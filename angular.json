@@ -1,0 +1,194 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "num-portal-webapp": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "num",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/num-portal-webapp",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              {
+                "glob": "loader.js",
+                "input": "node_modules/monaco-editor/min/vs",
+                "output": "./vs/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min/vs/editor",
+                "output": "./vs/editor"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min/vs/base",
+                "output": "./vs/base"
+              }
+            ],
+            "styles": [
+              "src/styles/styles.scss"
+            ],
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "keycloak-js"
+            ]
+          },
+          "configurations": {
+            "deploy": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.deploy.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "num-portal-webapp:build",
+            "proxyConfig": "proxy.conf.json"
+          },
+          "configurations": {
+            "deploy": {
+              "browserTarget": "num-portal-webapp:build:deploy"
+            }
+          },
+          "assets": [
+            {
+              "glob": "loader.js",
+              "input": "node_modules/monaco-editor/dev/vs",
+              "output": "./vs/"
+            },
+            {
+              "glob": "**/*",
+              "input": "node_modules/monaco-editor/dev/vs/editor",
+              "output": "./vs/editor"
+            },
+            {
+              "glob": "**/*",
+              "input": "node_modules/monaco-editor/dev/vs/base",
+              "output": "./vs/base"
+            }
+          ]
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "num-portal-webapp:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "num-portal-webapp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "num-portal-webapp:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "playground": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/playground",
+            "index": "src/index.html",
+            "main": "src/main.playground.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.playground.json",
+            "aot": false,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "playground:build",
+            "port": 4201
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "num-portal-webapp"
+}
