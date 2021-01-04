@@ -6,9 +6,9 @@
     "baseUrl": "/api"
   },
   "auth": {
-    "baseUrl": "https://temp-keycloak.10.214.4.21.xip.io",
-    "realm": "Num",
-    "clientId": "numPortalWebapp"
+    "baseUrl": "http://localhost:8080",
+    "realm": "codex-develop",
+    "clientId": "feasibility-gui"
   },
   "aqlEditor": {
     "baseUrl": ""

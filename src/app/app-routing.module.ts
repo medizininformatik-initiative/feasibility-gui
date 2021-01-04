@@ -75,6 +75,18 @@ export const routes: Routes = [
         (m) => m.AdminModule
       ),
   },
+  {
+    path: 'querybuilder',
+    canLoad: [RoleGuard],
+    data: {
+      navId: 'querybuilder',
+      roles: ['CODEX_DEVELOPER'],
+    },
+    loadChildren: () =>
+      import(/* webpackChunkName: "Querbybuilder.Module" */ './modules/querybuilder/querybuilder.module').then(
+        (m) => m.QuerybuilderModule
+      ),
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ]
