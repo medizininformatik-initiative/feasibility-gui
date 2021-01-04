@@ -41,7 +41,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       multi: true,
       deps: [AppConfigService, OAuthInitService],
       useFactory: (configService: AppConfigService, oauthInitService: OAuthInitService) => () =>
-        configService.loadConfig().then(),
+        configService.loadConfig().then(() => oauthInitService.initOAuth()),
     },
     {
       provide: HTTP_INTERCEPTORS,
