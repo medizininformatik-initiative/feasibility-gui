@@ -10,9 +10,6 @@
     "realm": "codex-develop",
     "clientId": "feasibility-gui"
   },
-  "aqlEditor": {
-    "baseUrl": ""
-  },
   "legal": {
     "version": "0.9.0",
     "copyrightOwner": "Num Core Team"
