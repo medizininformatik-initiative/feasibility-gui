@@ -1,7 +1,11 @@
 @mixin language-component_themed($theme) {
-  $accent: map-get($theme, accent);
   $primary: map-get($theme, primary);
   $additional: map-get($theme, additional);
+
+  num-language fa-icon {
+    background: mat-color($primary, 500) !important;
+    color: mat-contrast($primary, 500) !important;
+  }
 
   .num-mat-lang-toggle-button {
     border: none;
@@ -16,25 +20,25 @@
         font-weight: 400 !important;
 
         &:hover {
-          background: mat-color($accent, 100);
+          background: mat-color($primary, 500);
         }
 
         &:focus,
         .cdk-keyboard-focused & {
-          background: mat-color($accent, 200);
+          background: mat-color($primary, 500);
         }
       }
     }
 
     .mat-button-toggle-appearance-standard {
-      color: mat-color($additional, mid-grey);
+      color: mat-contrast($primary, 500);
 
       &.mat-button-toggle-checked {
-        color: mat-color($primary);
+        color: mat-color($primary, A700);
       }
 
       &.mat-button-toggle + .mat-button-toggle {
-        border-left: solid 2px mat-color($accent);
+        border-left: solid 2px mat-color($primary);
       }
     }
 

@@ -1,26 +1,43 @@
 @mixin side-menu-component_themed($theme) {
   $accent: map-get($theme, accent);
 
+  mat-nav-list {
+    background: mat-color($accent, 500) !important;
+    color: mat-contrast($accent, 500) !important;
+  }
+
+  .num-logo-row a {
+    background: mat-color($accent, 500) !important;
+    color: mat-contrast($accent, 500) !important;
+  }
+
+  .num-logo-row button:hover {
+    background: mat-color($accent, 200) !important;
+    color: mat-contrast($accent, 200) !important;
+  }
+
   .num-mat-list-item {
+    background: mat-color($accent, 500) !important;
+    color: mat-contrast($accent, 500) !important;
+
     font-size: 16px !important;
     font-weight: 400 !important;
     line-height: 20px !important;
     letter-spacing: 0.25px !important;
 
     &--active {
-      background: mat-color($accent, 50);
+      background: mat-color($accent, 200) !important;
+      color: mat-contrast($accent, 200) !important;
       font-weight: 500 !important;
-
-      fa-icon {
-        color: mat-color($accent);
-      }
     }
 
     &:hover {
       background: mat-color($accent, 100) !important;
+      color: mat-contrast($accent, 100) !important;
     }
     &:focus {
       background: mat-color($accent, 200) !important;
+      color: mat-contrast($accent, 200) !important;
     }
   }
 }

@@ -17,9 +17,12 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Übersicht",
-    "QUERYBUILDER": "Abfragen Editor",
-    "QUERYBUILDER_OVERVIEW": "Abfragen",
+    "QUERYBUILDER": "Abfragen",
+    "QUERYBUILDER_EDITOR": "Abfrage erstellen",
+    "QUERYBUILDER_OVERVIEW": "Übersicht",
     "SIGNOUT": "Abmelden"
+  },
+  "QUERYBUILDER": {
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",

@@ -1,13 +1,13 @@
 .toolbar {
   background: transparent;
   font-size: 14px;
+  margin: 0 0 1em 0;
+}
+
+.toolbar fa-icon {
+  padding: 0 0 0 1em;
 }
 
 .titlebar {
   border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
-}
-
-.mat-tab-label-active {
-  color: black;
-  opacity: 1;
 }

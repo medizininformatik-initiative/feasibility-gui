@@ -1,0 +1,8 @@
+@mixin header_themed($theme) {
+  $accent: map-get($theme, accent);
+
+  num-header mat-toolbar {
+    background: mat-color($accent, 500) !important;
+    color: mat-contrast($accent, 500) !important;
+  }
+}

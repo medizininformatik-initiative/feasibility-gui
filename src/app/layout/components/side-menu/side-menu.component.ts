@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { routes } from '../../../app-routing.module'
 import INavItem from '../../models/nav-item.interface'
 import { OAuthService } from 'angular-oauth2-oidc'
@@ -14,23 +14,33 @@ export class SideMenuComponent implements OnInit {
   mainNavItems = mainNavItems
   secondaryNavItems = secondaryNavItems
 
+  @Input() isSideMenuExpanded = true
   @Output() toggleSideMenu = new EventEmitter()
 
   constructor(private oauthService: OAuthService) {}
 
   ngOnInit(): void {
-    mainNavItems.forEach((item) => {
-      const roles = routes.filter((route) => route.path === item.routeTo)[0].data?.roles
+    this.mainNavItems.forEach((item) => {
+      let roles = item.roles ? item.roles : []
+
+      const routesFiltered = this.routes.filter((route) => item.routeTo === route.path)
+
+      if (routesFiltered && routesFiltered.length > 0) {
+        if (routesFiltered[0].data?.roles) {
+          roles = roles.concat(routesFiltered[0].data?.roles)
+        }
+      }
       item.roles = roles
     })
   }
 
-  menuItemClicked($event: Event, item: INavItem): void {
-    if (item.routeTo === '#logout') {
+  menuItemClicked($event: Event, item?: INavItem): void {
+    if (item?.routeTo === '#logout') {
       this.oauthService.logOut()
     }
+
     const target = $event.currentTarget as HTMLElement
     target.blur()
-    this.toggleSideMenu.emit()
+    this.toggleSideMenu.emit({ item })
   }
 }

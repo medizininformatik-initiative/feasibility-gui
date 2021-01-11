@@ -1,7 +1,19 @@
-<mat-nav-list fxLayout="column" fxFill fxFlex="225px">
-  <a class="navbar-item" routerLink="/home">
-    <img src="assets/logo.svg" alt="app-logo" />
-  </a>
+<mat-nav-list fxLayout="column" fxFill>
+  <div fxLayout="row" class="num-logo-row">
+    <button
+      type="button"
+      [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate"
+      mat-icon-button
+      (click)="menuItemClicked($event)"
+    >
+      <fa-icon size="2x" icon="bars"></fa-icon>
+    </button>
+    <div *ngIf="isSideMenuExpanded" fxLayoutAlign="center center">
+      <a class="navbar-item" routerLink="/home">
+        <h1>CODEX</h1>
+      </a>
+    </div>
+  </div>
 
   <ng-template ngFor let-item [ngForOf]="mainNavItems">
     <a
@@ -13,7 +25,7 @@
       (click)="menuItemClicked($event, item)"
     >
       <fa-icon size="lg" [fixedWidth]="true" [icon]="item.icon"></fa-icon>
-      <div>{{ item.translationKey | translate }}</div>
+      <div *ngIf="isSideMenuExpanded">{{ item.translationKey | translate }}</div>
     </a>
   </ng-template>
 
@@ -29,6 +41,6 @@
     (click)="menuItemClicked($event, item)"
   >
     <fa-icon size="lg" [fixedWidth]="true" [icon]="item.icon" routerLinkActive="active"></fa-icon>
-    <div>{{ item.translationKey | translate }}</div>
+    <div *ngIf="isSideMenuExpanded">{{ item.translationKey | translate }}</div>
   </a>
 </mat-nav-list>

@@ -1,9 +1,18 @@
-<mat-toolbar color="light" class="toolbar" fxLayoutGap="20px">
-  <ng-content></ng-content>
+<mat-toolbar
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  color="light"
+  class="toolbar"
+  fxLayoutGap="20px"
+>
+  <div fxFlex="95%" fxFlex.gt-md="90%" fxFlex.gt-lg="1200px">
+    <ng-content></ng-content>
 
-  <span fxFlex></span>
+    <span fxFlex></span>
 
-  <num-language></num-language>
+    {{ profile?.name }}
+    <fa-icon [icon]="'user'" size="2x" [fixedWidth]="true"></fa-icon>
+  </div>
 </mat-toolbar>
 
 <section role="heading" fxLayout="row" fxLayoutAlign="center start" *ngIf="currentMainNavItem">

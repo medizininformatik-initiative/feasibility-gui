@@ -15,6 +15,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faUsersCog } from '@fortawesome/free-solid-svg-icons'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 
@@ -36,6 +37,7 @@ export const FONT_AWESOME_ICONS = [
   faCheck,
   faCheckCircle,
   faTrash,
+  faUser,
   faUsersCog,
   faAngleRight,
 ]
