@@ -7,79 +7,19 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.DASHBOARD',
   },
   {
-    routeTo: 'studies',
-    icon: 'microscope',
-    translationKey: 'NAVIGATION.STUDIES',
-    tabNav: [
-      {
-        routeTo: 'studies',
-        id: 'overview',
-        translationKey: 'NAVIGATION.STUDIES_OVERVIEW',
-      },
-      {
-        routeTo: 'studies/new/editor',
-        id: 'editor',
-        translationKey: 'NAVIGATION.STUDIES_EDITOR',
-      },
-    ],
-  },
-  {
-    routeTo: 'phenotypes',
-    icon: 'cubes',
-    translationKey: 'NAVIGATION.PHENOTYPES',
-    tabNav: [
-      {
-        routeTo: 'phenotypes',
-        id: 'overview',
-        translationKey: 'NAVIGATION.PHENOTYPES_OVERVIEW',
-      },
-      {
-        routeTo: 'phenotypes/new/editor',
-        id: 'editor',
-        translationKey: 'NAVIGATION.PHENOTYPES_EDITOR',
-      },
-    ],
-  },
-  {
-    routeTo: 'cohorts',
-    icon: 'cubes',
-    translationKey: 'NAVIGATION.COHORTS',
-  },
-  {
-    routeTo: 'aqls',
+    routeTo: 'querybuilder-overview',
+    roles: ['CODEX_DEVELOPER'],
     icon: 'dna',
-    translationKey: 'NAVIGATION.AQLS',
-    tabNav: [
-      {
-        routeTo: 'aqls',
-        id: 'overview',
-        translationKey: 'NAVIGATION.AQLS_OVERVIEW',
-      },
-      {
-        routeTo: 'aqls/new/editor',
-        id: 'editor',
-        translationKey: 'NAVIGATION.AQLS_EDITOR',
-      },
-    ],
+    translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
   {
-    routeTo: 'admin',
-    icon: 'users-cog',
-    translationKey: 'NAVIGATION.USER_MANAGEMENT',
+    routeTo: 'querybuilder',
+    icon: 'dna',
+    translationKey: 'NAVIGATION.QUERYBUILDER',
   },
 ]
 
 export const secondaryNavItems: INavItem[] = [
-  {
-    routeTo: '#',
-    icon: 'bell',
-    translationKey: 'NAVIGATION.NOTIFICATIONS',
-  },
-  {
-    routeTo: '#',
-    icon: 'cog',
-    translationKey: 'NAVIGATION.PROFILE',
-  },
   {
     routeTo: '#logout',
     icon: 'sign-out-alt',

@@ -1,17 +1,6 @@
 import { IUserDetails } from 'src/app/shared/models/user/user-details.interface'
 import { IUser } from 'src/app/shared/models/user/user.interface'
 
-export const mockUser: IUser = {
-  approved: false,
-  email: 'mockUser1@gmail.com',
-  externalOrganizationId: '123',
-  firstName: 'Max',
-  id: '123-456',
-  lastName: 'Mustermann',
-  roles: ['some', 'role'],
-  username: 'mock-user-1',
-}
-
 export const mockUnapprovedUsers: IUser[] = [
   {
     approved: false,
