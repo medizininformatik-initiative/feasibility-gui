@@ -10,6 +10,7 @@
 @import './styles/side-menu.component.themed';
 @import './styles/general_table.themed';
 @import './styles/footer.themed';
+@import './styles/header.themed';
 @import './styles/typography.themed';
 @import './styles/mat-chip.themed';
 @import './styles/mat-expansion-panel.themed';
@@ -24,6 +25,7 @@
   @include language-component_themed($theme);
   @include general_table_themed($theme);
   @include footer_themed($theme);
+  @include header_themed($theme);
   @include typography_themed($theme);
   @include buttons($theme);
   @include mat-chip_themed($theme);

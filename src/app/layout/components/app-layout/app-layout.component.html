@@ -8,23 +8,16 @@
     [mode]="isHandset ? 'over' : 'side'"
     [opened]="isHandset === false"
   >
-    <num-side-menu (toggleSideMenu)="toggleMenu()" fxFlex="100"></num-side-menu>
+    <num-side-menu
+      (toggleSideMenu)="toggleMenu($event)"
+      [isSideMenuExpanded]="isSideMenuExpanded || isHandset"
+      fxFlex="100"
+    ></num-side-menu>
   </mat-sidenav>
 
   <mat-sidenav-content fxLayout="column">
     <!-- Page Content -->
-    <num-header role="banner">
-      <button
-        id="menu-toggle-button"
-        type="button"
-        [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate"
-        mat-icon-button
-        (click)="toggleMenu()"
-        *ngIf="isHandset"
-      >
-        <fa-icon icon="bars"></fa-icon>
-      </button>
-    </num-header>
+    <num-header role="banner"></num-header>
 
     <div class="safari-fix" fxLayout="row" fxLayoutAlign="center start" role="presentation">
       <main

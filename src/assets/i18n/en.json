@@ -17,9 +17,12 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Dashboard",
-    "QUERYBUILDER": "Query Editor",
-    "QUERYBUILDER_OVERVIEW": "Queries",
+    "QUERYBUILDER": "Queries",
+    "QUERYBUILDER_EDITOR": "Create query",
+    "QUERYBUILDER_OVERVIEW": "Overview",
     "SIGNOUT": "Sign out"
+  },
+  "QUERYBUILDER": {
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",
