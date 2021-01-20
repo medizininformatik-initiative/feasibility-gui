@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { MaterialModule } from 'src/app/layout/material/material.module'
-import { AqlFilterChipId } from '../../models/aql/aql-filter-chip.enum'
 import { IFilterChip } from '../../models/filter-chip.interface'
 
 import { FilterChipsComponent } from './filter-chips.component'
@@ -11,23 +10,25 @@ describe('FilterChipsComponent', () => {
   let component: FilterChipsComponent
   let fixture: ComponentFixture<FilterChipsComponent>
 
-  const filter1: IFilterChip<AqlFilterChipId> = {
-    id: AqlFilterChipId.AllAql,
+  const exampleId = 'test123'
+
+  const filter1: IFilterChip<string> = {
+    id: exampleId,
     title: 'test1',
     isSelected: false,
   }
-  const filter2: IFilterChip<AqlFilterChipId> = {
-    id: AqlFilterChipId.AllAql,
+  const filter2: IFilterChip<string> = {
+    id: exampleId,
     title: 'test2',
     isSelected: true,
   }
-  const filter3: IFilterChip<AqlFilterChipId> = {
-    id: AqlFilterChipId.AllAql,
+  const filter3: IFilterChip<string> = {
+    id: exampleId,
     title: 'test3',
     isSelected: false,
   }
 
-  const filterChips: IFilterChip<AqlFilterChipId>[] = [filter1, filter2, filter3]
+  const filterChips: IFilterChip<string>[] = [filter1, filter2, filter3]
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

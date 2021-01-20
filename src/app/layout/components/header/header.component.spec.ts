@@ -10,6 +10,8 @@ import INavItem from '../../models/nav-item.interface'
 import { ButtonComponent } from '../../../shared/components/button/button.component'
 import { LanguageComponent } from '../language/language.component'
 import { HeaderComponent } from './header.component'
+import { OAuthService } from 'angular-oauth2-oidc'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent
@@ -19,6 +21,30 @@ describe('HeaderComponent', () => {
 
   @Component({ selector: 'num-stub', template: '' })
   class StubComponent {}
+
+  const authService = {
+    logOut: () => {},
+    loadUserProfile: () => Promise.resolve({}),
+  } as OAuthService
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [HeaderComponent],
+      imports: [
+        MaterialModule,
+        FontAwesomeModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        FontAwesomeTestingModule,
+      ],
+      providers: [
+        {
+          provide: OAuthService,
+          useValue: authService,
+        },
+      ],
+    }).compileComponents()
+  })
 
   const firstNavItem: INavItem = {
     routeTo: 'first',

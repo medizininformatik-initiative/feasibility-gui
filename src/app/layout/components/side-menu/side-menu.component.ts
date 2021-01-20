@@ -23,11 +23,11 @@ export class SideMenuComponent implements OnInit {
     this.mainNavItems.forEach((item) => {
       let roles = item.roles ? item.roles : []
 
-      const routesFiltered = this.routes.filter((route) => item.routeTo === route.path)
+      const routesForNavItem = this.routes.filter((route) => item.routeTo === route.path)
 
-      if (routesFiltered && routesFiltered.length > 0) {
-        if (routesFiltered[0].data?.roles) {
-          roles = roles.concat(routesFiltered[0].data?.roles)
+      if (routesForNavItem && routesForNavItem.length > 0) {
+        if (routesForNavItem[0].data?.roles) {
+          roles = roles.concat(routesForNavItem[0].data?.roles)
         }
       }
       item.roles = roles

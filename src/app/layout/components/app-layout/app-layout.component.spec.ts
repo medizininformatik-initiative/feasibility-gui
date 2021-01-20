@@ -78,18 +78,10 @@ describe('AppLayoutComponent', () => {
       expect(component).toBeTruthy()
     })
 
-    it('should call toggleMenu function on menu-button click', () => {
-      jest.spyOn(component, 'toggleMenu')
-      const nativeElement = fixture.debugElement.nativeElement
-      const button = nativeElement.querySelector('#menu-toggle-button')
-      button.click()
-      expect(component.toggleMenu).toHaveBeenCalled()
-    })
-
     it('should call drawer toggle function on toggleMenu function', () => {
       jest.spyOn(component.drawer, 'toggle')
-      component.toggleMenu()
-      expect(component.drawer.toggle).toHaveBeenCalled()
+      component.toggleMenu(null)
+      expect(component.drawer.toggle).not.toHaveBeenCalled()
     })
   })
 
@@ -115,15 +107,9 @@ describe('AppLayoutComponent', () => {
       expect(component).toBeTruthy()
     })
 
-    it('menu-button should not be rendered', () => {
-      const nativeElement = fixture.debugElement.nativeElement
-      const button = nativeElement.querySelector('#menu-toggle-button')
-      expect(button).toBeNull()
-    })
-
     it('should not call drawer toggle function on toggleMenu function', () => {
       jest.spyOn(component.drawer, 'toggle')
-      component.toggleMenu()
+      component.toggleMenu(null)
       expect(component.drawer.toggle).not.toHaveBeenCalled()
     })
   })
