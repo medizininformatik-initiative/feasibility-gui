@@ -7,6 +7,7 @@ import { AppConfigService } from 'src/app/config/app-config.service'
 import { MaterialModule } from '../../material/material.module'
 
 import { FooterComponent } from './footer.component'
+import { LanguageComponent } from '../language/language.component'
 
 describe('FooterComponent', () => {
   let component: FooterComponent
@@ -14,7 +15,7 @@ describe('FooterComponent', () => {
   let appConfig: AppConfigService
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FooterComponent],
+      declarations: [FooterComponent, LanguageComponent],
       imports: [
         FontAwesomeTestingModule,
         MaterialModule,
