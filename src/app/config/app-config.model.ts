@@ -5,6 +5,9 @@ export interface IAppConfig {
   api: {
     baseUrl: string
   }
+  uiBackendApi: {
+    baseUrl: string
+  }
   auth: {
     baseUrl: string
     realm: string
@@ -13,5 +16,15 @@ export interface IAppConfig {
   legal: {
     version: string
     copyrightOwner: string
+  }
+  features: {
+    v2: {
+      active: boolean
+    }
+  }
+  mock: {
+    terminology: boolean
+    query: boolean
+    result: boolean
   }
 }

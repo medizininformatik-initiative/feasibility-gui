@@ -5,6 +5,9 @@
   "api": {
     "baseUrl": "#{api_baseUrl}"
   },
+  "uiBackendApi": {
+    "baseUrl": "#{uiBackendApi_baseUrl}"
+  },
   "auth": {
     "baseUrl": "#{auth_baseUrl}",
     "realm": "#{auth_realm}",
@@ -13,5 +16,15 @@
   "legal": {
     "version": "#{legal_version}",
     "copyrightOwner": "#{legal_copyrightOwner}"
+  },
+  "features": {
+    "v2": {
+      "activated": "#{features_v2_activated}"
+    }
+  },
+  "mock": {
+    "terminology": false,
+    "query": false,
+    "result": false
   }
 }

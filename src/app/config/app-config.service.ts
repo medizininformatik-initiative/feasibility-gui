@@ -11,6 +11,10 @@ export class AppConfigService {
 
   constructor(private http: HttpClient) {}
 
+  public getConfig(): IAppConfig {
+    return this.config
+  }
+
   public loadConfig(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.http
