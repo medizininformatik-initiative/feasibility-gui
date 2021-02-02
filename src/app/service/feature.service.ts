@@ -7,8 +7,16 @@ import { AppConfigService } from '../config/app-config.service'
 export class FeatureService {
   constructor(private appConfig: AppConfigService) {}
 
-  public useV2(): boolean {
-    return this.appConfig.getConfig().features.v2.active
+  public useFeatureMultipleGroups(): boolean {
+    return this.appConfig.getConfig().features.v2.multiplegroups
+  }
+
+  public useFeatureDependentGroups(): boolean {
+    return this.appConfig.getConfig().features.v2.dependentgroups
+  }
+
+  public useFeatureTimeRestriction(): boolean {
+    return this.appConfig.getConfig().features.v2.timerestriction
   }
 
   public isDevelopMode(): boolean {

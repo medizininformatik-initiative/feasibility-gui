@@ -19,7 +19,9 @@ export interface IAppConfig {
   }
   features: {
     v2: {
-      active: boolean
+      multiplegroups: boolean
+      dependentgroups: boolean
+      timerestriction: boolean
     }
   }
   mock: {

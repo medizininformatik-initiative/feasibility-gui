@@ -26,7 +26,9 @@ describe('FeatureService', () => {
       .spyOn(appConfigService, 'getConfig')
       .mockReturnValue(FeatureServiceSpecUtil.createConfig(true))
 
-    expect(service.useV2()).toBeTruthy()
+    expect(service.useFeatureMultipleGroups()).toBeTruthy()
+    expect(service.useFeatureDependentGroups()).toBeTruthy()
+    expect(service.useFeatureTimeRestriction()).toBeTruthy()
   })
 
   it('should use mocks in development mode', () => {
@@ -47,7 +49,9 @@ describe('FeatureService', () => {
       .spyOn(appConfigService, 'getConfig')
       .mockReturnValue(FeatureServiceSpecUtil.createConfig(false))
 
-    expect(service.useV2()).toBeFalsy()
+    expect(service.useFeatureMultipleGroups()).toBeFalsy()
+    expect(service.useFeatureDependentGroups()).toBeFalsy()
+    expect(service.useFeatureTimeRestriction()).toBeFalsy()
   })
 
   it('should not use mocks', () => {
@@ -81,7 +85,9 @@ class FeatureServiceSpecUtil {
     return {
       features: {
         v2: {
-          active: value,
+          multiplegroups: value,
+          dependentgroups: value,
+          timerestriction: value,
         },
       },
       mock: {

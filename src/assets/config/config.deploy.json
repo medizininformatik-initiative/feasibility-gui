@@ -19,7 +19,9 @@
   },
   "features": {
     "v2": {
-      "activated": "#{features_v2_activated}"
+      "multiplegroups": "#{features_v2_multiplegroups}",
+      "dependentgroups": "#{features_v2_dependentgroups}",
+      "timerestriction": "#{features_v2_timerestriction}"
     }
   },
   "mock": {

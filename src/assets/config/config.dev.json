@@ -19,7 +19,9 @@
   },
   "features": {
     "v2": {
-      "activated": false
+      "multiplegroups": false,
+      "dependentgroups": false,
+      "timerestriction": false
     }
   },
   "mock": {
