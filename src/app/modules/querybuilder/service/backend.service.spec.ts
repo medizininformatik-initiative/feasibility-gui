@@ -7,13 +7,14 @@ import { IAppConfig } from '../../../config/app-config.model'
 import { FeatureService } from '../../../service/feature.service'
 import { QueryResult } from '../model/api/result/QueryResult'
 import DoneCallback = jest.DoneCallback
-import { TerminologyEntry } from '../model/api/terminology/terminology'
-import { Query } from '../model/api/query/query'
+import { CategoryEntry, TerminologyEntry } from '../model/api/terminology/terminology'
+import { Query, QueryResponse } from '../model/api/query/query'
 
 describe('BackendService', () => {
   let service: BackendService
 
   const EXAMPLE_ID = '12345'
+  const EXAMPLE_SEARCH = 'Diab'
   const EXAMPLE_URL = 'http:/abc/result?id=123456'
 
   beforeEach(() => {
@@ -27,17 +28,46 @@ describe('BackendService', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should return programmatically mocked terminology', (done: DoneCallback) => {
+  it('should return programmatically mocked categories (root entries)', (done: DoneCallback) => {
     const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
 
-    service.getTerminolgyEntry(EXAMPLE_ID).subscribe((entry: TerminologyEntry) => {
+    service.getCategories().subscribe((categories: Array<CategoryEntry>) => {
+      expect(categories).toEqual(new Array<TerminologyEntry>())
+      done()
+    })
+  })
+
+  it('should return mocked categroies (root entries)', (done: DoneCallback) => {
+    const appConfigService = TestBed.inject<AppConfigService>(AppConfigService)
+    jest
+      .spyOn(appConfigService, 'getConfig')
+      .mockReturnValue(BackendServiceSpecUtil.createConfig('http:/abc'))
+    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    jest.spyOn(featureService, 'mockTerminology').mockReturnValue(false)
+
+    const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
+    const mockResponse = new Array<CategoryEntry>()
+
+    service.getCategories().subscribe((categories: Array<CategoryEntry>) => {
+      expect(categories).toEqual(new Array<TerminologyEntry>())
+      done()
+    })
+
+    httpMock.expectOne('http:/abc/root-entries').flush(mockResponse)
+  })
+
+  it('should return programmatically mocked terminology tree', (done: DoneCallback) => {
+    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
+
+    service.getTerminolgyTree(EXAMPLE_ID).subscribe((entry: TerminologyEntry) => {
       expect(entry).toEqual(new TerminologyEntry())
       done()
     })
   })
 
-  it('should return mocked terminology', (done: DoneCallback) => {
+  it('should return mocked terminology tree', (done: DoneCallback) => {
     const appConfigService = TestBed.inject<AppConfigService>(AppConfigService)
     jest
       .spyOn(appConfigService, 'getConfig')
@@ -48,20 +78,53 @@ describe('BackendService', () => {
     const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
     const mockResponse = new TerminologyEntry()
 
-    service.getTerminolgyEntry(EXAMPLE_ID).subscribe((entry: TerminologyEntry) => {
+    service.getTerminolgyTree(EXAMPLE_ID).subscribe((entry: TerminologyEntry) => {
       expect(entry).toEqual(new TerminologyEntry())
       done()
     })
 
-    httpMock.expectOne('http:/abc/terminology?id=12345').flush(mockResponse)
+    httpMock.expectOne('http:/abc/entries/12345').flush(mockResponse)
+  })
+
+  it('should return programmatically mocked search result list', (done: DoneCallback) => {
+    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
+
+    service
+      .getTerminolgyEntrySearchResult(EXAMPLE_SEARCH)
+      .subscribe((entries: Array<TerminologyEntry>) => {
+        expect(entries).toStrictEqual(new Array<TerminologyEntry>())
+        done()
+      })
+  })
+
+  it('should return mocked search result list', (done: DoneCallback) => {
+    const appConfigService = TestBed.inject<AppConfigService>(AppConfigService)
+    jest
+      .spyOn(appConfigService, 'getConfig')
+      .mockReturnValue(BackendServiceSpecUtil.createConfig('http:/abc'))
+    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    jest.spyOn(featureService, 'mockTerminology').mockReturnValue(false)
+
+    const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
+    const mockResponse = new Array<TerminologyEntry>()
+
+    service
+      .getTerminolgyEntrySearchResult(EXAMPLE_SEARCH)
+      .subscribe((entries: Array<TerminologyEntry>) => {
+        expect(entries).toStrictEqual(new Array<TerminologyEntry>())
+        done()
+      })
+
+    httpMock.expectOne('http:/abc/selectable-entries?q=' + EXAMPLE_SEARCH).flush(mockResponse)
   })
 
   it('should post programmatically mocked query', (done: DoneCallback) => {
     const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockQuery').mockReturnValue(true)
 
-    service.postQuery(new Query()).subscribe((result: string) => {
-      expect(result).toBe(BackendService.MOCK_RESULT_URL)
+    service.postQuery(new Query()).subscribe((queryResponse: QueryResponse) => {
+      expect(queryResponse).toStrictEqual({ location: BackendService.MOCK_RESULT_URL })
       done()
     })
   })
@@ -77,8 +140,8 @@ describe('BackendService', () => {
     const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
     const mockResponse = 'http://localhost:9999/mocked-result-of-query/99999'
 
-    service.postQuery(new Query()).subscribe((result: string) => {
-      expect(result).toBe('http://localhost:9999/mocked-result-of-query/99999')
+    service.postQuery(new Query()).subscribe((queryResponse: QueryResponse) => {
+      expect(queryResponse).toBe('http://localhost:9999/mocked-result-of-query/99999')
       done()
     })
 

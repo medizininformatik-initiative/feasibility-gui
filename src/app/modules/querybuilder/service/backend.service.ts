@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { TerminologyEntry } from '../model/api/terminology/terminology'
+import { CategoryEntry, TerminologyEntry } from '../model/api/terminology/terminology'
 import { AppConfigService } from '../../../config/app-config.service'
 import { Observable, of } from 'rxjs'
 import { FeatureService } from '../../../service/feature.service'
-import { Query } from '../model/api/query/query'
+import { Query, QueryResponse } from '../model/api/query/query'
 import { QueryResult } from '../model/api/result/QueryResult'
 
 @Injectable({
   providedIn: 'root',
 })
 export class BackendService {
-  private static PATH_TERMINOLOGY = 'terminology'
-  private static PATH_QUERY = 'query'
+  private static PATH_ROOT_ENTRIES = 'root-entries'
+  private static PATH_TERMINOLOGY_SUBTREE = 'entries'
+  private static PATH_SEARCH = 'selectable-entries'
+  private static PATH_RUN_QUERY = 'run-query'
 
   public static MOCK_QUERY_RESULT: QueryResult = {
     id: '12345',
@@ -27,22 +29,40 @@ export class BackendService {
     private http: HttpClient
   ) {}
 
-  public getTerminolgyEntry(id: string): Observable<TerminologyEntry> {
+  public getCategories(): Observable<Array<CategoryEntry>> {
+    if (this.feature.mockTerminology()) {
+      return of(new Array<CategoryEntry>())
+    }
+
+    return this.http.get<Array<CategoryEntry>>(this.createUrl(BackendService.PATH_ROOT_ENTRIES))
+  }
+
+  public getTerminolgyTree(id: string): Observable<TerminologyEntry> {
     if (this.feature.mockTerminology()) {
       return of(new TerminologyEntry())
     }
 
     return this.http.get<TerminologyEntry>(
-      this.createUrl(BackendService.PATH_TERMINOLOGY, 'id=' + id)
+      this.createUrl(BackendService.PATH_TERMINOLOGY_SUBTREE + '/' + id)
     )
   }
 
-  public postQuery(query: Query): Observable<string> {
-    if (this.feature.mockQuery()) {
-      return of(BackendService.MOCK_RESULT_URL)
+  public getTerminolgyEntrySearchResult(search: string): Observable<Array<TerminologyEntry>> {
+    if (this.feature.mockTerminology()) {
+      return of(new Array<TerminologyEntry>())
     }
 
-    return this.http.post<string>(this.createUrl(BackendService.PATH_QUERY), query)
+    return this.http.get<Array<TerminologyEntry>>(
+      this.createUrl(BackendService.PATH_SEARCH, 'q=' + search)
+    )
+  }
+
+  public postQuery(query: Query): Observable<QueryResponse> {
+    if (this.feature.mockQuery()) {
+      return of({ location: BackendService.MOCK_RESULT_URL })
+    }
+
+    return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), query)
   }
 
   public getResult(resultUrl: string): Observable<QueryResult> {
