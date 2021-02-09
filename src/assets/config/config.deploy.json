@@ -5,6 +5,9 @@
   "api": {
     "baseUrl": "#{api_baseUrl}"
   },
+  "uiBackendApi": {
+    "baseUrl": "#{uiBackendApi_baseUrl}"
+  },
   "auth": {
     "baseUrl": "#{auth_baseUrl}",
     "realm": "#{auth_realm}",
@@ -13,5 +16,17 @@
   "legal": {
     "version": "#{legal_version}",
     "copyrightOwner": "#{legal_copyrightOwner}"
+  },
+  "features": {
+    "v2": {
+      "multiplegroups": "#{features_v2_multiplegroups}",
+      "dependentgroups": "#{features_v2_dependentgroups}",
+      "timerestriction": "#{features_v2_timerestriction}"
+    }
+  },
+  "mock": {
+    "terminology": false,
+    "query": false,
+    "result": false
   }
 }

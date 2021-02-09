@@ -144,7 +144,7 @@
       }
     },
     "playground": {
-      "root": "",
+      "root": "play",
       "sourceRoot": "src",
       "projectType": "application",
       "architect": {

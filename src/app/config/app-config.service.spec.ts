@@ -27,6 +27,7 @@ describe('AppConfigService', () => {
       await appConfigService.loadConfig()
       expect(httpClient.get).toHaveBeenCalledTimes(1)
       expect(appConfigService.config).toEqual(config)
+      expect(appConfigService.getConfig()).toEqual(config)
     })
 
     it('rejects with an error on error', async () => {
