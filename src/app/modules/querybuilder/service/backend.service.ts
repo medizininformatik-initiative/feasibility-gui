@@ -4,17 +4,18 @@ import { CategoryEntry, TerminologyEntry } from '../model/api/terminology/termin
 import { AppConfigService } from '../../../config/app-config.service'
 import { Observable, of } from 'rxjs'
 import { FeatureService } from '../../../service/feature.service'
-import { Query, QueryResponse } from '../model/api/query/query'
+import { Query } from '../model/api/query/query'
+import { QueryResponse } from '../model/api/result/QueryResponse'
 import { QueryResult } from '../model/api/result/QueryResult'
 
 @Injectable({
   providedIn: 'root',
 })
 export class BackendService {
-  private static PATH_ROOT_ENTRIES = 'root-entries'
-  private static PATH_TERMINOLOGY_SUBTREE = 'entries'
-  private static PATH_SEARCH = 'selectable-entries'
-  private static PATH_RUN_QUERY = 'run-query'
+  private static PATH_ROOT_ENTRIES = 'terminology/root-entries'
+  private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries'
+  private static PATH_SEARCH = 'terminology/selectable-entries'
+  private static PATH_RUN_QUERY = 'querybuilder/run-query'
 
   public static MOCK_QUERY_RESULT: QueryResult = {
     id: '12345',
