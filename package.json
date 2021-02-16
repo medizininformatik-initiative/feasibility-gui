@@ -37,6 +37,7 @@
     "moment": "^2.29.1",
     "monaco-editor": "^0.21.2",
     "ng-lint-staged": "^0.1.6",
+    "ngx-webstorage-service": "^4.1.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

@@ -10,9 +10,14 @@ import { QueryProviderService } from '../../service/query-provider.service'
 export class QuerybuilderEditorComponent implements OnInit {
   query: Query
 
-  constructor(private queryProviderService: QueryProviderService) {}
+  constructor(public queryProviderService: QueryProviderService) {}
 
   ngOnInit(): void {
     this.query = this.queryProviderService.query()
+  }
+
+  storeQuery(query: Query): void {
+    this.query = query
+    this.queryProviderService.store(query)
   }
 }

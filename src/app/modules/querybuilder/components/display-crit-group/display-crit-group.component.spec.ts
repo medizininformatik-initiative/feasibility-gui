@@ -27,7 +27,7 @@ describe('DisplayCritGroupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DisplayCritGroupComponent)
     component = fixture.componentInstance
-    component.critGroup = new QueryProviderService().query().groups[0].inclusionCriteria
+    component.critGroup = QueryProviderService.createTestQuery().groups[0].inclusionCriteria
     fixture.detectChanges()
   })
 
@@ -66,7 +66,7 @@ describe('DisplayCritGroupComponent', () => {
   })
 
   it('should emit dropping event', () => {
-    spyOn(component.dropping, 'emit')
+    spyOn(component.dropped, 'emit')
 
     const mockEvent = {
       previousContainer: { data: { a: 1 } },
@@ -74,7 +74,7 @@ describe('DisplayCritGroupComponent', () => {
     }
     component.doDrop(mockEvent)
 
-    expect(component.dropping.emit).toHaveBeenCalledWith({
+    expect(component.dropped.emit).toHaveBeenCalledWith({
       addMode: 'position',
       from: { a: 1 },
       to: { b: 2 },

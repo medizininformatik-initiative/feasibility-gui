@@ -1,15 +1,34 @@
-import { Injectable } from '@angular/core'
+/* tslint:disable:member-ordering */
+import { Inject, Injectable } from '@angular/core'
 import { Query } from '../model/api/query/query'
 import { Comparator, OperatorOptions } from '../model/api/query/valueFilter'
+import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service'
+import { environment } from '../../../../environments/environment'
 
 @Injectable({
   providedIn: 'root',
 })
 export class QueryProviderService {
-  constructor() {}
+  STORAGE_QUERY_KEY = 'QUERY'
+
+  constructor(@Inject(LOCAL_STORAGE) public storage: StorageService) {}
 
   public query(): Query {
-    const queryTemp: Query = {
+    const query = this.storage.get(this.STORAGE_QUERY_KEY)
+
+    return query && environment.name !== 'test' ? query : QueryProviderService.createDefaultQuery()
+  }
+
+  public store(query: Query): void {
+    this.storage.set(this.STORAGE_QUERY_KEY, query)
+  }
+
+  public static createDefaultQuery(): Query {
+    return QueryProviderService.createTestQuery()
+  }
+
+  public static createTestQuery(): Query {
+    return {
       groups: [
         {
           display: 'Ausgewählte Merkmale',
@@ -147,7 +166,5 @@ export class QueryProviderService {
       ],
       display: 'Beispiel-Query',
     }
-
-    return queryTemp
   }
 }

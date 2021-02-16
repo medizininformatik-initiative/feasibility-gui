@@ -9,6 +9,7 @@ import { DisplayCritGroupComponent } from '../display-crit-group/display-crit-gr
 import { DisplayCriterionComponent } from '../display-criterion/display-criterion.component'
 import { BoolLogicSwitchComponent } from '../bool-logic-switch/bool-logic-switch.component'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
+import { QueryProviderService } from '../../service/query-provider.service'
 
 describe('AdminComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -39,5 +40,16 @@ describe('AdminComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should call storage service', () => {
+    spyOn(component.queryProviderService, 'store')
+
+    const query = QueryProviderService.createTestQuery()
+
+    component.storeQuery(query)
+
+    expect(component.queryProviderService.store).toHaveBeenCalledTimes(1)
+    expect(component.queryProviderService.store).toHaveBeenCalledWith(query)
   })
 })

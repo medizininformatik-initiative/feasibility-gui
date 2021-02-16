@@ -7,7 +7,7 @@
         [groupId]="group.id"
         [mode]="'inclusion'"
         (switch)="switch('inclusion', $event)"
-        (dropping)="doDrop($event)"
+        (dropped)="doDrop($event)"
         fxFlex="50"
       ></num-display-crit-group>
       <num-display-crit-group
@@ -15,7 +15,7 @@
         [groupId]="group.id"
         [mode]="'exclusion'"
         (switch)="switch('exclusion', $event)"
-        (dropping)="doDrop($event)"
+        (dropped)="doDrop($event)"
         fxFlex="50"
       ></num-display-crit-group>
     </div>

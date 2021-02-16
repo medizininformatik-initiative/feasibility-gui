@@ -16,7 +16,7 @@ describe('DisplayCriterionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DisplayCriterionComponent)
     component = fixture.componentInstance
-    component.criterion = new QueryProviderService().query().groups[0].inclusionCriteria[0][0]
+    component.criterion = QueryProviderService.createTestQuery().groups[0].inclusionCriteria[0][0]
     fixture.detectChanges()
   })
 

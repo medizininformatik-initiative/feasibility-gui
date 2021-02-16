@@ -31,7 +31,7 @@ describe('DisplayQueryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DisplayQueryComponent)
     component = fixture.componentInstance
-    component.query = new QueryProviderService().query()
+    component.query = QueryProviderService.createTestQuery()
     fixture.detectChanges()
   })
 

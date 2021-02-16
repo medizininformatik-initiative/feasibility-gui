@@ -29,7 +29,7 @@ describe('DisplayGroupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DisplayGroupComponent)
     component = fixture.componentInstance
-    component.group = new QueryProviderService().query().groups[0]
+    component.group = QueryProviderService.createTestQuery().groups[0]
     fixture.detectChanges()
   })
 
@@ -38,18 +38,18 @@ describe('DisplayGroupComponent', () => {
   })
 
   it('should emit dropping event (doDrop())', () => {
-    spyOn(component.dropping, 'emit')
+    spyOn(component.dropped, 'emit')
 
     const mockEvent = {
       a: 1,
     }
     component.doDrop(mockEvent)
 
-    expect(component.dropping.emit).toHaveBeenCalledWith(mockEvent)
+    expect(component.dropped.emit).toHaveBeenCalledWith(mockEvent)
   })
 
   it('should emit dropping event (doDropAtEnd())', () => {
-    spyOn(component.dropping, 'emit')
+    spyOn(component.dropped, 'emit')
 
     const mockEvent = {
       previousContainer: { data: { a: 1 } },
@@ -57,7 +57,7 @@ describe('DisplayGroupComponent', () => {
     }
     component.doDropAtEnd(mockEvent)
 
-    expect(component.dropping.emit).toHaveBeenCalledWith({
+    expect(component.dropped.emit).toHaveBeenCalledWith({
       addMode: 'end',
       from: { a: 1 },
       to: { b: 2 },
@@ -72,7 +72,7 @@ describe('DisplayGroupComponent', () => {
 
     expect(component.group.inclusionCriteria).toBe(critGroup)
     expect(component.group.exclusionCriteria).toStrictEqual(
-      new QueryProviderService().query().groups[0].exclusionCriteria
+      QueryProviderService.createTestQuery().groups[0].exclusionCriteria
     )
   })
 
@@ -84,7 +84,7 @@ describe('DisplayGroupComponent', () => {
 
     expect(component.group.exclusionCriteria).toBe(critGroup)
     expect(component.group.inclusionCriteria).toStrictEqual(
-      new QueryProviderService().query().groups[0].inclusionCriteria
+      QueryProviderService.createTestQuery().groups[0].inclusionCriteria
     )
   })
 })

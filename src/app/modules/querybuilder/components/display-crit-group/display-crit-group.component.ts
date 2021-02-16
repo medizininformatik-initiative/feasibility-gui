@@ -18,7 +18,7 @@ export class DisplayCritGroupComponent implements OnInit {
   mode: 'inclusion' | 'exclusion'
 
   @Output()
-  dropping = new EventEmitter()
+  dropped = new EventEmitter()
 
   @Output()
   switch = new EventEmitter()
@@ -46,7 +46,7 @@ export class DisplayCritGroupComponent implements OnInit {
   }
 
   doDrop($event: any): void {
-    this.dropping.emit({
+    this.dropped.emit({
       addMode: 'position',
       from: $event.previousContainer.data,
       to: $event.container.data,

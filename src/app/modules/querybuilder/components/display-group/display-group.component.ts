@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Group } from '../../model/api/query/group'
 import { Criterion } from '../../model/api/query/criterion'
 
@@ -12,18 +12,21 @@ export class DisplayGroupComponent implements OnInit {
   group: Group
 
   @Output()
-  dropping = new EventEmitter()
+  dropped = new EventEmitter()
+
+  @Output()
+  storeQuery = new EventEmitter<void>()
 
   constructor() {}
 
   ngOnInit(): void {}
 
   doDrop($event: any): void {
-    this.dropping.emit($event)
+    this.dropped.emit($event)
   }
 
   doDropAtEnd($event: any): void {
-    this.dropping.emit({
+    this.dropped.emit({
       addMode: 'end',
       from: $event.previousContainer.data,
       to: $event.container.data,
@@ -36,5 +39,7 @@ export class DisplayGroupComponent implements OnInit {
     } else {
       this.group.exclusionCriteria = $event
     }
+
+    this.storeQuery.emit()
   }
 }

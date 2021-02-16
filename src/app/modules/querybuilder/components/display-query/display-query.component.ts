@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Query } from '../../model/api/query/query'
 import { CritGroupArranger } from '../../controller/CritGroupArranger'
 
@@ -10,6 +10,9 @@ import { CritGroupArranger } from '../../controller/CritGroupArranger'
 export class DisplayQueryComponent implements OnInit {
   @Input()
   query: Query
+
+  @Output()
+  storeQuery = new EventEmitter<Query>()
 
   constructor() {}
 
@@ -25,5 +28,11 @@ export class DisplayQueryComponent implements OnInit {
         $event.to
       )
     }
+
+    this.doStoreQuery()
+  }
+
+  doStoreQuery(): void {
+    this.storeQuery.emit(this.query)
   }
 }

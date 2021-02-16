@@ -2,6 +2,7 @@
   <num-display-group
     *ngFor="let group of query.groups"
     [group]="group"
-    (dropping)="doDrop($event)"
+    (dropped)="doDrop($event)"
+    (storeQuery)="doStoreQuery()"
   ></num-display-group>
 </div>
