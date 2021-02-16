@@ -7,7 +7,7 @@ export class ValueFilter {
   // QUANTITY_COMPARATOR & QUANTITY_RANGE
   unit?: QuantityUnit
   @transient()
-  precision = 1
+  precision?: number
   @transient()
   min?: number
   @transient()

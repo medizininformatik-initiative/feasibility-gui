@@ -6,10 +6,10 @@ import { AppConfigService } from '../../../config/app-config.service'
 import { IAppConfig } from '../../../config/app-config.model'
 import { FeatureService } from '../../../service/feature.service'
 import { QueryResult } from '../model/api/result/QueryResult'
-import DoneCallback = jest.DoneCallback
 import { CategoryEntry, TerminologyEntry } from '../model/api/terminology/terminology'
 import { QueryResponse } from '../model/api/result/QueryResponse'
 import { Query } from '../model/api/query/query'
+import DoneCallback = jest.DoneCallback
 
 describe('BackendService', () => {
   let service: BackendService

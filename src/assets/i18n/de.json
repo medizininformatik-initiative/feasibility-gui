@@ -23,6 +23,10 @@
     "SIGNOUT": "Abmelden"
   },
   "QUERYBUILDER": {
+    "SWITCH":{
+      "LABEL_AND": "UND",
+      "LABEL_OR": "ODER"
+    }
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",

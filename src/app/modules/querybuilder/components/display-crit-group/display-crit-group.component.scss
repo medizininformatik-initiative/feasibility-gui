@@ -1,0 +1,15 @@
+.container {
+  padding: 1em 0;
+}
+
+.outer {
+  padding-left: 0.5em;
+}
+
+.inner {
+  border-left: 0.5em solid var(--num-color--accent-300);
+}
+
+num-bool-logic-switch {
+  padding: 0.2em 0;
+}

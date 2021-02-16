@@ -1,0 +1,7 @@
+<div cdkDropListGroup>
+  <num-display-group
+    *ngFor="let group of query.groups"
+    [group]="group"
+    (dropping)="doDrop($event)"
+  ></num-display-group>
+</div>

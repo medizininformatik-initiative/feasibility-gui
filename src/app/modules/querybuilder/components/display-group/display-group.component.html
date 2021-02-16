@@ -1,0 +1,43 @@
+<mat-card class="query-group">
+  <mat-card-header>{{ group.display }}</mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <num-display-crit-group
+        [critGroup]="group.inclusionCriteria"
+        [groupId]="group.id"
+        [mode]="'inclusion'"
+        (switch)="switch('inclusion', $event)"
+        (dropping)="doDrop($event)"
+        fxFlex="50"
+      ></num-display-crit-group>
+      <num-display-crit-group
+        [critGroup]="group.exclusionCriteria"
+        [groupId]="group.id"
+        [mode]="'exclusion'"
+        (switch)="switch('exclusion', $event)"
+        (dropping)="doDrop($event)"
+        fxFlex="50"
+      ></num-display-crit-group>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <div
+        class="drop-at-bottom"
+        cdkDropList
+        fxFlex="50"
+        [cdkDropListData]="{ mode: 'inclusion', groupId: group.id, addMode: 'end' }"
+        (cdkDropListDropped)="doDropAtEnd($event)"
+      >
+        <num-bool-logic-switch [position]="'outer'" [label]="'AND'"></num-bool-logic-switch>
+      </div>
+      <div
+        class="drop-at-bottom"
+        cdkDropList
+        fxFlex="50"
+        [cdkDropListData]="{ mode: 'exclusion', groupId: group.id, addMode: 'end' }"
+        (cdkDropListDropped)="doDropAtEnd($event)"
+      >
+        <num-bool-logic-switch [position]="'outer'" [label]="'OR'"></num-bool-logic-switch>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

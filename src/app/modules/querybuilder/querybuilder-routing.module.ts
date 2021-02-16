@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
+import { RouterModule, Routes } from '@angular/router'
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor/querybuilder-editor.component'
 import { QuerybuilderOverviewComponent } from './components/querybuilder-overview/querybuilder-overview.component'
 
