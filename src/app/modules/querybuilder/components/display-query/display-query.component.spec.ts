@@ -43,8 +43,8 @@ describe('DisplayQueryComponent', () => {
     spyOn(CritGroupArranger, 'moveCriterion')
     spyOn(CritGroupArranger, 'moveCriterionToEndOfGroup')
 
-    const from: CritGroupPosition = { groupId: '123', mode: 'inclusion', row: 1, column: 2 }
-    const to: CritGroupPosition = { groupId: '123', mode: 'inclusion', row: 2, column: 3 }
+    const from: CritGroupPosition = { groupId: '123', critType: 'inclusion', row: 1, column: 2 }
+    const to: CritGroupPosition = { groupId: '123', critType: 'inclusion', row: 2, column: 3 }
     const mockEvent = { addMode: 'position', from, to }
     const groupsParameter = component.query.groups
 
@@ -59,8 +59,8 @@ describe('DisplayQueryComponent', () => {
     spyOn(CritGroupArranger, 'moveCriterion')
     spyOn(CritGroupArranger, 'moveCriterionToEndOfGroup')
 
-    const from: CritGroupPosition = { groupId: '123', mode: 'inclusion', row: 1, column: 2 }
-    const to: CritGroupPosition = { groupId: '123', mode: 'inclusion', row: 2, column: 3 }
+    const from: CritGroupPosition = { groupId: '123', critType: 'inclusion', row: 1, column: 2 }
+    const to: CritGroupPosition = { groupId: '123', critType: 'inclusion', row: 2, column: 3 }
     const mockEvent = { addMode: 'end', from, to }
     const groupsParameter = component.query.groups
 

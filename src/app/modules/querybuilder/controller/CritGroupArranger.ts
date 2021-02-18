@@ -1,5 +1,5 @@
 import { Criterion } from '../model/api/query/criterion'
-import { Group } from '../model/api/query/group'
+import { CritType, Group } from '../model/api/query/group'
 
 export class CritGroupArranger {
   public static splitInnerArray(critGroup: Criterion[][], i: number, j: number): Criterion[][] {
@@ -65,9 +65,9 @@ export class CritGroupArranger {
 
     groups.forEach((group) => {
       if (group.id === position.groupId) {
-        if (position.mode === 'inclusion') {
+        if (position.critType === 'inclusion') {
           group.inclusionCriteria.push([criterion])
-        } else if (position.mode === 'exclusion') {
+        } else if (position.critType === 'exclusion') {
           group.exclusionCriteria.push([criterion])
         }
       }
@@ -83,7 +83,7 @@ export class CritGroupArranger {
     criterion: Criterion
   ): Group {
     const groupTemp: Group = JSON.parse(JSON.stringify(group))
-    if (position.mode === 'inclusion') {
+    if (position.critType === 'inclusion') {
       groupTemp.inclusionCriteria[position.row] = group.inclusionCriteria[position.row].slice(
         0,
         position.column
@@ -94,7 +94,7 @@ export class CritGroupArranger {
       )
 
       groupTemp.exclusionCriteria = group.exclusionCriteria
-    } else if (position.mode === 'exclusion') {
+    } else if (position.critType === 'exclusion') {
       groupTemp.exclusionCriteria[position.row] = group.exclusionCriteria[position.row].slice(
         0,
         position.column
@@ -126,13 +126,13 @@ export class CritGroupArranger {
 
   private static removeFromGroup(group: Group, position: CritGroupPosition): Group {
     const groupTemp: Group = JSON.parse(JSON.stringify(group))
-    if (position.mode === 'inclusion') {
+    if (position.critType === 'inclusion') {
       if (groupTemp.inclusionCriteria[position.row].length === 1) {
         groupTemp.inclusionCriteria.splice(position.row, 1)
       } else {
         groupTemp.inclusionCriteria[position.row].splice(position.column, 1)
       }
-    } else if (position.mode === 'exclusion') {
+    } else if (position.critType === 'exclusion') {
       if (groupTemp.exclusionCriteria[position.row].length === 1) {
         groupTemp.exclusionCriteria.splice(position.row, 1)
       } else {
@@ -157,17 +157,20 @@ export class CritGroupArranger {
 
     groups.forEach((group) => {
       if (group.id === positionFrom.groupId) {
-        if (positionFrom.mode === 'inclusion') {
+        if (positionFrom.critType === 'inclusion') {
           criterion = group.inclusionCriteria[positionFrom.row][positionFrom.column]
         } else {
           criterion = group.exclusionCriteria[positionFrom.row][positionFrom.column]
         }
 
-        if (positionFrom.groupId === positionTo.groupId && positionFrom.mode === positionTo.mode) {
+        if (
+          positionFrom.groupId === positionTo.groupId &&
+          positionFrom.critType === positionTo.critType
+        ) {
           if (
-            (positionTo.mode === 'inclusion' &&
+            (positionTo.critType === 'inclusion' &&
               group.inclusionCriteria[positionFrom.row].length === 1) ||
-            (positionTo.mode === 'exclusion' &&
+            (positionTo.critType === 'exclusion' &&
               group.exclusionCriteria[positionFrom.row].length === 1)
           ) {
             if (positionTo.row > positionFrom.row) {
@@ -198,7 +201,7 @@ export class CritGroupArranger {
 
     groups.forEach((group) => {
       if (group.id === positionFrom.groupId) {
-        if (positionFrom.mode === 'inclusion') {
+        if (positionFrom.critType === 'inclusion') {
           criterion = group.inclusionCriteria[positionFrom.row][positionFrom.column]
         } else {
           criterion = group.exclusionCriteria[positionFrom.row][positionFrom.column]
@@ -219,7 +222,7 @@ export class CritGroupArranger {
 
 export class CritGroupPosition {
   groupId: string
-  mode: 'inclusion' | 'exclusion'
+  critType: CritType
   row: number
   column: number
 }

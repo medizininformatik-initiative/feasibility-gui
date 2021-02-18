@@ -1,7 +1,11 @@
-.container {
+.container-bool-logic {
   padding: 0.3em 0;
 }
 
 mat-chip {
   cursor: pointer;
+}
+
+::ng-deep .container-bool-logic .mat-chip.mat-standard-chip {
+  background-color: transparent !important;
 }

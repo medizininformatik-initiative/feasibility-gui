@@ -1,1 +1,6 @@
+<div fxLayout="row" fxLayoutAlign="space-between">
+  <num-search-input [critType]="'inclusion'" fxFlex="50"></num-search-input>
+  <num-search-input [critType]="'exclusion'" fxFlex="50"></num-search-input>
+</div>
+
 <num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>

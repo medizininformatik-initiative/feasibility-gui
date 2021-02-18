@@ -7,6 +7,7 @@ import { FeatureService } from '../../../service/feature.service'
 import { Query } from '../model/api/query/query'
 import { QueryResponse } from '../model/api/result/QueryResponse'
 import { QueryResult } from '../model/api/result/QueryResult'
+import { MockBackendDataProvider } from './MockBackendDataProvider'
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class BackendService {
 
   public getCategories(): Observable<Array<CategoryEntry>> {
     if (this.feature.mockTerminology()) {
-      return of(new Array<CategoryEntry>())
+      return of(MockBackendDataProvider.getCategoryEntries())
     }
 
     return this.http.get<Array<CategoryEntry>>(this.createUrl(BackendService.PATH_ROOT_ENTRIES))
@@ -40,7 +41,7 @@ export class BackendService {
 
   public getTerminolgyTree(id: string): Observable<TerminologyEntry> {
     if (this.feature.mockTerminology()) {
-      return of(new TerminologyEntry())
+      return of(MockBackendDataProvider.getTerminologyEntry(id))
     }
 
     return this.http.get<TerminologyEntry>(

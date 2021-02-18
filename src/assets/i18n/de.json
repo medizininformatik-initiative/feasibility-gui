@@ -23,6 +23,11 @@
     "SIGNOUT": "Abmelden"
   },
   "QUERYBUILDER": {
+    "SEARCH": {
+      "INCLUSION": "Einschlusskriterien",
+      "EXCLUSION": "Ausschlusskriterien",
+      "LABEL": "Code oder Suchbegriff"
+    },
     "SWITCH":{
       "LABEL_AND": "UND",
       "LABEL_OR": "ODER"
@@ -34,6 +39,7 @@
   },
   "BUTTON": {
     "SAVE": "Speichern",
-    "CANCEL": "Abbrechen"
+    "CANCEL": "Abbrechen",
+    "ADD": "Hinzufügen"
   }
 }

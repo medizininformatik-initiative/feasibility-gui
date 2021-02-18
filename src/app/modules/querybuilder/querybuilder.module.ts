@@ -11,6 +11,13 @@ import { DisplayGroupComponent } from './components/display-group/display-group.
 import { DisplayCritGroupComponent } from './components/display-crit-group/display-crit-group.component'
 import { DisplayCriterionComponent } from './components/display-criterion/display-criterion.component'
 import { BoolLogicSwitchComponent } from './components/bool-logic-switch/bool-logic-switch.component'
+import { SearchInputComponent } from './components/search-input/search-input.component'
+import { OverlayModule } from '@angular/cdk/overlay'
+import { SearchOverlayTreeComponent } from './components/search-overlay-tree/search-overlay-tree.component'
+import { SearchHeaderTreeComponent } from './components/search-header-tree/search-header-tree.component'
+import { SearchInputTermEntryComponent } from './components/search-input-term-entry/search-input-term-entry.component'
+import { SearchFooterTreeComponent } from './components/search-footer-tree/search-footer-tree.component'
+import { EnterCriterionListComponent } from './components/enter-criterion-list/enter-criterion-list.component'
 
 @NgModule({
   declarations: [
@@ -21,7 +28,13 @@ import { BoolLogicSwitchComponent } from './components/bool-logic-switch/bool-lo
     DisplayCritGroupComponent,
     DisplayCriterionComponent,
     BoolLogicSwitchComponent,
+    SearchInputComponent,
+    SearchOverlayTreeComponent,
+    SearchHeaderTreeComponent,
+    SearchInputTermEntryComponent,
+    SearchFooterTreeComponent,
+    EnterCriterionListComponent,
   ],
-  imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule],
+  imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule, OverlayModule],
 })
 export class QuerybuilderModule {}

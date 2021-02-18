@@ -1,0 +1,23 @@
+.container {
+  width: 70vw;
+  min-height: 10em;
+
+  background-color: white;
+}
+
+.ontology-tree {
+  max-height: 40vh;
+
+  overflow-y: auto;
+}
+
+.ontology-tree ul,
+.ontology-tree li {
+  width: 100%;
+  margin: 0;
+  list-style-type: none;
+}
+
+.ontology-tree-invisible {
+  display: none;
+}

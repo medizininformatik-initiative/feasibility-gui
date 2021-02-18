@@ -1,0 +1,15 @@
+<div *ngIf="categories" fxLayout="row" fxLayoutAlign="start" class="container">
+  <div
+    *ngFor="let category of categories"
+    fxLayout="row"
+    (click)="fireSwitchCategory(category.entryId)"
+    class="category-box"
+  >
+    <div class="short-box">
+      {{ category.shortDisplay }}
+    </div>
+    <div class="display-box">
+      {{ category.display }}
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { Group } from '../../model/api/query/group'
+import { CritType, Group } from '../../model/api/query/group'
 import { Criterion } from '../../model/api/query/criterion'
 
 @Component({
@@ -33,8 +33,8 @@ export class DisplayGroupComponent implements OnInit {
     })
   }
 
-  switch(mode: 'inclusion' | 'exclusion', $event: Criterion[][]): void {
-    if (mode === 'inclusion') {
+  switch(critType: CritType, $event: Criterion[][]): void {
+    if (critType === 'inclusion') {
       this.group.inclusionCriteria = $event
     } else {
       this.group.exclusionCriteria = $event

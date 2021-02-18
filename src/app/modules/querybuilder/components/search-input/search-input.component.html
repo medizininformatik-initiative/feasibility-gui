@@ -1,0 +1,37 @@
+<div class="container-search-input" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+  <div class="header-label">{{ 'QUERYBUILDER.SEARCH.' + getHeaderLabelKey() | translate }}</div>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <mat-form-field fxFlex="80">
+      <mat-label>{{ 'QUERYBUILDER.SEARCH.LABEL' | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="value" />
+      <button
+        mat-button
+        *ngIf="value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="value = ''"
+      >
+        <!-- TODO[CODEX]: use icon 'close'-->
+        <mat-icon>X</mat-icon>
+      </button>
+    </mat-form-field>
+    <div fxFlex="20">
+      <button class="button-tree-view" type="button" mat-icon-button (click)="openTreeView($event)">
+        <fa-icon size="2x" icon="project-diagram"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayHeight="12em"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isTreeViewOpen"
+  (backdropClick)="isTreeViewOpen = false"
+>
+  <num-search-overlay-tree (closeOverlay)="closeOverlay()"></num-search-overlay-tree>
+</ng-template>

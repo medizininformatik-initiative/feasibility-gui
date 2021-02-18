@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Criterion } from '../../model/api/query/criterion'
 import { CritGroupArranger } from '../../controller/CritGroupArranger'
+import { CritType } from '../../model/api/query/group'
 
 @Component({
   selector: 'num-display-crit-group',
@@ -15,7 +16,7 @@ export class DisplayCritGroupComponent implements OnInit {
   groupId: string
 
   @Input()
-  mode: 'inclusion' | 'exclusion'
+  critType: CritType
 
   @Output()
   dropped = new EventEmitter()
@@ -28,11 +29,11 @@ export class DisplayCritGroupComponent implements OnInit {
   ngOnInit(): void {}
 
   getInnerLabelKey(): 'AND' | 'OR' {
-    return this.mode === 'inclusion' ? 'OR' : 'AND'
+    return this.critType === 'inclusion' ? 'OR' : 'AND'
   }
 
   getOuterLabelKey(): 'AND' | 'OR' {
-    return this.mode === 'exclusion' ? 'OR' : 'AND'
+    return this.critType === 'exclusion' ? 'OR' : 'AND'
   }
 
   splitInnerArray(i: number, j: number): void {
