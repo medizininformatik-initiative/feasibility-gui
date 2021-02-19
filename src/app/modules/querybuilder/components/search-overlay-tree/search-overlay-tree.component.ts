@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core'
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core'
 import { CategoryEntry, TerminologyEntry } from '../../model/api/terminology/terminology'
 import { of, Subscription } from 'rxjs'
 import { NestedTreeControl } from '@angular/cdk/tree'
@@ -21,14 +13,14 @@ import { EnterCriterionListComponent } from '../enter-criterion-list/enter-crite
   templateUrl: './search-overlay-tree.component.html',
   styleUrls: ['./search-overlay-tree.component.scss'],
 })
-export class SearchOverlayTreeComponent implements OnInit, OnDestroy, OnChanges {
+export class SearchOverlayTreeComponent implements OnInit, OnDestroy {
   @Output()
   closeOverlay = new EventEmitter<void>()
 
   id: string
   categories: Array<CategoryEntry>
 
-  private cachedTrees: Map<string, TerminologyEntry> = new Map<string, TerminologyEntry>()
+  cachedTrees: Map<string, TerminologyEntry> = new Map<string, TerminologyEntry>()
 
   treeControl: NestedTreeControl<TerminologyEntry>
   dataSource: MatTreeNestedDataSource<TerminologyEntry>
@@ -36,7 +28,7 @@ export class SearchOverlayTreeComponent implements OnInit, OnDestroy, OnChanges 
   private subscription: Subscription
   private subscriptionCategories: Subscription
 
-  constructor(private backend: BackendService, private dialog: MatDialog) {}
+  constructor(private backend: BackendService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.treeControl = new NestedTreeControl<TerminologyEntry>(this.getChildren)
@@ -65,7 +57,7 @@ export class SearchOverlayTreeComponent implements OnInit, OnDestroy, OnChanges 
     }
   }
 
-  private getChildren = (node: TerminologyEntry) => {
+  getChildren = (node: TerminologyEntry) => {
     if (node.leaf) {
       return of([])
     }
@@ -90,10 +82,6 @@ export class SearchOverlayTreeComponent implements OnInit, OnDestroy, OnChanges 
     this.subscription?.unsubscribe()
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.readTreeData(this.id)
-  }
-
   openDetailsPopUp(shouldAdd: boolean): void {
     if (shouldAdd) {
       const terminologyEntries = this.extractSelectedEntries()
@@ -108,7 +96,7 @@ export class SearchOverlayTreeComponent implements OnInit, OnDestroy, OnChanges 
     this.closeOverlay.emit()
   }
 
-  private extractSelectedEntries(): Array<TerminologyEntry> {
+  extractSelectedEntries(): Array<TerminologyEntry> {
     const result: Array<TerminologyEntry> = []
 
     for (const entry of this.cachedTrees.values()) {
@@ -123,7 +111,9 @@ export class SearchOverlayTreeComponent implements OnInit, OnDestroy, OnChanges 
     result: Array<TerminologyEntry>
   ): void {
     if (entry.selected) {
-      result.push(entry)
+      const clonedEntry = JSON.parse(JSON.stringify(entry))
+      clonedEntry.children = []
+      result.push(clonedEntry)
     }
 
     entry.children.forEach((child) => {
