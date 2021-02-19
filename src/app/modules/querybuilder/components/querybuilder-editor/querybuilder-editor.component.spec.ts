@@ -3,18 +3,18 @@ import { TranslateModule } from '@ngx-translate/core'
 import { QuerybuilderEditorComponent } from './querybuilder-editor.component'
 import { MaterialModule } from 'src/app/layout/material/material.module'
 import { Component } from '@angular/core'
-import { DisplayQueryComponent } from '../display-query/display-query.component'
-import { DisplayGroupComponent } from '../display-group/display-group.component'
-import { DisplayCritGroupComponent } from '../display-crit-group/display-crit-group.component'
-import { DisplayCriterionComponent } from '../display-criterion/display-criterion.component'
-import { BoolLogicSwitchComponent } from '../bool-logic-switch/bool-logic-switch.component'
+import { DisplayQueryComponent } from './display/display-query/display-query.component'
+import { DisplayGroupComponent } from './display/display-group/display-group.component'
+import { DisplayCritGroupComponent } from './display/display-crit-group/display-crit-group.component'
+import { DisplayCriterionComponent } from './display/display-criterion/display-criterion.component'
+import { BoolLogicSwitchComponent } from './display/bool-logic-switch/bool-logic-switch.component'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { QueryProviderService } from '../../service/query-provider.service'
-import { SearchInputComponent } from '../search-input/search-input.component'
-import { SearchOverlayTreeComponent } from '../search-overlay-tree/search-overlay-tree.component'
-import { SearchHeaderTreeComponent } from '../search-header-tree/search-header-tree.component'
-import { SearchFooterTreeComponent } from '../search-footer-tree/search-footer-tree.component'
-import { SearchInputTermEntryComponent } from '../search-input-term-entry/search-input-term-entry.component'
+import { SearchInputComponent } from './search/search-input/search-input.component'
+import { SearchTreeOverlayComponent } from './search/search-tree-overlay/search-tree-overlay.component'
+import { SearchTreeHeaderComponent } from './search/search-tree-header/search-tree-header.component'
+import { SearchTreeFooterComponent } from './search/search-tree-footer/search-tree-footer.component'
+import { SearchInputTermEntryComponent } from './search/search-input-term-entry/search-input-term-entry.component'
 import { ButtonComponent } from '../../../../shared/components/button/button.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { OverlayModule } from '@angular/cdk/overlay'
@@ -38,9 +38,9 @@ describe('QuerybuilderEditorComponent', () => {
         DisplayCriterionComponent,
         BoolLogicSwitchComponent,
         SearchInputComponent,
-        SearchOverlayTreeComponent,
-        SearchHeaderTreeComponent,
-        SearchFooterTreeComponent,
+        SearchTreeOverlayComponent,
+        SearchTreeHeaderComponent,
+        SearchTreeFooterComponent,
         SearchInputTermEntryComponent,
         ButtonComponent,
       ],
