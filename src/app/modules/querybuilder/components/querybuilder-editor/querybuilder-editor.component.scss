@@ -1,3 +1,11 @@
 :host {
   width: 100%;
 }
+
+.container {
+  border: 1px solid var(--num-color--accent);
+}
+
+.divider {
+  background: var(--num-color--accent);
+}

@@ -1,0 +1,13 @@
+<div class="container">
+  <num-search-text-header [categories]="categories" (switchCategory)="readTextData($event)">
+  </num-search-text-header>
+
+  <div *ngIf="text" class="search-results">
+    <div *ngFor="let termEntry of resultList">
+      <num-search-text-term-entry
+        [node]="termEntry"
+        (choose)="openDetailsPopUp($event)"
+      ></num-search-text-term-entry>
+    </div>
+  </div>
+</div>

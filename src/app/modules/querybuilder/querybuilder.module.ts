@@ -13,11 +13,14 @@ import { DisplayCriterionComponent } from './components/querybuilder-editor/disp
 import { BoolLogicSwitchComponent } from './components/querybuilder-editor/display/bool-logic-switch/bool-logic-switch.component'
 import { SearchInputComponent } from './components/querybuilder-editor/search/search-input/search-input.component'
 import { OverlayModule } from '@angular/cdk/overlay'
-import { SearchTreeOverlayComponent } from './components/querybuilder-editor/search/search-tree-overlay/search-tree-overlay.component'
+import { SearchTreeOverlayContentComponent } from './components/querybuilder-editor/search/search-tree-overlay-content/search-tree-overlay-content.component'
 import { SearchTreeHeaderComponent } from './components/querybuilder-editor/search/search-tree-header/search-tree-header.component'
-import { SearchInputTermEntryComponent } from './components/querybuilder-editor/search/search-input-term-entry/search-input-term-entry.component'
+import { SearchTreeTermEntryComponent } from './components/querybuilder-editor/search/search-tree-term-entry/search-tree-term-entry.component'
 import { SearchTreeFooterComponent } from './components/querybuilder-editor/search/search-tree-footer/search-tree-footer.component'
 import { EnterCriterionListComponent } from './components/querybuilder-editor/edit/enter-criterion-list/enter-criterion-list.component'
+import { SearchTextOverlayContentComponent } from './components/querybuilder-editor/search/search-text-overlay-content/search-text-overlay-content.component'
+import { SearchTextHeaderComponent } from './components/querybuilder-editor/search/search-text-header/search-text-header.component'
+import { SearchTextTermEntryComponent } from './components/querybuilder-editor/search/search-text-term-entry/search-text-term-entry.component'
 
 @NgModule({
   declarations: [
@@ -29,11 +32,14 @@ import { EnterCriterionListComponent } from './components/querybuilder-editor/ed
     DisplayCriterionComponent,
     BoolLogicSwitchComponent,
     SearchInputComponent,
-    SearchTreeOverlayComponent,
+    SearchTreeOverlayContentComponent,
     SearchTreeHeaderComponent,
-    SearchInputTermEntryComponent,
+    SearchTreeTermEntryComponent,
     SearchTreeFooterComponent,
     EnterCriterionListComponent,
+    SearchTextOverlayContentComponent,
+    SearchTextHeaderComponent,
+    SearchTextTermEntryComponent,
   ],
   imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule, OverlayModule],
 })

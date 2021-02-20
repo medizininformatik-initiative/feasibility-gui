@@ -1,5 +1,10 @@
 .container-search-input {
-  border: 1px solid var(--num-color--accent);
+  position: relative;
+  min-height: 8em;
+}
+
+.show-above-overlay {
+  z-index: 2000;
 }
 
 .header-label {

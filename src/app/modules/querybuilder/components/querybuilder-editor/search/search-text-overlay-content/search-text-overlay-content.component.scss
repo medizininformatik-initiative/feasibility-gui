@@ -1,0 +1,11 @@
+.container {
+  width: 70vw;
+  min-height: 10em;
+
+  background-color: white;
+}
+
+.search-results {
+  max-height: 40vh;
+  overflow-y: auto;
+}

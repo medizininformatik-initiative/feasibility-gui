@@ -1,19 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SearchTreeHeaderComponent } from './search-tree-header.component'
+import { SearchTextHeaderComponent } from './search-text-header.component'
+import { TranslateModule } from '@ngx-translate/core'
 
-describe('SearchHeaderTreeComponent', () => {
-  let component: SearchTreeHeaderComponent
-  let fixture: ComponentFixture<SearchTreeHeaderComponent>
+describe('SearchTextHeaderComponent', () => {
+  let component: SearchTextHeaderComponent
+  let fixture: ComponentFixture<SearchTextHeaderComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchTreeHeaderComponent],
+      declarations: [SearchTextHeaderComponent],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchTreeHeaderComponent)
+    fixture = TestBed.createComponent(SearchTextHeaderComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
@@ -28,5 +30,6 @@ describe('SearchHeaderTreeComponent', () => {
     component.fireSwitchCategory('4711')
 
     expect(component.switchCategory.emit).toHaveBeenCalledWith('4711')
+    expect(component.selectedId).toBe('4711')
   })
 })

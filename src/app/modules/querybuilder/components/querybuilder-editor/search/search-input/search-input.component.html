@@ -1,23 +1,33 @@
-<div class="container-search-input" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+<div
+  class="container-search-input"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  [ngClass]="{ 'show-above-overlay': isOverlayOpen }"
+>
   <div class="header-label">{{ 'QUERYBUILDER.SEARCH.' + getHeaderLabelKey() | translate }}</div>
   <div fxLayout="row" fxLayoutAlign="space-between">
     <mat-form-field fxFlex="80">
       <mat-label>{{ 'QUERYBUILDER.SEARCH.LABEL' | translate }}</mat-label>
-      <input matInput type="text" [(ngModel)]="value" />
+      <input matInput type="text" [(ngModel)]="search" />
       <button
         mat-button
-        *ngIf="value"
+        *ngIf="search"
         matSuffix
         mat-icon-button
         aria-label="Clear"
-        (click)="value = ''"
+        (click)="search = ''"
       >
         <!-- TODO[CODEX]: use icon 'close'-->
         <mat-icon>X</mat-icon>
       </button>
     </mat-form-field>
     <div fxFlex="20">
-      <button class="button-tree-view" type="button" mat-icon-button (click)="openTreeView($event)">
+      <button
+        class="button-tree-view"
+        type="button"
+        mat-icon-button
+        (click)="switchSearchMode($event)"
+      >
         <fa-icon size="2x" icon="project-diagram"></fa-icon>
       </button>
     </div>
@@ -30,8 +40,15 @@
   cdkConnectedOverlayHeight="12em"
   [cdkConnectedOverlayPositions]="positions"
   [cdkConnectedOverlayOrigin]="trigger"
-  [cdkConnectedOverlayOpen]="isTreeViewOpen"
-  (backdropClick)="isTreeViewOpen = false"
+  [cdkConnectedOverlayOpen]="isOverlayOpen"
 >
-  <num-search-tree-overlay (closeOverlay)="closeOverlay()"></num-search-tree-overlay>
+  <num-search-tree-overlay-content
+    *ngIf="searchMode === 'tree'"
+    (closeOverlay)="closeOverlay($event)"
+  ></num-search-tree-overlay-content>
+  <num-search-text-overlay-content
+    *ngIf="searchMode === 'text'"
+    [text]="search"
+    (closeOverlay)="closeOverlay($event)"
+  ></num-search-text-overlay-content>
 </ng-template>

@@ -1,6 +1,7 @@
 <div class="container" fxLayout="column">
   <num-search-tree-header
     [categories]="categories"
+    [selectedId]="catId"
     (switchCategory)="readTreeData($event)"
   ></num-search-tree-header>
 
@@ -9,7 +10,7 @@
       <li>
         <div fxLayout="row" fxLayoutAlign="start start">
           <button mat-icon-button disabled></button>
-          <num-search-input-term-entry [node]="node"></num-search-input-term-entry>
+          <num-search-tree-term-entry [node]="node"></num-search-tree-term-entry>
         </div>
       </li>
     </mat-tree-node>
@@ -21,7 +22,7 @@
             <fa-icon icon="chevron-right" *ngIf="!treeControl.isExpanded(node)"></fa-icon>
             <fa-icon icon="chevron-down" *ngIf="treeControl.isExpanded(node)"></fa-icon>
           </button>
-          <num-search-input-term-entry [node]="node"></num-search-input-term-entry>
+          <num-search-tree-term-entry [node]="node"></num-search-tree-term-entry>
         </div>
         <ul [class.ontology-tree-invisible]="!treeControl.isExpanded(node)">
           <ng-container matTreeNodeOutlet></ng-container>

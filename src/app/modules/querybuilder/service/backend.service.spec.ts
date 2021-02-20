@@ -35,7 +35,7 @@ describe('BackendService', () => {
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
 
     service.getCategories().subscribe((categories: Array<CategoryEntry>) => {
-      expect(categories).toEqual(MockBackendDataProvider.getCategoryEntries())
+      expect(categories).toEqual(new MockBackendDataProvider().getCategoryEntries())
       done()
     })
   })
@@ -64,7 +64,7 @@ describe('BackendService', () => {
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
 
     service.getTerminolgyTree(EXAMPLE_ID).subscribe((entry: TerminologyEntry) => {
-      expect(entry).toEqual(MockBackendDataProvider.getTerminologyEntry('1'))
+      expect(entry).toEqual(new MockBackendDataProvider().getTerminologyEntry('1'))
       done()
     })
   })
@@ -93,7 +93,7 @@ describe('BackendService', () => {
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
 
     service
-      .getTerminolgyEntrySearchResult(EXAMPLE_SEARCH)
+      .getTerminolgyEntrySearchResult('1', EXAMPLE_SEARCH)
       .subscribe((entries: Array<TerminologyEntry>) => {
         expect(entries).toStrictEqual(new Array<TerminologyEntry>())
         done()
@@ -112,7 +112,7 @@ describe('BackendService', () => {
     const mockResponse = new Array<TerminologyEntry>()
 
     service
-      .getTerminolgyEntrySearchResult(EXAMPLE_SEARCH)
+      .getTerminolgyEntrySearchResult('1', EXAMPLE_SEARCH)
       .subscribe((entries: Array<TerminologyEntry>) => {
         expect(entries).toStrictEqual(new Array<TerminologyEntry>())
         done()

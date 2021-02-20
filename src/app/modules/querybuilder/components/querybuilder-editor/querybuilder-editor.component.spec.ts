@@ -11,15 +11,18 @@ import { BoolLogicSwitchComponent } from './display/bool-logic-switch/bool-logic
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { QueryProviderService } from '../../service/query-provider.service'
 import { SearchInputComponent } from './search/search-input/search-input.component'
-import { SearchTreeOverlayComponent } from './search/search-tree-overlay/search-tree-overlay.component'
+import { SearchTreeOverlayContentComponent } from './search/search-tree-overlay-content/search-tree-overlay-content.component'
 import { SearchTreeHeaderComponent } from './search/search-tree-header/search-tree-header.component'
 import { SearchTreeFooterComponent } from './search/search-tree-footer/search-tree-footer.component'
-import { SearchInputTermEntryComponent } from './search/search-input-term-entry/search-input-term-entry.component'
+import { SearchTreeTermEntryComponent } from './search/search-tree-term-entry/search-tree-term-entry.component'
 import { ButtonComponent } from '../../../../shared/components/button/button.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { OverlayModule } from '@angular/cdk/overlay'
 import { FormsModule } from '@angular/forms'
 import { FlexLayoutModule } from '@angular/flex-layout'
+import { SearchTextOverlayContentComponent } from './search/search-text-overlay-content/search-text-overlay-content.component'
+import { SearchTextHeaderComponent } from './search/search-text-header/search-text-header.component'
+import { SearchTextTermEntryComponent } from './search/search-text-term-entry/search-text-term-entry.component'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -38,10 +41,13 @@ describe('QuerybuilderEditorComponent', () => {
         DisplayCriterionComponent,
         BoolLogicSwitchComponent,
         SearchInputComponent,
-        SearchTreeOverlayComponent,
+        SearchTreeOverlayContentComponent,
+        SearchTextOverlayContentComponent,
+        SearchTextTermEntryComponent,
         SearchTreeHeaderComponent,
+        SearchTextHeaderComponent,
         SearchTreeFooterComponent,
-        SearchInputTermEntryComponent,
+        SearchTreeTermEntryComponent,
         ButtonComponent,
       ],
       imports: [

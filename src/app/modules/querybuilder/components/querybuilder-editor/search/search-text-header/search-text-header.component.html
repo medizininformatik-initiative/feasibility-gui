@@ -1,4 +1,11 @@
 <div *ngIf="categories" fxLayout="row" fxLayoutAlign="start" class="container">
+  <div (click)="fireSwitchCategory('')" class="category-box" fxLayout="row">
+    <div class="short-box">X</div>
+    <div class="display-box" [ngClass]="{ 'selected-category': !selectedId }">
+      {{ 'QUERYBUILDER.SEARCH.ALL' | translate }}
+    </div>
+  </div>
+
   <div
     *ngFor="let category of categories"
     fxLayout="row"

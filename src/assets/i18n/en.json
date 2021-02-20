@@ -26,7 +26,8 @@
     "SEARCH": {
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
-      "LABEL": "Code or display"
+      "LABEL": "Code or display",
+      "ALL": "All"
     },
     "SWITCH":{
       "LABEL_AND": "AND",

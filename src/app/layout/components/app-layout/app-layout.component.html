@@ -1,4 +1,4 @@
-<mat-sidenav-container autosize fullscreen class="sidenav-container">
+<mat-sidenav-container autosize fullscreen class="sidenav-container fix-overlay">
   <mat-sidenav
     #drawer
     fixedInViewport
@@ -15,7 +15,7 @@
     ></num-side-menu>
   </mat-sidenav>
 
-  <mat-sidenav-content fxLayout="column">
+  <mat-sidenav-content fxLayout="column" class="fix-overlay">
     <!-- Page Content -->
     <num-header role="banner"></num-header>
 

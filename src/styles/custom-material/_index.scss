@@ -11,6 +11,7 @@
 @import './styles/general_table.themed';
 @import './styles/footer.themed';
 @import './styles/header.themed';
+@import './styles/search-input.themed';
 @import './styles/typography.themed';
 @import './styles/mat-chip.themed';
 @import './styles/mat-expansion-panel.themed';
@@ -31,4 +32,5 @@
   @include mat-chip_themed($theme);
   @include mat-expansion-panel_themed($theme);
   @include code-editor_themed($theme);
+  @include drop-down-search-theme($theme);
 }

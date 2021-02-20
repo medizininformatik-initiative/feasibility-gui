@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SearchTreeOverlayComponent } from './search-tree-overlay.component'
+import { SearchTreeOverlayContentComponent } from './search-tree-overlay-content.component'
 import { SearchTreeHeaderComponent } from '../search-tree-header/search-tree-header.component'
 import { SearchTreeFooterComponent } from '../search-tree-footer/search-tree-footer.component'
-import { SearchInputTermEntryComponent } from '../search-input-term-entry/search-input-term-entry.component'
+import { SearchTreeTermEntryComponent } from '../search-tree-term-entry/search-tree-term-entry.component'
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MaterialModule } from '../../../../../../layout/material/material.module'
@@ -21,8 +21,8 @@ import { EventEmitter, TemplateRef } from '@angular/core'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
 
 describe('SearchOverlayTreeComponent', () => {
-  let component: SearchTreeOverlayComponent
-  let fixture: ComponentFixture<SearchTreeOverlayComponent>
+  let component: SearchTreeOverlayContentComponent
+  let fixture: ComponentFixture<SearchTreeOverlayContentComponent>
 
   function createTermEntry(code: string, selected: boolean): TerminologyEntry {
     const termEntry = new TerminologyEntry()
@@ -85,10 +85,10 @@ describe('SearchOverlayTreeComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
-        SearchTreeOverlayComponent,
+        SearchTreeOverlayContentComponent,
         SearchTreeHeaderComponent,
         SearchTreeFooterComponent,
-        SearchInputTermEntryComponent,
+        SearchTreeTermEntryComponent,
         ButtonComponent,
         EnterCriterionListComponent,
       ],
@@ -120,7 +120,7 @@ describe('SearchOverlayTreeComponent', () => {
       }),
     })
 
-    fixture = TestBed.createComponent(SearchTreeOverlayComponent)
+    fixture = TestBed.createComponent(SearchTreeOverlayContentComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
@@ -197,7 +197,7 @@ describe('SearchOverlayTreeComponent', () => {
 
   describe('readTreeData', () => {
     it('should skip reading data for identical ids', () => {
-      component.id = '13'
+      component.catId = '13'
 
       component.readTreeData('13')
 
@@ -206,7 +206,7 @@ describe('SearchOverlayTreeComponent', () => {
     })
 
     it('should read from cache', () => {
-      component.id = '13'
+      component.catId = '13'
       component.cachedTrees.set('1', termEntry1)
 
       component.readTreeData('1')
@@ -216,7 +216,7 @@ describe('SearchOverlayTreeComponent', () => {
     })
 
     it('should read from server', () => {
-      component.id = '13'
+      component.catId = '13'
       component.cachedTrees.set('2', termEntry2)
 
       component.readTreeData('1')

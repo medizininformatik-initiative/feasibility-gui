@@ -9,15 +9,15 @@ import { MatDialog } from '@angular/material/dialog'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
 
 @Component({
-  selector: 'num-search-tree-overlay',
-  templateUrl: './search-tree-overlay.component.html',
-  styleUrls: ['./search-tree-overlay.component.scss'],
+  selector: 'num-search-tree-overlay-content',
+  templateUrl: './search-tree-overlay-content.component.html',
+  styleUrls: ['./search-tree-overlay-content.component.scss'],
 })
-export class SearchTreeOverlayComponent implements OnInit, OnDestroy {
+export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   @Output()
-  closeOverlay = new EventEmitter<void>()
+  closeOverlay = new EventEmitter<'text' | 'tree'>()
 
-  id: string
+  catId: string
   categories: Array<CategoryEntry>
 
   cachedTrees: Map<string, TerminologyEntry> = new Map<string, TerminologyEntry>()
@@ -40,19 +40,20 @@ export class SearchTreeOverlayComponent implements OnInit, OnDestroy {
     })
   }
 
-  public readTreeData(id: string): void {
-    if (this.id === id) {
+  public readTreeData(catId: string): void {
+    if (this.catId === catId) {
       return
     }
-    this.id = id
+    this.catId = catId
 
     this.subscription?.unsubscribe()
-    if (this.cachedTrees.get(id)) {
-      this.dataSource.data = [this.cachedTrees.get(id)]
+    if (this.cachedTrees.get(catId)) {
+      this.dataSource.data = [this.cachedTrees.get(catId)]
     } else {
-      this.subscription = this.backend.getTerminolgyTree(id).subscribe((termEntry) => {
+      this.subscription = this.backend.getTerminolgyTree(catId).subscribe((termEntry) => {
         this.dataSource.data = [termEntry]
-        this.cachedTrees.set(id, termEntry)
+        this.treeControl.expand(termEntry)
+        this.cachedTrees.set(catId, termEntry)
       })
     }
   }
@@ -93,7 +94,7 @@ export class SearchTreeOverlayComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.closeOverlay.emit()
+    this.closeOverlay.emit('tree')
   }
 
   extractSelectedEntries(): Array<TerminologyEntry> {

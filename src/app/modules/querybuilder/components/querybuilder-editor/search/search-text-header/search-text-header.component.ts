@@ -2,13 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { CategoryEntry } from '../../../../model/api/terminology/terminology'
 
 @Component({
-  selector: 'num-search-tree-header',
-  templateUrl: './search-tree-header.component.html',
-  styleUrls: ['./search-tree-header.component.scss'],
+  selector: 'num-search-text-header',
+  templateUrl: './search-text-header.component.html',
+  styleUrls: ['./search-text-header.component.scss'],
 })
-export class SearchTreeHeaderComponent implements OnInit {
-  @Input()
-  selectedId: string
+export class SearchTextHeaderComponent implements OnInit {
+  selectedId = ''
 
   @Input()
   categories: Array<CategoryEntry> = []
@@ -22,5 +21,6 @@ export class SearchTreeHeaderComponent implements OnInit {
 
   fireSwitchCategory(entryId: string): void {
     this.switchCategory.emit(entryId)
+    this.selectedId = entryId
   }
 }
