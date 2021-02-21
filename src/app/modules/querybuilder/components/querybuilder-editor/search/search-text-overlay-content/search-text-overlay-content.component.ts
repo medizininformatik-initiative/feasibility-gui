@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs'
 import { BackendService } from '../../../../service/backend.service'
 import { MatDialog } from '@angular/material/dialog'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
+import { SearchMode } from '../search-input/search-input.component'
 
 @Component({
   selector: 'num-search-text-overlay-content',
@@ -20,7 +21,7 @@ import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/ent
 })
 export class SearchTextOverlayContentComponent implements OnInit, OnChanges {
   @Output()
-  closeOverlay = new EventEmitter<'text' | 'tree'>()
+  closeOverlay = new EventEmitter<SearchMode>()
 
   @Input()
   text: string

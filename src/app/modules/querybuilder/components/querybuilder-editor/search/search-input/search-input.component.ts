@@ -16,7 +16,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   @Input()
   critType: CritType = 'inclusion'
 
-  searchMode: 'text' | 'tree' = 'text'
+  searchMode: SearchMode = 'text'
 
   search = ''
 
@@ -113,10 +113,12 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     }
   }
 
-  closeOverlay(mode: 'text' | 'tree'): void {
+  closeOverlay(mode: SearchMode): void {
     if (mode === 'text') {
       this.search = ''
     }
     this.isOverlayOpen = false
   }
 }
+
+export type SearchMode = 'text' | 'tree'

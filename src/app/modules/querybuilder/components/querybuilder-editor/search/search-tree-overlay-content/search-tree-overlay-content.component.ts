@@ -7,6 +7,7 @@ import { BackendService } from '../../../../service/backend.service'
 import { map } from 'rxjs/operators'
 import { MatDialog } from '@angular/material/dialog'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
+import { SearchMode } from '../search-input/search-input.component'
 
 @Component({
   selector: 'num-search-tree-overlay-content',
@@ -15,7 +16,7 @@ import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/ent
 })
 export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   @Output()
-  closeOverlay = new EventEmitter<'text' | 'tree'>()
+  closeOverlay = new EventEmitter<SearchMode>()
 
   catId: string
   categories: Array<CategoryEntry>

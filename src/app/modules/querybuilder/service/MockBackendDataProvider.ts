@@ -204,6 +204,133 @@ export class MockBackendDataProvider {
     'Vorhandensein eines Implantates oder Transplantates nach koronarer Gefäßplastik',
     'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
   )
+  private readonly _childA2_10 = this.createTermEntry(
+    'A2_10',
+    'I*',
+    'Krankheiten des Kreislaufsystems',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1 = this.createTermEntry(
+    'A2_10_1',
+    'I00-I02',
+    'Akutes rheumatisches Fieber',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_2 = this.createTermEntry(
+    'A2_10_2',
+    'I03-I09',
+    'Chronische rheumatische Herzkrankheiten',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_3 = this.createTermEntry(
+    'A2_10_3',
+    'I10-I15',
+    'Hypertonie [Hochdruckkrankheit]',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_4 = this.createTermEntry(
+    'A2_10_4',
+    'I20-I25',
+    'Ischämische HerzkrankheitenI26-I28 Pulmonale Herzkrankheit und Krankheiten des Lungenkreislaufes',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_5 = this.createTermEntry(
+    'A2_10_5',
+    'I26-I28',
+    'Pulmonale Herzkrankheit und Krankheiten des LungenkreislaufesI30-I52 Sonstige Formen der Herzkrankheit',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_6 = this.createTermEntry(
+    'A2_10_6',
+    'I30-I52',
+    'Sonstige Formen der HerzkrankheitI60-I69 Zerebrovaskuläre Krankheiten',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_7 = this.createTermEntry(
+    'A2_10_7',
+    'I60-I69',
+    'Zerebrovaskuläre KrankheitenI70-I79 Krankheiten der Arterien, Arteriolen und Kapillaren',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_8 = this.createTermEntry(
+    'A2_10_8',
+    'I70-I79',
+    'Krankheiten der Arterien, Arteriolen und KapillarenI80-I89 Krankheiten der Venen, der Lymphgefäße und der Lymphknoten, anderenorts nicht klassifiziert',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_9 = this.createTermEntry(
+    'A2_10_9',
+    'I80-I89',
+    'Krankheiten der Venen, der Lymphgefäße und der Lymphknoten, anderenorts nicht klassifiziertI95-I99 Sonstige und nicht näher bezeichnete Krankheiten des Kreislaufsystems',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_10 = this.createTermEntry(
+    'A2_10_10',
+    'I95-I99',
+    'Sonstige und nicht näher bezeichnete Krankheiten des KreislaufsystemsICD I95-I99 Sonstige und nicht näher bezeichnete Krankheiten des Kreislaufsystems',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_1 = this.createTermEntry(
+    'A2_10_1_1',
+    'I00',
+    'Rheumatisches Fieber ohne Angabe einer Herzbeteiligung',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_2 = this.createTermEntry(
+    'A2_10_1_2',
+    'I01',
+    'Rheumatisches Fieber mit Herzbeteiligung',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_3 = this.createTermEntry(
+    'A2_10_1_3',
+    'I02',
+    'Rheumatische Chorea',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_2_1 = this.createTermEntry(
+    'A2_10_1_2_1',
+    'I01.0',
+    'Akute rheumatische Perikarditis',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_2_2 = this.createTermEntry(
+    'A2_10_1_2_2',
+    'I01.1',
+    'Akute rheumatische Endokarditis',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_2_3 = this.createTermEntry(
+    'A2_10_1_2_3',
+    'I01.2',
+    'Akute rheumatische Myokarditis',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_2_4 = this.createTermEntry(
+    'A2_10_1_2_4',
+    'I01.8',
+    'Sonstige akute rheumatische Herzkrankheit',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_2_5 = this.createTermEntry(
+    'A2_10_1_2_5',
+    'I01.9',
+    'Akute rheumatische Herzkrankheit, nicht näher bezeichnet',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_3_1 = this.createTermEntry(
+    'A2_10_1_3_1',
+    'I02.0',
+    'Rheumatische Chorea mit Herzbeteiligung',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+  private readonly _childA2_10_1_3_2 = this.createTermEntry(
+    'A2_10_1_3_2',
+    'I02.9',
+    'Rheumatische Chorea ohne Herzbeteiligung',
+    'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
+  )
+
   private readonly _childA3_WithoutChildren = this.createRootTermEntry(
     'A3',
     'A3',
@@ -311,7 +438,7 @@ export class MockBackendDataProvider {
   )
 
   public getCategoryEntries(): Array<CategoryEntry> {
-    return this.categoryEntries
+    return this.cloneJsonObject(this.categoryEntries)
   }
 
   public getTerminologyEntry(id: string): TerminologyEntry {
@@ -332,15 +459,15 @@ export class MockBackendDataProvider {
   }
 
   private getTerminologyEntryAmnesis(): TerminologyEntry {
-    return this._rootAnamnesis
+    return this.cloneJsonObject(this._rootAnamnesis)
   }
 
   private getTerminologyEntryAmnesisLiver(): TerminologyEntry {
-    return this._childA3
+    return this.cloneJsonObject(this._childA3)
   }
 
   private getTerminologyEntryDemographics(): TerminologyEntry {
-    return this._rootDemographics
+    return this.cloneJsonObject(this._rootDemographics)
   }
 
   public getTerminolgyEntrySearchResult(catId: string, search: string): Array<TerminologyEntry> {
@@ -412,8 +539,50 @@ export class MockBackendDataProvider {
     this._childA2.children.push(this._childA2_7)
     this._childA2.children.push(this._childA2_8)
     this._childA2.children.push(this._childA2_9)
+    this._childA2.children.push(this._childA2_10)
+    this.configureSlectableNonLeaf(this._childA2_10)
+    this._childA2_10.children.push(this._childA2_10_1)
+    this.configureSlectableNonLeaf(this._childA2_10_1)
+    this._childA2_10.children.push(this._childA2_10_2)
+    this.configureSlectableNonLeaf(this._childA2_10_2)
+    this._childA2_10.children.push(this._childA2_10_3)
+    this.configureSlectableNonLeaf(this._childA2_10_3)
+    this._childA2_10.children.push(this._childA2_10_4)
+    this.configureSlectableNonLeaf(this._childA2_10_4)
+    this._childA2_10.children.push(this._childA2_10_5)
+    this.configureSlectableNonLeaf(this._childA2_10_5)
+    this._childA2_10.children.push(this._childA2_10_6)
+    this.configureSlectableNonLeaf(this._childA2_10_6)
+    this._childA2_10.children.push(this._childA2_10_7)
+    this.configureSlectableNonLeaf(this._childA2_10_7)
+    this._childA2_10.children.push(this._childA2_10_8)
+    this.configureSlectableNonLeaf(this._childA2_10_8)
+    this._childA2_10.children.push(this._childA2_10_9)
+    this.configureSlectableNonLeaf(this._childA2_10_9)
+    this._childA2_10.children.push(this._childA2_10_10)
+    this.configureSlectableNonLeaf(this._childA2_10_10)
+
+    this._childA2_10_1.children.push(this._childA2_10_1_1)
+    this._childA2_10_1.children.push(this._childA2_10_1_2)
+    this._childA2_10_1_2.leaf = false
+    this._childA2_10_1.children.push(this._childA2_10_1_3)
+    this._childA2_10_1_3.leaf = false
+
+    this._childA2_10_1_2.children.push(this._childA2_10_1_2_1)
+    this._childA2_10_1_2.children.push(this._childA2_10_1_2_2)
+    this._childA2_10_1_2.children.push(this._childA2_10_1_2_3)
+    this._childA2_10_1_2.children.push(this._childA2_10_1_2_4)
+    this._childA2_10_1_2.children.push(this._childA2_10_1_2_5)
+
+    this._childA2_10_1_3.children.push(this._childA2_10_1_3_1)
+    this._childA2_10_1_3.children.push(this._childA2_10_1_3_2)
 
     this._rootAnamnesis.children.push(this._childA3_WithoutChildren)
+  }
+
+  private configureSlectableNonLeaf(termEntry: TerminologyEntry): void {
+    termEntry.selectable = false
+    termEntry.leaf = false
   }
 
   private initAmnesisLiver(): void {
@@ -472,6 +641,16 @@ export class MockBackendDataProvider {
     this.addToMaps(this.categoryA.entryId, this._childA2_7)
     this.addToMaps(this.categoryA.entryId, this._childA2_8)
     this.addToMaps(this.categoryA.entryId, this._childA2_9)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_1)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_3)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_1)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_2)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_3)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_4)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_5)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_3_1)
+    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_3_2)
     this.addToMaps(this.categoryA.entryId, this._childA3)
     this.addToMaps(this.categoryA.entryId, this._childA3_1)
     this.addToMaps(this.categoryA.entryId, this._childA3_2)

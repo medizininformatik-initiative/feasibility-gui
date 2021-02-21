@@ -1,4 +1,4 @@
-<div *ngIf="node.selectable">
+<div *ngIf="node.selectable" class="container">
   <div fxLayout="row" fxLayoutAlign="space-between top">
     <div class="checkbox-part">
       <mat-checkbox [(ngModel)]="node.selected"></mat-checkbox>
@@ -12,6 +12,6 @@
   </div>
 </div>
 
-<button mat-icon-button matTreeNodeToggle *ngIf="!node.selectable">
+<div matTreeNodeToggle *ngIf="!node.selectable" class="container">
   {{ node.termCode.display }}
-</button>
+</div>
