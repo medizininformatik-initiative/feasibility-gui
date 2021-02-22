@@ -32,6 +32,18 @@
     "SWITCH":{
       "LABEL_AND": "AND",
       "LABEL_OR": "OR"
+    },
+    "EDIT": {
+      "UNIT": "Unit",
+      "MIN": "Min",
+      "MAX": "Max",
+      "VALUE": "Value",
+      "OPERATOR": "Operator",
+      "AND": "and",
+      "EQUAL": "equals",
+      "LESS_THAN": "less than",
+      "GREATER_THAN": "more than",
+      "BETWEEN": "between"
     }
   },
   "LEGAL": {

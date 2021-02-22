@@ -8,6 +8,7 @@ import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
 import { ValueType } from '../../../../model/api/terminology/valuedefinition'
 import { Comparator, OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('EditValueDefinitionComponent', () => {
   let component: EditValueFilterComponent
@@ -90,7 +91,7 @@ describe('EditValueDefinitionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EditValueFilterComponent, MatInputNumberDirective],
-      imports: [MaterialModule, FormsModule, NoopAnimationsModule],
+      imports: [MaterialModule, FormsModule, NoopAnimationsModule, TranslateModule.forRoot()],
     }).compileComponents()
   })
 

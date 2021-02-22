@@ -1,14 +1,15 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminology/terminology'
 import { of, Subscription } from 'rxjs'
 import { NestedTreeControl } from '@angular/cdk/tree'
 import { MatTreeNestedDataSource } from '@angular/material/tree'
 import { BackendService } from '../../../../service/backend.service'
 import { map } from 'rxjs/operators'
-import { MatDialog } from '@angular/material/dialog'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
 import { SearchMode } from '../search-input/search-input.component'
 import { ObjectHelper } from '../../../../controller/ObjectHelper'
+import { CritType } from '../../../../model/api/query/group'
 
 @Component({
   selector: 'num-search-tree-overlay-content',
@@ -18,6 +19,9 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper'
 export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   @Output()
   closeOverlay = new EventEmitter<SearchMode>()
+
+  @Input()
+  critType: CritType
 
   catId: string
   categories: Array<CategoryEntry>
@@ -83,6 +87,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe()
+    this.subscriptionCategories?.unsubscribe()
   }
 
   openDetailsPopUp(shouldAdd: boolean): void {
@@ -90,9 +95,17 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
       const terminologyEntries = this.extractSelectedEntries()
 
       if (terminologyEntries && terminologyEntries.length > 0) {
-        this.dialog.open(EnterCriterionListComponent, {
-          data: terminologyEntries,
-        })
+        const dialogConfig = new MatDialogConfig()
+
+        dialogConfig.disableClose = true
+        dialogConfig.autoFocus = true
+        dialogConfig.data = {
+          termEntryList: terminologyEntries,
+          groupIndex: 0,
+          critType: this.critType,
+        }
+
+        this.dialog.open(EnterCriterionListComponent, dialogConfig)
       }
     }
 

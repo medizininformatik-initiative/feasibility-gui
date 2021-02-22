@@ -24,6 +24,9 @@ export class DisplayCritGroupComponent implements OnInit {
   @Output()
   switch = new EventEmitter()
 
+  @Output()
+  delete = new EventEmitter<{ row: number; column: number }>()
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -52,5 +55,9 @@ export class DisplayCritGroupComponent implements OnInit {
       from: $event.previousContainer.data,
       to: $event.container.data,
     })
+  }
+
+  doDelete({ row, column }: { row: number; column: number }): void {
+    this.delete.emit({ row, column })
   }
 }

@@ -124,8 +124,9 @@ export class CritGroupArranger {
     return groupsTemp
   }
 
-  private static removeFromGroup(group: Group, position: CritGroupPosition): Group {
+  public static removeFromGroup(group: Group, position: CritGroupPosition): Group {
     const groupTemp: Group = JSON.parse(JSON.stringify(group))
+
     if (position.critType === 'inclusion') {
       if (groupTemp.inclusionCriteria[position.row].length === 1) {
         groupTemp.inclusionCriteria.splice(position.row, 1)

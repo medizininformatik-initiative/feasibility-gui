@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { OperatorOptions, QuantityUnit, ValueFilter } from '../../../../model/api/query/valueFilter'
+import {
+  Comparator,
+  OperatorOptions,
+  QuantityUnit,
+  ValueFilter,
+} from '../../../../model/api/query/valueFilter'
 import { TerminologyCode, TerminologyEntry } from '../../../../model/api/terminology/terminology'
 
 @Component({
@@ -20,6 +25,9 @@ export class EditValueFilterComponent implements OnInit {
 
   selectedUnit: QuantityUnit
   selectedMap: Map<TerminologyCode, boolean> = new Map()
+  quantityFilterOption: string
+  // TODO: Try using enum
+  quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN']
 
   constructor() {}
 
@@ -29,6 +37,30 @@ export class EditValueFilterComponent implements OnInit {
       this.termEntry.valueDefinition?.allowedUnits?.length > 0
         ? this.termEntry.valueDefinition?.allowedUnits[0]
         : undefined
+    this.quantityFilterOption = this.getQuantityFilterOption()
+  }
+
+  private getQuantityFilterOption(): string {
+    if (!this.filter || this.filter.type === OperatorOptions.CONCEPT) {
+      return null
+    }
+
+    if (this.filter.type === OperatorOptions.QUANTITY_RANGE) {
+      return 'BETWEEN'
+    }
+
+    switch (this.filter.comparator) {
+      case Comparator.EQUAL:
+        return 'EQUAL'
+      case Comparator.GREATER_OR_EQUAL:
+      case Comparator.GREATER_THAN:
+        return 'GREATER_THAN'
+      case Comparator.LESS_OR_EQUAL:
+      case Comparator.LESS_THAN:
+        return 'LESS_THAN'
+      default:
+        return null
+    }
   }
 
   roundMinValue(): void {
@@ -46,5 +78,24 @@ export class EditValueFilterComponent implements OnInit {
   private round(value: number): number {
     const divisor = Math.pow(10, this.filter.precision)
     return Math.round(value * divisor) / divisor
+  }
+
+  selectQuantityFilterOption(option: string): void {
+    if (option === 'BETWEEN') {
+      this.filter.type = OperatorOptions.QUANTITY_RANGE
+    } else {
+      this.filter.type = OperatorOptions.QUANTITY_COMPARATOR
+      switch (option) {
+        case 'EQUAL':
+          this.filter.comparator = Comparator.EQUAL
+          break
+        case 'LESS_THAN':
+          this.filter.comparator = Comparator.LESS_THAN
+          break
+        case 'GREATER_THAN':
+          this.filter.comparator = Comparator.GREATER_THAN
+          break
+      }
+    }
   }
 }

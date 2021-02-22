@@ -10,7 +10,12 @@
       [cdkDropListData]="{ groupId: groupId, critType: critType, row: i, column: j }"
       (cdkDropListDropped)="doDrop($event)"
     >
-      <num-display-criterion [criterion]="criterion" cdkDrag> </num-display-criterion>
+      <num-display-criterion
+        [criterion]="criterion"
+        (delete)="doDelete({ row: i, column: j })"
+        cdkDrag
+      >
+      </num-display-criterion>
       <num-bool-logic-switch
         [position]="'inner'"
         [label]="getInnerLabelKey()"

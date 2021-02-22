@@ -7,3 +7,24 @@
 .unit-selection {
   width: 8em;
 }
+
+mat-form-field {
+  padding: 1em;
+}
+
+.operator-part {
+  width: 11em;
+  padding: 0.5em 2.5em 0.5em 0;
+}
+
+.min-part,
+.max-part,
+.value-part {
+  width: 7em;
+  padding: 0.5em 1em;
+}
+
+.unit-part {
+  width: 9em;
+  padding: 0.5em 0 0.5em 1em;
+}

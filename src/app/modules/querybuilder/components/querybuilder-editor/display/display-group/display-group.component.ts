@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { CritType, Group } from '../../../../model/api/query/group'
 import { Criterion } from '../../../../model/api/query/criterion'
+import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
 
 @Component({
   selector: 'num-display-group',
@@ -16,6 +17,9 @@ export class DisplayGroupComponent implements OnInit {
 
   @Output()
   storeQuery = new EventEmitter<void>()
+
+  @Output()
+  saveGroup = new EventEmitter<Group>()
 
   constructor() {}
 
@@ -41,5 +45,16 @@ export class DisplayGroupComponent implements OnInit {
     }
 
     this.storeQuery.emit()
+  }
+
+  doDelete({ row, column }: { row: number; column: number }, critType: CritType): void {
+    this.group = CritGroupArranger.removeFromGroup(this.group, {
+      groupId: this.group.id,
+      critType,
+      row,
+      column,
+    })
+
+    this.saveGroup.emit(this.group)
   }
 }

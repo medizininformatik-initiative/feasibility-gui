@@ -8,6 +8,7 @@
         [critType]="'inclusion'"
         (switch)="switch('inclusion', $event)"
         (dropped)="doDrop($event)"
+        (delete)="doDelete($event, 'inclusion')"
         fxFlex="50"
       ></num-display-crit-group>
       <num-display-crit-group
@@ -16,6 +17,7 @@
         [critType]="'exclusion'"
         (switch)="switch('exclusion', $event)"
         (dropped)="doDrop($event)"
+        (delete)="doDelete($event, 'exclusion')"
         fxFlex="50"
       ></num-display-crit-group>
     </div>

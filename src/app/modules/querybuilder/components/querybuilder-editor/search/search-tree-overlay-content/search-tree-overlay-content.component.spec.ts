@@ -152,7 +152,16 @@ describe('SearchOverlayTreeComponent', () => {
 
       component.openDetailsPopUp(true)
 
-      expect(dialog.open).toBeCalledWith(EnterCriterionListComponent, { data: termEntriesSelected })
+      const expectedDialogConfig = new MatDialogConfig()
+      expectedDialogConfig.autoFocus = true
+      expectedDialogConfig.disableClose = true
+      expectedDialogConfig.data = {
+        termEntryList: termEntriesSelected,
+        groupIndex: 0,
+        critType: undefined,
+      }
+
+      expect(dialog.open).toBeCalledWith(EnterCriterionListComponent, expectedDialogConfig)
       expect(closeOverlay.emit).toBeCalled()
     })
 

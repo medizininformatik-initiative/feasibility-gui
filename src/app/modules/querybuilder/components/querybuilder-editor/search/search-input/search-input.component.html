@@ -44,11 +44,13 @@
 >
   <num-search-tree-overlay-content
     *ngIf="searchMode === 'tree'"
+    [critType]="critType"
     (closeOverlay)="closeOverlay($event)"
   ></num-search-tree-overlay-content>
   <num-search-text-overlay-content
     *ngIf="searchMode === 'text'"
     [text]="search"
+    [critType]="critType"
     (closeOverlay)="closeOverlay($event)"
   ></num-search-text-overlay-content>
 </ng-template>

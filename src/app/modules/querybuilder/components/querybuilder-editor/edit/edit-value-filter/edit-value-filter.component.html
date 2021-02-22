@@ -1,7 +1,18 @@
 <div *ngIf="filter">
   <div *ngIf="filter.type === QUANTITY_RANGE || filter.type === QUANTITY_COMPARATOR">
-    <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_RANGE">
-      <mat-label>min</mat-label>
+    <mat-form-field appearance="outline" *ngIf="filter?.unit" class="operator-part">
+      <mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>
+      <mat-select [(value)]="quantityFilterOption">
+        <mat-option
+          *ngFor="let option of quantityFilterOptions"
+          [value]="option"
+          (click)="selectQuantityFilterOption(option)"
+          >{{ 'QUERYBUILDER.EDIT.' + option | translate }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_RANGE" class="min-part">
+      <mat-label>{{ 'QUERYBUILDER.EDIT.MIN' | translate }}</mat-label>
       <input
         matInput
         type="number"
@@ -11,8 +22,9 @@
         [precision]="filter.precision"
       />
     </mat-form-field>
-    <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_RANGE">
-      <mat-label>min</mat-label>
+    <span *ngIf="filter.type === QUANTITY_RANGE">{{ 'QUERYBUILDER.EDIT.AND' | translate }}</span>
+    <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_RANGE" class="max-part">
+      <mat-label>{{ 'QUERYBUILDER.EDIT.MAX' | translate }}</mat-label>
       <input
         matInput
         type="number"
@@ -22,8 +34,12 @@
         [precision]="filter.precision"
       />
     </mat-form-field>
-    <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_COMPARATOR">
-      <mat-label>min</mat-label>
+    <mat-form-field
+      appearance="outline"
+      *ngIf="filter.type === QUANTITY_COMPARATOR"
+      class="value-part"
+    >
+      <mat-label>{{ 'QUERYBUILDER.EDIT.VALUE' | translate }}</mat-label>
       <input
         matInput
         type="number"
@@ -33,7 +49,7 @@
         [precision]="filter.precision"
       />
     </mat-form-field>
-    <mat-form-field appearance="outline" *ngIf="filter?.unit">
+    <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
       <mat-label>Einheit</mat-label>
       <mat-select [(value)]="filter.unit">
         <mat-option *ngFor="let unit of termEntry.valueDefinition.allowedUnits" [value]="unit">{{

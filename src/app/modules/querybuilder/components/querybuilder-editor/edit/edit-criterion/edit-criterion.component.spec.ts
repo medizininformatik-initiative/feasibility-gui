@@ -8,6 +8,9 @@ import { FormsModule } from '@angular/forms'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
+import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 
 const termEntryWithoutFilter: TerminologyEntry = {
   termCode: {
@@ -33,8 +36,19 @@ describe('EditCriterionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditCriterionComponent, EditValueFilterComponent, MatInputNumberDirective],
-      imports: [MaterialModule, FormsModule, NoopAnimationsModule],
+      declarations: [
+        EditCriterionComponent,
+        EditValueFilterComponent,
+        MatInputNumberDirective,
+        ButtonComponent,
+      ],
+      imports: [
+        MaterialModule,
+        FormsModule,
+        NoopAnimationsModule,
+        FontAwesomeTestingModule,
+        TranslateModule.forRoot(),
+      ],
     }).compileComponents()
   })
 

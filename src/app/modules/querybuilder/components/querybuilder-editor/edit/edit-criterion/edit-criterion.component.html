@@ -2,13 +2,15 @@
   <mat-card-header>
     <div fxLayout="row">
       <div fxFlex="10em">
-        <b
-          ><em>{{ criterion.termCode.code }}</em></b
-        ><br />
+        <b>
+          <em>{{ criterion.termCode.code }}</em>
+        </b>
       </div>
       <div>
         <b>{{ criterion.termCode.display }}</b>
       </div>
+      <div fxFlex="fill"></div>
+      <div (click)="doDiscard()">X</div>
     </div>
   </mat-card-header>
   <mat-card-content>
@@ -17,4 +19,10 @@
       [termEntry]="criterion.termEntry"
     ></num-edit-value-definition>
   </mat-card-content>
+  <mat-card-footer>
+    <div fxLayout="row">
+      <div fxFlex="fill"></div>
+      <num-button [type]="'primary'" (click)="doSave()">{{ 'BUTTON.ADD' | translate }}</num-button>
+    </div>
+  </mat-card-footer>
 </mat-card>

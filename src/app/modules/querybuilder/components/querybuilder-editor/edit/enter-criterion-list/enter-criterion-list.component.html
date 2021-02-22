@@ -2,5 +2,7 @@
   <num-edit-criterion
     *ngFor="let criterion of criterionList"
     [criterion]="criterion"
+    (save)="doSave(criterion)"
+    (discard)="doDiscard(criterion)"
   ></num-edit-criterion>
 </div>

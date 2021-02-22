@@ -478,12 +478,18 @@ export class MockBackendDataProvider {
     const result: Set<TerminologyEntry> = new Set<TerminologyEntry>()
 
     this.mapCode.forEach((termEntry, [keyCatId, keyCode]) => {
-      if ((!catId || catId === keyCatId) && keyCode.startsWith(search)) {
+      if (
+        (!catId || catId === keyCatId) &&
+        keyCode.toUpperCase().startsWith(search.toUpperCase())
+      ) {
         result.add(termEntry)
       }
     })
-    this.mapDisplay.forEach((termEntry, [keyCatId, keyCode]) => {
-      if ((!catId || catId === keyCatId) && keyCode.startsWith(search)) {
+    this.mapDisplay.forEach((termEntry, [keyCatId, keyDisplay]) => {
+      if (
+        (!catId || catId === keyCatId) &&
+        keyDisplay.toUpperCase().startsWith(search.toUpperCase())
+      ) {
         result.add(termEntry)
       }
     })
