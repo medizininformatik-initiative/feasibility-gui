@@ -5,6 +5,7 @@ import {
   TerminologyEntry,
 } from '../model/api/terminology/terminology'
 import { ValueDefinition, ValueType } from '../model/api/terminology/valuedefinition'
+import { ObjectHelper } from '../controller/ObjectHelper'
 
 // noinspection JSMethodCanBeStatic
 export class MockBackendDataProvider {
@@ -22,6 +23,7 @@ export class MockBackendDataProvider {
 
   private readonly mapDisplay = new Map<[string, string], TerminologyEntry>()
   private readonly mapCode = new Map<[string, string], TerminologyEntry>()
+  private readonly mapId = new Map<string, TerminologyEntry>()
 
   private readonly _rootAnamnesis = this.createRootTermEntry('1', 'A', 'Anamnesis / Risk factors')
   private readonly _childA1 = this.createRootTermEntry('A1', 'A1', 'Chronic lung diseases')
@@ -438,7 +440,7 @@ export class MockBackendDataProvider {
   )
 
   public getCategoryEntries(): Array<CategoryEntry> {
-    return this.cloneJsonObject(this.categoryEntries)
+    return ObjectHelper.clone(this.categoryEntries)
   }
 
   public getTerminologyEntry(id: string): TerminologyEntry {
@@ -455,19 +457,21 @@ export class MockBackendDataProvider {
   }
 
   private getTerminologyEntryEmpty(id: string): TerminologyEntry {
-    return this.createRootTermEntry(id, '---', 'Not specified so far')
+    return this.mapId.get(id)
+      ? ObjectHelper.clone(this.mapId.get(id))
+      : this.createRootTermEntry(id, '---', 'Not specified so far')
   }
 
   private getTerminologyEntryAmnesis(): TerminologyEntry {
-    return this.cloneJsonObject(this._rootAnamnesis)
+    return ObjectHelper.clone(this._rootAnamnesis)
   }
 
   private getTerminologyEntryAmnesisLiver(): TerminologyEntry {
-    return this.cloneJsonObject(this._childA3)
+    return ObjectHelper.clone(this._childA3)
   }
 
   private getTerminologyEntryDemographics(): TerminologyEntry {
-    return this.cloneJsonObject(this._rootDemographics)
+    return ObjectHelper.clone(this._rootDemographics)
   }
 
   public getTerminolgyEntrySearchResult(catId: string, search: string): Array<TerminologyEntry> {
@@ -671,9 +675,10 @@ export class MockBackendDataProvider {
       return
     }
 
-    const termEntryWithoutChildren = this.cloneJsonObject(termEntry)
+    const termEntryWithoutChildren = ObjectHelper.clone(termEntry)
     termEntryWithoutChildren.children = []
 
+    this.mapId.set(termEntry.id, termEntryWithoutChildren)
     this.mapCode.set([catId, termEntry.termCode.code], termEntryWithoutChildren)
     this.mapDisplay.set([catId, termEntry.termCode.display], termEntryWithoutChildren)
   }
@@ -740,9 +745,5 @@ export class MockBackendDataProvider {
 
   private createTermCode(code: string, system: string, display: string): TerminologyCode {
     return { code, display, system }
-  }
-
-  private cloneJsonObject(object: any): any {
-    return JSON.parse(JSON.stringify(object))
   }
 }

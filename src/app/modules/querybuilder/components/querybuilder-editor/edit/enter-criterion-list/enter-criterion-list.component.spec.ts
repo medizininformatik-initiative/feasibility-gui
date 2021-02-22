@@ -10,6 +10,9 @@ import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testi
 import { TranslateModule } from '@ngx-translate/core'
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
+import { EditCriterionComponent } from '../edit-criterion/edit-criterion.component'
+import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component'
+import { MatInputNumberDirective } from '../mat-input-number.directive'
 
 describe('EnterCriterionListComponent', () => {
   let component: EnterCriterionListComponent
@@ -17,7 +20,12 @@ describe('EnterCriterionListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EnterCriterionListComponent],
+      declarations: [
+        EnterCriterionListComponent,
+        EditCriterionComponent,
+        EditValueFilterComponent,
+        MatInputNumberDirective,
+      ],
       imports: [
         BrowserAnimationsModule,
         MaterialModule,
@@ -30,8 +38,16 @@ describe('EnterCriterionListComponent', () => {
       providers: [{ provide: MAT_DIALOG_DATA, useValue: [new TerminologyEntry()] }],
     }).compileComponents()
   })
-
   beforeEach(() => {
+    // noinspection JSUnusedLocalSymbols
+    Object.defineProperty(window, 'getComputedStyle', {
+      value: () => ({
+        getPropertyValue: (prop) => {
+          return ''
+        },
+      }),
+    })
+
     fixture = TestBed.createComponent(EnterCriterionListComponent)
     component = fixture.componentInstance
 

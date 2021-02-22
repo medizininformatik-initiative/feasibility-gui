@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-header>
+    <div fxLayout="row">
+      <div fxFlex="10em">
+        <b
+          ><em>{{ criterion.termCode.code }}</em></b
+        ><br />
+      </div>
+      <div>
+        <b>{{ criterion.termCode.display }}</b>
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <num-edit-value-definition
+      [filter]="criterion.valueFilter"
+      [termEntry]="criterion.termEntry"
+    ></num-edit-value-definition>
+  </mat-card-content>
+</mat-card>

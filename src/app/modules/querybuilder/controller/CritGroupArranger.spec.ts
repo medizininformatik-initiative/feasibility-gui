@@ -1,6 +1,7 @@
 import { Criterion } from '../model/api/query/criterion'
 import { CritGroupArranger } from './CritGroupArranger'
 import { Group } from '../model/api/query/group'
+import { ObjectHelper } from './ObjectHelper'
 
 describe('CritGroupArranger', () => {
   it('should split inner array', () => {
@@ -56,7 +57,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[2] = [
       createCriterion('in-0-20'),
       createCriterion('in-0-21'),
@@ -82,7 +83,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].exclusionCriteria[2] = [
       createCriterion('ex-0-20'),
       createCriterion('ex-0-21'),
@@ -108,7 +109,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[2] = [
       createCriterion('XY'),
       createCriterion('in-0-20'),
@@ -134,7 +135,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[2] = [
       createCriterion('in-0-20'),
       createCriterion('in-0-21'),
@@ -160,7 +161,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[2] = [
       createCriterion('in-0-21'),
       createCriterion('in-0-22'),
@@ -181,7 +182,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('1'))
     groups[0].inclusionCriteria[0] = [createCriterion('in-0-00')]
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria = [
       [createCriterion('in-0-10'), createCriterion('in-0-11'), createCriterion('in-0-12')],
       [createCriterion('in-0-20'), createCriterion('in-0-21'), createCriterion('in-0-22')],
@@ -201,7 +202,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[1].exclusionCriteria[1] = [
       createCriterion('ex-1-10'),
       createCriterion('ex-1-11'),
@@ -222,7 +223,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('1'))
     groups[0].exclusionCriteria[2] = [createCriterion('ex-0-20')]
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].exclusionCriteria = [
       [createCriterion('ex-0-00'), createCriterion('ex-0-01'), createCriterion('ex-0-02')],
       [createCriterion('ex-0-10'), createCriterion('ex-0-11'), createCriterion('ex-0-12')],
@@ -242,7 +243,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
@@ -262,7 +263,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
       createCriterion('in-0-10'),
       createCriterion('in-0-12'),
@@ -287,7 +288,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
       createCriterion('in-0-10'),
       createCriterion('ex-0-11'),
@@ -313,7 +314,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('1'))
     groups[1].exclusionCriteria[1] = [createCriterion('ex-1-11')]
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[1].exclusionCriteria = [
       [createCriterion('ex-1-00'), createCriterion('ex-1-01'), createCriterion('ex-1-02')],
       [
@@ -338,7 +339,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('1'))
     groups[1].exclusionCriteria[1] = [createCriterion('ex-1-11')]
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[1].exclusionCriteria = [
       [
         createCriterion('ex-1-00'),
@@ -363,7 +364,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('1'))
     groups[1].inclusionCriteria[1] = [createCriterion('in-1-11')]
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[1].inclusionCriteria = [
       [createCriterion('in-1-00'), createCriterion('in-1-01'), createCriterion('in-1-02')],
       [
@@ -388,7 +389,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('1'))
     groups[1].inclusionCriteria[1] = [createCriterion('in-1-11')]
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[1].inclusionCriteria = [
       [
         createCriterion('in-1-00'),
@@ -412,7 +413,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
       createCriterion('in-0-10'),
       createCriterion('in-0-12'),
@@ -432,7 +433,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
       createCriterion('in-0-11'),
       createCriterion('in-0-10'),
@@ -452,7 +453,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
@@ -467,7 +468,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
       createCriterion('in-0-10'),
       createCriterion('in-0-12'),
@@ -487,7 +488,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].exclusionCriteria[1] = [
       createCriterion('ex-0-10'),
       createCriterion('ex-0-12'),
@@ -507,7 +508,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[1].exclusionCriteria[1] = [
       createCriterion('ex-1-10'),
       createCriterion('ex-1-12'),
@@ -527,7 +528,7 @@ describe('CritGroupArranger', () => {
     groups.push(createDefaultGroup('0'))
     groups.push(createDefaultGroup('1'))
 
-    const groupsExpected = JSON.parse(JSON.stringify(groups))
+    const groupsExpected = ObjectHelper.clone(groups)
 
     const actual = CritGroupArranger.moveCriterionToEndOfGroup(
       groups,

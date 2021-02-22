@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators'
 import { MatDialog } from '@angular/material/dialog'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
 import { SearchMode } from '../search-input/search-input.component'
+import { ObjectHelper } from '../../../../controller/ObjectHelper'
 
 @Component({
   selector: 'num-search-tree-overlay-content',
@@ -113,7 +114,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
     result: Array<TerminologyEntry>
   ): void {
     if (entry.selected) {
-      const clonedEntry = JSON.parse(JSON.stringify(entry))
+      const clonedEntry = ObjectHelper.clone(entry)
       clonedEntry.children = []
       result.push(clonedEntry)
     }

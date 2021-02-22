@@ -1,4 +1,6 @@
 import { Query, QueryOnlyV1 } from '../model/api/query/query'
+import { Criterion } from '../model/api/query/criterion'
+import { ObjectHelper } from './ObjectHelper'
 
 // translates a query with groups to the agreed format of queries in version 1 (without groups)
 export class ApiTranslator {
@@ -15,9 +17,7 @@ export class ApiTranslator {
           return
         }
 
-        criterion.valueFilter.max = undefined
-        criterion.valueFilter.min = undefined
-        criterion.valueFilter.precision = undefined
+        this.removeNonApiFields(criterion)
       })
     )
 
@@ -26,10 +26,7 @@ export class ApiTranslator {
         if (!criterion.valueFilter) {
           return
         }
-
-        criterion.valueFilter.max = undefined
-        criterion.valueFilter.min = undefined
-        criterion.valueFilter.precision = undefined
+        this.removeNonApiFields(criterion)
       })
     )
 
@@ -37,7 +34,16 @@ export class ApiTranslator {
   }
 
   // noinspection JSMethodCanBeStatic
+  private removeNonApiFields(criterion: Criterion): void {
+    criterion.termEntry = undefined
+
+    criterion.valueFilter.max = undefined
+    criterion.valueFilter.min = undefined
+    criterion.valueFilter.precision = undefined
+  }
+
+  // noinspection JSMethodCanBeStatic
   private deepClone<T>(value): T {
-    return JSON.parse(JSON.stringify(value))
+    return ObjectHelper.clone(value)
   }
 }

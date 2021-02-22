@@ -1,5 +1,5 @@
-import { V2 } from '../annotations'
-import { TerminologyCode } from '../terminology/terminology'
+import { transient, V2 } from '../annotations'
+import { TerminologyCode, TerminologyEntry } from '../terminology/terminology'
 import { ValueFilter } from './valueFilter'
 import { TimeRestriction } from './timerestriction'
 
@@ -7,6 +7,9 @@ import { TimeRestriction } from './timerestriction'
 // a terminology code (system + version + code), operators and values.
 export class Criterion {
   termCode: TerminologyCode
+
+  @transient()
+  termEntry?: TerminologyEntry
 
   valueFilter?: ValueFilter
   @V2()

@@ -1,3 +1,6 @@
-<div *ngFor="let critDefinition of critDefinitionList">
-  {{ critDefinition.termCode.code }} : {{ critDefinition.termCode.display }}
+<div *ngIf="criterionList" class="container">
+  <num-edit-criterion
+    *ngFor="let criterion of criterionList"
+    [criterion]="criterion"
+  ></num-edit-criterion>
 </div>
