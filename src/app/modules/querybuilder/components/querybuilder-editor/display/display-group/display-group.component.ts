@@ -29,14 +29,6 @@ export class DisplayGroupComponent implements OnInit {
     this.dropped.emit($event)
   }
 
-  doDropAtEnd($event: any): void {
-    this.dropped.emit({
-      addMode: 'end',
-      from: $event.previousContainer.data,
-      to: $event.container.data,
-    })
-  }
-
   switch(critType: CritType, $event: Criterion[][]): void {
     if (critType === 'inclusion') {
       this.group.inclusionCriteria = $event

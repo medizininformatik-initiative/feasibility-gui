@@ -1,3 +1,7 @@
+mat-card-content {
+  margin: 0 0.5em 0 0;
+}
+
 .query-group {
   border-left: 0.5em solid var(--num-color--accent);
   padding: 0;
@@ -8,9 +12,6 @@
   color: var(--num-color--accent-contrast);
 }
 
-.drop-at-bottom {
-  border: dashed 1px black;
-  background: lightgrey;
-  height: 7em;
-  margin-left: 0.5em;
+.header-display {
+  height: 3em;
 }

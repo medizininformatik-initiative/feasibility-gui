@@ -1,5 +1,9 @@
 <mat-card class="query-group">
-  <mat-card-header>{{ group.display }}</mat-card-header>
+  <mat-card-header>
+    <div fxLayout="column" fxLayoutAlign="space-around" class="header-display">
+      {{ group.display }}
+    </div>
+  </mat-card-header>
   <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="space-between stretch">
       <num-display-crit-group
@@ -20,26 +24,6 @@
         (delete)="doDelete($event, 'exclusion')"
         fxFlex="50"
       ></num-display-crit-group>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="space-between stretch">
-      <div
-        class="drop-at-bottom"
-        cdkDropList
-        fxFlex="50"
-        [cdkDropListData]="{ critType: 'inclusion', groupId: group.id, addMode: 'end' }"
-        (cdkDropListDropped)="doDropAtEnd($event)"
-      >
-        <num-bool-logic-switch [position]="'outer'" [label]="'AND'"></num-bool-logic-switch>
-      </div>
-      <div
-        class="drop-at-bottom"
-        cdkDropList
-        fxFlex="50"
-        [cdkDropListData]="{ critType: 'exclusion', groupId: group.id, addMode: 'end' }"
-        (cdkDropListDropped)="doDropAtEnd($event)"
-      >
-        <num-bool-logic-switch [position]="'outer'" [label]="'OR'"></num-bool-logic-switch>
-      </div>
     </div>
   </mat-card-content>
 </mat-card>

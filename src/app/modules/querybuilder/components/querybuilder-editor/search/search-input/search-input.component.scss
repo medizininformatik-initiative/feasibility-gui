@@ -1,6 +1,14 @@
-.container-search-input {
+.container-search-input-outer {
   position: relative;
+}
+
+.container-search-input {
   min-height: 8em;
+  border: 1px solid var(--num-color--accent);
+}
+
+.input-field {
+  padding: 0 1em;
 }
 
 .show-above-overlay {
