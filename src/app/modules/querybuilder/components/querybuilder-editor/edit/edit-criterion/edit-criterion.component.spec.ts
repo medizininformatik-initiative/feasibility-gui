@@ -4,13 +4,14 @@ import { EditCriterionComponent } from './edit-criterion.component'
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component'
 import { MatInputNumberDirective } from '../mat-input-number.directive'
 import { MaterialModule } from '../../../../../../layout/material/material.module'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
+import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component'
 
 const termEntryWithoutFilter: TerminologyEntry = {
   termCode: {
@@ -39,12 +40,14 @@ describe('EditCriterionComponent', () => {
       declarations: [
         EditCriterionComponent,
         EditValueFilterComponent,
+        EditValueFilterConceptLineComponent,
         MatInputNumberDirective,
         ButtonComponent,
       ],
       imports: [
         MaterialModule,
         FormsModule,
+        ReactiveFormsModule,
         NoopAnimationsModule,
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),

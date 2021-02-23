@@ -25,6 +25,8 @@ import { EditCriterionComponent } from './components/querybuilder-editor/edit/ed
 import { EditValueFilterComponent } from './components/querybuilder-editor/edit/edit-value-filter/edit-value-filter.component'
 import { MatInputNumberDirective } from './components/querybuilder-editor/edit/mat-input-number.directive'
 import { DisplayValueFilterComponent } from './components/querybuilder-editor/display/display-value-filter/display-value-filter.component'
+import { EditSingleCriterionComponent } from './components/querybuilder-editor/edit/edit-single-criterion/edit-single-criterion.component'
+import { EditValueFilterConceptLineComponent } from './components/querybuilder-editor/edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component'
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { DisplayValueFilterComponent } from './components/querybuilder-editor/di
     EditValueFilterComponent,
     MatInputNumberDirective,
     DisplayValueFilterComponent,
+    EditSingleCriterionComponent,
+    EditValueFilterConceptLineComponent,
   ],
   imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule, OverlayModule],
 })

@@ -4,6 +4,7 @@ import { Query } from '../model/api/query/query'
 import { Comparator, OperatorOptions } from '../model/api/query/valueFilter'
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service'
 import { environment } from '../../../../environments/environment'
+import { Group } from '../model/api/query/group'
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class QueryProviderService {
   }
 
   public static createDefaultQuery(): Query {
-    return { groups: [], display: '' }
+    return { groups: [new Group()], display: '' }
   }
 
   public static createTestQuery(): Query {

@@ -8,6 +8,9 @@ import { BoolLogicSwitchComponent } from '../bool-logic-switch/bool-logic-switch
 import { QueryProviderService } from '../../../../service/query-provider.service'
 import { MaterialModule } from '../../../../../../layout/material/material.module'
 import { Criterion } from '../../../../model/api/query/criterion'
+import { EditValueFilterConceptLineComponent } from '../../edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component'
+import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
+import { ReactiveFormsModule } from '@angular/forms'
 
 describe('DisplayCritGroupComponent', () => {
   let component: DisplayCritGroupComponent
@@ -15,10 +18,17 @@ describe('DisplayCritGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MaterialModule, FontAwesomeTestingModule, TranslateModule.forRoot()],
+      imports: [
+        MaterialModule,
+        ReactiveFormsModule,
+        FontAwesomeTestingModule,
+        TranslateModule.forRoot(),
+      ],
       declarations: [
         DisplayCritGroupComponent,
         DisplayCriterionComponent,
+        DisplayValueFilterComponent,
+        EditValueFilterConceptLineComponent,
         BoolLogicSwitchComponent,
       ],
     }).compileComponents()

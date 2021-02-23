@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { DisplayCriterionComponent } from './display-criterion.component'
 import { QueryProviderService } from '../../../../service/query-provider.service'
+import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { MaterialModule } from '../../../../../../layout/material/material.module'
 
 describe('DisplayCriterionComponent', () => {
   let component: DisplayCriterionComponent
@@ -9,7 +12,8 @@ describe('DisplayCriterionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DisplayCriterionComponent],
+      declarations: [DisplayCriterionComponent, DisplayValueFilterComponent],
+      imports: [MaterialModule, TranslateModule.forRoot()],
     }).compileComponents()
   })
 

@@ -7,6 +7,7 @@
   <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="space-between stretch">
       <num-display-crit-group
+        [query]="query"
         [critGroup]="group.inclusionCriteria"
         [groupId]="group.id"
         [critType]="'inclusion'"
@@ -17,6 +18,7 @@
       ></num-display-crit-group>
       <num-display-crit-group
         [critGroup]="group.exclusionCriteria"
+        [query]="query"
         [groupId]="group.id"
         [critType]="'exclusion'"
         (switch)="switch('exclusion', $event)"

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 
 import { QueryProviderService } from './query-provider.service'
+import { Group } from '../model/api/query/group'
 
 describe('QueryProviderService', () => {
   let service: QueryProviderService
@@ -27,7 +28,7 @@ describe('QueryProviderService', () => {
 
   it('default query should be the same as test query ', () => {
     expect(QueryProviderService.createDefaultQuery()).toStrictEqual({
-      groups: [],
+      groups: [new Group()],
       display: '',
     })
   })
