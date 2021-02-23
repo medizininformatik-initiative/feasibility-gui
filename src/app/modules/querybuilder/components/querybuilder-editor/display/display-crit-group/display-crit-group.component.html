@@ -37,6 +37,7 @@
     cdkDropList
     [cdkDropListData]="{ critType: critType, groupId: groupId, addMode: 'end' }"
     (cdkDropListDropped)="doDropAtEnd($event)"
+    [ngClass]="{ 'no-top-margin': critGroup.length === 0 }"
   >
     <num-bool-logic-switch [position]="'outer'" [label]="'AND'"></num-bool-logic-switch>
   </div>

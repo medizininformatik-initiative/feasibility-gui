@@ -24,6 +24,7 @@ import { SearchTextTermEntryComponent } from './components/querybuilder-editor/s
 import { EditCriterionComponent } from './components/querybuilder-editor/edit/edit-criterion/edit-criterion.component'
 import { EditValueFilterComponent } from './components/querybuilder-editor/edit/edit-value-filter/edit-value-filter.component'
 import { MatInputNumberDirective } from './components/querybuilder-editor/edit/mat-input-number.directive'
+import { DisplayValueFilterComponent } from './components/querybuilder-editor/display/display-value-filter/display-value-filter.component'
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MatInputNumberDirective } from './components/querybuilder-editor/edit/m
     EditCriterionComponent,
     EditValueFilterComponent,
     MatInputNumberDirective,
+    DisplayValueFilterComponent,
   ],
   imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule, OverlayModule],
 })

@@ -6,7 +6,11 @@
     </h4>
   </mat-card-header>
   <mat-card-content>
-    <num-edit-value-definition [filter]="criterion.valueFilter" [termEntry]="criterion.termEntry">
+    <num-edit-value-definition
+      (selectConcept)="doSelectConcept($event)"
+      [filter]="criterion.valueFilter"
+      [termEntry]="criterion.termEntry"
+    >
     </num-edit-value-definition>
   </mat-card-content>
   <mat-card-footer>

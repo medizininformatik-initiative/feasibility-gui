@@ -33,6 +33,12 @@
       "LABEL_AND": "AND",
       "LABEL_OR": "OR"
     },
+    "DISPLAY": {
+      "ONE_OF": "",
+      "MORE": "more",
+      "BETWEEN": "between {{ min }} and {{ max }} {{ unit }}",
+      "COMPARATOR": "{{ comparator }} {{ value }} {{ unit }}"
+    },
     "EDIT": {
       "HEADER": "Restrictions of selected concepts",
       "HEADER_FILTER_QUANTITY": "Choose a value restriction:",

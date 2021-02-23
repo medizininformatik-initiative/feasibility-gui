@@ -3,7 +3,11 @@
     {{ criterion.termCode.code }}
   </div>
   <div fxFlex="80" class="display-part">
-    {{ criterion.termCode.display }}
+    <div class="header-display">{{ criterion.termCode.display }}</div>
+    <num-display-value-filter
+      *ngIf="criterion.valueFilter as filter"
+      [filter]="filter"
+    ></num-display-value-filter>
   </div>
   <div class="cancel-button-wrapper">
     <!-- TODO[CODEX]: use icon 'close'-->

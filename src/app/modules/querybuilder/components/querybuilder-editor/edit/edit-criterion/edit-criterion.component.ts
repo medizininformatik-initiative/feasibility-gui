@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Criterion } from '../../../../model/api/query/criterion'
+import { TerminologyCode } from '../../../../model/api/terminology/terminology'
 
 @Component({
   selector: 'num-edit-criterion',
@@ -26,5 +27,9 @@ export class EditCriterionComponent implements OnInit {
 
   doDiscard(): void {
     this.discard.emit()
+  }
+
+  doSelectConcept(selectedConcepts: Array<TerminologyCode>): void {
+    this.criterion.valueFilter.selectedConcepts = selectedConcepts
   }
 }

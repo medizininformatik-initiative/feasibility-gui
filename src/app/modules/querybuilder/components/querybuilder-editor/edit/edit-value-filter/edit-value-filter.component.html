@@ -81,7 +81,7 @@
     </div>
     <div class="concept-list mat-elevation-z2">
       <div *ngFor="let concept of termEntry.valueDefinition.selectableConcepts">
-        <mat-checkbox (click)="selectedMap.set(concept, !selectedMap.get(concept))"></mat-checkbox>
+        <mat-checkbox (click)="doSelectConcept(concept)"></mat-checkbox>
         {{ concept.code }} - {{ concept.display }}
       </div>
     </div>

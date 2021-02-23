@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import {
   Comparator,
   OperatorOptions,
@@ -6,6 +6,7 @@ import {
   ValueFilter,
 } from '../../../../model/api/query/valueFilter'
 import { TerminologyCode, TerminologyEntry } from '../../../../model/api/terminology/terminology'
+import { ObjectHelper } from '../../../../controller/ObjectHelper'
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -18,6 +19,9 @@ export class EditValueFilterComponent implements OnInit {
 
   @Input()
   termEntry: TerminologyEntry
+
+  @Output()
+  selectConcept = new EventEmitter()
 
   QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
   QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
@@ -97,5 +101,18 @@ export class EditValueFilterComponent implements OnInit {
           break
       }
     }
+  }
+
+  doSelectConcept(concept: TerminologyCode): void {
+    this.selectedMap.set(concept, !this.selectedMap.get(concept))
+
+    const selectedEntries: Array<TerminologyCode> = []
+    this.selectedMap.forEach((value, key) => {
+      if (value) {
+        selectedEntries.push(ObjectHelper.clone(key))
+      }
+    })
+
+    this.selectConcept.emit(selectedEntries)
   }
 }

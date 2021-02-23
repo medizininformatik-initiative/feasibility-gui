@@ -22,6 +22,10 @@ num-bool-logic-switch {
   min-height: 7em;
 }
 
+.drop-at-bottom.no-top-margin {
+  margin: 0 0 0 0.5em;
+}
+
 .drop-at-bottommat-car.cdk-drop-list-dragging {
   background: var(--num-color--accent-100);
 }
