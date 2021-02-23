@@ -34,6 +34,11 @@
       "LABEL_OR": "ODER"
     },
     "EDIT": {
+      "HEADER": "Einschränkungen der ausgewählten Merkmale",
+      "HEADER_FILTER_QUANTITY": "Geben Sie einen Wertebereich ein:",
+      "HEADER_FILTER_QUANTITY_FOR_DISPLAY": "Geben Sie einen Wertebereich ein ({{ label }}):",
+      "HEADER_FILTER_CONCEPT": "Geben Sie einen oder mehrere zulässige Werte an:",
+      "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
       "UNIT": "Einheit",
       "MIN": "Min",
       "MAX": "Max",

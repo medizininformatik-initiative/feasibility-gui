@@ -26,8 +26,9 @@ describe('QueryProviderService', () => {
   })
 
   it('default query should be the same as test query ', () => {
-    expect(QueryProviderService.createDefaultQuery()).toStrictEqual(
-      QueryProviderService.createTestQuery()
-    )
+    expect(QueryProviderService.createDefaultQuery()).toStrictEqual({
+      groups: [],
+      display: '',
+    })
   })
 })

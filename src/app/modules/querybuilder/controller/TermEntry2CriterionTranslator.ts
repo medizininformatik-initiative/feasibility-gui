@@ -24,6 +24,7 @@ export class TermEntry2CriterionTranslator {
     }
 
     const valueFilter = new ValueFilter()
+    valueFilter.display = valueDefinition.display
 
     if (valueDefinition.type === ValueType.CONCEPT) {
       valueFilter.type = OperatorOptions.CONCEPT

@@ -48,22 +48,6 @@ describe('DisplayGroupComponent', () => {
     expect(component.dropped.emit).toHaveBeenCalledWith(mockEvent)
   })
 
-  it('should emit dropping event (doDropAtEnd())', () => {
-    spyOn(component.dropped, 'emit')
-
-    const mockEvent = {
-      previousContainer: { data: { a: 1 } },
-      container: { data: { b: 2 } },
-    }
-    component.doDropAtEnd(mockEvent)
-
-    expect(component.dropped.emit).toHaveBeenCalledWith({
-      addMode: 'end',
-      from: { a: 1 },
-      to: { b: 2 },
-    })
-  })
-
   it('should store in inclusionCriteria', () => {
     const criterion = new Criterion()
     criterion.termCode = { code: 'a', system: 'b', display: 'c' }

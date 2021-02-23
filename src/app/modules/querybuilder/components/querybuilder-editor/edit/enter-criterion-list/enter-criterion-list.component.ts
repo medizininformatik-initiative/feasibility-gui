@@ -56,4 +56,8 @@ export class EnterCriterionListComponent implements OnInit {
       this.dialogRef.close()
     }
   }
+
+  doDiscardAll(): void {
+    this.dialogRef.close()
+  }
 }

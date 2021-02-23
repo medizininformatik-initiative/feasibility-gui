@@ -1,37 +1,36 @@
-<div class="container-search-input-outer">
-  <div
-    class="container-search-input"
-    cdkOverlayOrigin
-    #trigger="cdkOverlayOrigin"
-    [ngClass]="{ 'show-above-overlay': isOverlayOpen }"
-  >
-    <div class="header-label">{{ 'QUERYBUILDER.SEARCH.' + getHeaderLabelKey() | translate }}</div>
-    <div fxLayout="row" fxLayoutAlign="space-between">
-      <mat-form-field class="input-field" fxFlex="80">
-        <mat-label>{{ 'QUERYBUILDER.SEARCH.LABEL' | translate }}</mat-label>
-        <input matInput type="text" [(ngModel)]="search" />
-        <button
-          mat-button
-          *ngIf="search"
-          matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          (click)="search = ''"
-        >
-          <!-- TODO[CODEX]: use icon 'close'-->
-          <mat-icon>X</mat-icon>
-        </button>
-      </mat-form-field>
-      <div fxFlex="20">
-        <button
-          class="button-tree-view"
-          type="button"
-          mat-icon-button
-          (click)="switchSearchMode($event)"
-        >
-          <fa-icon size="2x" icon="project-diagram"></fa-icon>
-        </button>
-      </div>
+<div
+  class="container-search-input"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  [ngClass]="{ 'show-above-overlay': isOverlayOpen }"
+>
+  <div class="header-label">{{ 'QUERYBUILDER.SEARCH.' + getHeaderLabelKey() | translate }}</div>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <mat-form-field class="input-field" fxFlex="80">
+      <mat-label>{{ 'QUERYBUILDER.SEARCH.LABEL' | translate }}</mat-label>
+      <!--suppress HtmlFormInputWithoutLabel -->
+      <input matInput type="text" [(ngModel)]="search" />
+      <button
+        mat-button
+        *ngIf="search"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="search = ''"
+      >
+        <!-- TODO[CODEX]: use icon 'close'-->
+        <mat-icon>X</mat-icon>
+      </button>
+    </mat-form-field>
+    <div fxFlex="20">
+      <button
+        class="button-tree-view"
+        type="button"
+        mat-icon-button
+        (click)="switchSearchMode($event)"
+      >
+        <fa-icon size="2x" icon="project-diagram"></fa-icon>
+      </button>
     </div>
   </div>
 </div>
@@ -48,11 +47,13 @@
     *ngIf="searchMode === 'tree'"
     [critType]="critType"
     (closeOverlay)="closeOverlay($event)"
-  ></num-search-tree-overlay-content>
+  >
+  </num-search-tree-overlay-content>
   <num-search-text-overlay-content
     *ngIf="searchMode === 'text'"
     [text]="search"
     [critType]="critType"
     (closeOverlay)="closeOverlay($event)"
-  ></num-search-text-overlay-content>
+  >
+  </num-search-text-overlay-content>
 </ng-template>

@@ -604,18 +604,20 @@ export class MockBackendDataProvider {
   }
 
   private initDemographics(): void {
+    this._childD1.valueDefinition.display = 'Schwangerschaft'
     this._rootDemographics.children.push(this._childD1)
     this._rootDemographics.children.push(this._childD2)
     this._childD2.valueDefinition.precision = 0
-    this._childD2.valueDefinition.allowedUnits = [{ code: 'a', display: ' Jahre(e)' }]
     this._rootDemographics.children.push(this._childD3)
-    this._childD3.valueDefinition.allowedUnits = [{ code: 'kg', display: 'kg' }]
+    this._childD3.valueDefinition.allowedUnits = [{ code: 'a', display: ' Jahre(e)' }]
+    this._childD3.valueDefinition.display = 'Alter'
     this._rootDemographics.children.push(this._childD4)
-    this._childD4.valueDefinition.allowedUnits = [
+    this._childD4.valueDefinition.allowedUnits = [{ code: 'kg', display: 'kg' }]
+    this._rootDemographics.children.push(this._childD5)
+    this._childD5.valueDefinition.allowedUnits = [
       { code: 'cm', display: 'cm' },
       { code: 'm', display: 'm' },
     ]
-    this._rootDemographics.children.push(this._childD5)
     this._rootDemographics.children.push(this._childD6)
   }
 

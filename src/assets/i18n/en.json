@@ -34,6 +34,11 @@
       "LABEL_OR": "OR"
     },
     "EDIT": {
+      "HEADER": "Restrictions of selected concepts",
+      "HEADER_FILTER_QUANTITY": "Choose a value restriction:",
+      "HEADER_FILTER_QUANTITY_FOR_DISPLAY": "Choose a value restriction ({{ label }}):",
+      "HEADER_FILTER_CONCEPT": "Choose one or more valid values:",
+      "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Choose one or more valid values ({{ label }}):",
       "UNIT": "Unit",
       "MIN": "Min",
       "MAX": "Max",
