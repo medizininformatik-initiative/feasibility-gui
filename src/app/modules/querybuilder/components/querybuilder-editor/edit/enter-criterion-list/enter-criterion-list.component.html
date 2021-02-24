@@ -8,6 +8,7 @@
     <num-edit-criterion
       *ngFor="let criterion of criterionList"
       [criterion]="criterion"
+      actionButtonKey="ADD"
       (save)="doSave(criterion)"
       (discard)="doDiscard(criterion)"
     >

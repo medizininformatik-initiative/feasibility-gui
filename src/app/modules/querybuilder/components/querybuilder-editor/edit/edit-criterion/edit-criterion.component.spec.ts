@@ -12,8 +12,21 @@ import { ButtonComponent } from '../../../../../../shared/components/button/butt
 import { TranslateModule } from '@ngx-translate/core'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component'
+import { OperatorOptions } from '../../../../model/api/query/valueFilter'
+import { ValueType } from '../../../../model/api/terminology/valuedefinition'
 
-const termEntryWithoutFilter: TerminologyEntry = {
+const valueFilter = {
+  precision: 1,
+  type: OperatorOptions.CONCEPT,
+  selectedConcepts: [],
+}
+
+const valueDefinition = {
+  type: ValueType.CONCEPT,
+  precision: 1,
+}
+
+const termEntryWithFilter: TerminologyEntry = {
   termCode: {
     code: 'I00',
     system: 'http://test',
@@ -25,11 +38,13 @@ const termEntryWithoutFilter: TerminologyEntry = {
   selectable: true,
   id: 'A1',
   timeRestrictionAllowed: true,
+  valueDefinition,
 }
 
 const criterion = new Criterion()
 criterion.termCode = { code: 'A', system: 'http://test', display: 'Some Code' }
-criterion.termEntry = termEntryWithoutFilter // new TermEntry2CriterionTranslator().translate(new MockBackendDataProvider().getTerminologyEntry('id'))
+criterion.termEntry = termEntryWithFilter // new TermEntry2CriterionTranslator().translate(new MockBackendDataProvider().getTerminologyEntry('id'))
+criterion.valueFilter = valueFilter
 
 describe('EditCriterionComponent', () => {
   let component: EditCriterionComponent

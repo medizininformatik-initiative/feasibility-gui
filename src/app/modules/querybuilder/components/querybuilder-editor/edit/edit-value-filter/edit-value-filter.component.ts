@@ -123,4 +123,51 @@ export class EditValueFilterComponent implements OnInit {
   isSelected(concept: TerminologyCode): boolean {
     return this.selectedConceptsAsJson.has(JSON.stringify(concept))
   }
+
+  public isActionDisabled(): boolean {
+    if (this.filter.type === OperatorOptions.CONCEPT) {
+      return this.noSelectedConcept()
+    }
+
+    if (this.filter.type === OperatorOptions.QUANTITY_COMPARATOR) {
+      return this.valueTooSmall(this.filter.value) || this.valueTooLarge(this.filter.value)
+    }
+
+    if (this.filter.type === OperatorOptions.QUANTITY_RANGE) {
+      return (
+        this.minimumSmallerMaximum() ||
+        this.valueTooSmall(this.filter.minValue) ||
+        this.valueTooLarge(this.filter.minValue) ||
+        this.valueTooSmall(this.filter.maxValue) ||
+        this.valueTooLarge(this.filter.maxValue)
+      )
+    }
+
+    return false
+  }
+
+  noSelectedConcept(): boolean {
+    return this.selectedConceptsAsJson.size === 0
+  }
+
+  valueTooSmall(value: number): boolean {
+    if (!this.filter.min && this.filter.min !== 0) {
+      return true
+    }
+    return value < this.filter.min
+  }
+
+  valueTooLarge(value: number): boolean {
+    if (!this.filter.max && this.filter.max !== 0) {
+      return true
+    }
+    return value > this.filter.max
+  }
+
+  minimumSmallerMaximum(): boolean {
+    return (
+      this.filter.type === OperatorOptions.QUANTITY_RANGE &&
+      this.filter.minValue >= this.filter.maxValue
+    )
+  }
 }

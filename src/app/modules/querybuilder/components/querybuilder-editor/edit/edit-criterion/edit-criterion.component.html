@@ -16,7 +16,9 @@
   <mat-card-footer>
     <div fxLayout="row">
       <div fxFlex="fill"></div>
-      <num-button [type]="'primary'" (click)="doSave()">{{ 'BUTTON.ADD' | translate }}</num-button>
+      <num-button [type]="'primary'" (click)="doSave()" [isDisabled]="actionDisabled">{{
+        'BUTTON.' + actionButtonKey | translate
+      }}</num-button>
       <num-button [type]="'secondary'" (click)="doDiscard()">{{
         'BUTTON.CANCEL' | translate
       }}</num-button>

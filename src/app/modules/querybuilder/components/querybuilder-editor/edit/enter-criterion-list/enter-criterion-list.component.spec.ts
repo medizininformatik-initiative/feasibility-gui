@@ -64,6 +64,7 @@ describe('EnterCriterionListComponent', () => {
 
     fixture = TestBed.createComponent(EnterCriterionListComponent)
     component = fixture.componentInstance
+    component.criterionList = []
 
     fixture.detectChanges()
   })

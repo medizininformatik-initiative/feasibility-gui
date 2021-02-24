@@ -30,7 +30,15 @@
         (blur)="roundMinValue()"
         numMatInputNumber
         [precision]="filter.precision"
+        [min]="filter?.min"
+        [max]="filter?.max"
       />
+      <mat-hint *ngIf="valueTooSmall(filter.minValue)">{{
+        'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+      }}</mat-hint>
+      <mat-hint *ngIf="valueTooLarge(filter.minValue)">{{
+        'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+      }}</mat-hint>
     </mat-form-field>
     <span *ngIf="filter.type === QUANTITY_RANGE">{{ 'QUERYBUILDER.EDIT.AND' | translate }}</span>
     <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_RANGE" class="max-part">
@@ -44,6 +52,12 @@
         numMatInputNumber
         [precision]="filter.precision"
       />
+      <mat-hint *ngIf="valueTooSmall(filter.maxValue)">{{
+        'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+      }}</mat-hint>
+      <mat-hint *ngIf="valueTooLarge(filter.maxValue)">{{
+        'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+      }}</mat-hint>
     </mat-form-field>
     <mat-form-field
       appearance="outline"
@@ -60,6 +74,12 @@
         numMatInputNumber
         [precision]="filter.precision"
       />
+      <mat-hint *ngIf="valueTooSmall(filter.value)">{{
+        'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+      }}</mat-hint>
+      <mat-hint *ngIf="valueTooLarge(filter.value)">{{
+        'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+      }}</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
       <!-- TODO label = "Einheit" and flter.unit = [corresponding allowedUnit] -->
@@ -71,6 +91,9 @@
       </mat-select>
     </mat-form-field>
   </div>
+  <mat-hint *ngIf="minimumSmallerMaximum()">{{
+    'QUERYBUILDER.HINT.MINIMUM_GREATER_MAXIMUM' | translate
+  }}</mat-hint>
 
   <!-- CONCEPT -->
   <div *ngIf="filter.type === CONCEPT">
@@ -89,5 +112,8 @@
       >
       </num-edit-value-filter-concept-line>
     </div>
+    <mat-hint *ngIf="noSelectedConcept()">{{
+      'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate
+    }}</mat-hint>
   </div>
 </div>
