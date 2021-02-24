@@ -15,6 +15,7 @@ describe('TermEntry2CriterionTranslator', () => {
       children: [],
       selectable: true,
       selected: true,
+      valueDefinitions: [],
       timeRestrictionAllowed: false,
     }
   }
@@ -84,7 +85,7 @@ describe('TermEntry2CriterionTranslator', () => {
     valueDefinition.type = ValueType.QUANTITY
 
     const termEntry: TerminologyEntry = createTermEntry()
-    termEntry.valueDefinition = valueDefinition
+    termEntry.valueDefinitions = [valueDefinition]
 
     const criterion = translator.translate(termEntry)
 
@@ -102,7 +103,7 @@ describe('TermEntry2CriterionTranslator', () => {
     valueDefinition.type = ValueType.CONCEPT
 
     const termEntry: TerminologyEntry = createTermEntry()
-    termEntry.valueDefinition = valueDefinition
+    termEntry.valueDefinitions = [valueDefinition]
 
     const criterion = translator.translate(termEntry)
 

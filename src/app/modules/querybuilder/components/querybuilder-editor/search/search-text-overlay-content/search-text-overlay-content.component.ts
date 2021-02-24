@@ -68,7 +68,7 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges {
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
     dialogConfig.data = {
-      termEntryList: terminologyEntry,
+      termEntryList: [terminologyEntry],
       groupIndex: 0,
       critType: this.critType,
     }

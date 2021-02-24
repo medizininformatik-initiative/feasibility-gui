@@ -451,6 +451,8 @@ export class MockBackendDataProvider {
         return this.getTerminologyEntryAmnesisLiver()
       case '2':
         return this.getTerminologyEntryDemographics()
+      case '6':
+        return this.getTerminologyEntryOther()
       default:
         return this.getTerminologyEntryEmpty(id)
     }
@@ -604,17 +606,17 @@ export class MockBackendDataProvider {
   }
 
   private initDemographics(): void {
-    this._childD1.valueDefinition.display = 'Schwangerschaft'
+    this._childD1.valueDefinitions[0].display = 'Schwangerschaft'
     this._rootDemographics.children.push(this._childD1)
     this._rootDemographics.children.push(this._childD2)
-    this._childD2.valueDefinition.precision = 0
+    this._childD2.valueDefinitions[0].precision = 0
     this._rootDemographics.children.push(this._childD3)
-    this._childD3.valueDefinition.allowedUnits = [{ code: 'a', display: ' Jahre(e)' }]
-    this._childD3.valueDefinition.display = 'Alter'
+    this._childD3.valueDefinitions[0].allowedUnits = [{ code: 'a', display: ' Jahre(e)' }]
+    this._childD3.valueDefinitions[0].display = 'Alter'
     this._rootDemographics.children.push(this._childD4)
-    this._childD4.valueDefinition.allowedUnits = [{ code: 'kg', display: 'kg' }]
+    this._childD4.valueDefinitions[0].allowedUnits = [{ code: 'kg', display: 'kg' }]
     this._rootDemographics.children.push(this._childD5)
-    this._childD5.valueDefinition.allowedUnits = [
+    this._childD5.valueDefinitions[0].allowedUnits = [
       { code: 'cm', display: 'cm' },
       { code: 'm', display: 'm' },
     ]
@@ -724,7 +726,7 @@ export class MockBackendDataProvider {
       system,
       display,
     }
-    termEntry.valueDefinition = valueDefinition
+    termEntry.valueDefinitions = [valueDefinition]
     return termEntry
   }
 
@@ -753,5 +755,29 @@ export class MockBackendDataProvider {
 
   private createTermCode(code: string, system: string, display: string): TerminologyCode {
     return { code, display, system }
+  }
+
+  private getTerminologyEntryOther(): TerminologyEntry {
+    return {
+      id: '6',
+      timeRestrictionAllowed: true,
+      selected: false,
+      selectable: true,
+      children: [],
+      leaf: true,
+      termCode: {
+        code: 'xyz',
+        system: 'nonsense',
+        display: 'multiple value filters',
+      },
+      valueDefinitions: [
+        this.createDefaultValueDefinitionQuantity(),
+        this.createDefaultValueDefinitionConcept([
+          this.createTermCode('XYZ-0', 'http://test.org', 'first'),
+          this.createTermCode('XYZ-5', 'http://test.org', 'second'),
+          this.createTermCode('XYZ-6', 'http://test.org', 'last'),
+        ]),
+      ],
+    }
   }
 }
