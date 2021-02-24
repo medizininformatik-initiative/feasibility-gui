@@ -27,19 +27,6 @@ describe('TermEntry2CriterionTranslator', () => {
         system: 'http://test',
       },
       valueFilters: [],
-      termEntry: {
-        children: [],
-        id: 'abc',
-        leaf: true,
-        selectable: true,
-        selected: true,
-        termCode: {
-          code: 'A',
-          display: 'none',
-          system: 'http://test',
-        },
-        timeRestrictionAllowed: false,
-      },
     }
   }
 
@@ -93,29 +80,37 @@ describe('TermEntry2CriterionTranslator', () => {
   })
 
   it('should create criterion with value filter (quantity) but without time restriction', () => {
+    const valueDefinition = createValueDefinitionGeneral()
+    valueDefinition.type = ValueType.QUANTITY
+
     const termEntry: TerminologyEntry = createTermEntry()
-    termEntry.valueDefinition = createValueDefinitionGeneral()
-    termEntry.valueDefinition.type = ValueType.QUANTITY
+    termEntry.valueDefinition = valueDefinition
 
     const criterion = translator.translate(termEntry)
 
     const expectedCriterion = createExpectedCriterion()
-    expectedCriterion.termEntry = termEntry
-    expectedCriterion.valueFilters = [createExpectedValueFilterQuantity()]
+    const expectedValueFilter = createExpectedValueFilterQuantity()
+    expectedValueFilter.valueDefinition = valueDefinition
+
+    expectedCriterion.valueFilters = [expectedValueFilter]
 
     expect(criterion).toEqual(expectedCriterion)
   })
 
   it('should create criterion with value filter (concept) but without time restriction', () => {
+    const valueDefinition = createValueDefinitionGeneral()
+    valueDefinition.type = ValueType.CONCEPT
+
     const termEntry: TerminologyEntry = createTermEntry()
-    termEntry.valueDefinition = createValueDefinitionGeneral()
-    termEntry.valueDefinition.type = ValueType.CONCEPT
+    termEntry.valueDefinition = valueDefinition
 
     const criterion = translator.translate(termEntry)
 
     const expectedCriterion = createExpectedCriterion()
-    expectedCriterion.termEntry = termEntry
-    expectedCriterion.valueFilters = [createExpectedValueFilterConcept()]
+    const expectedValueFilter = createExpectedValueFilterConcept()
+    expectedValueFilter.valueDefinition = valueDefinition
+
+    expectedCriterion.valueFilters = [expectedValueFilter]
 
     expect(criterion).toEqual(expectedCriterion)
   })

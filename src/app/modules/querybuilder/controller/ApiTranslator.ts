@@ -25,7 +25,6 @@ export class ApiTranslator {
       criterionArray.forEach((criterion) => {
         const criterionV1 = new CriterionOnlyV1()
         criterionV1.termCode = criterion.termCode
-        criterionV1.termEntry = criterion.termEntry
         criterionV1.timeRestriction = criterion.timeRestriction
         if (criterion.valueFilters.length > 0) {
           criterionV1.valueFilter = criterion.valueFilters[0]
@@ -42,9 +41,8 @@ export class ApiTranslator {
 
   // noinspection JSMethodCanBeStatic
   private removeNonApiFields(criterion: CriterionOnlyV1): void {
-    criterion.termEntry = undefined
-
     if (criterion.valueFilter) {
+      criterion.valueFilter.valueDefinition = null
       criterion.valueFilter.max = undefined
       criterion.valueFilter.min = undefined
       criterion.valueFilter.precision = undefined

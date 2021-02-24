@@ -13,7 +13,6 @@ export class TermEntry2CriterionTranslator {
     criterion.valueFilters = this.createValueFilter(termEntry.valueDefinition)
       ? [this.createValueFilter(termEntry.valueDefinition)]
       : []
-    criterion.termEntry = termEntry
     criterion.timeRestriction = this.createTimeRestriction(termEntry.valueDefinition)
 
     return criterion
@@ -27,6 +26,7 @@ export class TermEntry2CriterionTranslator {
 
     const valueFilter = new ValueFilter()
     valueFilter.display = valueDefinition.display
+    valueFilter.valueDefinition = valueDefinition
 
     if (valueDefinition.type === ValueType.CONCEPT) {
       valueFilter.type = OperatorOptions.CONCEPT
