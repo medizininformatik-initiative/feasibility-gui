@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 
 import { QueryProviderService } from './query-provider.service'
-import { Group } from '../model/api/query/group'
 
 describe('QueryProviderService', () => {
   let service: QueryProviderService
@@ -26,9 +25,15 @@ describe('QueryProviderService', () => {
     expect(service.storage.set).toHaveBeenCalledWith('QUERY', query)
   })
 
-  it('default query should be the same as test query ', () => {
-    expect(QueryProviderService.createDefaultQuery()).toStrictEqual({
-      groups: [new Group()],
+  it('default query should contain one empty group, only ', () => {
+    expect(QueryProviderService.createDefaultQuery()).toEqual({
+      groups: [
+        {
+          display: 'Ausgewählte Merkmale',
+          exclusionCriteria: [],
+          inclusionCriteria: [],
+        },
+      ],
       display: '',
     })
   })

@@ -25,7 +25,12 @@ export class QueryProviderService {
   }
 
   public static createDefaultQuery(): Query {
-    return { groups: [new Group()], display: '' }
+    const group = new Group()
+    group.display = 'Ausgewählte Merkmale'
+    return {
+      groups: [group],
+      display: '',
+    }
   }
 
   public static createTestQuery(): Query {
