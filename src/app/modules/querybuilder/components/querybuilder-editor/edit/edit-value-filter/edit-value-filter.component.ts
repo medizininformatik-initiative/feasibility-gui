@@ -125,15 +125,15 @@ export class EditValueFilterComponent implements OnInit {
   }
 
   public isActionDisabled(): boolean {
-    if (this.filter.type === OperatorOptions.CONCEPT) {
+    if (this.filter?.type === OperatorOptions.CONCEPT) {
       return this.noSelectedConcept()
     }
 
-    if (this.filter.type === OperatorOptions.QUANTITY_COMPARATOR) {
+    if (this.filter?.type === OperatorOptions.QUANTITY_COMPARATOR) {
       return this.valueTooSmall(this.filter.value) || this.valueTooLarge(this.filter.value)
     }
 
-    if (this.filter.type === OperatorOptions.QUANTITY_RANGE) {
+    if (this.filter?.type === OperatorOptions.QUANTITY_RANGE) {
       return (
         this.minimumSmallerMaximum() ||
         this.valueTooSmall(this.filter.minValue) ||
