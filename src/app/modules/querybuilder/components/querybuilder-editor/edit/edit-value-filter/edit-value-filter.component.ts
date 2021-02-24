@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import {
   Comparator,
   OperatorOptions,
@@ -18,9 +18,6 @@ export class EditValueFilterComponent implements OnInit {
 
   @Input()
   termEntry: TerminologyEntry
-
-  @Output()
-  selectConcept = new EventEmitter<Array<TerminologyCode>>()
 
   QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
   QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
@@ -117,7 +114,8 @@ export class EditValueFilterComponent implements OnInit {
     this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) =>
       selectedConcepts.push(JSON.parse(conceptAsJsonTemp))
     )
-    this.selectConcept.emit(selectedConcepts)
+
+    this.filter.selectedConcepts = selectedConcepts
   }
 
   isSelected(concept: TerminologyCode): boolean {

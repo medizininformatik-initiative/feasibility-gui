@@ -11,6 +11,18 @@ export class Criterion {
   @transient()
   termEntry?: TerminologyEntry
 
+  valueFilters: Array<ValueFilter> = []
+
+  @V2()
+  timeRestriction?: TimeRestriction
+}
+
+export class CriterionOnlyV1 {
+  termCode: TerminologyCode
+
+  @transient()
+  termEntry?: TerminologyEntry
+
   valueFilter?: ValueFilter
   @V2()
   timeRestriction?: TimeRestriction

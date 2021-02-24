@@ -10,7 +10,9 @@ export class TermEntry2CriterionTranslator {
     const criterion = new Criterion()
 
     criterion.termCode = termEntry.termCode
-    criterion.valueFilter = this.createValueFilter(termEntry.valueDefinition)
+    criterion.valueFilters = this.createValueFilter(termEntry.valueDefinition)
+      ? [this.createValueFilter(termEntry.valueDefinition)]
+      : []
     criterion.termEntry = termEntry
     criterion.timeRestriction = this.createTimeRestriction(termEntry.valueDefinition)
 

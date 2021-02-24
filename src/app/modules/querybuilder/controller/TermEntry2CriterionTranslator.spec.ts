@@ -26,6 +26,7 @@ describe('TermEntry2CriterionTranslator', () => {
         display: 'none',
         system: 'http://test',
       },
+      valueFilters: [],
       termEntry: {
         children: [],
         id: 'abc',
@@ -100,7 +101,7 @@ describe('TermEntry2CriterionTranslator', () => {
 
     const expectedCriterion = createExpectedCriterion()
     expectedCriterion.termEntry = termEntry
-    expectedCriterion.valueFilter = createExpectedValueFilterQuantity()
+    expectedCriterion.valueFilters = [createExpectedValueFilterQuantity()]
 
     expect(criterion).toEqual(expectedCriterion)
   })
@@ -114,7 +115,7 @@ describe('TermEntry2CriterionTranslator', () => {
 
     const expectedCriterion = createExpectedCriterion()
     expectedCriterion.termEntry = termEntry
-    expectedCriterion.valueFilter = createExpectedValueFilterConcept()
+    expectedCriterion.valueFilters = [createExpectedValueFilterConcept()]
 
     expect(criterion).toEqual(expectedCriterion)
   })

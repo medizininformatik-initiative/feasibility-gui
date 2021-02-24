@@ -56,11 +56,13 @@ describe('EditSingleCriterionComponent', () => {
     component = fixture.componentInstance
 
     const criterion = new Criterion()
-    criterion.valueFilter = {
-      precision: 1,
-      type: OperatorOptions.CONCEPT,
-      selectedConcepts: [],
-    }
+    criterion.valueFilters = [
+      {
+        precision: 1,
+        type: OperatorOptions.CONCEPT,
+        selectedConcepts: [],
+      },
+    ]
     const termCode: TerminologyCode = {
       code: 'a',
       system: 'http://test',

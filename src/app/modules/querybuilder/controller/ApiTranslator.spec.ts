@@ -16,14 +16,16 @@ describe('ApiTranslator', () => {
 
       const criterion = new Criterion()
       if (createValueFilter) {
-        criterion.valueFilter = {
-          type: OperatorOptions.QUANTITY_COMPARATOR,
-          precision: 1,
-          min: -1,
-          max: 1,
-          value: 4711,
-          unit: { code: 'a', display: 'year' },
-        }
+        criterion.valueFilters = [
+          {
+            type: OperatorOptions.QUANTITY_COMPARATOR,
+            precision: 1,
+            min: -1,
+            max: 1,
+            value: 4711,
+            unit: { code: 'a', display: 'year' },
+          },
+        ]
       }
 
       innerCritArray.push(criterion)
@@ -128,44 +130,44 @@ describe('ApiTranslator', () => {
       })
 
       it('inclusion criteria in original query should remain untouched (min)', () => {
-        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.min).toBeTruthy()
       })
       it('inclusion criteria in original query should remain untouched (max)', () => {
-        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.max).toBeTruthy()
       })
       it('inclusion criteria in original query should remain untouched (precision)', () => {
-        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.precision).toBeTruthy()
       })
       it('inclusion criteria in original query should remain untouched (unit)', () => {
-        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.unit).toBeTruthy()
       })
       it('inclusion criteria in original query should remain untouched (value)', () => {
-        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].inclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.value).toBeTruthy()
       })
 
       it('exclusion criteria in original query should remain untouched (min)', () => {
-        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.min).toBeTruthy()
       })
       it('exclusion criteria in original query should remain untouched (max)', () => {
-        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.max).toBeTruthy()
       })
       it('exclusion criteria in original query should remain untouched (precision)', () => {
-        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.precision).toBeTruthy()
       })
       it('exclusion criteria in original query should remain untouched (unit)', () => {
-        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.unit).toBeTruthy()
       })
       it('exclusion criteria in original query should remain untouched (value)', () => {
-        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilter
+        const valueFilterOriginal = query.groups[0].exclusionCriteria[0][0].valueFilters[0]
         expect(valueFilterOriginal.value).toBeTruthy()
       })
     })

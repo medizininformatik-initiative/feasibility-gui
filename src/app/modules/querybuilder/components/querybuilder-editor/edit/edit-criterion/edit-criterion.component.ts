@@ -10,7 +10,6 @@ import {
   ViewChildren,
 } from '@angular/core'
 import { Criterion } from '../../../../model/api/query/criterion'
-import { TerminologyCode } from '../../../../model/api/terminology/terminology'
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component'
 
 @Component({
@@ -54,10 +53,6 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
 
   doDiscard(): void {
     this.discard.emit()
-  }
-
-  doSelectConcept(selectedConcepts: Array<TerminologyCode>): void {
-    this.criterion.valueFilter.selectedConcepts = selectedConcepts
   }
 
   isActionDisabled(): boolean {

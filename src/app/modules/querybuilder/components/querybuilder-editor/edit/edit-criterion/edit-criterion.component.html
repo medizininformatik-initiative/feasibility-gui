@@ -7,8 +7,8 @@
   </mat-card-header>
   <mat-card-content>
     <num-edit-value-definition
-      (selectConcept)="doSelectConcept($event)"
-      [filter]="criterion.valueFilter"
+      *ngFor="let valueFilter of criterion.valueFilters"
+      [filter]="valueFilter"
       [termEntry]="criterion.termEntry"
     >
     </num-edit-value-definition>

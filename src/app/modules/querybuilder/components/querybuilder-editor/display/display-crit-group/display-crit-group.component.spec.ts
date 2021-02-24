@@ -48,6 +48,7 @@ describe('DisplayCritGroupComponent', () => {
   function createCriterion(code: string): Criterion {
     return {
       termCode: { code, display: code, system: code },
+      valueFilters: [],
     }
   }
 

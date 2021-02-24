@@ -44,7 +44,7 @@ const termEntryWithFilter: TerminologyEntry = {
 const criterion = new Criterion()
 criterion.termCode = { code: 'A', system: 'http://test', display: 'Some Code' }
 criterion.termEntry = termEntryWithFilter // new TermEntry2CriterionTranslator().translate(new MockBackendDataProvider().getTerminologyEntry('id'))
-criterion.valueFilter = valueFilter
+criterion.valueFilters = [valueFilter]
 
 describe('EditCriterionComponent', () => {
   let component: EditCriterionComponent
