@@ -1,5 +1,5 @@
 import { Group } from './group'
-import { Criterion } from './criterion'
+import { CriterionOnlyV1 } from './criterion'
 
 // The atomic building block of a query is a Criterion (e.g. "Geschlecht: weiblich")
 //
@@ -35,7 +35,7 @@ export class QueryOnlyV1 {
   display = ''
 
   // conjunctive normal form (without negation)
-  inclusionCriteria: Criterion[][] = []
+  inclusionCriteria: CriterionOnlyV1[][] = []
   // disjunctive normal form (without negation)
-  exclusionCriteria: Criterion[][] = []
+  exclusionCriteria: CriterionOnlyV1[][] = []
 }

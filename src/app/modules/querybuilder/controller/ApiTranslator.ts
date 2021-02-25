@@ -1,5 +1,5 @@
 import { Query, QueryOnlyV1 } from '../model/api/query/query'
-import { Criterion } from '../model/api/query/criterion'
+import { Criterion, CriterionOnlyV1 } from '../model/api/query/criterion'
 import { ObjectHelper } from './ObjectHelper'
 import { OperatorOptions } from '../model/api/query/valueFilter'
 
@@ -9,29 +9,40 @@ export class ApiTranslator {
     const result = new QueryOnlyV1()
 
     result.display = query.display
-    result.exclusionCriteria = ObjectHelper.clone(query.groups[0].exclusionCriteria)
-    result.inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria)
+    const exclusionCriteria = ObjectHelper.clone(query.groups[0].exclusionCriteria)
+    const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria)
 
-    result.inclusionCriteria.forEach((criterionArray) =>
-      criterionArray.forEach((criterion) => {
-        this.removeNonApiFields(criterion)
-      })
-    )
+    result.inclusionCriteria = this.translateCritGroupV1(inclusionCriteria)
+    result.exclusionCriteria = this.translateCritGroupV1(exclusionCriteria)
 
-    result.exclusionCriteria.forEach((criterionArray) =>
+    return result
+  }
+
+  private translateCritGroupV1(inclusionCriteria: Criterion[][]): CriterionOnlyV1[][] {
+    const result: CriterionOnlyV1[][] = []
+    inclusionCriteria.forEach((criterionArray) => {
+      const innerArrayV1: CriterionOnlyV1[] = []
       criterionArray.forEach((criterion) => {
-        this.removeNonApiFields(criterion)
+        const criterionV1 = new CriterionOnlyV1()
+        criterionV1.termCode = criterion.termCode
+        criterionV1.timeRestriction = criterion.timeRestriction
+        if (criterion.valueFilters.length > 0) {
+          criterionV1.valueFilter = criterion.valueFilters[0]
+        }
+
+        this.removeNonApiFields(criterionV1)
+        innerArrayV1.push(criterionV1)
       })
-    )
+      result.push(innerArrayV1)
+    })
 
     return result
   }
 
   // noinspection JSMethodCanBeStatic
-  private removeNonApiFields(criterion: Criterion): void {
-    criterion.termEntry = undefined
-
+  private removeNonApiFields(criterion: CriterionOnlyV1): void {
     if (criterion.valueFilter) {
+      criterion.valueFilter.valueDefinition = null
       criterion.valueFilter.max = undefined
       criterion.valueFilter.min = undefined
       criterion.valueFilter.precision = undefined

@@ -58,7 +58,7 @@ export class TerminologyEntry {
   leaf: boolean
   children: TerminologyEntry[] = []
 
-  valueDefinition?: ValueDefinition
+  valueDefinitions: Array<ValueDefinition> = []
 }
 
 export class TerminologyCode {

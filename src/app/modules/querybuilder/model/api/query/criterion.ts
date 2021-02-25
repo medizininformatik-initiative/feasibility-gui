@@ -1,5 +1,5 @@
-import { transient, V2 } from '../annotations'
-import { TerminologyCode, TerminologyEntry } from '../terminology/terminology'
+import { V2 } from '../annotations'
+import { TerminologyCode } from '../terminology/terminology'
 import { ValueFilter } from './valueFilter'
 import { TimeRestriction } from './timerestriction'
 
@@ -8,8 +8,14 @@ import { TimeRestriction } from './timerestriction'
 export class Criterion {
   termCode: TerminologyCode
 
-  @transient()
-  termEntry?: TerminologyEntry
+  valueFilters: Array<ValueFilter> = []
+
+  @V2()
+  timeRestriction?: TimeRestriction
+}
+
+export class CriterionOnlyV1 {
+  termCode: TerminologyCode
 
   valueFilter?: ValueFilter
   @V2()

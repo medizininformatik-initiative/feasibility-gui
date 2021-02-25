@@ -15,7 +15,6 @@ import { Query } from '../../../../model/api/query/query'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { OperatorOptions } from '../../../../model/api/query/valueFilter'
 import { ValueType } from '../../../../model/api/terminology/valuedefinition'
-import { TerminologyCode, TerminologyEntry } from '../../../../model/api/terminology/terminology'
 
 describe('EditSingleCriterionComponent', () => {
   let component: EditSingleCriterionComponent
@@ -55,26 +54,25 @@ describe('EditSingleCriterionComponent', () => {
     fixture = TestBed.createComponent(EditSingleCriterionComponent)
     component = fixture.componentInstance
 
-    const criterion = new Criterion()
-    criterion.valueFilter = {
-      precision: 1,
-      type: OperatorOptions.CONCEPT,
-      selectedConcepts: [],
-    }
-    const termCode: TerminologyCode = {
-      code: 'a',
-      system: 'http://test',
-      display: 'none',
-    }
-
-    const termEntry = new TerminologyEntry()
-    termEntry.valueDefinition = {
+    const valueDefinition = {
       type: ValueType.CONCEPT,
       precision: 1,
     }
 
-    criterion.termCode = termCode
-    criterion.termEntry = termEntry
+    const criterion = new Criterion()
+    criterion.valueFilters = [
+      {
+        precision: 1,
+        type: OperatorOptions.CONCEPT,
+        selectedConcepts: [],
+        valueDefinition,
+      },
+    ]
+    criterion.termCode = {
+      code: 'a',
+      system: 'http://test',
+      display: 'none',
+    }
     component.criterion = criterion
 
     fixture.detectChanges()

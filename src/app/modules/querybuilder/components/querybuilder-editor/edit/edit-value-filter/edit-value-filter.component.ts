@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import {
   Comparator,
   OperatorOptions,
   QuantityUnit,
   ValueFilter,
 } from '../../../../model/api/query/valueFilter'
-import { TerminologyCode, TerminologyEntry } from '../../../../model/api/terminology/terminology'
+import { TerminologyCode } from '../../../../model/api/terminology/terminology'
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -15,12 +15,6 @@ import { TerminologyCode, TerminologyEntry } from '../../../../model/api/termino
 export class EditValueFilterComponent implements OnInit {
   @Input()
   filter: ValueFilter
-
-  @Input()
-  termEntry: TerminologyEntry
-
-  @Output()
-  selectConcept = new EventEmitter<Array<TerminologyCode>>()
 
   QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
   QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
@@ -40,8 +34,8 @@ export class EditValueFilterComponent implements OnInit {
       this.selectedConceptsAsJson.add(JSON.stringify(concept))
     )
     this.selectedUnit =
-      this.termEntry.valueDefinition?.allowedUnits?.length > 0
-        ? this.termEntry.valueDefinition?.allowedUnits[0]
+      this.filter?.valueDefinition?.allowedUnits?.length > 0
+        ? this.filter?.valueDefinition?.allowedUnits[0]
         : undefined
     this.quantityFilterOption = this.getQuantityFilterOption()
   }
@@ -117,7 +111,8 @@ export class EditValueFilterComponent implements OnInit {
     this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) =>
       selectedConcepts.push(JSON.parse(conceptAsJsonTemp))
     )
-    this.selectConcept.emit(selectedConcepts)
+
+    this.filter.selectedConcepts = selectedConcepts
   }
 
   isSelected(concept: TerminologyCode): boolean {

@@ -16,7 +16,6 @@ export class QueryProviderService {
 
   public query(): Query {
     const query = this.storage.get(this.STORAGE_QUERY_KEY)
-
     return query && environment.name !== 'test' ? query : QueryProviderService.createDefaultQuery()
   }
 
@@ -47,25 +46,27 @@ export class QueryProviderService {
                   display: 'Geschlecht',
                   system: 'http://loinc.org',
                 },
-                valueFilter: {
-                  type: OperatorOptions.CONCEPT,
-                  selectedConcepts: [
-                    {
-                      code: 'F',
-                      display: 'female',
-                      system:
-                        'https://fhir.loinc.org/CodeSystem/$lookup?system=http://loinc.org&code=LL2191-6',
-                      version: '',
-                    },
-                    {
-                      code: 'M',
-                      display: 'male',
-                      system:
-                        'https://fhir.loinc.org/CodeSystem/$lookup?system=http://loinc.org&code=LL2191-6',
-                      version: '',
-                    },
-                  ],
-                },
+                valueFilters: [
+                  {
+                    type: OperatorOptions.CONCEPT,
+                    selectedConcepts: [
+                      {
+                        code: 'F',
+                        display: 'female',
+                        system:
+                          'https://fhir.loinc.org/CodeSystem/$lookup?system=http://loinc.org&code=LL2191-6',
+                        version: '',
+                      },
+                      {
+                        code: 'M',
+                        display: 'male',
+                        system:
+                          'https://fhir.loinc.org/CodeSystem/$lookup?system=http://loinc.org&code=LL2191-6',
+                        version: '',
+                      },
+                    ],
+                  },
+                ],
               },
             ],
             [
@@ -75,15 +76,17 @@ export class QueryProviderService {
                   display: 'Alter',
                   system: 'http://loinc.org',
                 },
-                valueFilter: {
-                  type: OperatorOptions.QUANTITY_COMPARATOR,
-                  comparator: Comparator.GREATER_THAN,
-                  unit: {
-                    code: 'a',
-                    display: 'Jahr',
+                valueFilters: [
+                  {
+                    type: OperatorOptions.QUANTITY_COMPARATOR,
+                    comparator: Comparator.GREATER_THAN,
+                    unit: {
+                      code: 'a',
+                      display: 'Jahr',
+                    },
+                    value: 18,
                   },
-                  value: 18,
-                },
+                ],
               },
             ],
             [
@@ -93,6 +96,7 @@ export class QueryProviderService {
                   display: 'F00',
                   system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
                 },
+                valueFilters: [],
               },
               {
                 termCode: {
@@ -100,6 +104,7 @@ export class QueryProviderService {
                   display: 'F09',
                   system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
                 },
+                valueFilters: [],
               },
             ],
           ],
@@ -111,17 +116,19 @@ export class QueryProviderService {
                   display: 'Geschlecht',
                   system: 'http://loinc.org',
                 },
-                valueFilter: {
-                  type: OperatorOptions.CONCEPT,
-                  selectedConcepts: [
-                    {
-                      code: 'male',
-                      display: 'male',
-                      system: '',
-                      version: '',
-                    },
-                  ],
-                },
+                valueFilters: [
+                  {
+                    type: OperatorOptions.CONCEPT,
+                    selectedConcepts: [
+                      {
+                        code: 'male',
+                        display: 'male',
+                        system: '',
+                        version: '',
+                      },
+                    ],
+                  },
+                ],
               },
             ],
             [
@@ -131,15 +138,17 @@ export class QueryProviderService {
                   display: 'Alter',
                   system: 'http://loinc.org',
                 },
-                valueFilter: {
-                  type: OperatorOptions.QUANTITY_COMPARATOR,
-                  comparator: Comparator.GREATER_THAN,
-                  unit: {
-                    code: 'year',
-                    display: 'Jahr',
+                valueFilters: [
+                  {
+                    type: OperatorOptions.QUANTITY_COMPARATOR,
+                    comparator: Comparator.GREATER_THAN,
+                    unit: {
+                      code: 'year',
+                      display: 'Jahr',
+                    },
+                    value: 65,
                   },
-                  value: 65,
-                },
+                ],
               },
             ],
             [
@@ -149,6 +158,7 @@ export class QueryProviderService {
                   display: 'F00.9',
                   system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
                 },
+                valueFilters: [],
               },
               {
                 termCode: {
@@ -156,15 +166,17 @@ export class QueryProviderService {
                   display: 'Körpertemperatur',
                   system: 'http://loinc.org',
                 },
-                valueFilter: {
-                  type: OperatorOptions.QUANTITY_RANGE,
-                  unit: {
-                    code: 'Cel',
-                    display: '°C',
+                valueFilters: [
+                  {
+                    type: OperatorOptions.QUANTITY_RANGE,
+                    unit: {
+                      code: 'Cel',
+                      display: '°C',
+                    },
+                    minValue: 35,
+                    maxValue: 39,
                   },
-                  minValue: 35,
-                  maxValue: 39,
-                },
+                ],
               },
             ],
           ],

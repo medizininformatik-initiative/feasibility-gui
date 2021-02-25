@@ -15,6 +15,7 @@ describe('TermEntry2CriterionTranslator', () => {
       children: [],
       selectable: true,
       selected: true,
+      valueDefinitions: [],
       timeRestrictionAllowed: false,
     }
   }
@@ -26,19 +27,7 @@ describe('TermEntry2CriterionTranslator', () => {
         display: 'none',
         system: 'http://test',
       },
-      termEntry: {
-        children: [],
-        id: 'abc',
-        leaf: true,
-        selectable: true,
-        selected: true,
-        termCode: {
-          code: 'A',
-          display: 'none',
-          system: 'http://test',
-        },
-        timeRestrictionAllowed: false,
-      },
+      valueFilters: [],
     }
   }
 
@@ -92,29 +81,37 @@ describe('TermEntry2CriterionTranslator', () => {
   })
 
   it('should create criterion with value filter (quantity) but without time restriction', () => {
+    const valueDefinition = createValueDefinitionGeneral()
+    valueDefinition.type = ValueType.QUANTITY
+
     const termEntry: TerminologyEntry = createTermEntry()
-    termEntry.valueDefinition = createValueDefinitionGeneral()
-    termEntry.valueDefinition.type = ValueType.QUANTITY
+    termEntry.valueDefinitions = [valueDefinition]
 
     const criterion = translator.translate(termEntry)
 
     const expectedCriterion = createExpectedCriterion()
-    expectedCriterion.termEntry = termEntry
-    expectedCriterion.valueFilter = createExpectedValueFilterQuantity()
+    const expectedValueFilter = createExpectedValueFilterQuantity()
+    expectedValueFilter.valueDefinition = valueDefinition
+
+    expectedCriterion.valueFilters = [expectedValueFilter]
 
     expect(criterion).toEqual(expectedCriterion)
   })
 
   it('should create criterion with value filter (concept) but without time restriction', () => {
+    const valueDefinition = createValueDefinitionGeneral()
+    valueDefinition.type = ValueType.CONCEPT
+
     const termEntry: TerminologyEntry = createTermEntry()
-    termEntry.valueDefinition = createValueDefinitionGeneral()
-    termEntry.valueDefinition.type = ValueType.CONCEPT
+    termEntry.valueDefinitions = [valueDefinition]
 
     const criterion = translator.translate(termEntry)
 
     const expectedCriterion = createExpectedCriterion()
-    expectedCriterion.termEntry = termEntry
-    expectedCriterion.valueFilter = createExpectedValueFilterConcept()
+    const expectedValueFilter = createExpectedValueFilterConcept()
+    expectedValueFilter.valueDefinition = valueDefinition
+
+    expectedCriterion.valueFilters = [expectedValueFilter]
 
     expect(criterion).toEqual(expectedCriterion)
   })
