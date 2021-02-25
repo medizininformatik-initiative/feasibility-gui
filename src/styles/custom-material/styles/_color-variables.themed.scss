@@ -5,7 +5,15 @@
 
   :root {
     --num-color--primary: #{mat-color($primary)};
-    --num-color--accent: #{mat-color($accent)};
+    --num-color--accent: #{mat-color($accent, 500)};
     --num-color--warn: #{mat-color($warn)};
+
+    --num-color--accent-100: #{mat-color($accent, 100)};
+    --num-color--accent-200: #{mat-color($accent, 200)};
+    --num-color--accent-300: #{mat-color($accent, 300)};
+
+    --num-color--primary-contrast: #{mat-contrast($primary, default)};
+    --num-color--accent-contrast: #{mat-contrast($accent, 500)};
+    --num-color--warn-contrast: #{mat-contrast($warn, default)};
   }
 }

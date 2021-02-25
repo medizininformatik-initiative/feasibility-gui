@@ -1,0 +1,7 @@
+<div class="container">
+  <mat-chip (click)="switch()">
+    <fa-icon icon="circle" *ngIf="position === 'inner'"></fa-icon>
+    {{ getLabelKey() | translate }}
+    <fa-icon icon="circle" *ngIf="position === 'outer'"></fa-icon>
+  </mat-chip>
+</div>

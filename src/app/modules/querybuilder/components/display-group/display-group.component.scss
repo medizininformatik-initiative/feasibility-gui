@@ -1,0 +1,16 @@
+.query-group {
+  border-left: 0.5em solid var(--num-color--accent);
+  padding: 0;
+}
+
+.query-group mat-card-header {
+  background: var(--num-color--accent);
+  color: var(--num-color--accent-contrast);
+}
+
+.drop-at-bottom {
+  border: dashed 1px black;
+  background: lightgrey;
+  height: 7em;
+  margin-left: 0.5em;
+}

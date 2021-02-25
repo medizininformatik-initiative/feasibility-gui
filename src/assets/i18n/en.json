@@ -23,6 +23,10 @@
     "SIGNOUT": "Sign out"
   },
   "QUERYBUILDER": {
+    "SWITCH":{
+      "LABEL_AND": "AND",
+      "LABEL_OR": "OR"
+    }
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",

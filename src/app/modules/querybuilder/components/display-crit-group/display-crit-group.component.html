@@ -1,0 +1,28 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" class="container">
+  <div
+    *ngFor="let criterionInnerArray of critGroup; let lastOuter = last; let i = index"
+    class="outer"
+  >
+    <div
+      *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index"
+      class="inner"
+      cdkDropList
+      [cdkDropListData]="{ groupId: groupId, mode: mode, row: i, column: j }"
+      (cdkDropListDropped)="doDrop($event)"
+    >
+      <num-display-criterion [criterion]="criterion" cdkDrag> </num-display-criterion>
+      <num-bool-logic-switch
+        [position]="'inner'"
+        [label]="getInnerLabelKey()"
+        (switched)="splitInnerArray(i, j)"
+        *ngIf="!lastInner"
+      ></num-bool-logic-switch>
+    </div>
+    <num-bool-logic-switch
+      [position]="'outer'"
+      [label]="getOuterLabelKey()"
+      (switched)="joinInnerArrays(i)"
+      *ngIf="!lastOuter"
+    ></num-bool-logic-switch>
+  </div>
+</div>
