@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="space-between stretch" class="container">
+<div fxLayout="column" fxLayoutAlign="space-between stretch" class="container-crit-group">
   <div
     *ngFor="let criterionInnerArray of critGroup; let lastOuter = last; let i = index"
     class="outer"
@@ -7,7 +7,7 @@
       *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index"
       class="inner"
       cdkDropList
-      [cdkDropListData]="{ groupId: groupId, mode: mode, row: i, column: j }"
+      [cdkDropListData]="{ groupId: groupId, critType: critType, row: i, column: j }"
       (cdkDropListDropped)="doDrop($event)"
     >
       <num-display-criterion [criterion]="criterion" cdkDrag> </num-display-criterion>

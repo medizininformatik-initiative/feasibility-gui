@@ -68,7 +68,7 @@ describe('CritGroupArranger', () => {
       groups,
       {
         groupId: '0',
-        mode: 'inclusion',
+        critType: 'inclusion',
         row: 2,
         column: 2,
       },
@@ -94,7 +94,7 @@ describe('CritGroupArranger', () => {
       groups,
       {
         groupId: '0',
-        mode: 'exclusion',
+        critType: 'exclusion',
         row: 2,
         column: 2,
       },
@@ -120,7 +120,7 @@ describe('CritGroupArranger', () => {
       groups,
       {
         groupId: '0',
-        mode: 'inclusion',
+        critType: 'inclusion',
         row: 2,
         column: 0,
       },
@@ -146,7 +146,7 @@ describe('CritGroupArranger', () => {
       groups,
       {
         groupId: '0',
-        mode: 'inclusion',
+        critType: 'inclusion',
         row: 2,
         column: 3,
       },
@@ -168,7 +168,7 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.removeCriterion(groups, {
       groupId: '0',
-      mode: 'inclusion',
+      critType: 'inclusion',
       row: 2,
       column: 0,
     })
@@ -189,7 +189,7 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.removeCriterion(groups, {
       groupId: '0',
-      mode: 'inclusion',
+      critType: 'inclusion',
       row: 0,
       column: 0,
     })
@@ -209,7 +209,7 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.removeCriterion(groups, {
       groupId: '1',
-      mode: 'exclusion',
+      critType: 'exclusion',
       row: 1,
       column: 2,
     })
@@ -230,7 +230,7 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.removeCriterion(groups, {
       groupId: '0',
-      mode: 'exclusion',
+      critType: 'exclusion',
       row: 2,
       column: 0,
     })
@@ -248,11 +248,11 @@ describe('CritGroupArranger', () => {
       groups,
       {
         groupId: '0',
-        mode: 'inclusion',
+        critType: 'inclusion',
         row: 1,
         column: 1,
       },
-      { groupId: '0', mode: 'inclusion', row: 1, column: 1 }
+      { groupId: '0', critType: 'inclusion', row: 1, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -276,8 +276,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '0', mode: 'inclusion', row: 1, column: 1 },
-      { groupId: '1', mode: 'inclusion', row: 1, column: 1 }
+      { groupId: '0', critType: 'inclusion', row: 1, column: 1 },
+      { groupId: '1', critType: 'inclusion', row: 1, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -301,8 +301,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '0', mode: 'exclusion', row: 1, column: 1 },
-      { groupId: '0', mode: 'inclusion', row: 1, column: 1 }
+      { groupId: '0', critType: 'exclusion', row: 1, column: 1 },
+      { groupId: '0', critType: 'inclusion', row: 1, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -326,8 +326,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '1', mode: 'exclusion', row: 1, column: 0 },
-      { groupId: '1', mode: 'exclusion', row: 2, column: 1 }
+      { groupId: '1', critType: 'exclusion', row: 1, column: 0 },
+      { groupId: '1', critType: 'exclusion', row: 2, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -351,8 +351,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '1', mode: 'exclusion', row: 1, column: 0 },
-      { groupId: '1', mode: 'exclusion', row: 0, column: 1 }
+      { groupId: '1', critType: 'exclusion', row: 1, column: 0 },
+      { groupId: '1', critType: 'exclusion', row: 0, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -376,8 +376,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '1', mode: 'inclusion', row: 1, column: 0 },
-      { groupId: '1', mode: 'inclusion', row: 2, column: 1 }
+      { groupId: '1', critType: 'inclusion', row: 1, column: 0 },
+      { groupId: '1', critType: 'inclusion', row: 2, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -401,8 +401,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '1', mode: 'inclusion', row: 1, column: 0 },
-      { groupId: '1', mode: 'inclusion', row: 0, column: 1 }
+      { groupId: '1', critType: 'inclusion', row: 1, column: 0 },
+      { groupId: '1', critType: 'inclusion', row: 0, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -421,8 +421,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '0', mode: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', mode: 'inclusion', row: 1, column: 2 }
+      { groupId: '0', critType: 'inclusion', row: 1, column: 1 },
+      { groupId: '0', critType: 'inclusion', row: 1, column: 2 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -441,8 +441,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '0', mode: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', mode: 'inclusion', row: 1, column: 0 }
+      { groupId: '0', critType: 'inclusion', row: 1, column: 1 },
+      { groupId: '0', critType: 'inclusion', row: 1, column: 0 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -456,8 +456,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '300', mode: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', mode: 'inclusion', row: 1, column: 0 }
+      { groupId: '300', critType: 'inclusion', row: 1, column: 1 },
+      { groupId: '0', critType: 'inclusion', row: 1, column: 0 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -476,8 +476,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterionToEndOfGroup(
       groups,
-      { groupId: '0', mode: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', mode: 'exclusion', row: undefined, column: undefined }
+      { groupId: '0', critType: 'inclusion', row: 1, column: 1 },
+      { groupId: '0', critType: 'exclusion', row: undefined, column: undefined }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -496,8 +496,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterionToEndOfGroup(
       groups,
-      { groupId: '0', mode: 'exclusion', row: 1, column: 1 },
-      { groupId: '0', mode: 'inclusion', row: undefined, column: undefined }
+      { groupId: '0', critType: 'exclusion', row: 1, column: 1 },
+      { groupId: '0', critType: 'inclusion', row: undefined, column: undefined }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -516,8 +516,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterionToEndOfGroup(
       groups,
-      { groupId: '1', mode: 'exclusion', row: 1, column: 1 },
-      { groupId: '1', mode: 'exclusion', row: undefined, column: undefined }
+      { groupId: '1', critType: 'exclusion', row: 1, column: 1 },
+      { groupId: '1', critType: 'exclusion', row: undefined, column: undefined }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -531,8 +531,8 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterionToEndOfGroup(
       groups,
-      { groupId: '300', mode: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', mode: 'inclusion', row: 1, column: 0 }
+      { groupId: '300', critType: 'inclusion', row: 1, column: 1 },
+      { groupId: '0', critType: 'inclusion', row: 1, column: 0 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -553,23 +553,23 @@ describe('CritGroupArranger', () => {
     return group
   }
 
-  function createDefaultCriterionArray(mode: string, id: string): Criterion[][] {
+  function createDefaultCriterionArray(critType: string, id: string): Criterion[][] {
     const result: Criterion[][] = []
 
     result[0] = [
-      createCriterion(mode + '-' + id + '-00'),
-      createCriterion(mode + '-' + id + '-01'),
-      createCriterion(mode + '-' + id + '-02'),
+      createCriterion(critType + '-' + id + '-00'),
+      createCriterion(critType + '-' + id + '-01'),
+      createCriterion(critType + '-' + id + '-02'),
     ]
     result[1] = [
-      createCriterion(mode + '-' + id + '-10'),
-      createCriterion(mode + '-' + id + '-11'),
-      createCriterion(mode + '-' + id + '-12'),
+      createCriterion(critType + '-' + id + '-10'),
+      createCriterion(critType + '-' + id + '-11'),
+      createCriterion(critType + '-' + id + '-12'),
     ]
     result[2] = [
-      createCriterion(mode + '-' + id + '-20'),
-      createCriterion(mode + '-' + id + '-21'),
-      createCriterion(mode + '-' + id + '-22'),
+      createCriterion(critType + '-' + id + '-20'),
+      createCriterion(critType + '-' + id + '-21'),
+      createCriterion(critType + '-' + id + '-22'),
     ]
 
     return result

@@ -19,6 +19,9 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faUsersCog } from '@fortawesome/free-solid-svg-icons'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 export const FONT_AWESOME_ICONS = [
   faTh,
@@ -42,4 +45,7 @@ export const FONT_AWESOME_ICONS = [
   faUsersCog,
   faAngleRight,
   faCircle,
+  faProjectDiagram,
+  faChevronRight,
+  faChevronDown,
 ]

@@ -5,7 +5,7 @@
       <num-display-crit-group
         [critGroup]="group.inclusionCriteria"
         [groupId]="group.id"
-        [mode]="'inclusion'"
+        [critType]="'inclusion'"
         (switch)="switch('inclusion', $event)"
         (dropped)="doDrop($event)"
         fxFlex="50"
@@ -13,7 +13,7 @@
       <num-display-crit-group
         [critGroup]="group.exclusionCriteria"
         [groupId]="group.id"
-        [mode]="'exclusion'"
+        [critType]="'exclusion'"
         (switch)="switch('exclusion', $event)"
         (dropped)="doDrop($event)"
         fxFlex="50"
@@ -24,7 +24,7 @@
         class="drop-at-bottom"
         cdkDropList
         fxFlex="50"
-        [cdkDropListData]="{ mode: 'inclusion', groupId: group.id, addMode: 'end' }"
+        [cdkDropListData]="{ critType: 'inclusion', groupId: group.id, addMode: 'end' }"
         (cdkDropListDropped)="doDropAtEnd($event)"
       >
         <num-bool-logic-switch [position]="'outer'" [label]="'AND'"></num-bool-logic-switch>
@@ -33,7 +33,7 @@
         class="drop-at-bottom"
         cdkDropList
         fxFlex="50"
-        [cdkDropListData]="{ mode: 'exclusion', groupId: group.id, addMode: 'end' }"
+        [cdkDropListData]="{ critType: 'exclusion', groupId: group.id, addMode: 'end' }"
         (cdkDropListDropped)="doDropAtEnd($event)"
       >
         <num-bool-logic-switch [position]="'outer'" [label]="'OR'"></num-bool-logic-switch>

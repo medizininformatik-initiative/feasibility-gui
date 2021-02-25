@@ -10,11 +10,12 @@ import { CategoryEntry, TerminologyEntry } from '../model/api/terminology/termin
 import { QueryResponse } from '../model/api/result/QueryResponse'
 import { Query } from '../model/api/query/query'
 import DoneCallback = jest.DoneCallback
+import { MockBackendDataProvider } from './MockBackendDataProvider'
 
 describe('BackendService', () => {
   let service: BackendService
 
-  const EXAMPLE_ID = '12345'
+  const EXAMPLE_ID = '1'
   const EXAMPLE_SEARCH = 'Diab'
   const EXAMPLE_URL = 'http:/abc/querybuillder/result?id=123456'
 
@@ -34,7 +35,7 @@ describe('BackendService', () => {
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
 
     service.getCategories().subscribe((categories: Array<CategoryEntry>) => {
-      expect(categories).toEqual(new Array<TerminologyEntry>())
+      expect(categories).toEqual(MockBackendDataProvider.getCategoryEntries())
       done()
     })
   })
@@ -63,7 +64,7 @@ describe('BackendService', () => {
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
 
     service.getTerminolgyTree(EXAMPLE_ID).subscribe((entry: TerminologyEntry) => {
-      expect(entry).toEqual(new TerminologyEntry())
+      expect(entry).toEqual(MockBackendDataProvider.getTerminologyEntry('1'))
       done()
     })
   })
@@ -84,7 +85,7 @@ describe('BackendService', () => {
       done()
     })
 
-    httpMock.expectOne('http:/abc/terminology/entries/12345').flush(mockResponse)
+    httpMock.expectOne('http:/abc/terminology/entries/1').flush(mockResponse)
   })
 
   it('should return programmatically mocked search result list', (done: DoneCallback) => {
@@ -204,7 +205,7 @@ describe('BackendService', () => {
       .mockReturnValue(BackendServiceSpecUtil.createConfig('http:abc'))
 
     expect(service.createUrl('pathToResource', 'id=' + EXAMPLE_ID)).toBe(
-      'http:abc/pathToResource?id=12345'
+      'http:abc/pathToResource?id=1'
     )
   })
 
@@ -215,7 +216,7 @@ describe('BackendService', () => {
       .mockReturnValue(BackendServiceSpecUtil.createConfig('http:abc/'))
 
     expect(service.createUrl('pathToResource', 'id=' + EXAMPLE_ID)).toBe(
-      'http:abc/pathToResource?id=12345'
+      'http:abc/pathToResource?id=1'
     )
   })
 })

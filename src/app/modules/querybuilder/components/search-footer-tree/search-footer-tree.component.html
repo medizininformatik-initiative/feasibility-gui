@@ -1,0 +1,8 @@
+<div fxLayout="row" fxLayoutAlign="end center">
+  <num-button [type]="'primary'" (click)="fireAddEvent(true)" id="test1-add">{{
+    'BUTTON.ADD' | translate
+  }}</num-button>
+  <num-button [type]="'secondary'" (click)="fireAddEvent(false)" id="test2-cancel">{{
+    'BUTTON.CANCEL' | translate
+  }}</num-button>
+</div>

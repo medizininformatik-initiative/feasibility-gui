@@ -53,3 +53,5 @@ export enum PeriodUnit {
   MONTH = 'MONTH',
   YEAR = 'YEAR',
 }
+
+export type CritType = 'exclusion' | 'inclusion'
