@@ -65,4 +65,26 @@ describe('EditCriterionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('should fire discard event', () => {
+    spyOn(component.discard, 'emit')
+    component.doDiscard()
+    expect(component.discard.emit).toHaveBeenCalledWith()
+  })
+
+  it('should fire save event', () => {
+    spyOn(component.save, 'emit')
+    jest.spyOn(component, 'isActionDisabled').mockReturnValue(false)
+
+    component.doSave()
+    expect(component.save.emit).toHaveBeenCalledWith()
+  })
+
+  it('should not fire save event for disabled state', () => {
+    spyOn(component.save, 'emit')
+    jest.spyOn(component, 'isActionDisabled').mockReturnValue(true)
+
+    component.doSave()
+    expect(component.save.emit).not.toHaveBeenCalledWith()
+  })
 })

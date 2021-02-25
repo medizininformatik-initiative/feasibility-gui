@@ -19,7 +19,7 @@ export class DisplayCriterionComponent implements OnInit {
   @Output()
   delete = new EventEmitter<Criterion>()
 
-  constructor(private dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {}
 

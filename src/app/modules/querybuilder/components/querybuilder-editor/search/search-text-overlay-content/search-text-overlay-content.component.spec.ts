@@ -11,11 +11,12 @@ import { FormsModule } from '@angular/forms'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { Observable, of } from 'rxjs'
-import { CategoryEntry } from '../../../../model/api/terminology/terminology'
+import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminology/terminology'
 import { BackendService } from '../../../../service/backend.service'
 import { EventEmitter, TemplateRef } from '@angular/core'
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog'
 import { SearchTextTermEntryComponent } from '../search-text-term-entry/search-text-term-entry.component'
+import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
 
 describe('SerachTextOverlayContentComponent', () => {
   let component: SearchTextOverlayContentComponent
@@ -32,6 +33,7 @@ describe('SerachTextOverlayContentComponent', () => {
       },
     } as BackendService
 
+    // noinspection JSUnusedLocalSymbols
     dialog = {
       open<T, D = any, R = any>(
         componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
@@ -75,10 +77,31 @@ describe('SerachTextOverlayContentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchTextOverlayContentComponent)
     component = fixture.componentInstance
+    component.critType = 'inclusion'
+
     fixture.detectChanges()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should fire choose event', () => {
+    spyOn(component.closeOverlay, 'emit')
+    spyOn(component.dialog, 'open')
+    const termEntry = new TerminologyEntry()
+    const dialogConfig = new MatDialogConfig()
+
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    dialogConfig.data = {
+      termEntryList: [termEntry],
+      groupIndex: 0,
+      critType: 'inclusion',
+    }
+
+    component.openDetailsPopUp(termEntry)
+    expect(component.closeOverlay.emit).toHaveBeenCalledWith('text')
+    expect(component.dialog.open).toHaveBeenCalledWith(EnterCriterionListComponent, dialogConfig)
   })
 })

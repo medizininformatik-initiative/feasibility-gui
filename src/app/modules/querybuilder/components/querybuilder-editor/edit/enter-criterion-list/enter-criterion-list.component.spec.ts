@@ -14,10 +14,23 @@ import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter
 import { MatInputNumberDirective } from '../mat-input-number.directive'
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component'
+import { QueryProviderService } from '../../../../service/query-provider.service'
+import { Query } from '../../../../model/api/query/query'
+import { Criterion } from '../../../../model/api/query/criterion'
 
 describe('EnterCriterionListComponent', () => {
   let component: EnterCriterionListComponent
   let fixture: ComponentFixture<EnterCriterionListComponent>
+  const matDialogRef = {
+    close: () => {},
+  } as MatDialogRef<EnterCriterionListComponent>
+  // noinspection JSUnusedLocalSymbols
+  const providerService = {
+    store(query: Query): void {},
+    query(): Query {
+      return undefined
+    },
+  } as QueryProviderService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -48,7 +61,8 @@ describe('EnterCriterionListComponent', () => {
             groupIndex: 0,
           },
         },
-        { provide: MatDialogRef, useValue: {} },
+        { provide: MatDialogRef, useValue: matDialogRef },
+        { provide: QueryProviderService, useValue: providerService },
       ],
     }).compileComponents()
   })
@@ -71,5 +85,78 @@ describe('EnterCriterionListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should close dialog', () => {
+    spyOn(matDialogRef, 'close')
+    component.dialogRef = matDialogRef
+    component.doDiscardAll()
+    expect(matDialogRef.close).toBeCalledWith()
+  })
+
+  it('should discard criterion from list', () => {
+    spyOn(matDialogRef, 'close')
+    component.dialogRef = matDialogRef
+
+    const criterion = new Criterion()
+    component.criterionList = [new Criterion(), criterion, new Criterion()]
+
+    component.doDiscard(criterion)
+
+    expect(component.criterionList.length).toBe(2)
+    expect(matDialogRef.close).not.toBeCalledWith()
+  })
+
+  it('should discard criterion from list', () => {
+    spyOn(matDialogRef, 'close')
+    component.dialogRef = matDialogRef
+
+    const criterion = new Criterion()
+    component.criterionList = [criterion]
+
+    component.doDiscard(criterion)
+
+    expect(component.criterionList.length).toBe(0)
+    expect(matDialogRef.close).toBeCalledWith()
+  })
+
+  it('should store query in inclusion criteria and discard criterion from list', () => {
+    const query = new Query()
+    const criterion = new Criterion()
+
+    spyOn(component, 'doDiscard')
+    jest.spyOn(providerService, 'query').mockReturnValue(query)
+    spyOn(providerService, 'store')
+
+    component.critType = 'inclusion'
+    component.provider = providerService
+    component.dialogRef = matDialogRef
+    component.criterionList = [criterion]
+
+    component.doSave(criterion)
+
+    expect(query.groups[0].inclusionCriteria.length).toBe(1)
+    expect(query.groups[0].exclusionCriteria.length).toBe(0)
+    expect(component.doDiscard).toBeCalledWith(criterion)
+  })
+
+  it('should store query in exclusion criteria and discard criterion from list', () => {
+    const query = new Query()
+    const criterion = new Criterion()
+
+    spyOn(component, 'doDiscard')
+    jest.spyOn(providerService, 'query').mockReturnValue(query)
+    spyOn(providerService, 'store')
+
+    component.critType = 'exclusion'
+    component.provider = providerService
+    component.dialogRef = matDialogRef
+    component.criterionList = [criterion]
+
+    component.doSave(criterion)
+
+    expect(query.groups[0].inclusionCriteria.length).toBe(0)
+    expect(query.groups[0].exclusionCriteria.length).toBe(1)
+    expect(component.doDiscard).toBeCalledWith(criterion)
   })
 })

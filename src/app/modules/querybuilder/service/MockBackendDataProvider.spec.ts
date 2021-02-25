@@ -28,6 +28,13 @@ describe('MockBackendDataProvider', () => {
     expect(terminologyEntry.children[0].id).toBe('D1')
   })
 
+  it('getTerminologyEntry (other)', () => {
+    const terminologyEntry = provider.getTerminologyEntry('6')
+    expect(terminologyEntry.children.length).toBe(0)
+    expect(terminologyEntry.termCode.code).toBe('xyz')
+    expect(terminologyEntry.id).toBe('6')
+  })
+
   it('getTerminologyEntry (non specified id)', () => {
     const terminologyEntry = provider.getTerminologyEntry('XYZ')
     expect(terminologyEntry.children.length).toBe(0)

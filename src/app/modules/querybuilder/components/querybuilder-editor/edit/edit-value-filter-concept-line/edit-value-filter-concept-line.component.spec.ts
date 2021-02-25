@@ -29,4 +29,10 @@ describe('EditValueFilterConceptComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('should fire selectConcept event', () => {
+    spyOn(component.selectConcept, 'emit')
+    component.doSelectConcept()
+    expect(component.selectConcept.emit).toHaveBeenCalledWith()
+  })
 })

@@ -23,9 +23,11 @@ export class DisplayValueFilterComponent implements OnInit {
         return '='
       case Comparator.GREATER_THAN:
         return '>'
+      // TODO: Use UTF-8 characters      case Comparator.GREATER_OR_EQUAL: return utf8Encode('\u2265');
       case Comparator.GREATER_OR_EQUAL:
         return '>='
-      // TODO: Use UTF-8 characters      case Comparator.GREATER_OR_EQUAL: return utf8Encode('\u2265');
+      case Comparator.LESS_OR_EQUAL:
+        return '<='
       case Comparator.LESS_THAN:
         return '<'
       case Comparator.NOT_EQUAL:
