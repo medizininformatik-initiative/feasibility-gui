@@ -6,8 +6,9 @@
 >
   <div class="header-label">{{ 'QUERYBUILDER.SEARCH.' + getHeaderLabelKey() | translate }}</div>
   <div fxLayout="row" fxLayoutAlign="space-between">
-    <mat-form-field fxFlex="80">
+    <mat-form-field class="input-field" fxFlex="80">
       <mat-label>{{ 'QUERYBUILDER.SEARCH.LABEL' | translate }}</mat-label>
+      <!--suppress HtmlFormInputWithoutLabel -->
       <input matInput type="text" [(ngModel)]="search" />
       <button
         mat-button
@@ -44,11 +45,15 @@
 >
   <num-search-tree-overlay-content
     *ngIf="searchMode === 'tree'"
+    [critType]="critType"
     (closeOverlay)="closeOverlay($event)"
-  ></num-search-tree-overlay-content>
+  >
+  </num-search-tree-overlay-content>
   <num-search-text-overlay-content
     *ngIf="searchMode === 'text'"
     [text]="search"
+    [critType]="critType"
     (closeOverlay)="closeOverlay($event)"
-  ></num-search-text-overlay-content>
+  >
+  </num-search-text-overlay-content>
 </ng-template>

@@ -19,6 +19,9 @@ import { Observable, of } from 'rxjs'
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog'
 import { EventEmitter, TemplateRef } from '@angular/core'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
+import { EditCriterionComponent } from '../../edit/edit-criterion/edit-criterion.component'
+import { EditValueFilterComponent } from '../../edit/edit-value-filter/edit-value-filter.component'
+import { MatInputNumberDirective } from '../../edit/mat-input-number.directive'
 
 describe('SearchOverlayTreeComponent', () => {
   let component: SearchTreeOverlayContentComponent
@@ -68,6 +71,7 @@ describe('SearchOverlayTreeComponent', () => {
       },
     } as BackendService
 
+    // noinspection JSUnusedLocalSymbols
     dialog = {
       open<T, D = any, R = any>(
         componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
@@ -91,6 +95,9 @@ describe('SearchOverlayTreeComponent', () => {
         SearchTreeTermEntryComponent,
         ButtonComponent,
         EnterCriterionListComponent,
+        EditCriterionComponent,
+        EditValueFilterComponent,
+        MatInputNumberDirective,
       ],
       imports: [
         BrowserAnimationsModule,
@@ -112,6 +119,7 @@ describe('SearchOverlayTreeComponent', () => {
   })
 
   beforeEach(() => {
+    // noinspection JSUnusedLocalSymbols
     Object.defineProperty(window, 'getComputedStyle', {
       value: () => ({
         getPropertyValue: (prop) => {
@@ -144,7 +152,16 @@ describe('SearchOverlayTreeComponent', () => {
 
       component.openDetailsPopUp(true)
 
-      expect(dialog.open).toBeCalledWith(EnterCriterionListComponent, { data: termEntriesSelected })
+      const expectedDialogConfig = new MatDialogConfig()
+      expectedDialogConfig.autoFocus = true
+      expectedDialogConfig.disableClose = true
+      expectedDialogConfig.data = {
+        termEntryList: termEntriesSelected,
+        groupIndex: 0,
+        critType: undefined,
+      }
+
+      expect(dialog.open).toBeCalledWith(EnterCriterionListComponent, expectedDialogConfig)
       expect(closeOverlay.emit).toBeCalled()
     })
 

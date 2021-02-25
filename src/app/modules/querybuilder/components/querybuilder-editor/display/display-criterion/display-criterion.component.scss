@@ -22,3 +22,22 @@
 .display-part {
   padding: 0.5em;
 }
+
+.header-display {
+  padding: 0 0 0.5em 0;
+}
+
+.crit-box .cancel-button-wrapper {
+  border: 1px solid var(--num-color--accent-100);
+  background-color: var(--num-color--accent-100);
+}
+
+.crit-box .cancel-button {
+  cursor: pointer;
+
+  padding: 0.5em;
+}
+
+.crit-box .cancel-button:hover {
+  background-color: var(--num-color--accent-200);
+}

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Criterion } from '../../../../model/api/query/criterion'
 
 @Component({
@@ -10,7 +10,14 @@ export class DisplayCriterionComponent implements OnInit {
   @Input()
   criterion: Criterion
 
+  @Output()
+  delete = new EventEmitter<Criterion>()
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  doDelete(): void {
+    this.delete.emit(this.criterion)
+  }
 }

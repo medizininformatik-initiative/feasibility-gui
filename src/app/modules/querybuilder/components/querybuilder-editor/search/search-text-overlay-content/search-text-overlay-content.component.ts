@@ -10,9 +10,10 @@ import {
 import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminology/terminology'
 import { Subscription } from 'rxjs'
 import { BackendService } from '../../../../service/backend.service'
-import { MatDialog } from '@angular/material/dialog'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
 import { SearchMode } from '../search-input/search-input.component'
+import { CritType } from '../../../../model/api/query/group'
 
 @Component({
   selector: 'num-search-text-overlay-content',
@@ -25,6 +26,9 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges {
 
   @Input()
   text: string
+
+  @Input()
+  critType: CritType
 
   catId: string
   categories: Array<CategoryEntry>
@@ -59,9 +63,17 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges {
   }
 
   openDetailsPopUp(terminologyEntry: TerminologyEntry): void {
-    this.dialog.open(EnterCriterionListComponent, {
-      data: [terminologyEntry],
-    })
+    const dialogConfig = new MatDialogConfig()
+
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    dialogConfig.data = {
+      termEntryList: terminologyEntry,
+      groupIndex: 0,
+      critType: this.critType,
+    }
+
+    this.dialog.open(EnterCriterionListComponent, dialogConfig)
 
     this.closeOverlay.emit('text')
   }

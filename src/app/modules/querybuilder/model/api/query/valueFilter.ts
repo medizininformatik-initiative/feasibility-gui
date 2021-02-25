@@ -4,6 +4,9 @@ import { transient } from '../annotations'
 export class ValueFilter {
   type: OperatorOptions
 
+  @transient()
+  display?: string
+
   // QUANTITY_COMPARATOR & QUANTITY_RANGE
   unit?: QuantityUnit
   @transient()

@@ -1,0 +1,89 @@
+<div *ngIf="filter">
+  <!-- QUANTITY -->
+  <div *ngIf="filter.type === QUANTITY_RANGE || filter.type === QUANTITY_COMPARATOR">
+    <div *ngIf="!filter.display">{{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}</div>
+    <div *ngIf="filter.display">
+      {{
+        'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY_FOR_DISPLAY'
+          | translate: { label: filter.display }
+      }}
+    </div>
+    <mat-form-field appearance="outline" *ngIf="filter?.unit" class="operator-part">
+      <mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>
+      <mat-select [(value)]="quantityFilterOption">
+        <mat-option
+          *ngFor="let option of quantityFilterOptions"
+          [value]="option"
+          (click)="selectQuantityFilterOption(option)"
+        >
+          {{ 'QUERYBUILDER.EDIT.' + option | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_RANGE" class="min-part">
+      <mat-label>{{ 'QUERYBUILDER.EDIT.MIN' | translate }}</mat-label>
+      <!--suppress HtmlFormInputWithoutLabel -->
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="filter.minValue"
+        (blur)="roundMinValue()"
+        numMatInputNumber
+        [precision]="filter.precision"
+      />
+    </mat-form-field>
+    <span *ngIf="filter.type === QUANTITY_RANGE">{{ 'QUERYBUILDER.EDIT.AND' | translate }}</span>
+    <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_RANGE" class="max-part">
+      <mat-label>{{ 'QUERYBUILDER.EDIT.MAX' | translate }}</mat-label>
+      <!--suppress HtmlFormInputWithoutLabel -->
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="filter.maxValue"
+        (blur)="roundMaxValue()"
+        numMatInputNumber
+        [precision]="filter.precision"
+      />
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline"
+      *ngIf="filter.type === QUANTITY_COMPARATOR"
+      class="value-part"
+    >
+      <mat-label>{{ 'QUERYBUILDER.EDIT.VALUE' | translate }}</mat-label>
+      <!--suppress HtmlFormInputWithoutLabel -->
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="filter.value"
+        (blur)="roundValue()"
+        numMatInputNumber
+        [precision]="filter.precision"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
+      <mat-label>Einheit</mat-label>
+      <mat-select [(value)]="filter.unit">
+        <mat-option *ngFor="let unit of termEntry.valueDefinition.allowedUnits" [value]="unit">
+          {{ unit.display }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- CONCEPT -->
+  <div *ngIf="filter.type === CONCEPT">
+    <div *ngIf="!filter.display">{{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT' | translate }}</div>
+    <div *ngIf="filter.display">
+      {{
+        'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_FOR_DISPLAY' | translate: { label: filter.display }
+      }}
+    </div>
+    <div class="concept-list mat-elevation-z2">
+      <div *ngFor="let concept of termEntry.valueDefinition.selectableConcepts">
+        <mat-checkbox (click)="doSelectConcept(concept)"></mat-checkbox>
+        {{ concept.code }} - {{ concept.display }}
+      </div>
+    </div>
+  </div>
+</div>

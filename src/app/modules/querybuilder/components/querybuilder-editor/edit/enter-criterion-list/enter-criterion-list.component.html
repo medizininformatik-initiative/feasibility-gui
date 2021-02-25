@@ -1,3 +1,16 @@
-<div *ngFor="let critDefinition of critDefinitionList">
-  {{ critDefinition.termCode.code }} : {{ critDefinition.termCode.display }}
+<div class="container">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h3>{{ 'QUERYBUILDER.EDIT.HEADER' | translate }}</h3>
+    <!-- TODO[CODEX]: use icon 'close'-->
+    <button mat-button (click)="doDiscardAll()">X</button>
+  </div>
+  <div *ngIf="criterionList" class="crit-list">
+    <num-edit-criterion
+      *ngFor="let criterion of criterionList"
+      [criterion]="criterion"
+      (save)="doSave(criterion)"
+      (discard)="doDiscard(criterion)"
+    >
+    </num-edit-criterion>
+  </div>
 </div>

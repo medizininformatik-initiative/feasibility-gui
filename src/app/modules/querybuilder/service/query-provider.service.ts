@@ -24,7 +24,7 @@ export class QueryProviderService {
   }
 
   public static createDefaultQuery(): Query {
-    return QueryProviderService.createTestQuery()
+    return { groups: [], display: '' }
   }
 
   public static createTestQuery(): Query {

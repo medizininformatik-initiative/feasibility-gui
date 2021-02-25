@@ -1,7 +1,15 @@
-<div class="container-bool-logic">
+<div
+  class="container-bool-logic"
+  [ngClass]="{
+    'container-bool-logic-inner': position === 'inner',
+    'container-bool-logic-outer': position === 'outer'
+  }"
+>
   <mat-chip (click)="switch()">
-    <fa-icon icon="circle" *ngIf="position === 'inner'"></fa-icon>
-    {{ getLabelKey() | translate }}
-    <fa-icon icon="circle" *ngIf="position === 'outer'"></fa-icon>
+    <span [ngClass]="{ 'container-bool-logic-inner-margin': position === 'inner' }">
+      <fa-icon icon="circle" *ngIf="position === 'inner'"></fa-icon>
+      {{ getLabelKey() | translate }}
+      <fa-icon icon="circle" *ngIf="position === 'outer'"></fa-icon>
+    </span>
   </mat-chip>
 </div>

@@ -4,6 +4,8 @@ import { QuantityUnit } from '../query/valueFilter'
 export abstract class ValueDefinition {
   type: ValueType
 
+  display?: string
+
   precision = 1
   max?: number
   min?: number

@@ -1,6 +1,11 @@
 .container-search-input {
   position: relative;
   min-height: 8em;
+  border: 1px solid var(--num-color--accent);
+}
+
+.input-field {
+  padding: 0 1em;
 }
 
 .show-above-overlay {

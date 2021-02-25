@@ -1,5 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-between stretch" class="container-crit-group">
   <div
+    fxFlex="0"
     *ngFor="let criterionInnerArray of critGroup; let lastOuter = last; let i = index"
     class="outer"
   >
@@ -10,7 +11,12 @@
       [cdkDropListData]="{ groupId: groupId, critType: critType, row: i, column: j }"
       (cdkDropListDropped)="doDrop($event)"
     >
-      <num-display-criterion [criterion]="criterion" cdkDrag> </num-display-criterion>
+      <num-display-criterion
+        [criterion]="criterion"
+        (delete)="doDelete({ row: i, column: j })"
+        cdkDrag
+      >
+      </num-display-criterion>
       <num-bool-logic-switch
         [position]="'inner'"
         [label]="getInnerLabelKey()"
@@ -24,5 +30,15 @@
       (switched)="joinInnerArrays(i)"
       *ngIf="!lastOuter"
     ></num-bool-logic-switch>
+  </div>
+  <div
+    fxFlex="grow"
+    class="drop-at-bottom"
+    cdkDropList
+    [cdkDropListData]="{ critType: critType, groupId: groupId, addMode: 'end' }"
+    (cdkDropListDropped)="doDropAtEnd($event)"
+    [ngClass]="{ 'no-top-margin': critGroup.length === 0 }"
+  >
+    <num-bool-logic-switch [position]="'outer'" [label]="'AND'"></num-bool-logic-switch>
   </div>
 </div>

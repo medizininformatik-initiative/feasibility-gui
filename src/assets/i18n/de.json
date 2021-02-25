@@ -29,9 +29,32 @@
       "LABEL": "Code oder Suchbegriff",
       "ALL": "Alle"
     },
-    "SWITCH":{
+    "SWITCH": {
       "LABEL_AND": "UND",
       "LABEL_OR": "ODER"
+    },
+    "DISPLAY": {
+      "ONE_OF": "",
+      "MORE": "weitere",
+      "BETWEEN": "zwischen {{ min }} und {{ max }} {{ unit }}",
+      "COMPARATOR": "{{ comparator }} {{ value }} {{ unit }}"
+    },
+    "EDIT": {
+      "HEADER": "Einschränkungen der ausgewählten Merkmale",
+      "HEADER_FILTER_QUANTITY": "Geben Sie einen Wertebereich ein:",
+      "HEADER_FILTER_QUANTITY_FOR_DISPLAY": "Geben Sie einen Wertebereich ein ({{ label }}):",
+      "HEADER_FILTER_CONCEPT": "Geben Sie einen oder mehrere zulässige Werte an:",
+      "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
+      "UNIT": "Einheit",
+      "MIN": "Min",
+      "MAX": "Max",
+      "VALUE": "Wert",
+      "OPERATOR": "Operator",
+      "AND": "und",
+      "EQUAL": "gleich",
+      "LESS_THAN": "kleiner",
+      "GREATER_THAN": "größer",
+      "BETWEEN": "zwischen"
     }
   },
   "LEGAL": {
