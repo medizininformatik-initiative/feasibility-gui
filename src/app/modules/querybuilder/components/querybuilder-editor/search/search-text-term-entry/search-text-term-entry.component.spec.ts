@@ -21,4 +21,10 @@ describe('SerachTextTermEntryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('should fire choose event', () => {
+    spyOn(component.choose, 'emit')
+    component.fireChoose()
+    expect(component.choose.emit).toHaveBeenCalledWith(component.node)
+  })
 })

@@ -22,8 +22,8 @@ export class EditSingleCriterionComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EditSingleCriterionComponentData,
-    private provider: QueryProviderService,
-    private dialogRef: MatDialogRef<EditSingleCriterionComponent>
+    public provider: QueryProviderService,
+    public dialogRef: MatDialogRef<EditSingleCriterionComponent>
   ) {
     this.criterion = data.criterion
     this.queryModified = data.query

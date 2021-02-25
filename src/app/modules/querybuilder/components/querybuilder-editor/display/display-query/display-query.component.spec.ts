@@ -11,6 +11,7 @@ import { QueryProviderService } from '../../../../service/query-provider.service
 import { MaterialModule } from '../../../../../../layout/material/material.module'
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger'
 import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
+import { Group } from '../../../../model/api/query/group'
 
 describe('DisplayQueryComponent', () => {
   let component: DisplayQueryComponent
@@ -75,5 +76,30 @@ describe('DisplayQueryComponent', () => {
       from,
       to
     )
+  })
+
+  it('should do nothing for call on non-existing group', () => {
+    spyOn(component.storeQuery, 'emit')
+    const groupBeforeAction = component.query.groups[0]
+    const groupParameter = new Group()
+    groupParameter.id = '4711'
+
+    component.doSaveGroup(groupParameter)
+
+    expect(component.query.groups[0]).toBe(groupBeforeAction)
+    expect(component.storeQuery.emit).not.toHaveBeenCalled()
+  })
+
+  it('should replace existing group', () => {
+    spyOn(component.storeQuery, 'emit')
+    const groupBeforeAction = component.query.groups[0]
+    const groupParameter = new Group()
+    groupParameter.id = groupBeforeAction.id
+
+    component.doSaveGroup(groupParameter)
+
+    expect(component.query.groups[0]).toEqual(groupParameter)
+    expect(component.query.groups[0]).not.toEqual(groupBeforeAction)
+    expect(component.storeQuery.emit).toHaveBeenCalledWith(component.query)
   })
 })

@@ -20,10 +20,6 @@ export class TermEntry2CriterionTranslator {
 
   // noinspection JSMethodCanBeStatic
   private createValueFilter(valueDefinition: ValueDefinition): ValueFilter {
-    if (!valueDefinition) {
-      return undefined
-    }
-
     const valueFilter = new ValueFilter()
     valueFilter.display = valueDefinition.display
     valueFilter.valueDefinition = valueDefinition

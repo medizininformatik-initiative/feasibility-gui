@@ -53,7 +53,7 @@ export class DisplayQueryComponent implements OnInit, OnDestroy {
   doSaveGroup(group: Group): void {
     const index = this.query.groups.findIndex((groupTemp) => groupTemp.id === group.id)
 
-    if (index !== undefined) {
+    if (index >= 0) {
       this.query.groups[index] = group
       this.storeQuery.emit(this.query)
     }

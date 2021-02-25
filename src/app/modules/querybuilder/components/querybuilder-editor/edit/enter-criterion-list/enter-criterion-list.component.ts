@@ -26,8 +26,8 @@ export class EnterCriterionListComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
-    private provider: QueryProviderService,
-    private dialogRef: MatDialogRef<EnterCriterionListComponent>
+    public provider: QueryProviderService,
+    public dialogRef: MatDialogRef<EnterCriterionListComponent>
   ) {
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry))
     this.critType = data.critType

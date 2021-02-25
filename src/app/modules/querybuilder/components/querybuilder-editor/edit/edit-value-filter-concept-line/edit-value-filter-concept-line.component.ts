@@ -17,7 +17,7 @@ export class EditValueFilterConceptLineComponent implements OnInit {
   checkedControlForm: FormGroup
 
   @Output()
-  private selectConcept = new EventEmitter<void>()
+  selectConcept = new EventEmitter<void>()
 
   constructor() {}
 

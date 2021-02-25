@@ -107,4 +107,10 @@ describe('DisplayCritGroupComponent', () => {
       to: { b: 2 },
     })
   })
+
+  it('should fire delete event', () => {
+    spyOn(component.delete, 'emit')
+    component.doDelete({ row: 47, column: 11 })
+    expect(component.delete.emit).toHaveBeenCalledWith({ row: 47, column: 11 })
+  })
 })

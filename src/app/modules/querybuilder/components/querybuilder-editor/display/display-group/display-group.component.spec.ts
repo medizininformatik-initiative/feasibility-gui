@@ -10,6 +10,7 @@ import { QueryProviderService } from '../../../../service/query-provider.service
 import { MaterialModule } from '../../../../../../layout/material/material.module'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
+import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
 
 describe('DisplayGroupComponent', () => {
   let component: DisplayGroupComponent
@@ -48,6 +49,30 @@ describe('DisplayGroupComponent', () => {
     component.doDrop(mockEvent)
 
     expect(component.dropped.emit).toHaveBeenCalledWith(mockEvent)
+  })
+
+  it('should call remove on delete', () => {
+    spyOn(CritGroupArranger, 'removeFromGroup')
+    const groupBeforeAction = component.group
+
+    component.doDelete({ row: 47, column: 11 }, 'exclusion')
+
+    expect(CritGroupArranger.removeFromGroup).toHaveBeenCalledWith(groupBeforeAction, {
+      row: 47,
+      column: 11,
+      critType: 'exclusion',
+      groupId: groupBeforeAction.id,
+    })
+  })
+
+  it('should save on delete', () => {
+    spyOn(component.saveGroup, 'emit')
+    const groupBeforeAction = component.group
+
+    component.doDelete({ row: 0, column: 0 }, 'exclusion')
+
+    expect(component.saveGroup.emit).not.toHaveBeenCalledWith(groupBeforeAction)
+    expect(component.saveGroup.emit).toHaveBeenCalledWith(component.group)
   })
 
   it('should store in inclusionCriteria', () => {
