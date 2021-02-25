@@ -23,6 +23,11 @@ describe('EditSingleCriterionComponent', () => {
   let matDialogRef
   let providerService
 
+  const querySnapshot = new Query()
+  querySnapshot.display = 'SNAPSHOT'
+  const queryModified = new Query()
+  queryModified.display = 'MODIFIED'
+
   beforeEach(async () => {
     matDialogRef = {
       close: () => {},
@@ -102,11 +107,6 @@ describe('EditSingleCriterionComponent', () => {
     component.provider = providerService
     component.dialogRef = matDialogRef
 
-    const querySnapshot = new Query()
-    querySnapshot.display = 'SNAPSHOT'
-    const queryModified = new Query()
-    queryModified.display = 'MODIFIED'
-
     component.querySnapshot = querySnapshot
     component.queryModified = queryModified
 
@@ -123,11 +123,6 @@ describe('EditSingleCriterionComponent', () => {
 
     component.provider = providerService
     component.dialogRef = matDialogRef
-
-    const querySnapshot = new Query()
-    querySnapshot.display = 'SNAPSHOT'
-    const queryModified = new Query()
-    queryModified.display = 'MODIFIED'
 
     component.querySnapshot = querySnapshot
     component.queryModified = queryModified

@@ -7,6 +7,7 @@ import { TimeRestriction } from './timerestriction'
 // a terminology code (system + version + code), operators and values.
 export class Criterion {
   termCode: TerminologyCode
+  display: string
 
   valueFilters: Array<ValueFilter> = []
 
