@@ -8,14 +8,15 @@ import { FeatureService } from '../../../service/feature.service'
 import { QueryResult } from '../model/api/result/QueryResult'
 import DoneCallback = jest.DoneCallback
 import { CategoryEntry, TerminologyEntry } from '../model/api/terminology/terminology'
-import { Query, QueryResponse } from '../model/api/query/query'
+import { QueryResponse } from '../model/api/result/QueryResponse'
+import { Query } from '../model/api/query/query'
 
 describe('BackendService', () => {
   let service: BackendService
 
   const EXAMPLE_ID = '12345'
   const EXAMPLE_SEARCH = 'Diab'
-  const EXAMPLE_URL = 'http:/abc/result?id=123456'
+  const EXAMPLE_URL = 'http:/abc/querybuillder/result?id=123456'
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -38,7 +39,7 @@ describe('BackendService', () => {
     })
   })
 
-  it('should return mocked categroies (root entries)', (done: DoneCallback) => {
+  it('should return mocked categories (root entries)', (done: DoneCallback) => {
     const appConfigService = TestBed.inject<AppConfigService>(AppConfigService)
     jest
       .spyOn(appConfigService, 'getConfig')
@@ -54,7 +55,7 @@ describe('BackendService', () => {
       done()
     })
 
-    httpMock.expectOne('http:/abc/root-entries').flush(mockResponse)
+    httpMock.expectOne('http:/abc/terminology/root-entries').flush(mockResponse)
   })
 
   it('should return programmatically mocked terminology tree', (done: DoneCallback) => {
@@ -83,7 +84,7 @@ describe('BackendService', () => {
       done()
     })
 
-    httpMock.expectOne('http:/abc/entries/12345').flush(mockResponse)
+    httpMock.expectOne('http:/abc/terminology/entries/12345').flush(mockResponse)
   })
 
   it('should return programmatically mocked search result list', (done: DoneCallback) => {
@@ -116,7 +117,9 @@ describe('BackendService', () => {
         done()
       })
 
-    httpMock.expectOne('http:/abc/selectable-entries?q=' + EXAMPLE_SEARCH).flush(mockResponse)
+    httpMock
+      .expectOne('http:/abc/terminology/selectable-entries?q=' + EXAMPLE_SEARCH)
+      .flush(mockResponse)
   })
 
   it('should post programmatically mocked query', (done: DoneCallback) => {
@@ -145,7 +148,7 @@ describe('BackendService', () => {
       done()
     })
 
-    httpMock.expectOne(new Query()).flush(mockResponse)
+    httpMock.expectOne('http:/abc/querybuilder/run-query').flush(mockResponse)
   })
 
   it('should return programmatically mocked result', (done: DoneCallback) => {
