@@ -1,0 +1,26 @@
+.container-search-input {
+  position: relative;
+  min-height: 8em;
+}
+
+.show-above-overlay {
+  z-index: 2000;
+}
+
+.header-label {
+  width: 33%;
+  background-color: var(--num-color--accent-100);
+}
+
+.button-tree-view {
+  background-color: var(--num-color--accent-300);
+}
+
+.mat-icon-button {
+  height: 60px;
+  width: 60px;
+}
+
+::ng-deep .container-search-input .mat-checkbox {
+  padding: 0 0.5em 0 0;
+}

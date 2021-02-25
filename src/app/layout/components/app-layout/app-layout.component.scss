@@ -1,3 +1,7 @@
 .safari-fix {
   min-height: fit-content;
 }
+
+.fix-overlay {
+  z-index: unset;
+}

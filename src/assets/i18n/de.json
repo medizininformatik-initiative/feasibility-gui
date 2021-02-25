@@ -26,7 +26,8 @@
     "SEARCH": {
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
-      "LABEL": "Code oder Suchbegriff"
+      "LABEL": "Code oder Suchbegriff",
+      "ALL": "Alle"
     },
     "SWITCH":{
       "LABEL_AND": "UND",

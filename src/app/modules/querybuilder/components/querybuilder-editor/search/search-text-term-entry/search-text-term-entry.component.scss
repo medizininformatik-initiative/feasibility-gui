@@ -1,0 +1,7 @@
+.container {
+  cursor: pointer;
+}
+
+.container:hover {
+  background-color: var(--num-color--accent-100);
+}

@@ -13,6 +13,11 @@ import { MockBackendDataProvider } from './MockBackendDataProvider'
   providedIn: 'root',
 })
 export class BackendService {
+  constructor(
+    private config: AppConfigService,
+    private feature: FeatureService,
+    private http: HttpClient
+  ) {}
   private static PATH_ROOT_ENTRIES = 'terminology/root-entries'
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries'
   private static PATH_SEARCH = 'terminology/selectable-entries'
@@ -25,15 +30,11 @@ export class BackendService {
   }
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345'
 
-  constructor(
-    private config: AppConfigService,
-    private feature: FeatureService,
-    private http: HttpClient
-  ) {}
+  private readonly mockBackendDataProvider = new MockBackendDataProvider()
 
   public getCategories(): Observable<Array<CategoryEntry>> {
     if (this.feature.mockTerminology()) {
-      return of(MockBackendDataProvider.getCategoryEntries())
+      return of(this.mockBackendDataProvider.getCategoryEntries())
     }
 
     return this.http.get<Array<CategoryEntry>>(this.createUrl(BackendService.PATH_ROOT_ENTRIES))
@@ -41,7 +42,7 @@ export class BackendService {
 
   public getTerminolgyTree(id: string): Observable<TerminologyEntry> {
     if (this.feature.mockTerminology()) {
-      return of(MockBackendDataProvider.getTerminologyEntry(id))
+      return of(this.mockBackendDataProvider.getTerminologyEntry(id))
     }
 
     return this.http.get<TerminologyEntry>(
@@ -49,9 +50,12 @@ export class BackendService {
     )
   }
 
-  public getTerminolgyEntrySearchResult(search: string): Observable<Array<TerminologyEntry>> {
+  public getTerminolgyEntrySearchResult(
+    catId: string,
+    search: string
+  ): Observable<Array<TerminologyEntry>> {
     if (this.feature.mockTerminology()) {
-      return of(new Array<TerminologyEntry>())
+      return of(this.mockBackendDataProvider.getTerminolgyEntrySearchResult(catId, search))
     }
 
     return this.http.get<Array<TerminologyEntry>>(

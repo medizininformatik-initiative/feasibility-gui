@@ -1,0 +1,17 @@
+<div *ngIf="node.selectable" class="container">
+  <div fxLayout="row" fxLayoutAlign="space-between top">
+    <div class="checkbox-part">
+      <mat-checkbox [(ngModel)]="node.selected"></mat-checkbox>
+    </div>
+    <div class="code-part">
+      {{ node.termCode.code }}
+    </div>
+    <div class="display-part">
+      {{ node.termCode.display }}
+    </div>
+  </div>
+</div>
+
+<div matTreeNodeToggle *ngIf="!node.selectable" class="container">
+  {{ node.termCode.display }}
+</div>

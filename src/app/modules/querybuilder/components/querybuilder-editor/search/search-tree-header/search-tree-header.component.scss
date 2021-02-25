@@ -1,0 +1,24 @@
+.container {
+  border-top: 2px solid var(--num-color--accent-200);
+  border-bottom: 2px solid var(--num-color--accent-200);
+
+  overflow-x: auto;
+}
+
+.category-box {
+  cursor: pointer;
+}
+
+.short-box {
+  padding: 0.5em 1em;
+  background-color: var(--num-color--accent-200);
+  color: white;
+}
+
+.display-box {
+  padding: 0.5em;
+}
+
+.selected-category {
+  background-color: var(--num-color--accent-100);
+}
