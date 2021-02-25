@@ -23,6 +23,7 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 import { SearchTextOverlayContentComponent } from './search/search-text-overlay-content/search-text-overlay-content.component'
 import { SearchTextHeaderComponent } from './search/search-text-header/search-text-header.component'
 import { SearchTextTermEntryComponent } from './search/search-text-term-entry/search-text-term-entry.component'
+import { DisplayValueFilterComponent } from './display/display-value-filter/display-value-filter.component'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -39,6 +40,7 @@ describe('QuerybuilderEditorComponent', () => {
         DisplayGroupComponent,
         DisplayCritGroupComponent,
         DisplayCriterionComponent,
+        DisplayValueFilterComponent,
         BoolLogicSwitchComponent,
         SearchInputComponent,
         SearchTreeOverlayContentComponent,
@@ -64,6 +66,7 @@ describe('QuerybuilderEditorComponent', () => {
 
   beforeEach(() => {
     // Workaround: see https://github.com/thymikee/jest-preset-angular/issues/122
+    // noinspection JSUnusedLocalSymbols
     Object.defineProperty(window, 'getComputedStyle', {
       value: () => ({
         getPropertyValue: (prop) => {

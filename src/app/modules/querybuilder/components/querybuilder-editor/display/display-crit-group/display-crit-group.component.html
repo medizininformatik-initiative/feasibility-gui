@@ -13,6 +13,7 @@
     >
       <num-display-criterion
         [criterion]="criterion"
+        [query]="query"
         (delete)="doDelete({ row: i, column: j })"
         cdkDrag
       >
@@ -39,6 +40,9 @@
     (cdkDropListDropped)="doDropAtEnd($event)"
     [ngClass]="{ 'no-top-margin': critGroup.length === 0 }"
   >
-    <num-bool-logic-switch [position]="'outer'" [label]="'AND'"></num-bool-logic-switch>
+    <num-bool-logic-switch
+      [position]="'outer'"
+      [label]="getOuterLabelKey()"
+    ></num-bool-logic-switch>
   </div>
 </div>

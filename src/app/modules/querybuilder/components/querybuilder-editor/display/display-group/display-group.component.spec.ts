@@ -9,6 +9,7 @@ import { BoolLogicSwitchComponent } from '../bool-logic-switch/bool-logic-switch
 import { QueryProviderService } from '../../../../service/query-provider.service'
 import { MaterialModule } from '../../../../../../layout/material/material.module'
 import { Criterion } from '../../../../model/api/query/criterion'
+import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
 
 describe('DisplayGroupComponent', () => {
   let component: DisplayGroupComponent
@@ -20,6 +21,7 @@ describe('DisplayGroupComponent', () => {
         DisplayGroupComponent,
         DisplayCritGroupComponent,
         DisplayCriterionComponent,
+        DisplayValueFilterComponent,
         BoolLogicSwitchComponent,
       ],
       imports: [MaterialModule, FontAwesomeTestingModule, TranslateModule.forRoot()],

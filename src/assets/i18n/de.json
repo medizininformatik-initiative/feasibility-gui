@@ -55,6 +55,12 @@
       "LESS_THAN": "kleiner",
       "GREATER_THAN": "größer",
       "BETWEEN": "zwischen"
+    },
+    "HINT": {
+      "NO_VALUE_SELECTED": "Wählen Sie mindestens einen Wert",
+      "MINIMUM_GREATER_MAXIMUM": "Der minimale Wert muss kleiner als der maximale Wert sein",
+      "MINIMUM_EXCEEDED": "Wert muss mindestens {{ min }} sein",
+      "MAXIMUM_EXCEEDED": "Wert darf höchstens {{ max }} sein"
     }
   },
   "LEGAL": {

@@ -2,7 +2,7 @@
   <div fxFlex="20" class="code-part">
     {{ criterion.termCode.code }}
   </div>
-  <div fxFlex="80" class="display-part">
+  <div fxFlex="80" class="display-part" (click)="openDetailsPopUp()">
     <div class="header-display">{{ criterion.termCode.display }}</div>
     <num-display-value-filter
       *ngIf="criterion.valueFilter as filter"

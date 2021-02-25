@@ -6,7 +6,6 @@ import {
   ValueFilter,
 } from '../../../../model/api/query/valueFilter'
 import { TerminologyCode, TerminologyEntry } from '../../../../model/api/terminology/terminology'
-import { ObjectHelper } from '../../../../controller/ObjectHelper'
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -21,14 +20,15 @@ export class EditValueFilterComponent implements OnInit {
   termEntry: TerminologyEntry
 
   @Output()
-  selectConcept = new EventEmitter()
+  selectConcept = new EventEmitter<Array<TerminologyCode>>()
 
   QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
   QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
   CONCEPT = OperatorOptions.CONCEPT
 
   selectedUnit: QuantityUnit
-  selectedMap: Map<TerminologyCode, boolean> = new Map()
+  // Use string representation of concept because equivalent objects do not match in TypeScript (e.g. { a: 1 } !== { a: 1 })
+  selectedConceptsAsJson: Set<string> = new Set()
   quantityFilterOption: string
   // TODO: Try using enum
   quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN']
@@ -36,7 +36,9 @@ export class EditValueFilterComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.filter?.selectedConcepts.forEach((concept) => this.selectedMap.set(concept, false))
+    this.filter?.selectedConcepts.forEach((concept) =>
+      this.selectedConceptsAsJson.add(JSON.stringify(concept))
+    )
     this.selectedUnit =
       this.termEntry.valueDefinition?.allowedUnits?.length > 0
         ? this.termEntry.valueDefinition?.allowedUnits[0]
@@ -104,15 +106,68 @@ export class EditValueFilterComponent implements OnInit {
   }
 
   doSelectConcept(concept: TerminologyCode): void {
-    this.selectedMap.set(concept, !this.selectedMap.get(concept))
+    const conceptAsJson = JSON.stringify(concept)
+    if (this.selectedConceptsAsJson.has(conceptAsJson)) {
+      this.selectedConceptsAsJson.delete(conceptAsJson)
+    } else {
+      this.selectedConceptsAsJson.add(conceptAsJson)
+    }
 
-    const selectedEntries: Array<TerminologyCode> = []
-    this.selectedMap.forEach((value, key) => {
-      if (value) {
-        selectedEntries.push(ObjectHelper.clone(key))
-      }
-    })
+    const selectedConcepts: Array<TerminologyCode> = []
+    this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) =>
+      selectedConcepts.push(JSON.parse(conceptAsJsonTemp))
+    )
+    this.selectConcept.emit(selectedConcepts)
+  }
 
-    this.selectConcept.emit(selectedEntries)
+  isSelected(concept: TerminologyCode): boolean {
+    return this.selectedConceptsAsJson.has(JSON.stringify(concept))
+  }
+
+  public isActionDisabled(): boolean {
+    if (this.filter?.type === OperatorOptions.CONCEPT) {
+      return this.noSelectedConcept()
+    }
+
+    if (this.filter?.type === OperatorOptions.QUANTITY_COMPARATOR) {
+      return this.valueTooSmall(this.filter.value) || this.valueTooLarge(this.filter.value)
+    }
+
+    if (this.filter?.type === OperatorOptions.QUANTITY_RANGE) {
+      return (
+        this.minimumSmallerMaximum() ||
+        this.valueTooSmall(this.filter.minValue) ||
+        this.valueTooLarge(this.filter.minValue) ||
+        this.valueTooSmall(this.filter.maxValue) ||
+        this.valueTooLarge(this.filter.maxValue)
+      )
+    }
+
+    return false
+  }
+
+  noSelectedConcept(): boolean {
+    return this.selectedConceptsAsJson.size === 0
+  }
+
+  valueTooSmall(value: number): boolean {
+    if (!this.filter.min && this.filter.min !== 0) {
+      return true
+    }
+    return value < this.filter.min
+  }
+
+  valueTooLarge(value: number): boolean {
+    if (!this.filter.max && this.filter.max !== 0) {
+      return true
+    }
+    return value > this.filter.max
+  }
+
+  minimumSmallerMaximum(): boolean {
+    return (
+      this.filter.type === OperatorOptions.QUANTITY_RANGE &&
+      this.filter.minValue >= this.filter.maxValue
+    )
   }
 }

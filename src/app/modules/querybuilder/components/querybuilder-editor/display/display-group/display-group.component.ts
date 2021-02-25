@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { CritType, Group } from '../../../../model/api/query/group'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
+import { Query } from '../../../../model/api/query/query'
 
 @Component({
   selector: 'num-display-group',
@@ -11,6 +12,9 @@ import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
 export class DisplayGroupComponent implements OnInit {
   @Input()
   group: Group
+
+  @Input()
+  query: Query
 
   @Output()
   dropped = new EventEmitter()

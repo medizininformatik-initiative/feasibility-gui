@@ -25,9 +25,15 @@ describe('QueryProviderService', () => {
     expect(service.storage.set).toHaveBeenCalledWith('QUERY', query)
   })
 
-  it('default query should be the same as test query ', () => {
-    expect(QueryProviderService.createDefaultQuery()).toStrictEqual({
-      groups: [],
+  it('default query should contain one empty group, only ', () => {
+    expect(QueryProviderService.createDefaultQuery()).toEqual({
+      groups: [
+        {
+          display: 'Ausgewählte Merkmale',
+          exclusionCriteria: [],
+          inclusionCriteria: [],
+        },
+      ],
       display: '',
     })
   })

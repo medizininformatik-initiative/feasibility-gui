@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { QueryProviderService } from '../../../../service/query-provider.service'
 import { MaterialModule } from '../../../../../../layout/material/material.module'
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger'
+import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
 
 describe('DisplayQueryComponent', () => {
   let component: DisplayQueryComponent
@@ -22,6 +23,7 @@ describe('DisplayQueryComponent', () => {
         DisplayGroupComponent,
         DisplayCritGroupComponent,
         DisplayCriterionComponent,
+        DisplayValueFilterComponent,
         BoolLogicSwitchComponent,
       ],
       imports: [MaterialModule, FontAwesomeTestingModule, TranslateModule.forRoot()],

@@ -8,7 +8,7 @@ import { ButtonComponent } from '../../../../../../shared/components/button/butt
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MaterialModule } from '../../../../../../layout/material/material.module'
 import { ComponentType, OverlayModule } from '@angular/cdk/overlay'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { TranslateModule } from '@ngx-translate/core'
@@ -22,6 +22,7 @@ import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/ent
 import { EditCriterionComponent } from '../../edit/edit-criterion/edit-criterion.component'
 import { EditValueFilterComponent } from '../../edit/edit-value-filter/edit-value-filter.component'
 import { MatInputNumberDirective } from '../../edit/mat-input-number.directive'
+import { EditValueFilterConceptLineComponent } from '../../edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component'
 
 describe('SearchOverlayTreeComponent', () => {
   let component: SearchTreeOverlayContentComponent
@@ -96,11 +97,13 @@ describe('SearchOverlayTreeComponent', () => {
         ButtonComponent,
         EnterCriterionListComponent,
         EditCriterionComponent,
+        EditValueFilterConceptLineComponent,
         EditValueFilterComponent,
         MatInputNumberDirective,
       ],
       imports: [
         BrowserAnimationsModule,
+        ReactiveFormsModule,
         MaterialModule,
         HttpClientTestingModule,
         OverlayModule,

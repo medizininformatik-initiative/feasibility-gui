@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
 import { CritType } from '../../../../model/api/query/group'
+import { Query } from '../../../../model/api/query/query'
 
 @Component({
   selector: 'num-display-crit-group',
@@ -11,6 +12,9 @@ import { CritType } from '../../../../model/api/query/group'
 export class DisplayCritGroupComponent implements OnInit {
   @Input()
   critGroup: Criterion[][]
+
+  @Input()
+  query: Query
 
   @Input()
   groupId: string
