@@ -31,7 +31,7 @@ describe('SearchOverlayTreeComponent', () => {
   function createTermEntry(code: string, selected: boolean): TerminologyEntry {
     const termEntry = new TerminologyEntry()
     termEntry.id = code
-    termEntry.termCode.code = code
+    termEntry.termCode = { code, system: 'http://test', display: code }
     termEntry.selected = selected
     termEntry.leaf = false
     return termEntry

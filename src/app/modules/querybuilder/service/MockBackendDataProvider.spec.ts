@@ -47,8 +47,12 @@ describe('MockBackendDataProvider', () => {
     expect(terminologyEntryList[0].termCode.display).toBe(
       'Chronische Virushepatitis, nicht näher bezeichnet'
     )
+    expect(terminologyEntryList[0].display).toBe(
+      'Chronische Virushepatitis, nicht näher bezeichnet'
+    )
     expect(terminologyEntryList[2].termCode.code).toBe('76689-9')
     expect(terminologyEntryList[2].termCode.display).toBe('Biological Sex')
+    expect(terminologyEntryList[2].display).toBe('Biological Sex')
   })
 
   it('getTerminolgyEntrySearchResult (amnesis)', () => {
@@ -58,6 +62,9 @@ describe('MockBackendDataProvider', () => {
     expect(terminologyEntryList[0].termCode.display).toBe(
       'Chronische Virushepatitis, nicht näher bezeichnet'
     )
+    expect(terminologyEntryList[0].display).toBe(
+      'Chronische Virushepatitis, nicht näher bezeichnet'
+    )
   })
 
   it('getTerminolgyEntrySearchResult (demographics)', () => {
@@ -65,5 +72,6 @@ describe('MockBackendDataProvider', () => {
     expect(terminologyEntryList.length).toBe(3)
     expect(terminologyEntryList[0].termCode.code).toBe('76689-9')
     expect(terminologyEntryList[0].termCode.display).toBe('Biological Sex')
+    expect(terminologyEntryList[0].display).toBe('Biological Sex')
   })
 })

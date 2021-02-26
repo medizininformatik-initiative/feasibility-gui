@@ -11,6 +11,7 @@ describe('TermEntry2CriterionTranslator', () => {
     return {
       id: 'abc',
       termCode: { code: 'A', system: 'http://test', display: 'none' },
+      display: 'ui-display',
       leaf: true,
       children: [],
       selectable: true,
@@ -27,6 +28,7 @@ describe('TermEntry2CriterionTranslator', () => {
         display: 'none',
         system: 'http://test',
       },
+      display: 'ui-display',
       valueFilters: [],
     }
   }

@@ -46,8 +46,9 @@ import { ValueDefinition } from './valuedefinition'
 //                                                                      |      . . .
 
 export class TerminologyEntry {
-  termCode = new TerminologyCode()
   id: string
+  termCode?: TerminologyCode
+  display: string
 
   selectable: boolean
   @transient()

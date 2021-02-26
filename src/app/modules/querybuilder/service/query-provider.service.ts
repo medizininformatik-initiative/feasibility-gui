@@ -46,6 +46,7 @@ export class QueryProviderService {
                   display: 'Geschlecht',
                   system: 'http://loinc.org',
                 },
+                display: 'Geschlecht',
                 valueFilters: [
                   {
                     type: OperatorOptions.CONCEPT,
@@ -76,6 +77,7 @@ export class QueryProviderService {
                   display: 'Alter',
                   system: 'http://loinc.org',
                 },
+                display: 'Alter',
                 valueFilters: [
                   {
                     type: OperatorOptions.QUANTITY_COMPARATOR,
@@ -96,6 +98,7 @@ export class QueryProviderService {
                   display: 'F00',
                   system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
                 },
+                display: 'F00',
                 valueFilters: [],
               },
               {
@@ -104,6 +107,7 @@ export class QueryProviderService {
                   display: 'F09',
                   system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
                 },
+                display: 'F09',
                 valueFilters: [],
               },
             ],
@@ -116,6 +120,7 @@ export class QueryProviderService {
                   display: 'Geschlecht',
                   system: 'http://loinc.org',
                 },
+                display: 'Geschlecht',
                 valueFilters: [
                   {
                     type: OperatorOptions.CONCEPT,
@@ -138,6 +143,7 @@ export class QueryProviderService {
                   display: 'Alter',
                   system: 'http://loinc.org',
                 },
+                display: 'Alter',
                 valueFilters: [
                   {
                     type: OperatorOptions.QUANTITY_COMPARATOR,
@@ -158,6 +164,7 @@ export class QueryProviderService {
                   display: 'F00.9',
                   system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
                 },
+                display: 'F00.9',
                 valueFilters: [],
               },
               {
@@ -166,6 +173,7 @@ export class QueryProviderService {
                   display: 'Körpertemperatur',
                   system: 'http://loinc.org',
                 },
+                display: 'Körpertemperatur',
                 valueFilters: [
                   {
                     type: OperatorOptions.QUANTITY_RANGE,

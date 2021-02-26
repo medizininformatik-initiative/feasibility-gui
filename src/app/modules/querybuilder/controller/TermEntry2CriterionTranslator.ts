@@ -10,6 +10,7 @@ export class TermEntry2CriterionTranslator {
     const criterion = new Criterion()
 
     criterion.termCode = termEntry.termCode
+    criterion.display = termEntry.display
     termEntry.valueDefinitions.forEach((valueDefinition) => {
       criterion.valueFilters.push(this.createValueFilter(valueDefinition))
     })

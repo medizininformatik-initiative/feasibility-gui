@@ -690,7 +690,7 @@ export class MockBackendDataProvider {
 
     this.mapId.set(termEntry.id, termEntryWithoutChildren)
     this.mapCode.set([catId, termEntry.termCode.code], termEntryWithoutChildren)
-    this.mapDisplay.set([catId, termEntry.termCode.display], termEntryWithoutChildren)
+    this.mapDisplay.set([catId, termEntry.display], termEntryWithoutChildren)
   }
 
   private createRootTermEntry(id: string, code: string, display: string): TerminologyEntry {
@@ -698,6 +698,7 @@ export class MockBackendDataProvider {
     termEntry.leaf = false
     termEntry.selectable = false
     termEntry.id = id
+    termEntry.display = display
     termEntry.timeRestrictionAllowed = false
     termEntry.children = []
     termEntry.termCode = {
@@ -719,6 +720,7 @@ export class MockBackendDataProvider {
     termEntry.leaf = true
     termEntry.selectable = true
     termEntry.id = id
+    termEntry.display = display
     termEntry.timeRestrictionAllowed = true
     termEntry.children = []
     termEntry.termCode = {
@@ -726,7 +728,9 @@ export class MockBackendDataProvider {
       system,
       display,
     }
-    termEntry.valueDefinitions = [valueDefinition]
+    if (valueDefinition) {
+      termEntry.valueDefinitions.push(valueDefinition)
+    }
     return termEntry
   }
 
@@ -760,6 +764,7 @@ export class MockBackendDataProvider {
   private getTerminologyEntryOther(): TerminologyEntry {
     return {
       id: '6',
+      display: 'multiple value filters',
       timeRestrictionAllowed: true,
       selected: false,
       selectable: true,
