@@ -16,10 +16,9 @@
     }
   },
   "NAVIGATION": {
-    "DASHBOARD": "Übersicht",
-    "QUERYBUILDER": "Abfragen",
-    "QUERYBUILDER_EDITOR": "Abfrage erstellen",
-    "QUERYBUILDER_OVERVIEW": "Übersicht",
+    "DASHBOARD": "Dashboard",
+    "QUERYBUILDER_EDITOR": "Neue Abfrage",
+    "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
     "SIGNOUT": "Abmelden"
   },
   "QUERYBUILDER": {

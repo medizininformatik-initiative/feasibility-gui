@@ -7,21 +7,15 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.DASHBOARD',
   },
   {
-    routeTo: 'querybuilder',
+    routeTo: 'querybuilder/editor',
     icon: 'dna',
-    translationKey: 'NAVIGATION.QUERYBUILDER',
-    tabNav: [
-      {
-        routeTo: 'querybuilder/editor',
-        id: 'editor',
-        translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
-      },
-      {
-        routeTo: 'querybuilder/overview',
-        id: 'overview',
-        translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
-      },
-    ],
+    translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
+  },
+  {
+    routeTo: 'querybuilder/overview',
+    roles: ['CODEX_USER'],
+    icon: 'bars',
+    translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
 ]
 

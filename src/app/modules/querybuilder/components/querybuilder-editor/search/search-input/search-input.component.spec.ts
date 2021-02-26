@@ -93,7 +93,7 @@ describe('SearchInputComponent', () => {
       component.search = ''
       component.isOverlayOpen = false
 
-      component.switchSearchMode({} as MouseEvent)
+      component.switchSearchMode()
 
       expect(component.searchMode).toBe('tree')
       expect(component.isOverlayOpen).toBe(true)
@@ -103,7 +103,7 @@ describe('SearchInputComponent', () => {
       component.searchMode = 'tree'
       component.search = 'abc'
 
-      component.switchSearchMode({} as MouseEvent)
+      component.switchSearchMode()
 
       expect(component.searchMode).toBe('text')
       expect(component.isOverlayOpen).toBe(true)
@@ -113,7 +113,7 @@ describe('SearchInputComponent', () => {
       component.searchMode = 'tree'
       component.search = ''
 
-      component.switchSearchMode({} as MouseEvent)
+      component.switchSearchMode()
 
       expect(component.searchMode).toBe('text')
       expect(component.isOverlayOpen).toBe(false)
@@ -127,6 +127,7 @@ describe('SearchInputComponent', () => {
 
       expect(component.search).toBe('')
       expect(component.isOverlayOpen).toBe(false)
+      expect(component.searchMode).toBe('text')
     })
 
     it('should not delete search text', () => {
@@ -137,6 +138,7 @@ describe('SearchInputComponent', () => {
 
       expect(component.search).toBe('abc')
       expect(component.isOverlayOpen).toBe(false)
+      expect(component.searchMode).toBe('text')
     })
 
     it('should initialize position on the right ("inclusion")', () => {
@@ -176,7 +178,7 @@ describe('SearchInputComponent', () => {
         },
         getTerminolgyEntrySearchResult(
           catId: string,
-          search: string
+          search: string,
         ): Observable<Array<TerminologyEntry>> {
           return of(new MockBackendDataProvider().getTerminolgyEntrySearchResult(catId, search))
         },
@@ -194,7 +196,7 @@ describe('SearchInputComponent', () => {
 
       // trigger the click
       const overlayContent = document.querySelector(
-        '.cdk-overlay-container num-search-text-overlay-content'
+        '.cdk-overlay-container num-search-text-overlay-content',
       )
       overlayContent.dispatchEvent(new Event('closeOverlay'))
 
@@ -206,7 +208,8 @@ describe('SearchInputComponent', () => {
       monitor(element: HTMLElement, checkChildren?: boolean): Observable<FocusOrigin> {
         return of({} as FocusOrigin)
       },
-      stopMonitoring(element: HTMLElement): void {},
+      stopMonitoring(element: HTMLElement): void {
+      },
     } as FocusMonitor
 
     it('overlay should remain closed when input field is not focused', () => {

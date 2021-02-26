@@ -1,6 +1,19 @@
 <div class="container">
-  <num-search-text-header [categories]="categories" (switchCategory)="readTextData($event)">
+  <num-search-text-header
+    *ngIf="text"
+    [categories]="categories"
+    (switchCategory)="readTextData($event)"
+  >
   </num-search-text-header>
+
+  <div *ngIf="!text" fxLayout="row" fxLayoutAlign="center center" class="hint-empty-text">
+    <div>
+      Geben Sie ein Suchkriterium ein oder öffen sie die Übersicht der Kategorien
+      <button class="button-tree-view" type="button" mat-icon-button (click)="doSwitchSearchMode()">
+        <fa-icon icon="project-diagram"></fa-icon>
+      </button>
+    </div>
+  </div>
 
   <div *ngIf="text" class="search-results">
     <div *ngFor="let termEntry of resultList">

@@ -112,4 +112,10 @@ describe('SerachTextOverlayContentComponent', () => {
     expect(component.closeOverlay.emit).toHaveBeenCalledWith('text')
     expect(component.dialog.open).toHaveBeenCalledWith(EnterCriterionListComponent, dialogConfig)
   })
+
+  it('should fire storeQuery event', () => {
+    spyOn(component.switchSearchMode, 'emit')
+    component.doSwitchSearchMode()
+    expect(component.switchSearchMode.emit).toBeCalled()
+  })
 })

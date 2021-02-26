@@ -23,12 +23,7 @@
       </button>
     </mat-form-field>
     <div fxFlex="20">
-      <button
-        class="button-tree-view"
-        type="button"
-        mat-icon-button
-        (click)="switchSearchMode($event)"
-      >
+      <button class="button-tree-view" type="button" mat-icon-button (click)="switchSearchMode()">
         <fa-icon size="2x" icon="project-diagram"></fa-icon>
       </button>
     </div>
@@ -55,6 +50,7 @@
     [text]="search"
     [critType]="critType"
     [query]="query"
+    (switchSearchMode)="switchSearchMode()"
     (closeOverlay)="closeOverlay($event)"
   >
   </num-search-text-overlay-content>
