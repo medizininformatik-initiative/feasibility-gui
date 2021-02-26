@@ -12,6 +12,7 @@ import { MaterialModule } from '../../../../../../layout/material/material.modul
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger'
 import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
 import { Group } from '../../../../model/api/query/group'
+import { Query } from '../../../../model/api/query/query'
 
 describe('DisplayQueryComponent', () => {
   let component: DisplayQueryComponent
@@ -101,5 +102,11 @@ describe('DisplayQueryComponent', () => {
     expect(component.query.groups[0]).toEqual(groupParameter)
     expect(component.query.groups[0]).not.toEqual(groupBeforeAction)
     expect(component.storeQuery.emit).toHaveBeenCalledWith(component.query)
+  })
+
+  it('should fire storeQuery event', () => {
+    spyOn(component.storeQuery, 'emit')
+    component.doStoreQuery(new Query())
+    expect(component.storeQuery.emit).toBeCalled()
   })
 })

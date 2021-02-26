@@ -1,4 +1,13 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core'
 import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay'
 import { CritType } from '../../../../model/api/query/group'
 import { merge, Observable, Subscription } from 'rxjs'
@@ -6,6 +15,7 @@ import { MatInput } from '@angular/material/input'
 import { FocusMonitor } from '@angular/cdk/a11y'
 import { filter, mapTo } from 'rxjs/operators'
 import { MatFormField } from '@angular/material/form-field'
+import { Query } from '../../../../model/api/query/query'
 
 @Component({
   selector: 'num-search-input',
@@ -15,6 +25,12 @@ import { MatFormField } from '@angular/material/form-field'
 export class SearchInputComponent implements OnInit, OnDestroy {
   @Input()
   critType: CritType = 'inclusion'
+
+  @Input()
+  query: Query
+
+  @Output()
+  storeQuery = new EventEmitter<Query>()
 
   searchMode: SearchMode = 'text'
 
@@ -70,6 +86,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
       })
     )
 
+    // noinspection JSUnusedLocalSymbols
     this.subscriptions.push(
       this.focusInputField$.subscribe((value) => {
         this.searchMode = 'text'
@@ -118,6 +135,10 @@ export class SearchInputComponent implements OnInit, OnDestroy {
       this.search = ''
     }
     this.isOverlayOpen = false
+  }
+
+  doStoreQuery(query: Query): void {
+    this.storeQuery.emit(query)
   }
 }
 

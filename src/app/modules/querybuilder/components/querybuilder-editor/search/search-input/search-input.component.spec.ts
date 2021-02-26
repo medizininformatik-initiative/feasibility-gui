@@ -21,6 +21,7 @@ import { SearchTextHeaderComponent } from '../search-text-header/search-text-hea
 import { SearchTextOverlayContentComponent } from '../search-text-overlay-content/search-text-overlay-content.component'
 import { MockBackendDataProvider } from '../../../../service/MockBackendDataProvider'
 import { SearchTextTermEntryComponent } from '../search-text-term-entry/search-text-term-entry.component'
+import { Query } from '../../../../model/api/query/query'
 
 describe('SearchInputComponent', () => {
   let component: SearchInputComponent
@@ -67,6 +68,7 @@ describe('SearchInputComponent', () => {
 
   beforeEach(() => {
     // Workaround: see https://github.com/telerik/kendo-angular/issues/1505
+    // noinspection JSUnusedLocalSymbols
     Object.defineProperty(window, 'getComputedStyle', {
       value: () => ({
         getPropertyValue: (prop) => {
@@ -104,6 +106,63 @@ describe('SearchInputComponent', () => {
     const button = document.querySelector('.cdk-overlay-container num-search-text-overlay-content')
     button.dispatchEvent(new Event('closeOverlay'))
 
+    expect(component.isOverlayOpen).toBe(false)
+  })
+
+  it('should fire storeQuery event', () => {
+    spyOn(component.storeQuery, 'emit')
+    component.doStoreQuery(new Query())
+    expect(component.storeQuery.emit).toBeCalled()
+  })
+
+  it('should open overlay for designated searchMode = "tree"', () => {
+    component.searchMode = 'text'
+    component.search = ''
+    component.isOverlayOpen = false
+
+    component.switchSearchMode({} as MouseEvent)
+
+    expect(component.searchMode).toBe('tree')
+    expect(component.isOverlayOpen).toBe(true)
+  })
+
+  it('should open overlay for designated searchMode = "text" with search text', () => {
+    component.searchMode = 'tree'
+    component.search = 'abc'
+
+    component.switchSearchMode({} as MouseEvent)
+
+    expect(component.searchMode).toBe('text')
+    expect(component.isOverlayOpen).toBe(true)
+  })
+
+  it('should close overlay for designated searchMode = "text" without search text', () => {
+    component.searchMode = 'tree'
+    component.search = ''
+
+    component.switchSearchMode({} as MouseEvent)
+
+    expect(component.searchMode).toBe('text')
+    expect(component.isOverlayOpen).toBe(false)
+  })
+
+  it('should delete search text', () => {
+    component.search = 'abc'
+    component.isOverlayOpen = true
+
+    component.closeOverlay('text')
+
+    expect(component.search).toBe('')
+    expect(component.isOverlayOpen).toBe(false)
+  })
+
+  it('should not delete search text', () => {
+    component.search = 'abc'
+    component.isOverlayOpen = true
+
+    component.closeOverlay('tree')
+
+    expect(component.search).toBe('abc')
     expect(component.isOverlayOpen).toBe(false)
   })
 })

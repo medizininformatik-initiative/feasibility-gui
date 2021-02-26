@@ -1,9 +1,6 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Query } from '../../../../model/api/query/query'
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
-import { MatDialog } from '@angular/material/dialog'
-import { QueryProviderService } from '../../../../service/query-provider.service'
-import { Subscription } from 'rxjs'
 import { Group } from '../../../../model/api/query/group'
 
 @Component({
@@ -11,22 +8,16 @@ import { Group } from '../../../../model/api/query/group'
   templateUrl: './display-query.component.html',
   styleUrls: ['./display-query.component.scss'],
 })
-export class DisplayQueryComponent implements OnInit, OnDestroy {
+export class DisplayQueryComponent implements OnInit {
   @Input()
   query: Query
+
+  constructor() {}
 
   @Output()
   storeQuery = new EventEmitter<Query>()
 
-  private subscription: Subscription
-
-  constructor(private dialog: MatDialog, private provider: QueryProviderService) {}
-
-  ngOnInit(): void {
-    this.subscription = this.dialog.afterAllClosed.subscribe(() => {
-      this.query = this.provider.query()
-    })
-  }
+  ngOnInit(): void {}
 
   doDrop($event: any): void {
     if ($event.addMode === 'position') {
@@ -39,15 +30,11 @@ export class DisplayQueryComponent implements OnInit, OnDestroy {
       )
     }
 
-    this.doStoreQuery()
+    this.doStoreQuery(this.query)
   }
 
-  doStoreQuery(): void {
-    this.storeQuery.emit(this.query)
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe()
+  doStoreQuery(query: Query): void {
+    this.storeQuery.emit(query)
   }
 
   doSaveGroup(group: Group): void {

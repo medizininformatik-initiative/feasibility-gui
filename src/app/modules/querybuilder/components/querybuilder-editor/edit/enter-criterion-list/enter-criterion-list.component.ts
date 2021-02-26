@@ -3,13 +3,14 @@ import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { TermEntry2CriterionTranslator } from '../../../../controller/TermEntry2CriterionTranslator'
-import { QueryProviderService } from '../../../../service/query-provider.service'
 import { CritType } from '../../../../model/api/query/group'
+import { Query } from '../../../../model/api/query/query'
 
 export class EnterCriterionListComponentData {
   groupIndex: number
   critType: CritType
   termEntryList: Array<TerminologyEntry>
+  query: Query
 }
 
 @Component({
@@ -23,27 +24,26 @@ export class EnterCriterionListComponent implements OnInit {
   criterionList: Array<Criterion> = []
   groupIndex: number
   critType: CritType
+  query: Query
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
-    public provider: QueryProviderService,
     public dialogRef: MatDialogRef<EnterCriterionListComponent>
   ) {
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry))
     this.critType = data.critType
     this.groupIndex = data.groupIndex
+    this.query = data.query
   }
 
   ngOnInit(): void {}
 
   doSave(criterion: Criterion): void {
-    const query = this.provider.query()
     if (this.critType === 'inclusion') {
-      query.groups[this.groupIndex].inclusionCriteria.push([criterion])
+      this.query.groups[this.groupIndex].inclusionCriteria.push([criterion])
     } else {
-      query.groups[this.groupIndex].exclusionCriteria.push([criterion])
+      this.query.groups[this.groupIndex].exclusionCriteria.push([criterion])
     }
-    this.provider.store(query)
 
     this.doDiscard(criterion)
   }

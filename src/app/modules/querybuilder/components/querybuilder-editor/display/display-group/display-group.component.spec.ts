@@ -11,6 +11,7 @@ import { MaterialModule } from '../../../../../../layout/material/material.modul
 import { Criterion } from '../../../../model/api/query/criterion'
 import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
+import { Query } from '../../../../model/api/query/query'
 
 describe('DisplayGroupComponent', () => {
   let component: DisplayGroupComponent
@@ -76,6 +77,7 @@ describe('DisplayGroupComponent', () => {
   })
 
   it('should store in inclusionCriteria', () => {
+    spyOn(component.storeQuery, 'emit')
     const criterion = new Criterion()
     criterion.termCode = { code: 'a', system: 'b', display: 'c' }
     const critGroup: Criterion[][] = [[criterion]]
@@ -85,9 +87,11 @@ describe('DisplayGroupComponent', () => {
     expect(component.group.exclusionCriteria).toStrictEqual(
       QueryProviderService.createTestQuery().groups[0].exclusionCriteria
     )
+    expect(component.storeQuery.emit).toBeCalled()
   })
 
   it('should store in exclusionCriteria', () => {
+    spyOn(component.storeQuery, 'emit')
     const criterion = new Criterion()
     criterion.termCode = { code: 'a', system: 'b', display: 'c' }
     const critGroup: Criterion[][] = [[criterion]]
@@ -97,5 +101,12 @@ describe('DisplayGroupComponent', () => {
     expect(component.group.inclusionCriteria).toStrictEqual(
       QueryProviderService.createTestQuery().groups[0].inclusionCriteria
     )
+    expect(component.storeQuery.emit).toBeCalled()
+  })
+
+  it('should fire storeQuery event', () => {
+    spyOn(component.storeQuery, 'emit')
+    component.doStoreQuery(new Query())
+    expect(component.storeQuery.emit).toBeCalled()
   })
 })

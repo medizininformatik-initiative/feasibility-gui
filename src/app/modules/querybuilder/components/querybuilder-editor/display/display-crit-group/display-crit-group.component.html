@@ -14,6 +14,7 @@
       <num-display-criterion
         [criterion]="criterion"
         [query]="query"
+        (storeQuery)="doStoreQuery($event)"
         (delete)="doDelete({ row: i, column: j })"
         cdkDrag
       >

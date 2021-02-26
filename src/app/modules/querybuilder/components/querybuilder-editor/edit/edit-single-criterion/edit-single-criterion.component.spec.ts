@@ -15,13 +15,11 @@ import { Query } from '../../../../model/api/query/query'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { OperatorOptions } from '../../../../model/api/query/valueFilter'
 import { ValueType } from '../../../../model/api/terminology/valuedefinition'
-import { QueryProviderService } from '../../../../service/query-provider.service'
 
 describe('EditSingleCriterionComponent', () => {
   let component: EditSingleCriterionComponent
   let fixture: ComponentFixture<EditSingleCriterionComponent>
   let matDialogRef
-  let providerService
 
   const querySnapshot = new Query()
   querySnapshot.display = 'SNAPSHOT'
@@ -32,11 +30,6 @@ describe('EditSingleCriterionComponent', () => {
     matDialogRef = {
       close: () => {},
     } as MatDialogRef<EditSingleCriterionComponent>
-
-    // noinspection JSUnusedLocalSymbols
-    providerService = {
-      store(query: Query): void {},
-    } as QueryProviderService
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -63,7 +56,6 @@ describe('EditSingleCriterionComponent', () => {
           },
         },
         { provide: MatDialogRef, useValue: matDialogRef },
-        { provide: QueryProviderService, useValue: providerService },
       ],
     }).compileComponents()
   })
@@ -102,9 +94,7 @@ describe('EditSingleCriterionComponent', () => {
 
   it('should store original query', () => {
     spyOn(matDialogRef, 'close')
-    spyOn(providerService, 'store')
 
-    component.provider = providerService
     component.dialogRef = matDialogRef
 
     component.querySnapshot = querySnapshot
@@ -112,16 +102,12 @@ describe('EditSingleCriterionComponent', () => {
 
     component.doCancel()
 
-    expect(providerService.store).toBeCalled()
-    expect(providerService.store).toBeCalledWith(querySnapshot)
     expect(matDialogRef.close).toBeCalledWith(querySnapshot)
   })
 
   it('should store modified query', () => {
     spyOn(matDialogRef, 'close')
-    spyOn(providerService, 'store')
 
-    component.provider = providerService
     component.dialogRef = matDialogRef
 
     component.querySnapshot = querySnapshot
@@ -129,7 +115,6 @@ describe('EditSingleCriterionComponent', () => {
 
     component.doSave()
 
-    expect(providerService.store).toBeCalledWith(queryModified)
     expect(matDialogRef.close).toBeCalledWith(queryModified)
   })
 })

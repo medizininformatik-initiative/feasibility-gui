@@ -17,6 +17,7 @@ import { EventEmitter, TemplateRef } from '@angular/core'
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog'
 import { SearchTextTermEntryComponent } from '../search-text-term-entry/search-text-term-entry.component'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
+import { Query } from '../../../../model/api/query/query'
 
 describe('SerachTextOverlayContentComponent', () => {
   let component: SearchTextOverlayContentComponent
@@ -24,6 +25,7 @@ describe('SerachTextOverlayContentComponent', () => {
 
   let backendService
   let dialog
+  let dialogRef
   let closeOverlay
 
   beforeEach(async () => {
@@ -33,13 +35,19 @@ describe('SerachTextOverlayContentComponent', () => {
       },
     } as BackendService
 
+    dialogRef = {
+      afterClosed(): Observable<any | undefined> {
+        return of(new Query())
+      },
+    } as MatDialogRef<any>
+
     // noinspection JSUnusedLocalSymbols
     dialog = {
       open<T, D = any, R = any>(
         componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
         config?: MatDialogConfig<D>
       ): MatDialogRef<T, R> {
-        return {} as MatDialogRef<any>
+        return dialogRef
       },
     } as MatDialog
 
@@ -88,7 +96,8 @@ describe('SerachTextOverlayContentComponent', () => {
 
   it('should fire choose event', () => {
     spyOn(component.closeOverlay, 'emit')
-    spyOn(component.dialog, 'open')
+    spyOn(component.storeQuery, 'emit')
+    jest.spyOn(component.dialog, 'open').mockReturnValue(dialogRef)
     const termEntry = new TerminologyEntry()
     const dialogConfig = new MatDialogConfig()
 
@@ -103,5 +112,6 @@ describe('SerachTextOverlayContentComponent', () => {
     component.openDetailsPopUp(termEntry)
     expect(component.closeOverlay.emit).toHaveBeenCalledWith('text')
     expect(component.dialog.open).toHaveBeenCalledWith(EnterCriterionListComponent, dialogConfig)
+    expect(component.storeQuery.emit).toBeCalled()
   })
 })

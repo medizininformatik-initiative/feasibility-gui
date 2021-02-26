@@ -15,7 +15,6 @@ import { MatInputNumberDirective } from '../mat-input-number.directive'
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component'
 import { QueryProviderService } from '../../../../service/query-provider.service'
-import { Query } from '../../../../model/api/query/query'
 import { Criterion } from '../../../../model/api/query/criterion'
 
 describe('EnterCriterionListComponent', () => {
@@ -24,13 +23,6 @@ describe('EnterCriterionListComponent', () => {
   const matDialogRef = {
     close: () => {},
   } as MatDialogRef<EnterCriterionListComponent>
-  // noinspection JSUnusedLocalSymbols
-  const providerService = {
-    store(query: Query): void {},
-    query(): Query {
-      return undefined
-    },
-  } as QueryProviderService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -62,7 +54,6 @@ describe('EnterCriterionListComponent', () => {
           },
         },
         { provide: MatDialogRef, useValue: matDialogRef },
-        { provide: QueryProviderService, useValue: providerService },
       ],
     }).compileComponents()
   })
@@ -121,17 +112,15 @@ describe('EnterCriterionListComponent', () => {
   })
 
   it('should store query in inclusion criteria and discard criterion from list', () => {
-    const query = new Query()
+    const query = QueryProviderService.createDefaultQuery()
     const criterion = new Criterion()
 
     spyOn(component, 'doDiscard')
-    jest.spyOn(providerService, 'query').mockReturnValue(query)
-    spyOn(providerService, 'store')
 
     component.critType = 'inclusion'
-    component.provider = providerService
     component.dialogRef = matDialogRef
     component.criterionList = [criterion]
+    component.query = query
 
     component.doSave(criterion)
 
@@ -141,17 +130,15 @@ describe('EnterCriterionListComponent', () => {
   })
 
   it('should store query in exclusion criteria and discard criterion from list', () => {
-    const query = new Query()
+    const query = QueryProviderService.createDefaultQuery()
     const criterion = new Criterion()
 
     spyOn(component, 'doDiscard')
-    jest.spyOn(providerService, 'query').mockReturnValue(query)
-    spyOn(providerService, 'store')
 
     component.critType = 'exclusion'
-    component.provider = providerService
     component.dialogRef = matDialogRef
     component.criterionList = [criterion]
+    component.query = query
 
     component.doSave(criterion)
 

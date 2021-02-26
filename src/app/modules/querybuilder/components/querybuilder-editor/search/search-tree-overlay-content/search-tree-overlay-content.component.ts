@@ -10,6 +10,7 @@ import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/ent
 import { SearchMode } from '../search-input/search-input.component'
 import { ObjectHelper } from '../../../../controller/ObjectHelper'
 import { CritType } from '../../../../model/api/query/group'
+import { Query } from '../../../../model/api/query/query'
 
 @Component({
   selector: 'num-search-tree-overlay-content',
@@ -20,8 +21,14 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   @Output()
   closeOverlay = new EventEmitter<SearchMode>()
 
+  @Output()
+  storeQuery = new EventEmitter<Query>()
+
   @Input()
   critType: CritType
+
+  @Input()
+  query: Query
 
   catId: string
   categories: Array<CategoryEntry>
@@ -33,6 +40,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription
   private subscriptionCategories: Subscription
+  private subscriptionDialog: Subscription
 
   constructor(private backend: BackendService, public dialog: MatDialog) {}
 
@@ -88,6 +96,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription?.unsubscribe()
     this.subscriptionCategories?.unsubscribe()
+    this.subscriptionDialog?.unsubscribe()
   }
 
   openDetailsPopUp(shouldAdd: boolean): void {
@@ -103,9 +112,14 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
           termEntryList: terminologyEntries,
           groupIndex: 0,
           critType: this.critType,
+          query: this.query,
         }
 
-        this.dialog.open(EnterCriterionListComponent, dialogConfig)
+        const dialogRef = this.dialog.open(EnterCriterionListComponent, dialogConfig)
+
+        this.subscriptionDialog = dialogRef
+          .afterClosed()
+          .subscribe((query) => this.storeQuery.emit(query))
       }
     }
 
