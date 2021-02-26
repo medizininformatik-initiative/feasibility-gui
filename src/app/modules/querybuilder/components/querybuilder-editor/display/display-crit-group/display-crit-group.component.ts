@@ -29,6 +29,9 @@ export class DisplayCritGroupComponent implements OnInit {
   switch = new EventEmitter()
 
   @Output()
+  storeQuery = new EventEmitter<Query>()
+
+  @Output()
   delete = new EventEmitter<{ row: number; column: number }>()
 
   constructor() {}
@@ -59,6 +62,10 @@ export class DisplayCritGroupComponent implements OnInit {
       from: $event.previousContainer.data,
       to: $event.container.data,
     })
+  }
+
+  doStoreQuery(query: Query): void {
+    this.storeQuery.emit(query)
   }
 
   doDelete({ row, column }: { row: number; column: number }): void {

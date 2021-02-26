@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { QueryProviderService } from '../../../../service/query-provider.service'
 import { Query } from '../../../../model/api/query/query'
 import { ObjectHelper } from '../../../../controller/ObjectHelper'
 
@@ -22,7 +21,6 @@ export class EditSingleCriterionComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EditSingleCriterionComponentData,
-    public provider: QueryProviderService,
     public dialogRef: MatDialogRef<EditSingleCriterionComponent>
   ) {
     this.criterion = data.criterion
@@ -33,12 +31,10 @@ export class EditSingleCriterionComponent implements OnInit {
   ngOnInit(): void {}
 
   doSave(): void {
-    this.provider.store(this.queryModified)
     this.dialogRef.close(this.queryModified)
   }
 
   doCancel(): void {
-    this.provider.store(this.querySnapshot)
     this.dialogRef.close(this.querySnapshot)
   }
 }

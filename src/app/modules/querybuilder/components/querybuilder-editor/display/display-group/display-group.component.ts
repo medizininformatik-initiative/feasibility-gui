@@ -20,7 +20,7 @@ export class DisplayGroupComponent implements OnInit {
   dropped = new EventEmitter()
 
   @Output()
-  storeQuery = new EventEmitter<void>()
+  storeQuery = new EventEmitter<Query>()
 
   @Output()
   saveGroup = new EventEmitter<Group>()
@@ -40,7 +40,11 @@ export class DisplayGroupComponent implements OnInit {
       this.group.exclusionCriteria = $event
     }
 
-    this.storeQuery.emit()
+    this.doStoreQuery(this.query)
+  }
+
+  doStoreQuery(query: Query): void {
+    this.storeQuery.emit(query)
   }
 
   doDelete({ row, column }: { row: number; column: number }, critType: CritType): void {

@@ -11,6 +11,7 @@ import { Criterion } from '../../../../model/api/query/criterion'
 import { EditValueFilterConceptLineComponent } from '../../edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component'
 import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
 import { ReactiveFormsModule } from '@angular/forms'
+import { Query } from '../../../../model/api/query/query'
 
 describe('DisplayCritGroupComponent', () => {
   let component: DisplayCritGroupComponent
@@ -107,6 +108,12 @@ describe('DisplayCritGroupComponent', () => {
       from: { a: 1 },
       to: { b: 2 },
     })
+  })
+
+  it('should fire storeQuery event', () => {
+    spyOn(component.storeQuery, 'emit')
+    component.doStoreQuery(new Query())
+    expect(component.storeQuery.emit).toBeCalled()
   })
 
   it('should fire delete event', () => {

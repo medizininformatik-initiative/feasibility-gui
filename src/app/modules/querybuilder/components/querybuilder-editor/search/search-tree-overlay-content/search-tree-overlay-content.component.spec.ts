@@ -23,6 +23,7 @@ import { EditCriterionComponent } from '../../edit/edit-criterion/edit-criterion
 import { EditValueFilterComponent } from '../../edit/edit-value-filter/edit-value-filter.component'
 import { MatInputNumberDirective } from '../../edit/mat-input-number.directive'
 import { EditValueFilterConceptLineComponent } from '../../edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component'
+import { Query } from '../../../../model/api/query/query'
 
 describe('SearchOverlayTreeComponent', () => {
   let component: SearchTreeOverlayContentComponent
@@ -53,6 +54,7 @@ describe('SearchOverlayTreeComponent', () => {
 
   let backendService
   let dialog
+  let dialogRef
   let closeOverlay
 
   beforeEach(async () => {
@@ -72,13 +74,19 @@ describe('SearchOverlayTreeComponent', () => {
       },
     } as BackendService
 
+    dialogRef = {
+      afterClosed(): Observable<any | undefined> {
+        return of(new Query())
+      },
+    } as MatDialogRef<any>
+
     // noinspection JSUnusedLocalSymbols
     dialog = {
       open<T, D = any, R = any>(
         componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
         config?: MatDialogConfig<D>
       ): MatDialogRef<T, R> {
-        return {} as MatDialogRef<any>
+        return dialogRef
       },
     } as MatDialog
 
@@ -133,6 +141,7 @@ describe('SearchOverlayTreeComponent', () => {
 
     fixture = TestBed.createComponent(SearchTreeOverlayContentComponent)
     component = fixture.componentInstance
+    component.dialog = dialog
     fixture.detectChanges()
   })
 
@@ -144,10 +153,10 @@ describe('SearchOverlayTreeComponent', () => {
 
   describe('handle dialog', () => {
     it('should open dialog', () => {
-      jest.spyOn(dialog, 'open')
-      component.dialog = dialog
+      spyOn(component.storeQuery, 'emit')
+      spyOn(closeOverlay, 'emit')
+      jest.spyOn(dialog, 'open').mockReturnValue(dialogRef)
 
-      jest.spyOn(closeOverlay, 'emit')
       component.closeOverlay = closeOverlay
 
       component.cachedTrees.set('1', termEntry1)
@@ -166,6 +175,7 @@ describe('SearchOverlayTreeComponent', () => {
 
       expect(dialog.open).toBeCalledWith(EnterCriterionListComponent, expectedDialogConfig)
       expect(closeOverlay.emit).toBeCalled()
+      expect(component.storeQuery.emit).toBeCalled()
     })
 
     it('should not open dialog for value false', () => {
