@@ -22,51 +22,39 @@ import { SearchTextOverlayContentComponent } from '../search-text-overlay-conten
 import { MockBackendDataProvider } from '../../../../service/MockBackendDataProvider'
 import { SearchTextTermEntryComponent } from '../search-text-term-entry/search-text-term-entry.component'
 import { Query } from '../../../../model/api/query/query'
+import { FocusMonitor, FocusOrigin } from '@angular/cdk/a11y'
+import { cold } from 'jasmine-marbles'
+import { EventEmitter } from '@angular/core'
 
 describe('SearchInputComponent', () => {
+  const testBedConfig = {
+    declarations: [
+      SearchInputComponent,
+      SearchTreeOverlayContentComponent,
+      SearchTextOverlayContentComponent,
+      SearchTextHeaderComponent,
+      SearchTextTermEntryComponent,
+      SearchTreeHeaderComponent,
+      SearchTreeFooterComponent,
+      SearchTreeTermEntryComponent,
+      ButtonComponent,
+    ],
+    imports: [
+      BrowserAnimationsModule,
+      HttpClientTestingModule,
+      MaterialModule,
+      OverlayModule,
+      FormsModule,
+      FlexLayoutModule,
+      FontAwesomeTestingModule,
+      TranslateModule.forRoot(),
+    ],
+  }
+
   let component: SearchInputComponent
   let fixture: ComponentFixture<SearchInputComponent>
 
   beforeEach(async () => {
-    const backendService = {
-      getCategories(): Observable<Array<CategoryEntry>> {
-        return of([new CategoryEntry()])
-      },
-      getTerminolgyEntrySearchResult(
-        catId: string,
-        search: string
-      ): Observable<Array<TerminologyEntry>> {
-        return of(new MockBackendDataProvider().getTerminolgyEntrySearchResult(catId, search))
-      },
-    } as BackendService
-
-    await TestBed.configureTestingModule({
-      declarations: [
-        SearchInputComponent,
-        SearchTreeOverlayContentComponent,
-        SearchTextOverlayContentComponent,
-        SearchTextHeaderComponent,
-        SearchTextTermEntryComponent,
-        SearchTreeHeaderComponent,
-        SearchTreeFooterComponent,
-        SearchTreeTermEntryComponent,
-        ButtonComponent,
-      ],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientTestingModule,
-        MaterialModule,
-        OverlayModule,
-        FormsModule,
-        FlexLayoutModule,
-        FontAwesomeTestingModule,
-        TranslateModule.forRoot(),
-      ],
-      providers: [{ provide: BackendService, useValue: backendService }],
-    }).compileComponents()
-  })
-
-  beforeEach(() => {
     // Workaround: see https://github.com/telerik/kendo-angular/issues/1505
     // noinspection JSUnusedLocalSymbols
     Object.defineProperty(window, 'getComputedStyle', {
@@ -76,93 +64,312 @@ describe('SearchInputComponent', () => {
         },
       }),
     })
-
-    fixture = TestBed.createComponent(SearchInputComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
   })
 
-  it('should create', () => {
-    expect(component).toBeTruthy()
+  describe('default TestBed', () => {
+    beforeEach(async () => {
+      await TestBed.configureTestingModule(testBedConfig).compileComponents()
+      fixture = TestBed.createComponent(SearchInputComponent)
+      component = fixture.componentInstance
+      fixture.detectChanges()
+    })
+
+    it('should create', () => {
+      expect(component).toBeTruthy()
+    })
+
+    it('should open overlay', () => {
+      component.isOverlayOpen = false
+
+      // trigger the click
+      const nativeElement = fixture.nativeElement
+      const button = nativeElement.querySelector('.button-tree-view')
+      button.dispatchEvent(new Event('click'))
+
+      expect(component.isOverlayOpen).toBe(true)
+    })
+
+    it('should fire storeQuery event', () => {
+      spyOn(component.storeQuery, 'emit')
+      component.doStoreQuery(new Query())
+      expect(component.storeQuery.emit).toBeCalled()
+    })
+
+    it('should open overlay for designated searchMode = "tree"', () => {
+      component.searchMode = 'text'
+      component.search = ''
+      component.isOverlayOpen = false
+
+      component.switchSearchMode({} as MouseEvent)
+
+      expect(component.searchMode).toBe('tree')
+      expect(component.isOverlayOpen).toBe(true)
+    })
+
+    it('should open overlay for designated searchMode = "text" with search text', () => {
+      component.searchMode = 'tree'
+      component.search = 'abc'
+
+      component.switchSearchMode({} as MouseEvent)
+
+      expect(component.searchMode).toBe('text')
+      expect(component.isOverlayOpen).toBe(true)
+    })
+
+    it('should close overlay for designated searchMode = "text" without search text', () => {
+      component.searchMode = 'tree'
+      component.search = ''
+
+      component.switchSearchMode({} as MouseEvent)
+
+      expect(component.searchMode).toBe('text')
+      expect(component.isOverlayOpen).toBe(false)
+    })
+
+    it('should delete search text', () => {
+      component.search = 'abc'
+      component.isOverlayOpen = true
+
+      component.closeOverlay('text')
+
+      expect(component.search).toBe('')
+      expect(component.isOverlayOpen).toBe(false)
+    })
+
+    it('should not delete search text', () => {
+      component.search = 'abc'
+      component.isOverlayOpen = true
+
+      component.closeOverlay('tree')
+
+      expect(component.search).toBe('abc')
+      expect(component.isOverlayOpen).toBe(false)
+    })
+
+    it('should initialize position on the right ("inclusion")', () => {
+      component.critType = 'inclusion'
+      component.initPositionStrategy()
+
+      expect(component.positions).toEqual([
+        {
+          originX: 'start',
+          originY: 'bottom',
+          overlayX: 'start',
+          overlayY: 'top',
+        },
+      ])
+    })
+
+    it('should initialize position on the right ("exclusion")', () => {
+      component.critType = 'exclusion'
+      component.initPositionStrategy()
+
+      expect(component.positions).toEqual([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        },
+      ])
+    })
   })
 
-  it('should open overlay', () => {
-    component.isOverlayOpen = false
+  describe('special TestBeds', () => {
+    it('should close overlay on button click', () => {
+      const backendService = {
+        getCategories(): Observable<Array<CategoryEntry>> {
+          return of([new CategoryEntry()])
+        },
+        getTerminolgyEntrySearchResult(
+          catId: string,
+          search: string
+        ): Observable<Array<TerminologyEntry>> {
+          return of(new MockBackendDataProvider().getTerminolgyEntrySearchResult(catId, search))
+        },
+      } as BackendService
 
-    // trigger the click
-    const nativeElement = fixture.nativeElement
-    const button = nativeElement.querySelector('.button-tree-view')
-    button.dispatchEvent(new Event('click'))
+      TestBed.overrideProvider(BackendService, { useValue: backendService })
+      TestBed.configureTestingModule(testBedConfig).compileComponents()
+      fixture = TestBed.createComponent(SearchInputComponent)
+      component = fixture.componentInstance
+      fixture.detectChanges()
 
-    expect(component.isOverlayOpen).toBe(true)
-  })
+      // open overlay panel
+      component.isOverlayOpen = true
+      fixture.detectChanges()
 
-  it('should close overlay', () => {
-    // open overlay panel
-    component.isOverlayOpen = true
-    fixture.detectChanges()
+      // trigger the click
+      const overlayContent = document.querySelector(
+        '.cdk-overlay-container num-search-text-overlay-content'
+      )
+      overlayContent.dispatchEvent(new Event('closeOverlay'))
 
-    // trigger the click
-    const button = document.querySelector('.cdk-overlay-container num-search-text-overlay-content')
-    button.dispatchEvent(new Event('closeOverlay'))
+      expect(component.isOverlayOpen).toBe(false)
+    })
 
-    expect(component.isOverlayOpen).toBe(false)
-  })
+    // noinspection JSUnusedLocalSymbols
+    const focusMonitor = {
+      monitor(element: HTMLElement, checkChildren?: boolean): Observable<FocusOrigin> {
+        return of({} as FocusOrigin)
+      },
+      stopMonitoring(element: HTMLElement): void {},
+    } as FocusMonitor
 
-  it('should fire storeQuery event', () => {
-    spyOn(component.storeQuery, 'emit')
-    component.doStoreQuery(new Query())
-    expect(component.storeQuery.emit).toBeCalled()
-  })
+    it('overlay should remain closed when input field is not focused', () => {
+      jest.spyOn(focusMonitor, 'monitor').mockImplementation((element) => {
+        switch (element.nativeElement.tagName) {
+          case 'INPUT':
+            return cold('^---|', { o: {} as FocusOrigin })
+          default:
+            return cold('')
+        }
+      })
 
-  it('should open overlay for designated searchMode = "tree"', () => {
-    component.searchMode = 'text'
-    component.search = ''
-    component.isOverlayOpen = false
+      TestBed.overrideProvider(FocusMonitor, { useValue: focusMonitor })
+      TestBed.configureTestingModule(testBedConfig).compileComponents()
+      fixture = TestBed.createComponent(SearchInputComponent)
+      component = fixture.componentInstance
 
-    component.switchSearchMode({} as MouseEvent)
+      component.searchMode = 'tree'
+      component.isOverlayOpen = false
 
-    expect(component.searchMode).toBe('tree')
-    expect(component.isOverlayOpen).toBe(true)
-  })
+      fixture.detectChanges()
 
-  it('should open overlay for designated searchMode = "text" with search text', () => {
-    component.searchMode = 'tree'
-    component.search = 'abc'
+      expect(component.focusInputField$).toBeObservable(cold('^---|', { a: true }))
+      expect(component.searchMode).toBe('tree')
+      expect(component.isOverlayOpen).toBe(false)
+    })
 
-    component.switchSearchMode({} as MouseEvent)
+    it('should open overlay when input field is focused', () => {
+      jest.spyOn(focusMonitor, 'monitor').mockImplementation((element) => {
+        switch (element.nativeElement.tagName) {
+          case 'INPUT':
+            return cold('^-o-|', { o: {} as FocusOrigin })
+          default:
+            return cold('')
+        }
+      })
 
-    expect(component.searchMode).toBe('text')
-    expect(component.isOverlayOpen).toBe(true)
-  })
+      TestBed.overrideProvider(FocusMonitor, { useValue: focusMonitor })
+      TestBed.configureTestingModule(testBedConfig).compileComponents()
+      fixture = TestBed.createComponent(SearchInputComponent)
+      component = fixture.componentInstance
 
-  it('should close overlay for designated searchMode = "text" without search text', () => {
-    component.searchMode = 'tree'
-    component.search = ''
+      component.searchMode = 'tree'
+      component.isOverlayOpen = false
 
-    component.switchSearchMode({} as MouseEvent)
+      fixture.detectChanges()
 
-    expect(component.searchMode).toBe('text')
-    expect(component.isOverlayOpen).toBe(false)
-  })
+      expect(component.focusInputField$).toBeObservable(cold('^-a-|', { a: true }))
+      expect(component.searchMode).toBe('text')
+      expect(component.isOverlayOpen).toBe(true)
+    })
 
-  it('should delete search text', () => {
-    component.search = 'abc'
-    component.isOverlayOpen = true
+    it('should open overlay when input field is focused and remain open when focused again', () => {
+      jest.spyOn(focusMonitor, 'monitor').mockImplementation((element) => {
+        switch (element.nativeElement.tagName) {
+          case 'INPUT':
+            return cold('^-oo|', { o: {} as FocusOrigin })
+          default:
+            return cold('')
+        }
+      })
 
-    component.closeOverlay('text')
+      TestBed.overrideProvider(FocusMonitor, { useValue: focusMonitor })
+      TestBed.configureTestingModule(testBedConfig).compileComponents()
+      fixture = TestBed.createComponent(SearchInputComponent)
+      component = fixture.componentInstance
 
-    expect(component.search).toBe('')
-    expect(component.isOverlayOpen).toBe(false)
-  })
+      component.searchMode = 'tree'
+      component.isOverlayOpen = false
 
-  it('should not delete search text', () => {
-    component.search = 'abc'
-    component.isOverlayOpen = true
+      fixture.detectChanges()
 
-    component.closeOverlay('tree')
+      expect(component.focusInputField$).toBeObservable(cold('^-aa|', { a: true }))
+      expect(component.searchMode).toBe('text')
+      expect(component.isOverlayOpen).toBe(true)
+    })
 
-    expect(component.search).toBe('abc')
-    expect(component.isOverlayOpen).toBe(false)
+    it('should remain closed on backdropClick, open on focusing form field and close on detach event', () => {
+      jest.spyOn(focusMonitor, 'monitor').mockImplementation((element) => {
+        switch (element.nativeElement.tagName) {
+          case 'MAT-FORM-FIELD':
+            return cold('^-o-|', { o: {} as FocusOrigin })
+          default:
+            return cold('')
+        }
+      })
+
+      TestBed.overrideProvider(FocusMonitor, { useValue: focusMonitor })
+      TestBed.configureTestingModule(testBedConfig).compileComponents()
+      fixture = TestBed.createComponent(SearchInputComponent)
+      component = fixture.componentInstance
+      component.isOverlayOpen = false
+
+      component.connectedOverlay.backdropClick = (cold('^e--|', {
+        e: {} as MouseEvent,
+      }) as Observable<MouseEvent>) as EventEmitter<MouseEvent>
+      component.connectedOverlay.detach = (cold('^--e|') as Observable<void>) as EventEmitter<void>
+
+      fixture.detectChanges()
+
+      expect(component.showOverlay$).toBeObservable(cold('^ftf|', { f: false, t: true }))
+      expect(component.isOverlayOpen).toBe(false)
+    })
+
+    it('should open on fousing form field, close on backdropClick and open on focusing form field', () => {
+      jest.spyOn(focusMonitor, 'monitor').mockImplementation((element) => {
+        switch (element.nativeElement.tagName) {
+          case 'MAT-FORM-FIELD':
+            return cold('^o-o|', { o: {} as FocusOrigin })
+          default:
+            return cold('')
+        }
+      })
+
+      TestBed.overrideProvider(FocusMonitor, { useValue: focusMonitor })
+      TestBed.configureTestingModule(testBedConfig).compileComponents()
+      fixture = TestBed.createComponent(SearchInputComponent)
+      component = fixture.componentInstance
+      component.isOverlayOpen = false
+
+      component.connectedOverlay.backdropClick = (cold('^-e-|', {
+        e: {} as MouseEvent,
+      }) as Observable<MouseEvent>) as EventEmitter<MouseEvent>
+      component.connectedOverlay.detach = (cold('^---|') as Observable<void>) as EventEmitter<void>
+
+      fixture.detectChanges()
+
+      expect(component.showOverlay$).toBeObservable(cold('^tft|', { f: false, t: true }))
+      expect(component.isOverlayOpen).toBe(true)
+    })
+
+    it('should open on focusing form field, close on detach event and open on focusing form field', () => {
+      jest.spyOn(focusMonitor, 'monitor').mockImplementation((element) => {
+        switch (element.nativeElement.tagName) {
+          case 'MAT-FORM-FIELD':
+            return cold('^o-o|', { o: {} as FocusOrigin })
+          default:
+            return cold('')
+        }
+      })
+
+      TestBed.overrideProvider(FocusMonitor, { useValue: focusMonitor })
+      TestBed.configureTestingModule(testBedConfig).compileComponents()
+      fixture = TestBed.createComponent(SearchInputComponent)
+      component = fixture.componentInstance
+      component.isOverlayOpen = false
+
+      component.connectedOverlay.backdropClick = (cold('^---|', {
+        e: {} as MouseEvent,
+      }) as Observable<MouseEvent>) as EventEmitter<MouseEvent>
+      component.connectedOverlay.detach = (cold('^-e-|') as Observable<void>) as EventEmitter<void>
+
+      fixture.detectChanges()
+
+      expect(component.showOverlay$).toBeObservable(cold('^tft|', { f: false, t: true }))
+      expect(component.isOverlayOpen).toBe(true)
+    })
   })
 })
