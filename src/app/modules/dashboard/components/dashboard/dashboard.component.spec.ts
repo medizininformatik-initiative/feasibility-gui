@@ -1,54 +1,98 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
-import { OAuthService } from 'angular-oauth2-oidc'
-import { AppConfigService } from 'src/app/config/app-config.service'
+import { OAuthModule, OAuthService } from 'angular-oauth2-oidc'
 import { DashboardComponent } from './dashboard.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { IAppConfig } from 'src/app/config/app-config.model'
-import { OAuthModule } from 'angular-oauth2-oidc'
 import { DirectivesModule } from 'src/app/shared/directives/directives.module'
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent
   let fixture: ComponentFixture<DashboardComponent>
 
-  let appConfig: AppConfigService
   const authService = {
     loadUserProfile: () => Promise.resolve({}),
+    hasValidAccessToken(): boolean {
+      return true
+    },
   } as OAuthService
 
   const config = ({
     env: 'test',
   } as unknown) as IAppConfig
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [DashboardComponent],
-      imports: [
-        TranslateModule.forRoot(),
-        HttpClientTestingModule,
-        OAuthModule.forRoot(),
-        DirectivesModule,
-      ],
-      providers: [
-        {
-          provide: OAuthService,
-          useValue: authService,
-        },
-      ],
-    }).compileComponents()
-  })
+  const testBedConfig = {
+    declarations: [DashboardComponent],
+    imports: [
+      TranslateModule.forRoot(),
+      HttpClientTestingModule,
+      OAuthModule.forRoot(),
+      DirectivesModule,
+    ],
+    providers: [
+      {
+        provide: OAuthService,
+        useValue: authService,
+      },
+    ],
+  }
 
-  beforeEach(() => {
-    appConfig = TestBed.inject(AppConfigService)
-
+  it('should create', () => {
+    TestBed.configureTestingModule(testBedConfig).compileComponents()
     fixture = TestBed.createComponent(DashboardComponent)
     component = fixture.componentInstance
     component.config = config
     fixture.detectChanges()
-  })
 
-  it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('should show text "not logged in"', fakeAsync(() => {
+    spyOn(authService, 'hasValidAccessToken').and.returnValue(false)
+
+    TestBed.overrideProvider(OAuthService, { useValue: authService })
+    TestBed.configureTestingModule(testBedConfig).compileComponents()
+    fixture = TestBed.createComponent(DashboardComponent)
+    component = fixture.componentInstance
+    component.config = config
+
+    fixture.detectChanges()
+    tick()
+
+    expect(component.authTest).toEqual('Not logged in')
+  }))
+
+  it('should show text with name when logged in without roles', fakeAsync(() => {
+    spyOn(authService, 'hasValidAccessToken').and.returnValue(true)
+    spyOn(authService, 'loadUserProfile').and.returnValue(Promise.resolve({ name: 'Emmy' }))
+
+    TestBed.overrideProvider(OAuthService, { useValue: authService })
+    TestBed.configureTestingModule(testBedConfig).compileComponents()
+    fixture = TestBed.createComponent(DashboardComponent)
+    component = fixture.componentInstance
+    component.config = config
+
+    fixture.detectChanges()
+    tick()
+
+    expect(component.authTest).toEqual('Hello Emmy')
+  }))
+
+  it('should show text with name when logged in with roles', fakeAsync(() => {
+    spyOn(authService, 'hasValidAccessToken').and.returnValue(true)
+    spyOn(authService, 'loadUserProfile').and.returnValue(
+      Promise.resolve({ name: 'Emmy', groups: ['CODEX_DEVELOPER', 'MATHEMATICIAN'] })
+    )
+
+    TestBed.overrideProvider(OAuthService, { useValue: authService })
+    TestBed.configureTestingModule(testBedConfig).compileComponents()
+    fixture = TestBed.createComponent(DashboardComponent)
+    component = fixture.componentInstance
+    component.config = config
+
+    fixture.detectChanges()
+    tick()
+
+    expect(component.authTest).toEqual('Hello Emmy, Roles: CODEX_DEVELOPER, MATHEMATICIAN')
+  }))
 })

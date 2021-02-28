@@ -33,14 +33,17 @@ export class EditValueFilterComponent implements OnInit {
     this.filter?.selectedConcepts.forEach((concept) =>
       this.selectedConceptsAsJson.add(JSON.stringify(concept))
     )
-    this.selectedUnit =
-      this.filter?.valueDefinition?.allowedUnits?.length > 0
-        ? this.filter?.valueDefinition?.allowedUnits[0]
-        : undefined
+
+    this.filter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
+      if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
+        this.selectedUnit = allowedUnit
+      }
+    })
+
     this.quantityFilterOption = this.getQuantityFilterOption()
   }
 
-  private getQuantityFilterOption(): string {
+  getQuantityFilterOption(): string {
     if (!this.filter || this.filter.type === OperatorOptions.CONCEPT) {
       return null
     }
@@ -75,7 +78,7 @@ export class EditValueFilterComponent implements OnInit {
     this.filter.value = this.round(this.filter.value)
   }
 
-  private round(value: number): number {
+  round(value: number): number {
     const divisor = Math.pow(10, this.filter.precision)
     return Math.round(value * divisor) / divisor
   }
@@ -147,14 +150,14 @@ export class EditValueFilterComponent implements OnInit {
 
   valueTooSmall(value: number): boolean {
     if (!this.filter.min && this.filter.min !== 0) {
-      return true
+      return false
     }
     return value < this.filter.min
   }
 
   valueTooLarge(value: number): boolean {
     if (!this.filter.max && this.filter.max !== 0) {
-      return true
+      return false
     }
     return value > this.filter.max
   }
