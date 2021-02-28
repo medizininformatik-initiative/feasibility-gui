@@ -21,16 +21,6 @@ export class MatInputNumberDirective implements ControlValueAccessor {
 
   constructor(private elementRef: ElementRef<HTMLInputElement>) {}
 
-  get value(): string | null {
-    return this.valueInternal
-  }
-
-  @Input('value')
-  set value(value: string | null) {
-    this.formatValue(value)
-    this._onChange(value)
-  }
-
   @HostListener('input', ['$event.target.value'])
   onInput(value): void {
     this.valueInternal = value.replace(/[^\d.-]/g, '')
@@ -70,21 +60,11 @@ export class MatInputNumberDirective implements ControlValueAccessor {
   }
 
   private formatValue(value: string | null): void {
-    if (value !== null) {
-      this.elementRef.nativeElement.value = this.round(value).toFixed(this.precision)
-    } else {
-      this.elementRef.nativeElement.value = ''
-    }
+    this.elementRef.nativeElement.value = this.round(value).toFixed(this.precision)
   }
 
   private unFormatValue(): void {
-    const value = this.elementRef.nativeElement.value
-    this.valueInternal = value.replace(/[^\d.-]/g, '')
-    if (value) {
-      this.elementRef.nativeElement.value = this.valueInternal
-    } else {
-      this.elementRef.nativeElement.value = ''
-    }
+    this.elementRef.nativeElement.value = this.valueInternal
   }
 
   private round(value: string): number {

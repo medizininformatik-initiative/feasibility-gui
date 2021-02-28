@@ -37,7 +37,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   search = ''
 
   showOverlay$: Observable<boolean>
-  activateOverlay$: Observable<boolean>
+  focusSearchBox$: Observable<boolean>
   deactivateOverlay$: Observable<boolean>
   focusInputField$: Observable<boolean>
 
@@ -69,16 +69,17 @@ export class SearchInputComponent implements OnInit, OnDestroy {
       mapTo(true)
     )
 
-    this.activateOverlay$ = this.focusMonitor.monitor(this.inputEl).pipe(
+    this.focusSearchBox$ = this.focusMonitor.monitor(this.inputEl).pipe(
       filter((focus) => !!focus),
       mapTo(true)
     )
+
     this.deactivateOverlay$ = merge(
       this.connectedOverlay.backdropClick,
       this.connectedOverlay.detach
     ).pipe(mapTo(false))
 
-    this.showOverlay$ = merge(this.activateOverlay$, this.deactivateOverlay$)
+    this.showOverlay$ = merge(this.focusSearchBox$, this.deactivateOverlay$)
 
     this.subscriptions.push(
       this.showOverlay$.subscribe((value) => {
@@ -95,7 +96,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     )
   }
 
-  private initPositionStrategy(): void {
+  initPositionStrategy(): void {
     let positionVertical
     if (this.critType === 'exclusion') {
       positionVertical = 'end'
