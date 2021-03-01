@@ -56,7 +56,9 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   @ViewChild(CdkConnectedOverlay, { static: true })
   public connectedOverlay: CdkConnectedOverlay
 
-  constructor(private focusMonitor: FocusMonitor) {}
+  constructor(private focusMonitor: FocusMonitor) {
+    this.resetOverlayProperties()
+  }
 
   ngOnInit(): void {
     this.initPositionStrategy()
@@ -122,7 +124,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     return this.critType.toUpperCase()
   }
 
-  switchSearchMode($event: MouseEvent): void {
+  switchSearchMode(): void {
     this.searchMode = this.searchMode === 'tree' ? 'text' : 'tree'
     if (this.searchMode === 'tree') {
       this.isOverlayOpen = true
@@ -135,7 +137,12 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     if (mode === 'text') {
       this.search = ''
     }
+    this.resetOverlayProperties()
+  }
+
+  private resetOverlayProperties(): void {
     this.isOverlayOpen = false
+    this.searchMode = 'text'
   }
 }
 

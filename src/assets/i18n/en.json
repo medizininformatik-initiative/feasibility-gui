@@ -17,9 +17,8 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Dashboard",
-    "QUERYBUILDER": "Queries",
-    "QUERYBUILDER_EDITOR": "Create query",
-    "QUERYBUILDER_OVERVIEW": "Overview",
+    "QUERYBUILDER_EDITOR": "New query",
+    "QUERYBUILDER_OVERVIEW": "My queries",
     "SIGNOUT": "Sign out"
   },
   "QUERYBUILDER": {

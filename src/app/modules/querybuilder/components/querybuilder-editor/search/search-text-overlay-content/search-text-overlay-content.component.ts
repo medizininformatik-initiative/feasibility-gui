@@ -26,6 +26,9 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
   @Output()
   closeOverlay = new EventEmitter<SearchMode>()
 
+  @Output()
+  switchSearchMode = new EventEmitter<void>()
+
   @Input()
   text: string
 
@@ -86,5 +89,9 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
 
     this.dialog.open(EnterCriterionListComponent, dialogConfig)
     this.closeOverlay.emit('text')
+  }
+
+  doSwitchSearchMode(): void {
+    this.switchSearchMode.emit()
   }
 }

@@ -20,7 +20,6 @@ export const routes: Routes = [
     canLoad: [RoleGuard],
     data: {
       navId: 'querybuilder',
-      roles: ['CODEX_USER'],
     },
     loadChildren: () =>
       import(
