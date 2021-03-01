@@ -37,7 +37,14 @@
       "ONE_OF": "",
       "MORE": "weitere",
       "BETWEEN": "zwischen {{ min }} und {{ max }} {{ unit }}",
-      "COMPARATOR": "{{ comparator }} {{ value }} {{ unit }}"
+      "COMPARATOR": "{{ comparator }} {{ value }} {{ unit }}",
+      "TIMERESTRICTION": {
+        "LATEST": "(aktuellstes)",
+        "BOTH": "zwischen {{ from }} und {{ to }}",
+        "FROM": "nach {{ from }}",
+        "TO": "vor {{ to }}",
+        "NONE": "keine zeitliche Einschränkung"
+      }
     },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",
@@ -54,7 +61,14 @@
       "EQUAL": "gleich",
       "LESS_THAN": "kleiner",
       "GREATER_THAN": "größer",
-      "BETWEEN": "zwischen"
+      "BETWEEN": "zwischen",
+      "TIMERESTRICTION": {
+        "LABEL": "Zeitraum",
+        "EVER": "Alle Ereignisse liegen im Zeitraum",
+        "LATEST": "Aktuellstes Ereignis liegt im Zeitraum",
+        "FROM": "von",
+        "TO": "bis"
+      }
     },
     "HINT": {
       "NO_VALUE_SELECTED": "Wählen Sie mindestens einen Wert",

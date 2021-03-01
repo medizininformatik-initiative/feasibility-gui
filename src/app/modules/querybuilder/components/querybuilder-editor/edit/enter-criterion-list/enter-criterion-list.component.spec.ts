@@ -17,6 +17,8 @@ import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concep
 import { QueryProviderService } from '../../../../service/query-provider.service'
 import { Query } from '../../../../model/api/query/query'
 import { Criterion } from '../../../../model/api/query/criterion'
+import { FeatureService } from '../../../../../../service/feature.service'
+import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component'
 
 describe('EnterCriterionListComponent', () => {
   let component: EnterCriterionListComponent
@@ -32,6 +34,12 @@ describe('EnterCriterionListComponent', () => {
     },
   } as QueryProviderService
 
+  const featureService = {
+    useFeatureTimeRestriction(): boolean {
+      return true
+    },
+  } as FeatureService
+
   beforeEach(async () => {
     const testBedConfig = {
       declarations: [
@@ -41,6 +49,7 @@ describe('EnterCriterionListComponent', () => {
         EditValueFilterConceptLineComponent,
         MatInputNumberDirective,
         ButtonComponent,
+        EditTimeRestrictionComponent,
       ],
       imports: [
         BrowserAnimationsModule,
@@ -62,6 +71,7 @@ describe('EnterCriterionListComponent', () => {
           },
         },
         { provide: MatDialogRef, useValue: matDialogRef },
+        { provide: FeatureService, useValue: featureService },
         { provide: QueryProviderService, useValue: providerService },
       ],
     }

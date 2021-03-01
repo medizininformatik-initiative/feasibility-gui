@@ -21,6 +21,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatTreeModule } from '@angular/material/tree'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { DragDropModule } from '@angular/cdk/drag-drop'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatRadioModule } from '@angular/material/radio'
+import { MatNativeDateModule } from '@angular/material/core'
 
 const MATERIAL_MODULES = [
   MatSidenavModule,
@@ -45,6 +48,9 @@ const MATERIAL_MODULES = [
   MatTreeModule,
   MatProgressBarModule,
   DragDropModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatRadioModule,
 ]
 
 @NgModule({

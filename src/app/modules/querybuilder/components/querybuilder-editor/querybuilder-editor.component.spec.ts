@@ -24,6 +24,8 @@ import { SearchTextOverlayContentComponent } from './search/search-text-overlay-
 import { SearchTextHeaderComponent } from './search/search-text-header/search-text-header.component'
 import { SearchTextTermEntryComponent } from './search/search-text-term-entry/search-text-term-entry.component'
 import { DisplayValueFilterComponent } from './display/display-value-filter/display-value-filter.component'
+import { EditTimeRestrictionComponent } from './edit/edit-time-restriction/edit-time-restriction.component'
+import { DisplayTimeRestrictionComponent } from './display/display-time-restriction/display-time-restriction.component'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -51,6 +53,8 @@ describe('QuerybuilderEditorComponent', () => {
         SearchTreeFooterComponent,
         SearchTreeTermEntryComponent,
         ButtonComponent,
+        EditTimeRestrictionComponent,
+        DisplayTimeRestrictionComponent,
       ],
       imports: [
         BrowserAnimationsModule,

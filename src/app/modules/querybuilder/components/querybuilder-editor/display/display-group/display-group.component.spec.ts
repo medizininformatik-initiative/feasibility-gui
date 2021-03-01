@@ -14,6 +14,7 @@ import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
 import { Query } from '../../../../model/api/query/query'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
 
 describe('DisplayGroupComponent', () => {
   let component: DisplayGroupComponent
@@ -21,6 +22,9 @@ describe('DisplayGroupComponent', () => {
 
   const featureService = {
     useFeatureMultipleValueDefinitions(): boolean {
+      return true
+    },
+    useFeatureTimeRestriction(): boolean {
       return true
     },
   } as FeatureService
@@ -33,6 +37,7 @@ describe('DisplayGroupComponent', () => {
         DisplayCriterionComponent,
         DisplayValueFilterComponent,
         BoolLogicSwitchComponent,
+        DisplayTimeRestrictionComponent,
       ],
       imports: [
         MaterialModule,

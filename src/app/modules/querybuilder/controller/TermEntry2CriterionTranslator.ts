@@ -6,6 +6,12 @@ import { TimeRestriction } from '../model/api/query/timerestriction'
 import { V2 } from '../model/api/annotations'
 
 export class TermEntry2CriterionTranslator {
+  private useFeatureTimeRestrictions = false
+
+  constructor(useFeatureTimeRestrictions = false) {
+    this.useFeatureTimeRestrictions = useFeatureTimeRestrictions
+  }
+
   public translate(termEntry: TerminologyEntry): Criterion {
     const criterion = new Criterion()
 
@@ -48,6 +54,10 @@ export class TermEntry2CriterionTranslator {
 
   @V2()
   private createTimeRestriction(termEntry: TerminologyEntry): TimeRestriction {
-    return undefined
+    if (!this.useFeatureTimeRestrictions) {
+      return undefined
+    }
+
+    return termEntry.timeRestrictionAllowed ? new TimeRestriction() : undefined
   }
 }

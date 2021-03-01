@@ -1,14 +1,11 @@
 import { V2 } from '../annotations'
-import { Moment } from 'moment'
 
 @V2()
 export class TimeRestriction {
-  tvpe?: TimeRestrictionType.EVER
+  tvpe = TimeRestrictionType.EVER
 
-  restricted: boolean
-
-  maxDate?: Moment // implicitly included date
-  minDate?: Moment // implicitly included date
+  minDate?: Date // implicitly included date
+  maxDate?: Date // implicitly included date
 }
 
 export enum TimeRestrictionType {

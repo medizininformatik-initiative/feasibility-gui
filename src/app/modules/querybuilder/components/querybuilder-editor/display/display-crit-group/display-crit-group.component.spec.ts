@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { Query } from '../../../../model/api/query/query'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
 
 describe('DisplayCritGroupComponent', () => {
   let component: DisplayCritGroupComponent
@@ -22,6 +23,9 @@ describe('DisplayCritGroupComponent', () => {
   beforeEach(async () => {
     const featureService = {
       useFeatureMultipleValueDefinitions(): boolean {
+        return true
+      },
+      useFeatureTimeRestriction(): boolean {
         return true
       },
     } as FeatureService
@@ -40,6 +44,7 @@ describe('DisplayCritGroupComponent', () => {
         DisplayValueFilterComponent,
         EditValueFilterConceptLineComponent,
         BoolLogicSwitchComponent,
+        DisplayTimeRestrictionComponent,
       ],
       providers: [
         {

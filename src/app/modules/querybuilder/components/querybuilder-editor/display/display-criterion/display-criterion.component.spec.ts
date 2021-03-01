@@ -15,6 +15,7 @@ import { Observable, of } from 'rxjs'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
 
 describe('DisplayCriterionComponent', () => {
   let component: DisplayCriterionComponent
@@ -28,6 +29,9 @@ describe('DisplayCriterionComponent', () => {
     useFeatureMultipleValueDefinitions(): boolean {
       return true
     },
+    useFeatureTimeRestriction(): boolean {
+      return true
+    },
   } as FeatureService
 
   const valueFilter2: ValueFilter = {
@@ -38,7 +42,11 @@ describe('DisplayCriterionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DisplayCriterionComponent, DisplayValueFilterComponent],
+      declarations: [
+        DisplayCriterionComponent,
+        DisplayTimeRestrictionComponent,
+        DisplayValueFilterComponent,
+      ],
       imports: [MaterialModule, TranslateModule.forRoot(), HttpClientTestingModule],
       providers: [{ provide: FeatureService, useValue: featureService }],
     }).compileComponents()

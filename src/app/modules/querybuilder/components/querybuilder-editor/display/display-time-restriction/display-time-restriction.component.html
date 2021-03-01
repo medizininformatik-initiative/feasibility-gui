@@ -1,0 +1,15 @@
+<div *ngIf="timeRestriction" class="container">
+  <div *ngIf="timeRestriction.minDate || timeRestriction.maxDate">
+    {{
+      'QUERYBUILDER.DISPLAY.TIMERESTRICTION.' + getTranslationKeyInterval()
+        | translate
+          : {
+              from: getDateFormatted(timeRestriction.minDate),
+              to: getDateFormatted(timeRestriction.maxDate)
+            }
+    }}
+    <span *ngIf="timeRestriction.tvpe === typeLatest">{{
+      'QUERYBUILDER.DISPLAY.TIMERESTRICTION.LATEST' | translate
+    }}</span>
+  </div>
+</div>

@@ -24,6 +24,7 @@ import { EditValueFilterComponent } from '../../edit/edit-value-filter/edit-valu
 import { MatInputNumberDirective } from '../../edit/mat-input-number.directive'
 import { EditValueFilterConceptLineComponent } from '../../edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component'
 import { Query } from '../../../../model/api/query/query'
+import { EditTimeRestrictionComponent } from '../../edit/edit-time-restriction/edit-time-restriction.component'
 
 describe('SearchOverlayTreeComponent', () => {
   let component: SearchTreeOverlayContentComponent
@@ -108,6 +109,7 @@ describe('SearchOverlayTreeComponent', () => {
         EditValueFilterConceptLineComponent,
         EditValueFilterComponent,
         MatInputNumberDirective,
+        EditTimeRestrictionComponent,
       ],
       imports: [
         BrowserAnimationsModule,
