@@ -15,6 +15,8 @@ import { Query } from '../../../../model/api/query/query'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { OperatorOptions } from '../../../../model/api/query/valueFilter'
 import { ValueType } from '../../../../model/api/terminology/valuedefinition'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 describe('EditSingleCriterionComponent', () => {
   let component: EditSingleCriterionComponent
@@ -31,6 +33,12 @@ describe('EditSingleCriterionComponent', () => {
       close: () => {},
     } as MatDialogRef<EditSingleCriterionComponent>
 
+    const featureService = {
+      useFeatureMultipleValueDefinitions(): boolean {
+        return true
+      },
+    } as FeatureService
+
     await TestBed.configureTestingModule({
       declarations: [
         EditSingleCriterionComponent,
@@ -46,6 +54,7 @@ describe('EditSingleCriterionComponent', () => {
         FontAwesomeTestingModule,
         MaterialModule,
         TranslateModule.forRoot(),
+        HttpClientTestingModule,
       ],
       providers: [
         {
@@ -56,6 +65,10 @@ describe('EditSingleCriterionComponent', () => {
           },
         },
         { provide: MatDialogRef, useValue: matDialogRef },
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        },
       ],
     }).compileComponents()
   })

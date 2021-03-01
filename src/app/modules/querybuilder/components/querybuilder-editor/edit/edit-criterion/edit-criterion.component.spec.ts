@@ -13,26 +13,41 @@ import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testi
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component'
 import { OperatorOptions } from '../../../../model/api/query/valueFilter'
 import { ValueType } from '../../../../model/api/terminology/valuedefinition'
-
-const valueDefinition = {
-  type: ValueType.CONCEPT,
-  precision: 1,
-}
-
-const valueFilter = {
-  precision: 1,
-  type: OperatorOptions.CONCEPT,
-  selectedConcepts: [],
-  valueDefinition,
-}
-
-const criterion = new Criterion()
-criterion.termCode = { code: 'A', system: 'http://test', display: 'Some Code' }
-criterion.valueFilters = [valueFilter]
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 describe('EditCriterionComponent', () => {
   let component: EditCriterionComponent
   let fixture: ComponentFixture<EditCriterionComponent>
+
+  const valueDefinition = {
+    type: ValueType.CONCEPT,
+    precision: 1,
+  }
+
+  const valueFilter = {
+    precision: 1,
+    type: OperatorOptions.CONCEPT,
+    selectedConcepts: [],
+    valueDefinition,
+  }
+
+  const valueFilter2 = {
+    precision: 2,
+    type: OperatorOptions.CONCEPT,
+    selectedConcepts: [],
+    valueDefinition,
+  }
+
+  const criterion = new Criterion()
+  criterion.termCode = { code: 'A', system: 'http://test', display: 'Some Code' }
+  criterion.valueFilters = [valueFilter]
+
+  const featureService = {
+    useFeatureMultipleValueDefinitions(): boolean {
+      return true
+    },
+  } as FeatureService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -50,6 +65,13 @@ describe('EditCriterionComponent', () => {
         NoopAnimationsModule,
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
+        HttpClientTestingModule,
+      ],
+      providers: [
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        },
       ],
     }).compileComponents()
   })
@@ -86,5 +108,39 @@ describe('EditCriterionComponent', () => {
 
     component.doSave()
     expect(component.save.emit).not.toHaveBeenCalledWith()
+  })
+
+  it('should use all available filters', () => {
+    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(true)
+    component.featureService = featureService
+
+    component.criterion.valueFilters.push(valueFilter2)
+
+    expect(component.getValueFilters().length).toBe(2)
+  })
+
+  it('should use only the first value filter', () => {
+    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
+    component.featureService = featureService
+
+    component.criterion.valueFilters.push(valueFilter2)
+
+    expect(component.getValueFilters().length).toBe(1)
+  })
+
+  it('should use one value filter', () => {
+    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
+    component.featureService = featureService
+
+    expect(component.getValueFilters().length).toBe(1)
+  })
+
+  it('should use no value filter', () => {
+    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
+    component.featureService = featureService
+
+    component.criterion.valueFilters = []
+
+    expect(component.getValueFilters().length).toBe(0)
   })
 })

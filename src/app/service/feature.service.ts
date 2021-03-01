@@ -7,6 +7,10 @@ import { AppConfigService } from '../config/app-config.service'
 export class FeatureService {
   constructor(private appConfig: AppConfigService) {}
 
+  public useFeatureMultipleValueDefinitions(): boolean {
+    return this.appConfig.getConfig().features.v2.multiplevaluedefinitions
+  }
+
   public useFeatureMultipleGroups(): boolean {
     return this.appConfig.getConfig().features.v2.multiplegroups
   }

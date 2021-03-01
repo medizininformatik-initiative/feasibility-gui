@@ -4,6 +4,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { EditSingleCriterionComponent } from '../../edit/edit-single-criterion/edit-single-criterion.component'
 import { Query } from '../../../../model/api/query/query'
 import { Subscription } from 'rxjs'
+import { ValueFilter } from '../../../../model/api/query/valueFilter'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 @Component({
   selector: 'num-display-criterion',
@@ -25,7 +27,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
 
   private subscriptionDialog: Subscription
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public featureService: FeatureService) {}
 
   ngOnInit(): void {}
 
@@ -51,5 +53,13 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
 
   doDelete(): void {
     this.delete.emit(this.criterion)
+  }
+
+  getValueFilters(): ValueFilter[] {
+    if (!this.featureService.useFeatureMultipleValueDefinitions()) {
+      return this.criterion.valueFilters.length === 0 ? [] : [this.criterion.valueFilters[0]]
+    }
+
+    return this.criterion.valueFilters
   }
 }

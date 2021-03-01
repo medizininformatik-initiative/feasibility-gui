@@ -26,6 +26,7 @@ describe('FeatureService', () => {
       .spyOn(appConfigService, 'getConfig')
       .mockReturnValue(FeatureServiceSpecUtil.createConfig(true))
 
+    expect(service.useFeatureMultipleValueDefinitions()).toBeTruthy()
     expect(service.useFeatureMultipleGroups()).toBeTruthy()
     expect(service.useFeatureDependentGroups()).toBeTruthy()
     expect(service.useFeatureTimeRestriction()).toBeTruthy()
@@ -49,6 +50,7 @@ describe('FeatureService', () => {
       .spyOn(appConfigService, 'getConfig')
       .mockReturnValue(FeatureServiceSpecUtil.createConfig(false))
 
+    expect(service.useFeatureMultipleValueDefinitions()).toBeFalsy()
     expect(service.useFeatureMultipleGroups()).toBeFalsy()
     expect(service.useFeatureDependentGroups()).toBeFalsy()
     expect(service.useFeatureTimeRestriction()).toBeFalsy()
@@ -85,6 +87,7 @@ class FeatureServiceSpecUtil {
     return {
       features: {
         v2: {
+          multiplevaluedefinitions: value,
           multiplegroups: value,
           dependentgroups: value,
           timerestriction: value,

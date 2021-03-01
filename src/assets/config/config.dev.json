@@ -19,6 +19,7 @@
   },
   "features": {
     "v2": {
+      "multiplevaluedefinitions": false,
       "multiplegroups": false,
       "dependentgroups": false,
       "timerestriction": false

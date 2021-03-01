@@ -11,6 +11,8 @@ import {
 } from '@angular/core'
 import { Criterion } from '../../../../model/api/query/criterion'
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component'
+import { ValueFilter } from '../../../../model/api/query/valueFilter'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 @Component({
   selector: 'num-edit-criterion',
@@ -34,7 +36,7 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
 
   actionDisabled = true
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(public featureService: FeatureService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {}
 
@@ -60,5 +62,13 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
       !this.valueFilterComponents ||
       !!this.valueFilterComponents.find((filterComoponent) => filterComoponent.isActionDisabled())
     )
+  }
+
+  getValueFilters(): ValueFilter[] {
+    if (!this.featureService.useFeatureMultipleValueDefinitions()) {
+      return this.criterion.valueFilters.length === 0 ? [] : [this.criterion.valueFilters[0]]
+    }
+
+    return this.criterion.valueFilters
   }
 }

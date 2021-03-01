@@ -12,18 +12,27 @@ import { EditValueFilterConceptLineComponent } from '../../edit/edit-value-filte
 import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { Query } from '../../../../model/api/query/query'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 describe('DisplayCritGroupComponent', () => {
   let component: DisplayCritGroupComponent
   let fixture: ComponentFixture<DisplayCritGroupComponent>
 
   beforeEach(async () => {
+    const featureService = {
+      useFeatureMultipleValueDefinitions(): boolean {
+        return true
+      },
+    } as FeatureService
+
     await TestBed.configureTestingModule({
       imports: [
         MaterialModule,
         ReactiveFormsModule,
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
+        HttpClientTestingModule,
       ],
       declarations: [
         DisplayCritGroupComponent,
@@ -31,6 +40,12 @@ describe('DisplayCritGroupComponent', () => {
         DisplayValueFilterComponent,
         EditValueFilterConceptLineComponent,
         BoolLogicSwitchComponent,
+      ],
+      providers: [
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        },
       ],
     }).compileComponents()
   })

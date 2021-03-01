@@ -13,12 +13,20 @@ import { CritGroupArranger, CritGroupPosition } from '../../../../controller/Cri
 import { DisplayValueFilterComponent } from '../display-value-filter/display-value-filter.component'
 import { Group } from '../../../../model/api/query/group'
 import { Query } from '../../../../model/api/query/query'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 describe('DisplayQueryComponent', () => {
   let component: DisplayQueryComponent
   let fixture: ComponentFixture<DisplayQueryComponent>
 
   beforeEach(async () => {
+    const featureService = {
+      useFeatureMultipleValueDefinitions(): boolean {
+        return true
+      },
+    } as FeatureService
+
     await TestBed.configureTestingModule({
       declarations: [
         DisplayQueryComponent,
@@ -28,7 +36,18 @@ describe('DisplayQueryComponent', () => {
         DisplayValueFilterComponent,
         BoolLogicSwitchComponent,
       ],
-      imports: [MaterialModule, FontAwesomeTestingModule, TranslateModule.forRoot()],
+      imports: [
+        MaterialModule,
+        FontAwesomeTestingModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+      ],
+      providers: [
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        },
+      ],
     }).compileComponents()
   })
 
