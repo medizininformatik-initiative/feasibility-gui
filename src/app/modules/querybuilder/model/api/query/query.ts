@@ -32,6 +32,7 @@ export class Query {
 
 // agreed CODEX format of queries in version 1 (without groups)
 export class QueryOnlyV1 {
+  version = 'http://to_be_decided.com/draft-1/schema#'
   display = ''
 
   // conjunctive normal form (without negation)

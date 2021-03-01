@@ -21,7 +21,6 @@ import { SearchTextHeaderComponent } from '../search-text-header/search-text-hea
 import { SearchTextOverlayContentComponent } from '../search-text-overlay-content/search-text-overlay-content.component'
 import { MockBackendDataProvider } from '../../../../service/MockBackendDataProvider'
 import { SearchTextTermEntryComponent } from '../search-text-term-entry/search-text-term-entry.component'
-import { Query } from '../../../../model/api/query/query'
 import { FocusMonitor, FocusOrigin } from '@angular/cdk/a11y'
 import { cold } from 'jasmine-marbles'
 import { EventEmitter } from '@angular/core'
@@ -87,12 +86,6 @@ describe('SearchInputComponent', () => {
       button.dispatchEvent(new Event('click'))
 
       expect(component.isOverlayOpen).toBe(true)
-    })
-
-    it('should fire storeQuery event', () => {
-      spyOn(component.storeQuery, 'emit')
-      component.doStoreQuery(new Query())
-      expect(component.storeQuery.emit).toBeCalled()
     })
 
     it('should open overlay for designated searchMode = "tree"', () => {

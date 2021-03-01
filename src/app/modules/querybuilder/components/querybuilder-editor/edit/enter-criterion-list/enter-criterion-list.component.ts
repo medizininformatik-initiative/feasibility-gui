@@ -5,6 +5,7 @@ import { Criterion } from '../../../../model/api/query/criterion'
 import { TermEntry2CriterionTranslator } from '../../../../controller/TermEntry2CriterionTranslator'
 import { CritType } from '../../../../model/api/query/group'
 import { Query } from '../../../../model/api/query/query'
+import { QueryProviderService } from '../../../../service/query-provider.service'
 
 export class EnterCriterionListComponentData {
   groupIndex: number
@@ -28,7 +29,8 @@ export class EnterCriterionListComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
-    public dialogRef: MatDialogRef<EnterCriterionListComponent>
+    private dialogRef: MatDialogRef<EnterCriterionListComponent, void>,
+    private provider: QueryProviderService
   ) {
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry))
     this.critType = data.critType
@@ -45,6 +47,7 @@ export class EnterCriterionListComponent implements OnInit {
       this.query.groups[this.groupIndex].exclusionCriteria.push([criterion])
     }
 
+    this.provider.store(this.query)
     this.doDiscard(criterion)
   }
 

@@ -12,10 +12,10 @@ import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminolo
 import { Subscription } from 'rxjs'
 import { BackendService } from '../../../../service/backend.service'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
-import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
 import { SearchMode } from '../search-input/search-input.component'
 import { CritType } from '../../../../model/api/query/group'
 import { Query } from '../../../../model/api/query/query'
+import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
 
 @Component({
   selector: 'num-search-text-overlay-content',
@@ -25,9 +25,6 @@ import { Query } from '../../../../model/api/query/query'
 export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnDestroy {
   @Output()
   closeOverlay = new EventEmitter<SearchMode>()
-
-  @Output()
-  storeQuery = new EventEmitter<Query>()
 
   @Input()
   text: string
@@ -45,7 +42,6 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
 
   private subscription: Subscription
   private subscriptionCategories: Subscription
-  private subscriptionDialog: Subscription
 
   constructor(private backend: BackendService, public dialog: MatDialog) {}
 
@@ -59,7 +55,6 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
   ngOnDestroy(): void {
     this.subscription?.unsubscribe()
     this.subscriptionCategories?.unsubscribe()
-    this.subscriptionDialog?.unsubscribe()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -89,12 +84,7 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
       query: this.query,
     }
 
-    const dialogRef = this.dialog.open(EnterCriterionListComponent, dialogConfig)
-
-    this.subscriptionDialog = dialogRef
-      .afterClosed()
-      .subscribe((query) => this.storeQuery.emit(query))
-
+    this.dialog.open(EnterCriterionListComponent, dialogConfig)
     this.closeOverlay.emit('text')
   }
 }

@@ -5,6 +5,7 @@ import { ValueDefinition } from '../terminology/valuedefinition'
 export class ValueFilter {
   type: OperatorOptions
 
+  @transient()
   valueDefinition?: ValueDefinition
 
   @transient()

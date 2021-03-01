@@ -96,7 +96,6 @@ describe('SerachTextOverlayContentComponent', () => {
 
   it('should fire choose event', () => {
     spyOn(component.closeOverlay, 'emit')
-    spyOn(component.storeQuery, 'emit')
     jest.spyOn(component.dialog, 'open').mockReturnValue(dialogRef)
     const termEntry = new TerminologyEntry()
     const dialogConfig = new MatDialogConfig()
@@ -112,6 +111,5 @@ describe('SerachTextOverlayContentComponent', () => {
     component.openDetailsPopUp(termEntry)
     expect(component.closeOverlay.emit).toHaveBeenCalledWith('text')
     expect(component.dialog.open).toHaveBeenCalledWith(EnterCriterionListComponent, dialogConfig)
-    expect(component.storeQuery.emit).toBeCalled()
   })
 })

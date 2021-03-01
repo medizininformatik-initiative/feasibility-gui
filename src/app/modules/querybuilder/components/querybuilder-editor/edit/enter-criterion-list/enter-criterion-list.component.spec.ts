@@ -15,6 +15,7 @@ import { MatInputNumberDirective } from '../mat-input-number.directive'
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component'
 import { QueryProviderService } from '../../../../service/query-provider.service'
+import { Query } from '../../../../model/api/query/query'
 import { Criterion } from '../../../../model/api/query/criterion'
 
 describe('EnterCriterionListComponent', () => {
@@ -23,9 +24,16 @@ describe('EnterCriterionListComponent', () => {
   const matDialogRef = {
     close: () => {},
   } as MatDialogRef<EnterCriterionListComponent>
+  // noinspection JSUnusedLocalSymbols
+  const providerService = {
+    store(query: Query): void {},
+    query(): Query {
+      return undefined
+    },
+  } as QueryProviderService
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    const testBedConfig = {
       declarations: [
         EnterCriterionListComponent,
         EditCriterionComponent,
@@ -54,8 +62,10 @@ describe('EnterCriterionListComponent', () => {
           },
         },
         { provide: MatDialogRef, useValue: matDialogRef },
+        { provide: QueryProviderService, useValue: providerService },
       ],
-    }).compileComponents()
+    }
+    await TestBed.configureTestingModule(testBedConfig).compileComponents()
   })
   beforeEach(() => {
     // noinspection JSUnusedLocalSymbols
@@ -66,28 +76,38 @@ describe('EnterCriterionListComponent', () => {
         },
       }),
     })
-
-    fixture = TestBed.createComponent(EnterCriterionListComponent)
-    component = fixture.componentInstance
-    component.criterionList = []
-
-    fixture.detectChanges()
   })
 
   it('should create', () => {
+    fixture = TestBed.createComponent(EnterCriterionListComponent)
+    component = fixture.componentInstance
+    component.criterionList = []
+    fixture.detectChanges()
+
     expect(component).toBeTruthy()
   })
 
   it('should close dialog', () => {
     spyOn(matDialogRef, 'close')
-    component.dialogRef = matDialogRef
+    TestBed.overrideProvider(MatDialogRef, { useValue: matDialogRef })
+
+    fixture = TestBed.createComponent(EnterCriterionListComponent)
+    component = fixture.componentInstance
+    component.criterionList = []
+    fixture.detectChanges()
+
     component.doDiscardAll()
     expect(matDialogRef.close).toBeCalledWith()
   })
 
   it('should discard criterion from list', () => {
     spyOn(matDialogRef, 'close')
-    component.dialogRef = matDialogRef
+    TestBed.overrideProvider(MatDialogRef, { useValue: matDialogRef })
+
+    fixture = TestBed.createComponent(EnterCriterionListComponent)
+    component = fixture.componentInstance
+    component.criterionList = []
+    fixture.detectChanges()
 
     const criterion = new Criterion()
     component.criterionList = [new Criterion(), criterion, new Criterion()]
@@ -100,7 +120,12 @@ describe('EnterCriterionListComponent', () => {
 
   it('should discard criterion from list', () => {
     spyOn(matDialogRef, 'close')
-    component.dialogRef = matDialogRef
+    TestBed.overrideProvider(MatDialogRef, { useValue: matDialogRef })
+
+    fixture = TestBed.createComponent(EnterCriterionListComponent)
+    component = fixture.componentInstance
+    component.criterionList = []
+    fixture.detectChanges()
 
     const criterion = new Criterion()
     component.criterionList = [criterion]
@@ -112,15 +137,20 @@ describe('EnterCriterionListComponent', () => {
   })
 
   it('should store query in inclusion criteria and discard criterion from list', () => {
+    fixture = TestBed.createComponent(EnterCriterionListComponent)
+    component = fixture.componentInstance
+    component.criterionList = []
+    fixture.detectChanges()
+
     const query = QueryProviderService.createDefaultQuery()
     const criterion = new Criterion()
 
     spyOn(component, 'doDiscard')
+    spyOn(providerService, 'store')
 
     component.critType = 'inclusion'
-    component.dialogRef = matDialogRef
-    component.criterionList = [criterion]
     component.query = query
+    component.criterionList = [criterion]
 
     component.doSave(criterion)
 
@@ -130,15 +160,20 @@ describe('EnterCriterionListComponent', () => {
   })
 
   it('should store query in exclusion criteria and discard criterion from list', () => {
+    fixture = TestBed.createComponent(EnterCriterionListComponent)
+    component = fixture.componentInstance
+    component.criterionList = []
+    fixture.detectChanges()
+
     const query = QueryProviderService.createDefaultQuery()
     const criterion = new Criterion()
 
     spyOn(component, 'doDiscard')
+    spyOn(providerService, 'store')
 
     component.critType = 'exclusion'
-    component.dialogRef = matDialogRef
-    component.criterionList = [criterion]
     component.query = query
+    component.criterionList = [criterion]
 
     component.doSave(criterion)
 
