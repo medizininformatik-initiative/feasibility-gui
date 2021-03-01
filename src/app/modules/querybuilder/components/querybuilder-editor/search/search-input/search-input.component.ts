@@ -137,10 +137,6 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     }
     this.isOverlayOpen = false
   }
-
-  doStoreQuery(query: Query): void {
-    this.storeQuery.emit(query)
-  }
 }
 
 export type SearchMode = 'text' | 'tree'

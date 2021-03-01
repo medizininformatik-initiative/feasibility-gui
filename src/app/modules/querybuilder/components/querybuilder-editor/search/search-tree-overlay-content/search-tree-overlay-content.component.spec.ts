@@ -153,7 +153,6 @@ describe('SearchOverlayTreeComponent', () => {
 
   describe('handle dialog', () => {
     it('should open dialog', () => {
-      spyOn(component.storeQuery, 'emit')
       spyOn(closeOverlay, 'emit')
       jest.spyOn(dialog, 'open').mockReturnValue(dialogRef)
 
@@ -175,7 +174,6 @@ describe('SearchOverlayTreeComponent', () => {
 
       expect(dialog.open).toBeCalledWith(EnterCriterionListComponent, expectedDialogConfig)
       expect(closeOverlay.emit).toBeCalled()
-      expect(component.storeQuery.emit).toBeCalled()
     })
 
     it('should not open dialog for value false', () => {

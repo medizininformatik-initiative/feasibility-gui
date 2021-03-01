@@ -28,6 +28,7 @@ export class ApiTranslator {
         criterionV1.timeRestriction = criterion.timeRestriction
         if (criterion.valueFilters.length > 0) {
           criterionV1.valueFilter = criterion.valueFilters[0]
+          criterionV1.valueFilter.valueDefinition = undefined
         }
 
         this.removeNonApiFields(criterionV1)

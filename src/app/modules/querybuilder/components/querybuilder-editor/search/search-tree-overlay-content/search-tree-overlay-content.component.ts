@@ -21,9 +21,6 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   @Output()
   closeOverlay = new EventEmitter<SearchMode>()
 
-  @Output()
-  storeQuery = new EventEmitter<Query>()
-
   @Input()
   critType: CritType
 
@@ -115,11 +112,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
           query: this.query,
         }
 
-        const dialogRef = this.dialog.open(EnterCriterionListComponent, dialogConfig)
-
-        this.subscriptionDialog = dialogRef
-          .afterClosed()
-          .subscribe((query) => this.storeQuery.emit(query))
+        this.dialog.open(EnterCriterionListComponent, dialogConfig)
       }
     }
 
