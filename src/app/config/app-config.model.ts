@@ -19,6 +19,7 @@ export interface IAppConfig {
   }
   features: {
     v2: {
+      multiplevaluedefinitions: boolean
       multiplegroups: boolean
       dependentgroups: boolean
       timerestriction: boolean

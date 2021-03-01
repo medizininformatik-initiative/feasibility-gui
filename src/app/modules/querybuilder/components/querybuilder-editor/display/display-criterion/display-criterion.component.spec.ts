@@ -12,6 +12,9 @@ import { Criterion } from '../../../../model/api/query/criterion'
 import { ComponentType } from '@angular/cdk/overlay'
 import { TemplateRef } from '@angular/core'
 import { Observable, of } from 'rxjs'
+import { FeatureService } from '../../../../../../service/feature.service'
+import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('DisplayCriterionComponent', () => {
   let component: DisplayCriterionComponent
@@ -21,10 +24,23 @@ describe('DisplayCriterionComponent', () => {
   let dialog
   let dialogRef
 
+  const featureService = {
+    useFeatureMultipleValueDefinitions(): boolean {
+      return true
+    },
+  } as FeatureService
+
+  const valueFilter2: ValueFilter = {
+    precision: 2,
+    type: OperatorOptions.CONCEPT,
+    selectedConcepts: [],
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DisplayCriterionComponent, DisplayValueFilterComponent],
-      imports: [MaterialModule, TranslateModule.forRoot()],
+      imports: [MaterialModule, TranslateModule.forRoot(), HttpClientTestingModule],
+      providers: [{ provide: FeatureService, useValue: featureService }],
     }).compileComponents()
   })
 
@@ -83,5 +99,39 @@ describe('DisplayCriterionComponent', () => {
     spyOn(component.delete, 'emit')
     component.doDelete()
     expect(component.delete.emit).toHaveBeenCalledWith(criterion)
+  })
+
+  it('should use all available filters', () => {
+    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(true)
+    component.featureService = featureService
+
+    component.criterion.valueFilters.push(valueFilter2)
+
+    expect(component.getValueFilters().length).toBe(2)
+  })
+
+  it('should use only the first value filter', () => {
+    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
+    component.featureService = featureService
+
+    component.criterion.valueFilters.push(valueFilter2)
+
+    expect(component.getValueFilters().length).toBe(1)
+  })
+
+  it('should use one value filter', () => {
+    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
+    component.featureService = featureService
+
+    expect(component.getValueFilters().length).toBe(1)
+  })
+
+  it('should use no value filter', () => {
+    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
+    component.featureService = featureService
+
+    component.criterion.valueFilters = []
+
+    expect(component.getValueFilters().length).toBe(0)
   })
 })

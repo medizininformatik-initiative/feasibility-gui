@@ -6,10 +6,7 @@
     </h4>
   </mat-card-header>
   <mat-card-content>
-    <num-edit-value-definition
-      *ngFor="let valueFilter of criterion.valueFilters"
-      [filter]="valueFilter"
-    >
+    <num-edit-value-definition *ngFor="let valueFilter of getValueFilters()" [filter]="valueFilter">
     </num-edit-value-definition>
   </mat-card-content>
   <mat-card-footer>
