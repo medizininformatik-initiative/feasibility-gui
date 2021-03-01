@@ -17,6 +17,7 @@ import { OperatorOptions } from '../../../../model/api/query/valueFilter'
 import { ValueType } from '../../../../model/api/terminology/valuedefinition'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component'
 
 describe('EditSingleCriterionComponent', () => {
   let component: EditSingleCriterionComponent
@@ -37,6 +38,9 @@ describe('EditSingleCriterionComponent', () => {
       useFeatureMultipleValueDefinitions(): boolean {
         return true
       },
+      useFeatureTimeRestriction(): boolean {
+        return true
+      },
     } as FeatureService
 
     await TestBed.configureTestingModule({
@@ -47,6 +51,7 @@ describe('EditSingleCriterionComponent', () => {
         EditValueFilterConceptLineComponent,
         ButtonComponent,
         MatInputNumberDirective,
+        EditTimeRestrictionComponent,
       ],
       imports: [
         FormsModule,

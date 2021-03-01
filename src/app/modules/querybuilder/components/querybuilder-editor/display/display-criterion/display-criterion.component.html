@@ -8,6 +8,10 @@
       *ngFor="let filter of getValueFilters()"
       [filter]="filter"
     ></num-display-value-filter>
+    <num-display-time-restriction
+      *ngIf="featureService.useFeatureTimeRestriction()"
+      [timeRestriction]="criterion.timeRestriction"
+    ></num-display-time-restriction>
   </div>
   <div class="cancel-button-wrapper">
     <!-- TODO[CODEX]: use icon 'close'-->

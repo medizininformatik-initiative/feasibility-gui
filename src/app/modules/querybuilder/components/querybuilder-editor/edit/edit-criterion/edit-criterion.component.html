@@ -8,6 +8,10 @@
   <mat-card-content>
     <num-edit-value-definition *ngFor="let valueFilter of getValueFilters()" [filter]="valueFilter">
     </num-edit-value-definition>
+    <num-edit-time-restriction
+      *ngIf="featureService.useFeatureTimeRestriction()"
+      [timeRestriction]="criterion.timeRestriction"
+    ></num-edit-time-restriction>
   </mat-card-content>
   <mat-card-footer>
     <div fxLayout="row">

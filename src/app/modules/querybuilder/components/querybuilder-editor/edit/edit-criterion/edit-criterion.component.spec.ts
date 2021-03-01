@@ -15,6 +15,7 @@ import { OperatorOptions } from '../../../../model/api/query/valueFilter'
 import { ValueType } from '../../../../model/api/terminology/valuedefinition'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component'
 
 describe('EditCriterionComponent', () => {
   let component: EditCriterionComponent
@@ -47,6 +48,9 @@ describe('EditCriterionComponent', () => {
     useFeatureMultipleValueDefinitions(): boolean {
       return true
     },
+    useFeatureTimeRestriction(): boolean {
+      return true
+    },
   } as FeatureService
 
   beforeEach(async () => {
@@ -57,6 +61,7 @@ describe('EditCriterionComponent', () => {
         EditValueFilterConceptLineComponent,
         MatInputNumberDirective,
         ButtonComponent,
+        EditTimeRestrictionComponent,
       ],
       imports: [
         MaterialModule,

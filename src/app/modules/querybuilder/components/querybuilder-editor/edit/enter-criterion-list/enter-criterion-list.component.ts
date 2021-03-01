@@ -6,6 +6,7 @@ import { TermEntry2CriterionTranslator } from '../../../../controller/TermEntry2
 import { CritType } from '../../../../model/api/query/group'
 import { Query } from '../../../../model/api/query/query'
 import { QueryProviderService } from '../../../../service/query-provider.service'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 export class EnterCriterionListComponentData {
   groupIndex: number
@@ -20,7 +21,7 @@ export class EnterCriterionListComponentData {
   styleUrls: ['./enter-criterion-list.component.scss'],
 })
 export class EnterCriterionListComponent implements OnInit {
-  private readonly translator = new TermEntry2CriterionTranslator()
+  private readonly translator
 
   criterionList: Array<Criterion> = []
   groupIndex: number
@@ -30,8 +31,13 @@ export class EnterCriterionListComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
     private dialogRef: MatDialogRef<EnterCriterionListComponent, void>,
-    private provider: QueryProviderService
+    private provider: QueryProviderService,
+    public featureService: FeatureService
   ) {
+    this.translator = new TermEntry2CriterionTranslator(
+      this.featureService.useFeatureTimeRestriction()
+    )
+
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry))
     this.critType = data.critType
     this.groupIndex = data.groupIndex

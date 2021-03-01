@@ -27,6 +27,25 @@ import { MatInputNumberDirective } from './components/querybuilder-editor/edit/m
 import { DisplayValueFilterComponent } from './components/querybuilder-editor/display/display-value-filter/display-value-filter.component'
 import { EditSingleCriterionComponent } from './components/querybuilder-editor/edit/edit-single-criterion/edit-single-criterion.component'
 import { EditValueFilterConceptLineComponent } from './components/querybuilder-editor/edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component'
+import { DisplayTimeRestrictionComponent } from './components/querybuilder-editor/display/display-time-restriction/display-time-restriction.component'
+import { EditTimeRestrictionComponent } from './components/querybuilder-editor/edit/edit-time-restriction/edit-time-restriction.component'
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core'
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter'
+
+export const FORMATS_GERMAN = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD.MM.YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+}
 
 @NgModule({
   declarations: [
@@ -52,7 +71,17 @@ import { EditValueFilterConceptLineComponent } from './components/querybuilder-e
     DisplayValueFilterComponent,
     EditSingleCriterionComponent,
     EditValueFilterConceptLineComponent,
+    DisplayTimeRestrictionComponent,
+    EditTimeRestrictionComponent,
   ],
   imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule, OverlayModule],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: FORMATS_GERMAN },
+  ],
 })
 export class QuerybuilderModule {}

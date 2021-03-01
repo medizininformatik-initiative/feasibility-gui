@@ -15,6 +15,7 @@ import { Group } from '../../../../model/api/query/group'
 import { Query } from '../../../../model/api/query/query'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
 
 describe('DisplayQueryComponent', () => {
   let component: DisplayQueryComponent
@@ -23,6 +24,9 @@ describe('DisplayQueryComponent', () => {
   beforeEach(async () => {
     const featureService = {
       useFeatureMultipleValueDefinitions(): boolean {
+        return true
+      },
+      useFeatureTimeRestriction(): boolean {
         return true
       },
     } as FeatureService
@@ -35,6 +39,7 @@ describe('DisplayQueryComponent', () => {
         DisplayCriterionComponent,
         DisplayValueFilterComponent,
         BoolLogicSwitchComponent,
+        DisplayTimeRestrictionComponent,
       ],
       imports: [
         MaterialModule,

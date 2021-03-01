@@ -29,7 +29,7 @@
       "LABEL": "Code or display",
       "ALL": "All"
     },
-    "SWITCH":{
+    "SWITCH": {
       "LABEL_AND": "AND",
       "LABEL_OR": "OR"
     },
@@ -37,7 +37,14 @@
       "ONE_OF": "",
       "MORE": "more",
       "BETWEEN": "between {{ min }} and {{ max }} {{ unit }}",
-      "COMPARATOR": "{{ comparator }} {{ value }} {{ unit }}"
+      "COMPARATOR": "{{ comparator }} {{ value }} {{ unit }}",
+      "TIMERESTRICTION": {
+        "LATEST": "(latest)",
+        "BOTH": "between {{ from }} and {{ to }}",
+        "FROM": "later than {{ from }}",
+        "TO": "before {{ to }}",
+        "NONE": "keine zeitliche Einschränkung"
+      }
     },
     "EDIT": {
       "HEADER": "Restrictions of selected concepts",
@@ -54,7 +61,14 @@
       "EQUAL": "equals",
       "LESS_THAN": "less than",
       "GREATER_THAN": "more than",
-      "BETWEEN": "between"
+      "BETWEEN": "between",
+      "TIMERESTRICTION": {
+        "LABEL": "Time range",
+        "EVER": "All occurrences in",
+        "LATEST": "Latest occurrence in",
+        "FROM": "from",
+        "TO": "to"
+      }
     },
     "HINT": {
       "NO_VALUE_SELECTED": "Choose at least one value",
