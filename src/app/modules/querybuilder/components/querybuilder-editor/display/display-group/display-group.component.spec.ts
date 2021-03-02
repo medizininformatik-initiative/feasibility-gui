@@ -27,6 +27,12 @@ describe('DisplayGroupComponent', () => {
     useFeatureTimeRestriction(): boolean {
       return true
     },
+    useFeatureMultipleGroups(): boolean {
+      return true
+    },
+    useFeatureDependentGroups(): boolean {
+      return true
+    },
   } as FeatureService
 
   beforeEach(async () => {
@@ -57,6 +63,7 @@ describe('DisplayGroupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DisplayGroupComponent)
     component = fixture.componentInstance
+    component.query = QueryProviderService.createTestQuery()
     component.group = QueryProviderService.createTestQuery().groups[0]
     fixture.detectChanges()
   })

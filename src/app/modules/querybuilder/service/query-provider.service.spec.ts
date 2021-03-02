@@ -29,6 +29,7 @@ describe('QueryProviderService', () => {
     expect(QueryProviderService.createDefaultQuery()).toEqual({
       groups: [
         {
+          id: 1,
           display: 'Ausgewählte Merkmale',
           exclusionCriteria: [],
           inclusionCriteria: [],

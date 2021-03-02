@@ -18,6 +18,7 @@ import { ValueType } from '../../../../model/api/terminology/valuedefinition'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('EditSingleCriterionComponent', () => {
   let component: EditSingleCriterionComponent
@@ -41,6 +42,12 @@ describe('EditSingleCriterionComponent', () => {
       useFeatureTimeRestriction(): boolean {
         return true
       },
+      useFeatureMultipleGroups(): boolean {
+        return true
+      },
+      useFeatureDependentGroups(): boolean {
+        return true
+      },
     } as FeatureService
 
     await TestBed.configureTestingModule({
@@ -54,6 +61,7 @@ describe('EditSingleCriterionComponent', () => {
         EditTimeRestrictionComponent,
       ],
       imports: [
+        NoopAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
         FontAwesomeTestingModule,

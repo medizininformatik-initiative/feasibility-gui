@@ -29,6 +29,12 @@ describe('DisplayQueryComponent', () => {
       useFeatureTimeRestriction(): boolean {
         return true
       },
+      useFeatureMultipleGroups(): boolean {
+        return true
+      },
+      useFeatureDependentGroups(): boolean {
+        return true
+      },
     } as FeatureService
 
     await TestBed.configureTestingModule({

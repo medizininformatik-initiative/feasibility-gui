@@ -16,6 +16,7 @@ import { ValueType } from '../../../../model/api/terminology/valuedefinition'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component'
+import { QueryProviderService } from '../../../../service/query-provider.service'
 
 describe('EditCriterionComponent', () => {
   let component: EditCriterionComponent
@@ -49,6 +50,12 @@ describe('EditCriterionComponent', () => {
       return true
     },
     useFeatureTimeRestriction(): boolean {
+      return true
+    },
+    useFeatureMultipleGroups(): boolean {
+      return true
+    },
+    useFeatureDependentGroups(): boolean {
       return true
     },
   } as FeatureService
@@ -85,6 +92,7 @@ describe('EditCriterionComponent', () => {
     fixture = TestBed.createComponent(EditCriterionComponent)
     component = fixture.componentInstance
     component.criterion = criterion
+    component.query = QueryProviderService.createTestQuery()
 
     fixture.detectChanges()
   })
@@ -103,8 +111,9 @@ describe('EditCriterionComponent', () => {
     spyOn(component.save, 'emit')
     jest.spyOn(component, 'isActionDisabled').mockReturnValue(false)
 
+    component.selectedGroupId = 47
     component.doSave()
-    expect(component.save.emit).toHaveBeenCalledWith()
+    expect(component.save.emit).toHaveBeenCalledWith({ groupId: 47 })
   })
 
   it('should not fire save event for disabled state', () => {
