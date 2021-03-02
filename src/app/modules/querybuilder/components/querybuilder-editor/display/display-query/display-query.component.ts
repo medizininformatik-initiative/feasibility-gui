@@ -147,4 +147,11 @@ export class DisplayQueryComponent implements OnInit {
       return null
     }
   }
+
+  getGroups(): Group[] {
+    if (!this.featureService.useFeatureMultipleGroups() && this.query.groups.length > 0) {
+      return [this.query.groups[0]]
+    }
+    return this.query.groups
+  }
 }

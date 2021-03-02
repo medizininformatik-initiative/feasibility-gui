@@ -58,3 +58,7 @@ mat-card-content {
 .not-linked:hover {
   background-color: var(--num-color--accent-100);
 }
+
+.not-linked-without-dependent-group-feature div {
+  margin: 1em 0 1em 2em;
+}

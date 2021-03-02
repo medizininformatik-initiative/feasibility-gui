@@ -46,7 +46,6 @@
       },
       "GROUPS": {
         "LINKEDGROUPS": "Gruppen sind verbunden",
-        "UNLINKEDGROUPS": "Gruppen nicht verbunden",
         "SHOW_CONNECTION": "Beziehung anzeigen",
         "NEW_GROUP": "Neue Gruppe",
         "HINT_NOT_MOVED": "Gruppe konnte nicht verschoben werden",
