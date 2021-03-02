@@ -1,7 +1,72 @@
+<div *ngIf="!first && featureService.useFeatureMultipleGroups()">
+  <div *ngIf="isLinked()" fxLayout="column" fxLayoutAlign="space-around" class="is-linked-wrapper">
+    <div fxLayout="row" fxLayoutAlign="stretch">
+      <div (click)="switchLinkedStatus()" class="is-linked" fxFlex="50">
+        <fa-icon *ngIf="isLinked()" icon="link" size="lg"></fa-icon>
+        <span>
+          {{ 'QUERYBUILDER.DISPLAY.GROUPS.LINKEDGROUPS' | translate }}
+        </span>
+      </div>
+      <a (click)="editConnection()" class="is-linked" fxFlex="50">
+        <div fxLayout="row" fxLayoutAlign="space-around">
+          {{ 'QUERYBUILDER.DISPLAY.GROUPS.SHOW_CONNECTION' | translate }}
+        </div>
+      </a>
+      <div fxFlex="50"></div>
+    </div>
+  </div>
+  <div
+    *ngIf="!isLinked()"
+    (click)="switchLinkedStatus()"
+    class="not-linked"
+    fxLayout="column"
+    fxLayoutAlign="space-around"
+  >
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <fa-icon fxFlex="47" icon="unlink" size="lg"></fa-icon>
+      <span fxFlex="0"
+        ><b>{{ 'QUERYBUILDER.SWITCH.LABEL_AND' | translate }}</b></span
+      >
+      <span fxFlex="53"></span>
+    </div>
+  </div>
+</div>
+
 <mat-card class="query-group">
   <mat-card-header>
-    <div fxLayout="column" fxLayoutAlign="space-around" class="header-display">
-      {{ group.display }}
+    <div fxLayout="row" fxLayoutAlign="space-between" class="header-wrapper">
+      <div fxLayout="row">
+        <div
+          *ngIf="featureService.useFeatureMultipleGroups()"
+          class="button-space"
+          (click)="doMoveDown()"
+        >
+          <fa-icon *ngIf="!isLinked()" icon="arrow-down" size="lg"></fa-icon>
+        </div>
+        <div
+          *ngIf="featureService.useFeatureMultipleGroups()"
+          class="button-space"
+          (click)="doMoveUp()"
+        >
+          <fa-icon *ngIf="!isLinked()" icon="arrow-up" size="lg"></fa-icon>
+        </div>
+        <div class="button-space" *ngIf="isLinked()"></div>
+        <div class="button-space" *ngIf="isLinked()"></div>
+        <div fxLayout="column" fxLayoutAlign="space-around">
+          <div>
+            {{ group.display }}
+            <em *ngIf="featureService.useFeatureMultipleGroups()"> ({{ group.id }})</em>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-around">
+        <div fxLayout="row">
+          <div (click)="deleteGroup(group.id)" class="header-cancel-button button-space">
+            <fa-icon *ngIf="query.groups.length > 1" icon="times" size="lg"></fa-icon>
+          </div>
+          <div class="button-space"></div>
+        </div>
+      </div>
     </div>
   </mat-card-header>
   <mat-card-content>

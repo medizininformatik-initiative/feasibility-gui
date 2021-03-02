@@ -13,6 +13,8 @@ import { Criterion } from '../../../../model/api/query/criterion'
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component'
 import { ValueFilter } from '../../../../model/api/query/valueFilter'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { Query } from '../../../../model/api/query/query'
+import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger'
 
 @Component({
   selector: 'num-edit-criterion',
@@ -24,10 +26,16 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
   criterion: Criterion
 
   @Input()
+  query: Query
+
+  @Input()
+  position: CritGroupPosition
+
+  @Input()
   actionButtonKey: string
 
   @Output()
-  save = new EventEmitter()
+  save = new EventEmitter<{ groupId: number }>()
 
   @Output()
   discard = new EventEmitter<void>()
@@ -36,9 +44,17 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
 
   actionDisabled = true
 
+  selectedGroupId: number
+
   constructor(public featureService: FeatureService, private changeDetector: ChangeDetectorRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.position) {
+      this.selectedGroupId = this.position.groupId
+    } else {
+      this.selectedGroupId = this.query.groups[0].id
+    }
+  }
 
   ngAfterViewChecked(): void {
     this.actionDisabled = this.isActionDisabled()
@@ -50,7 +66,9 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
       return
     }
 
-    this.save.emit()
+    this.moveBetweenGroups()
+
+    this.save.emit({ groupId: this.selectedGroupId })
   }
 
   doDiscard(): void {
@@ -70,5 +88,29 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
     }
 
     return this.criterion.valueFilters
+  }
+
+  moveBetweenGroups(): void {
+    if (!this.position || this.position.groupId === this.selectedGroupId) {
+      return
+    }
+
+    if (
+      (!this.position.row && this.position.row !== 0) ||
+      (!this.position.column && this.position.column !== 0)
+    ) {
+      return
+    }
+
+    this.query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
+      this.query.groups,
+      this.position,
+      {
+        groupId: this.selectedGroupId,
+        critType: this.position.critType,
+        column: -1,
+        row: -1,
+      }
+    )
   }
 }

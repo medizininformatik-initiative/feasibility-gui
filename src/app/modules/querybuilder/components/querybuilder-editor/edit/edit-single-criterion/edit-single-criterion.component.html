@@ -1,6 +1,8 @@
 <div class="container">
   <num-edit-criterion
     [criterion]="criterion"
+    [query]="queryModified"
+    [position]="position"
     actionButtonKey="SAVE"
     (save)="doSave()"
     (discard)="doCancel()"

@@ -14,11 +14,29 @@
     ></num-edit-time-restriction>
   </mat-card-content>
   <mat-card-footer>
-    <div fxLayout="row">
-      <div fxFlex="fill"></div>
-      <num-button [type]="'primary'" (click)="doSave()" [isDisabled]="actionDisabled">{{
-        'BUTTON.' + actionButtonKey | translate
-      }}</num-button>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <mat-form-field
+        *ngIf="featureService.useFeatureMultipleGroups()"
+        appearance="outline"
+        class="group-form-field"
+        fxFlex="fill"
+      >
+        <mat-label>{{ 'QUERYBUILDER.EDIT.CHOOSE_GROUP' | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedGroupId">
+          <mat-option *ngFor="let group of query.groups" [value]="group.id"
+            >{{ group.display }}<em>({{ group.id }})</em></mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="!featureService.useFeatureMultipleGroups()" fxFlex="fill"></div>
+
+      <num-button
+        [type]="'primary'"
+        (click)="doSave()"
+        [isDisabled]="actionDisabled"
+        class="button-save"
+        >{{ 'BUTTON.' + actionButtonKey | translate }}</num-button
+      >
       <num-button [type]="'secondary'" (click)="doDiscard()">{{
         'BUTTON.CANCEL' | translate
       }}</num-button>

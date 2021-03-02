@@ -22,6 +22,10 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faLink } from '@fortawesome/free-solid-svg-icons'
+import { faUnlink } from '@fortawesome/free-solid-svg-icons'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 
 export const FONT_AWESOME_ICONS = [
   faTh,
@@ -48,4 +52,8 @@ export const FONT_AWESOME_ICONS = [
   faProjectDiagram,
   faChevronRight,
   faChevronDown,
+  faLink,
+  faUnlink,
+  faArrowUp,
+  faArrowDown,
 ]

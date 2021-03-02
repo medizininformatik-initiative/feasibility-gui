@@ -33,6 +33,6 @@ export class DisplayTimeRestrictionComponent implements OnInit {
   }
 
   getDateFormatted(date: Date): string {
-    return date ? "'" + moment(date).format('DD.MM.YYYY') + "'" : ''
+    return date ? moment(date).format('DD.MM.YYYY') : ''
   }
 }

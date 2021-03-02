@@ -43,6 +43,14 @@
         "FROM": "nach {{ from }}",
         "TO": "vor {{ to }}",
         "NONE": "keine zeitliche Einschränkung"
+      },
+      "GROUPS": {
+        "LINKEDGROUPS": "Gruppen sind verbunden",
+        "UNLINKEDGROUPS": "Gruppen nicht verbunden",
+        "SHOW_CONNECTION": "Beziehung anzeigen",
+        "NEW_GROUP": "Neue Gruppe",
+        "HINT_NOT_MOVED": "Gruppe konnte nicht verschoben werden",
+        "HINT_NOT_DELETABLE_LINKED_GROUP": "Gruppen mit verbundener Untergruppe können nicht gelöscht werden"
       }
     },
     "EDIT": {
@@ -51,6 +59,7 @@
       "HEADER_FILTER_QUANTITY_FOR_DISPLAY": "Geben Sie einen Wertebereich ein ({{ label }}):",
       "HEADER_FILTER_CONCEPT": "Geben Sie einen oder mehrere zulässige Werte an:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
+      "CHOOSE_GROUP":"Gruppe auswählen",
       "UNIT": "Einheit",
       "MIN": "Min",
       "MAX": "Max",
@@ -67,6 +76,29 @@
         "LATEST": "Aktuellstes Ereignis liegt im Zeitraum",
         "FROM": "von",
         "TO": "bis"
+      },
+      "GROUPS": {
+        "HEADER_LINKED_GROUPS": "Beziehung zwischen Gruppen",
+        "OPTION_PARENT_EVER": "Jedes Merkmal",
+        "OPTION_PARENT_FIRST": "Erstes Merkmal",
+        "OPTION_PARENT_LATEST": "Aktuellstes Merkmal",
+        "GROUP_PARENT_1": "der Gruppe",
+        "GROUP_PARENT_2": "fand",
+        "OPTION_DEPENDENT_EVER": "jedem Merkmal",
+        "OPTION_DEPENDENT_FIRST": "dem ersten Merkmal",
+        "OPTION_DEPENDENT_LATEST": "dem aktuellsten Merkmal",
+        "GROUP_DEPENDENT_1": "der Gruppe",
+        "GROUP_DEPENDENT_2": "statt",
+        "TILL": "bis",
+        "FROM": "von",
+        "BEFORE": "vor",
+        "AFTER": "nach",
+        "DAY": "Tag(e)",
+        "MONTH": "Monat(e)",
+        "YEAR": "Jahr(e)",
+        "LABEL_UNIT": "Einheit",
+        "LABEL_VALUE": "Wert",
+        "LABEL_PREPOSITION": "Präposition"
       }
     },
     "HINT": {

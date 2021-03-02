@@ -222,7 +222,7 @@ export class CritGroupArranger {
 }
 
 export class CritGroupPosition {
-  groupId: string
+  groupId: number
   critType: CritType
   row: number
   column: number

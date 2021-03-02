@@ -54,8 +54,8 @@ describe('CritGroupArranger', () => {
 
   it('should add inclusion criterion', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[2] = [
@@ -68,7 +68,7 @@ describe('CritGroupArranger', () => {
     const actual = CritGroupArranger.addCriterion(
       groups,
       {
-        groupId: '0',
+        groupId: 0,
         critType: 'inclusion',
         row: 2,
         column: 2,
@@ -80,8 +80,8 @@ describe('CritGroupArranger', () => {
 
   it('should add exclusion criterion', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].exclusionCriteria[2] = [
@@ -94,7 +94,7 @@ describe('CritGroupArranger', () => {
     const actual = CritGroupArranger.addCriterion(
       groups,
       {
-        groupId: '0',
+        groupId: 0,
         critType: 'exclusion',
         row: 2,
         column: 2,
@@ -106,8 +106,8 @@ describe('CritGroupArranger', () => {
 
   it('should add inclusion criterion at first position', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[2] = [
@@ -120,7 +120,7 @@ describe('CritGroupArranger', () => {
     const actual = CritGroupArranger.addCriterion(
       groups,
       {
-        groupId: '0',
+        groupId: 0,
         critType: 'inclusion',
         row: 2,
         column: 0,
@@ -132,8 +132,8 @@ describe('CritGroupArranger', () => {
 
   it('should add inclusion criterion at last position', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[2] = [
@@ -146,7 +146,7 @@ describe('CritGroupArranger', () => {
     const actual = CritGroupArranger.addCriterion(
       groups,
       {
-        groupId: '0',
+        groupId: 0,
         critType: 'inclusion',
         row: 2,
         column: 3,
@@ -158,8 +158,8 @@ describe('CritGroupArranger', () => {
 
   it('should remove inclusion criterion of first group', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[2] = [
@@ -168,7 +168,7 @@ describe('CritGroupArranger', () => {
     ]
 
     const actual = CritGroupArranger.removeCriterion(groups, {
-      groupId: '0',
+      groupId: 0,
       critType: 'inclusion',
       row: 2,
       column: 0,
@@ -178,8 +178,8 @@ describe('CritGroupArranger', () => {
 
   it('should remove solo inclusion criterion of inner array', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
     groups[0].inclusionCriteria[0] = [createCriterion('in-0-00')]
 
     const groupsExpected = ObjectHelper.clone(groups)
@@ -189,7 +189,7 @@ describe('CritGroupArranger', () => {
     ]
 
     const actual = CritGroupArranger.removeCriterion(groups, {
-      groupId: '0',
+      groupId: 0,
       critType: 'inclusion',
       row: 0,
       column: 0,
@@ -199,8 +199,8 @@ describe('CritGroupArranger', () => {
 
   it('should remove exclusion criterion of second', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[1].exclusionCriteria[1] = [
@@ -209,7 +209,7 @@ describe('CritGroupArranger', () => {
     ]
 
     const actual = CritGroupArranger.removeCriterion(groups, {
-      groupId: '1',
+      groupId: 1,
       critType: 'exclusion',
       row: 1,
       column: 2,
@@ -219,8 +219,8 @@ describe('CritGroupArranger', () => {
 
   it('should remove solo exclusion criterion of inner array', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
     groups[0].exclusionCriteria[2] = [createCriterion('ex-0-20')]
 
     const groupsExpected = ObjectHelper.clone(groups)
@@ -230,7 +230,7 @@ describe('CritGroupArranger', () => {
     ]
 
     const actual = CritGroupArranger.removeCriterion(groups, {
-      groupId: '0',
+      groupId: 0,
       critType: 'exclusion',
       row: 2,
       column: 0,
@@ -240,28 +240,28 @@ describe('CritGroupArranger', () => {
 
   it('should not move inclusion criterion to same position', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
       {
-        groupId: '0',
+        groupId: 0,
         critType: 'inclusion',
         row: 1,
         column: 1,
       },
-      { groupId: '0', critType: 'inclusion', row: 1, column: 1 }
+      { groupId: 0, critType: 'inclusion', row: 1, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move inclusion criterion between groups', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
@@ -277,16 +277,16 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '0', critType: 'inclusion', row: 1, column: 1 },
-      { groupId: '1', critType: 'inclusion', row: 1, column: 1 }
+      { groupId: 0, critType: 'inclusion', row: 1, column: 1 },
+      { groupId: 1, critType: 'inclusion', row: 1, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move from exclusion criterion to inclusion', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
@@ -302,16 +302,16 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '0', critType: 'exclusion', row: 1, column: 1 },
-      { groupId: '0', critType: 'inclusion', row: 1, column: 1 }
+      { groupId: 0, critType: 'exclusion', row: 1, column: 1 },
+      { groupId: 0, critType: 'inclusion', row: 1, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move exclusion criterion to higher row index while removing empty row', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
     groups[1].exclusionCriteria[1] = [createCriterion('ex-1-11')]
 
     const groupsExpected = ObjectHelper.clone(groups)
@@ -327,16 +327,16 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '1', critType: 'exclusion', row: 1, column: 0 },
-      { groupId: '1', critType: 'exclusion', row: 2, column: 1 }
+      { groupId: 1, critType: 'exclusion', row: 1, column: 0 },
+      { groupId: 1, critType: 'exclusion', row: 2, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move exclusion criterion to lower row index while removing empty row', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
     groups[1].exclusionCriteria[1] = [createCriterion('ex-1-11')]
 
     const groupsExpected = ObjectHelper.clone(groups)
@@ -352,16 +352,16 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '1', critType: 'exclusion', row: 1, column: 0 },
-      { groupId: '1', critType: 'exclusion', row: 0, column: 1 }
+      { groupId: 1, critType: 'exclusion', row: 1, column: 0 },
+      { groupId: 1, critType: 'exclusion', row: 0, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move inclusion criterion to higher row index while removing empty row', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
     groups[1].inclusionCriteria[1] = [createCriterion('in-1-11')]
 
     const groupsExpected = ObjectHelper.clone(groups)
@@ -377,16 +377,16 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '1', critType: 'inclusion', row: 1, column: 0 },
-      { groupId: '1', critType: 'inclusion', row: 2, column: 1 }
+      { groupId: 1, critType: 'inclusion', row: 1, column: 0 },
+      { groupId: 1, critType: 'inclusion', row: 2, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move inclusion criterion to lower row index while removing empty row', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
     groups[1].inclusionCriteria[1] = [createCriterion('in-1-11')]
 
     const groupsExpected = ObjectHelper.clone(groups)
@@ -402,16 +402,16 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '1', critType: 'inclusion', row: 1, column: 0 },
-      { groupId: '1', critType: 'inclusion', row: 0, column: 1 }
+      { groupId: 1, critType: 'inclusion', row: 1, column: 0 },
+      { groupId: 1, critType: 'inclusion', row: 0, column: 1 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move inclusion criterion in inner array to higher column index', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
@@ -422,16 +422,16 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '0', critType: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', critType: 'inclusion', row: 1, column: 2 }
+      { groupId: 0, critType: 'inclusion', row: 1, column: 1 },
+      { groupId: 0, critType: 'inclusion', row: 1, column: 2 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move inclusion criterion in inner array to lower column index', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
@@ -442,31 +442,31 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '0', critType: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', critType: 'inclusion', row: 1, column: 0 }
+      { groupId: 0, critType: 'inclusion', row: 1, column: 1 },
+      { groupId: 0, critType: 'inclusion', row: 1, column: 0 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should not change groups when criterion cannot be found (wrong indices,...)', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
 
     const actual = CritGroupArranger.moveCriterion(
       groups,
-      { groupId: '300', critType: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', critType: 'inclusion', row: 1, column: 0 }
+      { groupId: 300, critType: 'inclusion', row: 1, column: 1 },
+      { groupId: 0, critType: 'inclusion', row: 1, column: 0 }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move inclusion criterion to end of exclusion criteria', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].inclusionCriteria[1] = [
@@ -477,16 +477,16 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterionToEndOfGroup(
       groups,
-      { groupId: '0', critType: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', critType: 'exclusion', row: undefined, column: undefined }
+      { groupId: 0, critType: 'inclusion', row: 1, column: 1 },
+      { groupId: 0, critType: 'exclusion', row: undefined, column: undefined }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move exclusion criterion to end of inclusion criteria', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[0].exclusionCriteria[1] = [
@@ -497,16 +497,16 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterionToEndOfGroup(
       groups,
-      { groupId: '0', critType: 'exclusion', row: 1, column: 1 },
-      { groupId: '0', critType: 'inclusion', row: undefined, column: undefined }
+      { groupId: 0, critType: 'exclusion', row: 1, column: 1 },
+      { groupId: 0, critType: 'inclusion', row: undefined, column: undefined }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should move exclusion criterion to end of the same exclusion criteria', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
     groupsExpected[1].exclusionCriteria[1] = [
@@ -517,23 +517,23 @@ describe('CritGroupArranger', () => {
 
     const actual = CritGroupArranger.moveCriterionToEndOfGroup(
       groups,
-      { groupId: '1', critType: 'exclusion', row: 1, column: 1 },
-      { groupId: '1', critType: 'exclusion', row: undefined, column: undefined }
+      { groupId: 1, critType: 'exclusion', row: 1, column: 1 },
+      { groupId: 1, critType: 'exclusion', row: undefined, column: undefined }
     )
     expect(actual).toEqual(groupsExpected)
   })
 
   it('should not change groups when criterion cannot be found (wrong indices,...) while moving to end of a group', () => {
     const groups: Group[] = []
-    groups.push(createDefaultGroup('0'))
-    groups.push(createDefaultGroup('1'))
+    groups.push(createDefaultGroup(0))
+    groups.push(createDefaultGroup(1))
 
     const groupsExpected = ObjectHelper.clone(groups)
 
     const actual = CritGroupArranger.moveCriterionToEndOfGroup(
       groups,
-      { groupId: '300', critType: 'inclusion', row: 1, column: 1 },
-      { groupId: '0', critType: 'inclusion', row: 1, column: 0 }
+      { groupId: 300, critType: 'inclusion', row: 1, column: 1 },
+      { groupId: 0, critType: 'inclusion', row: 1, column: 0 }
     )
     expect(actual).toEqual(groupsExpected)
   })
@@ -546,7 +546,7 @@ describe('CritGroupArranger', () => {
     }
   }
 
-  function createDefaultGroup(id: string): Group {
+  function createDefaultGroup(id: number): Group {
     const group = new Group()
 
     group.id = id
@@ -556,7 +556,7 @@ describe('CritGroupArranger', () => {
     return group
   }
 
-  function createDefaultCriterionArray(critType: string, id: string): Criterion[][] {
+  function createDefaultCriterionArray(critType: string, id: number): Criterion[][] {
     const result: Criterion[][] = []
 
     result[0] = [
