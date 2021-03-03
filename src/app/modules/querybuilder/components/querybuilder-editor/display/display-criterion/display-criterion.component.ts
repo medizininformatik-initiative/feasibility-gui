@@ -6,6 +6,7 @@ import { Query } from '../../../../model/api/query/query'
 import { Subscription } from 'rxjs'
 import { ValueFilter } from '../../../../model/api/query/valueFilter'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { CritGroupPosition } from '../../../../controller/CritGroupArranger'
 
 @Component({
   selector: 'num-display-criterion',
@@ -18,6 +19,9 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
 
   @Input()
   query: Query
+
+  @Input()
+  position: CritGroupPosition
 
   @Output()
   delete = new EventEmitter<Criterion>()
@@ -43,6 +47,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
       criterion: this.criterion,
       query: this.query,
+      position: this.position,
     }
 
     const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig)

@@ -46,11 +46,18 @@ export class EnterCriterionListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  doSave(criterion: Criterion): void {
+  doSave(event: { groupId: number }, criterion: Criterion): void {
+    const index = this.query.groups.findIndex((group) => group.id === event.groupId)
+
+    if (index < 0) {
+      console.log('Group with id ' + event.groupId + ' not found')
+      return
+    }
+
     if (this.critType === 'inclusion') {
-      this.query.groups[this.groupIndex].inclusionCriteria.push([criterion])
+      this.query.groups[index].inclusionCriteria.push([criterion])
     } else {
-      this.query.groups[this.groupIndex].exclusionCriteria.push([criterion])
+      this.query.groups[index].exclusionCriteria.push([criterion])
     }
 
     this.provider.store(this.query)

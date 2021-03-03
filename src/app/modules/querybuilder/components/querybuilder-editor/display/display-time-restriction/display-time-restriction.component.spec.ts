@@ -71,6 +71,6 @@ describe('DisplayTimeRestrictionComponent', () => {
   })
 
   it('should format to date string', () => {
-    expect(component.getDateFormatted(new Date('3/13/2020'))).toBe("'13.03.2020'")
+    expect(component.getDateFormatted(new Date('3/13/2020'))).toBe('13.03.2020')
   })
 })

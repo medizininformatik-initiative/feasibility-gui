@@ -4,7 +4,7 @@ import { Query } from '../model/api/query/query'
 import { Comparator, OperatorOptions } from '../model/api/query/valueFilter'
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service'
 import { environment } from '../../../../environments/environment'
-import { Group } from '../model/api/query/group'
+import { GroupFactory } from '../controller/GroupFactory'
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +24,14 @@ export class QueryProviderService {
   }
 
   public static createDefaultQuery(): Query {
-    const group = new Group()
-    group.display = 'Ausgewählte Merkmale'
-    return {
-      groups: [group],
+    const query = {
+      groups: [],
       display: '',
     }
+    const group = GroupFactory.createGroup(query)
+    query.groups.push(group)
+
+    return query
   }
 
   public static createTestQuery(): Query {
@@ -37,7 +39,7 @@ export class QueryProviderService {
       groups: [
         {
           display: 'Ausgewählte Merkmale',
-          id: '123',
+          id: 123,
           inclusionCriteria: [
             [
               {

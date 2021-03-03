@@ -17,7 +17,7 @@ export class DisplayCritGroupComponent implements OnInit {
   query: Query
 
   @Input()
-  groupId: string
+  groupId: number
 
   @Input()
   critType: CritType

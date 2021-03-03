@@ -1,5 +1,5 @@
 <!--suppress HtmlFormInputWithoutLabel -->
-<div *ngIf="timeRestriction">
+<div *ngIf="timeRestriction" class="container">
   <div>
     <mat-radio-group [(ngModel)]="timeRestriction.tvpe" fxLayout="column">
       <mat-radio-button [value]="optionEver">{{
@@ -12,7 +12,7 @@
   </div>
 
   <div>
-    <mat-form-field class="example-form-field" appearance="fill">
+    <mat-form-field class="example-form-field" appearance="outline">
       <mat-label>{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.LABEL' | translate }}</mat-label>
       <mat-date-range-input [rangePicker]="campaignOnePicker">
         <input

@@ -1,10 +1,21 @@
 <div cdkDropListGroup>
   <num-display-group
-    *ngFor="let group of query.groups"
+    *ngFor="let group of getGroups(); let i = index"
     [group]="group"
+    [parentGroup]="getParentGroup(i)"
     [query]="query"
+    [first]="i === 0"
     (dropped)="doDrop($event)"
     (storeQuery)="doStoreQuery($event)"
     (saveGroup)="doSaveGroup($event)"
+    (moveUp)="doMoveUp(i)"
+    (moveDown)="doMoveDown(i)"
   ></num-display-group>
+
+  <div *ngIf="featureService.useFeatureMultipleGroups()">
+    <button class="button-add-group" type="button" mat-icon-button (click)="addGroup()">
+      <fa-icon icon="plus" size="lg"></fa-icon>
+    </button>
+    {{ 'QUERYBUILDER.DISPLAY.GROUPS.NEW_GROUP' | translate }}
+  </div>
 </div>

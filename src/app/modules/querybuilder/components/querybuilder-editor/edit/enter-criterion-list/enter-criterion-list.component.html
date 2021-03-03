@@ -8,8 +8,15 @@
     <num-edit-criterion
       *ngFor="let criterion of criterionList"
       [criterion]="criterion"
+      [query]="query"
+      [position]="{
+        groupId: query.groups[0].id,
+        critType: critType,
+        row: undefined,
+        column: undefined
+      }"
       actionButtonKey="ADD"
-      (save)="doSave(criterion)"
+      (save)="doSave($event, criterion)"
       (discard)="doDiscard(criterion)"
     >
     </num-edit-criterion>

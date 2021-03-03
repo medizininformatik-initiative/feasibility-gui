@@ -1,5 +1,5 @@
-mat-card-content {
-  margin: 0 0.5em 0 0;
+.header-wrapper {
+  width: 100%;
 }
 
 .query-group {
@@ -14,4 +14,51 @@ mat-card-content {
 
 .header-display {
   height: 3em;
+}
+
+.button-space {
+  height: 100%;
+
+  padding: 1em 0.5em;
+  cursor: pointer;
+}
+
+.header-cancel-button:hover,
+.button-space:hover {
+  background-color: var(--num-color--accent-200);
+}
+
+mat-card-content {
+  margin: 0 0.5em 0 0;
+}
+
+.not-linked {
+  cursor: pointer;
+}
+
+.not-linked div {
+  margin: 1em 0 1em 2em;
+}
+
+.is-linked-wrapper {
+  background-color: var(--num-color--accent-300);
+}
+
+.is-linked {
+  cursor: pointer;
+  color: white !important;
+  margin: 0.2em 0 0.2em 2em;
+}
+
+.is-linked a div {
+  margin: 0 2em;
+}
+
+.is-linked:hover,
+.not-linked:hover {
+  background-color: var(--num-color--accent-100);
+}
+
+.not-linked-without-dependent-group-feature div {
+  margin: 1em 0 1em 2em;
 }

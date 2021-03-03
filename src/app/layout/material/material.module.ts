@@ -24,6 +24,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatRadioModule } from '@angular/material/radio'
 import { MatNativeDateModule } from '@angular/material/core'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 const MATERIAL_MODULES = [
   MatSidenavModule,
@@ -51,6 +52,7 @@ const MATERIAL_MODULES = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatRadioModule,
+  MatSnackBarModule,
 ]
 
 @NgModule({

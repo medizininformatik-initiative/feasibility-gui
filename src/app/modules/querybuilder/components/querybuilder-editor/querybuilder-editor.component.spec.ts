@@ -26,10 +26,27 @@ import { SearchTextTermEntryComponent } from './search/search-text-term-entry/se
 import { DisplayValueFilterComponent } from './display/display-value-filter/display-value-filter.component'
 import { EditTimeRestrictionComponent } from './edit/edit-time-restriction/edit-time-restriction.component'
 import { DisplayTimeRestrictionComponent } from './display/display-time-restriction/display-time-restriction.component'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { FeatureService } from '../../../../service/feature.service'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
   let fixture: ComponentFixture<QuerybuilderEditorComponent>
+
+  const featureService = {
+    useFeatureMultipleValueDefinitions(): boolean {
+      return true
+    },
+    useFeatureTimeRestriction(): boolean {
+      return true
+    },
+    useFeatureMultipleGroups(): boolean {
+      return true
+    },
+    useFeatureDependentGroups(): boolean {
+      return true
+    },
+  } as FeatureService
 
   @Component({ selector: 'num-unapproved-users-table', template: '' })
   class UserTableStubComponent {}
@@ -64,6 +81,13 @@ describe('QuerybuilderEditorComponent', () => {
         FlexLayoutModule,
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
+        HttpClientTestingModule,
+      ],
+      providers: [
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        },
       ],
     }).compileComponents()
   })

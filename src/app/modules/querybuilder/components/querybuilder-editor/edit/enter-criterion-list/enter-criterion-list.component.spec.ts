@@ -162,7 +162,7 @@ describe('EnterCriterionListComponent', () => {
     component.query = query
     component.criterionList = [criterion]
 
-    component.doSave(criterion)
+    component.doSave({ groupId: 1 }, criterion)
 
     expect(query.groups[0].inclusionCriteria.length).toBe(1)
     expect(query.groups[0].exclusionCriteria.length).toBe(0)
@@ -185,7 +185,7 @@ describe('EnterCriterionListComponent', () => {
     component.query = query
     component.criterionList = [criterion]
 
-    component.doSave(criterion)
+    component.doSave({ groupId: 1 }, criterion)
 
     expect(query.groups[0].inclusionCriteria.length).toBe(0)
     expect(query.groups[0].exclusionCriteria.length).toBe(1)
