@@ -762,6 +762,14 @@ export class MockBackendDataProvider {
   }
 
   private getTerminologyEntryOther(): TerminologyEntry {
+    const valueDefinition1 = this.createDefaultValueDefinitionQuantity()
+    valueDefinition1.display = 'Bewertungszahl'
+    const valueDefinition2 = this.createDefaultValueDefinitionConcept([
+      this.createTermCode('XYZ-0', 'http://test.org', 'first'),
+      this.createTermCode('XYZ-5', 'http://test.org', 'second'),
+      this.createTermCode('XYZ-6', 'http://test.org', 'last'),
+    ])
+    valueDefinition2.display = 'Position'
     return {
       id: '6',
       display: 'multiple value filters',
@@ -775,14 +783,7 @@ export class MockBackendDataProvider {
         system: 'nonsense',
         display: 'multiple value filters',
       },
-      valueDefinitions: [
-        this.createDefaultValueDefinitionQuantity(),
-        this.createDefaultValueDefinitionConcept([
-          this.createTermCode('XYZ-0', 'http://test.org', 'first'),
-          this.createTermCode('XYZ-5', 'http://test.org', 'second'),
-          this.createTermCode('XYZ-6', 'http://test.org', 'last'),
-        ]),
-      ],
+      valueDefinitions: [valueDefinition1, valueDefinition2],
     }
   }
 }

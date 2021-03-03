@@ -105,7 +105,7 @@ export class DisplayGroupComponent implements OnInit {
       return
     }
 
-    if (index > 0) {
+    if (index >= 0) {
       clonedGroups.splice(index, 1)
     }
 

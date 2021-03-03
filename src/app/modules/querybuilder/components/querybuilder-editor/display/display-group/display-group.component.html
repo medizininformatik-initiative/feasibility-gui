@@ -74,7 +74,11 @@
           </div>
         </div>
       </div>
-      <div fxLayout="column" fxLayoutAlign="space-around">
+      <div
+        fxLayout="column"
+        fxLayoutAlign="space-around"
+        *ngIf="featureService.useFeatureMultipleGroups()"
+      >
         <div fxLayout="row">
           <div (click)="deleteGroup(group.id)" class="header-cancel-button button-space">
             <fa-icon *ngIf="query.groups.length > 1" icon="times" size="lg"></fa-icon>
