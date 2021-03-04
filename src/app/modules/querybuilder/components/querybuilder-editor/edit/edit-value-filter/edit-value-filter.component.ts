@@ -6,6 +6,7 @@ import {
   ValueFilter,
 } from '../../../../model/api/query/valueFilter'
 import { TerminologyCode } from '../../../../model/api/terminology/terminology'
+import { ObjectHelper } from '../../../../controller/ObjectHelper'
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -149,14 +150,14 @@ export class EditValueFilterComponent implements OnInit {
   }
 
   valueTooSmall(value: number): boolean {
-    if (!this.filter.min && this.filter.min !== 0) {
+    if (!ObjectHelper.isNumber(this.filter.min)) {
       return false
     }
     return value < this.filter.min
   }
 
   valueTooLarge(value: number): boolean {
-    if (!this.filter.max && this.filter.max !== 0) {
+    if (!ObjectHelper.isNumber(this.filter.max)) {
       return false
     }
     return value > this.filter.max

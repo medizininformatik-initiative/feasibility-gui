@@ -20,7 +20,7 @@ export class SearchTreeHeaderComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  fireSwitchCategory(entryId: string): void {
-    this.switchCategory.emit(entryId)
+  fireSwitchCategory(catId: string): void {
+    this.switchCategory.emit(catId)
   }
 }

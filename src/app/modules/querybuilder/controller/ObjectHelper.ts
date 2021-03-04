@@ -14,4 +14,8 @@ export class ObjectHelper {
 
     return JSON.stringify(object1) === JSON.stringify(object2)
   }
+
+  public static isNumber(value: number): boolean {
+    return !!value || value === 0
+  }
 }

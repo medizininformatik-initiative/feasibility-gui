@@ -59,10 +59,10 @@ describe('TermEntry2CriterionTranslator', () => {
       precision: 7,
       min: -80,
       max: 20,
-      value: 0,
+      value: -80,
       comparator: Comparator.GREATER_OR_EQUAL,
-      minValue: 0,
-      maxValue: 0,
+      minValue: -80,
+      maxValue: 20,
       selectedConcepts: [],
     }
   }

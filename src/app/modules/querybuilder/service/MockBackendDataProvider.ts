@@ -13,13 +13,13 @@ export class MockBackendDataProvider {
   private readonly categoryA = {
     shortDisplay: 'A',
     display: 'Anamnesis / Risk factors',
-    entryId: '1',
+    catId: '1',
   }
-  private readonly categoryD = { shortDisplay: 'D', display: 'Demographics', entryId: '2' }
-  private readonly categoryL = { shortDisplay: 'L', display: 'Laboratory values', entryId: '3' }
-  private readonly categoryT = { shortDisplay: 'T', display: 'Therapie', entryId: '4' }
-  private readonly categoryV = { shortDisplay: 'V', display: 'Vital signs', entryId: '5' }
-  private readonly categoryO = { shortDisplay: 'O', display: 'Other', entryId: '6' }
+  private readonly categoryD = { shortDisplay: 'D', display: 'Demographics', catId: '2' }
+  private readonly categoryL = { shortDisplay: 'L', display: 'Laboratory values', catId: '3' }
+  private readonly categoryT = { shortDisplay: 'T', display: 'Therapie', catId: '4' }
+  private readonly categoryV = { shortDisplay: 'V', display: 'Vital signs', catId: '5' }
+  private readonly categoryO = { shortDisplay: 'O', display: 'Other', catId: '6' }
 
   private readonly mapDisplay = new Map<[string, string], TerminologyEntry>()
   private readonly mapCode = new Map<[string, string], TerminologyEntry>()
@@ -624,60 +624,60 @@ export class MockBackendDataProvider {
   }
 
   private initTermEntryMaps(): void {
-    this.addToMaps(this.categoryA.entryId, this._childA1)
-    this.addToMaps(this.categoryA.entryId, this._childA1_1)
-    this.addToMaps(this.categoryA.entryId, this._childA1_2)
-    this.addToMaps(this.categoryA.entryId, this._childA1_3)
-    this.addToMaps(this.categoryA.entryId, this._childA1_4)
-    this.addToMaps(this.categoryA.entryId, this._childA1_5)
-    this.addToMaps(this.categoryA.entryId, this._childA1_6)
-    this.addToMaps(this.categoryA.entryId, this._childA1_7)
-    this.addToMaps(this.categoryA.entryId, this._childA1_8)
-    this.addToMaps(this.categoryA.entryId, this._childA1_9)
-    this.addToMaps(this.categoryA.entryId, this._childA1_10)
-    this.addToMaps(this.categoryA.entryId, this._childA1_11)
-    this.addToMaps(this.categoryA.entryId, this._childA1_12)
-    this.addToMaps(this.categoryA.entryId, this._childA1_13)
-    this.addToMaps(this.categoryA.entryId, this._childA1_14)
-    this.addToMaps(this.categoryA.entryId, this._childA1_15)
-    this.addToMaps(this.categoryA.entryId, this._childA1_16)
-    this.addToMaps(this.categoryA.entryId, this._childA1_17)
-    this.addToMaps(this.categoryA.entryId, this._childA1_18)
-    this.addToMaps(this.categoryA.entryId, this._childA1_19)
-    this.addToMaps(this.categoryA.entryId, this._childA1_20)
-    this.addToMaps(this.categoryA.entryId, this._childA2)
-    this.addToMaps(this.categoryA.entryId, this._childA2_1)
-    this.addToMaps(this.categoryA.entryId, this._childA2_2)
-    this.addToMaps(this.categoryA.entryId, this._childA2_3)
-    this.addToMaps(this.categoryA.entryId, this._childA2_4)
-    this.addToMaps(this.categoryA.entryId, this._childA2_5)
-    this.addToMaps(this.categoryA.entryId, this._childA2_6)
-    this.addToMaps(this.categoryA.entryId, this._childA2_7)
-    this.addToMaps(this.categoryA.entryId, this._childA2_8)
-    this.addToMaps(this.categoryA.entryId, this._childA2_9)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_1)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_3)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_1)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_2)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_3)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_4)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_2_5)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_3_1)
-    this.addToMaps(this.categoryA.entryId, this._childA2_10_1_3_2)
-    this.addToMaps(this.categoryA.entryId, this._childA3)
-    this.addToMaps(this.categoryA.entryId, this._childA3_1)
-    this.addToMaps(this.categoryA.entryId, this._childA3_2)
-    this.addToMaps(this.categoryA.entryId, this._childA3_3)
-    this.addToMaps(this.categoryA.entryId, this._childA3_4)
-    this.addToMaps(this.categoryA.entryId, this._childA3_5)
+    this.addToMaps(this.categoryA.catId, this._childA1)
+    this.addToMaps(this.categoryA.catId, this._childA1_1)
+    this.addToMaps(this.categoryA.catId, this._childA1_2)
+    this.addToMaps(this.categoryA.catId, this._childA1_3)
+    this.addToMaps(this.categoryA.catId, this._childA1_4)
+    this.addToMaps(this.categoryA.catId, this._childA1_5)
+    this.addToMaps(this.categoryA.catId, this._childA1_6)
+    this.addToMaps(this.categoryA.catId, this._childA1_7)
+    this.addToMaps(this.categoryA.catId, this._childA1_8)
+    this.addToMaps(this.categoryA.catId, this._childA1_9)
+    this.addToMaps(this.categoryA.catId, this._childA1_10)
+    this.addToMaps(this.categoryA.catId, this._childA1_11)
+    this.addToMaps(this.categoryA.catId, this._childA1_12)
+    this.addToMaps(this.categoryA.catId, this._childA1_13)
+    this.addToMaps(this.categoryA.catId, this._childA1_14)
+    this.addToMaps(this.categoryA.catId, this._childA1_15)
+    this.addToMaps(this.categoryA.catId, this._childA1_16)
+    this.addToMaps(this.categoryA.catId, this._childA1_17)
+    this.addToMaps(this.categoryA.catId, this._childA1_18)
+    this.addToMaps(this.categoryA.catId, this._childA1_19)
+    this.addToMaps(this.categoryA.catId, this._childA1_20)
+    this.addToMaps(this.categoryA.catId, this._childA2)
+    this.addToMaps(this.categoryA.catId, this._childA2_1)
+    this.addToMaps(this.categoryA.catId, this._childA2_2)
+    this.addToMaps(this.categoryA.catId, this._childA2_3)
+    this.addToMaps(this.categoryA.catId, this._childA2_4)
+    this.addToMaps(this.categoryA.catId, this._childA2_5)
+    this.addToMaps(this.categoryA.catId, this._childA2_6)
+    this.addToMaps(this.categoryA.catId, this._childA2_7)
+    this.addToMaps(this.categoryA.catId, this._childA2_8)
+    this.addToMaps(this.categoryA.catId, this._childA2_9)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_1)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_2)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_3)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_2_1)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_2_2)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_2_3)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_2_4)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_2_5)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_3_1)
+    this.addToMaps(this.categoryA.catId, this._childA2_10_1_3_2)
+    this.addToMaps(this.categoryA.catId, this._childA3)
+    this.addToMaps(this.categoryA.catId, this._childA3_1)
+    this.addToMaps(this.categoryA.catId, this._childA3_2)
+    this.addToMaps(this.categoryA.catId, this._childA3_3)
+    this.addToMaps(this.categoryA.catId, this._childA3_4)
+    this.addToMaps(this.categoryA.catId, this._childA3_5)
 
-    this.addToMaps(this.categoryD.entryId, this._childD1)
-    this.addToMaps(this.categoryD.entryId, this._childD2)
-    this.addToMaps(this.categoryD.entryId, this._childD3)
-    this.addToMaps(this.categoryD.entryId, this._childD4)
-    this.addToMaps(this.categoryD.entryId, this._childD5)
-    this.addToMaps(this.categoryD.entryId, this._childD6)
+    this.addToMaps(this.categoryD.catId, this._childD1)
+    this.addToMaps(this.categoryD.catId, this._childD2)
+    this.addToMaps(this.categoryD.catId, this._childD3)
+    this.addToMaps(this.categoryD.catId, this._childD4)
+    this.addToMaps(this.categoryD.catId, this._childD5)
+    this.addToMaps(this.categoryD.catId, this._childD6)
   }
 
   private addToMaps(catId: string, termEntry: TerminologyEntry): void {

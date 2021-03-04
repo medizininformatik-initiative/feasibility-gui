@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminology/terminology'
-import { of, Subscription } from 'rxjs'
+import { Observable, of, Subscription } from 'rxjs'
 import { NestedTreeControl } from '@angular/cdk/tree'
 import { MatTreeNestedDataSource } from '@angular/material/tree'
 import { BackendService } from '../../../../service/backend.service'
-import { map } from 'rxjs/operators'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
 import { SearchMode } from '../search-input/search-input.component'
@@ -38,6 +37,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   private subscription: Subscription
   private subscriptionCategories: Subscription
   private subscriptionDialog: Subscription
+  private subscriptionTemp: Subscription
 
   constructor(private backend: BackendService, public dialog: MatDialog) {}
 
@@ -47,7 +47,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
 
     this.subscriptionCategories = this.backend.getCategories().subscribe((categories) => {
       this.categories = categories
-      this.readTreeData(categories[0]?.entryId)
+      this.readTreeData(categories[0]?.catId)
     })
   }
 
@@ -69,21 +69,23 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
     }
   }
 
-  getChildren = (node: TerminologyEntry) => {
-    if (node.leaf) {
-      return of([])
+  getChildren: (TerminologyEntry) => Observable<TerminologyEntry[]> = (node: TerminologyEntry) => {
+    return of(node.children)
+  }
+
+  onToggleLoad(node): void {
+    if (node.children.length > 0) {
+      return
     }
 
-    if (node.children.length > 0) {
-      return of(node.children)
-    } else {
-      return this.backend.getTerminolgyTree(node.id).pipe(
-        map((entry) => {
-          node.children = entry.children
-          return entry.children
-        })
-      )
-    }
+    this.subscriptionTemp?.unsubscribe()
+    this.subscriptionTemp = this.backend.getTerminolgyTree(node.id).subscribe((entry) => {
+      node.children = entry.children
+
+      // trigger changes
+      this.dataSource.data = null
+      this.dataSource.data = [this.cachedTrees.get(this.catId)]
+    })
   }
 
   hasNestedChild = (_: number, nodeData: TerminologyEntry) => {
@@ -94,6 +96,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe()
     this.subscriptionCategories?.unsubscribe()
     this.subscriptionDialog?.unsubscribe()
+    this.subscriptionTemp?.unsubscribe()
   }
 
   openDetailsPopUp(shouldAdd: boolean): void {

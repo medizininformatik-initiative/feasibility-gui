@@ -58,9 +58,10 @@ export class BackendService {
       return of(this.mockBackendDataProvider.getTerminolgyEntrySearchResult(catId, search))
     }
 
-    return this.http.get<Array<TerminologyEntry>>(
-      this.createUrl(BackendService.PATH_SEARCH, 'q=' + search)
-    )
+    const queryParam = 'query=' + search + (catId ? '&categoryId=' + catId : '')
+    const url = this.createUrl(BackendService.PATH_SEARCH, queryParam)
+
+    return this.http.get<Array<TerminologyEntry>>(url)
   }
 
   public postQuery(query: Query): Observable<QueryResponse> {

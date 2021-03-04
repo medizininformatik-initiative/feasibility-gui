@@ -51,62 +51,7 @@ export class EditGroupConnectionComponent implements OnInit {
     this.querySnapshot = ObjectHelper.clone(data.query)
   }
 
-  ngOnInit(): void {
-    this.connection.restrictionType = this.findRestrictionType(this.connection.restrictionType)
-    this.connection.dependentGroupRestrictionType = this.findRestrictionType(
-      this.connection.dependentGroupRestrictionType
-    )
-
-    this.connection.atMostEarlierThanRelatedGroupTimeRelation = this.findTimeRelation(
-      this.connection.atMostEarlierThanRelatedGroupTimeRelation
-    )
-    this.connection.atMostLaterThanRelatedGroupTimeRelation = this.findTimeRelation(
-      this.connection.atMostLaterThanRelatedGroupTimeRelation
-    )
-
-    this.connection.atMostEarlierThanRelatedGroupUnit = this.findUnit(
-      this.connection.atMostEarlierThanRelatedGroupUnit
-    )
-    this.connection.atMostLaterThanRelatedGroupUnit = this.findUnit(
-      this.connection.atMostLaterThanRelatedGroupUnit
-    )
-  }
-
-  private findTimeRelation(timeRelation: TimeRelation): TimeRelation {
-    if (ObjectHelper.equals(timeRelation, this.before)) {
-      return this.before
-    }
-    if (ObjectHelper.equals(timeRelation, this.after)) {
-      return this.after
-    }
-    return undefined
-  }
-
-  private findUnit(periodUnit: PeriodUnit): PeriodUnit {
-    if (ObjectHelper.equals(periodUnit, this.day)) {
-      return this.day
-    }
-    if (ObjectHelper.equals(periodUnit, this.month)) {
-      return this.month
-    }
-    if (ObjectHelper.equals(periodUnit, this.year)) {
-      return this.year
-    }
-    return undefined
-  }
-
-  private findRestrictionType(restrictionType: InstanceRestrictionType): InstanceRestrictionType {
-    if (ObjectHelper.equals(restrictionType, this.restrictionTypeEver)) {
-      return this.restrictionTypeEver
-    }
-    if (ObjectHelper.equals(restrictionType, this.restrictionTypeLatest)) {
-      return this.restrictionTypeLatest
-    }
-    if (ObjectHelper.equals(restrictionType, this.restrictionTypeFirst)) {
-      return this.restrictionTypeFirst
-    }
-    return undefined
-  }
+  ngOnInit(): void {}
 
   doSave(): void {
     this.dialogRef.close(this.queryModified)

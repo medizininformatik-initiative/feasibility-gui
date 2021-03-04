@@ -70,7 +70,7 @@ export class TerminologyCode {
 }
 
 export class CategoryEntry {
-  entryId: string
+  catId: string
   display: string
   shortDisplay = ''
 }

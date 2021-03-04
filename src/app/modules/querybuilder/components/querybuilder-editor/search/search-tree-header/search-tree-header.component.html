@@ -2,13 +2,13 @@
   <div
     *ngFor="let category of categories"
     fxLayout="row"
-    (click)="fireSwitchCategory(category.entryId)"
+    (click)="fireSwitchCategory(category.catId)"
     class="category-box"
   >
     <div class="short-box">
       {{ category.shortDisplay }}
     </div>
-    <div class="display-box" [ngClass]="{ 'selected-category': category.entryId === selectedId }">
+    <div class="display-box" [ngClass]="{ 'selected-category': category.catId === selectedId }">
       {{ category.display }}
     </div>
   </div>

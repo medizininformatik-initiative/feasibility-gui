@@ -119,7 +119,32 @@ describe('BackendService', () => {
       })
 
     httpMock
-      .expectOne('http:/abc/terminology/selectable-entries?q=' + EXAMPLE_SEARCH)
+      .expectOne(
+        'http:/abc/terminology/selectable-entries?query=' + EXAMPLE_SEARCH + '&categoryId=1'
+      )
+      .flush(mockResponse)
+  })
+
+  it('should return mocked search result list (without categoryId)', (done: DoneCallback) => {
+    const appConfigService = TestBed.inject<AppConfigService>(AppConfigService)
+    jest
+      .spyOn(appConfigService, 'getConfig')
+      .mockReturnValue(BackendServiceSpecUtil.createConfig('http:/abc'))
+    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    jest.spyOn(featureService, 'mockTerminology').mockReturnValue(false)
+
+    const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
+    const mockResponse = new Array<TerminologyEntry>()
+
+    service
+      .getTerminolgyEntrySearchResult('', EXAMPLE_SEARCH)
+      .subscribe((entries: Array<TerminologyEntry>) => {
+        expect(entries).toStrictEqual(new Array<TerminologyEntry>())
+        done()
+      })
+
+    httpMock
+      .expectOne('http:/abc/terminology/selectable-entries?query=' + EXAMPLE_SEARCH)
       .flush(mockResponse)
   })
 
