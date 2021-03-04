@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  feasibility-gui:
+    container_name: feasibility-gui
+    build: .
+    ports:
+    - ${PORT_FEASIBILITY_GUI:-127.0.0.1:80}:80
+    volumes:
+      - ./deploy-config.json:/usr/share/nginx/html/assets/config/config.deploy.json
