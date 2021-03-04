@@ -15,6 +15,7 @@ import { ValueFilter } from '../../../../model/api/query/valueFilter'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { Query } from '../../../../model/api/query/query'
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger'
+import { ObjectHelper } from '../../../../controller/ObjectHelper'
 
 @Component({
   selector: 'num-edit-criterion',
@@ -95,10 +96,7 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
       return
     }
 
-    if (
-      (!this.position.row && this.position.row !== 0) ||
-      (!this.position.column && this.position.column !== 0)
-    ) {
+    if (!ObjectHelper.isNumber(this.position.row) || !ObjectHelper.isNumber(this.position.column)) {
       return
     }
 

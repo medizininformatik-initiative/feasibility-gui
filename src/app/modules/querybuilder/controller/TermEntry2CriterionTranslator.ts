@@ -40,9 +40,9 @@ export class TermEntry2CriterionTranslator {
         valueDefinition.allowedUnits.length > 0
           ? valueDefinition.allowedUnits[0]
           : { code: '1', display: '' }
-      valueFilter.value = 0
-      valueFilter.minValue = 0
-      valueFilter.maxValue = 0
+      valueFilter.value = valueDefinition.min ? valueDefinition.min : 0
+      valueFilter.minValue = valueDefinition.min ? valueDefinition.min : 0
+      valueFilter.maxValue = valueDefinition.max ? valueDefinition.max : 0
       valueFilter.min = valueDefinition.min
       valueFilter.max = valueDefinition.max
       valueFilter.precision = valueDefinition.precision

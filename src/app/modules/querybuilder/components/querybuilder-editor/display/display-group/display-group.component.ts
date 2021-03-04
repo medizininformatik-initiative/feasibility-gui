@@ -138,7 +138,7 @@ export class DisplayGroupComponent implements OnInit {
   editConnection(): void {
     const dialogConfig = new MatDialogConfig()
 
-    dialogConfig.disableClose = false
+    dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
     dialogConfig.data = {
       connection: this.group.dependencyInfo,

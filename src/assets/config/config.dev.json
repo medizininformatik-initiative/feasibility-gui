@@ -6,7 +6,7 @@
     "baseUrl": "/api"
   },
   "uiBackendApi": {
-    "baseUrl": "http://localhost:8050"
+    "baseUrl": "http://localhost:8090/api/v1"
   },
   "auth": {
     "baseUrl": "http://localhost:8080",
@@ -26,7 +26,7 @@
     }
   },
   "mock": {
-    "terminology": true,
+    "terminology": false,
     "query": true,
     "result": true
   }
