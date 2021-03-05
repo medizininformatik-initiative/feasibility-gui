@@ -51,6 +51,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
     }
 
     const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig)
+    this.subscriptionDialog?.unsubscribe()
     this.subscriptionDialog = dialogRef
       .afterClosed()
       .subscribe((query) => this.storeQuery.emit(query))
