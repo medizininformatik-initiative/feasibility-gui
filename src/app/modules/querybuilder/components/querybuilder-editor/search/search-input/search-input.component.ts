@@ -1,13 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core'
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay'
 import { CritType } from '../../../../model/api/query/group'
 import { merge, Observable, Subscription } from 'rxjs'
@@ -28,9 +19,6 @@ export class SearchInputComponent implements OnInit, OnDestroy {
 
   @Input()
   query: Query
-
-  @Output()
-  storeQuery = new EventEmitter<Query>()
 
   searchMode: SearchMode = 'text'
 

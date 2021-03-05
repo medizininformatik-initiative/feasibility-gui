@@ -1,17 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="space-between" class="container">
-  <num-search-input
-    [critType]="'inclusion'"
-    [query]="query"
-    (storeQuery)="query = $event"
-    fxFlex="50"
-  ></num-search-input>
+  <num-search-input [critType]="'inclusion'" [query]="query" fxFlex="50"></num-search-input>
   <div fxFlex=".5em"></div>
-  <num-search-input
-    [critType]="'exclusion'"
-    [query]="query"
-    (storeQuery)="query = $event"
-    fxFlex="50"
-  ></num-search-input>
+  <num-search-input [critType]="'exclusion'" [query]="query" fxFlex="50"></num-search-input>
 </div>
 
 <num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>
