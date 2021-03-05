@@ -8,6 +8,7 @@ import { Query } from '../model/api/query/query'
 import { QueryResponse } from '../model/api/result/QueryResponse'
 import { QueryResult } from '../model/api/result/QueryResult'
 import { MockBackendDataProvider } from './MockBackendDataProvider'
+import { ApiTranslator } from '../controller/ApiTranslator'
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +65,8 @@ export class BackendService {
       return of({ location: BackendService.MOCK_RESULT_URL })
     }
 
-    return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), query)
+    const queryV1 = new ApiTranslator().translateToV1(query)
+    return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV1)
   }
 
   public getResult(resultUrl: string): Observable<QueryResult> {
