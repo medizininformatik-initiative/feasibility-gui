@@ -114,6 +114,7 @@
   "BUTTON": {
     "SAVE": "Save",
     "CANCEL": "Cancel",
-    "ADD": "Add"
+    "ADD": "Add",
+    "SEND": "Send"
   }
 }

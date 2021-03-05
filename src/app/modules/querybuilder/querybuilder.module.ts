@@ -35,6 +35,7 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter'
 import { EditGroupConnectionComponent } from './components/querybuilder-editor/edit/edit-group-connection/edit-group-connection.component'
+import { ResultSimpleComponent } from './components/querybuilder-editor/result/result-simple/result-simple.component'
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -75,6 +76,7 @@ export const FORMATS_GERMAN = {
     DisplayTimeRestrictionComponent,
     EditTimeRestrictionComponent,
     EditGroupConnectionComponent,
+    ResultSimpleComponent,
   ],
   imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule, OverlayModule],
   providers: [

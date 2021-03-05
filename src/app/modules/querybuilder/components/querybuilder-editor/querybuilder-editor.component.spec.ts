@@ -28,6 +28,7 @@ import { EditTimeRestrictionComponent } from './edit/edit-time-restriction/edit-
 import { DisplayTimeRestrictionComponent } from './display/display-time-restriction/display-time-restriction.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../service/feature.service'
+import { ResultSimpleComponent } from './result/result-simple/result-simple.component'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -72,6 +73,7 @@ describe('QuerybuilderEditorComponent', () => {
         ButtonComponent,
         EditTimeRestrictionComponent,
         DisplayTimeRestrictionComponent,
+        ResultSimpleComponent,
       ],
       imports: [
         BrowserAnimationsModule,

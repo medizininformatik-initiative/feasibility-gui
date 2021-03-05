@@ -1,3 +1,10 @@
+<!-- TODO: <Move to num-querybuilder-editor> -->
+<div fxLayout="row" fxLayoutAlign="end">
+  <num-button [type]="'primary'" (click)="doSend()" class="button-send">{{
+    'BUTTON.SEND' | translate
+  }}</num-button>
+</div>
+
 <div cdkDropListGroup>
   <num-display-group
     *ngFor="let group of getGroups(); let i = index"

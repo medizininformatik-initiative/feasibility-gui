@@ -16,6 +16,7 @@ import { Query } from '../../../../model/api/query/query'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
+import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 
 describe('DisplayQueryComponent', () => {
   let component: DisplayQueryComponent
@@ -46,6 +47,7 @@ describe('DisplayQueryComponent', () => {
         DisplayValueFilterComponent,
         BoolLogicSwitchComponent,
         DisplayTimeRestrictionComponent,
+        ButtonComponent,
       ],
       imports: [
         MaterialModule,

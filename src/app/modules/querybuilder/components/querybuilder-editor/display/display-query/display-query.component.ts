@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { Query } from '../../../../model/api/query/query'
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
 import { Group } from '../../../../model/api/query/group'
@@ -8,18 +8,25 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { TranslateService } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
+import { BackendService } from '../../../../service/backend.service'
 
 @Component({
   selector: 'num-display-query',
   templateUrl: './display-query.component.html',
   styleUrls: ['./display-query.component.scss'],
 })
-export class DisplayQueryComponent implements OnInit {
+export class DisplayQueryComponent implements OnInit, OnDestroy {
   @Input()
   query: Query
 
+  @Output()
+  resultEmit = new EventEmitter<string>()
+
+  private subscriptionResult: Subscription
+
   constructor(
     public featureService: FeatureService,
+    private backend: BackendService,
     private snackBar: MatSnackBar,
     private translation: TranslateService
   ) {}
@@ -30,6 +37,10 @@ export class DisplayQueryComponent implements OnInit {
   subscriptionTranslation: Subscription
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.subscriptionResult?.unsubscribe()
+  }
 
   doDrop($event: any): void {
     if ($event.addMode === 'position') {
@@ -153,5 +164,11 @@ export class DisplayQueryComponent implements OnInit {
       return [this.query.groups[0]]
     }
     return this.query.groups
+  }
+
+  doSend(): void {
+    this.subscriptionResult = this.backend
+      .postQuery(this.query)
+      .subscribe((response) => this.resultEmit.emit(response.location))
   }
 }

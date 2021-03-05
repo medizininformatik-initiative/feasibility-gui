@@ -4,4 +4,10 @@
   <num-search-input [critType]="'exclusion'" [query]="query" fxFlex="50"></num-search-input>
 </div>
 
-<num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>
+<num-result-simple [result]="result"></num-result-simple>
+
+<num-display-query
+  [query]="query"
+  (storeQuery)="storeQuery($event)"
+  (resultEmit)="startRequestingResult($event)"
+></num-display-query>
