@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core'
 import { Query } from '../../model/api/query/query'
 import { QueryProviderService } from '../../service/query-provider.service'
 import { QueryResult } from '../../model/api/result/QueryResult'
@@ -21,7 +21,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
 
   resultUrl: string
 
+  @Output()
+  resultEmit = new EventEmitter<string>()
+
   private subscriptionPolling: Subscription
+  private subscriptionResult: Subscription
 
   constructor(public queryProviderService: QueryProviderService, private backend: BackendService) {}
 
@@ -31,6 +35,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptionPolling?.unsubscribe()
+    this.subscriptionResult?.unsubscribe()
   }
 
   storeQuery(query: Query): void {
@@ -58,5 +63,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
           this.resultUrl = ''
         }
       )
+  }
+
+  doSend(): void {
+    this.subscriptionResult = this.backend
+      .postQuery(this.query)
+      .subscribe((response) => this.startRequestingResult(response.location))
   }
 }

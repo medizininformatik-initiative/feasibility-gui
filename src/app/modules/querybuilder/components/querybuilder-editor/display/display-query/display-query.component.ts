@@ -8,7 +8,6 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { TranslateService } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
-import { BackendService } from '../../../../service/backend.service'
 
 @Component({
   selector: 'num-display-query',
@@ -19,14 +18,8 @@ export class DisplayQueryComponent implements OnInit, OnDestroy {
   @Input()
   query: Query
 
-  @Output()
-  resultEmit = new EventEmitter<string>()
-
-  private subscriptionResult: Subscription
-
   constructor(
     public featureService: FeatureService,
-    private backend: BackendService,
     private snackBar: MatSnackBar,
     private translation: TranslateService
   ) {}
@@ -38,9 +31,7 @@ export class DisplayQueryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-    this.subscriptionResult?.unsubscribe()
-  }
+  ngOnDestroy(): void {}
 
   doDrop($event: any): void {
     if ($event.addMode === 'position') {
@@ -164,11 +155,5 @@ export class DisplayQueryComponent implements OnInit, OnDestroy {
       return [this.query.groups[0]]
     }
     return this.query.groups
-  }
-
-  doSend(): void {
-    this.subscriptionResult = this.backend
-      .postQuery(this.query)
-      .subscribe((response) => this.resultEmit.emit(response.location))
   }
 }

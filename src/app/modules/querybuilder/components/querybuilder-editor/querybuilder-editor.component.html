@@ -4,10 +4,11 @@
   <num-search-input [critType]="'exclusion'" [query]="query" fxFlex="50"></num-search-input>
 </div>
 
-<num-result-simple [result]="result"></num-result-simple>
+<div fxLayout="row" fxLayoutAlign="end">
+  <num-result-simple [result]="result"></num-result-simple>
+  <num-button [type]="'primary'" (click)="doSend()" class="button-send">{{
+    'BUTTON.SEND' | translate
+  }}</num-button>
+</div>
 
-<num-display-query
-  [query]="query"
-  (storeQuery)="storeQuery($event)"
-  (resultEmit)="startRequestingResult($event)"
-></num-display-query>
+<num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>
