@@ -8,6 +8,7 @@ import { Query } from '../model/api/query/query'
 import { QueryResponse } from '../model/api/result/QueryResponse'
 import { QueryResult } from '../model/api/result/QueryResult'
 import { MockBackendDataProvider } from './MockBackendDataProvider'
+import { ApiTranslator } from '../controller/ApiTranslator'
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +24,6 @@ export class BackendService {
   private static PATH_SEARCH = 'terminology/selectable-entries'
   private static PATH_RUN_QUERY = 'querybuilder/run-query'
 
-  public static MOCK_QUERY_RESULT: QueryResult = {
-    id: '12345',
-    url: 'http://localhost:9999/result-of-query/12345',
-    numberOfPatients: 31415,
-  }
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345'
 
   private readonly mockBackendDataProvider = new MockBackendDataProvider()
@@ -69,12 +65,19 @@ export class BackendService {
       return of({ location: BackendService.MOCK_RESULT_URL })
     }
 
-    return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), query)
+    const queryV1 = new ApiTranslator().translateToV1(query)
+    return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV1)
   }
 
   public getResult(resultUrl: string): Observable<QueryResult> {
     if (this.feature.mockResult()) {
-      return of(BackendService.MOCK_QUERY_RESULT)
+      const result = {
+        id: '12345',
+        url: resultUrl,
+        numberOfPatients: Math.floor(Math.random() * 1000),
+      }
+
+      return of(result)
     }
 
     return this.http.get<QueryResult>(resultUrl)

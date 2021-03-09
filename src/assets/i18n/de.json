@@ -114,6 +114,7 @@
   "BUTTON": {
     "SAVE": "Speichern",
     "CANCEL": "Abbrechen",
-    "ADD": "Hinzufügen"
+    "ADD": "Hinzufügen",
+    "SEND": "Senden"
   }
 }

@@ -182,7 +182,8 @@ describe('BackendService', () => {
     jest.spyOn(featureService, 'mockResult').mockReturnValue(true)
 
     service.getResult(EXAMPLE_URL).subscribe((result: QueryResult) => {
-      expect(result).toBe(BackendService.MOCK_QUERY_RESULT)
+      expect(result.url).toBe(EXAMPLE_URL)
+      expect(result.id).toBe('12345')
       done()
     })
   })

@@ -27,7 +27,7 @@
   },
   "mock": {
     "terminology": false,
-    "query": true,
-    "result": true
+    "query": false,
+    "result": false
   }
 }
