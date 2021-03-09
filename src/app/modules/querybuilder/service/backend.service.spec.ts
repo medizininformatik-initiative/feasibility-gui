@@ -174,7 +174,7 @@ describe('BackendService', () => {
       done()
     })
 
-    httpMock.expectOne('http:/abc/querybuilder/run-query').flush(mockResponse)
+    httpMock.expectOne('http:/abc/query-handler/run-query').flush(mockResponse)
   })
 
   it('should return programmatically mocked result', (done: DoneCallback) => {
@@ -182,8 +182,7 @@ describe('BackendService', () => {
     jest.spyOn(featureService, 'mockResult').mockReturnValue(true)
 
     service.getResult(EXAMPLE_URL).subscribe((result: QueryResult) => {
-      expect(result.url).toBe(EXAMPLE_URL)
-      expect(result.id).toBe('12345')
+      expect(result.queryId).toBe('12345')
       done()
     })
   })
@@ -193,9 +192,9 @@ describe('BackendService', () => {
     jest.spyOn(featureService, 'mockResult').mockReturnValue(false)
     const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
     const mockResponse: QueryResult = {
-      numberOfPatients: 4711,
-      id: 'xyz',
-      url: 'http:/abc',
+      totalNumberOfPatients: 4711,
+      queryId: 'xyz',
+      resultLines: [],
     }
 
     service.getResult(EXAMPLE_URL).subscribe((result: QueryResult) => {

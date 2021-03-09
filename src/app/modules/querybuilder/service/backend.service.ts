@@ -22,7 +22,7 @@ export class BackendService {
   private static PATH_ROOT_ENTRIES = 'terminology/root-entries'
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries'
   private static PATH_SEARCH = 'terminology/selectable-entries'
-  private static PATH_RUN_QUERY = 'querybuilder/run-query'
+  private static PATH_RUN_QUERY = 'query-handler/run-query'
 
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345'
 
@@ -72,9 +72,9 @@ export class BackendService {
   public getResult(resultUrl: string): Observable<QueryResult> {
     if (this.feature.mockResult()) {
       const result = {
-        id: '12345',
-        url: resultUrl,
-        numberOfPatients: Math.floor(Math.random() * 1000),
+        totalNumberOfPatients: Math.floor(Math.random() * 1000),
+        queryId: '12345',
+        resultLines: [],
       }
 
       return of(result)

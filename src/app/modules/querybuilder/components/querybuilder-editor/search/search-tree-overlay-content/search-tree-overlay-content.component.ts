@@ -34,7 +34,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   treeControl: NestedTreeControl<TerminologyEntry>
   dataSource: MatTreeNestedDataSource<TerminologyEntry>
 
-  private subscription: Subscription
+  private subscriptionTerminologyTree: Subscription
   private subscriptionCategories: Subscription
   private subscriptionDialog: Subscription
   private subscriptionTemp: Subscription
@@ -57,15 +57,17 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
     }
     this.catId = catId
 
-    this.subscription?.unsubscribe()
+    this.subscriptionTerminologyTree?.unsubscribe()
     if (this.cachedTrees.get(catId)) {
       this.dataSource.data = [this.cachedTrees.get(catId)]
     } else {
-      this.subscription = this.backend.getTerminolgyTree(catId).subscribe((termEntry) => {
-        this.dataSource.data = [termEntry]
-        this.treeControl.expand(termEntry)
-        this.cachedTrees.set(catId, termEntry)
-      })
+      this.subscriptionTerminologyTree = this.backend
+        .getTerminolgyTree(catId)
+        .subscribe((termEntry) => {
+          this.dataSource.data = [termEntry]
+          this.treeControl.expand(termEntry)
+          this.cachedTrees.set(catId, termEntry)
+        })
     }
   }
 
@@ -93,7 +95,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe()
+    this.subscriptionTerminologyTree?.unsubscribe()
     this.subscriptionCategories?.unsubscribe()
     this.subscriptionDialog?.unsubscribe()
     this.subscriptionTemp?.unsubscribe()
