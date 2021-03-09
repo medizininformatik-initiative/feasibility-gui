@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Query } from '../../../../model/api/query/query'
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
 import { Group } from '../../../../model/api/query/group'
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs'
   templateUrl: './display-query.component.html',
   styleUrls: ['./display-query.component.scss'],
 })
-export class DisplayQueryComponent implements OnInit, OnDestroy {
+export class DisplayQueryComponent implements OnInit {
   @Input()
   query: Query
 
@@ -30,8 +30,6 @@ export class DisplayQueryComponent implements OnInit, OnDestroy {
   subscriptionTranslation: Subscription
 
   ngOnInit(): void {}
-
-  ngOnDestroy(): void {}
 
   doDrop($event: any): void {
     if ($event.addMode === 'position') {
