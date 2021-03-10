@@ -114,7 +114,10 @@
   "BUTTON": {
     "SAVE": "Speichern",
     "CANCEL": "Abbrechen",
+    "CLOSE": "Schließen",
     "ADD": "Hinzufügen",
-    "SEND": "Senden"
+    "SEND": "Senden",
+    "RESET": "Zurücksetzen",
+    "RESULTDETAILS": "Details"
   }
 }

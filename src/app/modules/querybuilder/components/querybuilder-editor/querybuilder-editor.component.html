@@ -1,11 +1,16 @@
+<num-result-simple [result]="result"></num-result-simple>
+
 <div fxLayout="row" fxLayoutAlign="space-between" class="container">
   <num-search-input [critType]="'inclusion'" [query]="query" fxFlex="50"></num-search-input>
   <div fxFlex=".5em"></div>
   <num-search-input [critType]="'exclusion'" [query]="query" fxFlex="50"></num-search-input>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="end">
-  <num-result-simple [result]="result"></num-result-simple>
+<div fxLayout="row" fxLayoutAlign="space-between">
+  <num-button [type]="'primary'" (click)="doReset()" class="button-reset">{{
+    'BUTTON.RESET' | translate
+  }}</num-button>
+
   <num-button [type]="'primary'" (click)="doSend()" class="button-send">{{
     'BUTTON.SEND' | translate
   }}</num-button>

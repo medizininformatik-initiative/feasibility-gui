@@ -1,4 +1,14 @@
 <!-- TODO: Rework     and add button for a popup (showing detailed results) -->
-<div class="result-line">
-  <div *ngIf="result">Anzahl der Patienten: {{ result?.totalNumberOfPatients }}</div>
+<div fxLayout="row" fxLayoutAlign="start">
+  <div class="result-line">
+    <div>Anzahl der Patienten:</div>
+    <div class="numberOfPatients">{{ result?.totalNumberOfPatients }}</div>
+  </div>
+  <num-button
+    *ngIf="result"
+    [type]="'primary'"
+    (click)="openDialogResultDetails()"
+    class="button-DialogResultDetails"
+    >{{ 'BUTTON.RESULTDETAILS' | translate }}</num-button
+  >
 </div>

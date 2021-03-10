@@ -65,9 +65,15 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
       )
   }
 
+  // Frage: muss subscriptionPolling und subscriptionResult noch vorher ge-unsubscripted werden?
   doSend(): void {
     this.subscriptionResult = this.backend
       .postQuery(this.query)
       .subscribe((response) => this.startRequestingResult(response.location))
+  }
+
+  doReset(): void {
+    this.query = QueryProviderService.createDefaultQuery()
+    this.queryProviderService.store(this.query)
   }
 }

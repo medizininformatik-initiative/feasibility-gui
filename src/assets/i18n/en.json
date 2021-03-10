@@ -114,7 +114,10 @@
   "BUTTON": {
     "SAVE": "Save",
     "CANCEL": "Cancel",
+    "CLOSE": "Close",
     "ADD": "Add",
-    "SEND": "Send"
+    "SEND": "Send",
+    "RESET": "Reset",
+    "RESULTDETAILS": "Details"
   }
 }
