@@ -18,3 +18,10 @@
 .button-tree-view {
   background-color: var(--num-color--accent-300);
 }
+
+.mat-icon-button {
+  height: 44px;
+  width: 44px;
+  line-height: unset;
+  border-radius: 0;
+}

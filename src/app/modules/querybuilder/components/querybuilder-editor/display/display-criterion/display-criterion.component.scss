@@ -42,3 +42,8 @@
 .crit-box .cancel-button:hover {
   background-color: var(--num-color--accent-200);
 }
+
+.mat-icon-button {
+  border-radius: 0;
+  line-height: unset;
+}

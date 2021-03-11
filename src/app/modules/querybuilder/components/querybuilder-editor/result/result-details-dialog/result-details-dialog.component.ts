@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { QueryResult } from '../../../../model/api/result/QueryResult'
+import { Observable } from 'rxjs'
 
 export class DialogData {
-  result: QueryResult
+  resultObservable$: Observable<QueryResult>
 }
 
 @Component({
@@ -12,14 +13,13 @@ export class DialogData {
   styleUrls: ['./result-details-dialog.component.scss'],
 })
 export class ResultDetailsDialogComponent implements OnInit {
-  // myresult: QueryResult
+  result: QueryResult
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<ResultDetailsDialogComponent>
   ) {
-    console.log(data.result.numberOfPatients)
-    // this.myresult = data.result
+    this.data.resultObservable$.subscribe((resulttemp) => (this.result = resulttemp))
   }
 
   ngOnInit(): void {}

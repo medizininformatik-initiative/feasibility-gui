@@ -1,8 +1,9 @@
 <div class="container">
   <div fxLayout="row" fxLayoutAlign="space-between">
     <h3>{{ 'QUERYBUILDER.EDIT.HEADER' | translate }}</h3>
-    <!-- TODO[CODEX]: use icon 'close'-->
-    <button mat-button (click)="doDiscardAll()">X</button>
+    <button class="close-button" type="button" mat-icon-button (click)="doDiscardAll()">
+      <fa-icon size="2x" icon="window-close"></fa-icon>
+    </button>
   </div>
   <div *ngIf="criterionList" class="crit-list">
     <num-edit-criterion

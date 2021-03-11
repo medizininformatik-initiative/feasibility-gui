@@ -1,7 +1,8 @@
-<div>Anzahl der Patienten: {{ data.result.numberOfPatients }}</div>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close class="button-close">{{ 'BUTTON.CLOSE' | translate }}</button>
-  <num-button [type]="'primary'" (click)="doClose()" class="button-close">{{
-    'BUTTON.CLOSE' | translate
-  }}</num-button>
-</mat-dialog-actions>
+<div *ngIf="result">
+  <div>Anzahl der Patienten: {{ result.numberOfPatients }}</div>
+  <mat-dialog-actions align="end">
+    <num-button [type]="'primary'" (click)="doClose()" class="button-close">{{
+      'BUTTON.CLOSE' | translate
+    }}</num-button>
+  </mat-dialog-actions>
+</div>
