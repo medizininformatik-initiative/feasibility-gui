@@ -1,16 +1,18 @@
 <div fxLayout="row" fxLayoutAlign="start">
-  <div class="result-line">
+  <div>
     <div>Anzahl der Patienten:</div>
-    <div *ngIf="result; else notShow" class="numberOfPatients">{{ result?.totalNumberOfPatients }}</div>
-    <ng-template #notShow>
-      <div class="numberOfPatients">0</div>
+    <div *ngIf="result; else showZeroPatients" class="number-of-patients">
+      {{ result?.totalNumberOfPatients }}
+    </div>
+    <ng-template #showZeroPatients>
+      <div class="number-of-patients">0</div>
     </ng-template>
   </div>
   <num-button
     *ngIf="resultObservable"
     [type]="'primary'"
     (click)="openDialogResultDetails()"
-    class="button-DialogResultDetails"
+    class="button-dialog-result-details"
     >{{ 'BUTTON.RESULTDETAILS' | translate }}</num-button
   >
 </div>

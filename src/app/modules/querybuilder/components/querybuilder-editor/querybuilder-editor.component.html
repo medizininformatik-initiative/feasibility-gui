@@ -7,9 +7,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutAlign="space-between">
-  <num-button [type]="'primary'" (click)="doReset()" class="button-reset">{{
-    'BUTTON.RESET' | translate
-  }}</num-button>
+  <num-button [type]="'primary'" (click)="doReset()">{{ 'BUTTON.RESET' | translate }}</num-button>
 
   <num-button [type]="'primary'" (click)="doSend()" class="button-send">{{
     'BUTTON.SEND' | translate

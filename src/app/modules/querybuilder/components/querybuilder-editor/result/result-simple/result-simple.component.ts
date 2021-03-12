@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { QueryResult } from '../../../../model/api/result/QueryResult'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import {
-  DialogData,
+  ResultDetailsDialogComponentData,
   ResultDetailsDialogComponent,
 } from '../result-details-dialog/result-details-dialog.component'
 import { Observable } from 'rxjs'
@@ -24,7 +24,7 @@ export class ResultSimpleComponent implements OnInit {
   ngOnInit(): void {}
 
   openDialogResultDetails(): void {
-    const dialogConfig = new MatDialogConfig<DialogData>()
+    const dialogConfig = new MatDialogConfig<ResultDetailsDialogComponentData>()
 
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true

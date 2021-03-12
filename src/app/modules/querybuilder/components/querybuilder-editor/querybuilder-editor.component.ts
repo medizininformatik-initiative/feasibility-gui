@@ -68,9 +68,9 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
 
   doSend(): void {
     this.subscriptionResult?.unsubscribe()
-    this.subscriptionResult = this.backend.postQuery(this.query).subscribe((response) => {
-      this.startRequestingResult(response.location)
-    })
+    this.subscriptionResult = this.backend
+      .postQuery(this.query)
+      .subscribe((response) => this.startRequestingResult(response.location))
   }
 
   doReset(): void {

@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { QueryResult } from '../../../../model/api/result/QueryResult'
 import { Observable } from 'rxjs'
 
-export class DialogData {
+export class ResultDetailsDialogComponentData {
   resultObservable$: Observable<QueryResult>
 }
 
@@ -16,10 +16,10 @@ export class ResultDetailsDialogComponent implements OnInit {
   result: QueryResult
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: ResultDetailsDialogComponentData,
     public dialogRef: MatDialogRef<ResultDetailsDialogComponent>
   ) {
-    this.data.resultObservable$.subscribe((resulttemp) => (this.result = resulttemp))
+    this.data.resultObservable$.subscribe((resultTemp) => (this.result = resultTemp))
   }
 
   ngOnInit(): void {}
