@@ -18,13 +18,12 @@
         aria-label="Clear"
         (click)="search = ''"
       >
-        <!-- TODO[CODEX]: use icon 'close'-->
-        <mat-icon>X</mat-icon>
+        <fa-icon size="2x" icon="times"></fa-icon>
       </button>
     </mat-form-field>
     <div fxFlex="20">
       <button class="button-tree-view" type="button" mat-icon-button (click)="switchSearchMode()">
-        <fa-icon size="2x" icon="project-diagram"></fa-icon>
+        <fa-icon size="2x" icon="folder"></fa-icon>
       </button>
     </div>
   </div>

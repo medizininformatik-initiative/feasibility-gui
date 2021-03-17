@@ -19,15 +19,15 @@
   },
   "features": {
     "v2": {
-      "multiplevaluedefinitions": false,
-      "multiplegroups": false,
-      "dependentgroups": false,
-      "timerestriction": false
+      "multiplevaluedefinitions": true,
+      "multiplegroups": true,
+      "dependentgroups": true,
+      "timerestriction": true
     }
   },
   "mock": {
-    "terminology": false,
-    "query": false,
-    "result": false
+    "terminology": true,
+    "query": true,
+    "result": true
   }
 }

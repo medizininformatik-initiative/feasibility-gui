@@ -1,4 +1,18 @@
-<!-- TODO: Rework     and add button for a popup (showing detailed results) -->
-<div class="result-line">
-  <div *ngIf="result">Anzahl der Patienten: {{ result?.totalNumberOfPatients }}</div>
+<div fxLayout="row" fxLayoutAlign="start">
+  <div>
+    <div>Anzahl der Patienten:</div>
+    <div *ngIf="result; else showZeroPatients" class="number-of-patients">
+      {{ result?.totalNumberOfPatients }}
+    </div>
+    <ng-template #showZeroPatients>
+      <div class="number-of-patients">0</div>
+    </ng-template>
+  </div>
+  <num-button
+    *ngIf="resultObservable"
+    [type]="'primary'"
+    (click)="openDialogResultDetails()"
+    class="button-dialog-result-details"
+    >{{ 'BUTTON.RESULTDETAILS' | translate }}</num-button
+  >
 </div>

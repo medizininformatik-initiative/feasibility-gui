@@ -26,6 +26,8 @@ import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { faUnlink } from '@fortawesome/free-solid-svg-icons'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faFolder } from '@fortawesome/free-solid-svg-icons'
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
 
 export const FONT_AWESOME_ICONS = [
   faTh,
@@ -56,4 +58,6 @@ export const FONT_AWESOME_ICONS = [
   faUnlink,
   faArrowUp,
   faArrowDown,
+  faFolder,
+  faWindowClose,
 ]
