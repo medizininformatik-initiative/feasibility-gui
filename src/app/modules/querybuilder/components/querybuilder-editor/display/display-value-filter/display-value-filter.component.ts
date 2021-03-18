@@ -1,5 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Comparator, OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter'
+import { FeatureService } from '../../../../../../service/feature.service'
+
+class ComperatorIcon {
+  icon: string
+  utf8: string
+}
 
 @Component({
   selector: 'num-display-value-filter',
@@ -13,27 +19,26 @@ export class DisplayValueFilterComponent implements OnInit {
   QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
   QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
 
-  constructor() {}
+  constructor(public featureService: FeatureService) {}
 
   ngOnInit(): void {}
 
-  getComparator(): string {
+  getComparator(): ComperatorIcon {
     switch (this.filter.comparator) {
       case Comparator.EQUAL:
-        return '='
+        return { icon: 'equals', utf8: '\u003d' }
       case Comparator.GREATER_THAN:
-        return '>'
-      // TODO: Use UTF-8 characters      case Comparator.GREATER_OR_EQUAL: return utf8Encode('\u2265');
+        return { icon: 'greater-than', utf8: '\u003e' }
       case Comparator.GREATER_OR_EQUAL:
-        return '>='
+        return { icon: 'greater-than-equal', utf8: '\u2265' }
       case Comparator.LESS_OR_EQUAL:
-        return '<='
+        return { icon: 'less-than-equal', utf8: '\u2264' }
       case Comparator.LESS_THAN:
-        return '<'
+        return { icon: 'less-than', utf8: '\u003c' }
       case Comparator.NOT_EQUAL:
-        return '<>'
+        return { icon: 'not-equal', utf8: '\u2260' }
       default:
-        return '##'
+        return { icon: '', utf8: '' }
     }
   }
 }

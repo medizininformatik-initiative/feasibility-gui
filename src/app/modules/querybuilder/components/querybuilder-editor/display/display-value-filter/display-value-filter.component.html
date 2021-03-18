@@ -11,10 +11,22 @@
   </div>
 
   <div *ngIf="filter.type === QUANTITY_COMPARATOR">
-    {{
+    <fa-icon
+      *ngIf="featureService.useFeatureShowDisplayValueFilterIcon()"
+      size="1x"
+      icon="{{ getComparator().icon }}"
+    ></fa-icon>
+    <span *ngIf="!featureService.useFeatureShowDisplayValueFilterIcon(); else show_no_symbol">{{
       'QUERYBUILDER.DISPLAY.COMPARATOR'
-        | translate: { comparator: getComparator(), value: filter.value, unit: filter.unit.display }
-    }}
+        | translate
+          : { comparator: getComparator().utf8, value: filter.value, unit: filter.unit.display }
+    }}</span>
+    <ng-template #show_no_symbol>
+      <span>{{
+        'QUERYBUILDER.DISPLAY.COMPARATOR'
+          | translate: { comparator: '', value: filter.value, unit: filter.unit.display }
+      }}</span>
+    </ng-template>
   </div>
 
   <div *ngIf="filter.type === QUANTITY_RANGE">

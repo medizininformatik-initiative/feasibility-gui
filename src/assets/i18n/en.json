@@ -104,7 +104,8 @@
       "NO_VALUE_SELECTED": "Choose at least one value",
       "MINIMUM_GREATER_MAXIMUM": "Minimal value must be greater than maximal value",
       "MINIMUM_EXCEEDED": "Value must be at least {{ min }}",
-      "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}"
+      "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}",
+      "SEARCH_TEXT_NO_INPUT": "Enter a search criteria or open the category tree view"
     }
   },
   "LEGAL": {

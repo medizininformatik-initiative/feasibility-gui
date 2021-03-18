@@ -23,6 +23,10 @@ export class FeatureService {
     return this.appConfig.getConfig().features.v2.timerestriction
   }
 
+  public useFeatureShowDisplayValueFilterIcon(): boolean {
+    return this.appConfig.getConfig().features.extra.displayvaluefiltericon
+  }
+
   public isDevelopMode(): boolean {
     return isDevMode()
   }
