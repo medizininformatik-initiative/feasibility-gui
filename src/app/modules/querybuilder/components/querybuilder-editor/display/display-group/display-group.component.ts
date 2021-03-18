@@ -49,7 +49,7 @@ export class DisplayGroupComponent implements OnInit {
   subscriptionDialog: Subscription
 
   constructor(
-    private snackBar: MatSnackBar,
+    public snackBar: MatSnackBar,
     public dialog: MatDialog,
     private translation: TranslateService,
     public featureService: FeatureService
@@ -114,7 +114,7 @@ export class DisplayGroupComponent implements OnInit {
     this.storeQuery.emit(this.query)
   }
 
-  private showHintNotDeletedLinkedParentGroup(): void {
+  showHintNotDeletedLinkedParentGroup(): void {
     this.subscriptionTranslation?.unsubscribe()
     this.subscriptionTranslation = this.translation
       .get('QUERYBUILDER.DISPLAY.GROUPS.HINT_NOT_DELETABLE_LINKED_GROUP')

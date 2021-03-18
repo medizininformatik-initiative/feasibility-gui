@@ -10,7 +10,7 @@ import INavItem from '../../models/nav-item.interface'
 import { ButtonComponent } from '../../../shared/components/button/button.component'
 import { LanguageComponent } from '../language/language.component'
 import { HeaderComponent } from './header.component'
-import { OAuthService } from 'angular-oauth2-oidc'
+import { OAuthService, UserInfo } from 'angular-oauth2-oidc'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 describe('HeaderComponent', () => {
@@ -22,9 +22,13 @@ describe('HeaderComponent', () => {
   @Component({ selector: 'num-stub', template: '' })
   class StubComponent {}
 
+  const profile = { sub: 'codex' } as UserInfo
   const authService = {
     logOut: () => {},
-    loadUserProfile: () => Promise.resolve({}),
+    loadUserProfile: () => Promise.resolve(profile),
+    hasValidAccessToken(): boolean {
+      return true
+    },
   } as OAuthService
 
   beforeEach(async () => {
@@ -112,6 +116,12 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should load profile', async () => {
+    await component.initProfile()
+
+    expect(component.profile).toEqual(profile)
   })
 
   describe('On ActivationEnd to a route without tab navigation', () => {

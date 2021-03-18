@@ -17,6 +17,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
+import { GroupFactory } from '../../../../controller/GroupFactory'
 
 describe('DisplayQueryComponent', () => {
   let component: DisplayQueryComponent
@@ -140,5 +141,143 @@ describe('DisplayQueryComponent', () => {
     spyOn(component.storeQuery, 'emit')
     component.doStoreQuery(new Query())
     expect(component.storeQuery.emit).toBeCalled()
+  })
+
+  it('should add group', () => {
+    const query = new Query()
+    query.groups = [new Group(), new Group()]
+    component.query = query
+    component.addGroup()
+
+    expect(component.query.groups.length).toBe(3)
+  })
+
+  it('should find only one group', () => {
+    jest.spyOn(component.featureService, 'useFeatureMultipleGroups').mockReturnValue(false)
+    const query = { groups: [] } as Query
+    createGroups(1).forEach((group) => query.groups.push(group))
+    createGroups(2).forEach((group) => query.groups.push(group))
+    component.query = query
+
+    expect(component.getGroups()).toEqual([createGroup(1)])
+  })
+
+  it('should find all groups', () => {
+    jest.spyOn(component.featureService, 'useFeatureMultipleGroups').mockReturnValue(true)
+    const query = { groups: [] } as Query
+    createGroups(1).forEach((group) => query.groups.push(group))
+    createGroups(2).forEach((group) => query.groups.push(group))
+    component.query = query
+
+    expect(component.getGroups()).toEqual([createGroup(1), createGroup(2)])
+  })
+
+  it('should normalize to first group with index 0', () => {
+    expect(component.findIndexOfPreviousGroupWithoutConnectedParent(-1)).toBe(0)
+  })
+
+  it('should not find parent group of first group', () => {
+    expect(component.getParentGroup(0)).toBe(null)
+  })
+
+  it('should not find parent group for non-linked group', () => {
+    const query = { groups: [] } as Query
+    createGroups(1).forEach((group) => query.groups.push(group))
+    createGroups(2).forEach((group) => query.groups.push(group))
+    component.query = query
+
+    expect(component.getParentGroup(1)).toBe(null)
+  })
+
+  it('should find parent group for linked group', () => {
+    const query = { groups: [] } as Query
+    createGroups(1, 2).forEach((group) => query.groups.push(group))
+    component.query = query
+
+    expect(component.getParentGroup(1)).toEqual(createGroup(1))
+  })
+
+  function createGroups(...ids: number[]): Group[] {
+    const groups: Group[] = []
+
+    ids.forEach((id) => groups.push(createGroup(id)))
+    for (let index = 0; index < groups.length - 1; index++) {
+      groups[index + 1].dependencyInfo = GroupFactory.createGroupDependencyInfo()
+      groups[index + 1].dependencyInfo.linked = true
+    }
+
+    return groups
+  }
+
+  function createGroup(id: number): Group {
+    const group = new Group()
+    group.id = id
+    return group
+  }
+
+  describe('move groups', () => {
+    beforeEach(() => {
+      const query = { groups: [] } as Query
+      createGroups(1, 2, 3).forEach((group) => query.groups.push(group))
+      createGroups(4).forEach((group) => query.groups.push(group))
+      createGroups(5, 6).forEach((group) => query.groups.push(group))
+      component.query = query
+    })
+
+    function extractIds(): number[] {
+      const ids = []
+      component.query.groups.forEach((group) => ids.push(group.id))
+      return ids
+    }
+
+    it('should move three linked groups down', () => {
+      component.doMoveDown(0)
+      expect(extractIds()).toEqual([4, 1, 2, 3, 5, 6])
+    })
+
+    it('should move partial subgroup', () => {
+      component.doMoveDown(1)
+      expect(extractIds()).toEqual([1, 2, 3, 4, 5, 6])
+    })
+
+    it('should move one linked group down', () => {
+      component.doMoveDown(3)
+      expect(extractIds()).toEqual([1, 2, 3, 5, 6, 4])
+    })
+
+    it('should not move last linked complete group down', () => {
+      component.doMoveDown(4)
+      expect(extractIds()).toEqual([1, 2, 3, 4, 5, 6])
+    })
+
+    it('should not move last partial linked subgroup down', () => {
+      component.doMoveDown(5)
+      expect(extractIds()).toEqual([1, 2, 3, 4, 5, 6])
+    })
+
+    it('should not move first complete linked groups up', () => {
+      component.doMoveUp(0)
+      expect(extractIds()).toEqual([1, 2, 3, 4, 5, 6])
+    })
+
+    it('should not move first partial linked subgroup up', () => {
+      component.doMoveUp(1)
+      expect(extractIds()).toEqual([1, 2, 3, 4, 5, 6])
+    })
+
+    it('should move one linked group up', () => {
+      component.doMoveUp(3)
+      expect(extractIds()).toEqual([4, 1, 2, 3, 5, 6])
+    })
+
+    it('should move last linked complete group up', () => {
+      component.doMoveUp(4)
+      expect(extractIds()).toEqual([1, 2, 3, 5, 6, 4])
+    })
+
+    it('should not move last partial linked subgroup up', () => {
+      component.doMoveUp(5)
+      expect(extractIds()).toEqual([1, 2, 3, 4, 5, 6])
+    })
   })
 })

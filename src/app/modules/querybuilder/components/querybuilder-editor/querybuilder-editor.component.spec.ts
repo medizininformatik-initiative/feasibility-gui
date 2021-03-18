@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { QuerybuilderEditorComponent } from './querybuilder-editor.component'
 import { MaterialModule } from 'src/app/layout/material/material.module'
@@ -29,6 +29,11 @@ import { DisplayTimeRestrictionComponent } from './display/display-time-restrict
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../service/feature.service'
 import { ResultSimpleComponent } from './result/result-simple/result-simple.component'
+import { BackendService } from '../../service/backend.service'
+import { Observable, of } from 'rxjs'
+import { QueryResult } from '../../model/api/result/QueryResult'
+import { QueryResponse } from '../../model/api/result/QueryResponse'
+import { Query } from '../../model/api/query/query'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -123,5 +128,77 @@ describe('QuerybuilderEditorComponent', () => {
 
     expect(component.queryProviderService.store).toHaveBeenCalledTimes(1)
     expect(component.queryProviderService.store).toHaveBeenCalledWith(query)
+  })
+
+  describe('polling results', () => {
+    const resultUrl = 'http://test'
+    const queryResult = { totalNumberOfPatients: 13, queryId: '1', resultLines: [] }
+    let backendService
+
+    beforeEach(() => {
+      backendService = {
+        getResult(resultUrlTemp: string): Observable<QueryResult> {
+          return null
+        },
+        postQuery(query: Query): Observable<QueryResponse> {
+          return null
+        },
+      } as BackendService
+      component.backend = backendService
+    })
+
+    it('should start polling query results', fakeAsync(() => {
+      const location = 'http://result/1'
+      jest.spyOn(backendService, 'postQuery').mockReturnValue(of({ location }))
+      jest.spyOn(backendService, 'getResult').mockReturnValue(of(queryResult))
+
+      component.doSend()
+      tick(5000)
+      component.subscriptionPolling.unsubscribe()
+
+      expect(component.resultUrl).toEqual(location)
+      expect(backendService.getResult).toBeCalledTimes(5)
+      expect(component.result).toEqual(queryResult)
+    }))
+
+    it('should set resultUrl and start polling query results', fakeAsync(() => {
+      jest.spyOn(backendService, 'getResult').mockReturnValue(of(queryResult))
+
+      component.startRequestingResult(resultUrl)
+      tick(5000)
+      component.subscriptionPolling.unsubscribe()
+
+      expect(component.resultUrl).toEqual(resultUrl)
+      expect(backendService.getResult).toBeCalledTimes(5)
+      expect(component.result).toEqual(queryResult)
+    }))
+
+    it('should reset result url after 5 minutes', fakeAsync(() => {
+      jest.spyOn(backendService, 'getResult').mockReturnValue(of(queryResult))
+
+      component.startRequestingResult(resultUrl)
+      tick(500000)
+      component.subscriptionPolling.unsubscribe()
+
+      expect(component.resultUrl).toEqual('')
+      expect(backendService.getResult).toBeCalledTimes(299)
+      expect(component.result).toEqual(queryResult)
+    }))
+
+    it('should log an error', fakeAsync(() => {
+      jest.spyOn(backendService, 'getResult').mockImplementation(() => {
+        throw new Error()
+      })
+      jest.spyOn(console, 'error').mockImplementation(() => undefined)
+
+      component.startRequestingResult(resultUrl)
+      tick(5000)
+      component.subscriptionPolling.unsubscribe()
+
+      expect(component.resultUrl).toEqual(resultUrl)
+      expect(console.error).toBeCalled()
+      expect(backendService.getResult).toBeCalledTimes(1)
+      expect(component.result).toEqual(undefined)
+    }))
   })
 })

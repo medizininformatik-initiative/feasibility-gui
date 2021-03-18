@@ -1,6 +1,6 @@
 import { ObjectHelper } from './ObjectHelper'
 
-describe('ObjectHeloer', () => {
+describe('ObjectHelper', () => {
   const objA = { a: 1 }
   const objAAgain = { a: 1 }
 
@@ -14,6 +14,13 @@ describe('ObjectHeloer', () => {
   it('should not result in equal object', () => {
     expect(ObjectHelper.clone(objA)).not.toBe(objB)
     expect(ObjectHelper.clone(objA)).not.toEqual(objB)
+  })
+
+  it('should result in identical falsy value', () => {
+    expect(ObjectHelper.clone(undefined)).toBe(undefined)
+    expect(ObjectHelper.clone(null)).toBe(null)
+    expect(ObjectHelper.clone(0)).toBe(0)
+    expect(ObjectHelper.clone('')).toBe('')
   })
 
   it('should result in equality', () => {
