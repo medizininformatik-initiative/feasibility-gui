@@ -16,6 +16,7 @@ import { FeatureService } from '../../../../../../service/feature.service'
 import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 
 describe('DisplayCriterionComponent', () => {
   let component: DisplayCriterionComponent
@@ -47,7 +48,12 @@ describe('DisplayCriterionComponent', () => {
         DisplayTimeRestrictionComponent,
         DisplayValueFilterComponent,
       ],
-      imports: [MaterialModule, TranslateModule.forRoot(), HttpClientTestingModule],
+      imports: [
+        FontAwesomeTestingModule,
+        MaterialModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+      ],
       providers: [{ provide: FeatureService, useValue: featureService }],
     }).compileComponents()
   })

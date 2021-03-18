@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { DirectivesModule } from 'src/app/shared/directives/directives.module'
+import { RoleGuard } from '../../../core/auth/guards/role.guard'
 
 describe('SideMenuComponent', () => {
   let component: SideMenuComponent
@@ -39,12 +40,12 @@ describe('SideMenuComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SideMenuComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
     jest.spyOn(component.toggleSideMenu, 'emit')
     jest.spyOn(authService, 'logOut').mockImplementation(() => Promise.resolve())
   })
 
   it('should create', () => {
+    fixture.detectChanges()
     expect(component).toBeTruthy()
   })
 
@@ -61,6 +62,40 @@ describe('SideMenuComponent', () => {
     const button = nativeElement.querySelector('.mat-list-item')
     button.click()
     expect(component.toggleSideMenu.emit).toHaveBeenCalled()
+  })
+
+  it('should merge roles from mainNavItem and corresponding route', () => {
+    component.mainNavItems = [
+      {
+        icon: 'test',
+        routeTo: '/test',
+        translationKey: 'test',
+        roles: ['test-role1'],
+      },
+    ]
+    component.routes = [
+      {
+        path: '/test_second',
+        canLoad: [RoleGuard],
+        data: {
+          navId: 'test_second',
+          roles: ['test-role_second'],
+        },
+      },
+      {
+        path: '/test',
+        canLoad: [RoleGuard],
+        data: {
+          navId: 'test',
+          roles: ['test-role2'],
+        },
+      },
+    ]
+    fixture.detectChanges()
+    const nativeElement = fixture.debugElement.nativeElement
+    const button = nativeElement.querySelector('.mat-list-item')
+    button.click()
+    expect(component.mainNavItems[0].roles).toEqual(['test-role1', 'test-role2'])
   })
 
   it('Calls logout function when logout button is clicked', () => {

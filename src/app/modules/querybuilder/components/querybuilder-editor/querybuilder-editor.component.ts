@@ -24,11 +24,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
   @Output()
   resultEmit = new EventEmitter<string>()
 
-  private subscriptionPolling: Subscription
+  subscriptionPolling: Subscription
   private subscriptionResult: Subscription
   public resultObservable$: Observable<QueryResult>
 
-  constructor(public queryProviderService: QueryProviderService, private backend: BackendService) {}
+  constructor(public queryProviderService: QueryProviderService, public backend: BackendService) {}
 
   ngOnInit(): void {
     this.query = this.queryProviderService.query()
@@ -58,7 +58,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
         this.result = result
       },
       (error) => {
-        console.log(error)
+        console.error(error)
       },
       () => {
         this.resultUrl = ''

@@ -53,7 +53,7 @@ describe('SearchOverlayTreeComponent', () => {
 
   const termEntriesSelected = [termEntry1a, termEntry2WithoutChildren, termEntry2b]
 
-  let backendService
+  let backendService: BackendService
   let dialog
   let dialogRef
   let closeOverlay
@@ -222,6 +222,24 @@ describe('SearchOverlayTreeComponent', () => {
       const actual = component.extractSelectedEntries()
 
       expect(actual).toEqual(termEntriesSelected)
+    })
+  })
+
+  describe('onToggleLoad', () => {
+    it('should not load new children', () => {
+      jest.spyOn(backendService, 'getTerminolgyTree')
+
+      component.onToggleLoad(termEntry1)
+
+      expect(backendService.getTerminolgyTree).not.toBeCalled()
+    })
+
+    it('should load new children', () => {
+      jest.spyOn(backendService, 'getTerminolgyTree').mockReturnValue(of(termEntry2))
+
+      component.onToggleLoad(termEntry2WithoutChildren)
+
+      expect(backendService.getTerminolgyTree).not.toBeCalledWith(termEntry2WithoutChildren.id)
     })
   })
 

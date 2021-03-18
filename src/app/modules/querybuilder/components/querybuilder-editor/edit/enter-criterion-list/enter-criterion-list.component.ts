@@ -31,7 +31,7 @@ export class EnterCriterionListComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
     private dialogRef: MatDialogRef<EnterCriterionListComponent, void>,
-    private provider: QueryProviderService,
+    public provider: QueryProviderService,
     public featureService: FeatureService
   ) {
     this.translator = new TermEntry2CriterionTranslator(
@@ -50,7 +50,6 @@ export class EnterCriterionListComponent implements OnInit {
     const index = this.query.groups.findIndex((group) => group.id === event.groupId)
 
     if (index < 0) {
-      console.log('Group with id ' + event.groupId + ' not found')
       return
     }
 

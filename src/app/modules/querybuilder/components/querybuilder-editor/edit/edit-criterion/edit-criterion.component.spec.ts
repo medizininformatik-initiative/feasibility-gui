@@ -16,34 +16,12 @@ import { ValueType } from '../../../../model/api/terminology/valuedefinition'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component'
-import { QueryProviderService } from '../../../../service/query-provider.service'
+import { Query } from '../../../../model/api/query/query'
+import { ObjectHelper } from '../../../../controller/ObjectHelper'
 
 describe('EditCriterionComponent', () => {
   let component: EditCriterionComponent
   let fixture: ComponentFixture<EditCriterionComponent>
-
-  const valueDefinition = {
-    type: ValueType.CONCEPT,
-    precision: 1,
-  }
-
-  const valueFilter = {
-    precision: 1,
-    type: OperatorOptions.CONCEPT,
-    selectedConcepts: [],
-    valueDefinition,
-  }
-
-  const valueFilter2 = {
-    precision: 2,
-    type: OperatorOptions.CONCEPT,
-    selectedConcepts: [],
-    valueDefinition,
-  }
-
-  const criterion = new Criterion()
-  criterion.termCode = { code: 'A', system: 'http://test', display: 'Some Code' }
-  criterion.valueFilters = [valueFilter]
 
   const featureService = {
     useFeatureMultipleValueDefinitions(): boolean {
@@ -60,101 +38,232 @@ describe('EditCriterionComponent', () => {
     },
   } as FeatureService
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        EditCriterionComponent,
-        EditValueFilterComponent,
-        EditValueFilterConceptLineComponent,
-        MatInputNumberDirective,
-        ButtonComponent,
-        EditTimeRestrictionComponent,
-      ],
-      imports: [
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NoopAnimationsModule,
-        FontAwesomeTestingModule,
-        TranslateModule.forRoot(),
-        HttpClientTestingModule,
-      ],
-      providers: [
-        {
-          provide: FeatureService,
-          useValue: featureService,
-        },
-      ],
-    }).compileComponents()
-  })
+  const testBedConfig = {
+    declarations: [
+      EditCriterionComponent,
+      EditValueFilterComponent,
+      EditValueFilterConceptLineComponent,
+      MatInputNumberDirective,
+      ButtonComponent,
+      EditTimeRestrictionComponent,
+    ],
+    imports: [
+      MaterialModule,
+      FormsModule,
+      ReactiveFormsModule,
+      NoopAnimationsModule,
+      FontAwesomeTestingModule,
+      TranslateModule.forRoot(),
+      HttpClientTestingModule,
+    ],
+    providers: [
+      {
+        provide: FeatureService,
+        useValue: featureService,
+      },
+    ],
+  }
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EditCriterionComponent)
-    component = fixture.componentInstance
-    component.criterion = criterion
-    component.query = QueryProviderService.createTestQuery()
+  const valueDefinition = {
+    type: ValueType.CONCEPT,
+    precision: 1,
+  }
 
-    fixture.detectChanges()
-  })
+  const valueFilter = {
+    precision: 1,
+    type: OperatorOptions.CONCEPT,
+    selectedConcepts: [],
+    valueDefinition,
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
+  const criterion = new Criterion()
+  criterion.termCode = { code: 'A', system: 'http://test', display: 'Some Code' }
+  criterion.valueFilters = [valueFilter]
 
-  it('should fire discard event', () => {
-    spyOn(component.discard, 'emit')
-    component.doDiscard()
-    expect(component.discard.emit).toHaveBeenCalledWith()
-  })
+  const valueFilter2 = {
+    precision: 2,
+    type: OperatorOptions.CONCEPT,
+    selectedConcepts: [],
+    valueDefinition,
+  }
 
-  it('should fire save event', () => {
-    spyOn(component.save, 'emit')
-    jest.spyOn(component, 'isActionDisabled').mockReturnValue(false)
+  const query: Query = {
+    display: '',
+    groups: [
+      {
+        id: 1,
+        display: '',
+        inclusionCriteria: [[criterion]],
+        exclusionCriteria: [],
+      },
+      {
+        id: 2,
+        display: '',
+        inclusionCriteria: [],
+        exclusionCriteria: [],
+      },
+    ],
+  }
 
-    component.selectedGroupId = 47
-    component.doSave()
-    expect(component.save.emit).toHaveBeenCalledWith({ groupId: 47 })
-  })
+  describe('default test bed config', () => {
+    beforeEach(async () => {
+      await TestBed.configureTestingModule(testBedConfig).compileComponents()
 
-  it('should not fire save event for disabled state', () => {
-    spyOn(component.save, 'emit')
-    jest.spyOn(component, 'isActionDisabled').mockReturnValue(true)
+      fixture = TestBed.createComponent(EditCriterionComponent)
+      component = fixture.componentInstance
+      component.criterion = criterion
+      component.query = ObjectHelper.clone(query)
+    })
 
-    component.doSave()
-    expect(component.save.emit).not.toHaveBeenCalledWith()
-  })
+    it('should create', () => {
+      expect(component).toBeTruthy()
+    })
 
-  it('should use all available filters', () => {
-    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(true)
-    component.featureService = featureService
+    it('should fire discard event', () => {
+      spyOn(component.discard, 'emit')
+      component.doDiscard()
+      expect(component.discard.emit).toHaveBeenCalledWith()
+    })
 
-    component.criterion.valueFilters.push(valueFilter2)
+    it('should fire save event', () => {
+      spyOn(component.save, 'emit')
+      jest.spyOn(component, 'isActionDisabled').mockReturnValue(false)
 
-    expect(component.getValueFilters().length).toBe(2)
-  })
+      component.selectedGroupId = 47
+      component.doSave()
+      expect(component.save.emit).toHaveBeenCalledWith({ groupId: 47 })
+    })
 
-  it('should use only the first value filter', () => {
-    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
-    component.featureService = featureService
+    it('should not fire save event for disabled state', () => {
+      spyOn(component.save, 'emit')
+      jest.spyOn(component, 'isActionDisabled').mockReturnValue(true)
 
-    component.criterion.valueFilters.push(valueFilter2)
+      component.doSave()
+      expect(component.save.emit).not.toHaveBeenCalledWith()
+    })
 
-    expect(component.getValueFilters().length).toBe(1)
-  })
+    it('should use all available filters', () => {
+      spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(true)
+      component.featureService = featureService
 
-  it('should use one value filter', () => {
-    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
-    component.featureService = featureService
+      component.criterion.valueFilters.push(valueFilter2)
 
-    expect(component.getValueFilters().length).toBe(1)
-  })
+      expect(component.getValueFilters().length).toBe(2)
+    })
 
-  it('should use no value filter', () => {
-    spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
-    component.featureService = featureService
+    it('should use only the first value filter', () => {
+      spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
+      component.featureService = featureService
 
-    component.criterion.valueFilters = []
+      component.criterion.valueFilters.push(valueFilter2)
 
-    expect(component.getValueFilters().length).toBe(0)
+      expect(component.getValueFilters().length).toBe(1)
+    })
+
+    it('should use one value filter', () => {
+      spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
+      component.featureService = featureService
+
+      expect(component.getValueFilters().length).toBe(1)
+    })
+
+    it('should use no value filter', () => {
+      spyOn(featureService, 'useFeatureMultipleValueDefinitions').and.returnValue(false)
+      component.featureService = featureService
+
+      component.criterion.valueFilters = []
+
+      expect(component.getValueFilters().length).toBe(0)
+    })
+
+    it('should use group id from position on ngInit()', () => {
+      component.query.groups[0].id = 27
+      component.position = { groupId: 13, critType: 'exclusion', row: 1, column: 1 }
+
+      fixture.detectChanges()
+
+      expect(component.selectedGroupId).toBe(13)
+    })
+
+    it('should use group id from first group on ngInit()', () => {
+      component.query.groups[0].id = 27
+      component.position = undefined
+
+      fixture.detectChanges()
+
+      expect(component.selectedGroupId).toBe(27)
+    })
+
+    describe('test moveBetweenGroups', () => {
+      it('should move criterion to second group', () => {
+        component.selectedGroupId = 2
+        component.position = {
+          groupId: 1,
+          critType: 'inclusion',
+          row: 0,
+          column: 0,
+        }
+
+        component.moveBetweenGroups()
+
+        expect(component.query.groups[0].inclusionCriteria).toEqual([])
+        expect(component.query.groups[1].inclusionCriteria).toEqual([[criterion]])
+      })
+
+      it('should not move criterion to second group (missing position)', () => {
+        component.selectedGroupId = 2
+        component.position = null
+
+        component.moveBetweenGroups()
+
+        expect(component.query.groups[0].inclusionCriteria).toEqual([[criterion]])
+        expect(component.query.groups[1].inclusionCriteria).toEqual([])
+      })
+
+      it('should not move criterion to second group (selected group id equals original group id)', () => {
+        component.selectedGroupId = 1
+        component.position = {
+          groupId: 1,
+          critType: 'inclusion',
+          row: 0,
+          column: 0,
+        }
+
+        component.moveBetweenGroups()
+
+        expect(component.query.groups[0].inclusionCriteria).toEqual([[criterion]])
+        expect(component.query.groups[1].inclusionCriteria).toEqual([])
+      })
+
+      it('should not move criterion to second group (row is missing)', () => {
+        component.selectedGroupId = 1
+        component.position = {
+          groupId: 2,
+          critType: 'inclusion',
+          row: null,
+          column: 0,
+        }
+
+        component.moveBetweenGroups()
+
+        expect(component.query.groups[0].inclusionCriteria).toEqual([[criterion]])
+        expect(component.query.groups[1].inclusionCriteria).toEqual([])
+      })
+
+      it('should not move criterion to second group (column is missing)', () => {
+        component.selectedGroupId = 1
+        component.position = {
+          groupId: 2,
+          critType: 'inclusion',
+          row: 0,
+          column: null,
+        }
+
+        component.moveBetweenGroups()
+
+        expect(component.query.groups[0].inclusionCriteria).toEqual([[criterion]])
+        expect(component.query.groups[1].inclusionCriteria).toEqual([])
+      })
+    })
   })
 })

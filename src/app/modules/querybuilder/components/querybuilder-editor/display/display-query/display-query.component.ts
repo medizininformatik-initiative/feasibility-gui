@@ -65,6 +65,11 @@ export class DisplayQueryComponent implements OnInit {
   }
 
   doMoveDown(i: number): void {
+    if (i > 0 && this.hasConnectedParent(i)) {
+      this.showHintNotMoved()
+      return
+    }
+
     const groupsTemp = ObjectHelper.clone(this.query.groups)
     const a = this.findIndexOfNextGroupWithoutConnectedParent(i)
     if (a >= groupsTemp.length) {
@@ -73,10 +78,6 @@ export class DisplayQueryComponent implements OnInit {
     }
 
     const b = this.findIndexOfNextGroupWithoutConnectedParent(a)
-    if (b > groupsTemp.length) {
-      this.showHintNotMoved()
-      return
-    }
 
     const groupsToBeMoved = groupsTemp.splice(i, a - i)
     groupsTemp.splice(i + (b - a), 0, ...groupsToBeMoved)
@@ -85,6 +86,11 @@ export class DisplayQueryComponent implements OnInit {
   }
 
   doMoveUp(i: number): void {
+    if (i > 0 && this.hasConnectedParent(i)) {
+      this.showHintNotMoved()
+      return
+    }
+
     if (i <= 0) {
       this.showHintNotMoved()
       return

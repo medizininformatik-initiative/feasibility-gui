@@ -184,11 +184,37 @@ describe('EnterCriterionListComponent', () => {
     component.critType = 'exclusion'
     component.query = query
     component.criterionList = [criterion]
+    component.provider = providerService
 
     component.doSave({ groupId: 1 }, criterion)
 
     expect(query.groups[0].inclusionCriteria.length).toBe(0)
     expect(query.groups[0].exclusionCriteria.length).toBe(1)
     expect(component.doDiscard).toBeCalledWith(criterion)
+    expect(providerService.store).toBeCalledWith(query)
+  })
+
+  it('should not store query and and not discard criterion from list when groupId is invalid', () => {
+    fixture = TestBed.createComponent(EnterCriterionListComponent)
+    component = fixture.componentInstance
+    component.criterionList = []
+    fixture.detectChanges()
+
+    const query = QueryProviderService.createDefaultQuery()
+    const criterion = new Criterion()
+
+    spyOn(component, 'doDiscard')
+    spyOn(providerService, 'store')
+
+    component.critType = 'exclusion'
+    component.query = query
+    component.criterionList = [criterion]
+
+    component.doSave({ groupId: 1234 }, criterion)
+
+    expect(query.groups[0].inclusionCriteria.length).toBe(0)
+    expect(query.groups[0].exclusionCriteria.length).toBe(0)
+    expect(component.doDiscard).not.toBeCalledWith(criterion)
+    expect(providerService.store).not.toBeCalled()
   })
 })
