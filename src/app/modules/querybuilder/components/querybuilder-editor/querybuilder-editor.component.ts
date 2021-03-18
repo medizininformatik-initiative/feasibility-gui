@@ -58,7 +58,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
         this.result = result
       },
       (error) => {
-        console.log(error)
+        console.error(error)
       },
       () => {
         this.resultUrl = ''

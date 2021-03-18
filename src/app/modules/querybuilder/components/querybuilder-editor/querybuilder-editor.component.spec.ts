@@ -130,6 +130,20 @@ describe('QuerybuilderEditorComponent', () => {
     expect(component.queryProviderService.store).toHaveBeenCalledWith(query)
   })
 
+  it('reset query', () => {
+    jest.spyOn(component.queryProviderService, 'store')
+
+    const expectedQuery = QueryProviderService.createDefaultQuery()
+    const originalQuery = new Query()
+    originalQuery.display = 'TEST'
+    component.query = originalQuery
+
+    component.doReset()
+
+    expect(component.query).toEqual(expectedQuery)
+    expect(component.queryProviderService.store).toBeCalledWith(expectedQuery)
+  })
+
   describe('polling results', () => {
     const resultUrl = 'http://test'
     const queryResult = { totalNumberOfPatients: 13, queryId: '1', resultLines: [] }
