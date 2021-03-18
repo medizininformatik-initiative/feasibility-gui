@@ -4,6 +4,7 @@ import { DisplayValueFilterComponent } from './display-value-filter.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { Comparator, ValueFilter } from '../../../../model/api/query/valueFilter'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('DisplayValueFilterComponent', () => {
   let component: DisplayValueFilterComponent
@@ -12,7 +13,7 @@ describe('DisplayValueFilterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DisplayValueFilterComponent],
-      imports: [TranslateModule.forRoot(), FontAwesomeTestingModule],
+      imports: [TranslateModule.forRoot(), FontAwesomeTestingModule, HttpClientTestingModule],
     }).compileComponents()
   })
 

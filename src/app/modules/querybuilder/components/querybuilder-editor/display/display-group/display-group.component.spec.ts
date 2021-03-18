@@ -38,6 +38,9 @@ describe('DisplayGroupComponent', () => {
     useFeatureDependentGroups(): boolean {
       return true
     },
+    useFeatureShowDisplayValueFilterIcon(): boolean {
+      return true
+    },
   } as FeatureService
 
   beforeEach(async () => {
