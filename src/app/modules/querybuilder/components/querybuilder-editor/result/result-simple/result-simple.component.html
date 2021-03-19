@@ -9,10 +9,13 @@
     </ng-template>
   </div>
   <num-button
-    *ngIf="resultObservable"
+    *ngIf="result?.totalNumberOfPatients; else showSpinnerID"
     [type]="'primary'"
     (click)="openDialogResultDetails()"
     class="button-dialog-result-details"
     >{{ 'BUTTON.RESULTDETAILS' | translate }}</num-button
   >
+  <ng-template #showSpinnerID>
+    <fa-icon *ngIf="showSpinner" size="2x" icon="spinner" class="fa-pulse"></fa-icon>
+  </ng-template>
 </div>

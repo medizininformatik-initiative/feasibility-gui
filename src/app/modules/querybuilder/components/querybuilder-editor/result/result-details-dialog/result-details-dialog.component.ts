@@ -19,12 +19,17 @@ export class ResultDetailsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsDialogComponentData,
     public dialogRef: MatDialogRef<ResultDetailsDialogComponent>
   ) {
-    this.data.resultObservable$.subscribe((resultTemp) => (this.result = resultTemp))
+    this.data.resultObservable$.subscribe((resultTemp) => this.sortResult(resultTemp))
   }
 
   ngOnInit(): void {}
 
   doClose(): void {
     this.dialogRef.close()
+  }
+
+  sortResult(resultTemp): void {
+    this.result = resultTemp
+    this.result.resultLines.sort((a, b) => b.numberOfPatients - a.numberOfPatients)
   }
 }

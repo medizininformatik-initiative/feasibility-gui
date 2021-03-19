@@ -19,6 +19,9 @@ export class ResultSimpleComponent implements OnInit {
   @Input()
   result: QueryResult
 
+  @Input()
+  showSpinner: boolean
+
   constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {}
@@ -31,6 +34,6 @@ export class ResultSimpleComponent implements OnInit {
     dialogConfig.data = {
       resultObservable$: this.resultObservable,
     }
-    const dialogRef = this.dialog.open(ResultDetailsDialogComponent, dialogConfig)
+    this.dialog.open(ResultDetailsDialogComponent, dialogConfig)
   }
 }
