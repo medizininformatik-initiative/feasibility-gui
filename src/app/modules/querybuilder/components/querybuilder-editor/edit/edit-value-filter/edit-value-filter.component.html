@@ -83,7 +83,7 @@
     </mat-form-field>
     <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
       <mat-label>{{ 'QUERYBUILDER.EDIT.UNIT' | translate }}</mat-label>
-      <mat-select [(value)]="selectedUnit">
+      <mat-select [(value)]="filter.unit" [compareWith]="compareFunction">
         <mat-option *ngFor="let unit of filter.valueDefinition?.allowedUnits" [value]="unit">
           {{ unit.display }}
         </mat-option>
