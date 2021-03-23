@@ -44,37 +44,37 @@ describe('DisplayValueFilterComponent', () => {
       expect(component).toBeTruthy()
     })
 
-    it('should return an empty string', () => {
+    it('should return an empty string instead of "<=" symbol', () => {
       component.filter = new ValueFilter()
       component.filter.comparator = Comparator.LESS_OR_EQUAL
       expect(component.getComparator()).toEqual({ icon: 'less-than-equal', utf8: '' })
     })
 
-    it('should return an empty string', () => {
+    it('should return an empty string instead of "<" symbol', () => {
       component.filter = new ValueFilter()
       component.filter.comparator = Comparator.LESS_THAN
       expect(component.getComparator()).toEqual({ icon: 'less-than', utf8: '' })
     })
 
-    it('should return an empty string', () => {
+    it('should return an empty string instead of ">=" symbol', () => {
       component.filter = new ValueFilter()
       component.filter.comparator = Comparator.GREATER_OR_EQUAL
       expect(component.getComparator()).toEqual({ icon: 'greater-than-equal', utf8: '' })
     })
 
-    it('should return an empty string', () => {
+    it('should return an empty string instead of ">" symbol', () => {
       component.filter = new ValueFilter()
       component.filter.comparator = Comparator.GREATER_THAN
       expect(component.getComparator()).toEqual({ icon: 'greater-than', utf8: '' })
     })
 
-    it('should return an empty string', () => {
+    it('should return an empty string instead of "=" symbol', () => {
       component.filter = new ValueFilter()
       component.filter.comparator = Comparator.EQUAL
       expect(component.getComparator()).toEqual({ icon: 'equals', utf8: '' })
     })
 
-    it('should return an empty string', () => {
+    it('should return an empty string instead of "<>" symbol', () => {
       component.filter = new ValueFilter()
       component.filter.comparator = Comparator.NOT_EQUAL
       expect(component.getComparator()).toEqual({ icon: 'not-equal', utf8: '' })
