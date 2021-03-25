@@ -1,5 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Comparator, OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter'
+import { FeatureService } from '../../../../../../service/feature.service'
+
+class ComperatorIcon {
+  icon: string
+  utf8: string
+}
 
 @Component({
   selector: 'num-display-value-filter',
@@ -13,27 +19,47 @@ export class DisplayValueFilterComponent implements OnInit {
   QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
   QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
 
-  constructor() {}
+  constructor(public featureService: FeatureService) {}
 
   ngOnInit(): void {}
 
-  getComparator(): string {
+  getComparator(): ComperatorIcon {
+    let comparatorIcon: ComperatorIcon
+
     switch (this.filter.comparator) {
-      case Comparator.EQUAL:
-        return '='
-      case Comparator.GREATER_THAN:
-        return '>'
-      // TODO: Use UTF-8 characters      case Comparator.GREATER_OR_EQUAL: return utf8Encode('\u2265');
-      case Comparator.GREATER_OR_EQUAL:
-        return '>='
-      case Comparator.LESS_OR_EQUAL:
-        return '<='
-      case Comparator.LESS_THAN:
-        return '<'
-      case Comparator.NOT_EQUAL:
-        return '<>'
-      default:
-        return '##'
+      case Comparator.EQUAL: {
+        comparatorIcon = { icon: 'equals', utf8: '\u003d' }
+        break
+      }
+      case Comparator.GREATER_THAN: {
+        comparatorIcon = { icon: 'greater-than', utf8: '\u003e' }
+        break
+      }
+      case Comparator.GREATER_OR_EQUAL: {
+        comparatorIcon = { icon: 'greater-than-equal', utf8: '\u2265' }
+        break
+      }
+      case Comparator.LESS_OR_EQUAL: {
+        comparatorIcon = { icon: 'less-than-equal', utf8: '\u2264' }
+        break
+      }
+      case Comparator.LESS_THAN: {
+        comparatorIcon = { icon: 'less-than', utf8: '\u003c' }
+        break
+      }
+      case Comparator.NOT_EQUAL: {
+        comparatorIcon = { icon: 'not-equal', utf8: '\u2260' }
+        break
+      }
+      default: {
+        comparatorIcon = { icon: '', utf8: '' }
+        break
+      }
     }
+    if (this.featureService.useFeatureShowDisplayValueFilterIcon()) {
+      comparatorIcon.utf8 = ''
+    }
+
+    return comparatorIcon
   }
 }

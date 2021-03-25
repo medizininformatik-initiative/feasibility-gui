@@ -23,6 +23,9 @@
       "multiplegroups": "#{features_v2_multiplegroups}",
       "dependentgroups": "#{features_v2_dependentgroups}",
       "timerestriction": "#{features_v2_timerestriction}"
+    },
+    "extra": {
+      "displayvalueicon": false
     }
   },
   "mock": {

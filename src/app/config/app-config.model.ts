@@ -24,6 +24,9 @@ export interface IAppConfig {
       dependentgroups: boolean
       timerestriction: boolean
     }
+    extra: {
+      displayvaluefiltericon: boolean
+    }
   }
   mock: {
     terminology: boolean

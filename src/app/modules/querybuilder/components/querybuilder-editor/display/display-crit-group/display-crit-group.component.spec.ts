@@ -28,6 +28,9 @@ describe('DisplayCritGroupComponent', () => {
       useFeatureTimeRestriction(): boolean {
         return true
       },
+      useFeatureShowDisplayValueFilterIcon(): boolean {
+        return true
+      },
     } as FeatureService
 
     await TestBed.configureTestingModule({

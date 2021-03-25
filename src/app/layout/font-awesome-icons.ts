@@ -28,6 +28,12 @@ import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { faFolder } from '@fortawesome/free-solid-svg-icons'
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { faLessThan } from '@fortawesome/free-solid-svg-icons'
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons'
+import { faEquals } from '@fortawesome/free-solid-svg-icons'
+import { faGreaterThan } from '@fortawesome/free-solid-svg-icons'
+import { faGreaterThanEqual } from '@fortawesome/free-solid-svg-icons'
+import { faNotEqual } from '@fortawesome/free-solid-svg-icons'
 
 export const FONT_AWESOME_ICONS = [
   faTh,
@@ -60,4 +66,10 @@ export const FONT_AWESOME_ICONS = [
   faArrowDown,
   faFolder,
   faWindowClose,
+  faLessThan,
+  faLessThanEqual,
+  faEquals,
+  faGreaterThan,
+  faGreaterThanEqual,
+  faNotEqual,
 ]

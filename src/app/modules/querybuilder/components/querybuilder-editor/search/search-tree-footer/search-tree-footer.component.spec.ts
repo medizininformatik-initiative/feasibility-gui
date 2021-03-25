@@ -38,7 +38,7 @@ describe('SearchFooterTreeComponent', () => {
 
     // trigger the click
     const nativeElement = fixture.nativeElement
-    const button = nativeElement.querySelector('#test1-add')
+    const button = nativeElement.querySelector('#searchtree-add-button')
     button.dispatchEvent(new Event('click'))
 
     expect(component.addEvent.emit).toHaveBeenCalledWith(true)
@@ -49,7 +49,7 @@ describe('SearchFooterTreeComponent', () => {
 
     // trigger the click
     const nativeElement = fixture.nativeElement
-    const button = nativeElement.querySelector('#test2-cancel')
+    const button = nativeElement.querySelector('#searchtree-cancel-button')
     button.dispatchEvent(new Event('click'))
 
     expect(component.addEvent.emit).toHaveBeenCalledWith(false)
