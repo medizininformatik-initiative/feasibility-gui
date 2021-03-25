@@ -82,9 +82,8 @@
       }}</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
-      <!-- TODO label = "Einheit" and flter.unit = [corresponding allowedUnit] -->
-      <mat-label>{{ filter.unit.display }}</mat-label>
-      <mat-select [(value)]="filter.unit">
+      <mat-label>{{ 'QUERYBUILDER.EDIT.UNIT' | translate }}</mat-label>
+      <mat-select [(value)]="filter.unit" [compareWith]="compareFunction">
         <mat-option *ngFor="let unit of filter.valueDefinition?.allowedUnits" [value]="unit">
           {{ unit.display }}
         </mat-option>

@@ -169,4 +169,9 @@ export class EditValueFilterComponent implements OnInit {
       this.filter.minValue >= this.filter.maxValue
     )
   }
+
+  // values come from the for-iteration (unit), option is the selected one ([(value)]="filter.unit")
+  compareFunction(values, option): boolean {
+    return values.code === option.code
+  }
 }

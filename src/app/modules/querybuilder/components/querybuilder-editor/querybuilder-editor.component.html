@@ -1,4 +1,8 @@
-<num-result-simple [resultObservable]="resultObservable$" [result]="result"></num-result-simple>
+<num-result-simple
+  [resultObservable]="resultObservable$"
+  [result]="result"
+  [showSpinner]="showSpinningIcon"
+></num-result-simple>
 
 <div fxLayout="row" fxLayoutAlign="space-between" class="container">
   <num-search-input [critType]="'inclusion'" [query]="query" fxFlex="50"></num-search-input>

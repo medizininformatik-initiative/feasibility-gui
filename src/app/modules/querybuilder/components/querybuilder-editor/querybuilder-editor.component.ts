@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Query } from '../../model/api/query/query'
 import { QueryProviderService } from '../../service/query-provider.service'
 import { QueryResult } from '../../model/api/result/QueryResult'
@@ -21,8 +21,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
 
   resultUrl: string
 
-  @Output()
-  resultEmit = new EventEmitter<string>()
+  showSpinningIcon = false
 
   subscriptionPolling: Subscription
   private subscriptionResult: Subscription
@@ -67,6 +66,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
   }
 
   doSend(): void {
+    this.showSpinningIcon = true
     this.subscriptionResult?.unsubscribe()
     this.subscriptionResult = this.backend
       .postQuery(this.query)

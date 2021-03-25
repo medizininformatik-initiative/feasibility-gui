@@ -1,5 +1,10 @@
 <div *ngIf="result">
-  <div>Anzahl der Patienten: {{ result.totalNumberOfPatients }}</div>
+  <div class="total-number-of-patients">
+    Anzahl der Patienten: {{ result.totalNumberOfPatients }}
+  </div>
+  <div *ngFor="let location of result.resultLines" fxLayoutAlign="space-between end">
+    <span>{{ location.siteName }}: </span><span>{{ location.numberOfPatients }}</span>
+  </div>
   <mat-dialog-actions align="end">
     <num-button [type]="'primary'" (click)="doClose()" class="button-close">{{
       'BUTTON.CLOSE' | translate
