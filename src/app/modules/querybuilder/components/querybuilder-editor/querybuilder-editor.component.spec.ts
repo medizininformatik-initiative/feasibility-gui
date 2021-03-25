@@ -34,6 +34,7 @@ import { Observable, of } from 'rxjs'
 import { QueryResult } from '../../model/api/result/QueryResult'
 import { QueryResponse } from '../../model/api/result/QueryResponse'
 import { Query } from '../../model/api/query/query'
+import { Group } from '../../model/api/query/group'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -142,6 +143,15 @@ describe('QuerybuilderEditorComponent', () => {
 
     expect(component.query).toEqual(expectedQuery)
     expect(component.queryProviderService.store).toBeCalledWith(expectedQuery)
+  })
+
+  it('should add group', () => {
+    const query = new Query()
+    query.groups = [new Group(), new Group()]
+    component.query = query
+    component.addGroup()
+
+    expect(component.query.groups.length).toBe(3)
   })
 
   describe('polling results', () => {

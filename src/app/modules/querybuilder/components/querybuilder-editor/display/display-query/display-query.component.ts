@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Query } from '../../../../model/api/query/query'
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
 import { Group } from '../../../../model/api/query/group'
-import { GroupFactory } from '../../../../controller/GroupFactory'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { ObjectHelper } from '../../../../controller/ObjectHelper'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -56,12 +55,6 @@ export class DisplayQueryComponent implements OnInit {
       this.query.groups[index] = group
       this.storeQuery.emit(this.query)
     }
-  }
-
-  addGroup(): void {
-    this.query.groups.push(GroupFactory.createGroup(this.query))
-
-    this.storeQuery.emit(this.query)
   }
 
   doMoveDown(i: number): void {

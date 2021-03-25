@@ -1,21 +1,34 @@
-<num-result-simple
-  [resultObservable]="resultObservable$"
-  [result]="result"
-  [showSpinner]="showSpinningIcon"
-></num-result-simple>
-
-<div fxLayout="row" fxLayoutAlign="space-between" class="container">
-  <num-search-input [critType]="'inclusion'" [query]="query" fxFlex="50"></num-search-input>
-  <div fxFlex=".5em"></div>
-  <num-search-input [critType]="'exclusion'" [query]="query" fxFlex="50"></num-search-input>
+<div fxLayout="row" fxLayoutAlign="space-between center" class="result-header-line">
+  <num-result-simple
+    class="result-simple-box"
+    [resultObservable]="resultObservable$"
+    [result]="result"
+    [showSpinner]="showSpinningIcon"
+  ></num-result-simple>
 </div>
+<div class="querybuilder-container">
+  <div fxLayout="row" fxLayoutAlign="space-between" class="container">
+    <num-search-input [critType]="'inclusion'" [query]="query" fxFlex="50"></num-search-input>
+    <div fxFlex=".5em"></div>
+    <num-search-input [critType]="'exclusion'" [query]="query" fxFlex="50"></num-search-input>
+  </div>
 
-<div fxLayout="row" fxLayoutAlign="space-between">
-  <num-button [type]="'primary'" (click)="doReset()">{{ 'BUTTON.RESET' | translate }}</num-button>
-
-  <num-button [type]="'primary'" (click)="doSend()" class="button-send">{{
-    'BUTTON.SEND' | translate
-  }}</num-button>
+  <num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>
 </div>
+<div fxLayout="row" fxLayoutAlign="space-between center" class="result-footer-line">
+  <div *ngIf="featureService.useFeatureMultipleGroups()">
+    <button class="button-add-group" type="button" mat-icon-button (click)="addGroup()">
+      <fa-icon icon="plus" size="lg"></fa-icon>
+    </button>
+    {{ 'QUERYBUILDER.DISPLAY.GROUPS.NEW_GROUP' | translate }}
+  </div>
 
-<num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>
+  <div fxLayout="row" fxLayoutAlign="space-between" class="footer-buttons-box">
+    <num-button [type]="'primary'" (click)="doReset()" class="button-reset">
+      {{ 'BUTTON.RESET' | translate }}
+    </num-button>
+    <num-button [type]="'primary'" (click)="doSend()" class="button-send">
+      {{ 'BUTTON.SEND' | translate }}
+    </num-button>
+  </div>
+</div>

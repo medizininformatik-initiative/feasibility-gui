@@ -1,7 +1,8 @@
 .container-search-input {
   position: relative;
-  min-height: 8em;
+  min-height: 6em;
   border: 1px solid var(--num-color--accent);
+  border-radius: 5px;
 }
 
 .input-field {
@@ -14,7 +15,10 @@
 
 .header-label {
   width: 33%;
-  background-color: var(--num-color--accent-100);
+  background-color: var(--num-color--accent-300);
+  color: var(--num-color--accent-contrast);
+  text-align: center;
+  border-bottom-right-radius: 5px;
 }
 
 .button-tree-view {
@@ -25,7 +29,7 @@
   height: 44px;
   width: 44px;
   line-height: unset;
-  border-radius: 0;
+  border-radius: 4px;
 }
 
 ::ng-deep .container-search-input .mat-checkbox {

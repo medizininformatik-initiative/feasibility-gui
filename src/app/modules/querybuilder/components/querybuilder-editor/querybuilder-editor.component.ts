@@ -5,6 +5,8 @@ import { QueryResult } from '../../model/api/result/QueryResult'
 import { interval, Observable, Subscription, timer } from 'rxjs'
 import { BackendService } from '../../service/backend.service'
 import { map, share, switchAll, takeUntil } from 'rxjs/operators'
+import { FeatureService } from '../../../../service/feature.service'
+import { GroupFactory } from '../../controller/GroupFactory'
 
 @Component({
   selector: 'num-querybuilder',
@@ -27,7 +29,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
   private subscriptionResult: Subscription
   public resultObservable$: Observable<QueryResult>
 
-  constructor(public queryProviderService: QueryProviderService, public backend: BackendService) {}
+  constructor(
+    public queryProviderService: QueryProviderService,
+    public backend: BackendService,
+    public featureService: FeatureService
+  ) {}
 
   ngOnInit(): void {
     this.query = this.queryProviderService.query()
@@ -63,6 +69,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
         this.resultUrl = ''
       }
     )
+  }
+
+  addGroup(): void {
+    this.query.groups.push(GroupFactory.createGroup(this.query))
+    this.storeQuery(this.query)
   }
 
   doSend(): void {

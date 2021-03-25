@@ -3,13 +3,13 @@
 }
 
 .query-group {
-  border-left: 0.5em solid var(--num-color--accent);
   padding: 0;
 }
 
 .query-group mat-card-header {
   background: var(--num-color--accent);
   color: var(--num-color--accent-contrast);
+  border-top-right-radius: 5px;
 }
 
 .header-display {
@@ -29,7 +29,7 @@
 }
 
 mat-card-content {
-  margin: 0 0.5em 0 0;
+  /*margin: 0 0.5em 0 0;*/
 }
 
 .not-linked {
