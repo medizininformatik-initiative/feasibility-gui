@@ -15,6 +15,7 @@
 
 .header-label {
   width: 33%;
+  min-width: min-content;
   background-color: var(--num-color--accent-300);
   color: var(--num-color--accent-contrast);
   text-align: center;
