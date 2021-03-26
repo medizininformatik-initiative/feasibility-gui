@@ -30,12 +30,18 @@
   margin: 1em 0;
   position: sticky;
   bottom: 0;
-  height: 4em;
   background-color: white;
   border: 1px solid black;
   border-radius: 5px;
   z-index: 100;
 }
 .footer-buttons-box {
-  margin-right: 1em;
+  margin: 1em;
+}
+.send-button-alert-text {
+  color: red;
+  font-size: small;
+  line-height: 1.3em;
+  padding-top: 5px;
+  max-width: 18em;
 }

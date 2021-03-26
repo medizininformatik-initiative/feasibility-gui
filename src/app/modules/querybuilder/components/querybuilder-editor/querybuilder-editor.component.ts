@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
 import { Query } from '../../model/api/query/query'
 import { QueryProviderService } from '../../service/query-provider.service'
 import { QueryResult } from '../../model/api/result/QueryResult'
@@ -13,7 +13,7 @@ import { GroupFactory } from '../../controller/GroupFactory'
   templateUrl: './querybuilder-editor.component.html',
   styleUrls: ['./querybuilder-editor.component.scss'],
 })
-export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
+export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterViewChecked {
   readonly POLLING_INTERVALL_MILLISECONDS = 1000
   readonly POLLING_MAXL_MILLISECONDS = 300 * 1000
 
@@ -24,6 +24,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
   resultUrl: string
 
   showSpinningIcon = false
+  actionDisabledSend: boolean
+  actionDisabledReset: boolean
 
   subscriptionPolling: Subscription
   private subscriptionResult: Subscription
@@ -32,7 +34,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
   constructor(
     public queryProviderService: QueryProviderService,
     public backend: BackendService,
-    public featureService: FeatureService
+    public featureService: FeatureService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +45,27 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptionPolling?.unsubscribe()
     this.subscriptionResult?.unsubscribe()
+  }
+
+  ngAfterViewChecked(): void {
+    this.actionDisabledSend = this.isActionDisabled('Send')
+    this.actionDisabledReset = this.isActionDisabled('Reset')
+    this.changeDetector.detectChanges()
+  }
+
+  isActionDisabled(button: string): boolean {
+    if (button === 'Send') {
+      return !(this.query.groups[0].inclusionCriteria.length > 0)
+    }
+
+    if (button === 'Reset') {
+      return (
+        !(this.query.groups[0].inclusionCriteria.length > 0) &&
+        !(this.query.groups[0].exclusionCriteria.length > 0) &&
+        !(this.query.groups.length > 1)
+      )
+    }
+    return false
   }
 
   storeQuery(query: Query): void {

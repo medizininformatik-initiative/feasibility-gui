@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="start">
   <div>
-    <div>Anzahl der Patienten:</div>
+    <div>{{ 'DISPLAY.PATIENT_NUMBER' | translate }}:</div>
     <div *ngIf="result; else showZeroPatients" class="number-of-patients">
       {{ result?.totalNumberOfPatients }}
     </div>
