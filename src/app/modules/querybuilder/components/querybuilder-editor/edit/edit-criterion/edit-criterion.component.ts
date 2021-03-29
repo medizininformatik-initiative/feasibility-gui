@@ -47,6 +47,8 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
 
   selectedGroupId: number
 
+  showGroups: boolean
+
   constructor(public featureService: FeatureService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -55,6 +57,8 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
     } else {
       this.selectedGroupId = this.query.groups[0].id
     }
+
+    this.showGroups = this.query.groups.length > 1
   }
 
   ngAfterViewChecked(): void {
