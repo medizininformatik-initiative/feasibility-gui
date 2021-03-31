@@ -6,7 +6,7 @@
     "baseUrl": "/api"
   },
   "uiBackendApi": {
-    "baseUrl": "http://feasibility-gui-backend:8090/api/v1"
+    "baseUrl": "http://localhost:8091/api/v1"
   },
   "auth": {
     "baseUrl": "http://localhost:8080",
@@ -23,11 +23,14 @@
       "multiplegroups": false,
       "dependentgroups": false,
       "timerestriction": false
+    },
+    "extra": {
+      "displayvaluefiltericon": false
     }
   },
   "mock": {
     "terminology": false,
-    "query": true,
-    "result": true
+    "query": false,
+    "result": false
   }
 }
