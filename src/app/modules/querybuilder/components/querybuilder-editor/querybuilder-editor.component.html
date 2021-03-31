@@ -22,9 +22,10 @@
     </button>
     {{ 'QUERYBUILDER.DISPLAY.GROUPS.NEW_GROUP' | translate }}
   </div>
+  <div *ngIf="!featureService.useFeatureMultipleGroups()" fxFlex="fill"></div>
 
   <div fxLayout="column" fxLayoutAlign="space-between" class="footer-buttons-box">
-    <div>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
       <num-button
         [type]="'primary'"
         [isDisabled]="actionDisabledReset"

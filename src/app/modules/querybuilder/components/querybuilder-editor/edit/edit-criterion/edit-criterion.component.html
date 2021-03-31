@@ -16,30 +16,30 @@
   <mat-card-footer>
     <div fxLayout="row" fxLayoutAlign="center center">
       <mat-form-field
-        *ngIf="featureService.useFeatureMultipleGroups()"
+        *ngIf="featureService.useFeatureMultipleGroups() && showGroups"
         appearance="outline"
         class="group-form-field"
         fxFlex="fill"
       >
         <mat-label>{{ 'QUERYBUILDER.EDIT.CHOOSE_GROUP' | translate }}</mat-label>
         <mat-select [(ngModel)]="selectedGroupId">
-          <mat-option *ngFor="let group of query.groups" [value]="group.id"
-            >{{ group.display }}<em>({{ group.id }})</em></mat-option
-          >
+          <mat-option *ngFor="let group of query.groups" [value]="group.id">
+            {{ group.display }}<em>({{ group.id }})</em>
+          </mat-option>
         </mat-select>
       </mat-form-field>
-      <div *ngIf="!featureService.useFeatureMultipleGroups()" fxFlex="fill"></div>
+      <div *ngIf="!(featureService.useFeatureMultipleGroups() && showGroups)" fxFlex="fill"></div>
 
       <num-button
         [type]="'primary'"
         (click)="doSave()"
         [isDisabled]="actionDisabled"
         class="button-save"
-        >{{ 'BUTTON.' + actionButtonKey | translate }}</num-button
-      >
-      <num-button [type]="'secondary'" (click)="doDiscard()">{{
-        'BUTTON.CANCEL' | translate
-      }}</num-button>
+        >{{ 'BUTTON.' + actionButtonKey | translate }}
+      </num-button>
+      <num-button [type]="'secondary'" (click)="doDiscard()">
+        {{ 'BUTTON.CANCEL' | translate }}
+      </num-button>
     </div>
   </mat-card-footer>
 </mat-card>
