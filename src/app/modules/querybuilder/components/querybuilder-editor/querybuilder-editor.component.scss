@@ -3,9 +3,39 @@
 }
 
 .container {
-  margin: 1em 0 0.5em 0;
+  margin: 1em 0;
 }
 
-.button-send {
-  margin: 0 0 0.5em 0.5em;
+.button-add-group {
+  background-color: var(--num-color--accent-300);
+  margin: 1em;
+}
+.button-reset {
+  margin-right: 2%;
+}
+
+.result-simple-box {
+  margin-left: 2%;
+}
+.result-header-line {
+  position: sticky;
+  top: 0;
+  height: 4em;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  z-index: 100;
+}
+.result-footer-line {
+  margin: 1em 0;
+  position: sticky;
+  bottom: 0;
+  height: 4em;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  z-index: 100;
+}
+.footer-buttons-box {
+  margin-right: 1em;
 }

@@ -146,15 +146,6 @@ describe('DisplayQueryComponent', () => {
     expect(component.storeQuery.emit).toBeCalled()
   })
 
-  it('should add group', () => {
-    const query = new Query()
-    query.groups = [new Group(), new Group()]
-    component.query = query
-    component.addGroup()
-
-    expect(component.query.groups.length).toBe(3)
-  })
-
   it('should find only one group', () => {
     jest.spyOn(component.featureService, 'useFeatureMultipleGroups').mockReturnValue(false)
     const query = { groups: [] } as Query

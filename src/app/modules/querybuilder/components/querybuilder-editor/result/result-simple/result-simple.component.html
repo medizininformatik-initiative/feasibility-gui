@@ -16,6 +16,11 @@
     >{{ 'BUTTON.RESULTDETAILS' | translate }}</num-button
   >
   <ng-template #showSpinnerID>
-    <fa-icon *ngIf="showSpinner" size="2x" icon="spinner" class="fa-pulse"></fa-icon>
+    <fa-icon
+      *ngIf="showSpinner"
+      size="2x"
+      icon="spinner"
+      class="fa-pulse result-spinning-icon"
+    ></fa-icon>
   </ng-template>
 </div>
