@@ -13,7 +13,12 @@ export class ApiTranslator {
     const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria)
 
     result.inclusionCriteria = this.translateCritGroupV1(inclusionCriteria)
-    result.exclusionCriteria = this.translateCritGroupV1(exclusionCriteria)
+
+    if (exclusionCriteria.length > 0) {
+      result.exclusionCriteria = this.translateCritGroupV1(exclusionCriteria)
+    } else {
+      result.exclusionCriteria = undefined
+    }
 
     return result
   }
