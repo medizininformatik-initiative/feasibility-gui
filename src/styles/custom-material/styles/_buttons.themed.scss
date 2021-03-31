@@ -26,6 +26,7 @@
 
     // Primaray Button
     &.mat-flat-button.mat-primary {
+      min-width: 8em !important;
       line-height: 34px;
       border-width: 1px;
       border-style: solid;
@@ -56,6 +57,7 @@
     // Secondary Button
     &.mat-stroked-button.mat-primary {
       border-color: mat-color($primary, 500);
+      min-width: 8em !important;
 
       fa-icon {
         color: mat-color($accent, 500);
@@ -81,6 +83,7 @@
     // Basic Button
     &.mat-button.mat-primary {
       color: mat-color($additional, mid-grey);
+      min-width: 8em !important;
 
       fa-icon {
         color: mat-color($accent, 500);

@@ -23,12 +23,27 @@
     {{ 'QUERYBUILDER.DISPLAY.GROUPS.NEW_GROUP' | translate }}
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between" class="footer-buttons-box">
-    <num-button [type]="'primary'" (click)="doReset()" class="button-reset">
-      {{ 'BUTTON.RESET' | translate }}
-    </num-button>
-    <num-button [type]="'primary'" (click)="doSend()" class="button-send">
-      {{ 'BUTTON.SEND' | translate }}
-    </num-button>
+  <div fxLayout="column" fxLayoutAlign="space-between" class="footer-buttons-box">
+    <div>
+      <num-button
+        [type]="'primary'"
+        [isDisabled]="actionDisabledReset"
+        (click)="doReset()"
+        class="button-reset"
+      >
+        {{ 'BUTTON.RESET' | translate }}
+      </num-button>
+      <num-button
+        [type]="'primary'"
+        [isDisabled]="actionDisabledSend"
+        (click)="doSend()"
+        class="button-send"
+      >
+        {{ 'BUTTON.SEND' | translate }}
+      </num-button>
+    </div>
+    <div *ngIf="actionDisabledSend && !actionDisabledReset" class="send-button-alert-text">
+      {{ 'QUERYBUILDER.HINT.NO_CRITERIA_SELECTED' | translate }}
+    </div>
   </div>
 </div>
