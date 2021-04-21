@@ -14,8 +14,8 @@ import { GroupFactory } from '../../controller/GroupFactory'
   styleUrls: ['./querybuilder-editor.component.scss'],
 })
 export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterViewChecked {
-  readonly POLLING_INTERVALL_MILLISECONDS = 1000
-  readonly POLLING_MAXL_MILLISECONDS = 300 * 1000
+  readonly POLLING_INTERVALL_MILLISECONDS = this.featureService.getPollingIntervall() * 1000
+  readonly POLLING_MAXL_MILLISECONDS = this.featureService.getPollingTime() * 1000
 
   query: Query
 

@@ -25,8 +25,12 @@
       "timerestriction": "#{features_v2_timerestriction}"
     },
     "extra": {
-      "displayvalueicon": false
+      "displayvaluefiltericon": false
     }
+  },
+  "options": {
+    "pollingtimeinseconds": 10,
+    "pollingintervallinseconds": 1
   },
   "mock": {
     "terminology": false,
