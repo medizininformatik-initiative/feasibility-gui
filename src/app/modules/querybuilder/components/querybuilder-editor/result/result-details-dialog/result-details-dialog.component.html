@@ -5,9 +5,9 @@
   <div *ngFor="let location of result.resultLines" fxLayoutAlign="space-between end">
     <span>{{ location.siteName }}: </span><span>{{ location.numberOfPatients }}</span>
   </div>
-  <mat-dialog-actions align="end">
-    <num-button [type]="'primary'" (click)="doClose()" class="button-close">{{
-      'BUTTON.CLOSE' | translate
-    }}</num-button>
-  </mat-dialog-actions>
 </div>
+<mat-dialog-actions fxLayoutAlign="end">
+  <num-button [type]="'primary'" (click)="doClose()" class="button-close">{{
+    'BUTTON.CLOSE' | translate
+  }}</num-button>
+</mat-dialog-actions>

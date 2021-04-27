@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { QueryResult } from '../../../../model/api/result/QueryResult'
-import { Observable } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 
 export class ResultDetailsDialogComponentData {
   resultObservable$: Observable<QueryResult>
@@ -14,17 +14,21 @@ export class ResultDetailsDialogComponentData {
 })
 export class ResultDetailsDialogComponent implements OnInit {
   result: QueryResult
+  resultSubscription: Subscription
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsDialogComponentData,
     public dialogRef: MatDialogRef<ResultDetailsDialogComponent>
   ) {
-    this.data.resultObservable$.subscribe((resultTemp) => this.sortResult(resultTemp))
+    this.resultSubscription = this.data.resultObservable$.subscribe((resultTemp) =>
+      this.sortResult(resultTemp)
+    )
   }
 
   ngOnInit(): void {}
 
   doClose(): void {
+    this.resultSubscription?.unsubscribe()
     this.dialogRef.close()
   }
 

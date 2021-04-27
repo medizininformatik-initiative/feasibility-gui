@@ -90,7 +90,9 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         console.error(error)
       },
       () => {
-        this.resultUrl = ''
+        console.log('done')
+        //  this.resultUrl = ''
+        this.showSpinningIcon = false
       }
     )
   }
@@ -101,6 +103,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   }
 
   doSend(): void {
+    this.resultUrl = ''
+    this.result = undefined
     this.showSpinningIcon = true
     this.subscriptionResult?.unsubscribe()
     this.subscriptionResult = this.backend
