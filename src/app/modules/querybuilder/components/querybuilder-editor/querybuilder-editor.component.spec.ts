@@ -53,6 +53,12 @@ describe('QuerybuilderEditorComponent', () => {
     useFeatureDependentGroups(): boolean {
       return true
     },
+    getPollingTime(): number {
+      return 300
+    },
+    getPollingIntervall(): number {
+      return 1
+    },
   } as FeatureService
 
   @Component({ selector: 'num-unapproved-users-table', template: '' })

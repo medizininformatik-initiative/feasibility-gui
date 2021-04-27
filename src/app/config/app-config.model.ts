@@ -28,6 +28,10 @@ export interface IAppConfig {
       displayvaluefiltericon: boolean
     }
   }
+  options: {
+    pollingtimeinseconds: number
+    pollingintervallinseconds: number
+  }
   mock: {
     terminology: boolean
     query: boolean

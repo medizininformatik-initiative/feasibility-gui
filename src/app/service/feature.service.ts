@@ -42,4 +42,11 @@ export class FeatureService {
   public mockResult(): boolean {
     return this.appConfig.getConfig().mock.result && this.isDevelopMode()
   }
+
+  public getPollingTime(): number {
+    return this.appConfig.getConfig().options.pollingtimeinseconds
+  }
+  public getPollingIntervall(): number {
+    return this.appConfig.getConfig().options.pollingintervallinseconds
+  }
 }
