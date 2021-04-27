@@ -9,7 +9,10 @@
     </ng-template>
   </div>
   <num-button
-    *ngIf="result?.totalNumberOfPatients; else showSpinnerID"
+    *ngIf="
+      result?.totalNumberOfPatients > 0 || result?.totalNumberOfPatients == 0;
+      else showSpinnerID
+    "
     [type]="'primary'"
     (click)="openDialogResultDetails()"
     class="button-dialog-result-details"

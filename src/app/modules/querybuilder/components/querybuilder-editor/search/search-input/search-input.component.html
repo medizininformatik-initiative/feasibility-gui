@@ -5,8 +5,8 @@
   [ngClass]="{ 'show-above-overlay': isOverlayOpen }"
 >
   <div class="header-label">{{ 'QUERYBUILDER.SEARCH.' + getHeaderLabelKey() | translate }}</div>
-  <div fxLayout="row" fxLayoutAlign="space-between">
-    <mat-form-field class="input-field" fxFlex="80">
+  <div fxLayout="row" fxLayoutAlign="space-evenly start">
+    <mat-form-field class="input-field" fxFlex="85">
       <mat-label>{{ 'QUERYBUILDER.SEARCH.LABEL' | translate }}</mat-label>
       <!--suppress HtmlFormInputWithoutLabel -->
       <input matInput type="text" [(ngModel)]="search" />
@@ -21,7 +21,7 @@
         <fa-icon size="2x" icon="times"></fa-icon>
       </button>
     </mat-form-field>
-    <div fxFlex="20">
+    <div fxLayoutAlign="center">
       <button class="button-tree-view" type="button" mat-icon-button (click)="switchSearchMode()">
         <fa-icon size="2x" icon="folder"></fa-icon>
       </button>
