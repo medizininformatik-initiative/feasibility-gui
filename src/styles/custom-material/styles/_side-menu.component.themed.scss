@@ -1,7 +1,7 @@
 @mixin side-menu-component_themed($theme) {
   $accent: map-get($theme, accent);
 
-  mat-nav-list {
+  .mat-nav-list {
     background: mat-color($accent, 500) !important;
     color: mat-contrast($accent, 500) !important;
   }

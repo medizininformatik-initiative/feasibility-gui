@@ -15,6 +15,7 @@ import { of } from 'rxjs'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { DirectivesModule } from 'src/app/shared/directives/directives.module'
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module'
+import { FeatureService } from '../../../service/feature.service'
 
 describe('AppLayoutComponent', () => {
   let component: AppLayoutComponent
@@ -30,6 +31,12 @@ describe('AppLayoutComponent', () => {
   class FooterStubComponent {}
 
   beforeEach(async () => {
+    const featureService = {
+      useFeatureOptionsPage(): boolean {
+        return true
+      },
+    } as FeatureService
+
     await TestBed.configureTestingModule({
       declarations: [
         AppLayoutComponent,
@@ -48,6 +55,10 @@ describe('AppLayoutComponent', () => {
         SharedComponentsModule,
       ],
       providers: [
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        },
         {
           provide: OAuthService,
           useValue: authService,

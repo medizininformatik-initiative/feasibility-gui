@@ -16,13 +16,30 @@ describe('BackendService', () => {
   let service: BackendService
 
   const EXAMPLE_ID = '1'
-  const EXAMPLE_SEARCH = 'Diab'
+  const EXAMPLE_SEARCH = 'DIAB'
   const EXAMPLE_URL = 'http:/abc/querybuillder/result?id=123456'
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    const featureService = {
+      mockTerminology(): boolean {
+        return true
+      },
+      mockQuery(): boolean {
+        return true
+      },
+      mockResult(): boolean {
+        return true
+      },
+    } as FeatureService
+    await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-    })
+      providers: [
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        },
+      ],
+    }).compileComponents()
     service = TestBed.inject(BackendService)
   })
 

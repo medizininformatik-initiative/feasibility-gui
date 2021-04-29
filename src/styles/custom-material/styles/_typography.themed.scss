@@ -1,4 +1,9 @@
+@import '~@angular/material/theming';
+
 @mixin typography_themed($theme) {
+  $num-typography: map-get($theme, num-typography);
+  @include angular-material-typography($num-typography);
+
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $additional: map-get($theme, additional);

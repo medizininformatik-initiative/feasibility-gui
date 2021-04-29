@@ -20,12 +20,13 @@
   "features": {
     "v2": {
       "multiplevaluedefinitions": true,
-      "multiplegroups": true,
+      "multiplegroups": false,
       "dependentgroups": true,
       "timerestriction": true
     },
     "extra": {
-      "displayvaluefiltericon": false
+      "displayvaluefiltericon": false,
+      "showoptionspage": true
     }
   },
   "options": {
@@ -36,5 +37,6 @@
     "terminology": false,
     "query": false,
     "result": false
-  }
+  },
+  "stylesheet": "primaryTheme"
 }

@@ -17,6 +17,12 @@ export const mainNavItems: INavItem[] = [
     icon: 'bars',
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
+  {
+    routeTo: 'options',
+    roles: ['CODEX_USER'],
+    icon: 'wrench',
+    translationKey: 'NAVIGATION.OPTIONS',
+  },
 ]
 
 export const secondaryNavItems: INavItem[] = [

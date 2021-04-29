@@ -1,0 +1,19 @@
+.maingroup {
+  margin-bottom: 2em;
+}
+#query-textfield,
+#response-textfield {
+  white-space: pre;
+}
+#postman-query-translate,
+#postman-query-sync {
+  white-space: nowrap;
+}
+.pollingtime,
+.pollingintervall {
+  width: 100px;
+  margin-right: 2em;
+}
+.example-radio-button {
+  margin-right: 1em;
+}

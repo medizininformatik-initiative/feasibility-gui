@@ -19,7 +19,17 @@
     "DASHBOARD": "Dashboard",
     "QUERYBUILDER_EDITOR": "New query",
     "QUERYBUILDER_OVERVIEW": "My queries",
+    "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
+  },
+  "OPTIONSPAGE": {
+    "MULTIPLEVALUEDEFINITIONS": "Multiple values per criteria",
+    "MULTIPLEGROUPS": "Multiple groups",
+    "DEPENDENTGROUPS": "Dependent groups",
+    "TIMERESTRICTION": "Time restricted criteria",
+    "DISPLAYVALUEFILTERICON": "Use icons for comparator symbols",
+    "POLLINGTIME": "Polling Time",
+    "POLLINGINTERVALL": "Polling Intervall"
   },
   "QUERYBUILDER": {
     "SEARCH": {

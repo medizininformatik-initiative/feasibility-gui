@@ -35,6 +35,7 @@ import { faGreaterThan } from '@fortawesome/free-solid-svg-icons'
 import { faGreaterThanEqual } from '@fortawesome/free-solid-svg-icons'
 import { faNotEqual } from '@fortawesome/free-solid-svg-icons'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faWrench } from '@fortawesome/free-solid-svg-icons'
 
 export const FONT_AWESOME_ICONS = [
   faTh,
@@ -74,4 +75,5 @@ export const FONT_AWESOME_ICONS = [
   faGreaterThanEqual,
   faNotEqual,
   faSpinner,
+  faWrench,
 ]
