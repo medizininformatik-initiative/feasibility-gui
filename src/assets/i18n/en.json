@@ -29,7 +29,8 @@
     "TIMERESTRICTION": "Time restricted criteria",
     "DISPLAYVALUEFILTERICON": "Use icons for comparator symbols",
     "POLLINGTIME": "Polling Time",
-    "POLLINGINTERVALL": "Polling Intervall"
+    "POLLINGINTERVALL": "Polling Intervall",
+    "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
     "SEARCH": {

@@ -67,7 +67,13 @@ export class FeatureService {
       return this.appConfig.getConfig().options.pollingintervallinseconds
     }
   }
-
+  public getFhirPort(): string {
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().fhirport
+    } else {
+      return this.appConfig.getConfig().fhirport
+    }
+  }
   public useFeatureOptionsPage(): boolean {
     return this.showOptionsPage
   }

@@ -39,4 +39,5 @@ export interface IAppConfig {
     result: boolean
   }
   stylesheet: string
+  fhirport: string
 }

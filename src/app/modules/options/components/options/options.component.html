@@ -52,6 +52,18 @@
     </div>
   </div>
   <div fxLayout="column" fxLayoutAlign="space-around" class="maingroup">
+    <mat-radio-group
+      class="example-radio-group"
+      (change)="setStylesheet($event)"
+      [(ngModel)]="stylesheet"
+    >
+      <mat-radio-button class="example-radio-button" value="primaryTheme">Style 1</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="secondaryTheme"
+        >Style 2</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="space-around" class="maingroup">
     <mat-form-field appearance="outline" class="pollingtime">
       <mat-label>{{ 'OPTIONSPAGE.POLLINGTIME' | translate }}</mat-label>
       <input
@@ -76,17 +88,11 @@
       />
     </mat-form-field>
   </div>
-  <div fxLayout="column" fxLayoutAlign="space-around" class="maingroup">
-    <mat-radio-group
-      class="example-radio-group"
-      (change)="setStylesheet($event)"
-      [(ngModel)]="stylesheet"
-    >
-      <mat-radio-button class="example-radio-button" value="primaryTheme">Style 1</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="secondaryTheme"
-        >Style 2</mat-radio-button
-      >
-    </mat-radio-group>
+  <div class="maingroup">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'OPTIONSPAGE.FHIRPORT' | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="fhirport" (ngModelChange)="setFhirPort()" />
+    </mat-form-field>
   </div>
   <div class="maingroup">
     <div>Structured Query v1</div>

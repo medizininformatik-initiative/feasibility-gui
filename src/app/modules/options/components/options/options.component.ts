@@ -35,6 +35,7 @@ export class OptionsComponent implements OnInit {
   postmanTranslate: string
   postmanSync: string
   getResponse: string
+  fhirport: string
 
   constructor(
     public featureService: FeatureService,
@@ -49,17 +50,21 @@ export class OptionsComponent implements OnInit {
     this.query = this.queryProviderService.query()
     this.pollingTime = this.featureProviderService.getFeatures().options.pollingtimeinseconds
     this.pollingIntervall = this.featureProviderService.getFeatures().options.pollingintervallinseconds
+    this.fhirport = this.featureProviderService.getFeatures().fhirport
 
     this.translatedQuery = new ApiTranslator().translateToV1(this.query)
     this.postQuery('translate').subscribe(
       (response) => {
         this.postmanTranslate = response
         this.getResponse =
-          'http://localhost:8082/fhir/' + this.postmanTranslate[0][0][0].replace(/\|/g, '%7c')
+          'http://localhost:' +
+          this.fhirport +
+          '/fhir/' +
+          this.postmanTranslate[0][0][0].replace(/\|/g, '%7c')
       },
       (error) => {
         console.log(error)
-        this.getResponse = 'http://localhost:8082'
+        this.getResponse = 'http://localhost:' + this.fhirport
       }
     )
     this.postQuery('sync').subscribe(
@@ -108,6 +113,11 @@ export class OptionsComponent implements OnInit {
   setPollingTimes(): void {
     this.features.options.pollingtimeinseconds = this.pollingTime
     this.features.options.pollingintervallinseconds = this.pollingIntervall
+    this.featureProviderService.storeFeatures(this.features)
+  }
+
+  setFhirPort(): void {
+    this.features.fhirport = this.fhirport
     this.featureProviderService.storeFeatures(this.features)
   }
 

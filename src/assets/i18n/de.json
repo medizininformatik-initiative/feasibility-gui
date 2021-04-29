@@ -29,7 +29,8 @@
     "TIMERESTRICTION": "zeitabhängige Kriterien",
     "DISPLAYVALUEFILTERICON": "nutze Icons für Vergleichsoperatoren",
     "POLLINGTIME": "Polling Time",
-    "POLLINGINTERVALL": "Polling Intervall"
+    "POLLINGINTERVALL": "Polling Intervall",
+    "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
     "SEARCH": {

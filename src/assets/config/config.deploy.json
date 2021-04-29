@@ -38,5 +38,6 @@
     "query": false,
     "result": false
   },
-  "stylesheet": "primaryTheme"
+  "stylesheet": "primaryTheme",
+  "fhirport": "8082"
 }

@@ -25,7 +25,8 @@
       "timerestriction": false
     },
     "extra": {
-      "displayvaluefiltericon": false
+      "displayvaluefiltericon": false,
+      "showoptionspage": false
     }
   },
   "options": {
@@ -36,5 +37,7 @@
     "terminology": false,
     "query": false,
     "result": false
-  }
+  },
+  "stylesheet": "primaryTheme",
+  "fhirport": "8082"
 }
