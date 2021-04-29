@@ -25,7 +25,8 @@
       "timerestriction": false
     },
     "extra": {
-      "displayvaluefiltericon": false
+      "displayvaluefiltericon": false,
+      "showoptionspage": false
     }
   },
   "options": {
