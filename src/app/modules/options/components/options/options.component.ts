@@ -48,9 +48,9 @@ export class OptionsComponent implements OnInit {
     this.features = this.featureProviderService.getFeatures()
     this.stylesheet = this.features.stylesheet
     this.query = this.queryProviderService.query()
-    this.pollingTime = this.featureProviderService.getFeatures().options.pollingtimeinseconds
-    this.pollingIntervall = this.featureProviderService.getFeatures().options.pollingintervallinseconds
-    this.fhirport = this.featureProviderService.getFeatures().fhirport
+    this.pollingTime = this.features.options.pollingtimeinseconds
+    this.pollingIntervall = this.features.options.pollingintervallinseconds
+    this.fhirport = this.features.fhirport
 
     this.translatedQuery = new ApiTranslator().translateToV1(this.query)
     this.postQuery('translate').subscribe(
@@ -68,7 +68,9 @@ export class OptionsComponent implements OnInit {
       }
     )
     this.postQuery('sync').subscribe(
-      (response) => (this.postmanSync = response),
+      (response) => {
+        this.postmanSync = response
+      },
       (error) => {
         console.log(error)
       }
