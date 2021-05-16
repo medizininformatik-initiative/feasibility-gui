@@ -9,10 +9,18 @@ import { ResultDetailsDialogComponent } from '../result-details-dialog/result-de
 import { MatDialogConfig, MatDialogRef } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import any = jasmine.any
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 describe('ResultSimpleComponent', () => {
   let component: ResultSimpleComponent
   let fixture: ComponentFixture<ResultSimpleComponent>
+
+  const featureService = {
+    getPatientResultLowerBoundary(): number {
+      return 10
+    },
+  } as FeatureService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -22,7 +30,9 @@ describe('ResultSimpleComponent', () => {
         MaterialModule,
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
+        HttpClientTestingModule,
       ],
+      providers: [{ provide: FeatureService, useValue: featureService }],
     }).compileComponents()
   })
 

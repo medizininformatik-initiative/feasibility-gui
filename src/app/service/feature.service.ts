@@ -49,4 +49,7 @@ export class FeatureService {
   public getPollingIntervall(): number {
     return this.appConfig.getConfig().options.pollingintervallinseconds
   }
+  public getPatientResultLowerBoundary(): number {
+    return this.appConfig.getConfig().options.lowerboundarypatientresult
+  }
 }

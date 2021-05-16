@@ -16,12 +16,28 @@ describe('BackendService', () => {
   let service: BackendService
 
   const EXAMPLE_ID = '1'
-  const EXAMPLE_SEARCH = 'Diab'
+  const EXAMPLE_SEARCH = 'DIAB'
   const EXAMPLE_URL = 'http:/abc/querybuillder/result?id=123456'
+
+  const featureService = {
+    getPatientResultLowerBoundary(): number {
+      return 10
+    },
+    mockTerminology(): boolean {
+      return true
+    },
+    mockQuery(): boolean {
+      return true
+    },
+    mockResult(): boolean {
+      return true
+    },
+  } as FeatureService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [{ provide: FeatureService, useValue: featureService }],
     })
     service = TestBed.inject(BackendService)
   })
@@ -31,7 +47,7 @@ describe('BackendService', () => {
   })
 
   it('should return programmatically mocked categories (root entries)', (done: DoneCallback) => {
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
 
     service.getCategories().subscribe((categories: Array<CategoryEntry>) => {
@@ -45,7 +61,7 @@ describe('BackendService', () => {
     jest
       .spyOn(appConfigService, 'getConfig')
       .mockReturnValue(BackendServiceSpecUtil.createConfig('http:/abc'))
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(false)
 
     const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
@@ -60,7 +76,7 @@ describe('BackendService', () => {
   })
 
   it('should return programmatically mocked terminology tree', (done: DoneCallback) => {
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
 
     service.getTerminolgyTree(EXAMPLE_ID).subscribe((entry: TerminologyEntry) => {
@@ -74,7 +90,7 @@ describe('BackendService', () => {
     jest
       .spyOn(appConfigService, 'getConfig')
       .mockReturnValue(BackendServiceSpecUtil.createConfig('http:/abc'))
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(false)
 
     const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
@@ -89,7 +105,7 @@ describe('BackendService', () => {
   })
 
   it('should return programmatically mocked search result list', (done: DoneCallback) => {
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(true)
 
     service
@@ -105,7 +121,7 @@ describe('BackendService', () => {
     jest
       .spyOn(appConfigService, 'getConfig')
       .mockReturnValue(BackendServiceSpecUtil.createConfig('http:/abc'))
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(false)
 
     const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
@@ -130,7 +146,7 @@ describe('BackendService', () => {
     jest
       .spyOn(appConfigService, 'getConfig')
       .mockReturnValue(BackendServiceSpecUtil.createConfig('http:/abc'))
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockTerminology').mockReturnValue(false)
 
     const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
@@ -149,7 +165,7 @@ describe('BackendService', () => {
   })
 
   it('should post programmatically mocked query', (done: DoneCallback) => {
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockQuery').mockReturnValue(true)
 
     service.postQuery(new Query()).subscribe((queryResponse: QueryResponse) => {
@@ -163,7 +179,7 @@ describe('BackendService', () => {
     jest
       .spyOn(appConfigService, 'getConfig')
       .mockReturnValue(BackendServiceSpecUtil.createConfig('http:/abc'))
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockQuery').mockReturnValue(false)
 
     const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
@@ -178,7 +194,7 @@ describe('BackendService', () => {
   })
 
   it('should return programmatically mocked result', (done: DoneCallback) => {
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockResult').mockReturnValue(true)
 
     service.getResult(EXAMPLE_URL).subscribe((result: QueryResult) => {
@@ -188,7 +204,7 @@ describe('BackendService', () => {
   })
 
   it('should return mocked result', (done: DoneCallback) => {
-    const featureService = TestBed.inject<FeatureService>(FeatureService)
+    // const featureService = TestBed.inject<FeatureService>(FeatureService)
     jest.spyOn(featureService, 'mockResult').mockReturnValue(false)
     const httpMock: HttpTestingController = TestBed.inject(HttpTestingController)
     const mockResponse: QueryResult = {
