@@ -59,6 +59,9 @@ describe('QuerybuilderEditorComponent', () => {
     getPollingIntervall(): number {
       return 1
     },
+    getPatientResultLowerBoundary(): number {
+      return 10
+    },
   } as FeatureService
 
   @Component({ selector: 'num-unapproved-users-table', template: '' })

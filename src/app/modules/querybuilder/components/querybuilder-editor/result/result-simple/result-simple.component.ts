@@ -6,6 +6,7 @@ import {
   ResultDetailsDialogComponent,
 } from '../result-details-dialog/result-details-dialog.component'
 import { Observable } from 'rxjs'
+import { BackendService } from '../../../../service/backend.service'
 
 @Component({
   selector: 'num-result-simple',
@@ -22,7 +23,7 @@ export class ResultSimpleComponent implements OnInit {
   @Input()
   showSpinner: boolean
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public backend: BackendService) {}
 
   ngOnInit(): void {}
 

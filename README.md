@@ -211,7 +211,7 @@ The main configuraton is declared in *IAppConfig* and specified in the file
 | features.v2.multiplegroups | Allow more than one group of criteria (unused for structured queries with version 1) | true |
 | features.v2.dependentgroups | Allow linking groups (unused for structured queries with version 1) | true |
 | features.v2.timerestriction | Allow defining time restrictions for a concept (unused for structured queries with version 1) | true |
-| features.extra.displayvaluefiltericon | show isons instead of UTF8 characters for comparators | false |
+| features.extra.displayvaluefiltericon | show icons instead of UTF8 characters for comparators | false |
 
 For development purposes we supply additional config properties
 

@@ -42,7 +42,7 @@ describe('MockBackendDataProvider', () => {
 
   it('getTerminolgyEntrySearchResult (all)', () => {
     const terminologyEntryList = provider.getTerminolgyEntrySearchResult('', 'B')
-    expect(terminologyEntryList.length).toBe(5)
+    expect(terminologyEntryList.length).toBe(34)
     expect(terminologyEntryList[0].termCode.code).toBe('B18.9')
     expect(terminologyEntryList[0].termCode.display).toBe(
       'Chronische Virushepatitis, nicht näher bezeichnet'
@@ -50,14 +50,14 @@ describe('MockBackendDataProvider', () => {
     expect(terminologyEntryList[0].display).toBe(
       'Chronische Virushepatitis, nicht näher bezeichnet'
     )
-    expect(terminologyEntryList[2].termCode.code).toBe('76689-9')
-    expect(terminologyEntryList[2].termCode.display).toBe('Biological Sex')
-    expect(terminologyEntryList[2].display).toBe('Biological Sex')
+    expect(terminologyEntryList[31].termCode.code).toBe('76689-9')
+    expect(terminologyEntryList[31].termCode.display).toBe('Biological Sex')
+    expect(terminologyEntryList[31].display).toBe('Biological Sex')
   })
 
   it('getTerminolgyEntrySearchResult (amnesis)', () => {
     const terminologyEntryList = provider.getTerminolgyEntrySearchResult('1', 'B')
-    expect(terminologyEntryList.length).toBe(2)
+    expect(terminologyEntryList.length).toBe(31)
     expect(terminologyEntryList[0].termCode.code).toBe('B18.9')
     expect(terminologyEntryList[0].termCode.display).toBe(
       'Chronische Virushepatitis, nicht näher bezeichnet'

@@ -2,7 +2,7 @@
   <div>
     <div>{{ 'DISPLAY.PATIENT_NUMBER' | translate }}:</div>
     <div *ngIf="result; else showZeroPatients" class="number-of-patients">
-      {{ result?.totalNumberOfPatients }}
+      {{ backend.obfuscateResult(result?.totalNumberOfPatients) }}
     </div>
     <ng-template #showZeroPatients>
       <div class="number-of-patients">0</div>

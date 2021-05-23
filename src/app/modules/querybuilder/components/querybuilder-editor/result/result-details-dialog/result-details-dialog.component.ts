@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { QueryResult } from '../../../../model/api/result/QueryResult'
 import { Observable, Subscription } from 'rxjs'
+import { BackendService } from '../../../../service/backend.service'
 
 export class ResultDetailsDialogComponentData {
   resultObservable$: Observable<QueryResult>
@@ -18,7 +19,8 @@ export class ResultDetailsDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsDialogComponentData,
-    public dialogRef: MatDialogRef<ResultDetailsDialogComponent>
+    public dialogRef: MatDialogRef<ResultDetailsDialogComponent>,
+    public backend: BackendService
   ) {
     this.resultSubscription = this.data.resultObservable$.subscribe((resultTemp) =>
       this.sortResult(resultTemp)
