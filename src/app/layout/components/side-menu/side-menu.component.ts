@@ -44,4 +44,12 @@ export class SideMenuComponent implements OnInit {
     target.blur()
     this.toggleSideMenu.emit({ item })
   }
+
+  showPage(itemRoute): boolean {
+    let showIt = true
+    if (itemRoute === 'options' && !this.featureService.useFeatureOptionsPage()) {
+      showIt = false
+    }
+    return showIt
+  }
 }

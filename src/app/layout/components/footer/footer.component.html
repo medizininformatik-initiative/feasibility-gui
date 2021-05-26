@@ -1,18 +1,22 @@
 <mat-toolbar class="num-footer" role="contentinfo">
   <mat-toolbar-row>
-    <div>© 2021 {{ config.legal.copyrightOwner }}</div>
+    <div>
+      <img src="assets/img/bmbf-gef-mit.png" alt="BMBF-LOGO" class="bmbf-logo" />
+    </div>
 
     <span fxFlex></span>
-
-    <a mat-button href="#">{{ 'LEGAL.DISCLOSURE' | translate }}</a>
-    <mat-divider [vertical]="true"></mat-divider>
-    <a mat-button href="#">{{ 'LEGAL.DATAPROTECTION' | translate }}</a>
-  </mat-toolbar-row>
-  <mat-toolbar-row class="version-row">
-    <num-language></num-language>
-
+    <div>
+      <mat-toolbar-row>
+        <a mat-button href="#">{{ 'LEGAL.DISCLOSURE' | translate }}</a>
+        <mat-divider [vertical]="true"></mat-divider>
+        <a mat-button href="#">{{ 'LEGAL.DATAPROTECTION' | translate }}</a>
+      </mat-toolbar-row>
+      <div class="version">Version {{ config.legal.version }}</div>
+    </div>
     <span fxFlex></span>
-
-    <div class="version">Version {{ config.legal.version }}</div>
+    <div>
+      <div class="copyright">© 2021 {{ config.legal.copyrightOwner }}</div>
+      <num-language></num-language>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

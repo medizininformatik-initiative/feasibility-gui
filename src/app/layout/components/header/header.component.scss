@@ -3,11 +3,16 @@
   font-size: 14px;
   margin: 0 0 1em 0;
 }
-
 .toolbar fa-icon {
   padding: 0 0 0 1em;
 }
 
-.titlebar {
-  border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+.codex-logo {
+  max-width: 210px;
+}
+.mat-toolbar {
+  height: 105px;
+}
+.mat-toolbar-single-row {
+  padding-left: 0px !important;
 }

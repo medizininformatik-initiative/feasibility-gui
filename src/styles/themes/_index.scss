@@ -1,14 +1,16 @@
 @import './colors/accent-theme.palette.scss';
 @import './colors/primary-theme.palette.scss';
-@import './colors/secondary-theme.palette.scss';
+@import 'src/styles/themes/colors/codex-accent-theme.palette';
+@import 'src/styles/themes/colors/codex-primary-theme.palette';
 @import './colors/additional-theme.palette.scss';
 @import './theme-palettes/mat-light-theme-background';
 @import './theme-palettes/mat-light-theme-foreground';
 @import './typography/typography.config';
 
 $num-portal-webapp-primary: mat-palette($num-primary-palette);
-$num-portal-webapp-secondary: mat-palette($num-secondary-palette);
 $num-portal-webapp-accent: mat-palette($num-accent-palette);
+$num-portal-webapp-primary-codex: mat-palette($num-codex-primary-palette);
+$num-portal-webapp-accent-codex: mat-palette($num-codex-accent-palette);
 $num-portal-webapp-additional: mat-palette($num-additional-palette, warning);
 
 $mat-light-theme-foreground: mat-light-theme-foreground(
@@ -17,7 +19,7 @@ $mat-light-theme-foreground: mat-light-theme-foreground(
   $num-portal-webapp-additional
 );
 $mat-light-theme2-foreground: mat-light-theme-foreground(
-  $num-portal-webapp-secondary,
+  $num-portal-webapp-primary-codex,
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
@@ -27,13 +29,14 @@ $mat-light-theme-background: mat-light-theme-background(
   $num-portal-webapp-additional
 );
 $mat-light-theme2-background: mat-light-theme-background(
-  $num-portal-webapp-secondary,
+  $num-portal-webapp-primary-codex,
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
 @function num-theme-builder($theme) {
   @if ($theme == 'primary') {
     @return (
+      name: 'primary',
       primary: $num-portal-webapp-primary,
       accent: $num-portal-webapp-accent,
       warn: $num-portal-webapp-additional,
@@ -44,10 +47,11 @@ $mat-light-theme2-background: mat-light-theme-background(
       num-typography: $num-typography
     );
   }
-  @if ($theme == 'secondary') {
+  @if ($theme == 'codex') {
     @return (
-      primary: $num-portal-webapp-secondary,
-      accent: $num-portal-webapp-secondary,
+      name: 'codex',
+      primary: $num-portal-webapp-primary-codex,
+      accent: $num-portal-webapp-accent-codex,
       warn: $num-portal-webapp-additional,
       additional: $num-portal-webapp-additional,
       is-dark: false,
@@ -59,4 +63,4 @@ $mat-light-theme2-background: mat-light-theme-background(
 }
 
 $num-portal-webapp-theme: num-theme-builder('primary');
-$num-portal-webapp-theme2: num-theme-builder('secondary');
+$num-portal-webapp-theme2: num-theme-builder('codex');

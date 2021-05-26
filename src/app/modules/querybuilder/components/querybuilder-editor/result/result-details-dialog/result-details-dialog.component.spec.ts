@@ -10,6 +10,8 @@ import { MaterialModule } from '../../../../../../layout/material/material.modul
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { of } from 'rxjs'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 describe('ResultDetailsDialogComponent', () => {
   let component: ResultDetailsDialogComponent
@@ -25,12 +27,24 @@ describe('ResultDetailsDialogComponent', () => {
       close: () => {},
     } as MatDialogRef<ResultDetailsDialogComponent>
 
+    const featureService = {
+      getPatientResultLowerBoundary(): number {
+        return 10
+      },
+    } as FeatureService
+
     await TestBed.configureTestingModule({
       declarations: [ResultDetailsDialogComponent, ButtonComponent],
-      imports: [MaterialModule, FontAwesomeTestingModule, TranslateModule.forRoot()],
+      imports: [
+        MaterialModule,
+        FontAwesomeTestingModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+      ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: data },
         { provide: MatDialogRef, useValue: matDialogRef },
+        { provide: FeatureService, useValue: featureService },
       ],
     }).compileComponents()
   })

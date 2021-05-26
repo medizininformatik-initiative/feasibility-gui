@@ -3,7 +3,7 @@
   $additional: map-get($theme, additional);
 
   num-language fa-icon {
-    background: mat-color($primary, 500) !important;
+    /*background: mat-color($primary, 500) !important;*/
     color: mat-contrast($primary, 500) !important;
   }
 

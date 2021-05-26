@@ -27,6 +27,7 @@ export class BackendService {
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345'
 
   private readonly mockBackendDataProvider = new MockBackendDataProvider()
+  lowerBoundary: number = this.feature.getPatientResultLowerBoundary()
 
   public getCategories(): Observable<Array<CategoryEntry>> {
     if (this.feature.mockTerminology()) {
@@ -97,5 +98,13 @@ export class BackendService {
     }
 
     return url
+  }
+
+  obfuscateResult(result: number): string {
+    if (result <= this.lowerBoundary) {
+      return '< ' + this.lowerBoundary.toString()
+    } else {
+      return result.toString()
+    }
   }
 }

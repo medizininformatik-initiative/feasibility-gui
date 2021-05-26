@@ -5,3 +5,15 @@
 .fix-overlay {
   z-index: unset;
 }
+
+.titlebar {
+  border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+}
+
+.mat-drawer-container,
+.mat-sidenav {
+  top: 108px !important;
+}
+.mat-drawer-container {
+  padding-top: 1em;
+}

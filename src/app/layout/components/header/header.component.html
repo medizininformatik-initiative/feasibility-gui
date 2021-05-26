@@ -2,10 +2,11 @@
   fxLayout="row"
   fxLayoutAlign="center center"
   color="light"
-  class="toolbar"
-  fxLayoutGap="20px"
+  class="toolbar mat-elevation-z3"
+  fxLayoutGap="0px"
 >
-  <div fxFlex="95%" fxFlex.gt-md="90%" fxFlex.gt-lg="1200px">
+  <img src="assets/img/Logo_CODEX_rgb_cropped.png" alt="CODEX-LOGO" class="codex-logo" />
+  <div fxFlex="100%">
     <ng-content></ng-content>
 
     <span fxFlex></span>
@@ -14,40 +15,3 @@
     <fa-icon [icon]="'user'" size="2x" [fixedWidth]="true"></fa-icon>
   </div>
 </mat-toolbar>
-
-<section role="heading" fxLayout="row" fxLayoutAlign="center start" *ngIf="currentMainNavItem">
-  <div
-    class="titlebar num-margin-b-60"
-    role="presentation"
-    fxLayout="column"
-    fxLayoutAlign="center start"
-    fxFlex="95%"
-    fxFlex.gt-md="90%"
-    fxFlex.gt-lg="1200px"
-  >
-    <h1>
-      <fa-icon
-        class="num-fc--a"
-        [icon]="currentMainNavItem.icon"
-        size="sm"
-        [fixedWidth]="true"
-      ></fa-icon>
-      {{ currentMainNavItem.translationKey | translate }}
-    </h1>
-
-    <nav mat-tab-nav-bar [backgroundColor]="'#fff'" color="accent" *ngIf="currentTabNav">
-      <a
-        class="no-focus"
-        mat-tab-link
-        *ngFor="let tab of currentTabNav"
-        [routerLink]="tab.routeTo"
-        routerLinkActive
-        #rla="routerLinkActive"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [active]="tab.id === currentTabNavSelected"
-      >
-        {{ tab.translationKey | translate }}
-      </a>
-    </nav>
-  </div>
-</section>

@@ -1,9 +1,10 @@
 <div *ngIf="result">
   <div class="total-number-of-patients">
-    Anzahl der Patienten: {{ result.totalNumberOfPatients }}
+    Anzahl der Patienten: {{ backend.obfuscateResult(result.totalNumberOfPatients) }}
   </div>
   <div *ngFor="let location of result.resultLines" fxLayoutAlign="space-between end">
-    <span>{{ location.siteName }}: </span><span>{{ location.numberOfPatients }}</span>
+    <span>{{ location.siteName }}: </span
+    ><span>{{ backend.obfuscateResult(location.numberOfPatients) }}</span>
   </div>
 </div>
 <mat-dialog-actions fxLayoutAlign="end">

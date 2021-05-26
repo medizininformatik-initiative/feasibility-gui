@@ -67,6 +67,9 @@ export class FeatureService {
       return this.appConfig.getConfig().options.pollingintervallinseconds
     }
   }
+  public getPatientResultLowerBoundary(): number {
+    return this.appConfig.getConfig().options.lowerboundarypatientresult
+  }
   public getFhirPort(): string {
     if (this.showOptionsPage) {
       return this.featureProviderService.getFeatures().fhirport
