@@ -69,7 +69,7 @@
         <div class="button-space" *ngIf="isLinked()"></div>
         <div fxLayout="column" fxLayoutAlign="space-around">
           <div>
-            {{ group.display }}
+            {{ 'QUERYBUILDER.DISPLAY.LABEL' | translate }}
             <em *ngIf="featureService.useFeatureMultipleGroups()"> ({{ group.id }})</em>
           </div>
         </div>

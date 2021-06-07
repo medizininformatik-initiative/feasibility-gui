@@ -13,9 +13,13 @@
 .version {
   text-align: center;
 }
-.bmbf-logo {
+.bmbf-logo,
+.num-logo {
   padding-top: 10px;
   max-width: 100px;
+}
+.num-logo {
+  margin-left: 20px;
 }
 .copyright {
   text-align: right;

@@ -17,12 +17,19 @@
 }
 
 .button-tree-view {
-  background-color: var(--num-color--accent-300);
+  margin-left: 10px;
+  background-color: var(--num-color--primary-900);
 }
-
+.button-tree-view:hover {
+  background-color: var(--num-color--primary);
+}
+.ng-fa-icon {
+  color: var(--num-color--primary-100);
+  font-size: 11px;
+}
 .mat-icon-button {
   height: 44px;
   width: 44px;
   line-height: unset;
-  border-radius: 0;
+  border-radius: 4px;
 }

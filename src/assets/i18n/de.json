@@ -44,6 +44,7 @@
       "LABEL_OR": "ODER"
     },
     "DISPLAY": {
+      "LABEL": "Ausgewählte Merkmale",
       "ONE_OF": "",
       "MORE": "weitere",
       "BETWEEN": "zwischen {{ min }} und {{ max }} {{ unit }}",

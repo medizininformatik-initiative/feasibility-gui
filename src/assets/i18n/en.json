@@ -44,6 +44,7 @@
       "LABEL_OR": "OR"
     },
     "DISPLAY": {
+      "LABEL": "Selected criteria",
       "ONE_OF": "",
       "MORE": "more",
       "BETWEEN": "between {{ min }} and {{ max }} {{ unit }}",
