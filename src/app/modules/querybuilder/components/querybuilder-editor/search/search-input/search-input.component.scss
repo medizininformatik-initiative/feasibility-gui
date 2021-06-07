@@ -30,6 +30,9 @@
 .button-tree-view:hover {
   background-color: var(--num-color--primary);
 }
+.button-tree-view:hover {
+  background-color: var(--num-color--accent-400);
+}
 
 .ng-fa-icon {
   color: var(--num-color--primary-100);

@@ -81,6 +81,16 @@ export class FeatureService {
     return this.showOptionsPage
   }
 
+  public getPollingTime(): number {
+    return this.appConfig.getConfig().options.pollingtimeinseconds
+  }
+  public getPollingIntervall(): number {
+    return this.appConfig.getConfig().options.pollingintervallinseconds
+  }
+  public getPatientResultLowerBoundary(): number {
+    return this.appConfig.getConfig().options.lowerboundarypatientresult
+  }
+
   public isDevelopMode(): boolean {
     return isDevMode()
   }
