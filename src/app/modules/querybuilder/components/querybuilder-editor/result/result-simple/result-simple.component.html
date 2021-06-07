@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="start">
-  <div>
+  <div class="result-text">
     <div>{{ 'DISPLAY.PATIENT_NUMBER' | translate }}:</div>
     <div *ngIf="result; else showZeroPatients" class="number-of-patients">
       {{ backend.obfuscateResult(result?.totalNumberOfPatients) }}

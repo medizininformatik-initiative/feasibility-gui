@@ -11,15 +11,21 @@ import { SideMenuComponent } from '../side-menu/side-menu.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { LanguageComponent } from '../language/language.component'
 import { Component } from '@angular/core'
-import { of } from 'rxjs'
+import { of, Subject } from 'rxjs'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { DirectivesModule } from 'src/app/shared/directives/directives.module'
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module'
+import { FeatureService } from '../../../service/feature.service'
+import INavItem from '../../models/nav-item.interface'
+import { ActivatedRouteSnapshot, ActivationEnd, ActivationStart, Router } from '@angular/router'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 describe('AppLayoutComponent', () => {
   let component: AppLayoutComponent
   let fixture: ComponentFixture<AppLayoutComponent>
   let breakpointObserver: BreakpointObserver
+  let router: Router
+  const routerEventsSubject = new Subject<ActivationEnd | ActivationStart>()
 
   const authService = {
     logOut: () => {},
@@ -27,27 +33,52 @@ describe('AppLayoutComponent', () => {
   } as OAuthService
 
   @Component({ selector: 'num-footer', template: '' })
-  class FooterStubComponent {}
+  // class FooterStubComponent {}
+  class StubComponent {}
 
   beforeEach(async () => {
+    const featureService = {
+      useFeatureOptionsPage(): boolean {
+        return true
+      },
+    } as FeatureService
+
     await TestBed.configureTestingModule({
       declarations: [
         AppLayoutComponent,
         HeaderComponent,
         SideMenuComponent,
         LanguageComponent,
-        FooterStubComponent,
+        //  FooterStubComponent,
+        StubComponent,
       ],
       imports: [
         BrowserAnimationsModule,
         MaterialModule,
+        FontAwesomeModule,
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([]),
         DirectivesModule,
         SharedComponentsModule,
+        RouterTestingModule.withRoutes([
+          {
+            path: 'third',
+            component: StubComponent,
+            children: [
+              {
+                path: 'tabnav1',
+                component: StubComponent,
+              },
+            ],
+          },
+        ]),
       ],
       providers: [
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        },
         {
           provide: OAuthService,
           useValue: authService,
@@ -55,6 +86,36 @@ describe('AppLayoutComponent', () => {
       ],
     }).compileComponents()
   })
+
+  const firstNavItem: INavItem = {
+    routeTo: 'first',
+    translationKey: 'first',
+    icon: 'test',
+  }
+
+  const secondNavItem: INavItem = {
+    routeTo: 'second',
+    translationKey: 'second',
+    icon: 'test',
+  }
+
+  const thirdNavItem: INavItem = {
+    routeTo: 'third',
+    translationKey: 'third',
+    icon: 'test',
+    tabNav: [
+      {
+        routeTo: 'tabnav1',
+        translationKey: 'tabnav1',
+      },
+      {
+        routeTo: 'tabnav2',
+        translationKey: 'tabnav2',
+      },
+    ],
+  }
+
+  const mainNavItems = [firstNavItem, secondNavItem, thirdNavItem]
 
   describe('On handset devices', () => {
     beforeEach(() => {
@@ -111,6 +172,109 @@ describe('AppLayoutComponent', () => {
       jest.spyOn(component.drawer, 'toggle')
       component.toggleMenu(null)
       expect(component.drawer.toggle).not.toHaveBeenCalled()
+    })
+  })
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppLayoutComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+
+    router = TestBed.inject(Router)
+    const routerAny = router as any
+    routerAny.events = routerEventsSubject.asObservable()
+
+    component.mainNavItems = mainNavItems
+  })
+  describe('On ActivationEnd to a route without tab navigation', () => {
+    const routeSnapshot = ({
+      data: {
+        navId: 'second',
+      },
+    } as unknown) as ActivatedRouteSnapshot
+    const routerEvent = new ActivationEnd(routeSnapshot)
+
+    it('should set the mainNav header only', () => {
+      routerEventsSubject.next(routerEvent)
+      fixture.detectChanges()
+
+      // TODO:
+      // expect(component.currentNavId).toEqual('second')
+      // expect(component.currentMainNavItem).toBe(secondNavItem)
+      expect(component.currentTabNav).toBeFalsy()
+    })
+  })
+
+  describe('On ActivationEnd to a route with tab navigation', () => {
+    const routeSnapshot = ({
+      data: {
+        navId: 'third',
+      },
+    } as unknown) as ActivatedRouteSnapshot
+    const routerEvent = new ActivationEnd(routeSnapshot)
+
+    it('should set the mainNav header only', () => {
+      routerEventsSubject.next(routerEvent)
+      fixture.detectChanges()
+
+      // TODO:
+      // expect(component.currentNavId).toEqual('third')
+      // expect(component.currentMainNavItem).toBe(thirdNavItem)
+      // expect(component.currentTabNav).toBe(thirdNavItem.tabNav)
+    })
+  })
+
+  describe('On ActivationEnd to a route without navId', () => {
+    const routeSnapshot = ({
+      data: {
+        navId: 'nope',
+      },
+    } as unknown) as ActivatedRouteSnapshot
+    const routerEvent = new ActivationEnd(routeSnapshot)
+
+    it('should set the mainNav to be undefined', () => {
+      routerEventsSubject.next(routerEvent)
+      fixture.detectChanges()
+
+      // TODO:
+      // expect(component.currentNavId).toEqual('nope')
+      // expect(component.currentMainNavItem).toBeFalsy()
+      expect(component.currentTabNav).toBeFalsy()
+    })
+  })
+
+  describe('On ActivationStart to a route', () => {
+    const routeSnapshot = ({
+      data: {
+        navId: 'nope',
+      },
+    } as unknown) as ActivatedRouteSnapshot
+    const routerEvent = new ActivationStart(routeSnapshot)
+
+    it('should do nothing', () => {
+      jest.spyOn(component, 'setHeader')
+      routerEventsSubject.next(routerEvent)
+      fixture.detectChanges()
+
+      expect(component.setHeader).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('On ActivationEnd to the same route', () => {
+    const routeSnapshot = ({
+      data: {
+        navId: 'sameRoute',
+      },
+    } as unknown) as ActivatedRouteSnapshot
+    const routerEvent = new ActivationEnd(routeSnapshot)
+
+    it('should do nothing', () => {
+      component.currentNavId = 'sameRoute'
+      jest.spyOn(component, 'setHeader')
+      routerEventsSubject.next(routerEvent)
+      fixture.detectChanges()
+
+      expect(component.setHeader).not.toHaveBeenCalled()
     })
   })
 })

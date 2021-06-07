@@ -1,30 +1,84 @@
 import { Injectable, isDevMode } from '@angular/core'
 import { AppConfigService } from '../config/app-config.service'
+import { FeatureProviderService } from '../modules/querybuilder/service/feature-provider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeatureService {
-  constructor(private appConfig: AppConfigService) {}
+  constructor(
+    private appConfig: AppConfigService,
+    private featureProviderService: FeatureProviderService
+  ) {}
+
+  private showOptionsPage = this.appConfig.getConfig().features.extra.showoptionspage
 
   public useFeatureMultipleValueDefinitions(): boolean {
-    return this.appConfig.getConfig().features.v2.multiplevaluedefinitions
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().features.v2.multiplevaluedefinitions
+    } else {
+      return this.appConfig.getConfig().features.v2.multiplevaluedefinitions
+    }
   }
 
   public useFeatureMultipleGroups(): boolean {
-    return this.appConfig.getConfig().features.v2.multiplegroups
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().features.v2.multiplegroups
+    } else {
+      return this.appConfig.getConfig().features.v2.multiplegroups
+    }
   }
 
   public useFeatureDependentGroups(): boolean {
-    return this.appConfig.getConfig().features.v2.dependentgroups
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().features.v2.dependentgroups
+    } else {
+      return this.appConfig.getConfig().features.v2.dependentgroups
+    }
   }
 
   public useFeatureTimeRestriction(): boolean {
-    return this.appConfig.getConfig().features.v2.timerestriction
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().features.v2.timerestriction
+    } else {
+      return this.appConfig.getConfig().features.v2.timerestriction
+    }
   }
 
   public useFeatureShowDisplayValueFilterIcon(): boolean {
-    return this.appConfig.getConfig().features.extra.displayvaluefiltericon
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().features.extra.displayvaluefiltericon
+    } else {
+      return this.appConfig.getConfig().features.extra.displayvaluefiltericon
+    }
+  }
+
+  public getPollingTime(): number {
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().options.pollingtimeinseconds
+    } else {
+      return this.appConfig.getConfig().options.pollingtimeinseconds
+    }
+  }
+  public getPollingIntervall(): number {
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().options.pollingintervallinseconds
+    } else {
+      return this.appConfig.getConfig().options.pollingintervallinseconds
+    }
+  }
+  public getPatientResultLowerBoundary(): number {
+    return this.appConfig.getConfig().options.lowerboundarypatientresult
+  }
+  public getFhirPort(): string {
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().fhirport
+    } else {
+      return this.appConfig.getConfig().fhirport
+    }
+  }
+  public useFeatureOptionsPage(): boolean {
+    return this.showOptionsPage
   }
 
   public getPollingTime(): number {

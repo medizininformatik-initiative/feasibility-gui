@@ -1,7 +1,7 @@
 .container-search-input {
   position: relative;
   min-height: 6em;
-  border: 1px solid var(--num-color--accent);
+  border: 1px solid var(--num-color--primary);
   border-radius: 5px;
 }
 
@@ -14,26 +14,38 @@
 }
 
 .header-label {
-  width: 33%;
+  width: 36%;
   min-width: min-content;
-  background-color: var(--num-color--accent);
+  background-color: var(--num-color--accent-600);
   color: var(--num-color--accent-contrast);
   text-align: center;
   border-bottom-right-radius: 5px;
+  font-size: 16px;
+  padding: 2px 0px;
 }
 
 .button-tree-view {
-  background-color: var(--num-color--accent-300);
+  background-color: var(--num-color--primary-900);
+}
+.button-tree-view:hover {
+  background-color: var(--num-color--primary);
 }
 .button-tree-view:hover {
   background-color: var(--num-color--accent-400);
 }
 
+.ng-fa-icon {
+  color: var(--num-color--primary-100);
+  font-size: 11px;
+}
 .mat-icon-button {
   height: 44px;
   width: 44px;
   line-height: unset;
   border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  color: var(--num-color--primary);
 }
 
 ::ng-deep .container-search-input .mat-checkbox {

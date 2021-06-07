@@ -5,14 +5,28 @@ import { AppConfigService } from '../config/app-config.service'
 import { IAppConfig } from '../config/app-config.model'
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 
+// TODO:
+
 describe('FeatureService', () => {
   let service: FeatureService
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    const featureService = {
+      useFeatureOptionsPage(): boolean {
+        return true
+      }
+    } as FeatureService
+    await TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      providers: [AppConfigService, HttpClient],
-    })
+      providers: [
+        AppConfigService,
+        HttpClient,
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        }
+      ],
+    }).compileComponents()
     service = TestBed.inject(FeatureService)
   })
 
@@ -92,6 +106,9 @@ class FeatureServiceSpecUtil {
           dependentgroups: value,
           timerestriction: value,
         },
+        extra: {
+          showoptionspage: value
+        }
       },
       mock: {
         terminology: value,

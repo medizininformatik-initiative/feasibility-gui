@@ -1,36 +1,38 @@
 <mat-nav-list fxLayout="column" fxFill>
-  <div fxLayout="row" class="num-logo-row">
+  <ng-template ngFor let-item [ngForOf]="mainNavItems">
+    <ng-template [ngIf]="showPage(item.routeTo)">
+      <a
+        *numUserHasRole="item.roles"
+        class="num-mat-list-item"
+        [routerLinkActive]="'num-mat-list-item--active'"
+        mat-list-item
+        [routerLink]="item.routeTo"
+        (click)="menuItemClicked($event, item)"
+      >
+        <fa-icon size="lg" [fixedWidth]="true" [icon]="item.icon"></fa-icon>
+        <div *ngIf="isSideMenuExpanded">{{ item.translationKey | translate }}</div>
+      </a>
+    </ng-template>
+  </ng-template>
+
+  <span fxFlex></span>
+  <div fxLayout="row" fxLayoutAlign="end center" class="num-logo-row">
     <button
       type="button"
       [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate"
       mat-icon-button
       (click)="menuItemClicked($event)"
     >
-      <fa-icon size="2x" icon="bars"></fa-icon>
+      <fa-icon *ngIf="isSideMenuExpanded" size="1x" icon="angle-double-left"></fa-icon>
+      <fa-icon *ngIf="!isSideMenuExpanded" size="1x" icon="angle-double-right"></fa-icon>
     </button>
-    <div *ngIf="isSideMenuExpanded" fxLayoutAlign="center center">
-      <a class="navbar-item" routerLink="/home">
-        <h1>CODEX</h1>
-      </a>
-    </div>
+    <!--  <div *ngIf="isSideMenuExpanded" fxLayoutAlign="center center">
+        <a class="navbar-item" routerLink="/home">
+          <h1>CODEX</h1>
+        </a>
+      </div>-->
   </div>
-
-  <ng-template ngFor let-item [ngForOf]="mainNavItems">
-    <a
-      *numUserHasRole="item.roles"
-      class="num-mat-list-item"
-      [routerLinkActive]="'num-mat-list-item--active'"
-      mat-list-item
-      [routerLink]="item.routeTo"
-      (click)="menuItemClicked($event, item)"
-    >
-      <fa-icon size="lg" [fixedWidth]="true" [icon]="item.icon"></fa-icon>
-      <div *ngIf="isSideMenuExpanded">{{ item.translationKey | translate }}</div>
-    </a>
-  </ng-template>
-
-  <span fxFlex></span>
-  <mat-divider class="num-d-c--a num-d-w--2"></mat-divider>
+  <mat-divider class="num-d-c--p num-d-w--1"></mat-divider>
 
   <a
     class="num-mat-list-item"

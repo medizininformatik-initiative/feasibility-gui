@@ -26,6 +26,7 @@ export interface IAppConfig {
     }
     extra: {
       displayvaluefiltericon: boolean
+      showoptionspage: boolean
     }
   }
   options: {
@@ -38,4 +39,6 @@ export interface IAppConfig {
     query: boolean
     result: boolean
   }
+  stylesheet: string
+  fhirport: string
 }

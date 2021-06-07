@@ -26,6 +26,17 @@ export const routes: Routes = [
         /* webpackChunkName: "Querbybuilder.Module" */ './modules/querybuilder/querybuilder.module'
       ).then((m) => m.QuerybuilderModule),
   },
+  {
+    path: 'options',
+    canLoad: [RoleGuard],
+    data: {
+      navId: 'options',
+    },
+    loadChildren: () =>
+      import(
+        /* webpackChunkName: "Querbybuilder.Module" */ './modules/options/options.module'
+      ).then((m) => m.OptionsModule),
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ]

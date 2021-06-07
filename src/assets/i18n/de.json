@@ -19,7 +19,18 @@
     "DASHBOARD": "Dashboard",
     "QUERYBUILDER_EDITOR": "Neue Abfrage",
     "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
+    "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
+  },
+  "OPTIONSPAGE": {
+    "MULTIPLEVALUEDEFINITIONS": "mehrere Einschränkungen pro Kriterium",
+    "MULTIPLEGROUPS": "mehrere Gruppen",
+    "DEPENDENTGROUPS": "abhängige Gruppen",
+    "TIMERESTRICTION": "zeitabhängige Kriterien",
+    "DISPLAYVALUEFILTERICON": "nutze Icons für Vergleichsoperatoren",
+    "POLLINGTIME": "Polling Time",
+    "POLLINGINTERVALL": "Polling Intervall",
+    "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
     "SEARCH": {
@@ -33,6 +44,7 @@
       "LABEL_OR": "ODER"
     },
     "DISPLAY": {
+      "LABEL": "Ausgewählte Merkmale",
       "ONE_OF": "",
       "MORE": "weitere",
       "BETWEEN": "zwischen {{ min }} und {{ max }} {{ unit }}",

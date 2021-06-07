@@ -1,8 +1,18 @@
 @mixin header_themed($theme) {
   $accent: map-get($theme, accent);
+  $primary: map-get($theme, primary);
+  $name: map-get($theme, name);
 
-  num-header mat-toolbar {
-    background: mat-color($accent, 500) !important;
-    color: mat-contrast($accent, 500) !important;
+  @if ($name == 'primary') {
+    num-header mat-toolbar {
+      background: mat-color($accent, 500) !important;
+      color: mat-contrast($accent, 500) !important;
+    }
+  }
+  @if ($name == 'codex') {
+    num-header mat-toolbar {
+      background: mat-color($primary, 200) !important;
+      color: mat-contrast($primary, 200) !important;
+    }
   }
 }

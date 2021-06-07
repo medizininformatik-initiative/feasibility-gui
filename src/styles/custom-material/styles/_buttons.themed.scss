@@ -3,6 +3,7 @@
   $accent: map-get($theme, accent);
   $primary: map-get($theme, primary);
   $additional: map-get($theme, additional);
+  $name: map-get($theme, name);
 
   .mat-button-base {
     text-transform: uppercase !important;
@@ -30,11 +31,20 @@
       line-height: 34px;
       border-width: 1px;
       border-style: solid;
-      border-color: mat-color($primary, 500);
-      fa-icon {
-        color: mat-color($accent, 500);
+      @if ($name == 'primary') {
+        border-color: mat-color($primary, 500);
+        fa-icon {
+          color: mat-color($accent, 500);
+        }
       }
-
+      @if ($name == 'codex') {
+        color: mat-contrast($primary, 900);
+        background-color: mat-color($primary, 900);
+        border-color: mat-color($primary, 500);
+        fa-icon {
+          color: mat-contrast($primary, 900);
+        }
+      }
       &:hover:not(.mat-button-disabled) {
         background: mat-color($primary, 700);
         box-shadow: $raised-shadow;
@@ -46,8 +56,15 @@
       }
 
       &.mat-button-disabled {
-        background: mat-color($primary, 100);
-        border-color: mat-color($primary, 100);
+        @if ($name == 'primary') {
+          background: mat-color($primary, 100);
+          border-color: mat-color($primary, 100);
+        }
+        @if ($name == 'codex') {
+          background: mat-color($primary, 100);
+          border-color: mat-color($primary, 500);
+          color: mat-color($primary, 500);
+        }
         fa-icon {
           color: mat-color($accent, 200);
         }
@@ -64,7 +81,15 @@
       }
 
       &:hover:not(.mat-button-disabled) {
-        background: mat-color($accent, 100);
+        @if ($name == 'primary') {
+          background: mat-color($accent, 100);
+          border-color: mat-color($primary, 100);
+        }
+        @if ($name == 'codex') {
+          background: mat-color($primary, 200);
+          border-color: mat-color($primary, 500);
+          color: mat-color($primary, 500);
+        }
         box-shadow: $raised-shadow;
       }
 
@@ -73,10 +98,18 @@
       }
 
       &.mat-button-disabled {
+        @if ($name == 'primary') {
+          background: mat-color($primary, 100);
+          border-color: mat-color($primary, 100);
+        }
+        @if ($name == 'codex') {
+          background: mat-color($primary, 100);
+          border-color: mat-color($primary, 500);
+          color: mat-color($primary, 500);
+        }
         fa-icon {
           color: mat-color($accent, 200);
         }
-        color: mat-color($additional, mid-grey);
       }
     }
 

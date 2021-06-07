@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
 import { IAppConfig } from './app-config.model'
+import { FeatureProviderService } from '../modules/querybuilder/service/feature-provider.service'
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {
@@ -9,7 +10,7 @@ export class AppConfigService {
 
   config: IAppConfig = null
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private featureProviderService: FeatureProviderService) {}
 
   public getConfig(): IAppConfig {
     return this.config
@@ -22,6 +23,7 @@ export class AppConfigService {
         .toPromise()
         .then((config) => {
           this.config = config
+          this.featureProviderService.initFeatures(this.config)
           return resolve()
         })
         .catch((error) => {

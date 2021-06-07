@@ -3,6 +3,7 @@ import { routes } from '../../../app-routing.module'
 import INavItem from '../../models/nav-item.interface'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { mainNavItems, secondaryNavItems } from '../../../core/constants/navigation'
+import { FeatureService } from '../../../service/feature.service'
 
 @Component({
   selector: 'num-side-menu',
@@ -17,7 +18,7 @@ export class SideMenuComponent implements OnInit {
   @Input() isSideMenuExpanded = true
   @Output() toggleSideMenu = new EventEmitter()
 
-  constructor(private oauthService: OAuthService) {}
+  constructor(private oauthService: OAuthService, public featureService: FeatureService) {}
 
   ngOnInit(): void {
     this.mainNavItems?.forEach((item) => {
@@ -42,5 +43,13 @@ export class SideMenuComponent implements OnInit {
     const target = $event.currentTarget as HTMLElement
     target.blur()
     this.toggleSideMenu.emit({ item })
+  }
+
+  showPage(itemRoute): boolean {
+    let showIt = true
+    if (itemRoute === 'options' && !this.featureService.useFeatureOptionsPage()) {
+      showIt = false
+    }
+    return showIt
   }
 }
