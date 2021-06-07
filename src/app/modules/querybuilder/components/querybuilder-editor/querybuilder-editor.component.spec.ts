@@ -213,6 +213,8 @@ describe('QuerybuilderEditorComponent', () => {
       tick(500000)
       component.subscriptionPolling.unsubscribe()
 
+      // TODO:
+
       // expect(component.resultUrl).toEqual('')
       expect(backendService.getResult).toBeCalledTimes(299)
       expect(component.result).toEqual(queryResult)

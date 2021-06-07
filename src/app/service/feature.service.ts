@@ -27,6 +27,16 @@ export class FeatureService {
     return this.appConfig.getConfig().features.extra.displayvaluefiltericon
   }
 
+  public getPollingTime(): number {
+    return this.appConfig.getConfig().options.pollingtimeinseconds
+  }
+  public getPollingIntervall(): number {
+    return this.appConfig.getConfig().options.pollingintervallinseconds
+  }
+  public getPatientResultLowerBoundary(): number {
+    return this.appConfig.getConfig().options.lowerboundarypatientresult
+  }
+
   public isDevelopMode(): boolean {
     return isDevMode()
   }
@@ -41,15 +51,5 @@ export class FeatureService {
 
   public mockResult(): boolean {
     return this.appConfig.getConfig().mock.result && this.isDevelopMode()
-  }
-
-  public getPollingTime(): number {
-    return this.appConfig.getConfig().options.pollingtimeinseconds
-  }
-  public getPollingIntervall(): number {
-    return this.appConfig.getConfig().options.pollingintervallinseconds
-  }
-  public getPatientResultLowerBoundary(): number {
-    return this.appConfig.getConfig().options.lowerboundarypatientresult
   }
 }

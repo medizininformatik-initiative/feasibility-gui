@@ -34,11 +34,16 @@ describe('BackendService', () => {
     },
   } as FeatureService
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [{ provide: FeatureService, useValue: featureService }],
-    })
+      providers: [
+        {
+          provide: FeatureService,
+          useValue: featureService,
+        },
+      ],
+    }).compileComponents()
     service = TestBed.inject(BackendService)
   })
 
