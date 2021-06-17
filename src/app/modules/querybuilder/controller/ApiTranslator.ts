@@ -63,10 +63,16 @@ export class ApiTranslator {
         criterion.valueFilter.comparator = undefined
         criterion.valueFilter.value = undefined
         criterion.valueFilter.selectedConcepts = undefined
+        if (criterion.valueFilter.unit.code == ''){
+          criterion.valueFilter.unit = undefined
+        }
       } else if (criterion.valueFilter.type === OperatorOptions.QUANTITY_COMPARATOR) {
         criterion.valueFilter.minValue = undefined
         criterion.valueFilter.maxValue = undefined
         criterion.valueFilter.selectedConcepts = undefined
+        if (criterion.valueFilter.unit.code == ''){
+          criterion.valueFilter.unit = undefined
+        }
       }
     }
   }
