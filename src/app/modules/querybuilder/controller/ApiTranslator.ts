@@ -53,6 +53,10 @@ export class ApiTranslator {
       criterion.valueFilter.min = undefined
       criterion.valueFilter.precision = undefined
 
+      if (criterion.valueFilter.unit.code == ''){
+        criterion.valueFilter.unit = undefined
+      }
+
       if (criterion.valueFilter.type === OperatorOptions.CONCEPT) {
         criterion.valueFilter.comparator = undefined
         criterion.valueFilter.maxValue = undefined

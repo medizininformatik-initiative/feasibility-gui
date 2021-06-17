@@ -39,7 +39,7 @@ export class TermEntry2CriterionTranslator {
       valueFilter.unit =
         valueDefinition.allowedUnits.length > 0
           ? valueDefinition.allowedUnits[0]
-          : { code: '1', display: '' }
+          : { code: '', display: '' }
       valueFilter.value = valueDefinition.min ? valueDefinition.min : 0
       valueFilter.minValue = valueDefinition.min ? valueDefinition.min : 0
       valueFilter.maxValue = valueDefinition.max ? valueDefinition.max : 0
