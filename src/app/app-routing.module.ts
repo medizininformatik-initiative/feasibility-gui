@@ -23,7 +23,7 @@ export const routes: Routes = [
     },
     loadChildren: () =>
       import(
-        /* webpackChunkName: "Querbybuilder.Module" */ './modules/querybuilder/querybuilder.module'
+        /* webpackChunkName: "Querybuilder.Module" */ './modules/querybuilder/querybuilder.module'
       ).then((m) => m.QuerybuilderModule),
   },
   {
@@ -33,9 +33,9 @@ export const routes: Routes = [
       navId: 'options',
     },
     loadChildren: () =>
-      import(
-        /* webpackChunkName: "Querbybuilder.Module" */ './modules/options/options.module'
-      ).then((m) => m.OptionsModule),
+      import(/* webpackChunkName: "Options.Module" */ './modules/options/options.module').then(
+        (m) => m.OptionsModule
+      ),
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
