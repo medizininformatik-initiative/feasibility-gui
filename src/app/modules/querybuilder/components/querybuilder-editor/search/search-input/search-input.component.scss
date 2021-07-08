@@ -31,7 +31,7 @@
   background-color: var(--num-color--primary);
 }
 
-.ng-fa-icon {
+.button-tree-view .ng-fa-icon {
   color: var(--num-color--primary-100);
   font-size: 11px;
 }
@@ -39,10 +39,12 @@
   height: 44px;
   width: 44px;
   line-height: unset;
+  color: var(--num-color--primary);
+}
+.button-tree-view.mat-icon-button {
   border-radius: 4px;
   border-width: 1px;
   border-style: solid;
-  color: var(--num-color--primary);
 }
 
 ::ng-deep .container-search-input .mat-checkbox {
