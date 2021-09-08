@@ -5,6 +5,8 @@
 
   --num-color--primary: #{mat-color($primary)};
   --num-color--primary-100: #{mat-color($primary, 100)};
+  --num-color--primary-300: #{mat-color($primary, 300)};
+  --num-color--primary-400: #{mat-color($primary, 400)};
   --num-color--primary-900: #{mat-color($primary, 900)};
   --num-color--accent: #{mat-color($accent, 500)};
   --num-color--warn: #{mat-color($warn)};

@@ -7,18 +7,12 @@
     <div
       *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index"
       class="inner"
-      cdkDropList
-      [cdkDropListData]="{ groupId: groupId, critType: critType, row: i, column: j }"
-      (cdkDropListDropped)="doDrop($event)"
     >
       <num-display-criterion
         [criterion]="criterion"
         [query]="query"
-        [position]="{ groupId: groupId, critType: critType, row: i, column: j }"
-        [showCancelButton]="true"
-        (storeQuery)="doStoreQuery($event)"
-        (delete)="doDelete({ row: i, column: j })"
-        cdkDrag
+        [position]="{ groupId: 1, critType: critType, row: i, column: j }"
+        [showCancelButton]="false"
       >
       </num-display-criterion>
       <num-bool-logic-switch
@@ -34,18 +28,5 @@
       (switched)="joinInnerArrays(i)"
       *ngIf="!lastOuter"
     ></num-bool-logic-switch>
-  </div>
-  <div
-    fxFlex="grow"
-    class="drop-at-bottom"
-    cdkDropList
-    [cdkDropListData]="{ critType: critType, groupId: groupId, addMode: 'end' }"
-    (cdkDropListDropped)="doDropAtEnd($event)"
-    [ngClass]="{ 'no-top-margin': critGroup.length === 0 }"
-  >
-    <!--<num-bool-logic-switch
-      [position]="'outer'"
-      [label]="getOuterLabelKey()"
-    ></num-bool-logic-switch>-->
   </div>
 </div>

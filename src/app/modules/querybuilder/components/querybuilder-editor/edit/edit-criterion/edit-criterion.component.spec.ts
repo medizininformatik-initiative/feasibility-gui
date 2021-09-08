@@ -18,6 +18,11 @@ import { FeatureService } from '../../../../../../service/feature.service'
 import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component'
 import { Query } from '../../../../model/api/query/query'
 import { ObjectHelper } from '../../../../controller/ObjectHelper'
+import { DisplayEntitiesComponent } from '../../display/display-entities/display-entities.component'
+import { DisplayCriterionComponent } from '../../display/display-criterion/display-criterion.component'
+import { BoolLogicSwitchComponent } from '../../display/bool-logic-switch/bool-logic-switch.component'
+import { DisplayValueFilterComponent } from '../../display/display-value-filter/display-value-filter.component'
+import { DisplayTimeRestrictionComponent } from '../../display/display-time-restriction/display-time-restriction.component'
 
 describe('EditCriterionComponent', () => {
   let component: EditCriterionComponent
@@ -46,6 +51,11 @@ describe('EditCriterionComponent', () => {
       MatInputNumberDirective,
       ButtonComponent,
       EditTimeRestrictionComponent,
+      DisplayEntitiesComponent,
+      DisplayCriterionComponent,
+      BoolLogicSwitchComponent,
+      DisplayValueFilterComponent,
+      DisplayTimeRestrictionComponent,
     ],
     imports: [
       MaterialModule,

@@ -13,6 +13,7 @@ describe('TermEntry2CriterionTranslator', () => {
       termCode: { code: 'A', system: 'http://test', display: 'none' },
       display: 'ui-display',
       leaf: true,
+      entity: false,
       children: [],
       selectable: true,
       selected: true,
@@ -23,6 +24,7 @@ describe('TermEntry2CriterionTranslator', () => {
 
   function createExpectedCriterion(): Criterion {
     return {
+      children: [],
       termCode: {
         code: 'A',
         display: 'none',

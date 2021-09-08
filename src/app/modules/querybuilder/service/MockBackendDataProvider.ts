@@ -20,13 +20,26 @@ export class MockBackendDataProvider {
   private readonly categoryT = { shortDisplay: 'T', display: 'Therapie', catId: '4' }
   private readonly categoryV = { shortDisplay: 'V', display: 'Vital signs', catId: '5' }
   private readonly categoryO = { shortDisplay: 'O', display: 'Other', catId: '6' }
+  private readonly categoryE = { shortDisplay: 'E', display: 'Tumorentität', catId: '7' }
 
   private readonly mapDisplay = new Map<[string, string], TerminologyEntry>()
   private readonly mapCode = new Map<[string, string], TerminologyEntry>()
   private readonly mapId = new Map<string, TerminologyEntry>()
 
-  private readonly _rootAnamnesis = this.createRootTermEntry('1', 'A', 'Anamnesis / Risk factors')
-  private readonly _childA1 = this.createRootTermEntry('A1', 'A1', 'Chronic lung diseases')
+  private readonly _rootAnamnesis = this.createRootTermEntry(
+    '1',
+    'A',
+    'Anamnesis / Risk factors',
+    false,
+    false
+  )
+  private readonly _childA1 = this.createRootTermEntry(
+    'A1',
+    'A1',
+    'Chronic lung diseases',
+    false,
+    false
+  )
   private readonly _childA1_1 = this.createTermEntry(
     'A1_1',
     'G47.3',
@@ -150,7 +163,9 @@ export class MockBackendDataProvider {
   private readonly _childA2 = this.createRootTermEntry(
     'A2',
     'A2',
-    'Disorders of cardiovascular system'
+    'Disorders of cardiovascular system',
+    false,
+    false
   )
   private readonly _childA2_1 = this.createTermEntry(
     'A2_1',
@@ -336,9 +351,17 @@ export class MockBackendDataProvider {
   private readonly _childA3_WithoutChildren = this.createRootTermEntry(
     'A3',
     'A3',
-    'Chronic liver diseases'
+    'Chronic liver diseases',
+    false,
+    false
   )
-  private readonly _childA3 = this.createRootTermEntry('A3', 'A3', 'Chronic liver diseases')
+  private readonly _childA3 = this.createRootTermEntry(
+    'A3',
+    'A3',
+    'Chronic liver diseases',
+    false,
+    false
+  )
   private readonly _childA3_1 = this.createTermEntry(
     'A3_1',
     'K76.0',
@@ -370,7 +393,13 @@ export class MockBackendDataProvider {
     'http://fhir.de/CodeSystem/dimdi/icd-10-gm'
   )
 
-  private readonly _rootDemographics = this.createRootTermEntry('2', 'D', 'Demographics')
+  private readonly _rootDemographics = this.createRootTermEntry(
+    '2',
+    'D',
+    'Demographics',
+    false,
+    false
+  )
   private readonly _childD1 = this.createTermEntry(
     'D1',
     '82810-3',
@@ -438,6 +467,193 @@ export class MockBackendDataProvider {
       this.createTermCode('2135-2', 'urn:oid:2.16.840.1.113883.6.238', 'Hispanic or Latino'),
     ])
   )
+  private readonly _rootEntity = this.createRootTermEntry('7', 'E', 'Entities', false, false)
+  private readonly _rootTumorEntity = this.createRootTermEntry(
+    'TE',
+    'TE',
+    'Tumor Entities',
+    false,
+    false
+  )
+  private readonly _childE1 = this.createRootTermEntry('E1', 'E1', 'Gliom I', true, true)
+  private readonly _childE1_D = this.createRootTermEntry('E1_D', 'E1_D', 'Diagnosen', false, false)
+  private readonly _childE1_M = this.createRootTermEntry(
+    'E1_M',
+    'E1_M',
+    'Morphologien',
+    false,
+    false
+  )
+  private readonly _childE1_D_1 = this.createTermEntry(
+    'E1_D_1',
+    '29:2',
+    'Diagnose',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('D43', '', 'D43')])
+  )
+  private readonly _childE1_M_1 = this.createTermEntry(
+    'E1_M_1',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9383/1', '', '9383/1')])
+  )
+  private readonly _childE1_M_2 = this.createTermEntry(
+    'E1_M_2',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9384/1', '', '9384/1')])
+  )
+  private readonly _childE1_M_3 = this.createTermEntry(
+    'E1_M_3',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9394/1', '', '9394/1')])
+  )
+  private readonly _childE1_M_4 = this.createTermEntry(
+    'E1_M_4',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9421/1', '', '9421/1')])
+  )
+
+  private readonly _childE2 = this.createRootTermEntry('E2', 'E2', 'Gliom II', true, true)
+  private readonly _childE2_D = this.createRootTermEntry('E2_D', 'E2_D', 'Diagnosen', false, false)
+  private readonly _childE2_M = this.createRootTermEntry(
+    'E2_M',
+    'E2_M',
+    'Morphologien',
+    false,
+    false
+  )
+  private readonly _childE2_D_1 = this.createTermEntry(
+    'E2_D_1',
+    '29:2',
+    'Diagnose',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('C71', '', 'C71')])
+  )
+  private readonly _childE2_D_2 = this.createTermEntry(
+    'E2_D_2',
+    '29:2',
+    'Diagnose',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('C72', '', 'C72')])
+  )
+  private readonly _childE2_M_1 = this.createTermEntry(
+    'E2_M_1',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9382/3', '', '9382/3')])
+  )
+  private readonly _childE2_M_2 = this.createTermEntry(
+    'E2_M_2',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9391/3', '', '9391/3')])
+  )
+  private readonly _childE2_M_3 = this.createTermEntry(
+    'E2_M_3',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9400/3', '', '9400/3')])
+  )
+  private readonly _childE2_M_4 = this.createTermEntry(
+    'E2_M_4',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9424/3', '', '9424/3')])
+  )
+  private readonly _childE2_M_5 = this.createTermEntry(
+    'E2_M_5',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9425/3', '', '9425/3')])
+  )
+  private readonly _childE2_M_6 = this.createTermEntry(
+    'E2_M_6',
+    '7:2',
+    'Morphologie',
+    '',
+    this.createDefaultValueDefinitionConcept([this.createTermCode('9450/3', '', '9450/3')])
+  )
+
+  private readonly _rootComponents = this.createRootTermEntry(
+    '7_2',
+    'E_C',
+    'Components',
+    false,
+    false
+  )
+  private readonly _childE_C1 = this.createTermEntry(
+    'E_C1',
+    '29:2',
+    'Diagnose',
+    'http://loinc.org',
+    this.createDefaultValueDefinitionConcept([
+      this.createTermCode('D43', 'http://loinc.org', 'D43'),
+      this.createTermCode('C71', 'http://loinc.org', 'C71'),
+      this.createTermCode('C72', 'http://loinc.org', 'C72'),
+    ])
+  )
+  private readonly _childE_C2 = this.createTermEntry(
+    'E_C2',
+    '7:2',
+    'Morphologie',
+    'http://loinc.org',
+    this.createDefaultValueDefinitionConcept([
+      this.createTermCode('9383/1', 'http://loinc.org', '9383/1'),
+      this.createTermCode('9384/1', 'http://loinc.org', '9384/1'),
+      this.createTermCode('9394/1', 'http://loinc.org', '9394/1'),
+      this.createTermCode('9421/1', 'http://loinc.org', '9421/1'),
+      this.createTermCode('9382/3', 'http://loinc.org', '9382/3'),
+      this.createTermCode('9391/3', 'http://loinc.org', '9391/3'),
+      this.createTermCode('9400/3', 'http://loinc.org', '9400/3'),
+      this.createTermCode('9424/3', 'http://loinc.org', '9424/3'),
+      this.createTermCode('9425/3', 'http://loinc.org', '9425/3'),
+      this.createTermCode('9450/3', 'http://loinc.org', '9450/3'),
+    ])
+  )
+
+  private initEntities(): void {
+    this._rootEntity.children.push(this._rootTumorEntity)
+    this._rootTumorEntity.children.push(this._childE1)
+    this._childE1.children.push(this._childE1_D)
+    this._childE1_D.children.push(this._childE1_D_1)
+    this._childE1.children.push(this._childE1_M)
+    this._childE1_M.children.push(this._childE1_M_1)
+    this._childE1_M.children.push(this._childE1_M_2)
+    this._childE1_M.children.push(this._childE1_M_3)
+    this._childE1_M.children.push(this._childE1_M_4)
+
+    this._rootTumorEntity.children.push(this._childE2)
+    this._childE2.children.push(this._childE2_D)
+    this._childE2_D.children.push(this._childE2_D_1)
+    this._childE2_D.children.push(this._childE2_D_2)
+    this._childE2.children.push(this._childE2_M)
+    this._childE2_M.children.push(this._childE2_M_1)
+    this._childE2_M.children.push(this._childE2_M_2)
+    this._childE2_M.children.push(this._childE2_M_3)
+    this._childE2_M.children.push(this._childE2_M_4)
+    this._childE2_M.children.push(this._childE2_M_5)
+    this._childE2_M.children.push(this._childE2_M_6)
+
+    this._rootEntity.children.push(this._rootComponents)
+    this._rootComponents.children.push(this._childE_C1)
+    this._rootComponents.children.push(this._childE_C2)
+  }
+
+  private getTerminologyEntryEntity(): TerminologyEntry {
+    return ObjectHelper.clone(this._rootEntity)
+  }
 
   public getCategoryEntries(): Array<CategoryEntry> {
     return ObjectHelper.clone(this.categoryEntries)
@@ -453,6 +669,8 @@ export class MockBackendDataProvider {
         return this.getTerminologyEntryDemographics()
       case '6':
         return this.getTerminologyEntryOther()
+      case '7':
+        return this.getTerminologyEntryEntity()
       default:
         return this.getTerminologyEntryEmpty(id)
     }
@@ -461,7 +679,7 @@ export class MockBackendDataProvider {
   private getTerminologyEntryEmpty(id: string): TerminologyEntry {
     return this.mapId.get(id)
       ? ObjectHelper.clone(this.mapId.get(id))
-      : this.createRootTermEntry(id, '---', 'Not specified so far')
+      : this.createRootTermEntry(id, '---', 'Not specified so far', false, false)
   }
 
   private getTerminologyEntryAmnesis(): TerminologyEntry {
@@ -501,6 +719,7 @@ export class MockBackendDataProvider {
     this.initAmnesis()
     this.initAmnesisLiver()
     this.initDemographics()
+    this.initEntities()
     this.initTermEntryMaps()
   }
 
@@ -511,6 +730,7 @@ export class MockBackendDataProvider {
     this.categoryEntries.push(this.categoryT)
     this.categoryEntries.push(this.categoryV)
     this.categoryEntries.push(this.categoryO)
+    this.categoryEntries.push(this.categoryE)
   }
 
   private initAmnesis(): void {
@@ -690,14 +910,21 @@ export class MockBackendDataProvider {
     this.mapDisplay.set([catId, termEntry.display], termEntryWithoutChildren)
   }
 
-  private createRootTermEntry(id: string, code: string, display: string): TerminologyEntry {
+  private createRootTermEntry(
+    id: string,
+    code: string,
+    display: string,
+    entity: boolean,
+    selectable: boolean
+  ): TerminologyEntry {
     const termEntry = new TerminologyEntry()
     termEntry.leaf = false
-    termEntry.selectable = false
+    termEntry.selectable = selectable
     termEntry.id = id
     termEntry.display = display
     termEntry.timeRestrictionAllowed = false
     termEntry.children = []
+    termEntry.entity = entity
     termEntry.termCode = {
       code,
       system: '',
@@ -720,6 +947,7 @@ export class MockBackendDataProvider {
     termEntry.display = display
     termEntry.timeRestrictionAllowed = true
     termEntry.children = []
+    termEntry.entity = false
     termEntry.termCode = {
       code,
       system,
@@ -775,6 +1003,7 @@ export class MockBackendDataProvider {
       selectable: true,
       children: [],
       leaf: true,
+      entity: false,
       termCode: {
         code: 'xyz',
         system: 'nonsense',

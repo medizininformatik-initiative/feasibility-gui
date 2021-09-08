@@ -23,6 +23,9 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   @Input()
   position: CritGroupPosition
 
+  @Input()
+  showCancelButton: boolean
+
   @Output()
   delete = new EventEmitter<Criterion>()
 

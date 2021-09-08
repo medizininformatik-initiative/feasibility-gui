@@ -6,12 +6,12 @@
     <!--<div class="code-part">
       {{ node.termCode.code }}
     </div>-->
-    <div class="display-part">
+    <div matTreeNodeToggle (click)="toggleTreeNode()" class="display-part">
       {{ node.display }}
     </div>
   </div>
 </div>
 
-<div matTreeNodeToggle *ngIf="!node.selectable" class="container">
+<div matTreeNodeToggle *ngIf="!node.selectable" (click)="toggleTreeNode()" class="container">
   {{ node.display }}
 </div>

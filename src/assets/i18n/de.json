@@ -1,6 +1,17 @@
 {
   "DASHBOARD": {
-    "WELCOME": "Willkommen auf dem CODEX Portal!"
+    "HEADLINE": "Willkommen auf der CODEX Feasibility Plattform!",
+    "PARAGRAPH1": "Die CODEX Feasibility Plattform ist ein Angebot für Wissenschaftler:innen, die für ihre Forschung nach COVID-19 spezifischen Daten suchen.",
+    "PARAGRAPH2": "Auf dieser Plattform steht hierfür ein frei zugängliches Suchtool zur Verfügung, das eine erste, unverbindliche Machbarkeitsabfrage ermöglicht. Auf diesem Weg kann festgestellt werden, wie viele Daten an den angeschlossenen CODEX-Standorten zur Verfügung stehen.",
+    "PARAGRAPH3": "Anhand dieser Information können dann in einem nächsten Schritt konkrete Anfragen an die entsprechenden Standorte gestellt werden.",
+    "NEWQUERY": {
+      "HEADLINE": "Neue Abfrage",
+      "TEXT": "Führen Sie eine Suche nach COVID-19 spezifischen Daten durch"
+    },
+    "MYQUERY": {
+      "HEADLINE": "Meine Abfragen",
+      "TEXT": "Erhalten Sie eine Übersicht über Ihre bereits durchgeführten Suchanfragen"
+    }
   },
   "LANGUAGE": {
     "GERMAN": "Deutsch",
@@ -16,7 +27,7 @@
     }
   },
   "NAVIGATION": {
-    "DASHBOARD": "Dashboard",
+    "DASHBOARD": "Startseite",
     "QUERYBUILDER_EDITOR": "Neue Abfrage",
     "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
     "OPTIONS": "Einstellungen",

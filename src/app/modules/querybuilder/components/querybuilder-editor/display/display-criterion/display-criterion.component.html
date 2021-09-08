@@ -13,7 +13,7 @@
       [timeRestriction]="criterion.timeRestriction"
     ></num-display-time-restriction>
   </div>
-  <div class="cancel-button-wrapper">
+  <div *ngIf="showCancelButton" class="cancel-button-wrapper">
     <button class="cancel-button" type="button" mat-icon-button (click)="doDelete()">
       <fa-icon size="lg" icon="times"></fa-icon>
     </button>

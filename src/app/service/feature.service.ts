@@ -77,6 +77,10 @@ export class FeatureService {
       return this.appConfig.getConfig().fhirport
     }
   }
+  public getDataset(): string {
+    return this.appConfig.getConfig().dataset
+  }
+
   public useFeatureOptionsPage(): boolean {
     return this.showOptionsPage
   }

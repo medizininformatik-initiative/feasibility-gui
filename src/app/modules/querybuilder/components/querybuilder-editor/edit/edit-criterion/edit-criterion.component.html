@@ -8,6 +8,7 @@
   <mat-card-content>
     <num-edit-value-definition *ngFor="let valueFilter of getValueFilters()" [filter]="valueFilter">
     </num-edit-value-definition>
+    <num-display-entities [criterionEntity]="criterion" [query]="query"></num-display-entities>
     <num-edit-time-restriction
       *ngIf="featureService.useFeatureTimeRestriction()"
       [timeRestriction]="criterion.timeRestriction"

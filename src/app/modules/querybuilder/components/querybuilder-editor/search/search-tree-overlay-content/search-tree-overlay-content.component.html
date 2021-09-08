@@ -22,7 +22,10 @@
             <fa-icon icon="chevron-right" *ngIf="!treeControl.isExpanded(node)"></fa-icon>
             <fa-icon icon="chevron-down" *ngIf="treeControl.isExpanded(node)"></fa-icon>
           </button>
-          <num-search-tree-term-entry [node]="node"></num-search-tree-term-entry>
+          <num-search-tree-term-entry
+            [node]="node"
+            (toggleEvent)="onToggleLoad($event)"
+          ></num-search-tree-term-entry>
         </div>
         <ul [class.ontology-tree-invisible]="!treeControl.isExpanded(node)">
           <ng-container matTreeNodeOutlet></ng-container>

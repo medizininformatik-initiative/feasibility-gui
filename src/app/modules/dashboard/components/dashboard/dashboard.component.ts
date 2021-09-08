@@ -17,6 +17,8 @@ export class DashboardComponent implements OnInit {
     this.init()
   }
 
+  newQuery(): void {}
+
   async init(): Promise<void> {
     const isLoggedIn = this.oauthService.hasValidAccessToken()
     if (isLoggedIn) {

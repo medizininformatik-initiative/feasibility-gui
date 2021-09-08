@@ -57,6 +57,7 @@ export class TerminologyEntry {
   timeRestrictionAllowed: boolean
 
   leaf: boolean
+  entity: boolean
   children: TerminologyEntry[] = []
 
   valueDefinitions: Array<ValueDefinition> = []

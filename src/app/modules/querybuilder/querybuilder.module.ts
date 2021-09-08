@@ -37,6 +37,7 @@ import {
 import { EditGroupConnectionComponent } from './components/querybuilder-editor/edit/edit-group-connection/edit-group-connection.component'
 import { ResultSimpleComponent } from './components/querybuilder-editor/result/result-simple/result-simple.component'
 import { ResultDetailsDialogComponent } from './components/querybuilder-editor/result/result-details-dialog/result-details-dialog.component'
+import { DisplayEntitiesComponent } from './components/querybuilder-editor/display/display-entities/display-entities.component'
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -79,6 +80,7 @@ export const FORMATS_GERMAN = {
     EditGroupConnectionComponent,
     ResultSimpleComponent,
     ResultDetailsDialogComponent,
+    DisplayEntitiesComponent,
   ],
   imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule, OverlayModule],
   providers: [

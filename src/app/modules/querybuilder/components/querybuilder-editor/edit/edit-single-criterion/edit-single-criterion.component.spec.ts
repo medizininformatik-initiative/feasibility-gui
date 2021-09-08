@@ -19,6 +19,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { DisplayEntitiesComponent } from '../../display/display-entities/display-entities.component'
+import { DisplayCriterionComponent } from '../../display/display-criterion/display-criterion.component'
+import { BoolLogicSwitchComponent } from '../../display/bool-logic-switch/bool-logic-switch.component'
+import { DisplayValueFilterComponent } from '../../display/display-value-filter/display-value-filter.component'
+import { DisplayTimeRestrictionComponent } from '../../display/display-time-restriction/display-time-restriction.component'
 
 describe('EditSingleCriterionComponent', () => {
   let component: EditSingleCriterionComponent
@@ -59,6 +64,11 @@ describe('EditSingleCriterionComponent', () => {
         ButtonComponent,
         MatInputNumberDirective,
         EditTimeRestrictionComponent,
+        DisplayEntitiesComponent,
+        DisplayCriterionComponent,
+        BoolLogicSwitchComponent,
+        DisplayValueFilterComponent,
+        DisplayTimeRestrictionComponent,
       ],
       imports: [
         NoopAnimationsModule,

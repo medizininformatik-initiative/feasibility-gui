@@ -1,5 +1,5 @@
 import { V2 } from '../annotations'
-import { TerminologyCode } from '../terminology/terminology'
+import { TerminologyCode, TerminologyEntry } from '../terminology/terminology'
 import { ValueFilter } from './valueFilter'
 import { TimeRestriction } from './timerestriction'
 
@@ -10,6 +10,7 @@ export class Criterion {
   display: string
 
   valueFilters: Array<ValueFilter> = []
+  children?: Array<TerminologyEntry> = []
 
   @V2()
   timeRestriction?: TimeRestriction

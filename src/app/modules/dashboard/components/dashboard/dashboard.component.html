@@ -1,8 +1,23 @@
-<h2>dashboard works! {{ config.env.name }}</h2>
-<div>
-  {{ 'DASHBOARD.WELCOME' | translate }}
+<h2>{{ 'DASHBOARD.HEADLINE' | translate }}</h2>
+<div class="paragraphBox">
+  <p>{{ 'DASHBOARD.PARAGRAPH1' | translate }}</p>
+  <p>{{ 'DASHBOARD.PARAGRAPH2' | translate }}</p>
+  <p>{{ 'DASHBOARD.PARAGRAPH3' | translate }}</p>
 </div>
 
-<div>{{ authTest }}</div>
-
-<pre *numUserHasRole="['CODEX_DEVELOPER']">Content for CODEX Dashboard</pre>
+<div fxLayout="row" fxLayoutAlign="space-between">
+  <div class="newQueryBox">
+    <a routerLink="/querybuilder/editor">
+      <div class="queryBoxHeader">{{ 'DASHBOARD.NEWQUERY.HEADLINE' | translate }}</div>
+      <div class="queryBoxText">{{ 'DASHBOARD.NEWQUERY.TEXT' | translate }}</div>
+    </a>
+  </div>
+  <div class="myQueryBox">
+    <a routerLink="/querybuilder/overview">
+      <div class="queryBoxHeader">{{ 'DASHBOARD.MYQUERY.HEADLINE' | translate }}</div>
+      <div class="queryBoxText">{{ 'DASHBOARD.MYQUERY.TEXT' | translate }}</div>
+    </a>
+  </div>
+</div>
+<!--<div>{{ authTest }}</div>-->
+<!--<pre *numUserHasRole="['CODEX_DEVELOPER']">Content for CODEX Dashboard</pre>-->

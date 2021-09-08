@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
 
 @Component({
@@ -10,7 +10,14 @@ export class SearchTreeTermEntryComponent implements OnInit {
   @Input()
   node: TerminologyEntry
 
+  @Output()
+  toggleEvent = new EventEmitter()
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  toggleTreeNode(): void {
+    this.toggleEvent.emit(this.node)
+  }
 }

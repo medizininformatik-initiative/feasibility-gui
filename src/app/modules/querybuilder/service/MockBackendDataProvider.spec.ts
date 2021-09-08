@@ -4,7 +4,7 @@ describe('MockBackendDataProvider', () => {
   const provider = new MockBackendDataProvider()
 
   it('getCategories', () => {
-    expect(provider.getCategoryEntries().length).toBe(6)
+    expect(provider.getCategoryEntries().length).toBe(7)
   })
 
   it('getTerminologyEntry (amnesis)', () => {

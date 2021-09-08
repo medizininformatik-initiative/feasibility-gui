@@ -91,7 +91,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   }
 
   hasNestedChild = (_: number, nodeData: TerminologyEntry) => {
-    return !nodeData.leaf
+    return !nodeData.leaf && !nodeData.entity
   }
 
   ngOnDestroy(): void {
@@ -140,7 +140,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   ): void {
     if (entry.selected) {
       const clonedEntry = ObjectHelper.clone(entry)
-      clonedEntry.children = []
+      // clonedEntry.children = []
       result.push(clonedEntry)
     }
 

@@ -60,7 +60,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
   setHeader(): void {
     const navItem = this.mainNavItems.find((item) => item.routeTo === this.currentNavId)
-    this.currentMainNavItem = navItem
+    if (navItem?.routeTo !== 'home') {
+      this.currentMainNavItem = navItem
+    }
     this.currentTabNav = navItem?.tabNav
   }
 }

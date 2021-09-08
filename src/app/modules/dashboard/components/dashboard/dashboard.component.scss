@@ -1,3 +1,96 @@
 .test {
   color: var(--num-color--accent);
 }
+
+h2 {
+  border-bottom: none !important;
+  font-size: 2.8vw;
+  padding-top: 3% !important;
+}
+@media screen and (min-width: 1401px) {
+  h2 {
+    font-size: 30pt;
+  }
+}
+@media screen and (max-width: 600px) {
+  h2 {
+    font-size: 14pt;
+  }
+}
+.paragraphBox {
+  padding: 1% 0 4% 0;
+  font-size: 1.5vw;
+  line-height: 2.4vw;
+}
+@media screen and (min-width: 1601px) {
+  .paragraphBox {
+    font-size: 18pt;
+    line-height: 40px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .paragraphBox {
+    font-size: 10pt;
+    line-height: 15px;
+  }
+}
+.paragraphBox p {
+  padding-bottom: 1%;
+}
+.newQueryBox,
+.myQueryBox {
+  cursor: pointer;
+  width: 40%;
+  border-width: 4px;
+  border-style: double;
+  border-color: white;
+  text-align: center;
+  padding: 2%;
+}
+.newQueryBox a,
+.myQueryBox a {
+  text-decoration: none !important;
+}
+.newQueryBox {
+  background: var(--num-color--accent-300);
+}
+.newQueryBox:hover {
+  background: var(--num-color--accent-400);
+}
+.myQueryBox {
+  background: var(--num-color--primary-300);
+}
+.myQueryBox:hover {
+  background: var(--num-color--primary-400);
+}
+.queryBoxHeader {
+  padding-bottom: 5%;
+  font-size: 2vw;
+  font-weight: bold;
+  color: var(--num-color--primary-100);
+}
+@media screen and (min-width: 1401px) {
+  .queryBoxHeader {
+    font-size: 20pt;
+  }
+}
+@media screen and (max-width: 600px) {
+  .queryBoxHeader {
+    font-size: 10pt;
+  }
+}
+.queryBoxText {
+  padding-bottom: 3%;
+  font-size: 1.5vw;
+  color: var(--num-color--primary-100);
+}
+@media screen and (min-width: 1401px) {
+  .queryBoxText {
+    font-size: 16pt;
+  }
+}
+@media screen and (max-width: 600px) {
+  .queryBoxText {
+    font-size: 10pt;
+  }
+}

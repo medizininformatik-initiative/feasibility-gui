@@ -20,6 +20,7 @@ export class TermEntry2CriterionTranslator {
     termEntry.valueDefinitions.forEach((valueDefinition) => {
       criterion.valueFilters.push(this.createValueFilter(valueDefinition))
     })
+    criterion.children = termEntry.children
     criterion.timeRestriction = this.createTimeRestriction(termEntry)
 
     return criterion
