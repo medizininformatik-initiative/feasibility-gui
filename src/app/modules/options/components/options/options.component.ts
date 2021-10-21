@@ -36,6 +36,7 @@ export class OptionsComponent implements OnInit {
   postmanSync: string
   getResponse: string
   fhirport: string
+  queryVersion: string
 
   constructor(
     public featureService: FeatureService,
@@ -51,6 +52,7 @@ export class OptionsComponent implements OnInit {
     this.pollingTime = this.features.options.pollingtimeinseconds
     this.pollingIntervall = this.features.options.pollingintervallinseconds
     this.fhirport = this.features.fhirport
+    this.queryVersion = this.features.queryVersion
 
     this.translatedQuery = new ApiTranslator().translateToV1(this.query)
     this.postQuery('translate').subscribe(
@@ -120,6 +122,11 @@ export class OptionsComponent implements OnInit {
 
   setFhirPort(): void {
     this.features.fhirport = this.fhirport
+    this.featureProviderService.storeFeatures(this.features)
+  }
+
+  setQueryVersion(version: MatRadioChange): void {
+    this.features.queryVersion = version.value
     this.featureProviderService.storeFeatures(this.features)
   }
 

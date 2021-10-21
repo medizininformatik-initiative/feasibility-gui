@@ -17,6 +17,9 @@ export class EditValueFilterComponent implements OnInit {
   @Input()
   filter: ValueFilter
 
+  @Input()
+  filterType: string
+
   QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
   QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
   CONCEPT = OperatorOptions.CONCEPT
@@ -36,6 +39,11 @@ export class EditValueFilterComponent implements OnInit {
     )
 
     this.filter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
+      if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
+        this.selectedUnit = allowedUnit
+      }
+    })
+    this.filter?.attributeDefinition?.allowedUnits?.forEach((allowedUnit) => {
       if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
         this.selectedUnit = allowedUnit
       }

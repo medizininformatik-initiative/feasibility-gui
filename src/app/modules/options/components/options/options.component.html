@@ -1,4 +1,14 @@
 <div fxLayout="column" fxLayoutAlign="space-around start" class="maingroup">
+  <div fxLayout="column" fxLayoutAlign="space-around" class="maingroup">
+    <mat-radio-group
+      class="example-radio-group"
+      (change)="setQueryVersion($event)"
+      [(ngModel)]="queryVersion"
+    >
+      <mat-radio-button class="example-radio-button" value="v1">Codex - SQv1</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="v2">ABIDE - SQv2</mat-radio-button>
+    </mat-radio-group>
+  </div>
   <div class="maingroup">
     <div>
       <mat-checkbox

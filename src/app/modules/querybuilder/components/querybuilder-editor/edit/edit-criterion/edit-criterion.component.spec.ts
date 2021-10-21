@@ -87,7 +87,7 @@ describe('EditCriterionComponent', () => {
   }
 
   const criterion = new Criterion()
-  criterion.termCode = { code: 'A', system: 'http://test', display: 'Some Code' }
+  criterion.termCodes = [{ code: 'A', system: 'http://test', display: 'Some Code' }]
   criterion.valueFilters = [valueFilter]
 
   const valueFilter2 = {

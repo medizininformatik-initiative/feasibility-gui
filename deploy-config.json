@@ -41,5 +41,6 @@
   },
   "stylesheet": "codexTheme",
   "fhirport": "8082",
-  "dataset": "codex"
+  "dataset": "codex",
+  "queryVersion": "v1"
 }

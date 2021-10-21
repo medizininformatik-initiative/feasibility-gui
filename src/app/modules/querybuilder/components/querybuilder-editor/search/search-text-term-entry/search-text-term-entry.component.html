@@ -1,8 +1,6 @@
 <div *ngIf="node && node.selectable" (click)="fireChoose()" class="container">
   <div fxLayout="row" fxLayoutAlign="start top">
-    <div class="code-part" fxFlex="8em">
-      {{ node.termCode.code }}
-    </div>
+    <div class="code-part" fxFlex="8em">{{ node.termCode?.code }}{{ node.termCodes[0]?.code }}</div>
     <div class="display-part">
       {{ node.display }}
     </div>

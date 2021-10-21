@@ -114,11 +114,13 @@ describe('EditSingleCriterionComponent', () => {
         valueDefinition,
       },
     ]
-    criterion.termCode = {
-      code: 'a',
-      system: 'http://test',
-      display: 'none',
-    }
+    criterion.termCodes = [
+      {
+        code: 'a',
+        system: 'http://test',
+        display: 'none',
+      },
+    ]
     component.criterion = criterion
 
     fixture.detectChanges()

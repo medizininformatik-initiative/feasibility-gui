@@ -35,7 +35,8 @@ export class EnterCriterionListComponent implements OnInit {
     public featureService: FeatureService
   ) {
     this.translator = new TermEntry2CriterionTranslator(
-      this.featureService.useFeatureTimeRestriction()
+      this.featureService.useFeatureTimeRestriction(),
+      this.featureService.getQueryVersion()
     )
 
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry))

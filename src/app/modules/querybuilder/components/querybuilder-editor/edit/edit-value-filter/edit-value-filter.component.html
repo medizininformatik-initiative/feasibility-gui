@@ -83,8 +83,21 @@
     </mat-form-field>
     <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
       <mat-label>{{ 'QUERYBUILDER.EDIT.UNIT' | translate }}</mat-label>
-      <mat-select [(value)]="filter.unit" [compareWith]="compareFunction">
+      <mat-select
+        *ngIf="filterType === 'value'"
+        [(value)]="filter.unit"
+        [compareWith]="compareFunction"
+      >
         <mat-option *ngFor="let unit of filter.valueDefinition?.allowedUnits" [value]="unit">
+          {{ unit.display }}
+        </mat-option>
+      </mat-select>
+      <mat-select
+        *ngIf="filterType === 'attribute'"
+        [(value)]="filter.unit"
+        [compareWith]="compareFunction"
+      >
+        <mat-option *ngFor="let unit of filter.attributeDefinition?.allowedUnits" [value]="unit">
           {{ unit.display }}
         </mat-option>
       </mat-select>
@@ -102,9 +115,18 @@
         'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_FOR_DISPLAY' | translate: { label: filter.display }
       }}
     </div>
-    <div class="concept-list mat-elevation-z2">
+    <div *ngIf="filterType === 'value'" class="concept-list mat-elevation-z2">
       <num-edit-value-filter-concept-line
         *ngFor="let concept of filter.valueDefinition?.selectableConcepts"
+        [checked]="isSelected(concept)"
+        [concept]="concept"
+        (selectConcept)="doSelectConcept(concept)"
+      >
+      </num-edit-value-filter-concept-line>
+    </div>
+    <div *ngIf="filterType === 'attribute'" class="concept-list mat-elevation-z2">
+      <num-edit-value-filter-concept-line
+        *ngFor="let concept of filter.attributeDefinition?.selectableConcepts"
         [checked]="isSelected(concept)"
         [concept]="concept"
         (selectConcept)="doSelectConcept(concept)"

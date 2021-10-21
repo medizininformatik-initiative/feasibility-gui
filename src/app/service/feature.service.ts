@@ -77,6 +77,13 @@ export class FeatureService {
       return this.appConfig.getConfig().fhirport
     }
   }
+  public getQueryVersion(): string {
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().queryVersion
+    } else {
+      return this.appConfig.getConfig().queryVersion
+    }
+  }
   public getDataset(): string {
     return this.appConfig.getConfig().dataset
   }

@@ -66,8 +66,14 @@ export class BackendService {
       return of({ location: BackendService.MOCK_RESULT_URL })
     }
 
-    const queryV1 = new ApiTranslator().translateToV1(query)
-    return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV1)
+    if (this.feature.getQueryVersion() === 'v1') {
+      const queryV1 = new ApiTranslator().translateToV1(query)
+      return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV1)
+    }
+    if (this.feature.getQueryVersion() === 'v2') {
+      const queryV2 = new ApiTranslator().translateToV2(query)
+      return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV2)
+    }
   }
 
   public getResult(resultUrl: string): Observable<QueryResult> {

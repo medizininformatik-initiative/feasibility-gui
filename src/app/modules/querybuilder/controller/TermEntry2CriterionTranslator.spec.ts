@@ -5,7 +5,7 @@ import { ValueDefinition, ValueType } from '../model/api/terminology/valuedefini
 import { Comparator, OperatorOptions, ValueFilter } from '../model/api/query/valueFilter'
 
 describe('TermEntry2CriterionTranslator', () => {
-  const translator = new TermEntry2CriterionTranslator()
+  const translator = new TermEntry2CriterionTranslator(false, 'v1')
 
   function createTermEntry(): TerminologyEntry {
     return {
@@ -25,11 +25,13 @@ describe('TermEntry2CriterionTranslator', () => {
   function createExpectedCriterion(): Criterion {
     return {
       children: [],
-      termCode: {
-        code: 'A',
-        display: 'none',
-        system: 'http://test',
-      },
+      termCodes: [
+        {
+          code: 'A',
+          display: 'none',
+          system: 'http://test',
+        },
+      ],
       display: 'ui-display',
       valueFilters: [],
     }

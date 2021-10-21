@@ -43,6 +43,9 @@ describe('EnterCriterionListComponent', () => {
     useFeatureTimeRestriction(): boolean {
       return true
     },
+    getQueryVersion(): string {
+      return 'v2'
+    },
   } as FeatureService
 
   beforeEach(async () => {

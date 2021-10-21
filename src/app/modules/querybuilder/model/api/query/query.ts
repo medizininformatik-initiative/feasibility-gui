@@ -1,5 +1,5 @@
 import { Group } from './group'
-import { CriterionOnlyV1 } from './criterion'
+import { CriterionOnlyV1, CriterionOnlyV2 } from './criterion'
 
 // The atomic building block of a query is a Criterion (e.g. "Geschlecht: weiblich")
 //
@@ -39,4 +39,13 @@ export class QueryOnlyV1 {
   inclusionCriteria: CriterionOnlyV1[][] = []
   // disjunctive normal form (without negation)
   exclusionCriteria: CriterionOnlyV1[][] = []
+}
+export class QueryOnlyV2 {
+  version = 'http://to_be_decided.com/draft-1/schema#'
+  display = ''
+
+  // conjunctive normal form (without negation)
+  inclusionCriteria: CriterionOnlyV2[][] = []
+  // disjunctive normal form (without negation)
+  exclusionCriteria: CriterionOnlyV2[][] = []
 }
