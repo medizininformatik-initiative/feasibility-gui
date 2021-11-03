@@ -27,6 +27,12 @@ export class EnterCriterionListComponent implements OnInit {
   groupIndex: number
   critType: CritType
   query: Query
+  actionDisabled = true
+  criterionAddibleList: Array<{
+    criterion: Criterion
+    groupID: number
+    isAddible: boolean
+  }> = []
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
@@ -45,7 +51,16 @@ export class EnterCriterionListComponent implements OnInit {
     this.query = data.query
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.criterionList.forEach((thisCriterium) => {
+      this.criterionAddibleList.push({
+        criterion: thisCriterium,
+        groupID: undefined,
+        isAddible: undefined,
+      })
+    })
+    console.log(this.criterionList)
+  }
 
   doSave(event: { groupId: number }, criterion: Criterion): void {
     const index = this.query.groups.findIndex((group) => group.id === event.groupId)
@@ -64,10 +79,37 @@ export class EnterCriterionListComponent implements OnInit {
     this.doDiscard(criterion)
   }
 
+  registerAllAddible(event: { groupId: number; isaddible: boolean }, criterion: Criterion): void {
+    const element = this.criterionAddibleList.find(
+      (criterionTemp) => criterionTemp.criterion.display === criterion.display
+    )
+    element.isAddible = event.isaddible
+    element.groupID = event.groupId
+
+    this.actionDisabled = this.getAddibleList().length < 1
+  }
+
+  doSaveAll(): void {
+    this.getAddibleList().forEach((thisCriterium) => {
+      if (thisCriterium.isAddible) {
+        this.doSave({ groupId: thisCriterium.groupID }, thisCriterium.criterion)
+      }
+    })
+    this.actionDisabled = this.getAddibleList().length < 1
+  }
+
+  getAddibleList(): Array<any> {
+    return this.criterionAddibleList.filter((list) => list.isAddible)
+  }
+
   doDiscard(criterion: Criterion): void {
     const index = this.criterionList.findIndex((critrionTemp) => critrionTemp === criterion)
+    const index2 = this.criterionAddibleList.findIndex(
+      (critrionTemp) => critrionTemp.criterion === criterion
+    )
 
     this.criterionList.splice(index, 1)
+    this.criterionAddibleList.splice(index2, 1)
     if (this.criterionList.length === 0) {
       this.dialogRef.close()
     }

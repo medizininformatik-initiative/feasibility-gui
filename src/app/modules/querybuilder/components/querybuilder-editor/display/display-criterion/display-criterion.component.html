@@ -1,6 +1,6 @@
 <div class="crit-box" fxLayout="row">
   <div fxFlex="20" class="code-part">
-    <div *ngFor="let termcode of criterion.termCodes">{{ termcode.code }}</div>
+    <div *ngFor="let termcode of criterion.termCodes">{{ termcode?.code }}</div>
   </div>
   <div fxFlex="80" class="display-part" (click)="openDetailsPopUp()">
     <div class="header-display">{{ criterion.display }}</div>

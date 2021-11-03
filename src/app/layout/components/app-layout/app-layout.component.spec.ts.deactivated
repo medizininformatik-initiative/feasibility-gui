@@ -19,6 +19,8 @@ import { FeatureService } from '../../../service/feature.service'
 import INavItem from '../../models/nav-item.interface'
 import { ActivatedRouteSnapshot, ActivationEnd, ActivationStart, Router } from '@angular/router'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import {FeatureProviderService} from "../../../modules/querybuilder/service/feature-provider.service";
+import {IAppConfig} from "../../../config/app-config.model";
 
 describe('AppLayoutComponent', () => {
   let component: AppLayoutComponent
@@ -43,6 +45,12 @@ describe('AppLayoutComponent', () => {
       },
     } as FeatureService
 
+    const featureProviderService = {
+      getFeatures(): IAppConfig {
+      //  return {env:{name:""},}
+      },
+    } as FeatureProviderService
+    
     await TestBed.configureTestingModule({
       declarations: [
         AppLayoutComponent,
@@ -83,6 +91,10 @@ describe('AppLayoutComponent', () => {
           provide: OAuthService,
           useValue: authService,
         },
+        {
+          provide: FeatureProviderService,
+          useValue: featureProviderService,
+        }
       ],
     }).compileComponents()
   })

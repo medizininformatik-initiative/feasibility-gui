@@ -18,7 +18,11 @@
       [filterType]="'attribute'"
     >
     </num-edit-value-definition>
-    <num-display-entities [criterionEntity]="criterion" [query]="query"></num-display-entities>
+    <num-display-entities
+      *ngIf="criterion.entity"
+      [criterionEntity]="criterion"
+      [query]="query"
+    ></num-display-entities>
     <num-edit-time-restriction
       *ngIf="featureService.useFeatureTimeRestriction()"
       [timeRestriction]="criterion.timeRestriction"

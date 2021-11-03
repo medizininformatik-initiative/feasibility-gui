@@ -9,7 +9,7 @@ export class Criterion {
   // termCode?: TerminologyCode
   termCodes?: Array<TerminologyCode> = []
   display: string
-
+  entity?: boolean
   valueFilters: Array<ValueFilter> = []
   attributeFilters?: Array<ValueFilter> = []
   children?: Array<TerminologyEntry> = []

@@ -1,11 +1,11 @@
-<div fxLayout="row" fxLayoutAlign="start">
+<div fxLayout="row" fxLayoutAlign="start center">
   <div class="result-text">
-    <div>{{ 'DISPLAY.PATIENT_NUMBER' | translate }}:</div>
-    <div *ngIf="result; else showZeroPatients" class="number-of-patients">
+    {{ 'DISPLAY.PATIENT_NUMBER' | translate }}:
+    <span *ngIf="result; else showZeroPatients" class="number-of-patients">
       {{ backend.obfuscateResult(result?.totalNumberOfPatients) }}
-    </div>
+    </span>
     <ng-template #showZeroPatients>
-      <div class="number-of-patients">0</div>
+      <span class="number-of-patients">0</span>
     </ng-template>
   </div>
   <num-button

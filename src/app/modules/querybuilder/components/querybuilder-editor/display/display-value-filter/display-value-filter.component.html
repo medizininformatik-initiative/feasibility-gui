@@ -1,5 +1,9 @@
 <div *ngIf="filter" class="container">
   <div *ngIf="filter.type === CONCEPT">
+    <span *ngIf="filter.display">{{ filter.display }}{{ ': ' }}></span>
+    <span *ngIf="filter.attributeDefinition?.attributeCode?.display"
+      >{{ filter.attributeDefinition?.attributeCode?.display }}{{ ': ' }}</span
+    >
     {{ 'QUERYBUILDER.DISPLAY.ONE_OF' | translate }}
     <span *ngIf="filter.selectedConcepts as selected">
       <span *ngIf="selected[0] as termCode">{{ termCode.display }}</span>
@@ -11,6 +15,10 @@
   </div>
 
   <div *ngIf="filter.type === QUANTITY_COMPARATOR">
+    <span *ngIf="filter.display">{{ filter.display }}{{ ': ' }}></span>
+    <span *ngIf="filter.attributeDefinition?.attributeCode?.display"
+      >{{ filter.attributeDefinition?.attributeCode?.display }}{{ ': ' }}</span
+    >
     <fa-icon
       *ngIf="featureService.useFeatureShowDisplayValueFilterIcon()"
       size="1x"
@@ -24,6 +32,10 @@
   </div>
 
   <div *ngIf="filter.type === QUANTITY_RANGE">
+    <span *ngIf="filter.display">{{ filter.display }}{{ ': ' }}></span>
+    <span *ngIf="filter.attributeDefinition?.attributeCode?.display"
+      >{{ filter.attributeDefinition?.attributeCode?.display }}{{ ': ' }}</span
+    >
     {{
       'QUERYBUILDER.DISPLAY.BETWEEN'
         | translate: { min: filter.minValue, max: filter.maxValue, unit: filter.unit.display }

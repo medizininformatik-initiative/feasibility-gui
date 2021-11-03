@@ -39,6 +39,9 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
   save = new EventEmitter<{ groupId: number }>()
 
   @Output()
+  addible = new EventEmitter<{ groupId: number; isaddible: boolean }>()
+
+  @Output()
   discard = new EventEmitter<void>()
 
   @ViewChildren(EditValueFilterComponent) valueFilterComponents: QueryList<EditValueFilterComponent>
@@ -81,10 +84,11 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
   }
 
   isActionDisabled(): boolean {
-    return (
+    const addibleTemp =
       !this.valueFilterComponents ||
       !!this.valueFilterComponents.find((filterComoponent) => filterComoponent.isActionDisabled())
-    )
+    this.addible.emit({ groupId: this.selectedGroupId, isaddible: !addibleTemp })
+    return addibleTemp
   }
 
   getValueFilters(): ValueFilter[] {

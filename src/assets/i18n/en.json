@@ -75,6 +75,9 @@
         "HINT_NOT_DELETABLE_LINKED_GROUP": "Groups linked with subgroups cannot be deleted"
       }
     },
+    "OVERVIEW": {
+      "TITLE_LABEL": "Title"
+    },
     "EDIT": {
       "HEADER": "Restrictions of selected concepts",
       "HEADER_FILTER_QUANTITY": "Choose a value restriction:",
@@ -141,6 +144,7 @@
     "CANCEL": "Cancel",
     "CLOSE": "Close",
     "ADD": "Add",
+    "ADDALL": "Add all",
     "SEND": "Send",
     "RESET": "Reset",
     "RESULTDETAILS": "Details"

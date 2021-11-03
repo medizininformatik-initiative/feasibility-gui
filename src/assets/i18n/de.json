@@ -75,6 +75,9 @@
         "HINT_NOT_DELETABLE_LINKED_GROUP": "Gruppen mit verbundener Untergruppe können nicht gelöscht werden"
       }
     },
+    "OVERVIEW": {
+      "TITLE_LABEL": "Titel"
+    },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",
       "HEADER_FILTER_QUANTITY": "Geben Sie einen Wertebereich ein:",
@@ -141,7 +144,8 @@
     "CANCEL": "Abbrechen",
     "CLOSE": "Schließen",
     "ADD": "Hinzufügen",
-    "SEND": "Senden",
+    "ADDALL": "Alle hinzufügen",
+    "SEND": "Abfrage starten",
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details"
   },

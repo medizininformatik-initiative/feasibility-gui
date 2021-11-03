@@ -14,18 +14,19 @@
 }
 
 .header-label {
-  width: 36%;
+  /*width: 36%;*/
   min-width: min-content;
   background-color: var(--num-color--accent-600);
   color: var(--num-color--accent-contrast);
   text-align: center;
-  border-bottom-right-radius: 5px;
   font-size: 16px;
   padding: 2px 0px;
+  text-align: center;
 }
 
 .button-tree-view {
   background-color: var(--num-color--primary-900);
+  margin-top: 8px;
 }
 .button-tree-view:hover {
   background-color: var(--num-color--primary);

@@ -2,6 +2,8 @@
 @import './colors/primary-theme.palette.scss';
 @import 'src/styles/themes/colors/codex-accent-theme.palette';
 @import 'src/styles/themes/colors/codex-primary-theme.palette';
+@import 'src/styles/themes/colors/abide-accent-theme.palette';
+@import 'src/styles/themes/colors/abide-primary-theme.palette';
 @import './colors/additional-theme.palette.scss';
 @import './theme-palettes/mat-light-theme-background';
 @import './theme-palettes/mat-light-theme-foreground';
@@ -11,6 +13,8 @@ $num-portal-webapp-primary: mat-palette($num-primary-palette);
 $num-portal-webapp-accent: mat-palette($num-accent-palette);
 $num-portal-webapp-primary-codex: mat-palette($num-codex-primary-palette);
 $num-portal-webapp-accent-codex: mat-palette($num-codex-accent-palette);
+$num-portal-webapp-primary-abide: mat-palette($num-abide-primary-palette);
+$num-portal-webapp-accent-abide: mat-palette($num-abide-accent-palette);
 $num-portal-webapp-additional: mat-palette($num-additional-palette, warning);
 
 $mat-light-theme-foreground: mat-light-theme-foreground(
@@ -18,8 +22,13 @@ $mat-light-theme-foreground: mat-light-theme-foreground(
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
-$mat-light-theme2-foreground: mat-light-theme-foreground(
+$mat-light-theme-codex-foreground: mat-light-theme-foreground(
   $num-portal-webapp-primary-codex,
+  $num-portal-webapp-accent,
+  $num-portal-webapp-additional
+);
+$mat-light-theme-abide-foreground: mat-light-theme-foreground(
+  $num-portal-webapp-primary-abide,
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
@@ -28,8 +37,13 @@ $mat-light-theme-background: mat-light-theme-background(
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
-$mat-light-theme2-background: mat-light-theme-background(
+$mat-light-theme-codex-background: mat-light-theme-background(
   $num-portal-webapp-primary-codex,
+  $num-portal-webapp-accent,
+  $num-portal-webapp-additional
+);
+$mat-light-theme-abide-background: mat-light-theme-background(
+  $num-portal-webapp-primary-abide,
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
@@ -55,12 +69,26 @@ $mat-light-theme2-background: mat-light-theme-background(
       warn: $num-portal-webapp-additional,
       additional: $num-portal-webapp-additional,
       is-dark: false,
-      foreground: $mat-light-theme-foreground,
-      background: $mat-light-theme-background,
+      foreground: $mat-light-theme-codex-foreground,
+      background: $mat-light-theme-codex-background,
+      num-typography: $num-typography
+    );
+  }
+  @if ($theme == 'abide') {
+    @return (
+      name: 'abide',
+      primary: $num-portal-webapp-primary-abide,
+      accent: $num-portal-webapp-accent-abide,
+      warn: $num-portal-webapp-additional,
+      additional: $num-portal-webapp-additional,
+      is-dark: false,
+      foreground: $mat-light-theme-abide-foreground,
+      background: $mat-light-theme-abide-background,
       num-typography: $num-typography
     );
   }
 }
 
 $num-portal-webapp-theme: num-theme-builder('primary');
-$num-portal-webapp-theme2: num-theme-builder('codex');
+$num-portal-webapp-theme-codex: num-theme-builder('codex');
+$num-portal-webapp-theme-abide: num-theme-builder('abide');

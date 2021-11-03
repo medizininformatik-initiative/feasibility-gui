@@ -22,6 +22,7 @@ export class TermEntry2CriterionTranslator {
     const criterion = new Criterion()
 
     criterion.display = termEntry.display
+    criterion.entity = termEntry.entity
     if (this.queryVersion === 'v1') {
       termEntry.valueDefinitions.forEach((valueDefinition) => {
         criterion.valueFilters.push(this.createValueFilter(valueDefinition))

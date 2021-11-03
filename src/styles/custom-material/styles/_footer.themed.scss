@@ -17,4 +17,11 @@
       border-top: 1px rgba(0, 0, 0, 0.2) solid;
     }
   }
+  @if ($name == 'abide') {
+    .num-footer {
+      background: mat-color($background, white);
+      color: mat-contrast($primary, 200);
+      border-top: 1px rgba(0, 0, 0, 0.2) solid;
+    }
+  }
 }

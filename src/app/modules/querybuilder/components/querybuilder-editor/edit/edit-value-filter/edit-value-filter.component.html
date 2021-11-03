@@ -1,13 +1,25 @@
 <div *ngIf="filter">
   <!-- QUANTITY -->
   <div *ngIf="filter.type === QUANTITY_RANGE || filter.type === QUANTITY_COMPARATOR">
-    <div *ngIf="!filter.display">{{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}</div>
-    <div *ngIf="filter.display">
+    <div *ngIf="filterType === 'value' && !filter.display">
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
+    </div>
+    <div *ngIf="filterType === 'value' && filter.display">
       {{
         'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY_FOR_DISPLAY'
           | translate: { label: filter.display }
       }}
     </div>
+    <div *ngIf="filterType === 'attribute' && !filter.attributeDefinition.attributeCode.display">
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
+    </div>
+    <div *ngIf="filterType === 'attribute' && filter.attributeDefinition.attributeCode.display">
+      {{
+        'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY_FOR_DISPLAY'
+          | translate: { label: filter.attributeDefinition.attributeCode.display }
+      }}
+    </div>
+
     <mat-form-field appearance="outline" *ngIf="filter?.unit" class="operator-part">
       <mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>
       <mat-select [(value)]="quantityFilterOption">
@@ -109,10 +121,21 @@
 
   <!-- CONCEPT -->
   <div *ngIf="filter.type === CONCEPT">
-    <div *ngIf="!filter.display">{{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT' | translate }}</div>
-    <div *ngIf="filter.display">
+    <div *ngIf="filterType === 'value' && !filter.display">
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT' | translate }}
+    </div>
+    <div *ngIf="filterType === 'value' && filter.display">
       {{
         'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_FOR_DISPLAY' | translate: { label: filter.display }
+      }}
+    </div>
+    <div *ngIf="filterType === 'attribute' && !filter.attributeDefinition.attributeCode.display">
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT' | translate }}
+    </div>
+    <div *ngIf="filterType === 'attribute' && filter.attributeDefinition.attributeCode.display">
+      {{
+        'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_FOR_DISPLAY'
+          | translate: { label: filter.attributeDefinition.attributeCode.display }
       }}
     </div>
     <div *ngIf="filterType === 'value'" class="concept-list mat-elevation-z2">

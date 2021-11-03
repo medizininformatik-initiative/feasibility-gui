@@ -1,1 +1,29 @@
 <h2>Overview</h2>
+<div class="save-query-box">
+  <div class="save-query-header">Abspeichern der aktuellen Suchanfrage</div>
+  <div>
+    <mat-form-field class="input-field" fxFlex="30">
+      <mat-label>{{ 'QUERYBUILDER.OVERVIEW.TITLE_LABEL' | translate }}</mat-label>
+      <!--suppress HtmlFormInputWithoutLabel -->
+      <input matInput type="text" [(ngModel)]="title" />
+    </mat-form-field>
+    <num-button [type]="'primary'" [isDisabled]="" (click)="doSave()" class="button-save">
+      {{ 'BUTTON.SAVE' | translate }}
+    </num-button>
+  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Kommentar</mat-label>
+    <textarea matInput [(ngModel)]="comment"></textarea>
+  </mat-form-field>
+</div>
+<div *ngFor="let singleQuery of savedQueries; index as i" class="query-box">
+  <num-single-query
+    [index]="i"
+    [singleQuery]="singleQuery.query"
+    [singleTitle]="singleQuery.title"
+    [singleComment]="singleQuery.comment"
+    [singleDate]="singleQuery.date"
+    (click)="loadQuery(singleQuery.query)"
+  >
+  </num-single-query>
+</div>

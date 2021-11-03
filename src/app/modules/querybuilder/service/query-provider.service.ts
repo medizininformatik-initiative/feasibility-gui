@@ -11,6 +11,7 @@ import { GroupFactory } from '../controller/GroupFactory'
 })
 export class QueryProviderService {
   STORAGE_QUERY_KEY = 'QUERY'
+  SAVE_QUERY_KEY = 'SAVEDQUERIES'
 
   constructor(@Inject(LOCAL_STORAGE) public storage: StorageService) {}
 
@@ -21,6 +22,13 @@ export class QueryProviderService {
 
   public store(query: Query): void {
     this.storage.set(this.STORAGE_QUERY_KEY, query)
+  }
+
+  public saveQueries(queries: Array<any>): void {
+    this.storage.set(this.SAVE_QUERY_KEY, queries)
+  }
+  public loadQueries(): Array<any> {
+    return this.storage.get(this.SAVE_QUERY_KEY)
   }
 
   public static createDefaultQuery(): Query {

@@ -15,4 +15,10 @@
       color: mat-contrast($primary, 200) !important;
     }
   }
+  @if ($name == 'abide') {
+    num-header mat-toolbar {
+      background: mat-color($primary, A400) !important;
+      color: mat-contrast($primary, 200) !important;
+    }
+  }
 }

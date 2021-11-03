@@ -5,14 +5,21 @@
 
 .query-group {
   padding: 0;
+  border: 1px solid var(--num-color--primary);
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  box-shadow: none !important;
 }
 
 .query-group mat-card-header {
   background: var(--num-color--accent-600);
   color: var(--num-color--accent-contrast);
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
   min-height: 3.5em;
+}
+.crit-group-spacer {
+  background-color: var(--num-color--accent-600);
 }
 
 .header-display {

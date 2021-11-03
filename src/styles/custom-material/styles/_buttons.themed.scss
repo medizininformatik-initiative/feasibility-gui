@@ -45,6 +45,14 @@
           color: mat-contrast($primary, 900);
         }
       }
+      @if ($name == 'abide') {
+        color: mat-contrast($primary, 900);
+        background-color: mat-color($primary, 900);
+        border-color: mat-color($primary, 500);
+        fa-icon {
+          color: mat-contrast($primary, 900);
+        }
+      }
       &:hover:not(.mat-button-disabled) {
         background: mat-color($primary, 700);
         box-shadow: $raised-shadow;
@@ -61,6 +69,11 @@
           border-color: mat-color($primary, 100);
         }
         @if ($name == 'codex') {
+          background: mat-color($primary, 100);
+          border-color: mat-color($primary, 500);
+          color: mat-color($primary, 500);
+        }
+        @if ($name == 'abide') {
           background: mat-color($primary, 100);
           border-color: mat-color($primary, 500);
           color: mat-color($primary, 500);
@@ -90,6 +103,11 @@
           border-color: mat-color($primary, 500);
           color: mat-color($primary, 500);
         }
+        @if ($name == 'abide') {
+          background: mat-color($primary, 200);
+          border-color: mat-color($primary, 500);
+          color: mat-color($primary, 500);
+        }
         box-shadow: $raised-shadow;
       }
 
@@ -103,6 +121,11 @@
           border-color: mat-color($primary, 100);
         }
         @if ($name == 'codex') {
+          background: mat-color($primary, 100);
+          border-color: mat-color($primary, 500);
+          color: mat-color($primary, 500);
+        }
+        @if ($name == 'abide') {
           background: mat-color($primary, 100);
           border-color: mat-color($primary, 500);
           color: mat-color($primary, 500);
