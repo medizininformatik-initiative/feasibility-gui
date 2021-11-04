@@ -19,11 +19,11 @@ export class FooterComponent implements OnInit, AfterViewInit {
     private featureProviderService: FeatureProviderService
   ) {
     this.config = appConfig.config
+    this.stylesheet = featureProviderService.getFeatures().stylesheet
   }
 
-  ngOnInit(): void {
-    this.stylesheet = this.featureProviderService.getFeatures().stylesheet
-  }
+  ngOnInit(): void {}
+
   ngAfterViewInit(): void {
     this.featureProviderService.setTheme(this.stylesheet, this.stylesheet)
   }

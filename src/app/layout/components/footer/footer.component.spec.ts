@@ -8,12 +8,34 @@ import { MaterialModule } from '../../material/material.module'
 
 import { FooterComponent } from './footer.component'
 import { LanguageComponent } from '../language/language.component'
+import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service'
 
 describe('FooterComponent', () => {
   let component: FooterComponent
   let fixture: ComponentFixture<FooterComponent>
   let appConfig: AppConfigService
+
   beforeEach(async () => {
+    const featureProviderService = {
+      getFeatures(): IAppConfig {
+        return {
+          env: null,
+          api: null,
+          uiBackendApi: null,
+          features: null,
+          stylesheet: 'abide',
+          auth: null,
+          dataset: null,
+          queryVersion: null,
+          options: null,
+          fhirport: null,
+          legal: null,
+          mock: null,
+        }
+      },
+      setTheme(oldTheme: string, newTheme: string): void {},
+    } as FeatureProviderService
+
     await TestBed.configureTestingModule({
       declarations: [FooterComponent, LanguageComponent],
       imports: [
@@ -21,6 +43,12 @@ describe('FooterComponent', () => {
         MaterialModule,
         TranslateModule.forRoot(),
         HttpClientTestingModule,
+      ],
+      providers: [
+        {
+          provide: FeatureProviderService,
+          useValue: featureProviderService,
+        },
       ],
     }).compileComponents()
   })
