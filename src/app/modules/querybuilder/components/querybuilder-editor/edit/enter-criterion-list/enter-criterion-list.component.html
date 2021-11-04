@@ -14,6 +14,10 @@
       </button>
     </div>
   </div>
+  <div class="mandatory-div">
+    <span class="mandatory-star">*</span
+    ><span> - {{ 'QUERYBUILDER.EDIT.MANDATORY_HINT' | translate }}</span>
+  </div>
   <div *ngIf="criterionList" class="crit-list">
     <num-edit-criterion
       *ngFor="let criterion of criterionList"

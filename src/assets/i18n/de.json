@@ -47,7 +47,7 @@
     "SEARCH": {
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
-      "LABEL": "Code oder Suchbegriff",
+      "LABEL": "Code oder Suchbegriff eingeben",
       "ALL": "Alle"
     },
     "SWITCH": {
@@ -85,6 +85,7 @@
       "HEADER_FILTER_CONCEPT": "Geben Sie einen oder mehrere zulässige Werte an:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
       "CHOOSE_GROUP":"Gruppe auswählen",
+      "MANDATORY_HINT": "Pflichtfeld",
       "UNIT": "Einheit",
       "MIN": "Min",
       "MAX": "Max",

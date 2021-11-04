@@ -9,3 +9,7 @@ mat-card-footer {
 .button-save {
   margin: 0 1em 0 2em;
 }
+
+::ng-deep num-edit-value-definition > div:first-child {
+  margin-bottom: 2em;
+}

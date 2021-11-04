@@ -133,6 +133,12 @@ export class EditValueFilterComponent implements OnInit {
   }
 
   public isActionDisabled(): boolean {
+    if (this.filter?.attributeDefinition) {
+      if (this.filter?.attributeDefinition?.optional) {
+        return false
+      }
+    }
+
     if (this.filter?.type === OperatorOptions.CONCEPT) {
       return this.noSelectedConcept()
     }

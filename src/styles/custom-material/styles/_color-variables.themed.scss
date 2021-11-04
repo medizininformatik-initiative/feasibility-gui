@@ -21,6 +21,8 @@
   --num-color--accent-600: #{mat-color($accent, 600)};
   --num-color--accent-700: #{mat-color($accent, 700)};
   --num-color--accent-A200: #{mat-color($accent, A200)};
+  --num-color--accent-A300: #{mat-color($accent, A300)};
+  --num-color--accent-A700: #{mat-color($accent, A700)};
 
   --num-color--primary-contrast: #{mat-contrast($primary, default)};
   --num-color--accent-contrast: #{mat-contrast($accent, 500)};

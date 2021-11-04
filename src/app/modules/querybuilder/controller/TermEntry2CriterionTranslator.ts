@@ -43,6 +43,7 @@ export class TermEntry2CriterionTranslator {
     }
     criterion.children = termEntry.children
     criterion.timeRestriction = this.createTimeRestriction(termEntry)
+    criterion.optional = termEntry.optional
 
     return criterion
   }

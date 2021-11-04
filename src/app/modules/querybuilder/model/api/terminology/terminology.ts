@@ -60,6 +60,7 @@ export class TerminologyEntry {
   leaf: boolean
   entity: boolean
   children: TerminologyEntry[] = []
+  optional?: boolean
 
   valueDefinition?: ValueDefinition
   valueDefinitions?: Array<ValueDefinition> = []

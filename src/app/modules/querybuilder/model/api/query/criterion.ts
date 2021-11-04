@@ -10,6 +10,7 @@ export class Criterion {
   termCodes?: Array<TerminologyCode> = []
   display: string
   entity?: boolean
+  optional?: boolean
   valueFilters: Array<ValueFilter> = []
   attributeFilters?: Array<ValueFilter> = []
   children?: Array<TerminologyEntry> = []

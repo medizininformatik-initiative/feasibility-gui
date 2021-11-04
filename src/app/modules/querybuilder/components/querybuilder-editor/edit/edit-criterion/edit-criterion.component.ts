@@ -86,7 +86,7 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
   isActionDisabled(): boolean {
     const addibleTemp =
       !this.valueFilterComponents ||
-      !!this.valueFilterComponents.find((filterComoponent) => filterComoponent.isActionDisabled())
+      !!this.valueFilterComponents.find((filterComponent) => filterComponent.isActionDisabled())
     this.addible.emit({ groupId: this.selectedGroupId, isaddible: !addibleTemp })
     return addibleTemp
   }
