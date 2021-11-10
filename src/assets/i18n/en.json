@@ -76,13 +76,17 @@
       }
     },
     "OVERVIEW": {
-      "TITLE_LABEL": "Title"
+      "TITLE_LABEL": "Title",
+      "COMMENT_LABEL": "Comment",
+      "SAVE_HEADER": "Save the current query",
+      "LOAD_HEADER": "load previous queries"
     },
     "EDIT": {
       "HEADER": "Restrictions of selected concepts",
       "HEADER_FILTER_QUANTITY": "Choose a value restriction:",
       "HEADER_FILTER_QUANTITY_FOR_DISPLAY": "Choose a value restriction ({{ label }}):",
-      "HEADER_FILTER_CONCEPT": "Choose one or more valid values:",
+      "HEADER_FILTER_CONCEPT_OPTIONAL": "Choose one or more valid values:",
+      "HEADER_FILTER_CONCEPT_MANDATORY": "Choose one or more valid values:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Choose one or more valid values ({{ label }}):",
       "CHOOSE_GROUP":"Choose a group",
       "MANDATORY_HINT": "Mandatory field",

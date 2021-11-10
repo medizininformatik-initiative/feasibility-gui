@@ -9,6 +9,7 @@ import { MaterialModule } from '../../material/material.module'
 import { FooterComponent } from './footer.component'
 import { LanguageComponent } from '../language/language.component'
 import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service'
+import { FeatureService } from '../../../service/feature.service'
 
 describe('FooterComponent', () => {
   let component: FooterComponent
@@ -16,6 +17,12 @@ describe('FooterComponent', () => {
   let appConfig: AppConfigService
 
   beforeEach(async () => {
+    const featureService = {
+      getStylesheet(): string {
+        return 'abideTheme'
+      },
+    } as FeatureService
+
     const featureProviderService = {
       getFeatures(): IAppConfig {
         return {
@@ -48,6 +55,10 @@ describe('FooterComponent', () => {
         {
           provide: FeatureProviderService,
           useValue: featureProviderService,
+        },
+        {
+          provide: FeatureService,
+          useValue: featureService,
         },
       ],
     }).compileComponents()

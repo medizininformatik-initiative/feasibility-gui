@@ -1,21 +1,29 @@
-<h2>Overview</h2>
+<h2>{{ 'QUERYBUILDER.OVERVIEW.SAVE_HEADER' | translate }}</h2>
 <div class="save-query-box">
-  <div class="save-query-header">Abspeichern der aktuellen Suchanfrage</div>
-  <div>
-    <mat-form-field class="input-field" fxFlex="30">
-      <mat-label>{{ 'QUERYBUILDER.OVERVIEW.TITLE_LABEL' | translate }}</mat-label>
-      <!--suppress HtmlFormInputWithoutLabel -->
-      <input matInput type="text" [(ngModel)]="title" />
-    </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="start start">
+    <div fxFlex="50" fxLayout="column" fxLayoutAlign="space-around center">
+      <mat-form-field class="input-field">
+        <mat-label>{{ 'QUERYBUILDER.OVERVIEW.TITLE_LABEL' | translate }}</mat-label>
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <input matInput type="text" [(ngModel)]="title" />
+      </mat-form-field>
+      <mat-form-field class="input-field" appearance="fill">
+        <mat-label>{{ 'QUERYBUILDER.OVERVIEW.COMMENT_LABEL' | translate }}</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="2"
+          cdkAutosizeMaxRows="5"
+          [(ngModel)]="comment"
+        ></textarea>
+      </mat-form-field>
+    </div>
     <num-button [type]="'primary'" [isDisabled]="" (click)="doSave()" class="button-save">
       {{ 'BUTTON.SAVE' | translate }}
     </num-button>
   </div>
-  <mat-form-field appearance="fill">
-    <mat-label>Kommentar</mat-label>
-    <textarea matInput [(ngModel)]="comment"></textarea>
-  </mat-form-field>
 </div>
+<h2 class="loading-header">{{ 'QUERYBUILDER.OVERVIEW.LOAD_HEADER' | translate }}</h2>
 <div *ngFor="let singleQuery of savedQueries; index as i" class="query-box">
   <num-single-query
     [index]="i"

@@ -43,6 +43,9 @@ describe('AppLayoutComponent', () => {
       useFeatureOptionsPage(): boolean {
         return true
       },
+      getStylesheet(): string {
+        return 'abideTheme'
+      },
     } as FeatureService
 
     const featureProviderService = {

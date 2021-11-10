@@ -1,5 +1,11 @@
 .container {
-  margin: 2em 0 0 0;
+  margin: 1em 0 0 0;
+}
+
+.container > div:first-child {
+  padding: 1em;
+  border: 2px solid var(--num-color--accent-200);
+  border-radius: 5px;
 }
 
 .mat-date-range-input {
@@ -13,4 +19,7 @@
 .mat-radio-button {
   padding: 0 0 0.5em 0;
   width: max-content;
+}
+::ng-deep num-edit-time-restriction .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
 }

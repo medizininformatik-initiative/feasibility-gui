@@ -5,26 +5,18 @@
     <span *ngIf="filterType === 'value' && !filter.display">
       {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
     </span>
-    <span *ngIf="filterType === 'value' && filter.display">
-      {{
-        'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY_FOR_DISPLAY'
-          | translate: { label: filter.display }
-      }}
-    </span>
+    <span *ngIf="filterType === 'value' && filter.display"> {{ filter.display }}: </span>
     <span
       *ngIf="filterType === 'attribute' && !filter.attributeDefinition.optional"
       class="required-flag"
     >
       *
     </span>
+    <span *ngIf="filterType === 'attribute' && filter.attributeDefinition.attributeCode.display">
+      {{ filter.attributeDefinition.attributeCode.display }}:
+    </span>
     <span *ngIf="filterType === 'attribute' && !filter.attributeDefinition.attributeCode.display">
       {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
-    </span>
-    <span *ngIf="filterType === 'attribute' && filter.attributeDefinition.attributeCode.display">
-      {{
-        'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY_FOR_DISPLAY'
-          | translate: { label: filter.attributeDefinition.attributeCode.display }
-      }}
     </span>
     <br />
 
@@ -131,31 +123,39 @@
   <div *ngIf="filter.type === CONCEPT">
     <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
     <span *ngIf="filterType === 'value' && !filter.display">
-      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT' | translate }}
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
     </span>
-    <span *ngIf="filterType === 'value' && filter.display">
-      {{
-        'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_FOR_DISPLAY' | translate: { label: filter.display }
-      }}
-    </span>
+    <span *ngIf="filterType === 'value' && filter.display"> {{ filter.display }}: </span>
     <span
       *ngIf="filterType === 'attribute' && !filter.attributeDefinition.optional"
       class="required-flag"
     >
       *
     </span>
-    <span *ngIf="filterType === 'attribute' && !filter.attributeDefinition.attributeCode.display">
-      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT' | translate }}
+    <span
+      *ngIf="
+        filterType === 'attribute' &&
+        !filter.attributeDefinition.attributeCode.display &&
+        filter.attributeDefinition.optional
+      "
+    >
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_OPTIONAL' | translate }}
+    </span>
+    <span
+      *ngIf="
+        filterType === 'attribute' &&
+        !filter.attributeDefinition.attributeCode.display &&
+        !filter.attributeDefinition.optional
+      "
+    >
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
     </span>
     <span *ngIf="filterType === 'attribute' && filter.attributeDefinition.attributeCode.display">
-      {{
-        'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_FOR_DISPLAY'
-          | translate: { label: filter.attributeDefinition.attributeCode.display }
-      }}
+      {{ filter.attributeDefinition.attributeCode.display }}:
     </span>
     <br />
 
-    <div *ngIf="filterType === 'value'" class="concept-list mat-elevation-z2">
+    <div *ngIf="filterType === 'value'" class="concept-list">
       <num-edit-value-filter-concept-line
         *ngFor="let concept of filter.valueDefinition?.selectableConcepts"
         [checked]="isSelected(concept)"
@@ -164,7 +164,7 @@
       >
       </num-edit-value-filter-concept-line>
     </div>
-    <div *ngIf="filterType === 'attribute'" class="concept-list mat-elevation-z2">
+    <div *ngIf="filterType === 'attribute'" class="concept-list">
       <num-edit-value-filter-concept-line
         *ngFor="let concept of filter.attributeDefinition?.selectableConcepts"
         [checked]="isSelected(concept)"
@@ -173,8 +173,14 @@
       >
       </num-edit-value-filter-concept-line>
     </div>
-    <mat-hint *ngIf="noSelectedConcept()">{{
+    <mat-hint *ngIf="filterType === 'value' && noSelectedConcept()">{{
       'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate
     }}</mat-hint>
+    <mat-hint
+      *ngIf="
+        filterType === 'attribut' && !filter.attributeDefinition.optional && noSelectedConcept()
+      "
+      >{{ 'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate }}</mat-hint
+    >
   </div>
 </div>

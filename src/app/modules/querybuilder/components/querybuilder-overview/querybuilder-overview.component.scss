@@ -1,3 +1,13 @@
 :host {
   width: 100%;
 }
+
+textarea {
+  box-sizing: content-box;
+}
+.input-field {
+  width: 90%;
+}
+.save-query-box {
+  margin-bottom: 5em;
+}

@@ -107,10 +107,14 @@ export class BackendService {
   }
 
   obfuscateResult(result: number): string {
-    if (result <= this.lowerBoundary) {
-      return '< ' + this.lowerBoundary.toString()
+    if (result === 0) {
+      return '0'
     } else {
-      return result.toString()
+      if (result <= this.lowerBoundary) {
+        return '< ' + this.lowerBoundary.toString()
+      } else {
+        return result.toString()
+      }
     }
   }
 }

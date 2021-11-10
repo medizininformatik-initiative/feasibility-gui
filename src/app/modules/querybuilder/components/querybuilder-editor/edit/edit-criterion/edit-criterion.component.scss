@@ -10,6 +10,16 @@ mat-card-footer {
   margin: 0 1em 0 2em;
 }
 
+.mat-card-header h4 {
+  font-weight: 500;
+}
 ::ng-deep num-edit-value-definition > div:first-child {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
+  padding: 1em;
+  border: 2px solid var(--num-color--accent-200);
+  border-radius: 5px;
+}
+
+::ng-deep num-edit-value-definition .mat-form-field-wrapper {
+  padding-bottom: 0.5em !important;
 }

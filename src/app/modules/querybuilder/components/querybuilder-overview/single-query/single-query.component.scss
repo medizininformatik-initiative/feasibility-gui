@@ -1,15 +1,26 @@
 .query-box {
   cursor: pointer;
-  width: 120px;
+  width: 50%;
   border-width: 4px;
   border-style: double;
   border-color: white;
-  text-align: center;
-  padding: 10px;
+  padding: 10px 20px;
   margin: 5px 0;
   color: white;
-  background: var(--num-color--accent-300);
+  background-color: var(--num-color--accent-400);
 }
 .query-box:hover {
-  background: var(--num-color--accent-400);
+  background-color: var(--num-color--accent-300);
+}
+.query-box-title {
+  width: 70%;
+  font-size: 16px;
+}
+.query-box-date {
+  width: 30%;
+  text-align: right;
+}
+.query-box-comment {
+  margin-top: 10px;
+  font-size: 12px;
 }

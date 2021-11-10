@@ -11,6 +11,7 @@ import { OAuthService, UserInfo } from 'angular-oauth2-oidc'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service'
 import { IAppConfig } from '../../../config/app-config.model'
+import { FeatureService } from '../../../service/feature.service'
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent
@@ -27,6 +28,12 @@ describe('HeaderComponent', () => {
       return true
     },
   } as OAuthService
+
+  const featureService = {
+    getStylesheet(): string {
+      return 'abideTheme'
+    },
+  } as FeatureService
 
   const featureProviderService = {
     getFeatures(): IAppConfig {
@@ -66,6 +73,10 @@ describe('HeaderComponent', () => {
         {
           provide: FeatureProviderService,
           useValue: featureProviderService,
+        },
+        {
+          provide: FeatureService,
+          useValue: featureService,
         },
       ],
     }).compileComponents()

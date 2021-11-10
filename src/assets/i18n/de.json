@@ -76,13 +76,17 @@
       }
     },
     "OVERVIEW": {
-      "TITLE_LABEL": "Titel"
+      "TITLE_LABEL": "Titel",
+      "COMMENT_LABEL": "Kommentar",
+      "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
+      "LOAD_HEADER": "bisherige Suchanfragen"
     },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",
       "HEADER_FILTER_QUANTITY": "Geben Sie einen Wertebereich ein:",
       "HEADER_FILTER_QUANTITY_FOR_DISPLAY": "Geben Sie einen Wertebereich ein ({{ label }}):",
-      "HEADER_FILTER_CONCEPT": "Geben Sie einen oder mehrere zulässige Werte an:",
+      "HEADER_FILTER_CONCEPT_OPTIONAL": "Wählen Sie einen oder mehrere zulässige Werte:",
+      "HEADER_FILTER_CONCEPT_MANDATORY": "Geben Sie einen oder mehrere zulässige Werte an:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
       "CHOOSE_GROUP":"Gruppe auswählen",
       "MANDATORY_HINT": "Pflichtfeld",
