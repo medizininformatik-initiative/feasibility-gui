@@ -2,6 +2,7 @@ import { Query, QueryOnlyV1, QueryOnlyV2 } from '../model/api/query/query'
 import { Criterion, CriterionOnlyV1, CriterionOnlyV2 } from '../model/api/query/criterion'
 import { ObjectHelper } from './ObjectHelper'
 import { OperatorOptions } from '../model/api/query/valueFilter'
+import { TimeRestrictionType } from '../model/api/query/timerestriction'
 
 // translates a query with groups to the agreed format of queries in version 1 (without groups)
 export class ApiTranslator {
@@ -108,7 +109,7 @@ export class ApiTranslator {
           criterionV2.valueFilter.valueDefinition = undefined
         }
 
-        // this.removeNonApiFieldsV2(criterionV2)
+        this.editTimeRestrictionsV2(criterionV2)
         innerArrayV2.push(criterionV2)
       })
       result.push(innerArrayV2)
@@ -118,34 +119,58 @@ export class ApiTranslator {
   }
 
   // noinspection JSMethodCanBeStatic
-  private removeNonApiFieldsV2(criterion: CriterionOnlyV2): void {
-    if (criterion.valueFilter) {
-      criterion.valueFilter.valueDefinition = null
-      criterion.valueFilter.max = undefined
-      criterion.valueFilter.min = undefined
-      criterion.valueFilter.precision = undefined
+  private editTimeRestrictionsV2(criterion: CriterionOnlyV2): void {
+    if (criterion.timeRestriction.minDate) {
+      criterion.timeRestriction.beforeDate = new Date()
+      criterion.timeRestriction.afterDate = new Date()
+      const minTemp = new Date(criterion.timeRestriction.minDate)
+      const maxTemp = new Date(criterion.timeRestriction.maxDate)
 
-      if (criterion.valueFilter.type === OperatorOptions.CONCEPT) {
-        criterion.valueFilter.comparator = undefined
-        criterion.valueFilter.maxValue = undefined
-        criterion.valueFilter.minValue = undefined
-        criterion.valueFilter.value = undefined
-        criterion.valueFilter.unit = undefined
-      } else if (criterion.valueFilter.type === OperatorOptions.QUANTITY_RANGE) {
-        criterion.valueFilter.comparator = undefined
-        criterion.valueFilter.value = undefined
-        criterion.valueFilter.selectedConcepts = undefined
-        if (criterion.valueFilter.unit.code === '') {
-          criterion.valueFilter.unit = undefined
+      switch (criterion.timeRestriction.tvpe) {
+        case TimeRestrictionType.AFTER: {
+          criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
+          criterion.timeRestriction.beforeDate = undefined
+          break
         }
-      } else if (criterion.valueFilter.type === OperatorOptions.QUANTITY_COMPARATOR) {
-        criterion.valueFilter.minValue = undefined
-        criterion.valueFilter.maxValue = undefined
-        criterion.valueFilter.selectedConcepts = undefined
-        if (criterion.valueFilter.unit.code === '') {
-          criterion.valueFilter.unit = undefined
+        case TimeRestrictionType.AFTER_OR_AT: {
+          criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+          criterion.timeRestriction.beforeDate = undefined
+          break
+        }
+        case TimeRestrictionType.BEFORE: {
+          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
+          criterion.timeRestriction.afterDate = undefined
+          break
+        }
+        case TimeRestrictionType.BEFORE_OR_AT: {
+          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
+          criterion.timeRestriction.afterDate = undefined
+          break
+        }
+        case TimeRestrictionType.AT: {
+          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
+          criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+          break
+        }
+        case TimeRestrictionType.NOT_AT: {
+          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
+          criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
+          break
+        }
+        case TimeRestrictionType.BETWEEN: {
+          if (criterion.timeRestriction.maxDate) {
+            criterion.timeRestriction.beforeDate.setDate(maxTemp.getDate())
+            criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+          } else {
+            criterion.timeRestriction.beforeDate = undefined
+            criterion.timeRestriction.afterDate = undefined
+          }
+          break
         }
       }
     }
+    criterion.timeRestriction.tvpe = undefined
+    criterion.timeRestriction.minDate = undefined
+    criterion.timeRestriction.maxDate = undefined
   }
 }

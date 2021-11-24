@@ -101,11 +101,18 @@
       "GREATER_THAN": "more than",
       "BETWEEN": "between",
       "TIMERESTRICTION": {
-        "LABEL": "Time range",
+        "LABEL": "Date",
         "EVER": "All occurrences in",
         "LATEST": "Latest occurrence in",
         "FROM": "from",
-        "TO": "to"
+        "TO": "to",
+        "AT": "at",
+        "NOT_AT": "not at",
+        "BEFORE": "before",
+        "BEFORE_OR_AT": "before or at",
+        "AFTER": "after",
+        "AFTER_OR_AT": "after or at",
+        "BETWEEN": "between"
       },
       "GROUPS": {
         "HEADER_LINKED_GROUPS": "Relation between linked groups",
@@ -152,7 +159,8 @@
     "ADDALL": "Add all",
     "SEND": "Send",
     "RESET": "Reset",
-    "RESULTDETAILS": "Details"
+    "RESULTDETAILS": "Details",
+    "SAVEQUERY": "Save query"
   },
   "DISPLAY": {
     "PATIENT_NUMBER": "Number of patients"

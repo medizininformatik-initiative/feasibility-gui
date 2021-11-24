@@ -101,11 +101,18 @@
       "GREATER_THAN": "größer",
       "BETWEEN": "zwischen",
       "TIMERESTRICTION": {
-        "LABEL": "Zeitraum",
+        "LABEL": "Datum",
         "EVER": "Alle Ereignisse liegen im Zeitraum",
         "LATEST": "Aktuellstes Ereignis liegt im Zeitraum",
         "FROM": "von",
-        "TO": "bis"
+        "TO": "bis",
+        "AT": "am",
+        "NOT_AT": "nicht am",
+        "BEFORE": "vor",
+        "BEFORE_OR_AT": "vor oder am",
+        "AFTER": "nach",
+        "AFTER_OR_AT": "nach oder am",
+        "BETWEEN": "zwischen"
       },
       "GROUPS": {
         "HEADER_LINKED_GROUPS": "Beziehung zwischen Gruppen",
@@ -152,7 +159,8 @@
     "ADDALL": "Alle hinzufügen",
     "SEND": "Abfrage starten",
     "RESET": "Zurücksetzen",
-    "RESULTDETAILS": "Details"
+    "RESULTDETAILS": "Details",
+    "SAVEQUERY": "Abfrage speichern"
   },
   "DISPLAY": {
     "PATIENT_NUMBER": "Anzahl der Patienten"

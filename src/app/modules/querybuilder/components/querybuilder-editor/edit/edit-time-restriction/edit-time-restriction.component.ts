@@ -10,8 +10,8 @@ export class EditTimeRestrictionComponent implements OnInit {
   @Input()
   timeRestriction: TimeRestriction
 
-  optionEver = TimeRestrictionType.EVER
-  optionLatest = TimeRestrictionType.LATEST
+  timeRestrictionOptions = Object.keys(TimeRestrictionType)
+  timeRestrictionType: typeof TimeRestrictionType = TimeRestrictionType
 
   constructor() {}
 

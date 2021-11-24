@@ -20,6 +20,14 @@
         </num-button>
         <num-button
           [type]="'primary'"
+          [isDisabled]="actionDisabledReset"
+          (click)="doSave()"
+          class="button-save"
+        >
+          {{ 'BUTTON.SAVEQUERY' | translate }}
+        </num-button>
+        <num-button
+          [type]="'primary'"
           [isDisabled]="actionDisabledSend"
           (click)="doSend()"
           class="button-send"
