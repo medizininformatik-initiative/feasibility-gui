@@ -47,7 +47,7 @@
     "SEARCH": {
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
-      "LABEL": "Code or display",
+      "LABEL": "enter code or display",
       "ALL": "All"
     },
     "SWITCH": {
@@ -65,7 +65,7 @@
         "BOTH": "between {{ from }} and {{ to }}",
         "FROM": "later than {{ from }}",
         "TO": "before {{ to }}",
-        "NONE": "keine zeitliche Einschränkung"
+        "NONE": "no time restriction"
       },
       "GROUPS": {
         "LINKEDGROUPS": "groups are linked",
@@ -75,13 +75,21 @@
         "HINT_NOT_DELETABLE_LINKED_GROUP": "Groups linked with subgroups cannot be deleted"
       }
     },
+    "OVERVIEW": {
+      "TITLE_LABEL": "Title",
+      "COMMENT_LABEL": "Comment",
+      "SAVE_HEADER": "Save the current query",
+      "LOAD_HEADER": "load previous queries"
+    },
     "EDIT": {
       "HEADER": "Restrictions of selected concepts",
       "HEADER_FILTER_QUANTITY": "Choose a value restriction:",
       "HEADER_FILTER_QUANTITY_FOR_DISPLAY": "Choose a value restriction ({{ label }}):",
-      "HEADER_FILTER_CONCEPT": "Choose one or more valid values:",
+      "HEADER_FILTER_CONCEPT_OPTIONAL": "Choose one or more valid values:",
+      "HEADER_FILTER_CONCEPT_MANDATORY": "Choose one or more valid values:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Choose one or more valid values ({{ label }}):",
       "CHOOSE_GROUP":"Choose a group",
+      "MANDATORY_HINT": "Mandatory field",
       "UNIT": "Unit",
       "MIN": "Min",
       "MAX": "Max",
@@ -93,11 +101,18 @@
       "GREATER_THAN": "more than",
       "BETWEEN": "between",
       "TIMERESTRICTION": {
-        "LABEL": "Time range",
+        "LABEL": "Date",
         "EVER": "All occurrences in",
         "LATEST": "Latest occurrence in",
         "FROM": "from",
-        "TO": "to"
+        "TO": "to",
+        "AT": "at",
+        "NOT_AT": "not at",
+        "BEFORE": "before",
+        "BEFORE_OR_AT": "before or at",
+        "AFTER": "after",
+        "AFTER_OR_AT": "after or at",
+        "BETWEEN": "between"
       },
       "GROUPS": {
         "HEADER_LINKED_GROUPS": "Relation between linked groups",
@@ -129,7 +144,7 @@
       "MINIMUM_EXCEEDED": "Value must be at least {{ min }}",
       "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}",
       "SEARCH_TEXT_NO_INPUT": "Enter a search criteria or open the category tree view",
-      "NO_CRITERIA_SELECTED": "Choose at least one criteria"
+      "NO_CRITERIA_SELECTED": "Choose at least one inclusion criteria"
     }
   },
   "LEGAL": {
@@ -141,9 +156,11 @@
     "CANCEL": "Cancel",
     "CLOSE": "Close",
     "ADD": "Add",
+    "ADDALL": "Add all",
     "SEND": "Send",
     "RESET": "Reset",
-    "RESULTDETAILS": "Details"
+    "RESULTDETAILS": "Details",
+    "SAVEQUERY": "Save query"
   },
   "DISPLAY": {
     "PATIENT_NUMBER": "Number of patients"

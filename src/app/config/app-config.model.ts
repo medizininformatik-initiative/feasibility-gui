@@ -42,4 +42,5 @@ export interface IAppConfig {
   stylesheet: string
   fhirport: string
   dataset: string
+  queryVersion: string
 }

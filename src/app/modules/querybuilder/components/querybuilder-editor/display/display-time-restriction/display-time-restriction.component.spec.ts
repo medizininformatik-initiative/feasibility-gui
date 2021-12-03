@@ -26,46 +26,6 @@ describe('DisplayTimeRestrictionComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should restrict "NONE"', () => {
-    component.timeRestriction = {
-      tvpe: TimeRestrictionType.EVER,
-      minDate: undefined,
-      maxDate: undefined,
-    }
-
-    expect(component.getTranslationKeyInterval()).toBe('NONE')
-  })
-
-  it('should restrict "FROM"', () => {
-    component.timeRestriction = {
-      tvpe: TimeRestrictionType.EVER,
-      minDate: new Date(),
-      maxDate: undefined,
-    }
-
-    expect(component.getTranslationKeyInterval()).toBe('FROM')
-  })
-
-  it('should restrict "TO"', () => {
-    component.timeRestriction = {
-      tvpe: TimeRestrictionType.EVER,
-      minDate: undefined,
-      maxDate: new Date(),
-    }
-
-    expect(component.getTranslationKeyInterval()).toBe('TO')
-  })
-
-  it('should restrict "BOTH"', () => {
-    component.timeRestriction = {
-      tvpe: TimeRestrictionType.EVER,
-      minDate: new Date(),
-      maxDate: new Date(),
-    }
-
-    expect(component.getTranslationKeyInterval()).toBe('BOTH')
-  })
-
   it('should format to empty string', () => {
     expect(component.getDateFormatted(null)).toBe('')
   })

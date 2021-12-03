@@ -1,4 +1,14 @@
 <div fxLayout="column" fxLayoutAlign="space-around start" class="maingroup">
+  <div fxLayout="column" fxLayoutAlign="space-around" class="maingroup">
+    <mat-radio-group
+      class="example-radio-group"
+      (change)="setQueryVersion($event)"
+      [(ngModel)]="queryVersion"
+    >
+      <mat-radio-button class="example-radio-button" value="v1">Codex - SQv1</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="v2">ABIDE - SQv2</mat-radio-button>
+    </mat-radio-group>
+  </div>
   <div class="maingroup">
     <div>
       <mat-checkbox
@@ -57,8 +67,15 @@
       (change)="setStylesheet($event)"
       [(ngModel)]="stylesheet"
     >
-      <mat-radio-button class="example-radio-button" value="primaryTheme">Style 1</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="codexTheme">Style 2</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="primaryTheme"
+        >Primary Style</mat-radio-button
+      >
+      <mat-radio-button class="example-radio-button" value="codexTheme"
+        >Codex Style</mat-radio-button
+      >
+      <mat-radio-button class="example-radio-button" value="abideTheme"
+        >Abide Style</mat-radio-button
+      >
     </mat-radio-group>
   </div>
   <div fxLayout="column" fxLayoutAlign="space-around" class="maingroup">
@@ -93,10 +110,23 @@
     </mat-form-field>
   </div>
   <div class="maingroup">
-    <div>Structured Query v1</div>
-    <textarea id="query-textfield" name="query-textfield" rows="20" cols="100">{{
-      translatedQuery | json
-    }}</textarea>
+    <div>Structured Query {{ queryVersion }}</div>
+    <textarea
+      *ngIf="queryVersion === 'v1'"
+      class="query-textfield"
+      name="query-textfield"
+      rows="20"
+      cols="100"
+      >{{ translatedQueryv1 | json }}</textarea
+    >
+    <textarea
+      *ngIf="queryVersion === 'v2'"
+      class="query-textfield"
+      name="query-textfield"
+      rows="20"
+      cols="100"
+      >{{ translatedQueryv2 | json }}</textarea
+    >
   </div>
   <div class="maingroup">
     <div>localhost:5000/query-translate</div>

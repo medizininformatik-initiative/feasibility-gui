@@ -47,7 +47,7 @@
     "SEARCH": {
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
-      "LABEL": "Code oder Suchbegriff",
+      "LABEL": "Code oder Suchbegriff eingeben",
       "ALL": "Alle"
     },
     "SWITCH": {
@@ -75,13 +75,21 @@
         "HINT_NOT_DELETABLE_LINKED_GROUP": "Gruppen mit verbundener Untergruppe können nicht gelöscht werden"
       }
     },
+    "OVERVIEW": {
+      "TITLE_LABEL": "Titel",
+      "COMMENT_LABEL": "Kommentar",
+      "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
+      "LOAD_HEADER": "bisherige Suchanfragen"
+    },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",
       "HEADER_FILTER_QUANTITY": "Geben Sie einen Wertebereich ein:",
       "HEADER_FILTER_QUANTITY_FOR_DISPLAY": "Geben Sie einen Wertebereich ein ({{ label }}):",
-      "HEADER_FILTER_CONCEPT": "Geben Sie einen oder mehrere zulässige Werte an:",
+      "HEADER_FILTER_CONCEPT_OPTIONAL": "Wählen Sie einen oder mehrere zulässige Werte:",
+      "HEADER_FILTER_CONCEPT_MANDATORY": "Geben Sie einen oder mehrere zulässige Werte an:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
       "CHOOSE_GROUP":"Gruppe auswählen",
+      "MANDATORY_HINT": "Pflichtfeld",
       "UNIT": "Einheit",
       "MIN": "Min",
       "MAX": "Max",
@@ -93,11 +101,18 @@
       "GREATER_THAN": "größer",
       "BETWEEN": "zwischen",
       "TIMERESTRICTION": {
-        "LABEL": "Zeitraum",
+        "LABEL": "Datum",
         "EVER": "Alle Ereignisse liegen im Zeitraum",
         "LATEST": "Aktuellstes Ereignis liegt im Zeitraum",
         "FROM": "von",
-        "TO": "bis"
+        "TO": "bis",
+        "AT": "am",
+        "NOT_AT": "nicht am",
+        "BEFORE": "vor",
+        "BEFORE_OR_AT": "vor oder am",
+        "AFTER": "nach",
+        "AFTER_OR_AT": "nach oder am",
+        "BETWEEN": "zwischen"
       },
       "GROUPS": {
         "HEADER_LINKED_GROUPS": "Beziehung zwischen Gruppen",
@@ -141,9 +156,11 @@
     "CANCEL": "Abbrechen",
     "CLOSE": "Schließen",
     "ADD": "Hinzufügen",
-    "SEND": "Senden",
+    "ADDALL": "Alle hinzufügen",
+    "SEND": "Abfrage starten",
     "RESET": "Zurücksetzen",
-    "RESULTDETAILS": "Details"
+    "RESULTDETAILS": "Details",
+    "SAVEQUERY": "Abfrage speichern"
   },
   "DISPLAY": {
     "PATIENT_NUMBER": "Anzahl der Patienten"

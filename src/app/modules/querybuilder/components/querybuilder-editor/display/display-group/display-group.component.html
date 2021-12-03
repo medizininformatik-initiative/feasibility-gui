@@ -99,8 +99,9 @@
         (storeQuery)="doStoreQuery($event)"
         (dropped)="doDrop($event)"
         (delete)="doDelete($event, 'inclusion')"
-        fxFlex="50"
+        fxFlex="49.5"
       ></num-display-crit-group>
+      <div fxFlex="1" class="crit-group-spacer"></div>
       <num-display-crit-group
         [critGroup]="group.exclusionCriteria"
         [query]="query"
@@ -110,7 +111,7 @@
         (storeQuery)="doStoreQuery($event)"
         (dropped)="doDrop($event)"
         (delete)="doDelete($event, 'exclusion')"
-        fxFlex="50"
+        fxFlex="49.5"
       ></num-display-crit-group>
     </div>
   </mat-card-content>

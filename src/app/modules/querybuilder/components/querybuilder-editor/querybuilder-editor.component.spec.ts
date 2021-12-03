@@ -35,6 +35,7 @@ import { QueryResult } from '../../model/api/result/QueryResult'
 import { QueryResponse } from '../../model/api/result/QueryResponse'
 import { Query } from '../../model/api/query/query'
 import { Group } from '../../model/api/query/group'
+import { RouterTestingModule } from '@angular/router/testing'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -99,6 +100,7 @@ describe('QuerybuilderEditorComponent', () => {
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
         HttpClientTestingModule,
+        RouterTestingModule,
       ],
       providers: [
         {

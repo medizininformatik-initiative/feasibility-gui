@@ -118,7 +118,7 @@ describe('DisplayGroupComponent', () => {
   it('should store in inclusionCriteria', () => {
     spyOn(component.storeQuery, 'emit')
     const criterion = new Criterion()
-    criterion.termCode = { code: 'a', system: 'b', display: 'c' }
+    criterion.termCodes = [{ code: 'a', system: 'b', display: 'c' }]
     const critGroup: Criterion[][] = [[criterion]]
     component.switch('inclusion', critGroup)
 
@@ -132,7 +132,7 @@ describe('DisplayGroupComponent', () => {
   it('should store in exclusionCriteria', () => {
     spyOn(component.storeQuery, 'emit')
     const criterion = new Criterion()
-    criterion.termCode = { code: 'a', system: 'b', display: 'c' }
+    criterion.termCodes = [{ code: 'a', system: 'b', display: 'c' }]
     const critGroup: Criterion[][] = [[criterion]]
     component.switch('exclusion', critGroup)
 

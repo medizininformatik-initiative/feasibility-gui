@@ -11,8 +11,13 @@
   @include custom-material_themed($num-portal-webapp-theme);
 }
 .codexTheme {
-  @include angular-material-theme($num-portal-webapp-theme2);
-  @include custom-material_themed($num-portal-webapp-theme2);
+  @include angular-material-theme($num-portal-webapp-theme-codex);
+  @include custom-material_themed($num-portal-webapp-theme-codex);
+}
+
+.abideTheme {
+  @include angular-material-theme($num-portal-webapp-theme-abide);
+  @include custom-material_themed($num-portal-webapp-theme-abide);
 }
 
 html,

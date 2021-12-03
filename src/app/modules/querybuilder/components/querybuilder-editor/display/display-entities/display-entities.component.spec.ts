@@ -17,7 +17,7 @@ describe('DisplayEntitiesComponent', () => {
   let fixture: ComponentFixture<DisplayEntitiesComponent>
   const EntityConcept: Criterion = {
     children: [],
-    termCode: new TerminologyCode(),
+    termCodes: [],
     display: '',
     valueFilters: [],
   }

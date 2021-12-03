@@ -77,6 +77,20 @@ export class FeatureService {
       return this.appConfig.getConfig().fhirport
     }
   }
+  public getQueryVersion(): string {
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().queryVersion
+    } else {
+      return this.appConfig.getConfig().queryVersion
+    }
+  }
+  public getStylesheet(): string {
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().stylesheet
+    } else {
+      return this.appConfig.getConfig().stylesheet
+    }
+  }
   public getDataset(): string {
     return this.appConfig.getConfig().dataset
   }

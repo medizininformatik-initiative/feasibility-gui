@@ -12,25 +12,12 @@ export class DisplayTimeRestrictionComponent implements OnInit {
   @Input()
   timeRestriction: TimeRestriction
 
-  readonly typeLatest = TimeRestrictionType.LATEST
+  readonly typeLatest = TimeRestrictionType.BETWEEN
+  timeRestrictionType: typeof TimeRestrictionType = TimeRestrictionType
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  getTranslationKeyInterval(): string {
-    if (this.timeRestriction.minDate && this.timeRestriction.maxDate) {
-      return 'BOTH'
-    }
-    if (this.timeRestriction.minDate) {
-      return 'FROM'
-    }
-    if (this.timeRestriction.maxDate) {
-      return 'TO'
-    }
-
-    return 'NONE'
-  }
 
   getDateFormatted(date: Date): string {
     return date ? moment(date).format('DD.MM.YYYY') : ''

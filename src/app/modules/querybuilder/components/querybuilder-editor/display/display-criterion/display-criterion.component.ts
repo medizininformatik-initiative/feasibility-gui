@@ -65,10 +65,27 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   }
 
   getValueFilters(): ValueFilter[] {
-    if (!this.featureService.useFeatureMultipleValueDefinitions()) {
-      return this.criterion.valueFilters.length === 0 ? [] : [this.criterion.valueFilters[0]]
-    }
+    if (this.criterion.valueFilters) {
+      if (!this.featureService.useFeatureMultipleValueDefinitions()) {
+        return this.criterion.valueFilters.length === 0 ? [] : [this.criterion.valueFilters[0]]
+      }
 
-    return this.criterion.valueFilters
+      return this.criterion.valueFilters
+    } else {
+      return []
+    }
+  }
+  getAttributeFilters(): ValueFilter[] {
+    if (this.criterion.attributeFilters) {
+      if (!this.featureService.useFeatureMultipleValueDefinitions()) {
+        return this.criterion.attributeFilters.length === 0
+          ? []
+          : [this.criterion.attributeFilters[0]]
+      }
+
+      return this.criterion.attributeFilters
+    } else {
+      return []
+    }
   }
 }

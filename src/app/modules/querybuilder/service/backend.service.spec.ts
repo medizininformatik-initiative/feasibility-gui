@@ -32,6 +32,9 @@ describe('BackendService', () => {
     mockResult(): boolean {
       return true
     },
+    getQueryVersion(): string {
+      return 'v2'
+    },
   } as FeatureService
 
   beforeEach(async () => {

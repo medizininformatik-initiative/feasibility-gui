@@ -7,10 +7,18 @@
   padding: 0 0 0 1em;
 }
 
-.codex-logo {
+.codexTheme,
+.abideTheme {
   max-width: 210px;
   box-shadow: 0 0 15px rgba(232, 235, 237, 1) inset;
   background-color: white;
+}
+.abideTheme {
+  /*margin-top: 60px;
+  max-height: 175px;
+  padding-left: 10px;*/
+  width: 210px;
+  height: 105px;
 }
 .mat-toolbar {
   height: 105px;

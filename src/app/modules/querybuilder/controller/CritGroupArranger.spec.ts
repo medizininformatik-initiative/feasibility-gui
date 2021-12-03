@@ -541,7 +541,7 @@ describe('CritGroupArranger', () => {
   function createCriterion(code: string): Criterion {
     return {
       display: code,
-      termCode: { code, display: code, system: code },
+      termCodes: [{ code, display: code, system: code }],
       valueFilters: [],
     }
   }

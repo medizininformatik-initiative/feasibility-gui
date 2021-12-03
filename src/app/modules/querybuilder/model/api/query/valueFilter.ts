@@ -1,12 +1,15 @@
 import { TerminologyCode } from '../terminology/terminology'
 import { transient } from '../annotations'
-import { ValueDefinition } from '../terminology/valuedefinition'
+import { AttributeDefinition, ValueDefinition } from '../terminology/valuedefinition'
 
 export class ValueFilter {
   type: OperatorOptions
 
   @transient()
   valueDefinition?: ValueDefinition
+
+  @transient()
+  attributeDefinition?: AttributeDefinition
 
   @transient()
   display?: string

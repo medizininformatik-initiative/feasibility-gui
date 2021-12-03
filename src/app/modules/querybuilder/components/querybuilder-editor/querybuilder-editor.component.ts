@@ -7,6 +7,7 @@ import { BackendService } from '../../service/backend.service'
 import { map, share, switchAll, takeUntil } from 'rxjs/operators'
 import { FeatureService } from '../../../../service/feature.service'
 import { GroupFactory } from '../../controller/GroupFactory'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'num-querybuilder',
@@ -35,7 +36,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     public queryProviderService: QueryProviderService,
     public backend: BackendService,
     public featureService: FeatureService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -110,6 +112,10 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.subscriptionResult = this.backend
       .postQuery(this.query)
       .subscribe((response) => this.startRequestingResult(response.location))
+  }
+
+  doSave(): void {
+    this.router.navigate(['/querybuilder/overview'])
   }
 
   doReset(): void {

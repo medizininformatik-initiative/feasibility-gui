@@ -39,6 +39,9 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
   save = new EventEmitter<{ groupId: number }>()
 
   @Output()
+  addible = new EventEmitter<{ groupId: number; isaddible: boolean }>()
+
+  @Output()
   discard = new EventEmitter<void>()
 
   @ViewChildren(EditValueFilterComponent) valueFilterComponents: QueryList<EditValueFilterComponent>
@@ -81,18 +84,36 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
   }
 
   isActionDisabled(): boolean {
-    return (
+    const addibleTemp =
       !this.valueFilterComponents ||
-      !!this.valueFilterComponents.find((filterComoponent) => filterComoponent.isActionDisabled())
-    )
+      !!this.valueFilterComponents.find((filterComponent) => filterComponent.isActionDisabled())
+    this.addible.emit({ groupId: this.selectedGroupId, isaddible: !addibleTemp })
+    return addibleTemp
   }
 
   getValueFilters(): ValueFilter[] {
-    if (!this.featureService.useFeatureMultipleValueDefinitions()) {
-      return this.criterion.valueFilters.length === 0 ? [] : [this.criterion.valueFilters[0]]
-    }
+    if (this.criterion.valueFilters) {
+      if (!this.featureService.useFeatureMultipleValueDefinitions()) {
+        return this.criterion.valueFilters.length === 0 ? [] : [this.criterion.valueFilters[0]]
+      }
 
-    return this.criterion.valueFilters
+      return this.criterion.valueFilters
+    } else {
+      return []
+    }
+  }
+  getAttributeFilters(): ValueFilter[] {
+    if (this.criterion.attributeFilters) {
+      if (!this.featureService.useFeatureMultipleValueDefinitions()) {
+        return this.criterion.attributeFilters.length === 0
+          ? []
+          : [this.criterion.attributeFilters[0]]
+      }
+
+      return this.criterion.attributeFilters
+    } else {
+      return []
+    }
   }
 
   moveBetweenGroups(): void {

@@ -9,6 +9,9 @@ import { LanguageComponent } from '../language/language.component'
 import { HeaderComponent } from './header.component'
 import { OAuthService, UserInfo } from 'angular-oauth2-oidc'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service'
+import { IAppConfig } from '../../../config/app-config.model'
+import { FeatureService } from '../../../service/feature.service'
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent
@@ -26,6 +29,32 @@ describe('HeaderComponent', () => {
     },
   } as OAuthService
 
+  const featureService = {
+    getStylesheet(): string {
+      return 'abideTheme'
+    },
+  } as FeatureService
+
+  const featureProviderService = {
+    getFeatures(): IAppConfig {
+      return {
+        env: null,
+        api: null,
+        uiBackendApi: null,
+        features: null,
+        stylesheet: 'abide',
+        auth: null,
+        dataset: null,
+        queryVersion: null,
+        options: null,
+        fhirport: null,
+        legal: null,
+        mock: null,
+      }
+    },
+    setTheme(oldTheme: string, newTheme: string): void {},
+  } as FeatureProviderService
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
@@ -40,6 +69,14 @@ describe('HeaderComponent', () => {
         {
           provide: OAuthService,
           useValue: authService,
+        },
+        {
+          provide: FeatureProviderService,
+          useValue: featureProviderService,
+        },
+        {
+          provide: FeatureService,
+          useValue: featureService,
         },
       ],
     }).compileComponents()

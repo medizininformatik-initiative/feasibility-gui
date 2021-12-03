@@ -1,7 +1,8 @@
-import { Query, QueryOnlyV1 } from '../model/api/query/query'
-import { Criterion, CriterionOnlyV1 } from '../model/api/query/criterion'
+import { Query, QueryOnlyV1, QueryOnlyV2 } from '../model/api/query/query'
+import { Criterion, CriterionOnlyV1, CriterionOnlyV2 } from '../model/api/query/criterion'
 import { ObjectHelper } from './ObjectHelper'
 import { OperatorOptions } from '../model/api/query/valueFilter'
+import { TimeRestrictionType } from '../model/api/query/timerestriction'
 
 // translates a query with groups to the agreed format of queries in version 1 (without groups)
 export class ApiTranslator {
@@ -29,14 +30,14 @@ export class ApiTranslator {
       const innerArrayV1: CriterionOnlyV1[] = []
       criterionArray.forEach((criterion) => {
         const criterionV1 = new CriterionOnlyV1()
-        criterionV1.termCode = criterion.termCode
+        criterionV1.termCode = criterion.termCodes[0]
         criterionV1.timeRestriction = criterion.timeRestriction
         if (criterion.valueFilters.length > 0) {
           criterionV1.valueFilter = criterion.valueFilters[0]
           criterionV1.valueFilter.valueDefinition = undefined
         }
 
-        this.removeNonApiFields(criterionV1)
+        this.removeNonApiFieldsV1(criterionV1)
         innerArrayV1.push(criterionV1)
       })
       result.push(innerArrayV1)
@@ -46,9 +47,9 @@ export class ApiTranslator {
   }
 
   // noinspection JSMethodCanBeStatic
-  private removeNonApiFields(criterion: CriterionOnlyV1): void {
+  private removeNonApiFieldsV1(criterion: CriterionOnlyV1): void {
     if (criterion.valueFilter) {
-      criterion.valueFilter.valueDefinition = null
+      // criterion.valueFilter.valueDefinition = null
       criterion.valueFilter.max = undefined
       criterion.valueFilter.min = undefined
       criterion.valueFilter.precision = undefined
@@ -75,5 +76,106 @@ export class ApiTranslator {
         }
       }
     }
+  }
+
+  translateToV2(query: Query): QueryOnlyV2 {
+    const result = new QueryOnlyV2()
+
+    result.display = query.display
+    const exclusionCriteria = ObjectHelper.clone(query.groups[0].exclusionCriteria)
+    const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria)
+
+    result.inclusionCriteria = this.translateCritGroupV2(inclusionCriteria)
+
+    if (exclusionCriteria.length > 0) {
+      result.exclusionCriteria = this.translateCritGroupV2(exclusionCriteria)
+    } else {
+      result.exclusionCriteria = undefined
+    }
+
+    return result
+  }
+
+  private translateCritGroupV2(inclusionCriteria: Criterion[][]): CriterionOnlyV2[][] {
+    const result: CriterionOnlyV2[][] = []
+    inclusionCriteria.forEach((criterionArray) => {
+      const innerArrayV2: CriterionOnlyV2[] = []
+      criterionArray.forEach((criterion) => {
+        const criterionV2 = new CriterionOnlyV2()
+        criterionV2.termCodes = criterion.termCodes
+        criterionV2.timeRestriction = criterion.timeRestriction
+        if (criterion.valueFilters.length > 0) {
+          criterionV2.valueFilter = criterion.valueFilters[0]
+          criterionV2.valueFilter.valueDefinition = undefined
+        }
+        if (criterion.attributeFilters.length > 0) {
+          criterionV2.attributeFilter = criterion.attributeFilters
+          criterionV2.attributeFilter.forEach((attibute) => {
+            attibute.attributeDefinition = undefined
+          })
+        }
+        this.editTimeRestrictionsV2(criterionV2)
+        innerArrayV2.push(criterionV2)
+      })
+      result.push(innerArrayV2)
+    })
+
+    return result
+  }
+
+  // noinspection JSMethodCanBeStatic
+  private editTimeRestrictionsV2(criterion: CriterionOnlyV2): void {
+    if (criterion.timeRestriction.minDate) {
+      criterion.timeRestriction.beforeDate = new Date()
+      criterion.timeRestriction.afterDate = new Date()
+      const minTemp = new Date(criterion.timeRestriction.minDate)
+      const maxTemp = new Date(criterion.timeRestriction.maxDate)
+
+      switch (criterion.timeRestriction.tvpe) {
+        case TimeRestrictionType.AFTER: {
+          criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
+          criterion.timeRestriction.beforeDate = undefined
+          break
+        }
+        case TimeRestrictionType.AFTER_OR_AT: {
+          criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+          criterion.timeRestriction.beforeDate = undefined
+          break
+        }
+        case TimeRestrictionType.BEFORE: {
+          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
+          criterion.timeRestriction.afterDate = undefined
+          break
+        }
+        case TimeRestrictionType.BEFORE_OR_AT: {
+          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
+          criterion.timeRestriction.afterDate = undefined
+          break
+        }
+        case TimeRestrictionType.AT: {
+          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
+          criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+          break
+        }
+        case TimeRestrictionType.NOT_AT: {
+          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
+          criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
+          break
+        }
+        case TimeRestrictionType.BETWEEN: {
+          if (criterion.timeRestriction.maxDate) {
+            criterion.timeRestriction.beforeDate.setDate(maxTemp.getDate())
+            criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+          } else {
+            criterion.timeRestriction.beforeDate = undefined
+            criterion.timeRestriction.afterDate = undefined
+          }
+          break
+        }
+      }
+    }
+    criterion.timeRestriction.tvpe = undefined
+    criterion.timeRestriction.minDate = undefined
+    criterion.timeRestriction.maxDate = undefined
   }
 }

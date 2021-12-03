@@ -2,13 +2,27 @@
   <mat-card-header>
     <h4>
       {{ criterion.display }}
-      <em>({{ criterion.termCode?.code }})</em>
+      <em *ngFor="let termcode of criterion.termCodes">({{ termcode?.code }})</em>
     </h4>
   </mat-card-header>
   <mat-card-content>
-    <num-edit-value-definition *ngFor="let valueFilter of getValueFilters()" [filter]="valueFilter">
+    <num-edit-value-definition
+      *ngFor="let valueFilter of getValueFilters()"
+      [filter]="valueFilter"
+      [filterType]="'value'"
+    >
     </num-edit-value-definition>
-    <num-display-entities [criterionEntity]="criterion" [query]="query"></num-display-entities>
+    <num-edit-value-definition
+      *ngFor="let attributeFilter of getAttributeFilters()"
+      [filter]="attributeFilter"
+      [filterType]="'attribute'"
+    >
+    </num-edit-value-definition>
+    <num-display-entities
+      *ngIf="criterion.entity"
+      [criterionEntity]="criterion"
+      [query]="query"
+    ></num-display-entities>
     <num-edit-time-restriction
       *ngIf="featureService.useFeatureTimeRestriction()"
       [timeRestriction]="criterion.timeRestriction"

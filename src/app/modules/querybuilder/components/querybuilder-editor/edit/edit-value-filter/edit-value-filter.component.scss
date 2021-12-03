@@ -3,9 +3,9 @@ mat-hint {
 }
 
 .concept-list {
-  height: 7em;
-  margin: 0.1em;
-
+  max-height: 7em;
+  padding: 0.1em;
+  margin-top: 5px;
   overflow-y: auto;
 }
 
@@ -32,4 +32,8 @@ mat-form-field {
 .unit-part {
   width: 9em;
   padding: 0.5em 0 0.5em 1em;
+}
+
+.required-flag {
+  color: red;
 }

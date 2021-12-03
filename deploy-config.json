@@ -39,7 +39,8 @@
     "query": false,
     "result": false
   },
-  "stylesheet": "codexTheme",
+  "stylesheet": "abideTheme",
   "fhirport": "8082",
-  "dataset": "codex"
+  "dataset": "codex",
+  "queryVersion": "v2"
 }

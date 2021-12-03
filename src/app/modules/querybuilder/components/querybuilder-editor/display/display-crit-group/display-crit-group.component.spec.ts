@@ -72,7 +72,7 @@ describe('DisplayCritGroupComponent', () => {
   function createCriterion(code: string): Criterion {
     return {
       display: 'arbitrary',
-      termCode: { code, display: code, system: code },
+      termCodes: [{ code, display: code, system: code }],
       valueFilters: [],
     }
   }

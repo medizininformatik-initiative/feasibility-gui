@@ -17,6 +17,9 @@ export class EditValueFilterComponent implements OnInit {
   @Input()
   filter: ValueFilter
 
+  @Input()
+  filterType: string
+
   QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
   QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
   CONCEPT = OperatorOptions.CONCEPT
@@ -31,11 +34,17 @@ export class EditValueFilterComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    console.log(this.filter)
     this.filter?.selectedConcepts.forEach((concept) =>
       this.selectedConceptsAsJson.add(JSON.stringify(concept))
     )
 
     this.filter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
+      if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
+        this.selectedUnit = allowedUnit
+      }
+    })
+    this.filter?.attributeDefinition?.allowedUnits?.forEach((allowedUnit) => {
       if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
         this.selectedUnit = allowedUnit
       }
@@ -124,6 +133,12 @@ export class EditValueFilterComponent implements OnInit {
   }
 
   public isActionDisabled(): boolean {
+    if (this.filter?.attributeDefinition) {
+      if (this.filter?.attributeDefinition?.optional) {
+        return false
+      }
+    }
+
     if (this.filter?.type === OperatorOptions.CONCEPT) {
       return this.noSelectedConcept()
     }

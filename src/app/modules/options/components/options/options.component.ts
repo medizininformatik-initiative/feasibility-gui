@@ -5,7 +5,7 @@ import { IAppConfig } from '../../../../config/app-config.model'
 import { FeatureProviderService } from '../../../querybuilder/service/feature-provider.service'
 import { MatRadioChange } from '@angular/material/radio'
 import { ApiTranslator } from '../../../querybuilder/controller/ApiTranslator'
-import { Query, QueryOnlyV1 } from '../../../querybuilder/model/api/query/query'
+import { Query, QueryOnlyV1, QueryOnlyV2 } from '../../../querybuilder/model/api/query/query'
 import { QueryProviderService } from '../../../querybuilder/service/query-provider.service'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs'
@@ -29,13 +29,15 @@ export class OptionsComponent implements OnInit {
   public features: IAppConfig
   stylesheet: string
   query: Query
-  translatedQuery: QueryOnlyV1
+  translatedQueryv1: QueryOnlyV1
+  translatedQueryv2: QueryOnlyV2
   pollingTime: number
   pollingIntervall: number
   postmanTranslate: string
   postmanSync: string
   getResponse: string
   fhirport: string
+  queryVersion: string
 
   constructor(
     public featureService: FeatureService,
@@ -51,8 +53,15 @@ export class OptionsComponent implements OnInit {
     this.pollingTime = this.features.options.pollingtimeinseconds
     this.pollingIntervall = this.features.options.pollingintervallinseconds
     this.fhirport = this.features.fhirport
+    this.queryVersion = this.features.queryVersion
 
-    this.translatedQuery = new ApiTranslator().translateToV1(this.query)
+    if (this.queryVersion === 'v1') {
+      this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query)
+    }
+    if (this.queryVersion === 'v2') {
+      this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query)
+    }
+
     this.postQuery('translate').subscribe(
       (response) => {
         this.postmanTranslate = response
@@ -64,7 +73,7 @@ export class OptionsComponent implements OnInit {
       },
       (error) => {
         console.log(error)
-        this.getResponse = 'http://localhost:' + this.fhirport
+        this.getResponse = ''
       }
     )
     this.postQuery('sync').subscribe(
@@ -123,6 +132,17 @@ export class OptionsComponent implements OnInit {
     this.featureProviderService.storeFeatures(this.features)
   }
 
+  setQueryVersion(version: MatRadioChange): void {
+    this.features.queryVersion = version.value
+    this.featureProviderService.storeFeatures(this.features)
+    if (this.queryVersion === 'v1') {
+      this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query)
+    }
+    if (this.queryVersion === 'v2') {
+      this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query)
+    }
+  }
+
   postQuery(modus: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -139,6 +159,11 @@ export class OptionsComponent implements OnInit {
       url = 'http://localhost:5000/query-sync'
     }
 
-    return this.http.post(url, this.translatedQuery, httpOptions)
+    if (this.queryVersion === 'v1') {
+      return this.http.post(url, this.translatedQueryv1, httpOptions)
+    }
+    if (this.queryVersion === 'v2') {
+      return this.http.post(url, this.translatedQueryv2, httpOptions)
+    }
   }
 }

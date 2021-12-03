@@ -1,0 +1,15 @@
+::ng-deep .mat-checkbox-layout {
+  margin-top: -6px;
+}
+.mat-checkbox {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+.checkbox-line {
+  margin: 0.3em 0.1em;
+}
+::ng-deep .mat-checkbox-ripple {
+  height: 39px !important;
+  width: 39px !important;
+}

@@ -1,9 +1,22 @@
 <div class="container">
   <div fxLayout="row" fxLayoutAlign="space-between">
     <h3>{{ 'QUERYBUILDER.EDIT.HEADER' | translate }}</h3>
-    <button class="close-button" type="button" mat-icon-button (click)="doDiscardAll()">
-      <fa-icon size="2x" icon="window-close"></fa-icon>
-    </button>
+    <div fxLayout="row" fxLayoutAlign="space-between top">
+      <num-button
+        [type]="'primary'"
+        (click)="doSaveAll()"
+        [isDisabled]="actionDisabled"
+        class="button-save-all"
+        >{{ 'BUTTON.ADDALL' | translate }}
+      </num-button>
+      <button class="close-button" type="button" mat-icon-button (click)="doDiscardAll()">
+        <fa-icon size="2x" icon="window-close"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <div class="mandatory-div">
+    <span class="mandatory-star">*</span
+    ><span> - {{ 'QUERYBUILDER.EDIT.MANDATORY_HINT' | translate }}</span>
   </div>
   <div *ngIf="criterionList" class="crit-list">
     <num-edit-criterion
@@ -19,6 +32,7 @@
       actionButtonKey="ADD"
       (save)="doSave($event, criterion)"
       (discard)="doDiscard(criterion)"
+      (addible)="registerAllAddible($event, criterion)"
     >
     </num-edit-criterion>
   </div>

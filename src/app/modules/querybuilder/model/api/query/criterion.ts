@@ -6,10 +6,13 @@ import { TimeRestriction } from './timerestriction'
 // A Criterion is an atomic building block of a query. However, a Criterion itself is defined by
 // a terminology code (system + version + code), operators and values.
 export class Criterion {
-  termCode: TerminologyCode
+  // termCode?: TerminologyCode
+  termCodes?: Array<TerminologyCode> = []
   display: string
-
+  entity?: boolean
+  optional?: boolean
   valueFilters: Array<ValueFilter> = []
+  attributeFilters?: Array<ValueFilter> = []
   children?: Array<TerminologyEntry> = []
 
   @V2()
@@ -21,5 +24,12 @@ export class CriterionOnlyV1 {
 
   valueFilter?: ValueFilter
   @V2()
+  timeRestriction?: TimeRestriction
+}
+export class CriterionOnlyV2 {
+  termCodes: Array<TerminologyCode> = []
+
+  valueFilter?: ValueFilter
+  attributeFilter?: Array<ValueFilter> = []
   timeRestriction?: TimeRestriction
 }

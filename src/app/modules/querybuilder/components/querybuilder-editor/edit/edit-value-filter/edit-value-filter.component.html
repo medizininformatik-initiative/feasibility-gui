@@ -1,13 +1,25 @@
 <div *ngIf="filter">
   <!-- QUANTITY -->
   <div *ngIf="filter.type === QUANTITY_RANGE || filter.type === QUANTITY_COMPARATOR">
-    <div *ngIf="!filter.display">{{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}</div>
-    <div *ngIf="filter.display">
-      {{
-        'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY_FOR_DISPLAY'
-          | translate: { label: filter.display }
-      }}
-    </div>
+    <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
+    <span *ngIf="filterType === 'value' && !filter.display">
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
+    </span>
+    <span *ngIf="filterType === 'value' && filter.display"> {{ filter.display }}: </span>
+    <span
+      *ngIf="filterType === 'attribute' && !filter.attributeDefinition.optional"
+      class="required-flag"
+    >
+      *
+    </span>
+    <span *ngIf="filterType === 'attribute' && filter.attributeDefinition.attributeCode.display">
+      {{ filter.attributeDefinition.attributeCode.display }}:
+    </span>
+    <span *ngIf="filterType === 'attribute' && !filter.attributeDefinition.attributeCode.display">
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
+    </span>
+    <br />
+
     <mat-form-field appearance="outline" *ngIf="filter?.unit" class="operator-part">
       <mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>
       <mat-select [(value)]="quantityFilterOption">
@@ -83,8 +95,21 @@
     </mat-form-field>
     <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
       <mat-label>{{ 'QUERYBUILDER.EDIT.UNIT' | translate }}</mat-label>
-      <mat-select [(value)]="filter.unit" [compareWith]="compareFunction">
+      <mat-select
+        *ngIf="filterType === 'value'"
+        [(value)]="filter.unit"
+        [compareWith]="compareFunction"
+      >
         <mat-option *ngFor="let unit of filter.valueDefinition?.allowedUnits" [value]="unit">
+          {{ unit.display }}
+        </mat-option>
+      </mat-select>
+      <mat-select
+        *ngIf="filterType === 'attribute'"
+        [(value)]="filter.unit"
+        [compareWith]="compareFunction"
+      >
+        <mat-option *ngFor="let unit of filter.attributeDefinition?.allowedUnits" [value]="unit">
           {{ unit.display }}
         </mat-option>
       </mat-select>
@@ -96,13 +121,41 @@
 
   <!-- CONCEPT -->
   <div *ngIf="filter.type === CONCEPT">
-    <div *ngIf="!filter.display">{{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT' | translate }}</div>
-    <div *ngIf="filter.display">
-      {{
-        'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_FOR_DISPLAY' | translate: { label: filter.display }
-      }}
-    </div>
-    <div class="concept-list mat-elevation-z2">
+    <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
+    <span *ngIf="filterType === 'value' && !filter.display">
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
+    </span>
+    <span *ngIf="filterType === 'value' && filter.display"> {{ filter.display }}: </span>
+    <span
+      *ngIf="filterType === 'attribute' && !filter.attributeDefinition.optional"
+      class="required-flag"
+    >
+      *
+    </span>
+    <span
+      *ngIf="
+        filterType === 'attribute' &&
+        !filter.attributeDefinition.attributeCode.display &&
+        filter.attributeDefinition.optional
+      "
+    >
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_OPTIONAL' | translate }}
+    </span>
+    <span
+      *ngIf="
+        filterType === 'attribute' &&
+        !filter.attributeDefinition.attributeCode.display &&
+        !filter.attributeDefinition.optional
+      "
+    >
+      {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
+    </span>
+    <span *ngIf="filterType === 'attribute' && filter.attributeDefinition.attributeCode.display">
+      {{ filter.attributeDefinition.attributeCode.display }}:
+    </span>
+    <br />
+
+    <div *ngIf="filterType === 'value'" class="concept-list">
       <num-edit-value-filter-concept-line
         *ngFor="let concept of filter.valueDefinition?.selectableConcepts"
         [checked]="isSelected(concept)"
@@ -111,8 +164,23 @@
       >
       </num-edit-value-filter-concept-line>
     </div>
-    <mat-hint *ngIf="noSelectedConcept()">{{
+    <div *ngIf="filterType === 'attribute'" class="concept-list">
+      <num-edit-value-filter-concept-line
+        *ngFor="let concept of filter.attributeDefinition?.selectableConcepts"
+        [checked]="isSelected(concept)"
+        [concept]="concept"
+        (selectConcept)="doSelectConcept(concept)"
+      >
+      </num-edit-value-filter-concept-line>
+    </div>
+    <mat-hint *ngIf="filterType === 'value' && noSelectedConcept()">{{
       'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate
     }}</mat-hint>
+    <mat-hint
+      *ngIf="
+        filterType === 'attribut' && !filter.attributeDefinition.optional && noSelectedConcept()
+      "
+      >{{ 'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate }}</mat-hint
+    >
   </div>
 </div>

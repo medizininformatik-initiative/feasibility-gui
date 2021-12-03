@@ -2,6 +2,7 @@
   $accent: map-get($theme, accent);
   $primary: map-get($theme, primary);
   $warn: map-get($theme, warn);
+  $additional: map-get($theme, additional);
 
   --num-color--primary: #{mat-color($primary)};
   --num-color--primary-100: #{mat-color($primary, 100)};
@@ -10,14 +11,19 @@
   --num-color--primary-900: #{mat-color($primary, 900)};
   --num-color--accent: #{mat-color($accent, 500)};
   --num-color--warn: #{mat-color($warn)};
+  --num-color--background: #{mat-color($additional, page-background)};
 
   --num-color--accent-50: #{mat-color($accent, 50)};
   --num-color--accent-100: #{mat-color($accent, 100)};
   --num-color--accent-200: #{mat-color($accent, 200)};
   --num-color--accent-300: #{mat-color($accent, 300)};
   --num-color--accent-400: #{mat-color($accent, 400)};
+  --num-color--accent-500: #{mat-color($accent, 500)};
   --num-color--accent-600: #{mat-color($accent, 600)};
   --num-color--accent-700: #{mat-color($accent, 700)};
+  --num-color--accent-A200: #{mat-color($accent, A200)};
+  --num-color--accent-A300: #{mat-color($accent, A300)};
+  --num-color--accent-A700: #{mat-color($accent, A700)};
 
   --num-color--primary-contrast: #{mat-contrast($primary, default)};
   --num-color--accent-contrast: #{mat-contrast($accent, 500)};

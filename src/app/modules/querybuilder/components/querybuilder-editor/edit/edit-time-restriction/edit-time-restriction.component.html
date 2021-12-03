@@ -1,6 +1,6 @@
 <!--suppress HtmlFormInputWithoutLabel -->
 <div *ngIf="timeRestriction" class="container">
-  <div>
+  <!--<div>
     <mat-radio-group [(ngModel)]="timeRestriction.tvpe" fxLayout="column">
       <mat-radio-button [value]="optionEver">{{
         'QUERYBUILDER.EDIT.TIMERESTRICTION.EVER' | translate
@@ -9,25 +9,37 @@
         'QUERYBUILDER.EDIT.TIMERESTRICTION.LATEST' | translate
       }}</mat-radio-button>
     </mat-radio-group>
-  </div>
+  </div>-->
 
   <div>
-    <mat-form-field class="example-form-field" appearance="outline">
-      <mat-label>{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.LABEL' | translate }}</mat-label>
-      <mat-date-range-input [rangePicker]="campaignOnePicker">
-        <input
-          matStartDate
-          placeholder="{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.FROM' | translate }}"
-          [(ngModel)]="timeRestriction.minDate"
-        />
-        <input
-          matEndDate
-          placeholder="{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.TO' | translate }}"
-          [(ngModel)]="timeRestriction.maxDate"
-        />
-      </mat-date-range-input>
-      <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-      <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+    <mat-form-field appearance="outline" class="operator-part">
+      <mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>
+      <mat-select [(value)]="timeRestriction.tvpe">
+        <mat-option *ngFor="let option of timeRestrictionOptions" [value]="option">
+          {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.' + option | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form-field-from" appearance="outline">
+      <mat-label *ngIf="timeRestriction.tvpe === timeRestrictionType.BETWEEN">{{
+        'QUERYBUILDER.EDIT.TIMERESTRICTION.FROM' | translate
+      }}</mat-label>
+      <mat-label *ngIf="timeRestriction.tvpe !== timeRestrictionType.BETWEEN">{{
+        'QUERYBUILDER.EDIT.TIMERESTRICTION.' + timeRestriction.tvpe | translate
+      }}</mat-label>
+      <input matInput [matDatepicker]="dateStartPicker" [(ngModel)]="timeRestriction.minDate" />
+      <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
+      <mat-datepicker #dateStartPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field
+      *ngIf="timeRestriction.tvpe === timeRestrictionType.BETWEEN"
+      class="form-field-to"
+      appearance="outline"
+    >
+      <mat-label>{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.TO' | translate }}</mat-label>
+      <input matInput [matDatepicker]="dateEndPicker" [(ngModel)]="timeRestriction.maxDate" />
+      <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
+      <mat-datepicker #dateEndPicker></mat-datepicker>
     </mat-form-field>
   </div>
 </div>

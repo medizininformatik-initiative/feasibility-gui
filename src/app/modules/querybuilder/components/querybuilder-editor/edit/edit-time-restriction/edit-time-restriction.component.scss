@@ -1,5 +1,11 @@
 .container {
-  margin: 2em 0 0 0;
+  margin: 1em 0 0 0;
+}
+
+.container > div:first-child {
+  padding: 1em;
+  border: 2px solid var(--num-color--accent-200);
+  border-radius: 5px;
 }
 
 .mat-date-range-input {
@@ -13,4 +19,25 @@
 .mat-radio-button {
   padding: 0 0 0.5em 0;
   width: max-content;
+}
+::ng-deep num-edit-time-restriction .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}
+
+.operator-part {
+  padding-right: 2em;
+  width: 11em;
+}
+.form-field-from,
+.form-field-to {
+  margin: 0 1em;
+  width: 11em;
+}
+::ng-deep mat-datepicker-toggle > .mat-icon-button {
+  padding-top: 1em;
+}
+::ng-deep mat-datepicker-toggle > .mat-icon-button > .mat-button-ripple.mat-ripple,
+::ng-deep mat-datepicker-toggle > .mat-icon-button > .mat-button-focus-overlay {
+  top: 7px;
+  bottom: -7px;
 }

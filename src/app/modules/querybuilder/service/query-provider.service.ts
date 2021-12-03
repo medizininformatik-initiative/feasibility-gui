@@ -11,6 +11,7 @@ import { GroupFactory } from '../controller/GroupFactory'
 })
 export class QueryProviderService {
   STORAGE_QUERY_KEY = 'QUERY'
+  SAVE_QUERY_KEY = 'SAVEDQUERIES'
 
   constructor(@Inject(LOCAL_STORAGE) public storage: StorageService) {}
 
@@ -21,6 +22,13 @@ export class QueryProviderService {
 
   public store(query: Query): void {
     this.storage.set(this.STORAGE_QUERY_KEY, query)
+  }
+
+  public saveQueries(queries: Array<any>): void {
+    this.storage.set(this.SAVE_QUERY_KEY, queries)
+  }
+  public loadQueries(): Array<any> {
+    return this.storage.get(this.SAVE_QUERY_KEY)
   }
 
   public static createDefaultQuery(): Query {
@@ -43,11 +51,13 @@ export class QueryProviderService {
           inclusionCriteria: [
             [
               {
-                termCode: {
-                  code: 'in-0-00 LL2191-6',
-                  display: 'Geschlecht',
-                  system: 'http://loinc.org',
-                },
+                termCodes: [
+                  {
+                    code: 'in-0-00 LL2191-6',
+                    display: 'Geschlecht',
+                    system: 'http://loinc.org',
+                  },
+                ],
                 display: 'Geschlecht',
                 valueFilters: [
                   {
@@ -74,11 +84,13 @@ export class QueryProviderService {
             ],
             [
               {
-                termCode: {
-                  code: 'in-0-10 30525-0',
-                  display: 'Alter',
-                  system: 'http://loinc.org',
-                },
+                termCodes: [
+                  {
+                    code: 'in-0-10 30525-0',
+                    display: 'Alter',
+                    system: 'http://loinc.org',
+                  },
+                ],
                 display: 'Alter',
                 valueFilters: [
                   {
@@ -95,20 +107,24 @@ export class QueryProviderService {
             ],
             [
               {
-                termCode: {
-                  code: 'in-0-20 F00',
-                  display: 'F00',
-                  system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
-                },
+                termCodes: [
+                  {
+                    code: 'in-0-20 F00',
+                    display: 'F00',
+                    system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
+                  },
+                ],
                 display: 'F00',
                 valueFilters: [],
               },
               {
-                termCode: {
-                  code: 'in-0-21 F09',
-                  display: 'F09',
-                  system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
-                },
+                termCodes: [
+                  {
+                    code: 'in-0-21 F09',
+                    display: 'F09',
+                    system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
+                  },
+                ],
                 display: 'F09',
                 valueFilters: [],
               },
@@ -117,11 +133,13 @@ export class QueryProviderService {
           exclusionCriteria: [
             [
               {
-                termCode: {
-                  code: 'ex-0-00 LL2191-6',
-                  display: 'Geschlecht',
-                  system: 'http://loinc.org',
-                },
+                termCodes: [
+                  {
+                    code: 'ex-0-00 LL2191-6',
+                    display: 'Geschlecht',
+                    system: 'http://loinc.org',
+                  },
+                ],
                 display: 'Geschlecht',
                 valueFilters: [
                   {
@@ -140,11 +158,13 @@ export class QueryProviderService {
             ],
             [
               {
-                termCode: {
-                  code: 'ex-0-10 30525-0',
-                  display: 'Alter',
-                  system: 'http://loinc.org',
-                },
+                termCodes: [
+                  {
+                    code: 'ex-0-10 30525-0',
+                    display: 'Alter',
+                    system: 'http://loinc.org',
+                  },
+                ],
                 display: 'Alter',
                 valueFilters: [
                   {
@@ -161,20 +181,24 @@ export class QueryProviderService {
             ],
             [
               {
-                termCode: {
-                  code: 'ex-0-20 F00.9',
-                  display: 'F00.9',
-                  system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
-                },
+                termCodes: [
+                  {
+                    code: 'ex-0-20 F00.9',
+                    display: 'F00.9',
+                    system: 'http://fhir.de/CodeSystem/dimdi/icd-10-gm',
+                  },
+                ],
                 display: 'F00.9',
                 valueFilters: [],
               },
               {
-                termCode: {
-                  code: 'ex-0-21 8310-5',
-                  display: 'Körpertemperatur',
-                  system: 'http://loinc.org',
-                },
+                termCodes: [
+                  {
+                    code: 'ex-0-21 8310-5',
+                    display: 'Körpertemperatur',
+                    system: 'http://loinc.org',
+                  },
+                ],
                 display: 'Körpertemperatur',
                 valueFilters: [
                   {
