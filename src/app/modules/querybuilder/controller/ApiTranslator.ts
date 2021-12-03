@@ -49,7 +49,7 @@ export class ApiTranslator {
   // noinspection JSMethodCanBeStatic
   private removeNonApiFieldsV1(criterion: CriterionOnlyV1): void {
     if (criterion.valueFilter) {
-      criterion.valueFilter.valueDefinition = null
+      // criterion.valueFilter.valueDefinition = null
       criterion.valueFilter.max = undefined
       criterion.valueFilter.min = undefined
       criterion.valueFilter.precision = undefined
@@ -108,7 +108,12 @@ export class ApiTranslator {
           criterionV2.valueFilter = criterion.valueFilters[0]
           criterionV2.valueFilter.valueDefinition = undefined
         }
-
+        if (criterion.attributeFilters.length > 0) {
+          criterionV2.attributeFilter = criterion.attributeFilters
+          criterionV2.attributeFilter.forEach((attibute) => {
+            attibute.attributeDefinition = undefined
+          })
+        }
         this.editTimeRestrictionsV2(criterionV2)
         innerArrayV2.push(criterionV2)
       })

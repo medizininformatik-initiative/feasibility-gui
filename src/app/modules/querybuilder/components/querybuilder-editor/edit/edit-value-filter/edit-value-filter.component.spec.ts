@@ -55,6 +55,7 @@ describe('EditValueDefinitionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditValueFilterComponent)
     component = fixture.componentInstance
+    component.filterType = 'value'
   })
 
   describe('create component', () => {

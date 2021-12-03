@@ -55,8 +55,12 @@ export class OptionsComponent implements OnInit {
     this.fhirport = this.features.fhirport
     this.queryVersion = this.features.queryVersion
 
-    this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query)
-    this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query)
+    if (this.queryVersion === 'v1') {
+      this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query)
+    }
+    if (this.queryVersion === 'v2') {
+      this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query)
+    }
 
     this.postQuery('translate').subscribe(
       (response) => {
@@ -131,6 +135,12 @@ export class OptionsComponent implements OnInit {
   setQueryVersion(version: MatRadioChange): void {
     this.features.queryVersion = version.value
     this.featureProviderService.storeFeatures(this.features)
+    if (this.queryVersion === 'v1') {
+      this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query)
+    }
+    if (this.queryVersion === 'v2') {
+      this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query)
+    }
   }
 
   postQuery(modus: string): Observable<any> {
