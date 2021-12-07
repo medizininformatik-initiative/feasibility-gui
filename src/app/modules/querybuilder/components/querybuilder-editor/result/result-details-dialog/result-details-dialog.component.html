@@ -1,14 +1,23 @@
-<div *ngIf="result">
-  <div class="total-number-of-patients">
-    Anzahl der Patienten: {{ backend.obfuscateResult(result.totalNumberOfPatients) }}
+<div *ngIf="result" class="result-details-box">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxFlex="80" class="result-header">{{ 'RESULT.PATIENT_NUMBER' | translate }}</div>
+    <button class="close-button" type="button" mat-icon-button (click)="doClose()">
+      <fa-icon size="2x" icon="window-close"></fa-icon>
+    </button>
   </div>
-  <div *ngFor="let location of result.resultLines" fxLayoutAlign="space-between end">
-    <span>{{ location.siteName }}: </span
-    ><span>{{ backend.obfuscateResult(location.numberOfPatients) }}</span>
+  <div class="result-div">
+    <table class="result-table">
+      <thead>
+        <tr>
+          <td class="left-column">{{ 'RESULT.TOTAL' | translate }}</td>
+          <td class="right-column">{{ backend.obfuscateResult(result.totalNumberOfPatients) }}</td>
+        </tr>
+      </thead>
+      <tr class="empty-row"></tr>
+      <tr *ngFor="let location of result.resultLines" class="result-lines">
+        <td class="left-column">{{ location.siteName }}</td>
+        <td class="right-column">{{ backend.obfuscateResult(location.numberOfPatients) }}</td>
+      </tr>
+    </table>
   </div>
 </div>
-<mat-dialog-actions fxLayoutAlign="end">
-  <num-button [type]="'primary'" (click)="doClose()" class="button-close">{{
-    'BUTTON.CLOSE' | translate
-  }}</num-button>
-</mat-dialog-actions>

@@ -15,9 +15,7 @@ class ComperatorIcon {
 export class DisplayValueFilterComponent implements OnInit {
   @Input()
   filter: ValueFilter
-  CONCEPT = OperatorOptions.CONCEPT
-  QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
-  QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
+  OperatorOptions: typeof OperatorOptions = OperatorOptions
 
   constructor(public featureService: FeatureService) {}
 

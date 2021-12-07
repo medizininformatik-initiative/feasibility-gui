@@ -20,9 +20,7 @@ export class EditValueFilterComponent implements OnInit {
   @Input()
   filterType: string
 
-  QUANTITY_RANGE = OperatorOptions.QUANTITY_RANGE
-  QUANTITY_COMPARATOR = OperatorOptions.QUANTITY_COMPARATOR
-  CONCEPT = OperatorOptions.CONCEPT
+  OperatorOptions: typeof OperatorOptions = OperatorOptions
 
   selectedUnit: QuantityUnit
   // Use string representation of concept because equivalent objects do not match in TypeScript (e.g. { a: 1 } !== { a: 1 })

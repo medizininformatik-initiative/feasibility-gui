@@ -10,8 +10,12 @@ mat-card-footer {
   margin: 0 1em 0 2em;
 }
 
+::ng-deep .mat-card-header-text {
+  margin: 0 5px;
+}
 .mat-card-header h4 {
   font-weight: 500;
+  font-size: 16px;
 }
 ::ng-deep num-edit-value-definition > div:first-child {
   margin-bottom: 1em;
