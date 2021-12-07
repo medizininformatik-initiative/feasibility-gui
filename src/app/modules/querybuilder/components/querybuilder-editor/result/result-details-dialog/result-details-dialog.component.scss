@@ -1,7 +1,44 @@
 .button-close {
   margin: 0.5em;
 }
-
+.result-details-box {
+  font-size: 16px;
+}
+.result-header {
+  border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+  margin-bottom: 1em;
+  padding: 0 0 2px 3px;
+}
 .total-number-of-patients {
   margin-bottom: 2em;
+}
+.result-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+thead td {
+  border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+  margin-bottom: 1em;
+  padding-bottom: 2px;
+}
+.result-div {
+  padding: 2em;
+  border: 2px solid var(--num-color--accent-200);
+  border-radius: 5px;
+  min-width: 28em;
+}
+.empty-row {
+  height: 1em;
+}
+.result-lines td {
+  padding-bottom: 5px;
+}
+.left-column {
+  width: 80%;
+  padding-left: 5px;
+}
+.right-column {
+  width: 20%;
+  text-align: right;
+  padding-right: 5px;
 }

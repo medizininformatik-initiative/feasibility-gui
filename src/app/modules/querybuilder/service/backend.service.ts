@@ -81,7 +81,12 @@ export class BackendService {
       const result = {
         totalNumberOfPatients: Math.floor(Math.random() * 1000),
         queryId: '12345',
-        resultLines: [],
+        resultLines: [
+          { siteName: 'Standort 1', numberOfPatients: 351 },
+          { siteName: 'Standort 2', numberOfPatients: 1277 },
+          { siteName: 'Standort 3', numberOfPatients: 63 },
+          { siteName: 'Standort 4', numberOfPatients: 0 },
+        ],
       }
 
       return of(result)

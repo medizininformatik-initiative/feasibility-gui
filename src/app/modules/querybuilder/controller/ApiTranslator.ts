@@ -108,7 +108,7 @@ export class ApiTranslator {
           criterionV2.valueFilter = criterion.valueFilters[0]
           criterionV2.valueFilter.valueDefinition = undefined
         }
-        if (criterion.attributeFilters.length > 0) {
+        if (criterion.attributeFilters?.length > 0) {
           criterionV2.attributeFilter = criterion.attributeFilters
           criterionV2.attributeFilter.forEach((attibute) => {
             attibute.attributeDefinition = undefined
@@ -125,57 +125,59 @@ export class ApiTranslator {
 
   // noinspection JSMethodCanBeStatic
   private editTimeRestrictionsV2(criterion: CriterionOnlyV2): void {
-    if (criterion.timeRestriction.minDate) {
-      criterion.timeRestriction.beforeDate = new Date()
-      criterion.timeRestriction.afterDate = new Date()
-      const minTemp = new Date(criterion.timeRestriction.minDate)
-      const maxTemp = new Date(criterion.timeRestriction.maxDate)
+    if (criterion.timeRestriction) {
+      if (criterion.timeRestriction.minDate) {
+        criterion.timeRestriction.beforeDate = new Date()
+        criterion.timeRestriction.afterDate = new Date()
+        const minTemp = new Date(criterion.timeRestriction.minDate)
+        const maxTemp = new Date(criterion.timeRestriction.maxDate)
 
-      switch (criterion.timeRestriction.tvpe) {
-        case TimeRestrictionType.AFTER: {
-          criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
-          criterion.timeRestriction.beforeDate = undefined
-          break
-        }
-        case TimeRestrictionType.AFTER_OR_AT: {
-          criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
-          criterion.timeRestriction.beforeDate = undefined
-          break
-        }
-        case TimeRestrictionType.BEFORE: {
-          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
-          criterion.timeRestriction.afterDate = undefined
-          break
-        }
-        case TimeRestrictionType.BEFORE_OR_AT: {
-          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
-          criterion.timeRestriction.afterDate = undefined
-          break
-        }
-        case TimeRestrictionType.AT: {
-          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
-          criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
-          break
-        }
-        case TimeRestrictionType.NOT_AT: {
-          criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
-          criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
-          break
-        }
-        case TimeRestrictionType.BETWEEN: {
-          if (criterion.timeRestriction.maxDate) {
-            criterion.timeRestriction.beforeDate.setDate(maxTemp.getDate())
-            criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
-          } else {
+        switch (criterion.timeRestriction.tvpe) {
+          case TimeRestrictionType.AFTER: {
+            criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
             criterion.timeRestriction.beforeDate = undefined
-            criterion.timeRestriction.afterDate = undefined
+            break
           }
-          break
+          case TimeRestrictionType.AFTER_OR_AT: {
+            criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+            criterion.timeRestriction.beforeDate = undefined
+            break
+          }
+          case TimeRestrictionType.BEFORE: {
+            criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
+            criterion.timeRestriction.afterDate = undefined
+            break
+          }
+          case TimeRestrictionType.BEFORE_OR_AT: {
+            criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
+            criterion.timeRestriction.afterDate = undefined
+            break
+          }
+          case TimeRestrictionType.AT: {
+            criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
+            criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+            break
+          }
+          case TimeRestrictionType.NOT_AT: {
+            criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
+            criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
+            break
+          }
+          case TimeRestrictionType.BETWEEN: {
+            if (criterion.timeRestriction.maxDate) {
+              criterion.timeRestriction.beforeDate.setDate(maxTemp.getDate())
+              criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+            } else {
+              criterion.timeRestriction.beforeDate = undefined
+              criterion.timeRestriction.afterDate = undefined
+            }
+            break
+          }
         }
       }
+      criterion.timeRestriction.tvpe = undefined
+      criterion.timeRestriction.minDate = undefined
+      criterion.timeRestriction.maxDate = undefined
     }
-    criterion.timeRestriction.tvpe = undefined
-    criterion.timeRestriction.minDate = undefined
-    criterion.timeRestriction.maxDate = undefined
   }
 }

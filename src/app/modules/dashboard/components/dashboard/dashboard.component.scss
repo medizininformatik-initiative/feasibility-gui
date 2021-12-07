@@ -51,18 +51,15 @@ h2 {
 .myQueryBox a {
   text-decoration: none !important;
 }
-.newQueryBox {
-  background: var(--num-color--accent-300);
-}
-.newQueryBox:hover {
+.newQueryBox,
+.myQueryBox {
   background: var(--num-color--accent-400);
 }
-.myQueryBox {
-  background: var(--num-color--primary-300);
-}
+.newQueryBox:hover,
 .myQueryBox:hover {
-  background: var(--num-color--primary-400);
+  background: var(--num-color--accent-300);
 }
+
 .queryBoxHeader {
   padding-bottom: 5%;
   font-size: 2vw;

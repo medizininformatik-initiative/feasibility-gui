@@ -1,6 +1,11 @@
 <div *ngIf="filter">
   <!-- QUANTITY -->
-  <div *ngIf="filter.type === QUANTITY_RANGE || filter.type === QUANTITY_COMPARATOR">
+  <div
+    *ngIf="
+      filter.type === OperatorOptions.QUANTITY_RANGE ||
+      filter.type === OperatorOptions.QUANTITY_COMPARATOR
+    "
+  >
     <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
     <span *ngIf="filterType === 'value' && !filter.display">
       {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
@@ -32,7 +37,11 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_RANGE" class="min-part">
+    <mat-form-field
+      appearance="outline"
+      *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE"
+      class="min-part"
+    >
       <mat-label>{{ 'QUERYBUILDER.EDIT.MIN' | translate }}</mat-label>
       <!--suppress HtmlFormInputWithoutLabel -->
       <input
@@ -52,8 +61,14 @@
         'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
       }}</mat-hint>
     </mat-form-field>
-    <span *ngIf="filter.type === QUANTITY_RANGE">{{ 'QUERYBUILDER.EDIT.AND' | translate }}</span>
-    <mat-form-field appearance="outline" *ngIf="filter.type === QUANTITY_RANGE" class="max-part">
+    <span *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE">{{
+      'QUERYBUILDER.EDIT.AND' | translate
+    }}</span>
+    <mat-form-field
+      appearance="outline"
+      *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE"
+      class="max-part"
+    >
       <mat-label>{{ 'QUERYBUILDER.EDIT.MAX' | translate }}</mat-label>
       <!--suppress HtmlFormInputWithoutLabel -->
       <input
@@ -73,7 +88,7 @@
     </mat-form-field>
     <mat-form-field
       appearance="outline"
-      *ngIf="filter.type === QUANTITY_COMPARATOR"
+      *ngIf="filter.type === OperatorOptions.QUANTITY_COMPARATOR"
       class="value-part"
     >
       <mat-label>{{ 'QUERYBUILDER.EDIT.VALUE' | translate }}</mat-label>
@@ -120,7 +135,7 @@
   }}</mat-hint>
 
   <!-- CONCEPT -->
-  <div *ngIf="filter.type === CONCEPT">
+  <div *ngIf="filter.type === OperatorOptions.CONCEPT">
     <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
     <span *ngIf="filterType === 'value' && !filter.display">
       {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}

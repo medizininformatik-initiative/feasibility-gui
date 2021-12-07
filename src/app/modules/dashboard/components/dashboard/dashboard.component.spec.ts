@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { IAppConfig } from 'src/app/config/app-config.model'
 import { DirectivesModule } from 'src/app/shared/directives/directives.module'
+import { FeatureService } from '../../../../service/feature.service'
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent
@@ -21,6 +22,12 @@ describe('DashboardComponent', () => {
     env: 'test',
   } as unknown) as IAppConfig
 
+  const featureService = {
+    getStylesheet(): string {
+      return 'abideTheme'
+    },
+  } as FeatureService
+
   const testBedConfig = {
     declarations: [DashboardComponent],
     imports: [
@@ -33,6 +40,10 @@ describe('DashboardComponent', () => {
       {
         provide: OAuthService,
         useValue: authService,
+      },
+      {
+        provide: FeatureService,
+        useValue: featureService,
       },
     ],
   }

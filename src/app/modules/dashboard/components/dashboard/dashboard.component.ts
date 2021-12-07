@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { AppConfigService } from '../../../../config/app-config.service'
+import { FeatureService } from '../../../../service/feature.service'
 
 @Component({
   selector: 'num-dashboard',
@@ -8,13 +9,19 @@ import { AppConfigService } from '../../../../config/app-config.service'
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private appConfig: AppConfigService, private oauthService: OAuthService) {}
+  constructor(
+    private appConfig: AppConfigService,
+    private oauthService: OAuthService,
+    private featureService: FeatureService
+  ) {}
 
   config = this.appConfig.config
   authTest: string
+  stylesheet: string
 
   ngOnInit(): void {
     this.init()
+    this.stylesheet = this.featureService.getStylesheet()
   }
 
   newQuery(): void {}

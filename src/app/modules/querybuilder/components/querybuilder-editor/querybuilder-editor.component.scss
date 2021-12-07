@@ -18,6 +18,7 @@
 
 .result-simple-box {
   margin-left: 2%;
+  width: 100%;
 }
 .header-line {
   position: sticky;
@@ -30,7 +31,7 @@
   background-color: white;
   border: 1px solid var(--num-color--primary);
   border-radius: 5px;
-  width: 50%;
+  width: 35%;
 }
 
 .query-buttons-box {
