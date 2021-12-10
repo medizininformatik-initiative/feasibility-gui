@@ -30,6 +30,6 @@ export class CriterionOnlyV2 {
   termCodes: Array<TerminologyCode> = []
 
   valueFilter?: ValueFilter
-  attributeFilter?: Array<ValueFilter> = []
+  attributeFilters?: Array<ValueFilter> = []
   timeRestriction?: TimeRestriction
 }
