@@ -109,8 +109,8 @@ export class ApiTranslator {
           criterionV2.valueFilter.valueDefinition = undefined
         }
         if (criterion.attributeFilters?.length > 0) {
-          criterionV2.attributeFilter = criterion.attributeFilters
-          criterionV2.attributeFilter.forEach((attibute) => {
+          criterionV2.attributeFilters = criterion.attributeFilters
+          criterionV2.attributeFilters.forEach((attibute) => {
             attibute.attributeDefinition = undefined
           })
         }
