@@ -2,6 +2,7 @@ import { V2 } from '../annotations'
 import { TerminologyCode, TerminologyEntry } from '../terminology/terminology'
 import { ValueFilter } from './valueFilter'
 import { TimeRestriction } from './timerestriction'
+import { AttributeFilter } from './attributeFilter'
 
 // A Criterion is an atomic building block of a query. However, a Criterion itself is defined by
 // a terminology code (system + version + code), operators and values.
@@ -12,7 +13,7 @@ export class Criterion {
   entity?: boolean
   optional?: boolean
   valueFilters: Array<ValueFilter> = []
-  attributeFilters?: Array<ValueFilter> = []
+  attributeFilters?: Array<AttributeFilter> = []
   children?: Array<TerminologyEntry> = []
 
   @V2()
@@ -30,6 +31,6 @@ export class CriterionOnlyV2 {
   termCodes: Array<TerminologyCode> = []
 
   valueFilter?: ValueFilter
-  attributeFilters?: Array<ValueFilter> = []
+  attributeFilters?: Array<AttributeFilter> = []
   timeRestriction?: TimeRestriction
 }
