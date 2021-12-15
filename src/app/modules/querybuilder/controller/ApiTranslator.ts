@@ -110,8 +110,9 @@ export class ApiTranslator {
         }
         if (criterion.attributeFilters?.length > 0) {
           criterionV2.attributeFilters = criterion.attributeFilters
-          criterionV2.attributeFilters.forEach((attibute) => {
-            attibute.attributeDefinition = undefined
+          criterionV2.attributeFilters.forEach((attribute) => {
+            attribute.attributeCode = attribute.attributeDefinition.attributeCode
+            attribute.attributeDefinition = undefined
           })
         }
         this.editTimeRestrictionsV2(criterionV2)

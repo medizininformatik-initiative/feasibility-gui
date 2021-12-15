@@ -8,6 +8,7 @@ import {
 } from '../model/api/terminology/valuedefinition'
 import { TimeRestriction } from '../model/api/query/timerestriction'
 import { V2 } from '../model/api/annotations'
+import { AttributeFilter } from '../model/api/query/attributeFilter'
 
 export class TermEntry2CriterionTranslator {
   private useFeatureTimeRestrictions = false
@@ -76,30 +77,30 @@ export class TermEntry2CriterionTranslator {
   }
 
   // noinspection JSMethodCanBeStatic
-  private createAttributeFilter(attributeDefinition: AttributeDefinition): ValueFilter {
-    const valueFilter = new ValueFilter()
-    valueFilter.display = attributeDefinition.display
-    valueFilter.attributeDefinition = attributeDefinition
+  private createAttributeFilter(attributeDefinition: AttributeDefinition): AttributeFilter {
+    const attributeFilter = new AttributeFilter()
+    attributeFilter.display = attributeDefinition.display
+    attributeFilter.attributeDefinition = attributeDefinition
 
     if (attributeDefinition.type === ValueType.CONCEPT) {
-      valueFilter.type = OperatorOptions.CONCEPT
-      valueFilter.selectedConcepts = []
+      attributeFilter.type = OperatorOptions.CONCEPT
+      attributeFilter.selectedConcepts = []
     } else if (attributeDefinition.type === ValueType.QUANTITY) {
-      valueFilter.type = OperatorOptions.QUANTITY_RANGE
-      valueFilter.unit =
+      attributeFilter.type = OperatorOptions.QUANTITY_RANGE
+      attributeFilter.unit =
         attributeDefinition.allowedUnits.length > 0
           ? attributeDefinition.allowedUnits[0]
           : { code: '', display: '' }
-      valueFilter.value = attributeDefinition.min ? attributeDefinition.min : 0
-      valueFilter.minValue = attributeDefinition.min ? attributeDefinition.min : 0
-      valueFilter.maxValue = attributeDefinition.max ? attributeDefinition.max : 0
-      valueFilter.min = attributeDefinition.min
-      valueFilter.max = attributeDefinition.max
-      valueFilter.precision = attributeDefinition.precision
-      valueFilter.comparator = Comparator.GREATER_OR_EQUAL
+      attributeFilter.value = attributeDefinition.min ? attributeDefinition.min : 0
+      attributeFilter.minValue = attributeDefinition.min ? attributeDefinition.min : 0
+      attributeFilter.maxValue = attributeDefinition.max ? attributeDefinition.max : 0
+      attributeFilter.min = attributeDefinition.min
+      attributeFilter.max = attributeDefinition.max
+      attributeFilter.precision = attributeDefinition.precision
+      attributeFilter.comparator = Comparator.GREATER_OR_EQUAL
     }
 
-    return valueFilter
+    return attributeFilter
   }
 
   @V2()
