@@ -9,6 +9,7 @@ import { SingleQueryComponent } from './single-query/single-query.component'
 import { MaterialModule } from '../../../../layout/material/material.module'
 import { FormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { RouterTestingModule } from '@angular/router/testing'
 
 describe('QuerybuilderOverviewComponent', () => {
   let component: QuerybuilderOverviewComponent
@@ -24,6 +25,7 @@ describe('QuerybuilderOverviewComponent', () => {
         MaterialModule,
         FormsModule,
         BrowserAnimationsModule,
+        RouterTestingModule.withRoutes([]),
       ],
     }).compileComponents()
   })

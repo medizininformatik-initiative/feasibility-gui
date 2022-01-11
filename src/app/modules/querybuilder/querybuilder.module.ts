@@ -39,6 +39,7 @@ import { ResultSimpleComponent } from './components/querybuilder-editor/result/r
 import { ResultDetailsDialogComponent } from './components/querybuilder-editor/result/result-details-dialog/result-details-dialog.component'
 import { DisplayEntitiesComponent } from './components/querybuilder-editor/display/display-entities/display-entities.component'
 import { SingleQueryComponent } from './components/querybuilder-overview/single-query/single-query.component'
+import { SaveDialogComponent } from './components/querybuilder-editor/save/save-dialog/save-dialog.component'
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -83,6 +84,7 @@ export const FORMATS_GERMAN = {
     ResultDetailsDialogComponent,
     DisplayEntitiesComponent,
     SingleQueryComponent,
+    SaveDialogComponent,
   ],
   imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule, OverlayModule],
   providers: [

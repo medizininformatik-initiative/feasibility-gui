@@ -11,7 +11,7 @@ describe('EditTimeRestrictionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditTimeRestrictionComponent, EditTimeRestrictionComponent],
+      declarations: [EditTimeRestrictionComponent],
       imports: [MaterialModule, FormsModule, TranslateModule.forRoot()],
     }).compileComponents()
   })
