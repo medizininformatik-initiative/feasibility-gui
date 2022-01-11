@@ -121,7 +121,7 @@ describe('QuerybuilderEditorComponent', () => {
         },
       }),
     })
-
+    window.history.pushState({ preventReset: true }, '', '')
     fixture = TestBed.createComponent(QuerybuilderEditorComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

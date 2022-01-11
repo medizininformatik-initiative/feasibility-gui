@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { QueryProviderService } from '../../service/query-provider.service'
 import { HttpClient } from '@angular/common/http'
 import { Query } from '../../model/api/query/query'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'num-querybuilder-overview',
@@ -9,7 +10,11 @@ import { Query } from '../../model/api/query/query'
   styleUrls: ['./querybuilder-overview.component.scss'],
 })
 export class QuerybuilderOverviewComponent implements OnInit {
-  constructor(public queryProviderService: QueryProviderService, private httpClient: HttpClient) {}
+  constructor(
+    public queryProviderService: QueryProviderService,
+    private httpClient: HttpClient,
+    private router: Router
+  ) {}
 
   query: Query
   title = ''
@@ -30,18 +35,9 @@ export class QuerybuilderOverviewComponent implements OnInit {
     }
   }
 
-  doSave(): void {
-    this.savedQueries.push({
-      query: this.query,
-      title: this.title,
-      comment: this.comment,
-      date: Date.now(),
-    })
-    this.queryProviderService.saveQueries(this.savedQueries)
-  }
-
   loadQuery(singleQuery: Query): void {
     this.query = singleQuery
     this.queryProviderService.store(this.query)
+    this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } })
   }
 }
