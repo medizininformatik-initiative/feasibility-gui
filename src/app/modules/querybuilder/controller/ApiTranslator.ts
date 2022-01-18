@@ -116,12 +116,28 @@ export class ApiTranslator {
           })
         }
         this.editTimeRestrictionsV2(criterionV2)
+        this.removeNonApiFieldsV2(criterionV2)
         innerArrayV2.push(criterionV2)
       })
       result.push(innerArrayV2)
     })
 
     return result
+  }
+
+  // noinspection JSMethodCanBeStatic
+  private removeNonApiFieldsV2(criterion: CriterionOnlyV2): void {
+    if (criterion.valueFilter) {
+      criterion.valueFilter.precision = undefined
+      if (criterion.valueFilter.type === OperatorOptions.QUANTITY_COMPARATOR) {
+        criterion.valueFilter.minValue = undefined
+        criterion.valueFilter.maxValue = undefined
+      }
+      if (criterion.valueFilter.type === OperatorOptions.QUANTITY_RANGE) {
+        criterion.valueFilter.comparator = undefined
+        criterion.valueFilter.value = undefined
+      }
+    }
   }
 
   // noinspection JSMethodCanBeStatic
