@@ -23,6 +23,9 @@ describe('BackendService', () => {
     getPatientResultLowerBoundary(): number {
       return 10
     },
+    getLocationResultLowerBoundary(): number {
+      return 3
+    },
     mockTerminology(): boolean {
       return true
     },

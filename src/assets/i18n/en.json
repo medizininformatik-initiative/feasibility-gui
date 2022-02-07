@@ -157,7 +157,8 @@
   },
   "RESULT": {
     "PATIENT_NUMBER": "Number of patients",
-    "TOTAL": "Total"
+    "TOTAL": "Total",
+    "SITE": "Site"
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",

@@ -14,10 +14,12 @@
         </tr>
       </thead>
       <tr class="empty-row"></tr>
-      <tr *ngFor="let location of result.resultLines" class="result-lines">
-        <td class="left-column">{{ location.siteName }}</td>
-        <td class="right-column">{{ backend.obfuscateResult(location.numberOfPatients) }}</td>
-      </tr>
+      <ng-container *ngIf="result.resultLines.length >= lowerBoundaryLocation">
+        <tr *ngFor="let location of result.resultLines; index as i" class="result-lines">
+          <td class="left-column">{{ 'RESULT.SITE' | translate }} {{ i + 1 }}</td>
+          <td class="right-column">{{ backend.obfuscateResult(location.numberOfPatients) }}</td>
+        </tr>
+      </ng-container>
     </table>
   </div>
 </div>

@@ -70,6 +70,9 @@ export class FeatureService {
   public getPatientResultLowerBoundary(): number {
     return this.appConfig.getConfig().options.lowerboundarypatientresult
   }
+  public getLocationResultLowerBoundary(): number {
+    return this.appConfig.getConfig().options.lowerboundarylocationresult
+  }
   public getFhirPort(): string {
     if (this.showOptionsPage) {
       return this.featureProviderService.getFeatures().fhirport
