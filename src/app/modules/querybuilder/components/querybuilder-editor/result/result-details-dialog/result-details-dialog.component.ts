@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { QueryResult } from '../../../../model/api/result/QueryResult'
 import { Observable, Subscription } from 'rxjs'
 import { BackendService } from '../../../../service/backend.service'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 export class ResultDetailsDialogComponentData {
   resultObservable$: Observable<QueryResult>
@@ -20,12 +21,15 @@ export class ResultDetailsDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsDialogComponentData,
     public dialogRef: MatDialogRef<ResultDetailsDialogComponent>,
-    public backend: BackendService
+    public backend: BackendService,
+    private feature: FeatureService
   ) {
     this.resultSubscription = this.data.resultObservable$.subscribe((resultTemp) =>
       this.sortResult(resultTemp)
     )
   }
+
+  lowerBoundaryLocation: number = this.feature.getLocationResultLowerBoundary()
 
   ngOnInit(): void {}
 

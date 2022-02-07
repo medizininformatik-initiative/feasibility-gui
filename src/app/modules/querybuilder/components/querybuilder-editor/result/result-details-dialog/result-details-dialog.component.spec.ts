@@ -31,6 +31,9 @@ describe('ResultDetailsDialogComponent', () => {
       getPatientResultLowerBoundary(): number {
         return 10
       },
+      getLocationResultLowerBoundary(): number {
+        return 3
+      },
     } as FeatureService
 
     await TestBed.configureTestingModule({

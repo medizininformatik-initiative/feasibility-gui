@@ -157,7 +157,8 @@
   },
   "RESULT": {
     "PATIENT_NUMBER": "Anzahl der Patienten",
-    "TOTAL": "Gesamt"
+    "TOTAL": "Gesamt",
+    "SITE": "Standort"
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",

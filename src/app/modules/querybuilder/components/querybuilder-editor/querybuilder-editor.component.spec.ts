@@ -63,6 +63,9 @@ describe('QuerybuilderEditorComponent', () => {
     getPatientResultLowerBoundary(): number {
       return 10
     },
+    getLocationResultLowerBoundary(): number {
+      return 3
+    },
   } as FeatureService
 
   @Component({ selector: 'num-unapproved-users-table', template: '' })

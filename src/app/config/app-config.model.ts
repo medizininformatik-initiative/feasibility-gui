@@ -33,6 +33,7 @@ export interface IAppConfig {
     pollingtimeinseconds: number
     pollingintervallinseconds: number
     lowerboundarypatientresult: number
+    lowerboundarylocationresult: number
   }
   mock: {
     terminology: boolean
