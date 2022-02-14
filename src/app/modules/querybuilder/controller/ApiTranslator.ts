@@ -112,7 +112,6 @@ export class ApiTranslator {
           criterionV2.attributeFilters = criterion.attributeFilters
           criterionV2.attributeFilters.forEach((attribute) => {
             attribute.attributeCode = attribute.attributeDefinition.attributeCode
-            attribute.attributeDefinition = undefined
           })
         }
         this.editTimeRestrictionsV2(criterionV2)
@@ -137,6 +136,15 @@ export class ApiTranslator {
         criterion.valueFilter.comparator = undefined
         criterion.valueFilter.value = undefined
       }
+    }
+    if (criterion.attributeFilters?.length > 0) {
+      criterion.attributeFilters.forEach((attribute) => {
+        attribute.attributeDefinition = undefined
+        attribute.precision = undefined
+        if (attribute.type === OperatorOptions.QUANTITY_RANGE) {
+          attribute.value = undefined
+        }
+      })
     }
   }
 
