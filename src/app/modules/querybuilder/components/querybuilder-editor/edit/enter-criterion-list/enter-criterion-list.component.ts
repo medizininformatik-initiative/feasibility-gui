@@ -59,7 +59,6 @@ export class EnterCriterionListComponent implements OnInit {
         isAddible: undefined,
       })
     })
-    console.log(this.criterionList)
   }
 
   doSave(event: { groupId: number }, criterion: Criterion): void {

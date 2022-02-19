@@ -110,7 +110,7 @@ export class ApiTranslator {
         }
         if (criterion.attributeFilters?.length > 0) {
           criterionV2.attributeFilters = criterion.attributeFilters
-          
+
           for (let i = 0; i < criterion.attributeFilters.length; i++){
 
             const attribute = criterionV2.attributeFilters[i]
@@ -118,10 +118,12 @@ export class ApiTranslator {
 
             if (attribute.type === 'concept' && attribute.selectedConcepts.length === 0){
               criterionV2.attributeFilters.splice(i, 1)
+              i--
             }
 
           }
         }
+        
         this.editTimeRestrictionsV2(criterionV2)
         this.removeNonApiFieldsV2(criterionV2)
         innerArrayV2.push(criterionV2)
