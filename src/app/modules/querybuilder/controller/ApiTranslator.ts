@@ -111,12 +111,12 @@ export class ApiTranslator {
         if (criterion.attributeFilters?.length > 0) {
           criterionV2.attributeFilters = criterion.attributeFilters
           
-          for(let i = 0; i < criterion.attributeFilters.length; i++){
+          for (let i = 0; i < criterion.attributeFilters.length; i++){
 
-            var attribute = criterionV2.attributeFilters[i]
+            const attribute = criterionV2.attributeFilters[i]
             attribute.attributeCode = attribute.attributeDefinition.attributeCode
 
-            if (attribute.type == 'concept' && attribute.selectedConcepts.length == 0){
+            if (attribute.type === 'concept' && attribute.selectedConcepts.length === 0){
               criterionV2.attributeFilters.splice(i, 1)
             }
 
