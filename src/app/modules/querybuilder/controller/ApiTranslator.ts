@@ -110,9 +110,17 @@ export class ApiTranslator {
         }
         if (criterion.attributeFilters?.length > 0) {
           criterionV2.attributeFilters = criterion.attributeFilters
-          criterionV2.attributeFilters.forEach((attribute) => {
+          
+          for(let i = 0; i < criterion.attributeFilters.length; i++){
+
+            var attribute = criterionV2.attributeFilters[i]
             attribute.attributeCode = attribute.attributeDefinition.attributeCode
-          })
+
+            if (attribute.type == 'concept' && attribute.selectedConcepts.length == 0){
+              criterionV2.attributeFilters.splice(i, 1)
+            }
+
+          }
         }
         this.editTimeRestrictionsV2(criterionV2)
         this.removeNonApiFieldsV2(criterionV2)
