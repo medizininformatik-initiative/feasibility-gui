@@ -1,5 +1,8 @@
-<div *ngIf="filter" class="container">
-  <div *ngIf="filter.type === OperatorOptions.CONCEPT">
+<div *ngIf="filter">
+  <div
+    *ngIf="filter.type === OperatorOptions.CONCEPT && filter.selectedConcepts.length > 0"
+    class="container"
+  >
     <span *ngIf="filter.display">{{ filter.display }}{{ ': ' }}</span>
     <span *ngIf="filter.attributeDefinition?.attributeCode?.display"
       >{{ filter.attributeDefinition?.attributeCode?.display }}{{ ': ' }}</span
@@ -14,7 +17,7 @@
     </span>
   </div>
 
-  <div *ngIf="filter.type === OperatorOptions.QUANTITY_COMPARATOR">
+  <div *ngIf="filter.type === OperatorOptions.QUANTITY_COMPARATOR" class="container">
     <span *ngIf="filter.display">{{ filter.display }}{{ ': ' }}</span>
     <span *ngIf="filter.attributeDefinition?.attributeCode?.display"
       >{{ filter.attributeDefinition?.attributeCode?.display }}{{ ': ' }}</span
@@ -31,7 +34,7 @@
     }}
   </div>
 
-  <div *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE">
+  <div *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE" class="container">
     <span *ngIf="filter.display">{{ filter.display }}{{ ': ' }}</span>
     <span *ngIf="filter.attributeDefinition?.attributeCode?.display"
       >{{ filter.attributeDefinition?.attributeCode?.display }}{{ ': ' }}</span

@@ -32,7 +32,6 @@ export class EditValueFilterComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.filter)
     this.filter?.selectedConcepts.forEach((concept) =>
       this.selectedConceptsAsJson.add(JSON.stringify(concept))
     )
