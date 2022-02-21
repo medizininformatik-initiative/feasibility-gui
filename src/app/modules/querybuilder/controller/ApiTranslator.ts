@@ -109,8 +109,14 @@ export class ApiTranslator {
           criterionV2.valueFilter.valueDefinition = undefined
         }
         if (criterion.attributeFilters?.length > 0) {
-          criterionV2.attributeFilters = criterion.attributeFilters
-          criterionV2.attributeFilters.forEach((attribute) => {
+          criterion.attributeFilters.forEach((attribute) => {
+            if (attribute.type === OperatorOptions.CONCEPT) {
+              if (attribute.selectedConcepts.length > 0) {
+                criterionV2.attributeFilters.push(attribute)
+              }
+            } else {
+              criterionV2.attributeFilters.push(attribute)
+            }
             attribute.attributeCode = attribute.attributeDefinition.attributeCode
           })
         }

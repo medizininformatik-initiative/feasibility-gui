@@ -32,7 +32,6 @@ export class DisplayEntitiesComponent implements OnInit {
         child.valueFilters[0].selectedConcepts = child.valueDefinitions[0].selectableConcepts
       })
     })
-    console.log(this.critGroup)
   }
 
   getInnerLabelKey(): 'AND' | 'OR' {
