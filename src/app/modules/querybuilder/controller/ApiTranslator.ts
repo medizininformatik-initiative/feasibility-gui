@@ -151,6 +151,8 @@ export class ApiTranslator {
           attribute.value = undefined
         }
       })
+    } else {
+      criterion.attributeFilters = undefined
     }
   }
 
@@ -169,46 +171,55 @@ export class ApiTranslator {
             criterion.timeRestriction.beforeDate = undefined
             break
           }
-          case TimeRestrictionType.AFTER_OR_AT: {
+          /*case TimeRestrictionType.AFTER_OR_AT: {
             criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
             criterion.timeRestriction.beforeDate = undefined
             break
-          }
+          }*/
           case TimeRestrictionType.BEFORE: {
             criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
             criterion.timeRestriction.afterDate = undefined
             break
           }
-          case TimeRestrictionType.BEFORE_OR_AT: {
+          /*case TimeRestrictionType.BEFORE_OR_AT: {
             criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
             criterion.timeRestriction.afterDate = undefined
             break
-          }
+          }*/
           case TimeRestrictionType.AT: {
             criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
             criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
             break
           }
-          case TimeRestrictionType.NOT_AT: {
+          /*case TimeRestrictionType.NOT_AT: {
             criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
             criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
             break
-          }
+          }*/
           case TimeRestrictionType.BETWEEN: {
             if (criterion.timeRestriction.maxDate) {
               criterion.timeRestriction.beforeDate.setDate(maxTemp.getDate())
               criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
             } else {
-              criterion.timeRestriction.beforeDate = undefined
-              criterion.timeRestriction.afterDate = undefined
+              criterion.timeRestriction = undefined
             }
             break
           }
         }
+      } else {
+        criterion.timeRestriction = undefined
       }
-      criterion.timeRestriction.tvpe = undefined
-      criterion.timeRestriction.minDate = undefined
-      criterion.timeRestriction.maxDate = undefined
+      if (criterion.timeRestriction) {
+        criterion.timeRestriction.tvpe = undefined
+        criterion.timeRestriction.minDate = undefined
+        criterion.timeRestriction.maxDate = undefined
+        if (criterion.timeRestriction.beforeDate) {
+          criterion.timeRestriction.beforeDate.setHours(24, 59, 59, 999)
+        }
+        if (criterion.timeRestriction.afterDate) {
+          criterion.timeRestriction.afterDate.setHours(1, 0, 0, 0)
+        }
+      }
     }
   }
 }
