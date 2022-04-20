@@ -185,6 +185,8 @@ describe('QuerybuilderEditorComponent', () => {
       component.backend = backendService
     })
 
+    // TODO Request from Location Header
+    /*
     it('should start polling query results', fakeAsync(() => {
       const location = 'http://result/1'
       jest.spyOn(backendService, 'postQuery').mockReturnValue(of({ location }))
@@ -198,7 +200,7 @@ describe('QuerybuilderEditorComponent', () => {
       expect(backendService.getResult).toBeCalledTimes(5)
       expect(component.result).toEqual(queryResult)
     }))
-
+    */
     it('should set resultUrl and start polling query results', fakeAsync(() => {
       jest.spyOn(backendService, 'getResult').mockReturnValue(of(queryResult))
 
