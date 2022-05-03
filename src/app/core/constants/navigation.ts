@@ -3,23 +3,25 @@ import INavItem from '../../layout/models/nav-item.interface'
 export const mainNavItems: INavItem[] = [
   {
     routeTo: 'home',
+    roles: ['main'],
     icon: 'th',
     translationKey: 'NAVIGATION.DASHBOARD',
   },
   {
     routeTo: 'querybuilder/editor',
+    roles: ['main'],
     icon: 'dna',
     translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
   },
   {
     routeTo: 'querybuilder/overview',
-    roles: ['CODEX_USER'],
+    roles: ['main'],
     icon: 'bars',
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
   {
     routeTo: 'options',
-    roles: ['CODEX_USER'],
+    roles: ['option'],
     icon: 'wrench',
     translationKey: 'NAVIGATION.OPTIONS',
   },

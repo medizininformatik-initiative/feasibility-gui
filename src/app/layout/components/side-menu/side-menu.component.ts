@@ -23,7 +23,12 @@ export class SideMenuComponent implements OnInit {
   ngOnInit(): void {
     this.mainNavItems?.forEach((item) => {
       let roles = item.roles ? item.roles : []
-
+      if (roles[0] === 'main') {
+        roles = [].concat(this.featureService.getRoles('main'))
+      }
+      if (roles[0] === 'option') {
+        roles = [].concat(this.featureService.getRoles('optionpage'))
+      }
       const routesForNavItem = this.routes.filter((route) => item.routeTo === route.path)
 
       if (routesForNavItem && routesForNavItem.length > 0) {
