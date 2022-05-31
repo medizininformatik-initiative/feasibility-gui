@@ -11,11 +11,26 @@ import { FormsModule } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog'
 import { RouterTestingModule } from '@angular/router/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { FeatureService } from '../../../../../../service/feature.service'
+import { OAuthStorage } from 'angular-oauth2-oidc'
 
 describe('SaveDialogComponent', () => {
   let component: SaveDialogComponent
   let fixture: ComponentFixture<SaveDialogComponent>
   let matDialogRef
+
+  const featureService = {
+    mockLoadnSave(): boolean {
+      return true
+    },
+    getPatientResultLowerBoundary(): number {
+      return 0
+    },
+  } as FeatureService
+
+  const authStorage = {
+    getItem: (accessToken: string) => 'test_token',
+  } as OAuthStorage
 
   beforeEach(async () => {
     matDialogRef = {
@@ -34,7 +49,11 @@ describe('SaveDialogComponent', () => {
         RouterTestingModule.withRoutes([]),
         BrowserAnimationsModule,
       ],
-      providers: [{ provide: MatDialogRef, useValue: matDialogRef }],
+      providers: [
+        { provide: OAuthStorage, useValue: authStorage },
+        { provide: MatDialogRef, useValue: matDialogRef },
+        { provide: FeatureService, useValue: featureService },
+      ],
     }).compileComponents()
   })
 

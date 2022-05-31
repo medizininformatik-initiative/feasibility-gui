@@ -11,16 +11,22 @@ export class SingleQueryComponent implements OnInit {
   index: number
 
   @Input()
+  id: number
+
+  @Input()
   singleQuery: Query
 
   @Input()
-  singleTitle: string
+  singleLabel: string
 
   @Input()
   singleComment: string
 
   @Input()
-  singleDate: number
+  singleDate: Date
+
+  @Input()
+  createdBy: string
 
   constructor() {}
 

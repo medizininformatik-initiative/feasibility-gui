@@ -85,12 +85,16 @@ export class ApiTranslator {
     const exclusionCriteria = ObjectHelper.clone(query.groups[0].exclusionCriteria)
     const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria)
 
-    result.inclusionCriteria = this.translateCritGroupV2(inclusionCriteria)
+    if (inclusionCriteria.length > 0) {
+      result.inclusionCriteria = this.translateCritGroupV2(inclusionCriteria)
+    } else {
+      result.inclusionCriteria = []
+    }
 
     if (exclusionCriteria.length > 0) {
       result.exclusionCriteria = this.translateCritGroupV2(exclusionCriteria)
     } else {
-      result.exclusionCriteria = undefined
+      result.exclusionCriteria = []
     }
 
     return result
@@ -117,7 +121,7 @@ export class ApiTranslator {
             } else {
               criterionV2.attributeFilters.push(attribute)
             }
-            attribute.attributeCode = attribute.attributeDefinition.attributeCode
+            attribute.attributeCode = attribute.attributeDefinition?.attributeCode
           })
         }
         this.editTimeRestrictionsV2(criterionV2)
@@ -160,46 +164,51 @@ export class ApiTranslator {
   private editTimeRestrictionsV2(criterion: CriterionOnlyV2): void {
     if (criterion.timeRestriction) {
       if (criterion.timeRestriction.minDate) {
-        criterion.timeRestriction.beforeDate = new Date()
-        criterion.timeRestriction.afterDate = new Date()
         const minTemp = new Date(criterion.timeRestriction.minDate)
         const maxTemp = new Date(criterion.timeRestriction.maxDate)
+        const offset = minTemp.getTimezoneOffset() / -60
+        minTemp.setHours(23 + offset, 59, 59, 999)
+        maxTemp.setHours(offset, 0, 0, 0)
 
         switch (criterion.timeRestriction.tvpe) {
           case TimeRestrictionType.AFTER: {
-            criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
+            minTemp.setDate(minTemp.getDate() + 1)
+            criterion.timeRestriction.afterDate = minTemp.toISOString().split('T')[0]
             criterion.timeRestriction.beforeDate = undefined
             break
           }
           /*case TimeRestrictionType.AFTER_OR_AT: {
-            criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+            criterion.timeRestriction.afterDate = minTemp.toISOString().split("T")[0]
             criterion.timeRestriction.beforeDate = undefined
             break
           }*/
           case TimeRestrictionType.BEFORE: {
-            criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
+            minTemp.setDate(minTemp.getDate() - 1)
+            criterion.timeRestriction.beforeDate = minTemp.toISOString().split('T')[0]
             criterion.timeRestriction.afterDate = undefined
             break
           }
           /*case TimeRestrictionType.BEFORE_OR_AT: {
-            criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
+            criterion.timeRestriction.beforeDate = minTemp.toISOString().split("T")[0]
             criterion.timeRestriction.afterDate = undefined
             break
           }*/
           case TimeRestrictionType.AT: {
-            criterion.timeRestriction.beforeDate.setDate(minTemp.getDate())
-            criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+            criterion.timeRestriction.beforeDate = minTemp.toISOString().split('T')[0]
+            criterion.timeRestriction.afterDate = minTemp.toISOString().split('T')[0]
             break
           }
           /*case TimeRestrictionType.NOT_AT: {
-            criterion.timeRestriction.beforeDate.setDate(minTemp.getDate() - 1)
-            criterion.timeRestriction.afterDate.setDate(minTemp.getDate() + 1)
+            minTemp.setDate(minTemp.getDate() - 1)
+            criterion.timeRestriction.beforeDate = minTemp.toISOString().split("T")[0]
+            minTemp.setDate(minTemp.getDate() + 2)
+            criterion.timeRestriction.afterDate = minTemp.toISOString().split("T")[0]
             break
           }*/
           case TimeRestrictionType.BETWEEN: {
             if (criterion.timeRestriction.maxDate) {
-              criterion.timeRestriction.beforeDate.setDate(maxTemp.getDate())
-              criterion.timeRestriction.afterDate.setDate(minTemp.getDate())
+              criterion.timeRestriction.beforeDate = maxTemp.toISOString().split('T')[0]
+              criterion.timeRestriction.afterDate = minTemp.toISOString().split('T')[0]
             } else {
               criterion.timeRestriction = undefined
             }
@@ -213,13 +222,71 @@ export class ApiTranslator {
         criterion.timeRestriction.tvpe = undefined
         criterion.timeRestriction.minDate = undefined
         criterion.timeRestriction.maxDate = undefined
-        if (criterion.timeRestriction.beforeDate) {
-          criterion.timeRestriction.beforeDate.setHours(24, 59, 59, 999)
-        }
-        if (criterion.timeRestriction.afterDate) {
-          criterion.timeRestriction.afterDate.setHours(1, 0, 0, 0)
-        }
       }
     }
+  }
+
+  translateSQtoUIQuery(uiquery: Query, sqquery: any): Query {
+    const inclusion = sqquery.structuredQuery.inclusionCriteria
+      ? sqquery.structuredQuery.inclusionCriteria
+      : []
+    uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(inclusion)
+    const exclusion = sqquery.structuredQuery.exclusionCriteria
+      ? sqquery.structuredQuery.exclusionCriteria
+      : []
+    uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion)
+    return uiquery
+  }
+
+  private translateSQtoUICriteria(inexclusion): any {
+    inexclusion.forEach((and) => {
+      and.forEach((or) => {
+        or.valueFilters = []
+        if (or.valueFilter) {
+          or.valueFilters.push(or.valueFilter)
+          or.valueFilter = undefined
+        }
+        if (!or.attributeFilters) {
+          or.attributeFilters = []
+        }
+        or.attributeFilters.forEach((attribute) => {
+          attribute.attributeDefinition = {}
+          attribute.attributeDefinition.attributeCode = ObjectHelper.clone(attribute.attributeCode)
+          attribute.attributeCode = undefined
+        })
+        or.display = or.termCodes[0].display
+        or.children = []
+        if (or.timeRestriction) {
+          let type: TimeRestrictionType
+          if (or.timeRestriction.afterDate && !or.timeRestriction.beforeDate) {
+            type = TimeRestrictionType.AFTER
+          }
+          if (!or.timeRestriction.afterDate && or.timeRestriction.beforeDate) {
+            type = TimeRestrictionType.BEFORE
+          }
+          if (or.timeRestriction.afterDate && or.timeRestriction.beforeDate) {
+            if (
+              new Date(or.timeRestriction.beforeDate).getTime() -
+                new Date(or.timeRestriction.afterDate).getTime() ===
+              86399999
+            ) {
+              type = TimeRestrictionType.AT
+            } else {
+              type = TimeRestrictionType.BETWEEN
+            }
+          }
+          or.timeRestriction = {
+            tvpe: type,
+            minDate: or.timeRestriction.afterDate
+              ? new Date(or.timeRestriction.afterDate)
+              : undefined,
+            maxDate: or.timeRestriction.beforeDate
+              ? new Date(or.timeRestriction.beforeDate)
+              : undefined,
+          }
+        }
+      })
+    })
+    return inexclusion
   }
 }

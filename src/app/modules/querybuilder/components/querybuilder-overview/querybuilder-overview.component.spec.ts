@@ -10,10 +10,26 @@ import { MaterialModule } from '../../../../layout/material/material.module'
 import { FormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
+import { OAuthStorage } from 'angular-oauth2-oidc'
+import { FeatureService } from '../../../../service/feature.service'
+import { BackendService } from '../../service/backend.service'
 
 describe('QuerybuilderOverviewComponent', () => {
   let component: QuerybuilderOverviewComponent
   let fixture: ComponentFixture<QuerybuilderOverviewComponent>
+
+  const featureService = {
+    mockLoadnSave(): boolean {
+      return true
+    },
+    getPatientResultLowerBoundary(): number {
+      return 0
+    },
+  } as FeatureService
+
+  const authStorage = {
+    getItem: (accessToken: string) => 'test_token',
+  } as OAuthStorage
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,6 +42,10 @@ describe('QuerybuilderOverviewComponent', () => {
         FormsModule,
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([]),
+      ],
+      providers: [
+        { provide: OAuthStorage, useValue: authStorage },
+        { provide: FeatureService, useValue: featureService },
       ],
     }).compileComponents()
   })

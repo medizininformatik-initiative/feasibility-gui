@@ -62,5 +62,11 @@ export class FeatureProviderService {
       document.getElementById('footer-logo').setAttribute('src', 'assets/img/Abide_MI_cropped.jpg')
       document.getElementById('footer-logo').setAttribute('alt', 'MII Logo')
     }
+    if (newTheme === 'primaryTheme') {
+      document.getElementById('header-logo').setAttribute('src', 'assets/img/Abide_MI_cropped.jpg')
+      document.getElementById('header-logo').setAttribute('alt', 'ABIDE Logo')
+      document.getElementById('footer-logo').setAttribute('src', 'assets/img/Abide_MI_cropped.jpg')
+      document.getElementById('footer-logo').setAttribute('alt', 'MII Logo')
+    }
   }
 }
