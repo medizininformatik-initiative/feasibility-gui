@@ -94,7 +94,7 @@ export class ApiTranslator {
     if (exclusionCriteria.length > 0) {
       result.exclusionCriteria = this.translateCritGroupV2(exclusionCriteria)
     } else {
-      result.exclusionCriteria = []
+      result.exclusionCriteria = undefined
     }
 
     return result
@@ -245,6 +245,13 @@ export class ApiTranslator {
         if (or.valueFilter) {
           or.valueFilters.push(or.valueFilter)
           or.valueFilter = undefined
+          if (or.valueFilters[0].type === 'quantity-range') {
+            or.valueFilters[0].value = 0
+            or.valueFilters[0].precision = 1
+          }
+          if (or.valueFilters[0].type === 'quantity-comparator') {
+            or.valueFilters[0].precision = 1
+          }
         }
         if (!or.attributeFilters) {
           or.attributeFilters = []
@@ -253,6 +260,13 @@ export class ApiTranslator {
           attribute.attributeDefinition = {}
           attribute.attributeDefinition.attributeCode = ObjectHelper.clone(attribute.attributeCode)
           attribute.attributeCode = undefined
+          if (attribute.type === 'quantity-range') {
+            attribute.value = 0
+            attribute.precision = 1
+          }
+          if (attribute.type === 'quantity-comparator') {
+            attribute.precision = 1
+          }
         })
         or.display = or.termCodes[0].display
         or.children = []
@@ -265,11 +279,7 @@ export class ApiTranslator {
             type = TimeRestrictionType.BEFORE
           }
           if (or.timeRestriction.afterDate && or.timeRestriction.beforeDate) {
-            if (
-              new Date(or.timeRestriction.beforeDate).getTime() -
-                new Date(or.timeRestriction.afterDate).getTime() ===
-              86399999
-            ) {
+            if (or.timeRestriction.beforeDate === or.timeRestriction.afterDate) {
               type = TimeRestrictionType.AT
             } else {
               type = TimeRestrictionType.BETWEEN

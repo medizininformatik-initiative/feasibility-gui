@@ -18,8 +18,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { OAuthStorage } from 'angular-oauth2-oidc'
-import { BackendService } from '../../../../service/backend.service'
-import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminology/terminology'
 
 describe('DisplayCriterionComponent', () => {
   let component: DisplayCriterionComponent
@@ -28,22 +26,6 @@ describe('DisplayCriterionComponent', () => {
   let query = new Query()
   let dialog
   let dialogRef
-  let backendService: BackendService
-
-  beforeEach(async () => {
-    backendService = {
-      getTerminologyProfile(id: string): Observable<any> {
-        switch (id) {
-          case '1':
-            return of({})
-          case '2':
-            return of({})
-          default:
-            return of(undefined)
-        }
-      },
-    } as BackendService
-  })
 
   const featureService = {
     useFeatureMultipleValueDefinitions(): boolean {
@@ -83,10 +65,6 @@ describe('DisplayCriterionComponent', () => {
       providers: [
         { provide: OAuthStorage, useValue: authStorage },
         { provide: FeatureService, useValue: featureService },
-        {
-          provide: BackendService,
-          useValue: backendService,
-        },
       ],
     }).compileComponents()
   })

@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs'
 import { ValueFilter } from '../../../../model/api/query/valueFilter'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { CritGroupPosition } from '../../../../controller/CritGroupArranger'
-import { BackendService } from '../../../../service/backend.service'
 
 @Component({
   selector: 'num-display-criterion',
@@ -34,43 +33,16 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   storeQuery = new EventEmitter<Query>()
 
   private subscriptionDialog: Subscription
-  private subscriptionCritProfile: Subscription
 
-  constructor(
-    public dialog: MatDialog,
-    public featureService: FeatureService,
-    private backend: BackendService
-  ) {}
+  constructor(public dialog: MatDialog, public featureService: FeatureService) {}
 
-  ngOnInit(): void {
-    console.log(this.query)
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscriptionDialog?.unsubscribe()
-    this.subscriptionCritProfile?.unsubscribe()
   }
 
   openDetailsPopUp(): void {
-    this.subscriptionCritProfile?.unsubscribe()
-    const version = this.criterion.termCodes[0].version
-      ? '&version=' + this.criterion.termCodes[0].version
-      : ''
-    const param =
-      'code=' +
-      this.criterion.termCodes[0].code +
-      '&system=' +
-      this.criterion.termCodes[0].system +
-      version
-    this.subscriptionCritProfile = this.backend
-      .getTerminologyProfile(param)
-      .subscribe((profile) => {
-        console.log(profile)
-      })
-    // this.query.groups[0].inclusionCriteria[0][0].attributeFilters[0].attributeDefinition.selectableConcepts = [{code: "available", display: "available", system: "hl7"}, {code: "unavailable", display: "unavailable", system: "hl7"}]
-    // this.storeQuery.emit(this.query)
-    // console.log(this.query)
-
     const dialogConfig = new MatDialogConfig()
 
     dialogConfig.disableClose = true

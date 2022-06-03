@@ -263,19 +263,19 @@ describe('EditValueDefinitionComponent', () => {
   describe('select concepts', () => {
     const termCodeA: TerminologyCode = {
       code: 'a',
-      system: 'http://test',
       display: 'code a',
+      system: 'http://test',
     }
     const termCodeACloned: TerminologyCode = ObjectHelper.clone(termCodeA)
     const termCodeB: TerminologyCode = {
       code: 'b',
-      system: 'http://test',
       display: 'code b',
+      system: 'http://test',
     }
     const termCodeC: TerminologyCode = {
       code: 'c',
-      system: 'http://test',
       display: 'code c',
+      system: 'http://test',
     }
 
     it('should be selected for chosen term code ', () => {
