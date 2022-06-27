@@ -20,6 +20,11 @@
   @include custom-material_themed($num-portal-webapp-theme-abide);
 }
 
+.bzkfTheme {
+  @include angular-material-theme($num-portal-webapp-theme-bzkf);
+  @include custom-material_themed($num-portal-webapp-theme-bzkf);
+}
+
 html,
 body {
   position: absolute;
