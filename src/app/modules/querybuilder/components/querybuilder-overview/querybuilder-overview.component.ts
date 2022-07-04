@@ -37,6 +37,7 @@ export class QuerybuilderOverviewComponent implements OnInit {
     comment: string
     lastModified: Date
     createdBy?: string
+    isValid?: boolean
   }> = []
 
   ngOnInit(): void {
@@ -63,5 +64,11 @@ export class QuerybuilderOverviewComponent implements OnInit {
         this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } })
       })
     }
+  }
+
+  doValidate(): void {
+    this.savedQueriesSubscription = this.backend.loadSavedQueries(true).subscribe((queries) => {
+      this.savedQueries = queries
+    })
   }
 }

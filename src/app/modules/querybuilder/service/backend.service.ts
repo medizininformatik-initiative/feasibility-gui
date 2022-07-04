@@ -158,12 +158,13 @@ export class BackendService {
     }
   }
 
-  public loadSavedQueries(): Observable<any> {
+  public loadSavedQueries(validate?: boolean): Observable<any> {
     if (this.feature.mockLoadnSave()) {
       return of(this.queryProviderService.loadQueries())
     } else {
       const headers = this.headers
-      return this.http.get<Array<any>>(this.createUrl(BackendService.PATH_STORED_QUERY), {
+      const url = validate ? '/validate' : ''
+      return this.http.get<Array<any>>(this.createUrl(BackendService.PATH_STORED_QUERY + url), {
         headers,
       })
     }

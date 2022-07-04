@@ -173,6 +173,7 @@
     "SEND": "Abfrage starten",
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
-    "SAVEQUERY": "Abfrage speichern"
+    "SAVEQUERY": "Abfrage speichern",
+    "VALIDATE": "Validieren"
   }
 }

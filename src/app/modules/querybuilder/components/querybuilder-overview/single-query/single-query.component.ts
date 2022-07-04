@@ -14,7 +14,7 @@ export class SingleQueryComponent implements OnInit {
   id: number
 
   @Input()
-  singleQuery: Query
+  isValid: boolean
 
   @Input()
   singleLabel: string
@@ -28,7 +28,13 @@ export class SingleQueryComponent implements OnInit {
   @Input()
   createdBy: string
 
+  isInvalid: boolean
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.isValid === false) {
+      this.isInvalid = true
+    }
+  }
 }

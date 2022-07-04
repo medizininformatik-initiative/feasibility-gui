@@ -173,6 +173,7 @@
     "SEND": "Send",
     "RESET": "Reset",
     "RESULTDETAILS": "Details",
-    "SAVEQUERY": "Save query"
+    "SAVEQUERY": "Save query",
+    "VALIDATE": "Validate"
   }
 }

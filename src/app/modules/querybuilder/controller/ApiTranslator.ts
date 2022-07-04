@@ -227,18 +227,24 @@ export class ApiTranslator {
   }
 
   translateSQtoUIQuery(uiquery: Query, sqquery: any): Query {
+    const invalidCriteria = sqquery.invalidTerms
     const inclusion = sqquery.structuredQuery.inclusionCriteria
       ? sqquery.structuredQuery.inclusionCriteria
       : []
-    uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(inclusion)
+    uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(inclusion, invalidCriteria)
     const exclusion = sqquery.structuredQuery.exclusionCriteria
       ? sqquery.structuredQuery.exclusionCriteria
       : []
-    uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion)
+    uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria)
     return uiquery
   }
 
-  private translateSQtoUICriteria(inexclusion): any {
+  private translateSQtoUICriteria(inexclusion, invalidCriteria): any {
+    const invalidCriteriaSet: Set<string> = new Set()
+    invalidCriteria.forEach((invalids) => {
+      invalidCriteriaSet.add(JSON.stringify(invalids))
+    })
+
     inexclusion.forEach((and) => {
       and.forEach((or) => {
         or.valueFilters = []
@@ -295,6 +301,7 @@ export class ApiTranslator {
               : undefined,
           }
         }
+        or.isinvalid = invalidCriteriaSet.has(JSON.stringify(or.termCodes[0]))
       })
     })
     return inexclusion
