@@ -172,7 +172,7 @@ export class ApiTranslator {
 
         switch (criterion.timeRestriction.tvpe) {
           case TimeRestrictionType.AFTER: {
-            minTemp.setDate(minTemp.getDate() + 1)
+            // minTemp.setDate(minTemp.getDate() + 1)
             criterion.timeRestriction.afterDate = minTemp.toISOString().split('T')[0]
             criterion.timeRestriction.beforeDate = undefined
             break
@@ -183,7 +183,7 @@ export class ApiTranslator {
             break
           }*/
           case TimeRestrictionType.BEFORE: {
-            minTemp.setDate(minTemp.getDate() - 1)
+            // minTemp.setDate(minTemp.getDate() - 1)
             criterion.timeRestriction.beforeDate = minTemp.toISOString().split('T')[0]
             criterion.timeRestriction.afterDate = undefined
             break
@@ -278,18 +278,19 @@ export class ApiTranslator {
         or.children = []
         if (or.timeRestriction) {
           let type: TimeRestrictionType
-          if (or.timeRestriction.afterDate && !or.timeRestriction.beforeDate) {
-            type = TimeRestrictionType.AFTER
-          }
-          if (!or.timeRestriction.afterDate && or.timeRestriction.beforeDate) {
-            type = TimeRestrictionType.BEFORE
-          }
           if (or.timeRestriction.afterDate && or.timeRestriction.beforeDate) {
             if (or.timeRestriction.beforeDate === or.timeRestriction.afterDate) {
               type = TimeRestrictionType.AT
             } else {
               type = TimeRestrictionType.BETWEEN
             }
+          }
+          if (or.timeRestriction.afterDate && !or.timeRestriction.beforeDate) {
+            type = TimeRestrictionType.AFTER
+          }
+          if (!or.timeRestriction.afterDate && or.timeRestriction.beforeDate) {
+            type = TimeRestrictionType.BEFORE
+            or.timeRestriction.afterDate = or.timeRestriction.beforeDate
           }
           or.timeRestriction = {
             tvpe: type,
