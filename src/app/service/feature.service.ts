@@ -124,4 +124,8 @@ export class FeatureService {
   public mockResult(): boolean {
     return this.appConfig.getConfig().mock.result && this.isDevelopMode()
   }
+
+  public mockLoadnSave(): boolean {
+    return this.appConfig.getConfig().mock.loadnsave && this.isDevelopMode()
+  }
 }

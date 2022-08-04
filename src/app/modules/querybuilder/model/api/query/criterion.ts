@@ -9,12 +9,13 @@ import { AttributeFilter } from './attributeFilter'
 export class Criterion {
   // termCode?: TerminologyCode
   termCodes?: Array<TerminologyCode> = []
-  display: string
+  display?: string
   entity?: boolean
   optional?: boolean
-  valueFilters: Array<ValueFilter> = []
+  valueFilters?: Array<ValueFilter> = []
   attributeFilters?: Array<AttributeFilter> = []
   children?: Array<TerminologyEntry> = []
+  isinvalid?: boolean
 
   @V2()
   timeRestriction?: TimeRestriction
@@ -33,4 +34,5 @@ export class CriterionOnlyV2 {
   valueFilter?: ValueFilter
   attributeFilters?: Array<AttributeFilter> = []
   timeRestriction?: TimeRestriction
+  isinvalid?: boolean
 }

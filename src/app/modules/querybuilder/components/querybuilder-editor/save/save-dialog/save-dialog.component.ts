@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Query } from '../../../../model/api/query/query'
 import { QueryProviderService } from '../../../../service/query-provider.service'
 import { MatDialogRef } from '@angular/material/dialog'
 import { Router } from '@angular/router'
+import { BackendService } from '../../../../service/backend.service'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'num-save-dialog',
   templateUrl: './save-dialog.component.html',
   styleUrls: ['./save-dialog.component.scss'],
 })
-export class SaveDialogComponent implements OnInit {
+export class SaveDialogComponent implements OnInit, OnDestroy {
+  private subscriptionResult: Subscription
   constructor(
     public queryProviderService: QueryProviderService,
+    public backend: BackendService,
     private dialogRef: MatDialogRef<SaveDialogComponent, void>,
     private router: Router
   ) {}
@@ -20,31 +24,21 @@ export class SaveDialogComponent implements OnInit {
   title = ''
   comment = ''
 
-  savedQueries: Array<{
-    query: Query
-    title: string
-    comment: string
-    date: number
-  }> = []
-
   ngOnInit(): void {
     this.query = this.queryProviderService.query()
-    this.savedQueries = this.queryProviderService.loadQueries()
-    if (this.savedQueries === undefined) {
-      this.savedQueries = []
-    }
   }
-
+  ngOnDestroy(): void {
+    this.subscriptionResult?.unsubscribe()
+  }
   doSave(): void {
-    this.savedQueries.push({
-      query: this.query,
-      title: this.title,
-      comment: this.comment,
-      date: Date.now(),
-    })
-    this.queryProviderService.saveQueries(this.savedQueries)
+    this.subscriptionResult?.unsubscribe()
+    this.subscriptionResult = this.backend
+      .saveQuery(this.query, this.title, this.comment)
+      .subscribe((response) => {
+        console.log(response)
+      })
     this.dialogRef.close()
-    this.router.navigate(['/querybuilder/overview'])
+    // this.router.navigate(['/querybuilder/overview'])
   }
 
   doDiscard(): void {

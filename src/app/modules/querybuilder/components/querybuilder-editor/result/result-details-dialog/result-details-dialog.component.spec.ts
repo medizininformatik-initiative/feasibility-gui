@@ -12,6 +12,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { of } from 'rxjs'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { OAuthStorage } from 'angular-oauth2-oidc'
 
 describe('ResultDetailsDialogComponent', () => {
   let component: ResultDetailsDialogComponent
@@ -36,6 +37,10 @@ describe('ResultDetailsDialogComponent', () => {
       },
     } as FeatureService
 
+    const authStorage = {
+      getItem: (accessToken: string) => 'test_token',
+    } as OAuthStorage
+
     await TestBed.configureTestingModule({
       declarations: [ResultDetailsDialogComponent, ButtonComponent],
       imports: [
@@ -45,6 +50,7 @@ describe('ResultDetailsDialogComponent', () => {
         HttpClientTestingModule,
       ],
       providers: [
+        { provide: OAuthStorage, useValue: authStorage },
         { provide: MAT_DIALOG_DATA, useValue: data },
         { provide: MatDialogRef, useValue: matDialogRef },
         { provide: FeatureService, useValue: featureService },

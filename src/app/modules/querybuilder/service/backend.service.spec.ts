@@ -11,6 +11,7 @@ import { QueryResponse } from '../model/api/result/QueryResponse'
 import { Query } from '../model/api/query/query'
 import DoneCallback = jest.DoneCallback
 import { MockBackendDataProvider } from './MockBackendDataProvider'
+import { OAuthStorage } from 'angular-oauth2-oidc'
 
 describe('BackendService', () => {
   let service: BackendService
@@ -40,10 +41,15 @@ describe('BackendService', () => {
     },
   } as FeatureService
 
+  const authStorage = {
+    getItem: (accessToken: string) => 'test_token',
+  } as OAuthStorage
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
+        { provide: OAuthStorage, useValue: authStorage },
         {
           provide: FeatureService,
           useValue: featureService,

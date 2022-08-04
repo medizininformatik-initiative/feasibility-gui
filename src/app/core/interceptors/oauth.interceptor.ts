@@ -27,13 +27,23 @@ export class OAuthInterceptor implements HttpInterceptor {
     const token = this.authStorage.getItem('access_token')
     const headers = req.headers.set('Authorization', 'Bearer ' + token)
     req = req.clone({ headers })
-    return next.handle(req).pipe(catchError(this.handleError.bind(this)))
-  }
 
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    if (error.status === 401) {
-      this.oauthService.logOut()
-    }
-    return throwError(error)
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.log(error)
+        if (error.status === 401) {
+          if (req.url === 'http://localhost:8090/api/v1/query-handler/stored-query') {
+            window.alert('User unauthorized')
+          } else {
+            this.oauthService.logOut()
+          }
+        }
+        if (error.status === 404) {
+          window.alert('Site not found')
+        }
+
+        return throwError(error.message)
+      })
+    )
   }
 }

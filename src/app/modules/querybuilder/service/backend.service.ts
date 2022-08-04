@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { CategoryEntry, TerminologyEntry } from '../model/api/terminology/terminology'
 import { AppConfigService } from '../../../config/app-config.service'
 import { Observable, of } from 'rxjs'
@@ -9,6 +9,8 @@ import { QueryResponse } from '../model/api/result/QueryResponse'
 import { QueryResult } from '../model/api/result/QueryResult'
 import { MockBackendDataProvider } from './MockBackendDataProvider'
 import { ApiTranslator } from '../controller/ApiTranslator'
+import { QueryProviderService } from './query-provider.service'
+import { OAuthStorage } from 'angular-oauth2-oidc'
 
 @Injectable({
   providedIn: 'root',
@@ -17,17 +19,26 @@ export class BackendService {
   constructor(
     private config: AppConfigService,
     private feature: FeatureService,
-    private http: HttpClient
+    private queryProviderService: QueryProviderService,
+    private http: HttpClient,
+    private authStorage: OAuthStorage
   ) {}
   private static PATH_ROOT_ENTRIES = 'terminology/root-entries'
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries'
+  private static PATH_TERMINOLOGY_PROFILE = 'terminology/ui_profile'
   private static PATH_SEARCH = 'terminology/selectable-entries'
   private static PATH_RUN_QUERY = 'query-handler/run-query'
+  private static PATH_STORED_QUERY = 'query-handler/stored-query'
 
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345'
 
   private readonly mockBackendDataProvider = new MockBackendDataProvider()
   lowerBoundaryPatient: number = this.feature.getPatientResultLowerBoundary()
+
+  token = this.authStorage.getItem('access_token')
+  headers = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + this.token)
 
   public getCategories(): Observable<Array<CategoryEntry>> {
     if (this.feature.mockTerminology()) {
@@ -45,6 +56,10 @@ export class BackendService {
     return this.http.get<TerminologyEntry>(
       this.createUrl(BackendService.PATH_TERMINOLOGY_SUBTREE + '/' + id)
     )
+  }
+
+  public getTerminologyProfile(termcode: string): Observable<any> {
+    return this.http.get<any>(this.createUrl(BackendService.PATH_TERMINOLOGY_PROFILE, termcode))
   }
 
   public getTerminolgyEntrySearchResult(
@@ -95,6 +110,72 @@ export class BackendService {
     }
 
     return this.http.get<QueryResult>(resultUrl)
+  }
+
+  public saveQuery(query: Query, title: string, comment: string): Observable<any> {
+    if (this.feature.mockLoadnSave()) {
+      let savedQueries: Array<{
+        structuredQuery: Query
+        label: string
+        comment: string
+        lastModified: number
+      }> = []
+      savedQueries = this.queryProviderService.loadQueries()
+      if (savedQueries === undefined) {
+        savedQueries = []
+      }
+      savedQueries.push({
+        structuredQuery: query,
+        label: title,
+        comment,
+        lastModified: Date.now(),
+      })
+      this.queryProviderService.saveQueries(savedQueries)
+      return of({ location: BackendService.MOCK_RESULT_URL })
+    } else {
+      const headers = this.headers
+      if (this.feature.getQueryVersion() === 'v1') {
+        const savedQuery = {
+          label: title,
+          comment,
+          structuredQuery: new ApiTranslator().translateToV1(query),
+        }
+        return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
+          headers,
+        })
+      }
+      if (this.feature.getQueryVersion() === 'v2') {
+        const savedQuery = {
+          label: title,
+          comment,
+          structuredQuery: new ApiTranslator().translateToV2(query),
+        }
+        return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
+          headers,
+          observe: 'response',
+        })
+      }
+    }
+  }
+
+  public loadSavedQueries(validate?: boolean): Observable<any> {
+    if (this.feature.mockLoadnSave()) {
+      return of(this.queryProviderService.loadQueries())
+    } else {
+      const headers = this.headers
+      const url = validate ? '/validate' : ''
+      return this.http.get<Array<any>>(this.createUrl(BackendService.PATH_STORED_QUERY + url), {
+        headers,
+      })
+    }
+  }
+
+  public loadQuery(id: number): Observable<any> {
+    const headers = this.headers
+    return this.http.get<any>(
+      this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
+      { headers }
+    )
   }
 
   createUrl(pathToResource: string, paramString?: string): string {

@@ -1,13 +1,20 @@
 <h2 class="loading-header">{{ 'QUERYBUILDER.OVERVIEW.LOAD_HEADER' | translate }}</h2>
 <div class="saved-queries">
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <num-button [type]="'primary'" (click)="doValidate()" class="button-validate">
+      {{ 'BUTTON.VALIDATE' | translate }}
+    </num-button>
+  </div>
   <div *ngFor="let singleQuery of savedQueries; index as i" class="query-box">
     <num-single-query
       [index]="i"
-      [singleQuery]="singleQuery.query"
-      [singleTitle]="singleQuery.title"
+      [id]="singleQuery.id"
+      [isValid]="singleQuery.isValid"
+      [singleLabel]="singleQuery.label"
       [singleComment]="singleQuery.comment"
-      [singleDate]="singleQuery.date"
-      (click)="loadQuery(singleQuery.query)"
+      [singleDate]="singleQuery.lastModified"
+      [createdBy]="singleQuery.createdBy"
+      (click)="loadQuery(singleQuery.id, singleQuery.structuredQuery)"
     >
     </num-single-query>
   </div>

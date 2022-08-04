@@ -11,18 +11,30 @@ export class SingleQueryComponent implements OnInit {
   index: number
 
   @Input()
-  singleQuery: Query
+  id: number
 
   @Input()
-  singleTitle: string
+  isValid: boolean
+
+  @Input()
+  singleLabel: string
 
   @Input()
   singleComment: string
 
   @Input()
-  singleDate: number
+  singleDate: Date
+
+  @Input()
+  createdBy: string
+
+  isInvalid: boolean
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.isValid === false) {
+      this.isInvalid = true
+    }
+  }
 }
