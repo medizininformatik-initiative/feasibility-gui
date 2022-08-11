@@ -87,7 +87,9 @@
       "TITLE_LABEL": "Titel",
       "COMMENT_LABEL": "Kommentar",
       "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
-      "LOAD_HEADER": "bisherige Suchanfragen"
+      "LOAD_HEADER": "bisherige Suchanfragen",
+      "SAVE_WITH_QUERY": "komplette Abfrage speichern",
+      "SAVE_TEMPLATE": "als Template speichern"
     },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",

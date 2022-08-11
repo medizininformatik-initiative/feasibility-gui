@@ -5,16 +5,29 @@
       {{ 'BUTTON.VALIDATE' | translate }}
     </num-button>
   </div>
+  <h3>Abgespeicherte Queries</h3>
   <div *ngFor="let singleQuery of savedQueries; index as i" class="query-box">
     <num-single-query
       [index]="i"
       [id]="singleQuery.id"
-      [isValid]="singleQuery.isValid"
       [singleLabel]="singleQuery.label"
-      [singleComment]="singleQuery.comment"
-      [singleDate]="singleQuery.lastModified"
-      [createdBy]="singleQuery.createdBy"
-      (click)="loadQuery(singleQuery.id, singleQuery.structuredQuery)"
+      [singleDate]="singleQuery.created_at"
+      (click)="loadQuery(singleQuery.id)"
+    >
+    </num-single-query>
+  </div>
+  <div class="trenner"></div>
+  <h3>Abgespeicherte Templates</h3>
+  <div *ngFor="let singleTemplate of savedTemplates; index as i" class="template-box">
+    <num-single-query
+      [index]="i"
+      [id]="singleTemplate.id"
+      [isValid]="singleTemplate.isValid"
+      [singleLabel]="singleTemplate.label"
+      [singleComment]="singleTemplate.comment"
+      [singleDate]="singleTemplate.lastModified"
+      [createdBy]="singleTemplate.createdBy"
+      (click)="loadTemplate(singleTemplate.id, singleTemplate.content)"
     >
     </num-single-query>
   </div>

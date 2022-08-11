@@ -87,7 +87,9 @@
       "TITLE_LABEL": "Title",
       "COMMENT_LABEL": "Comment",
       "SAVE_HEADER": "Save the current query",
-      "LOAD_HEADER": "load previous queries"
+      "LOAD_HEADER": "load previous queries",
+      "SAVE_WITH_QUERY": "Save whole query",
+      "SAVE_TEMPLATE": "save as template"
     },
     "EDIT": {
       "HEADER": "Restrictions of selected concepts",
