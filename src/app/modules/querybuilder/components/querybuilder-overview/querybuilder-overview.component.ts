@@ -24,15 +24,23 @@ export class QuerybuilderOverviewComponent implements OnInit {
   ) {}
 
   private savedQueriesSubscription: Subscription
+  private savedTemplatesSubscription: Subscription
   private singleQuerySubscription: Subscription
+  private singleTemplateSubscription: Subscription
 
   query: Query
   title = ''
   comment = ''
 
   savedQueries: Array<{
+    id: number
+    label: string
+    created_at: Date
+  }> = []
+
+  savedTemplates: Array<{
     id?: number
-    structuredQuery?: Query
+    content?: Query
     label: string
     comment: string
     lastModified: Date
@@ -43,19 +51,24 @@ export class QuerybuilderOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.query = this.queryProviderService.query()
     this.savedQueriesSubscription?.unsubscribe()
+    this.savedTemplatesSubscription?.unsubscribe()
     this.singleQuerySubscription?.unsubscribe()
+    this.singleTemplateSubscription?.unsubscribe()
     this.savedQueriesSubscription = this.backend.loadSavedQueries().subscribe((queries) => {
       this.savedQueries = queries
     })
+    this.savedTemplatesSubscription = this.backend.loadSavedTemplates().subscribe((templates) => {
+      this.savedTemplates = templates
+    })
   }
 
-  loadQuery(id: number, singleQuery: Query): void {
+  loadTemplate(id: number, singleQuery: Query): void {
     if (this.feature.mockLoadnSave()) {
       this.query = singleQuery
       this.queryProviderService.store(this.query)
       this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } })
     } else {
-      this.singleQuerySubscription = this.backend.loadQuery(id).subscribe((query) => {
+      this.singleTemplateSubscription = this.backend.loadTemplate(id).subscribe((query) => {
         this.query = new ApiTranslator().translateSQtoUIQuery(
           QueryProviderService.createDefaultQuery(),
           query
@@ -66,9 +79,22 @@ export class QuerybuilderOverviewComponent implements OnInit {
     }
   }
 
+  loadQuery(id: number): void {
+    this.singleQuerySubscription = this.backend.loadQuery(id).subscribe((query) => {
+      this.query = new ApiTranslator().translateSQtoUIQuery(
+        QueryProviderService.createDefaultQuery(),
+        query
+      )
+      this.queryProviderService.store(this.query)
+      this.router.navigate(['/querybuilder/editor'], {
+        state: { preventReset: true, loadedResult: query.results },
+      })
+    })
+  }
+
   doValidate(): void {
-    this.savedQueriesSubscription = this.backend.loadSavedQueries(true).subscribe((queries) => {
-      this.savedQueries = queries
+    this.savedTemplatesSubscription = this.backend.loadSavedTemplates(true).subscribe((queries) => {
+      this.savedTemplates = queries
     })
   }
 }

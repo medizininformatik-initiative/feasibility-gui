@@ -214,7 +214,7 @@ describe('QuerybuilderEditorComponent', () => {
       tick(5000)
       component.subscriptionPolling.unsubscribe()
 
-      expect(component.resultUrl).toEqual(resultUrl)
+      expect(component.resultUrl).toEqual(resultUrl + '/result')
       expect(backendService.getResult).toBeCalledTimes(5)
       expect(component.result).toEqual(queryResult)
     }))
@@ -243,7 +243,7 @@ describe('QuerybuilderEditorComponent', () => {
       tick(5000)
       component.subscriptionPolling.unsubscribe()
 
-      expect(component.resultUrl).toEqual(resultUrl)
+      expect(component.resultUrl).toEqual(resultUrl + '/result')
       expect(console.error).toBeCalled()
       expect(backendService.getResult).toBeCalledTimes(1)
       expect(component.result).toEqual(undefined)

@@ -228,13 +228,9 @@ export class ApiTranslator {
 
   translateSQtoUIQuery(uiquery: Query, sqquery: any): Query {
     const invalidCriteria = sqquery.invalidTerms
-    const inclusion = sqquery.structuredQuery.inclusionCriteria
-      ? sqquery.structuredQuery.inclusionCriteria
-      : []
+    const inclusion = sqquery.content.inclusionCriteria ? sqquery.content.inclusionCriteria : []
     uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(inclusion, invalidCriteria)
-    const exclusion = sqquery.structuredQuery.exclusionCriteria
-      ? sqquery.structuredQuery.exclusionCriteria
-      : []
+    const exclusion = sqquery.content.exclusionCriteria ? sqquery.content.exclusionCriteria : []
     uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria)
     return uiquery
   }

@@ -16,6 +16,20 @@
         [(ngModel)]="comment"
       ></textarea>
     </mat-form-field>
+    <div>
+      <mat-radio-group class="example-radio-group" (change)="setQuerySaving($event)">
+        <mat-radio-button
+          class="example-radio-button"
+          value="saveQuery"
+          [disabled]="letQuerySave"
+          [checked]="!letQuerySave"
+          >{{ 'QUERYBUILDER.OVERVIEW.SAVE_WITH_QUERY' | translate }}
+        </mat-radio-button>
+        <mat-radio-button class="example-radio-button" value="template" [checked]="letQuerySave"
+          >{{ 'QUERYBUILDER.OVERVIEW.SAVE_TEMPLATE' | translate }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
   </div>
 </div>
 <div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">

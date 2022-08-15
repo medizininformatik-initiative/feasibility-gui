@@ -5,7 +5,7 @@ import {
   ResultDetailsDialogComponentData,
   ResultDetailsDialogComponent,
 } from '../result-details-dialog/result-details-dialog.component'
-import { Observable } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { BackendService } from '../../../../service/backend.service'
 
 @Component({
@@ -21,6 +21,9 @@ export class ResultSimpleComponent implements OnInit {
   result: QueryResult
 
   @Input()
+  isResultLoaded: boolean
+
+  @Input()
   showSpinner: boolean
 
   constructor(public dialog: MatDialog, public backend: BackendService) {}
@@ -34,6 +37,8 @@ export class ResultSimpleComponent implements OnInit {
     dialogConfig.autoFocus = true
     dialogConfig.data = {
       resultObservable$: this.resultObservable,
+      myResult: this.result,
+      isResultLoaded: this.isResultLoaded,
     }
     this.dialog.open(ResultDetailsDialogComponent, dialogConfig)
   }

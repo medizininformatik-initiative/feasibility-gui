@@ -7,6 +7,8 @@ import { FeatureService } from '../../../../../../service/feature.service'
 
 export class ResultDetailsDialogComponentData {
   resultObservable$: Observable<QueryResult>
+  myResult: QueryResult
+  isResultLoaded: boolean
 }
 
 @Component({
@@ -24,9 +26,13 @@ export class ResultDetailsDialogComponent implements OnInit {
     public backend: BackendService,
     private feature: FeatureService
   ) {
-    this.resultSubscription = this.data.resultObservable$.subscribe((resultTemp) =>
-      this.sortResult(resultTemp)
-    )
+    if (this.data.isResultLoaded) {
+      this.sortResult(this.data.myResult)
+    } else {
+      this.resultSubscription = this.data.resultObservable$.subscribe((resultTemp) =>
+        this.sortResult(resultTemp)
+      )
+    }
   }
 
   lowerBoundaryLocation: number = this.feature.getLocationResultLowerBoundary()

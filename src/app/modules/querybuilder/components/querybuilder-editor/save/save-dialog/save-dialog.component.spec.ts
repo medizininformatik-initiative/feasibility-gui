@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SaveDialogComponent } from './save-dialog.component'
+import { SaveDialogComponent, SaveDialogComponentData } from './save-dialog.component'
 import { MaterialModule } from '../../../../../../layout/material/material.module'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FormsModule } from '@angular/forms'
-import { MatDialogRef } from '@angular/material/dialog'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { RouterTestingModule } from '@angular/router/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FeatureService } from '../../../../../../service/feature.service'
@@ -18,6 +18,7 @@ describe('SaveDialogComponent', () => {
   let component: SaveDialogComponent
   let fixture: ComponentFixture<SaveDialogComponent>
   let matDialogRef
+  let data: SaveDialogComponentData
 
   const featureService = {
     mockLoadnSave(): boolean {
@@ -33,6 +34,9 @@ describe('SaveDialogComponent', () => {
   } as OAuthStorage
 
   beforeEach(async () => {
+    data = {
+      hasQuerySend: false,
+    }
     matDialogRef = {
       close: () => {},
     } as MatDialogRef<SaveDialogComponent>
@@ -51,6 +55,7 @@ describe('SaveDialogComponent', () => {
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },
+        { provide: MAT_DIALOG_DATA, useValue: data },
         { provide: MatDialogRef, useValue: matDialogRef },
         { provide: FeatureService, useValue: featureService },
       ],

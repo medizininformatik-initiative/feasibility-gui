@@ -27,8 +27,8 @@ export class BackendService {
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries'
   private static PATH_TERMINOLOGY_PROFILE = 'terminology/ui_profile'
   private static PATH_SEARCH = 'terminology/selectable-entries'
-  private static PATH_RUN_QUERY = 'query-handler/run-query'
-  private static PATH_STORED_QUERY = 'query-handler/stored-query'
+  private static PATH_RUN_QUERY = 'query'
+  private static PATH_STORED_QUERY = 'query/template'
 
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345'
 
@@ -112,10 +112,15 @@ export class BackendService {
     return this.http.get<QueryResult>(resultUrl)
   }
 
-  public saveQuery(query: Query, title: string, comment: string): Observable<any> {
+  public saveQuery(
+    query: Query,
+    title: string,
+    comment: string,
+    saveWithQuery: boolean | string
+  ): Observable<any> {
     if (this.feature.mockLoadnSave()) {
       let savedQueries: Array<{
-        structuredQuery: Query
+        content: Query
         label: string
         comment: string
         lastModified: number
@@ -125,7 +130,7 @@ export class BackendService {
         savedQueries = []
       }
       savedQueries.push({
-        structuredQuery: query,
+        content: query,
         label: title,
         comment,
         lastModified: Date.now(),
@@ -138,27 +143,52 @@ export class BackendService {
         const savedQuery = {
           label: title,
           comment,
-          structuredQuery: new ApiTranslator().translateToV1(query),
+          content: new ApiTranslator().translateToV1(query),
         }
         return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
           headers,
         })
       }
       if (this.feature.getQueryVersion() === 'v2') {
-        const savedQuery = {
-          label: title,
-          comment,
-          structuredQuery: new ApiTranslator().translateToV2(query),
+        if (saveWithQuery === false) {
+          const savedQuery = {
+            label: title,
+            comment,
+            content: new ApiTranslator().translateToV2(query),
+          }
+          return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
+            headers,
+            observe: 'response',
+          })
+        } else {
+          const savedQuery = {
+            label: title,
+            comment,
+          }
+          return this.http.post<any>(
+            this.createUrl(BackendService.PATH_RUN_QUERY) + '/' + saveWithQuery + '/saved',
+            savedQuery,
+            {
+              headers,
+              observe: 'response',
+            }
+          )
         }
-        return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
-          headers,
-          observe: 'response',
-        })
       }
     }
   }
 
-  public loadSavedQueries(validate?: boolean): Observable<any> {
+  public loadSavedQueries(): Observable<any> {
+    const headers = this.headers
+    return this.http.get<Array<any>>(
+      this.createUrl(BackendService.PATH_RUN_QUERY, 'filter=saved'),
+      {
+        headers,
+      }
+    )
+  }
+
+  public loadSavedTemplates(validate?: boolean): Observable<any> {
     if (this.feature.mockLoadnSave()) {
       return of(this.queryProviderService.loadQueries())
     } else {
@@ -172,12 +202,18 @@ export class BackendService {
 
   public loadQuery(id: number): Observable<any> {
     const headers = this.headers
+    return this.http.get<any>(this.createUrl(BackendService.PATH_RUN_QUERY + '/' + id.toString()), {
+      headers,
+    })
+  }
+
+  public loadTemplate(id: number): Observable<any> {
+    const headers = this.headers
     return this.http.get<any>(
       this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
       { headers }
     )
   }
-
   createUrl(pathToResource: string, paramString?: string): string {
     let url = this.config.getConfig().uiBackendApi.baseUrl
 

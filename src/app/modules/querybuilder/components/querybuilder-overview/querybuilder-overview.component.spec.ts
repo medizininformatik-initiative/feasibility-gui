@@ -13,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { OAuthStorage } from 'angular-oauth2-oidc'
 import { FeatureService } from '../../../../service/feature.service'
 import { BackendService } from '../../service/backend.service'
+import { Observable, of } from 'rxjs'
 
 describe('QuerybuilderOverviewComponent', () => {
   let component: QuerybuilderOverviewComponent
@@ -26,6 +27,15 @@ describe('QuerybuilderOverviewComponent', () => {
       return 0
     },
   } as FeatureService
+
+  const backendService = {
+    loadSavedQueries(): Observable<any> {
+      return of([{ id: 0, label: 'label', created_at: '' }])
+    },
+    loadSavedTemplates(): Observable<any> {
+      return of([{ id: 0, label: 'label', comment: 'comment', lastModified: '' }])
+    },
+  } as BackendService
 
   const authStorage = {
     getItem: (accessToken: string) => 'test_token',
@@ -46,6 +56,7 @@ describe('QuerybuilderOverviewComponent', () => {
       providers: [
         { provide: OAuthStorage, useValue: authStorage },
         { provide: FeatureService, useValue: featureService },
+        { provide: BackendService, useValue: backendService },
       ],
     }).compileComponents()
   })
