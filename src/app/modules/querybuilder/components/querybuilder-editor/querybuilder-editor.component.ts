@@ -109,6 +109,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
       },
       (error) => {
         console.error(error)
+        this.showSpinningIcon = false
         this.hasQuerySend = false
       },
       () => {
@@ -148,5 +149,6 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   doReset(): void {
     this.query = QueryProviderService.createDefaultQuery()
     this.queryProviderService.store(this.query)
+    this.result = null
   }
 }

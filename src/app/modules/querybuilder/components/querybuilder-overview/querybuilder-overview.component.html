@@ -5,7 +5,7 @@
       {{ 'BUTTON.VALIDATE' | translate }}
     </num-button>
   </div>
-  <h3>Abgespeicherte Queries</h3>
+  <h3>{{ 'QUERYBUILDER.OVERVIEW.SAVED_QUERIES' | translate }}</h3>
   <div *ngFor="let singleQuery of savedQueries; index as i" class="query-box">
     <num-single-query
       [index]="i"
@@ -17,7 +17,7 @@
     </num-single-query>
   </div>
   <div class="trenner"></div>
-  <h3>Abgespeicherte Templates</h3>
+  <h3>{{ 'QUERYBUILDER.OVERVIEW.SAVED_TEMPLATES' | translate }}</h3>
   <div *ngFor="let singleTemplate of savedTemplates; index as i" class="template-box">
     <num-single-query
       [index]="i"
