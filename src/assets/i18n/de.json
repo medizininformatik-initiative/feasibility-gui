@@ -56,7 +56,8 @@
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
       "LABEL": "Code oder Suchbegriff eingeben",
-      "ALL": "Alle"
+      "ALL": "Alle",
+      "CATEGORY_FILTER": "Filtern nach"
     },
     "SWITCH": {
       "LABEL_AND": "UND",
