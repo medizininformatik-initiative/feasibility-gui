@@ -125,7 +125,8 @@
         "BEFORE_OR_AT": "vor oder am",
         "AFTER": "nach",
         "AFTER_OR_AT": "nach oder am",
-        "BETWEEN": "zwischen"
+        "BETWEEN": "zwischen",
+        "TITLE": "Zeitraum (optional)"
       },
       "GROUPS": {
         "HEADER_LINKED_GROUPS": "Beziehung zwischen Gruppen",
