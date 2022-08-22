@@ -14,7 +14,7 @@
 }
 
 ::ng-deep .input-field .mat-form-field-wrapper .mat-form-field-flex {
-  border: 1px solid lightgray;
+  border: 1px solid var(--num-color--primary-300);
   padding: 0px 6px;
   border-radius: 10px;
 }

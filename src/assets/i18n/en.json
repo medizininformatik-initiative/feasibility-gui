@@ -56,7 +56,8 @@
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
       "LABEL": "enter code or display",
-      "ALL": "All"
+      "ALL": "All",
+      "CATEGORY_FILTER": "Filter by"
     },
     "SWITCH": {
       "LABEL_AND": "AND",
