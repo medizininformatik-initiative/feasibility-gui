@@ -125,7 +125,8 @@
         "BEFORE_OR_AT": "before or at",
         "AFTER": "after",
         "AFTER_OR_AT": "after or at",
-        "BETWEEN": "between"
+        "BETWEEN": "between",
+        "TITLE": "Time constraint (optional)"
       },
       "GROUPS": {
         "HEADER_LINKED_GROUPS": "Relation between linked groups",

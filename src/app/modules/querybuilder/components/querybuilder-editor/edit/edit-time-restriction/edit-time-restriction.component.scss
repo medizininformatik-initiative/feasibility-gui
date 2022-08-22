@@ -41,3 +41,12 @@
   top: 7px;
   bottom: -7px;
 }
+
+mat-expansion-panel {
+  box-shadow: 0px 3px 1px -2px var(--num-color--accent-200),
+    0px 2px 2px 0px var(--num-color--accent-200), 0px 1px 5px 0px var(--num-color--accent-200) !important;
+}
+.mat-expansion-panel-header-title {
+  font-size: 16px;
+  font-weight: normal;
+}
