@@ -13,6 +13,7 @@ import { of } from 'rxjs'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { OAuthStorage } from 'angular-oauth2-oidc'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('ResultDetailsDialogComponent', () => {
   let component: ResultDetailsDialogComponent
@@ -50,6 +51,7 @@ describe('ResultDetailsDialogComponent', () => {
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
         HttpClientTestingModule,
+        MatTooltipModule,
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },

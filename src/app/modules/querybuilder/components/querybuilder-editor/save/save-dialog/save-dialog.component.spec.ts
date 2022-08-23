@@ -13,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { OAuthStorage } from 'angular-oauth2-oidc'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('SaveDialogComponent', () => {
   let component: SaveDialogComponent
@@ -52,6 +53,7 @@ describe('SaveDialogComponent', () => {
         FormsModule,
         RouterTestingModule.withRoutes([]),
         BrowserAnimationsModule,
+        MatTooltipModule,
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },

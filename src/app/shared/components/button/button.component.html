@@ -4,6 +4,9 @@
   color="primary"
   [disabled]="isDisabled"
   *ngIf="type === 'primary'"
+  [matTooltip]="tooltip"
+  [matTooltipPosition]="'above'"
+  [matTooltipShowDelay]="300"
 >
   <fa-icon *ngIf="icon" [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
   <ng-container *ngTemplateOutlet="content"></ng-container>
@@ -15,6 +18,9 @@
   color="primary"
   [disabled]="isDisabled"
   *ngIf="type === 'secondary'"
+  [matTooltip]="tooltip"
+  [matTooltipPosition]="'above'"
+  [matTooltipShowDelay]="300"
 >
   <fa-icon *ngIf="icon" [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
   <ng-container *ngTemplateOutlet="content"></ng-container>
@@ -26,6 +32,9 @@
   color="primary"
   [disabled]="isDisabled"
   *ngIf="type === 'basic'"
+  [matTooltip]="tooltip"
+  [matTooltipPosition]="'above'"
+  [matTooltipShowDelay]="300"
 >
   <fa-icon *ngIf="icon" [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
   <ng-container *ngTemplateOutlet="content"></ng-container>

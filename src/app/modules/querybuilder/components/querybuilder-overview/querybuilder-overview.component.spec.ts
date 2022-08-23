@@ -14,6 +14,7 @@ import { OAuthStorage } from 'angular-oauth2-oidc'
 import { FeatureService } from '../../../../service/feature.service'
 import { BackendService } from '../../service/backend.service'
 import { Observable, of } from 'rxjs'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('QuerybuilderOverviewComponent', () => {
   let component: QuerybuilderOverviewComponent
@@ -52,6 +53,7 @@ describe('QuerybuilderOverviewComponent', () => {
         FormsModule,
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([]),
+        MatTooltipModule,
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },

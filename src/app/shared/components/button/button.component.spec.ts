@@ -3,6 +3,7 @@ import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testi
 import { MaterialModule } from '../../../layout/material/material.module'
 
 import { ButtonComponent } from './button.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('ButtonComponent', () => {
   let component: ButtonComponent
@@ -11,7 +12,7 @@ describe('ButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ButtonComponent],
-      imports: [MaterialModule, FontAwesomeTestingModule],
+      imports: [MaterialModule, FontAwesomeTestingModule, MatTooltipModule],
     }).compileComponents()
   })
 

@@ -24,6 +24,7 @@ import { DisplayCriterionComponent } from '../../display/display-criterion/displ
 import { BoolLogicSwitchComponent } from '../../display/bool-logic-switch/bool-logic-switch.component'
 import { DisplayValueFilterComponent } from '../../display/display-value-filter/display-value-filter.component'
 import { DisplayTimeRestrictionComponent } from '../../display/display-time-restriction/display-time-restriction.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('EnterCriterionListComponent', () => {
   let component: EnterCriterionListComponent
@@ -73,6 +74,7 @@ describe('EnterCriterionListComponent', () => {
         FlexLayoutModule,
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
+        MatTooltipModule,
       ],
       providers: [
         {

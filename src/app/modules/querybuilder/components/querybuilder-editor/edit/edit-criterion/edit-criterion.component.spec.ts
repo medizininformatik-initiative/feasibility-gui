@@ -26,6 +26,7 @@ import { DisplayTimeRestrictionComponent } from '../../display/display-time-rest
 import { OAuthStorage } from 'angular-oauth2-oidc'
 import { BackendService } from '../../../../service/backend.service'
 import { Observable, of } from 'rxjs'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('EditCriterionComponent', () => {
   let component: EditCriterionComponent
@@ -84,6 +85,7 @@ describe('EditCriterionComponent', () => {
       FontAwesomeTestingModule,
       TranslateModule.forRoot(),
       HttpClientTestingModule,
+      MatTooltipModule,
     ],
     providers: [
       {

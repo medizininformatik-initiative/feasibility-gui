@@ -37,6 +37,7 @@ import { Query } from '../../model/api/query/query'
 import { Group } from '../../model/api/query/group'
 import { RouterTestingModule } from '@angular/router/testing'
 import { OAuthStorage } from 'angular-oauth2-oidc'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -109,6 +110,7 @@ describe('QuerybuilderEditorComponent', () => {
         TranslateModule.forRoot(),
         HttpClientTestingModule,
         RouterTestingModule,
+        MatTooltipModule,
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },

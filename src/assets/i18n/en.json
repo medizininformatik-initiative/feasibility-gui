@@ -175,6 +175,7 @@
     "CANCEL": "Cancel",
     "CLOSE": "Close",
     "ADD": "Add",
+    "ADD_TOOLTIP": "restrict criteria",
     "ADDALL": "Add all",
     "SEND": "Send",
     "RESET": "Reset",
