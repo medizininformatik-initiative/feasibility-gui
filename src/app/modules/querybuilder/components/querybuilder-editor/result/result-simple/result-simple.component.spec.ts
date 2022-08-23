@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import any = jasmine.any
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { OAuthStorage } from 'angular-oauth2-oidc'
 
 describe('ResultSimpleComponent', () => {
   let component: ResultSimpleComponent
@@ -25,6 +26,10 @@ describe('ResultSimpleComponent', () => {
     },
   } as FeatureService
 
+  const authStorage = {
+    getItem: (accessToken: string) => 'test_token',
+  } as OAuthStorage
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ResultSimpleComponent, ResultDetailsDialogComponent, ButtonComponent],
@@ -35,7 +40,10 @@ describe('ResultSimpleComponent', () => {
         TranslateModule.forRoot(),
         HttpClientTestingModule,
       ],
-      providers: [{ provide: FeatureService, useValue: featureService }],
+      providers: [
+        { provide: OAuthStorage, useValue: authStorage },
+        { provide: FeatureService, useValue: featureService },
+      ],
     }).compileComponents()
   })
 

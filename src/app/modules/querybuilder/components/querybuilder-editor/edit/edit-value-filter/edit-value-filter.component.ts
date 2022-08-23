@@ -32,9 +32,11 @@ export class EditValueFilterComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.filter?.selectedConcepts.forEach((concept) =>
-      this.selectedConceptsAsJson.add(JSON.stringify(concept))
-    )
+    this.filter?.selectedConcepts.forEach((concept) => {
+      // bring the object into the right order for stringify
+      const temp = { code: concept.code, display: concept.display, system: concept.system }
+      this.selectedConceptsAsJson.add(JSON.stringify(temp))
+    })
 
     this.filter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
       if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
@@ -126,7 +128,9 @@ export class EditValueFilterComponent implements OnInit {
   }
 
   isSelected(concept: TerminologyCode): boolean {
-    return this.selectedConceptsAsJson.has(JSON.stringify(concept))
+    // bring the object into the right order for stringify
+    const temp = { code: concept.code, display: concept.display, system: concept.system }
+    return this.selectedConceptsAsJson.has(JSON.stringify(temp))
   }
 
   public isActionDisabled(): boolean {

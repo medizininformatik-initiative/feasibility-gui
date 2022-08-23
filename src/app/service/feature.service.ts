@@ -97,7 +97,14 @@ export class FeatureService {
   public getDataset(): string {
     return this.appConfig.getConfig().dataset
   }
-
+  public getRoles(site: string): string[] {
+    if (site === 'main') {
+      return this.appConfig.getConfig().auth.roles
+    }
+    if (site === 'optionpage') {
+      return this.appConfig.getConfig().features.extra.optionpageroles
+    }
+  }
   public useFeatureOptionsPage(): boolean {
     return this.showOptionsPage
   }
@@ -116,5 +123,9 @@ export class FeatureService {
 
   public mockResult(): boolean {
     return this.appConfig.getConfig().mock.result && this.isDevelopMode()
+  }
+
+  public mockLoadnSave(): boolean {
+    return this.appConfig.getConfig().mock.loadnsave && this.isDevelopMode()
   }
 }

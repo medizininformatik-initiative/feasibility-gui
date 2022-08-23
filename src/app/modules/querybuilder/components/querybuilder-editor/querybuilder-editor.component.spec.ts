@@ -36,6 +36,7 @@ import { QueryResponse } from '../../model/api/result/QueryResponse'
 import { Query } from '../../model/api/query/query'
 import { Group } from '../../model/api/query/group'
 import { RouterTestingModule } from '@angular/router/testing'
+import { OAuthStorage } from 'angular-oauth2-oidc'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -67,6 +68,10 @@ describe('QuerybuilderEditorComponent', () => {
       return 3
     },
   } as FeatureService
+
+  const authStorage = {
+    getItem: (accessToken: string) => 'test_token',
+  } as OAuthStorage
 
   @Component({ selector: 'num-unapproved-users-table', template: '' })
   class UserTableStubComponent {}
@@ -106,6 +111,7 @@ describe('QuerybuilderEditorComponent', () => {
         RouterTestingModule,
       ],
       providers: [
+        { provide: OAuthStorage, useValue: authStorage },
         {
           provide: FeatureService,
           useValue: featureService,
@@ -208,7 +214,7 @@ describe('QuerybuilderEditorComponent', () => {
       tick(5000)
       component.subscriptionPolling.unsubscribe()
 
-      expect(component.resultUrl).toEqual(resultUrl)
+      expect(component.resultUrl).toEqual(resultUrl + '/result')
       expect(backendService.getResult).toBeCalledTimes(5)
       expect(component.result).toEqual(queryResult)
     }))
@@ -237,7 +243,7 @@ describe('QuerybuilderEditorComponent', () => {
       tick(5000)
       component.subscriptionPolling.unsubscribe()
 
-      expect(component.resultUrl).toEqual(resultUrl)
+      expect(component.resultUrl).toEqual(resultUrl + '/result')
       expect(console.error).toBeCalled()
       expect(backendService.getResult).toBeCalledTimes(1)
       expect(component.result).toEqual(undefined)

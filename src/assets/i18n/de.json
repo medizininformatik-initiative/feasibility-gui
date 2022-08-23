@@ -93,7 +93,11 @@
       "TITLE_LABEL": "Titel",
       "COMMENT_LABEL": "Kommentar",
       "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
-      "LOAD_HEADER": "bisherige Suchanfragen"
+      "LOAD_HEADER": "Bisherige Suchanfragen",
+      "SAVE_WITH_QUERY": "komplette Abfrage speichern",
+      "SAVE_TEMPLATE": "als Template speichern",
+      "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
+      "SAVED_TEMPLATES": "Gespeicherte Vorlagen"
     },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",
@@ -179,6 +183,7 @@
     "SEND": "Abfrage starten",
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
-    "SAVEQUERY": "Abfrage speichern"
+    "SAVEQUERY": "Abfrage speichern",
+    "VALIDATE": "Validieren"
   }
 }

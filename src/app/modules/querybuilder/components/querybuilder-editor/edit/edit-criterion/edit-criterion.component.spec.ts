@@ -23,10 +23,19 @@ import { DisplayCriterionComponent } from '../../display/display-criterion/displ
 import { BoolLogicSwitchComponent } from '../../display/bool-logic-switch/bool-logic-switch.component'
 import { DisplayValueFilterComponent } from '../../display/display-value-filter/display-value-filter.component'
 import { DisplayTimeRestrictionComponent } from '../../display/display-time-restriction/display-time-restriction.component'
+import { OAuthStorage } from 'angular-oauth2-oidc'
+import { BackendService } from '../../../../service/backend.service'
+import { Observable, of } from 'rxjs'
 
 describe('EditCriterionComponent', () => {
   let component: EditCriterionComponent
   let fixture: ComponentFixture<EditCriterionComponent>
+
+  const backendService = {
+    getTerminologyProfile(termcode: string): Observable<any> {
+      return of({})
+    },
+  } as BackendService
 
   const featureService = {
     useFeatureMultipleValueDefinitions(): boolean {
@@ -41,7 +50,17 @@ describe('EditCriterionComponent', () => {
     useFeatureDependentGroups(): boolean {
       return true
     },
+    getPatientResultLowerBoundary(): number {
+      return 0
+    },
+    mockLoadnSave(): boolean {
+      return false
+    },
   } as FeatureService
+
+  const authStorage = {
+    getItem: (accessToken: string) => 'test_token',
+  } as OAuthStorage
 
   const testBedConfig = {
     declarations: [
@@ -71,6 +90,11 @@ describe('EditCriterionComponent', () => {
         provide: FeatureService,
         useValue: featureService,
       },
+      {
+        provide: BackendService,
+        useValue: backendService,
+      },
+      { provide: OAuthStorage, useValue: authStorage },
     ],
   }
 

@@ -28,10 +28,12 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   showSpinningIcon = false
   actionDisabledSend: boolean
   actionDisabledReset: boolean
+  hasQuerySend: boolean | string = false
 
   subscriptionPolling: Subscription
   private subscriptionResult: Subscription
   public resultObservable$: Observable<QueryResult>
+  loadedResult: boolean
 
   constructor(
     public queryProviderService: QueryProviderService,
@@ -46,6 +48,12 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
       this.query = this.queryProviderService.query()
     } else {
       this.doReset()
+    }
+    if (window.history.state.loadedResult) {
+      this.result = window.history.state.loadedResult
+      this.loadedResult = true
+    } else {
+      this.loadedResult = false
     }
   }
 
@@ -81,7 +89,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   }
 
   startRequestingResult(resultUrl: string): void {
-    this.resultUrl = resultUrl
+    this.resultUrl = resultUrl + '/result'
+    this.loadedResult = false
 
     this.resultObservable$ = interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.POLLING_MAXL_MILLISECONDS)),
@@ -92,14 +101,21 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.subscriptionPolling = this.resultObservable$.subscribe(
       (result) => {
         this.result = result
+        if (result.queryId !== undefined) {
+          this.hasQuerySend = result.queryId
+        } else {
+          this.hasQuerySend = false
+        }
       },
       (error) => {
         console.error(error)
+        this.hasQuerySend = false
       },
       () => {
         console.log('done')
         //  this.resultUrl = ''
         this.showSpinningIcon = false
+        this.loadedResult = true
       }
     )
   }
@@ -123,11 +139,15 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     const dialogConfig = new MatDialogConfig()
 
     dialogConfig.autoFocus = true
+    dialogConfig.data = {
+      hasQuerySend: this.hasQuerySend,
+    }
     this.dialog.open(SaveDialogComponent, dialogConfig)
   }
 
   doReset(): void {
     this.query = QueryProviderService.createDefaultQuery()
     this.queryProviderService.store(this.query)
+    this.result = null
   }
 }
