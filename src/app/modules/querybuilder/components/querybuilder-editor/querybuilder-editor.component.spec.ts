@@ -38,6 +38,7 @@ import { Group } from '../../model/api/query/group'
 import { RouterTestingModule } from '@angular/router/testing'
 import { OAuthStorage } from 'angular-oauth2-oidc'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -67,6 +68,9 @@ describe('QuerybuilderEditorComponent', () => {
     },
     getLocationResultLowerBoundary(): number {
       return 3
+    },
+    getClickEvent(): Observable<any> {
+      return of(null)
     },
   } as FeatureService
 
@@ -111,6 +115,7 @@ describe('QuerybuilderEditorComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         MatTooltipModule,
+        MatProgressSpinnerModule,
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },

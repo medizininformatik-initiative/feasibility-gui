@@ -130,6 +130,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.resultUrl = ''
     this.result = undefined
     this.showSpinningIcon = true
+    this.featureService.sendClickEvent(this.featureService.getPollingTime())
     this.subscriptionResult?.unsubscribe()
     this.subscriptionResult = this.backend.postQuery(this.query).subscribe((response) => {
       this.startRequestingResult(response.headers.get('location')) // response.location))
