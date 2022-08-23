@@ -53,3 +53,10 @@ mat-expansion-panel {
   font-size: 16px;
   font-weight: normal;
 }
+
+::ng-deep .operator-part .mat-form-field-infix {
+  padding-top: 0.8em !important;
+}
+::ng-deep .operator-part .mat-select-arrow-wrapper {
+  transform: none !important;
+}
