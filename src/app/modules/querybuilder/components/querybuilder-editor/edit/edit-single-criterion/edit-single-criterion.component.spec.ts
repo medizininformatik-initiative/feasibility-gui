@@ -25,6 +25,7 @@ import { BoolLogicSwitchComponent } from '../../display/bool-logic-switch/bool-l
 import { DisplayValueFilterComponent } from '../../display/display-value-filter/display-value-filter.component'
 import { DisplayTimeRestrictionComponent } from '../../display/display-time-restriction/display-time-restriction.component'
 import { OAuthStorage } from 'angular-oauth2-oidc'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('EditSingleCriterionComponent', () => {
   let component: EditSingleCriterionComponent
@@ -89,6 +90,7 @@ describe('EditSingleCriterionComponent', () => {
         MaterialModule,
         TranslateModule.forRoot(),
         HttpClientTestingModule,
+        MatTooltipModule,
       ],
       providers: [
         {

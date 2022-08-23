@@ -19,6 +19,7 @@ import { DisplayTimeRestrictionComponent } from '../display-time-restriction/dis
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { GroupFactory } from '../../../../controller/GroupFactory'
 import { OAuthStorage } from 'angular-oauth2-oidc'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('DisplayQueryComponent', () => {
   let component: DisplayQueryComponent
@@ -66,6 +67,7 @@ describe('DisplayQueryComponent', () => {
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
         HttpClientTestingModule,
+        MatTooltipModule,
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },
