@@ -19,7 +19,7 @@
     </mat-expansion-panel-header>
     <div>
       <mat-form-field appearance="outline" class="operator-part">
-        <mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>
+        <!--<mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>-->
         <mat-select [(value)]="timeRestriction.tvpe">
           <mat-option *ngFor="let option of timeRestrictionOptions" [value]="option">
             {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.' + option | translate }}

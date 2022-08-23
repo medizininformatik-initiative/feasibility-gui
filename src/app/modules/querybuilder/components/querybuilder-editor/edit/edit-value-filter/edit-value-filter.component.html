@@ -62,7 +62,7 @@
         </ng-container>
 
         <mat-form-field appearance="outline" *ngIf="filter?.unit" class="operator-part">
-          <mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>
+          <!--<mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>-->
           <mat-select [(value)]="quantityFilterOption">
             <mat-option
               *ngFor="let option of quantityFilterOptions"
