@@ -7,6 +7,7 @@ import {
 } from '../result-details-dialog/result-details-dialog.component'
 import { Observable, Subscription } from 'rxjs'
 import { BackendService } from '../../../../service/backend.service'
+import { FeatureService } from '../../../../../../service/feature.service'
 
 @Component({
   selector: 'num-result-simple',
@@ -26,7 +27,20 @@ export class ResultSimpleComponent implements OnInit {
   @Input()
   showSpinner: boolean
 
-  constructor(public dialog: MatDialog, public backend: BackendService) {}
+  clickEventsubscription: Subscription
+  spinnerValue = 100
+  pollingTime: number
+
+  constructor(
+    public dialog: MatDialog,
+    public backend: BackendService,
+    private featureService: FeatureService
+  ) {
+    this.clickEventsubscription = this.featureService.getClickEvent().subscribe((pollingTime) => {
+      this.pollingTime = pollingTime
+      this.startProgressSpinner(pollingTime)
+    })
+  }
 
   ngOnInit(): void {}
 
@@ -41,5 +55,19 @@ export class ResultSimpleComponent implements OnInit {
       isResultLoaded: this.isResultLoaded,
     }
     this.dialog.open(ResultDetailsDialogComponent, dialogConfig)
+  }
+
+  startProgressSpinner(pollingTime: number): void {
+    const interval = setInterval(() => {
+      if (this.pollingTime > 0) {
+        // console.log(this.spinnerValue)
+        this.pollingTime--
+        this.spinnerValue = this.spinnerValue - 100 / pollingTime
+      } else {
+        this.pollingTime = pollingTime
+        this.spinnerValue = 100
+        clearInterval(interval)
+      }
+    }, 1000)
   }
 }

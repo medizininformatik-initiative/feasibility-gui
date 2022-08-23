@@ -13,6 +13,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { OAuthStorage } from 'angular-oauth2-oidc'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { Observable, of } from 'rxjs'
 
 describe('ResultSimpleComponent', () => {
   let component: ResultSimpleComponent
@@ -24,6 +26,9 @@ describe('ResultSimpleComponent', () => {
     },
     getLocationResultLowerBoundary(): number {
       return 3
+    },
+    getClickEvent(): Observable<any> {
+      return of(null)
     },
   } as FeatureService
 
@@ -41,6 +46,7 @@ describe('ResultSimpleComponent', () => {
         TranslateModule.forRoot(),
         HttpClientTestingModule,
         MatTooltipModule,
+        MatProgressSpinnerModule,
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },

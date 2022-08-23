@@ -1,6 +1,7 @@
 import { Injectable, isDevMode } from '@angular/core'
 import { AppConfigService } from '../config/app-config.service'
 import { FeatureProviderService } from '../modules/querybuilder/service/feature-provider.service'
+import { Observable, Subject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ export class FeatureService {
     private featureProviderService: FeatureProviderService
   ) {}
 
+  private subject = new Subject<any>()
   private showOptionsPage = this.appConfig.getConfig().features.extra.showoptionspage
 
   public useFeatureMultipleValueDefinitions(): boolean {
@@ -127,5 +129,12 @@ export class FeatureService {
 
   public mockLoadnSave(): boolean {
     return this.appConfig.getConfig().mock.loadnsave && this.isDevelopMode()
+  }
+
+  sendClickEvent(pollingTime: number): void {
+    this.subject.next(pollingTime)
+  }
+  getClickEvent(): Observable<any> {
+    return this.subject.asObservable()
   }
 }

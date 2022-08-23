@@ -6,21 +6,37 @@
         {{ backend.obfuscateResult(result?.totalNumberOfPatients) }}
       </span>
       <ng-template #showZeroPatients>
-        <span class="number-of-patients">0</span>
+        <span class="number-of-patients">-</span>
       </ng-template>
     </div>
-    <fa-icon
+    <!--<fa-icon
       *ngIf="showSpinner"
       size="2x"
       icon="spinner"
       class="fa-pulse result-spinning-icon"
-    ></fa-icon>
+    ></fa-icon>-->
+  </div>
+  <div class="spinner-box">
+    <mat-progress-spinner
+      *ngIf="showSpinner"
+      class="example-margin"
+      [mode]="'determinate'"
+      [value]="spinnerValue"
+    >
+    </mat-progress-spinner>
+    <div *ngIf="showSpinner" class="spinner-counter">{{ pollingTime }}</div>
   </div>
   <num-button
-    *ngIf="result?.totalNumberOfPatients > 0 || result?.totalNumberOfPatients == 0"
+    *ngIf="
+      result?.totalNumberOfPatients > 0 || result?.totalNumberOfPatients == 0;
+      else showPlaceholder
+    "
     [type]="'primary'"
     (click)="openDialogResultDetails()"
     class="button-dialog-result-details"
     >{{ 'BUTTON.RESULTDETAILS' | translate }}
   </num-button>
+  <ng-template #showPlaceholder>
+    <div class="button-placeholder"></div>
+  </ng-template>
 </div>
