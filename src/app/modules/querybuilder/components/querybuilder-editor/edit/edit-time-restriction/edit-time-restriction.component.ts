@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core'
 import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/query/timerestriction'
 import { MAT_DATE_FORMATS } from '@angular/material/core'
 
@@ -20,14 +20,21 @@ export const MY_DATE_FORMATS = {
   styleUrls: ['./edit-time-restriction.component.scss'],
   providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }],
 })
-export class EditTimeRestrictionComponent implements OnInit {
+export class EditTimeRestrictionComponent implements OnInit, AfterViewInit {
   @Input()
   timeRestriction: TimeRestriction
 
   timeRestrictionOptions = Object.keys(TimeRestrictionType)
   timeRestrictionType: typeof TimeRestrictionType = TimeRestrictionType
+  disableAnimation = true
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  // Workaround for angular component issue #13870
+  ngAfterViewInit(): void {
+    // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
+    setTimeout(() => (this.disableAnimation = false))
+  }
 }

@@ -1,10 +1,11 @@
-<div *ngIf="filter">
+<div *ngIf="filter" [@.disabled]="disableAnimation">
   <mat-expansion-panel
     *ngIf="
       filterType === 'attribute' && filter.attributeDefinition.optional;
       else valueFilterContent
     "
     togglePosition="before"
+    [expanded]="false"
   >
     <mat-expansion-panel-header>
       <mat-panel-title>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { QueryResult } from '../../../../model/api/result/QueryResult'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import {
@@ -14,7 +14,7 @@ import { FeatureService } from '../../../../../../service/feature.service'
   templateUrl: './result-simple.component.html',
   styleUrls: ['./result-simple.component.scss'],
 })
-export class ResultSimpleComponent implements OnInit {
+export class ResultSimpleComponent implements OnInit, OnDestroy {
   @Input()
   resultObservable: Observable<QueryResult>
 
@@ -28,21 +28,29 @@ export class ResultSimpleComponent implements OnInit {
   showSpinner: boolean
 
   clickEventsubscription: Subscription
-  spinnerValue = 100
+  spinnerValue: number
   pollingTime: number
+  interval
 
   constructor(
     public dialog: MatDialog,
     public backend: BackendService,
     private featureService: FeatureService
   ) {
+    this.clickEventsubscription?.unsubscribe()
     this.clickEventsubscription = this.featureService.getClickEvent().subscribe((pollingTime) => {
+      clearInterval(this.interval)
+      this.spinnerValue = 100
       this.pollingTime = pollingTime
       this.startProgressSpinner(pollingTime)
     })
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.clickEventsubscription?.unsubscribe()
+  }
 
   openDialogResultDetails(): void {
     const dialogConfig = new MatDialogConfig<ResultDetailsDialogComponentData>()
@@ -58,7 +66,7 @@ export class ResultSimpleComponent implements OnInit {
   }
 
   startProgressSpinner(pollingTime: number): void {
-    const interval = setInterval(() => {
+    this.interval = setInterval(() => {
       if (this.pollingTime > 0) {
         // console.log(this.spinnerValue)
         this.pollingTime--
@@ -66,7 +74,7 @@ export class ResultSimpleComponent implements OnInit {
       } else {
         this.pollingTime = pollingTime
         this.spinnerValue = 100
-        clearInterval(interval)
+        clearInterval(this.interval)
       }
     }, 1000)
   }
