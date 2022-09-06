@@ -1,5 +1,5 @@
 <!--suppress HtmlFormInputWithoutLabel -->
-<div *ngIf="timeRestriction" class="container">
+<div *ngIf="timeRestriction" [@.disabled]="disableAnimation" class="container">
   <!--<div>
     <mat-radio-group [(ngModel)]="timeRestriction.tvpe" fxLayout="column">
       <mat-radio-button [value]="optionEver">{{
@@ -11,7 +11,7 @@
     </mat-radio-group>
   </div>-->
 
-  <mat-expansion-panel togglePosition="before">
+  <mat-expansion-panel togglePosition="before" [expanded]="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.TITLE' | translate }}

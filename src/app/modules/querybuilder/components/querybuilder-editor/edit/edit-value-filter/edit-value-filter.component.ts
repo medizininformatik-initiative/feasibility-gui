@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core'
 import {
   Comparator,
   OperatorOptions,
@@ -13,7 +13,7 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper'
   templateUrl: './edit-value-filter.component.html',
   styleUrls: ['./edit-value-filter.component.scss'],
 })
-export class EditValueFilterComponent implements OnInit {
+export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   filter: ValueFilter
 
@@ -28,6 +28,7 @@ export class EditValueFilterComponent implements OnInit {
   quantityFilterOption: string
   // TODO: Try using enum
   quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN']
+  disableAnimation = true
 
   constructor() {}
 
@@ -50,6 +51,12 @@ export class EditValueFilterComponent implements OnInit {
     })
 
     this.quantityFilterOption = this.getQuantityFilterOption()
+  }
+
+  // Workaround for angular component issue #13870
+  ngAfterViewInit(): void {
+    // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
+    setTimeout(() => (this.disableAnimation = false))
   }
 
   getQuantityFilterOption(): string {
