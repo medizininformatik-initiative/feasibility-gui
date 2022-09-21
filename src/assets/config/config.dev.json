@@ -6,10 +6,10 @@
     "baseUrl": "/api"
   },
   "uiBackendApi": {
-    "baseUrl": "http://localhost:8091/api/v1"
+    "baseUrl": "http://localhost:8090/api/v1"
   },
   "auth": {
-    "baseUrl": "https://localhost",
+    "baseUrl": "http://localhost:8080",
     "realm": "codex-develop",
     "clientId": "feasibility-gui"
   },
@@ -32,16 +32,16 @@
   "options": {
     "pollingtimeinseconds": 10,
     "pollingintervallinseconds": 1,
-    "lowerboundarypatientresult": 0,
-    "lowerboundarylocationresult": 0
+    "lowerboundarypatientresult": 10,
+    "lowerboundarylocationresult": 3
   },
   "mock": {
     "terminology": false,
     "query": false,
     "result": false
   },
-  "stylesheet": "bzkfTheme",
-  "fhirport": "8086",
+  "stylesheet": "abideTheme",
+  "fhirport": "8082",
   "dataset": "codex",
   "queryVersion": "v2"
 }
