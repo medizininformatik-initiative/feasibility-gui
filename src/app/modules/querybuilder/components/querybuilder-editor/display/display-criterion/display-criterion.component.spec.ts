@@ -105,7 +105,7 @@ describe('DisplayCriterionComponent', () => {
   it('should open dialog and store query', () => {
     jest.spyOn(component.dialog, 'open').mockReturnValue(dialogRef)
     spyOn(component.storeQuery, 'emit')
-
+    component.isEditable = true
     const dialogConfig = new MatDialogConfig()
 
     dialogConfig.disableClose = true

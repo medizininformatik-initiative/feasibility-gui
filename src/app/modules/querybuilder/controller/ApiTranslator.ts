@@ -226,6 +226,15 @@ export class ApiTranslator {
     }
   }
 
+  translateImportedSQtoUIQuery(uiquery: Query, sqquery: any): Query {
+    const invalidCriteria = []
+    const inclusion = sqquery.inclusionCriteria ? sqquery.inclusionCriteria : []
+    uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(inclusion, invalidCriteria)
+    const exclusion = sqquery.exclusionCriteria ? sqquery.exclusionCriteria : []
+    uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria)
+    return uiquery
+  }
+
   translateSQtoUIQuery(uiquery: Query, sqquery: any): Query {
     const invalidCriteria = sqquery.invalidTerms
     const inclusion = sqquery.content.inclusionCriteria ? sqquery.content.inclusionCriteria : []

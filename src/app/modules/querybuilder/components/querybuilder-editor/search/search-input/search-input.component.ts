@@ -7,6 +7,7 @@ import { FocusMonitor } from '@angular/cdk/a11y'
 import { filter, mapTo } from 'rxjs/operators'
 import { MatFormField } from '@angular/material/form-field'
 import { Query } from '../../../../model/api/query/query'
+import { OAuthService } from 'angular-oauth2-oidc'
 
 @Component({
   selector: 'num-search-input',
@@ -35,6 +36,8 @@ export class SearchInputComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = []
 
+  isLoggedIn: boolean
+
   @ViewChild(MatInput, { read: ElementRef, static: true })
   private inputFieldEl: ElementRef
 
@@ -44,11 +47,12 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   @ViewChild(CdkConnectedOverlay, { static: true })
   public connectedOverlay: CdkConnectedOverlay
 
-  constructor(private focusMonitor: FocusMonitor) {
+  constructor(private focusMonitor: FocusMonitor, private oauthService: OAuthService) {
     this.resetOverlayProperties()
   }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.oauthService.hasValidAccessToken()
     this.initPositionStrategy()
     this.initAndSubscribeToOverlayObservables()
   }

@@ -21,19 +21,23 @@
         </num-button>
         <num-button
           [type]="'primary'"
-          [isDisabled]="actionDisabledReset"
+          [isDisabled]="actionDisabledSave"
           (click)="doSave()"
           class="button-save"
         >
           {{ 'BUTTON.SAVEQUERY' | translate }}
         </num-button>
         <num-button
+          *ngIf="isLoggedIn"
           [type]="'primary'"
           [isDisabled]="actionDisabledSend"
           (click)="doSend()"
           class="button-send"
         >
           {{ 'BUTTON.SEND' | translate }}
+        </num-button>
+        <num-button *ngIf="!isLoggedIn" [type]="'primary'" (click)="doImport()" class="button-send">
+          {{ 'BUTTON.IMPORT' | translate }}
         </num-button>
       </div>
       <div *ngIf="actionDisabledSend && !actionDisabledReset" class="send-button-alert-text">

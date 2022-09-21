@@ -41,6 +41,8 @@ import { DisplayEntitiesComponent } from './components/querybuilder-editor/displ
 import { SingleQueryComponent } from './components/querybuilder-overview/single-query/single-query.component'
 import { SaveDialogComponent } from './components/querybuilder-editor/save/save-dialog/save-dialog.component'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { ImportDialogComponent } from './components/querybuilder-editor/import/import-dialog/import-dialog.component'
+import { DisplayCritGroupViewonlyComponent } from './components/querybuilder-editor/display/display-crit-group-viewonly/display-crit-group-viewonly.component'
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -86,6 +88,8 @@ export const FORMATS_GERMAN = {
     DisplayEntitiesComponent,
     SingleQueryComponent,
     SaveDialogComponent,
+    ImportDialogComponent,
+    DisplayCritGroupViewonlyComponent,
   ],
   imports: [
     CommonModule,

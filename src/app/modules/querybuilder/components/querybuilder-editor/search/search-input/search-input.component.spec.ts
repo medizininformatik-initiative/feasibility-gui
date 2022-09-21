@@ -25,8 +25,13 @@ import { FocusMonitor, FocusOrigin } from '@angular/cdk/a11y'
 import { cold } from 'jasmine-marbles'
 import { EventEmitter } from '@angular/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { OAuthService } from 'angular-oauth2-oidc'
 
 describe('SearchInputComponent', () => {
+  const authService = {
+    hasValidAccessToken: () => true,
+  } as OAuthService
+
   const testBedConfig = {
     declarations: [
       SearchInputComponent,
@@ -49,6 +54,12 @@ describe('SearchInputComponent', () => {
       FontAwesomeTestingModule,
       TranslateModule.forRoot(),
       MatTooltipModule,
+    ],
+    providers: [
+      {
+        provide: OAuthService,
+        useValue: authService,
+      },
     ],
   }
 

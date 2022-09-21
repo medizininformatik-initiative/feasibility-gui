@@ -2,8 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { routes } from '../../../app-routing.module'
 import INavItem from '../../models/nav-item.interface'
 import { OAuthService } from 'angular-oauth2-oidc'
-import { mainNavItems, secondaryNavItems } from '../../../core/constants/navigation'
+import {
+  mainNavItems,
+  secondaryNavItemsLoggedIn,
+  secondaryNavItemsLoggedOut,
+} from '../../../core/constants/navigation'
 import { FeatureService } from '../../../service/feature.service'
+import { OAuthInitService } from '../../../core/auth/oauth-init.service'
 
 @Component({
   selector: 'num-side-menu',
@@ -13,7 +18,8 @@ import { FeatureService } from '../../../service/feature.service'
 export class SideMenuComponent implements OnInit {
   routes = routes
   mainNavItems = mainNavItems
-  secondaryNavItems = secondaryNavItems
+  secondaryNavItems: INavItem[]
+  isLoggedIn = false
 
   @Input() isSideMenuExpanded = true
   @Output() toggleSideMenu = new EventEmitter()
@@ -21,6 +27,7 @@ export class SideMenuComponent implements OnInit {
   constructor(private oauthService: OAuthService, public featureService: FeatureService) {}
 
   ngOnInit(): void {
+    this.handleUserInfo()
     this.mainNavItems?.forEach((item) => {
       let roles = item.roles ? item.roles : []
       if (roles[0] === 'main') {
@@ -37,6 +44,8 @@ export class SideMenuComponent implements OnInit {
         }
       }
       item.roles = roles
+      console.log('Sidemenu')
+      console.log(roles)
     })
   }
 
@@ -44,7 +53,9 @@ export class SideMenuComponent implements OnInit {
     if (item?.routeTo === '#logout') {
       this.oauthService.logOut()
     }
-
+    if (item?.routeTo === '#login') {
+      this.oauthService.initCodeFlow()
+    }
     const target = $event.currentTarget as HTMLElement
     target.blur()
     this.toggleSideMenu.emit({ item })
@@ -56,5 +67,16 @@ export class SideMenuComponent implements OnInit {
       showIt = false
     }
     return showIt
+  }
+  handleUserInfo(): void {
+    const isLoggedIn = this.oauthService.hasValidAccessToken()
+    console.log('isLoggedIn:' + isLoggedIn)
+    if (isLoggedIn) {
+      this.isLoggedIn = true
+      this.secondaryNavItems = secondaryNavItemsLoggedIn
+    } else {
+      this.isLoggedIn = false
+      this.secondaryNavItems = secondaryNavItemsLoggedOut
+    }
   }
 }

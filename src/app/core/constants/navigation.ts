@@ -1,4 +1,8 @@
 import INavItem from '../../layout/models/nav-item.interface'
+import { inject, InjectionToken } from '@angular/core'
+import { FeatureService } from '../../service/feature.service'
+import { AppConfigService } from '../../config/app-config.service'
+import { FeatureProviderService } from '../../modules/querybuilder/service/feature-provider.service'
 
 export const mainNavItems: INavItem[] = [
   {
@@ -27,10 +31,17 @@ export const mainNavItems: INavItem[] = [
   },
 ]
 
-export const secondaryNavItems: INavItem[] = [
+export const secondaryNavItemsLoggedIn: INavItem[] = [
   {
     routeTo: '#logout',
     icon: 'sign-out-alt',
     translationKey: 'NAVIGATION.SIGNOUT',
+  },
+]
+export const secondaryNavItemsLoggedOut: INavItem[] = [
+  {
+    routeTo: '#login',
+    icon: 'sign-in-alt',
+    translationKey: 'NAVIGATION.SIGNIN',
   },
 ]

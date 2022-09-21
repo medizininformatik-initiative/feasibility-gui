@@ -89,7 +89,7 @@
     </div>
   </mat-card-header>
   <mat-card-content>
-    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+    <div *ngIf="isLoggedIn" fxLayout="row" fxLayoutAlign="space-between stretch">
       <num-display-crit-group
         [query]="query"
         [critGroup]="group.inclusionCriteria"
@@ -113,6 +113,23 @@
         (delete)="doDelete($event, 'exclusion')"
         fxFlex="49.5"
       ></num-display-crit-group>
+    </div>
+    <div *ngIf="!isLoggedIn" fxLayout="row" fxLayoutAlign="space-between stretch">
+      <num-display-crit-group-viewonly
+        [query]="query"
+        [critGroup]="group.inclusionCriteria"
+        [groupId]="group.id"
+        [critType]="'inclusion'"
+        fxFlex="49.5"
+      ></num-display-crit-group-viewonly>
+      <div fxFlex="1" class="crit-group-spacer"></div>
+      <num-display-crit-group-viewonly
+        [critGroup]="group.exclusionCriteria"
+        [query]="query"
+        [groupId]="group.id"
+        [critType]="'exclusion'"
+        fxFlex="49.5"
+      ></num-display-crit-group-viewonly>
     </div>
   </mat-card-content>
 </mat-card>

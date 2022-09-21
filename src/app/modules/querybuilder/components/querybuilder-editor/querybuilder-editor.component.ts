@@ -9,6 +9,8 @@ import { FeatureService } from '../../../../service/feature.service'
 import { GroupFactory } from '../../controller/GroupFactory'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { SaveDialogComponent } from './save/save-dialog/save-dialog.component'
+import { OAuthService } from 'angular-oauth2-oidc'
+import { ImportDialogComponent } from './import/import-dialog/import-dialog.component'
 
 @Component({
   selector: 'num-querybuilder',
@@ -28,14 +30,18 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   showSpinningIcon = false
   actionDisabledSend: boolean
   actionDisabledReset: boolean
+  actionDisabledSave: boolean
   hasQuerySend: boolean | string = false
 
   subscriptionPolling: Subscription
   private subscriptionResult: Subscription
   public resultObservable$: Observable<QueryResult>
+  private subscriptionDialog: Subscription
   loadedResult: boolean
+  isLoggedIn: boolean
 
   constructor(
+    private oauthService: OAuthService,
     public queryProviderService: QueryProviderService,
     public backend: BackendService,
     public featureService: FeatureService,
@@ -44,6 +50,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   ) {}
 
   ngOnInit(): void {
+    this.isLoggedIn = this.oauthService.hasValidAccessToken()
+    if (!this.isLoggedIn) {
+      this.doReset()
+    }
+
     if (window.history.state.preventReset) {
       this.query = this.queryProviderService.query()
     } else {
@@ -60,11 +71,13 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   ngOnDestroy(): void {
     this.subscriptionPolling?.unsubscribe()
     this.subscriptionResult?.unsubscribe()
+    this.subscriptionDialog?.unsubscribe()
   }
 
   ngAfterViewChecked(): void {
     this.actionDisabledSend = this.isActionDisabled('Send')
     this.actionDisabledReset = this.isActionDisabled('Reset')
+    this.actionDisabledSave = this.isActionDisabled('Save')
     this.changeDetector.detectChanges()
   }
 
@@ -78,6 +91,15 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         !(this.query.groups[0].inclusionCriteria.length > 0) &&
         !(this.query.groups[0].exclusionCriteria.length > 0) &&
         !(this.query.groups.length > 1)
+      )
+    }
+
+    if (button === 'Save') {
+      return (
+        !this.isLoggedIn ||
+        (!(this.query.groups[0].inclusionCriteria.length > 0) &&
+          !(this.query.groups[0].exclusionCriteria.length > 0) &&
+          !(this.query.groups.length > 1))
       )
     }
     return false
@@ -141,6 +163,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   doSave(): void {
     const dialogConfig = new MatDialogConfig()
 
+    dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
     dialogConfig.data = {
       hasQuerySend: this.hasQuerySend,
@@ -152,5 +175,14 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.query = QueryProviderService.createDefaultQuery()
     this.queryProviderService.store(this.query)
     this.result = null
+  }
+
+  doImport(): void {
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    const dialogRef = this.dialog.open(ImportDialogComponent, dialogConfig)
+    this.subscriptionDialog?.unsubscribe()
+    this.subscriptionDialog = dialogRef.afterClosed().subscribe((query) => this.storeQuery(query))
   }
 }

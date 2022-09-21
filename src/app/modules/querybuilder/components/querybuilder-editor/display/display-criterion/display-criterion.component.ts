@@ -24,7 +24,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   position: CritGroupPosition
 
   @Input()
-  showCancelButton: boolean
+  isEditable: boolean
 
   @Output()
   delete = new EventEmitter<Criterion>()
@@ -46,20 +46,22 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   }
 
   openDetailsPopUp(): void {
-    const dialogConfig = new MatDialogConfig()
+    if (this.isEditable) {
+      const dialogConfig = new MatDialogConfig()
 
-    dialogConfig.disableClose = true
-    dialogConfig.autoFocus = true
-    dialogConfig.data = {
-      criterion: this.criterion,
-      query: this.query,
-      position: this.position,
+      dialogConfig.disableClose = true
+      dialogConfig.autoFocus = true
+      dialogConfig.data = {
+        criterion: this.criterion,
+        query: this.query,
+        position: this.position,
+      }
+      const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig)
+      this.subscriptionDialog?.unsubscribe()
+      this.subscriptionDialog = dialogRef
+        .afterClosed()
+        .subscribe((query) => this.storeQuery.emit(query))
     }
-    const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig)
-    this.subscriptionDialog?.unsubscribe()
-    this.subscriptionDialog = dialogRef
-      .afterClosed()
-      .subscribe((query) => this.storeQuery.emit(query))
   }
 
   doDelete(): void {

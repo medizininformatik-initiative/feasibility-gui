@@ -1,0 +1,30 @@
+<div>
+  <textarea
+    class="query-textfield"
+    name="query-textfield"
+    rows="20"
+    cols="100"
+    [ngModel]="importQuery | json"
+    (ngModelChange)="transform($event)"
+  ></textarea>
+</div>
+<div class="div-import-from-file">
+  <input type="file" class="file-input" (change)="doImportFromFile($event)" #fileUpload />
+  <num-button [type]="'primary'" (click)="fileUpload.click()" class="button-import-from-file">
+    {{ 'BUTTON.IMPORT_FROM_FILE' | translate }}
+  </num-button>
+</div>
+<div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
+  <div fxFlex="fill"></div>
+  <num-button
+    [type]="'primary'"
+    [isDisabled]="actionDisabled"
+    (click)="doImport()"
+    class="button-import"
+  >
+    {{ 'BUTTON.IMPORT' | translate }}
+  </num-button>
+  <num-button [type]="'secondary'" (click)="doDiscard()">
+    {{ 'BUTTON.CANCEL' | translate }}
+  </num-button>
+</div>

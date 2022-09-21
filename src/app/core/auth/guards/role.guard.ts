@@ -5,6 +5,7 @@ import {
   Route,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
+  Router,
 } from '@angular/router'
 import { OAuthService } from 'angular-oauth2-oidc'
 
@@ -12,10 +13,15 @@ import { OAuthService } from 'angular-oauth2-oidc'
   providedIn: 'root',
 })
 export class RoleGuard implements CanActivate, CanLoad {
-  constructor(private oauthService: OAuthService) {}
+  constructor(private oauthService: OAuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const redirectUri = window.location.origin + state.url
+    const isLoggedIn =
+      this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken()
+    if (!isLoggedIn) {
+      this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } })
+    }
     return this.isAllowed(route, redirectUri)
   }
 
