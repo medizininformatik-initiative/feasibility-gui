@@ -1,8 +1,4 @@
 import INavItem from '../../layout/models/nav-item.interface'
-import { inject, InjectionToken } from '@angular/core'
-import { FeatureService } from '../../service/feature.service'
-import { AppConfigService } from '../../config/app-config.service'
-import { FeatureProviderService } from '../../modules/querybuilder/service/feature-provider.service'
 
 export const mainNavItems: INavItem[] = [
   {

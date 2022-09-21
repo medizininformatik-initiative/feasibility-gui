@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit {
   stylesheet: string
 
   ngOnInit(): void {
-    console.log('dashboard')
     this.init()
     this.stylesheet = this.featureService.getStylesheet()
   }
@@ -29,11 +28,9 @@ export class DashboardComponent implements OnInit {
 
   async init(): Promise<void> {
     const isLoggedIn = this.oauthService.hasValidAccessToken()
-    console.log(isLoggedIn)
     if (isLoggedIn) {
       const profile = await this.oauthService.loadUserProfile()
       const roles = profile.groups
-      console.log(roles)
       this.authTest = 'Hello ' + profile.name
       if (roles) {
         this.authTest = this.authTest + ', Roles: ' + roles.join(', ')

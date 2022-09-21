@@ -44,8 +44,6 @@ export class SideMenuComponent implements OnInit {
         }
       }
       item.roles = roles
-      console.log('Sidemenu')
-      console.log(roles)
     })
   }
 
@@ -70,7 +68,6 @@ export class SideMenuComponent implements OnInit {
   }
   handleUserInfo(): void {
     const isLoggedIn = this.oauthService.hasValidAccessToken()
-    console.log('isLoggedIn:' + isLoggedIn)
     if (isLoggedIn) {
       this.isLoggedIn = true
       this.secondaryNavItems = secondaryNavItemsLoggedIn
