@@ -17,6 +17,7 @@ import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueF
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
+import { OAuthStorage } from 'angular-oauth2-oidc'
 
 describe('DisplayCriterionComponent', () => {
   let component: DisplayCriterionComponent
@@ -33,6 +34,9 @@ describe('DisplayCriterionComponent', () => {
     useFeatureTimeRestriction(): boolean {
       return true
     },
+    getPatientResultLowerBoundary(): number {
+      return 0
+    },
   } as FeatureService
 
   const valueFilter2: ValueFilter = {
@@ -40,6 +44,10 @@ describe('DisplayCriterionComponent', () => {
     type: OperatorOptions.CONCEPT,
     selectedConcepts: [],
   }
+
+  const authStorage = {
+    getItem: (accessToken: string) => 'test_token',
+  } as OAuthStorage
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -54,7 +62,10 @@ describe('DisplayCriterionComponent', () => {
         TranslateModule.forRoot(),
         HttpClientTestingModule,
       ],
-      providers: [{ provide: FeatureService, useValue: featureService }],
+      providers: [
+        { provide: OAuthStorage, useValue: authStorage },
+        { provide: FeatureService, useValue: featureService },
+      ],
     }).compileComponents()
   })
 

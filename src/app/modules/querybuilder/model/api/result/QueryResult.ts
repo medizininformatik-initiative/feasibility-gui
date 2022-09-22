@@ -1,7 +1,6 @@
 export class QueryResult {
   totalNumberOfPatients: number
   queryId: string
-
   resultLines: QueryResultLine[]
 }
 

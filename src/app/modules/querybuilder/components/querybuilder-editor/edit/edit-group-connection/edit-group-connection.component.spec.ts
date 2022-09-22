@@ -14,6 +14,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { Group, InstanceRestrictionType } from '../../../../model/api/query/group'
 import { QueryProviderService } from '../../../../service/query-provider.service'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('EditGroupConnectionComponent', () => {
   let component: EditGroupConnectionComponent
@@ -48,6 +49,7 @@ describe('EditGroupConnectionComponent', () => {
         MaterialModule,
         TranslateModule.forRoot(),
         FontAwesomeTestingModule,
+        MatTooltipModule,
       ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: data },

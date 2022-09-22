@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('SearchFooterTreeComponent', () => {
   let component: SearchTreeFooterComponent
@@ -19,6 +20,7 @@ describe('SearchFooterTreeComponent', () => {
         FlexLayoutModule,
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
+        MatTooltipModule,
       ],
     }).compileComponents()
   })

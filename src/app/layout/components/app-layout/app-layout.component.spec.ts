@@ -46,6 +46,9 @@ describe('AppLayoutComponent', () => {
       getStylesheet(): string {
         return 'abideTheme'
       },
+      getRoles(site: string): string[] {
+        return ['test']
+      },
     } as FeatureService
 
     const featureProviderService = {

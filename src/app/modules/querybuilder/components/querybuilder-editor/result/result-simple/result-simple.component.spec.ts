@@ -11,6 +11,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import any = jasmine.any
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { OAuthStorage } from 'angular-oauth2-oidc'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { Observable, of } from 'rxjs'
 
 describe('ResultSimpleComponent', () => {
   let component: ResultSimpleComponent
@@ -23,7 +27,14 @@ describe('ResultSimpleComponent', () => {
     getLocationResultLowerBoundary(): number {
       return 3
     },
+    getClickEvent(): Observable<any> {
+      return of(null)
+    },
   } as FeatureService
+
+  const authStorage = {
+    getItem: (accessToken: string) => 'test_token',
+  } as OAuthStorage
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,8 +45,13 @@ describe('ResultSimpleComponent', () => {
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
         HttpClientTestingModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
       ],
-      providers: [{ provide: FeatureService, useValue: featureService }],
+      providers: [
+        { provide: OAuthStorage, useValue: authStorage },
+        { provide: FeatureService, useValue: featureService },
+      ],
     }).compileComponents()
   })
 
