@@ -40,7 +40,7 @@
     "query": false,
     "result": false
   },
-  "stylesheet": "abideTheme",
+  "stylesheet": "bzkfTheme",
   "fhirport": "8082",
   "dataset": "codex",
   "queryVersion": "v2"
