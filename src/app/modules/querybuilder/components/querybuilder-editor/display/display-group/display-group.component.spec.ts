@@ -20,6 +20,7 @@ import { Observable, of } from 'rxjs'
 import { MatDialogRef } from '@angular/material/dialog'
 import { EditGroupConnectionComponent } from '../../edit/edit-group-connection/edit-group-connection.component'
 import anything = jasmine.anything
+import { OAuthStorage } from 'angular-oauth2-oidc'
 
 describe('DisplayGroupComponent', () => {
   let component: DisplayGroupComponent
@@ -41,7 +42,14 @@ describe('DisplayGroupComponent', () => {
     useFeatureShowDisplayValueFilterIcon(): boolean {
       return true
     },
+    getPatientResultLowerBoundary(): number {
+      return 0
+    },
   } as FeatureService
+
+  const authStorage = {
+    getItem: (accessToken: string) => 'test_token',
+  } as OAuthStorage
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -60,6 +68,7 @@ describe('DisplayGroupComponent', () => {
         HttpClientTestingModule,
       ],
       providers: [
+        { provide: OAuthStorage, useValue: authStorage },
         {
           provide: FeatureService,
           useValue: featureService,

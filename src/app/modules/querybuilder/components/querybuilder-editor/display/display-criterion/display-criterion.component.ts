@@ -33,10 +33,13 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   storeQuery = new EventEmitter<Query>()
 
   private subscriptionDialog: Subscription
+  isinvalid: boolean
 
   constructor(public dialog: MatDialog, public featureService: FeatureService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isinvalid = this.criterion.isinvalid === true
+  }
 
   ngOnDestroy(): void {
     this.subscriptionDialog?.unsubscribe()
@@ -52,7 +55,6 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
       query: this.query,
       position: this.position,
     }
-
     const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig)
     this.subscriptionDialog?.unsubscribe()
     this.subscriptionDialog = dialogRef

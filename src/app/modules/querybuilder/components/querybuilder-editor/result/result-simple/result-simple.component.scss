@@ -13,3 +13,28 @@
   margin-left: 1em;
   height: 2em;
 }
+
+::ng-deep .mat-progress-spinner {
+  right: -10px;
+  width: 40px !important;
+  height: 40px !important;
+}
+::ng-deep .mat-progress-spinner svg {
+  width: 40px !important;
+  height: 40px !important;
+}
+.spinner-counter {
+  position: relative;
+  right: -10px;
+  top: -28px;
+  text-align: center;
+}
+.spinner-box {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+.button-placeholder {
+  width: 112px;
+  margin-right: 1em;
+}

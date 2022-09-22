@@ -11,7 +11,8 @@
   "auth": {
     "baseUrl": "#{auth_baseUrl}",
     "realm": "#{auth_realm}",
-    "clientId": "#{auth_clientId}"
+    "clientId": "#{auth_clientId}",
+    "roles": "#{auth_roles}"
   },
   "legal": {
     "version": "#{legal_version}",
@@ -26,7 +27,8 @@
     },
     "extra": {
       "displayvaluefiltericon": false,
-      "showoptionspage": false
+      "showoptionspage": false,
+      "optionpageroles": "#{auth_roles}"
     }
   },
   "options": {
@@ -38,7 +40,8 @@
   "mock": {
     "terminology": false,
     "query": false,
-    "result": false
+    "result": false,
+    "loadnsave": false
   },
   "stylesheet": "abideTheme",
   "fhirport": "8082",

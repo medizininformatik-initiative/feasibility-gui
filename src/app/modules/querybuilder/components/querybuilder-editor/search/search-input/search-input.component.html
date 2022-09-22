@@ -6,8 +6,14 @@
 >
   <div class="header-label">{{ 'QUERYBUILDER.SEARCH.' + getHeaderLabelKey() | translate }}</div>
   <div fxLayout="row" fxLayoutAlign="space-evenly start">
+    <div fxLayoutAlign="center">
+      <button class="button-tree-view" type="button" mat-icon-button (click)="switchSearchMode()">
+        <fa-icon size="2x" icon="folder"></fa-icon>
+      </button>
+    </div>
     <mat-form-field class="input-field" fxFlex="85">
       <mat-label>{{ 'QUERYBUILDER.SEARCH.LABEL' | translate }}</mat-label>
+      <fa-icon matPrefix size="2x" icon="search"></fa-icon>
       <!--suppress HtmlFormInputWithoutLabel -->
       <input matInput type="text" [(ngModel)]="search" />
       <button
@@ -21,11 +27,6 @@
         <fa-icon size="2x" icon="times"></fa-icon>
       </button>
     </mat-form-field>
-    <div fxLayoutAlign="center">
-      <button class="button-tree-view" type="button" mat-icon-button (click)="switchSearchMode()">
-        <fa-icon size="2x" icon="folder"></fa-icon>
-      </button>
-    </div>
   </div>
 </div>
 

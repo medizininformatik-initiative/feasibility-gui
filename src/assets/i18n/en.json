@@ -62,7 +62,8 @@
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
       "LABEL": "enter code or display",
-      "ALL": "All"
+      "ALL": "All",
+      "CATEGORY_FILTER": "Filter by"
     },
     "SWITCH": {
       "LABEL_AND": "AND",
@@ -93,7 +94,11 @@
       "TITLE_LABEL": "Title",
       "COMMENT_LABEL": "Comment",
       "SAVE_HEADER": "Save the current query",
-      "LOAD_HEADER": "load previous queries"
+      "LOAD_HEADER": "Previous Queries",
+      "SAVE_WITH_QUERY": "Save whole query",
+      "SAVE_TEMPLATE": "save as template",
+      "SAVED_QUERIES": "Saved Queries (with result)",
+      "SAVED_TEMPLATES": "Saved Templates"
     },
     "EDIT": {
       "HEADER": "Restrictions of selected concepts",
@@ -126,7 +131,8 @@
         "BEFORE_OR_AT": "before or at",
         "AFTER": "after",
         "AFTER_OR_AT": "after or at",
-        "BETWEEN": "between"
+        "BETWEEN": "between",
+        "TITLE": "Time constraint (optional)"
       },
       "GROUPS": {
         "HEADER_LINKED_GROUPS": "Relation between linked groups",
@@ -175,10 +181,12 @@
     "CANCEL": "Cancel",
     "CLOSE": "Close",
     "ADD": "Add",
+    "ADD_TOOLTIP": "restrict criteria",
     "ADDALL": "Add all",
     "SEND": "Send",
     "RESET": "Reset",
     "RESULTDETAILS": "Details",
-    "SAVEQUERY": "Save query"
+    "SAVEQUERY": "Save query",
+    "VALIDATE": "Validate"
   }
 }

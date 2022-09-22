@@ -1,6 +1,9 @@
 <div class="crit-box" fxLayout="row">
   <div fxFlex="15" class="code-part">
     <!--<div *ngFor="let termcode of criterion.termCodes">{{ termcode?.code }}</div>-->
+    <div *ngIf="isinvalid" class="invalid-Criterion">
+      <img src="assets/img/alert.png" alt="Validation Alert" />
+    </div>
   </div>
   <div fxFlex="85" class="display-part" (click)="openDetailsPopUp()">
     <div class="header-display">{{ criterion.display }}</div>

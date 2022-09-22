@@ -12,6 +12,7 @@ export interface IAppConfig {
     baseUrl: string
     realm: string
     clientId: string
+    roles: string[]
   }
   legal: {
     version: string
@@ -27,6 +28,7 @@ export interface IAppConfig {
     extra: {
       displayvaluefiltericon: boolean
       showoptionspage: boolean
+      optionpageroles: string[]
     }
   }
   options: {
@@ -39,6 +41,7 @@ export interface IAppConfig {
     terminology: boolean
     query: boolean
     result: boolean
+    loadnsave: boolean
   }
   stylesheet: string
   fhirport: string

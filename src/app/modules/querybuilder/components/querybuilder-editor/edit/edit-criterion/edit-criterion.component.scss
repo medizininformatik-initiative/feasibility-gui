@@ -17,12 +17,6 @@ mat-card-footer {
   font-weight: 500;
   font-size: 16px;
 }
-::ng-deep num-edit-value-definition > div:first-child {
-  margin-bottom: 1em;
-  padding: 1em;
-  border: 2px solid var(--num-color--accent-200);
-  border-radius: 5px;
-}
 
 ::ng-deep num-edit-value-definition .mat-form-field-wrapper {
   padding-bottom: 0.5em !important;
