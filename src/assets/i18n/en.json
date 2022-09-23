@@ -12,6 +12,12 @@
       "PARAGRAPH2": "Mit einer Machbarkeitsanfrage (Feasibility) erfahren Forschende, wie viele Fälle für ihre Suchkriterien (Ein- und Ausschlusskriterien) in den Datenintegrationszentren der universitätsmedizinischen Standorte bundesweit vorhanden sind und für medizinische Forschungszwecke beantragt werden können.",
       "PARAGRAPH3": "Zur Formulierung der Abfrage stehen aktuell der Kerndatensatz der Medizininformatikinitiative und der COVID-19 spezifische Datensatz GECCO zur Verfügung."
     },
+    "BZKFTHEME": {
+      "HEADLINE": "Welcome to the BZKF Feasibility Platform!",
+      "PARAGRAPH1": "The BZKF Feasibility Plattform offers support to researchers who want to perform research projects.",
+      "PARAGRAPH2": "Through a feasibility request,  researchers can learn more about a theoretical cohort. Using inclusion and exclusion criteria, researchers obtain a number of existing patients in all six BZKF sites. Data access can be applied for if a research idea is feasible.",
+      "PARAGRAPH3": ""
+    },
     "NEWQUERY": {
       "HEADLINE": "New Query",
       "TEXT": "Führen Sie eine Suche anhand Ihrer Ein- und Ausschlusskriterien durch"

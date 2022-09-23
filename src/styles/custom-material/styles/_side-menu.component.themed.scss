@@ -45,6 +45,20 @@
       color: mat-contrast($primary, 200) !important;
     }
   }
+  @if ($name == 'bzkf') {
+    .mat-nav-list {
+      background: mat-color($primary, A400) !important;
+      color: mat-contrast($primary, 200) !important;
+    }
+    .num-logo-row a {
+      /*background: mat-color($accent, 500) !important;*/
+      color: mat-contrast($primary, 200) !important;
+    }
+    .num-mat-list-item {
+      /*background: mat-color($accent, 500) !important;*/
+      color: mat-contrast($primary, 200) !important;
+    }
+  }
   .num-logo-row button:hover {
     background: mat-color($accent, 200) !important;
     color: mat-contrast($accent, 200) !important;
@@ -74,6 +88,30 @@
     }
   }
   @if ($name == 'abide') {
+    .num-mat-list-item {
+      font-size: 16px !important;
+      font-weight: 400 !important;
+      line-height: 20px !important;
+      letter-spacing: 0.25px !important;
+
+      &--active {
+        background: mat-color($accent, 500) !important;
+        color: mat-color($primary, A200) !important;
+        font-weight: 500 !important;
+      }
+
+      &:hover {
+        background: mat-color($accent, 100) !important;
+        color: mat-contrast($accent, 100) !important;
+      }
+
+      &:focus {
+        background: mat-color($accent, 200) !important;
+        color: mat-contrast($accent, 200) !important;
+      }
+    }
+  }
+  @if ($name == 'bzkf') {
     .num-mat-list-item {
       font-size: 16px !important;
       font-weight: 400 !important;

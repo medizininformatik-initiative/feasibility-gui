@@ -27,7 +27,7 @@
     },
     "extra": {
       "displayvaluefiltericon": false,
-      "showoptionspage": false,
+      "showoptionspage": true,
       "optionpageroles": "#{auth_roles}"
     }
   },
@@ -43,8 +43,8 @@
     "result": false,
     "loadnsave": false
   },
-  "stylesheet": "abideTheme",
-  "fhirport": "8082",
+  "stylesheet": "bzkfTheme",
+  "fhirport": "8086",
   "dataset": "codex",
   "queryVersion": "v2"
 }
