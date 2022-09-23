@@ -6,8 +6,8 @@ export class TimeRestriction {
 
   minDate?: Date // implicitly included date
   maxDate?: Date // implicitly included date
-  beforeDate?: Date
-  afterDate?: Date
+  beforeDate?: string
+  afterDate?: string
 }
 
 export enum TimeRestrictionType {

@@ -24,6 +24,9 @@ describe('SideMenuComponent', () => {
       useFeatureOptionsPage(): boolean {
         return true
       },
+      getRoles(site: string): string[] {
+        return ['test']
+      },
     } as FeatureService
 
     await TestBed.configureTestingModule({

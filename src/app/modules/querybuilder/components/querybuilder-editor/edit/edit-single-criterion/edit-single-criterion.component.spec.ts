@@ -24,6 +24,8 @@ import { DisplayCriterionComponent } from '../../display/display-criterion/displ
 import { BoolLogicSwitchComponent } from '../../display/bool-logic-switch/bool-logic-switch.component'
 import { DisplayValueFilterComponent } from '../../display/display-value-filter/display-value-filter.component'
 import { DisplayTimeRestrictionComponent } from '../../display/display-time-restriction/display-time-restriction.component'
+import { OAuthStorage } from 'angular-oauth2-oidc'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('EditSingleCriterionComponent', () => {
   let component: EditSingleCriterionComponent
@@ -53,7 +55,17 @@ describe('EditSingleCriterionComponent', () => {
       useFeatureDependentGroups(): boolean {
         return true
       },
+      getPatientResultLowerBoundary(): number {
+        return 0
+      },
+      mockLoadnSave(): boolean {
+        return true
+      },
     } as FeatureService
+
+    const authStorage = {
+      getItem: (accessToken: string) => 'test_token',
+    } as OAuthStorage
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -78,6 +90,7 @@ describe('EditSingleCriterionComponent', () => {
         MaterialModule,
         TranslateModule.forRoot(),
         HttpClientTestingModule,
+        MatTooltipModule,
       ],
       providers: [
         {
@@ -92,6 +105,7 @@ describe('EditSingleCriterionComponent', () => {
           provide: FeatureService,
           useValue: featureService,
         },
+        { provide: OAuthStorage, useValue: authStorage },
       ],
     }).compileComponents()
   })

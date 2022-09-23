@@ -10,6 +10,7 @@ import { DialogSize } from 'src/app/shared/models/dialog/dialog-size.enum'
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing'
 import { GenericDialogComponent } from './generic-dialog.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('GenericDialogComponent', () => {
   let component: GenericDialogComponent
@@ -46,6 +47,7 @@ describe('GenericDialogComponent', () => {
         FlexLayoutModule,
         FontAwesomeTestingModule,
         TranslateModule.forRoot(),
+        MatTooltipModule,
       ],
       providers: [
         ChangeDetectorRef,

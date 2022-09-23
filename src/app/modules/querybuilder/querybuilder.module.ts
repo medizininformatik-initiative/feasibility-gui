@@ -40,6 +40,7 @@ import { ResultDetailsDialogComponent } from './components/querybuilder-editor/r
 import { DisplayEntitiesComponent } from './components/querybuilder-editor/display/display-entities/display-entities.component'
 import { SingleQueryComponent } from './components/querybuilder-overview/single-query/single-query.component'
 import { SaveDialogComponent } from './components/querybuilder-editor/save/save-dialog/save-dialog.component'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -86,7 +87,14 @@ export const FORMATS_GERMAN = {
     SingleQueryComponent,
     SaveDialogComponent,
   ],
-  imports: [CommonModule, QuerybuilderRoutingModule, SharedModule, LayoutModule, OverlayModule],
+  imports: [
+    CommonModule,
+    QuerybuilderRoutingModule,
+    SharedModule,
+    LayoutModule,
+    OverlayModule,
+    MatProgressSpinnerModule,
+  ],
   providers: [
     {
       provide: DateAdapter,

@@ -15,6 +15,7 @@ import { Query } from '../../../../model/api/query/query'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { FeatureService } from '../../../../../../service/feature.service'
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
+import { OAuthStorage } from 'angular-oauth2-oidc'
 
 describe('DisplayCritGroupComponent', () => {
   let component: DisplayCritGroupComponent
@@ -31,7 +32,14 @@ describe('DisplayCritGroupComponent', () => {
       useFeatureShowDisplayValueFilterIcon(): boolean {
         return true
       },
+      getPatientResultLowerBoundary(): number {
+        return 0
+      },
     } as FeatureService
+
+    const authStorage = {
+      getItem: (accessToken: string) => 'test_token',
+    } as OAuthStorage
 
     await TestBed.configureTestingModule({
       imports: [
@@ -50,6 +58,7 @@ describe('DisplayCritGroupComponent', () => {
         DisplayTimeRestrictionComponent,
       ],
       providers: [
+        { provide: OAuthStorage, useValue: authStorage },
         {
           provide: FeatureService,
           useValue: featureService,

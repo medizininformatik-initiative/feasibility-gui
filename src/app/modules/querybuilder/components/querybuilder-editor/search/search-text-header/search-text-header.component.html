@@ -1,4 +1,5 @@
 <div *ngIf="categories" fxLayout="row" fxLayoutAlign="start" class="container">
+  <div class="display-label-box">{{ 'QUERYBUILDER.SEARCH.CATEGORY_FILTER' | translate }}</div>
   <div (click)="fireSwitchCategory('')" class="category-box" fxLayout="row">
     <!--<div class="short-box">X</div>-->
     <div class="display-box" [ngClass]="{ 'selected-category': !selectedId }">
@@ -12,9 +13,9 @@
     (click)="fireSwitchCategory(category.catId)"
     class="category-box"
   >
-    <div class="short-box">
+    <!--<div class="short-box">
       {{ category.shortDisplay }}
-    </div>
+    </div>-->
     <div class="display-box" [ngClass]="{ 'selected-category': category.catId === selectedId }">
       {{ category.display }}
     </div>

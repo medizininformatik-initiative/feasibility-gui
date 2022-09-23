@@ -62,7 +62,8 @@
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
       "LABEL": "Code oder Suchbegriff eingeben",
-      "ALL": "Alle"
+      "ALL": "Alle",
+      "CATEGORY_FILTER": "Filtern nach"
     },
     "SWITCH": {
       "LABEL_AND": "UND",
@@ -93,7 +94,11 @@
       "TITLE_LABEL": "Titel",
       "COMMENT_LABEL": "Kommentar",
       "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
-      "LOAD_HEADER": "bisherige Suchanfragen"
+      "LOAD_HEADER": "Bisherige Suchanfragen",
+      "SAVE_WITH_QUERY": "komplette Abfrage speichern",
+      "SAVE_TEMPLATE": "als Template speichern",
+      "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
+      "SAVED_TEMPLATES": "Gespeicherte Vorlagen"
     },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",
@@ -126,7 +131,8 @@
         "BEFORE_OR_AT": "vor oder am",
         "AFTER": "nach",
         "AFTER_OR_AT": "nach oder am",
-        "BETWEEN": "zwischen"
+        "BETWEEN": "zwischen",
+        "TITLE": "Zeitraum (optional)"
       },
       "GROUPS": {
         "HEADER_LINKED_GROUPS": "Beziehung zwischen Gruppen",
@@ -174,11 +180,13 @@
     "SAVE": "Speichern",
     "CANCEL": "Abbrechen",
     "CLOSE": "Schließen",
-    "ADD": "Hinzufügen",
+    "ADD": "Auswählen",
+    "ADD_TOOLTIP": "Merkmal einschränken",
     "ADDALL": "Alle hinzufügen",
     "SEND": "Abfrage starten",
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
-    "SAVEQUERY": "Abfrage speichern"
+    "SAVEQUERY": "Abfrage speichern",
+    "VALIDATE": "Validieren"
   }
 }

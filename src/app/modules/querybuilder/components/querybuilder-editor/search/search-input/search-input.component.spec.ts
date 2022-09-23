@@ -24,6 +24,7 @@ import { SearchTextTermEntryComponent } from '../search-text-term-entry/search-t
 import { FocusMonitor, FocusOrigin } from '@angular/cdk/a11y'
 import { cold } from 'jasmine-marbles'
 import { EventEmitter } from '@angular/core'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('SearchInputComponent', () => {
   const testBedConfig = {
@@ -47,6 +48,7 @@ describe('SearchInputComponent', () => {
       FlexLayoutModule,
       FontAwesomeTestingModule,
       TranslateModule.forRoot(),
+      MatTooltipModule,
     ],
   }
 
@@ -178,7 +180,7 @@ describe('SearchInputComponent', () => {
         },
         getTerminolgyEntrySearchResult(
           catId: string,
-          search: string,
+          search: string
         ): Observable<Array<TerminologyEntry>> {
           return of(new MockBackendDataProvider().getTerminolgyEntrySearchResult(catId, search))
         },
@@ -196,7 +198,7 @@ describe('SearchInputComponent', () => {
 
       // trigger the click
       const overlayContent = document.querySelector(
-        '.cdk-overlay-container num-search-text-overlay-content',
+        '.cdk-overlay-container num-search-text-overlay-content'
       )
       overlayContent.dispatchEvent(new Event('closeOverlay'))
 
@@ -208,8 +210,7 @@ describe('SearchInputComponent', () => {
       monitor(element: HTMLElement, checkChildren?: boolean): Observable<FocusOrigin> {
         return of({} as FocusOrigin)
       },
-      stopMonitoring(element: HTMLElement): void {
-      },
+      stopMonitoring(element: HTMLElement): void {},
     } as FocusMonitor
 
     it('overlay should remain closed when input field is not focused', () => {
