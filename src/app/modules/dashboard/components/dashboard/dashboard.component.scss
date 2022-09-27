@@ -6,6 +6,7 @@ h2 {
   border-bottom: none !important;
   font-size: 2.8vw;
   padding-top: 3% !important;
+  line-height: initial;
 }
 @media screen and (min-width: 1401px) {
   h2 {
@@ -22,14 +23,21 @@ h2 {
   font-size: 1.5vw;
   line-height: 2.4vw;
 }
+.paragraphBox a {
+  font-size: 1.5vw;
+  line-height: 2.4vw;
+  color: var(--num-color--accent-400);
+}
 @media screen and (min-width: 1601px) {
-  .paragraphBox {
+  .paragraphBox,
+  .paragraphBox a {
     font-size: 18pt;
     line-height: 40px;
   }
 }
 @media screen and (max-width: 600px) {
-  .paragraphBox {
+  .paragraphBox,
+  .paragraphBox a {
     font-size: 10pt;
     line-height: 15px;
   }
@@ -37,31 +45,27 @@ h2 {
 .paragraphBox p {
   padding-bottom: 1%;
 }
-.newQueryBox,
-.myQueryBox {
+.linkBox {
   cursor: pointer;
-  width: 40%;
+  width: 32%;
   border-width: 4px;
   border-style: double;
   border-color: white;
   text-align: center;
   padding: 2%;
 }
-.newQueryBox a,
-.myQueryBox a {
+.linkBox a {
   text-decoration: none !important;
 }
-.newQueryBox,
-.myQueryBox {
+.linkBox {
   background: var(--num-color--accent-400);
 }
-.newQueryBox:hover,
-.myQueryBox:hover {
+.linkBox:hover {
   background: var(--num-color--accent-300);
 }
 
 .queryBoxHeader {
-  padding-bottom: 5%;
+  padding-bottom: 8%;
   font-size: 2vw;
   font-weight: bold;
   color: var(--num-color--primary-100);
@@ -77,8 +81,7 @@ h2 {
   }
 }
 .queryBoxText {
-  padding-bottom: 3%;
-  font-size: 1.5vw;
+  font-size: 1.4vw;
   color: var(--num-color--primary-100);
 }
 @media screen and (min-width: 1401px) {
@@ -90,4 +93,7 @@ h2 {
   .queryBoxText {
     font-size: 10pt;
   }
+}
+.link-boxes {
+  margin-bottom: 30px;
 }

@@ -8,8 +8,9 @@
 }
 
 .codexTheme,
-.abideTheme {
-  max-width: 210px;
+.abideTheme,
+.FDPGTheme {
+  max-width: 250px;
   box-shadow: 0 0 15px rgba(232, 235, 237, 1) inset;
   background-color: white;
 }
@@ -19,6 +20,12 @@
   padding-left: 10px;*/
   width: 210px;
   height: 105px;
+}
+.FDPGTheme {
+  width: 250px;
+  max-width: 210px;
+  height: 105px;
+  object-fit: cover;
 }
 .mat-toolbar {
   height: 105px;

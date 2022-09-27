@@ -4,6 +4,8 @@
 @import 'src/styles/themes/colors/codex-primary-theme.palette';
 @import 'src/styles/themes/colors/abide-accent-theme.palette';
 @import 'src/styles/themes/colors/abide-primary-theme.palette';
+@import 'src/styles/themes/colors/fdpg-accent-theme.palette';
+@import 'src/styles/themes/colors/fdpg-primary-theme.palette';
 @import './colors/additional-theme.palette.scss';
 @import './theme-palettes/mat-light-theme-background';
 @import './theme-palettes/mat-light-theme-foreground';
@@ -11,14 +13,16 @@
 
 $num-portal-webapp-primary: mat-palette($num-primary-palette);
 $num-portal-webapp-accent: mat-palette($num-accent-palette);
+$num-portal-webapp-primary-fdpg: mat-palette($num-fdpg-primary-palette);
+$num-portal-webapp-accent-fdpg: mat-palette($num-fdpg-accent-palette);
 $num-portal-webapp-primary-codex: mat-palette($num-codex-primary-palette);
 $num-portal-webapp-accent-codex: mat-palette($num-codex-accent-palette);
 $num-portal-webapp-primary-abide: mat-palette($num-abide-primary-palette);
 $num-portal-webapp-accent-abide: mat-palette($num-abide-accent-palette);
 $num-portal-webapp-additional: mat-palette($num-additional-palette, warning);
 
-$mat-light-theme-foreground: mat-light-theme-foreground(
-  $num-portal-webapp-primary,
+$mat-light-theme-fdpg-foreground: mat-light-theme-foreground(
+  $num-portal-webapp-primary-fdpg,
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
@@ -47,17 +51,22 @@ $mat-light-theme-abide-background: mat-light-theme-background(
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
+$mat-light-theme-fdpg-background: mat-light-theme-background(
+  $num-portal-webapp-primary-fdpg,
+  $num-portal-webapp-accent,
+  $num-portal-webapp-additional
+);
 @function num-theme-builder($theme) {
-  @if ($theme == 'primary') {
+  @if ($theme == 'fdpg') {
     @return (
-      name: 'primary',
-      primary: $num-portal-webapp-primary,
-      accent: $num-portal-webapp-accent,
+      name: 'fdpg',
+      primary: $num-portal-webapp-primary-fdpg,
+      accent: $num-portal-webapp-accent-fdpg,
       warn: $num-portal-webapp-additional,
       additional: $num-portal-webapp-additional,
       is-dark: false,
-      foreground: $mat-light-theme-foreground,
-      background: $mat-light-theme-background,
+      foreground: $mat-light-theme-fdpg-foreground,
+      background: $mat-light-theme-fdpg-background,
       num-typography: $num-typography
     );
   }
@@ -89,6 +98,6 @@ $mat-light-theme-abide-background: mat-light-theme-background(
   }
 }
 
-$num-portal-webapp-theme: num-theme-builder('primary');
+$num-portal-webapp-theme-fdpg: num-theme-builder('fdpg');
 $num-portal-webapp-theme-codex: num-theme-builder('codex');
 $num-portal-webapp-theme-abide: num-theme-builder('abide');

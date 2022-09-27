@@ -31,10 +31,12 @@
       line-height: 34px;
       border-width: 1px;
       border-style: solid;
-      @if ($name == 'primary') {
+      @if ($name == 'fdpg') {
+        color: mat-contrast($primary, 900);
+        background-color: mat-color($primary, 900);
         border-color: mat-color($primary, 500);
         fa-icon {
-          color: mat-color($accent, 500);
+          color: mat-contrast($primary, 900);
         }
       }
       @if ($name == 'codex') {
@@ -64,9 +66,10 @@
       }
 
       &.mat-button-disabled {
-        @if ($name == 'primary') {
+        @if ($name == 'fdpg') {
           background: mat-color($primary, 100);
-          border-color: mat-color($primary, 100);
+          border-color: mat-color($primary, 500);
+          color: mat-color($primary, 500);
         }
         @if ($name == 'codex') {
           background: mat-color($primary, 100);
@@ -94,9 +97,10 @@
       }
 
       &:hover:not(.mat-button-disabled) {
-        @if ($name == 'primary') {
-          background: mat-color($accent, 100);
-          border-color: mat-color($primary, 100);
+        @if ($name == 'fdpg') {
+          background: mat-color($primary, 200);
+          border-color: mat-color($primary, 500);
+          color: mat-color($primary, 500);
         }
         @if ($name == 'codex') {
           background: mat-color($primary, 200);
@@ -116,9 +120,10 @@
       }
 
       &.mat-button-disabled {
-        @if ($name == 'primary') {
+        @if ($name == 'fdpg') {
           background: mat-color($primary, 100);
-          border-color: mat-color($primary, 100);
+          border-color: mat-color($primary, 500);
+          color: mat-color($primary, 500);
         }
         @if ($name == 'codex') {
           background: mat-color($primary, 100);

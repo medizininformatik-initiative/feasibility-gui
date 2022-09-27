@@ -3,14 +3,44 @@
     "CODEXTHEME": {
       "HEADLINE": "Willkommen auf der CODEX Feasibility Plattform!",
       "PARAGRAPH1": "Die CODEX Feasibility Plattform ist ein Angebot für Wissenschaftler:innen, die für ihre Forschung nach COVID-19 spezifischen Daten suchen.",
-      "PARAGRAPH2": "Auf dieser Plattform steht hierfür ein frei zugängliches Suchtool zur Verfügung, das eine erste, unverbindliche Machbarkeitsabfrage ermöglicht. Auf diesem Weg kann festgestellt werden, wie viele Daten an den angeschlossenen CODEX-Standorten zur Verfügung stehen.",
-      "PARAGRAPH3": "Anhand dieser Information können dann in einem nächsten Schritt konkrete Anfragen an die entsprechenden Standorte gestellt werden."
+      "PARAGRAPH2_1": "Auf dieser Plattform steht hierfür ein frei zugängliches Suchtool zur Verfügung, das eine erste, unverbindliche Machbarkeitsabfrage ermöglicht. Auf diesem Weg kann festgestellt werden, wie viele Daten an den angeschlossenen CODEX-Standorten zur Verfügung stehen.",
+      "PARAGRAPH2_2":"",
+      "PARAGRAPH2_LINK":"",
+      "PARAGRAPH3_1": "Anhand dieser Information können dann in einem nächsten Schritt konkrete Anfragen an die entsprechenden Standorte gestellt werden.",
+      "PARAGRAPH3_2":"",
+      "PARAGRAPH3_LINK":"",
+      "PARAGRAPH4_1":"",
+      "PARAGRAPH4_2":"",
+      "PARAGRAPH5_1": "",
+      "PARAGRAPH5_2": ""
     },
     "ABIDETHEME": {
       "HEADLINE": "Willkommen auf der ABIDE Feasibility Plattform!",
       "PARAGRAPH1": "Die ABIDE Feasibility Plattform ist ein Unterstützungsangebot für Wissenschaftler und Wissenschaftlerinnen bei der Umsetzung ihrer Forschungsvorhaben.",
-      "PARAGRAPH2": "Mit einer Machbarkeitsanfrage (Feasibility) erfahren Forschende, wie viele Fälle für ihre Suchkriterien (Ein- und Ausschlusskriterien) in den Datenintegrationszentren der universitätsmedizinischen Standorte bundesweit vorhanden sind und für medizinische Forschungszwecke beantragt werden können.",
-      "PARAGRAPH3": "Zur Formulierung der Abfrage stehen aktuell der Kerndatensatz der Medizininformatikinitiative und der COVID-19 spezifische Datensatz GECCO zur Verfügung."
+      "PARAGRAPH2_1": "Mit einer Machbarkeitsanfrage (Feasibility) erfahren Forschende, wie viele Fälle für ihre Suchkriterien (Ein- und Ausschlusskriterien) in den Datenintegrationszentren der universitätsmedizinischen Standorte bundesweit vorhanden sind und für medizinische Forschungszwecke beantragt werden können.",
+      "PARAGRAPH2_2":"",
+      "PARAGRAPH2_LINK":"",
+      "PARAGRAPH3_1": "Zur Formulierung der Abfrage stehen aktuell der Kerndatensatz der Medizininformatikinitiative und der COVID-19 spezifische Datensatz GECCO zur Verfügung.",
+      "PARAGRAPH3_2":"",
+      "PARAGRAPH3_LINK":"",
+      "PARAGRAPH4_1":"",
+      "PARAGRAPH4_2":"",
+      "PARAGRAPH5_1": "",
+      "PARAGRAPH5_2": ""
+    },
+    "FDPGTHEME": {
+      "HEADLINE": "Willkommen im Bereich „Daten und Bioproben finden“ des Forschungsdatenportals für Gesundheit",
+      "PARAGRAPH1": "Hier finden Sie ein Unterstützungsangebot für Wissenschaftlerinnen und Wissenschaftler zur Umsetzung Ihres Forschungsvorhabens.",
+      "PARAGRAPH2_1": "Mit einer Machbarkeitsanfrage erfahren Sie, wie viele Datensätze für Ihre Suchkriterien in den Universitätskliniken bundesweit vorhanden sind. Anhand von Ein- und Ausschlusskriterien kann die Verfügbarkeit von Gesundheitsdaten für medizinische Forschungszwecke abgeschätzt werden. Zur Formulierung der Abfrage steht Ihnen der ",
+      "PARAGRAPH2_2":" zur Verfügung.",
+      "PARAGRAPH2_LINK":"Kerndatensatz der MII",
+      "PARAGRAPH3_1": "Voraussetzung für die Nutzung aller Funktionen des Tools ist eine ",
+      "PARAGRAPH3_2": " notwendig.",
+      "PARAGRAPH3_LINK": "Registrierung über das Forschungsdatenportal für Gesundheit",
+      "PARAGRAPH4_1":"Nutzende, die bereits einen Zugang haben",
+      "PARAGRAPH4_2":", können sich einloggen und ihre Machbarkeitsanfrage über das FDPG Feasibility Tool zusammenstellen und abschicken.",
+      "PARAGRAPH5_1": "Ohne Login",
+      "PARAGRAPH5_2": " besteht die Möglichkeit, den Query Viewer zu nutzen. Dieser ermöglicht es, Machbarkeitsanfragen in JSON-Format zu importieren und visuell auf der Oberfläche des FDPG Feasibility Tools anzeigen zu lassen."
     },
     "NEWQUERY": {
       "HEADLINE": "Neue Abfrage",
@@ -19,6 +49,10 @@
     "MYQUERY": {
       "HEADLINE": "Meine Abfragen",
       "TEXT": "Erhalten Sie eine Übersicht über Ihre bereits durchgeführten Suchanfragen"
+    },
+    "FEASPORTAL": {
+      "HEADLINE": "Antrag stellen",
+      "TEXT": "Stellen Sie einen Antrag zur Datennutzung im Antragsportal"
     }
   },
   "LANGUAGE": {
