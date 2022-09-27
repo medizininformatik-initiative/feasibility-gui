@@ -4,10 +4,11 @@
   $name: map-get($theme, name);
   $background: map-get($theme, additional);
 
-  @if ($name == 'primary') {
+  @if ($name == 'fdpg') {
     .num-footer {
-      background: mat-color($accent, 500);
-      color: mat-contrast($primary, 900);
+      background: mat-color($background, white);
+      color: mat-contrast($primary, 200);
+      border-top: 1px rgba(0, 0, 0, 0.2) solid;
     }
   }
   @if ($name == 'codex') {

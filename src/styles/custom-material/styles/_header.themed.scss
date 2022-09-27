@@ -3,10 +3,10 @@
   $primary: map-get($theme, primary);
   $name: map-get($theme, name);
 
-  @if ($name == 'primary') {
+  @if ($name == 'fdpg') {
     num-header mat-toolbar {
-      background: mat-color($accent, 500) !important;
-      color: mat-contrast($accent, 500) !important;
+      background: mat-color($primary, A400) !important;
+      color: mat-contrast($primary, 200) !important;
     }
   }
   @if ($name == 'codex') {

@@ -62,9 +62,9 @@ export class FeatureProviderService {
       document.getElementById('footer-logo').setAttribute('src', 'assets/img/Abide_MI_cropped.jpg')
       document.getElementById('footer-logo').setAttribute('alt', 'MII Logo')
     }
-    if (newTheme === 'primaryTheme') {
-      document.getElementById('header-logo').setAttribute('src', 'assets/img/Abide_MI_cropped.jpg')
-      document.getElementById('header-logo').setAttribute('alt', 'ABIDE Logo')
+    if (newTheme === 'FDPGTheme') {
+      document.getElementById('header-logo').setAttribute('src', 'assets/img/FDPG-Logo.svg')
+      document.getElementById('header-logo').setAttribute('alt', 'FDPG Logo')
       document.getElementById('footer-logo').setAttribute('src', 'assets/img/Abide_MI_cropped.jpg')
       document.getElementById('footer-logo').setAttribute('alt', 'MII Logo')
     }

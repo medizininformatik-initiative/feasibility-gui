@@ -3,22 +3,56 @@
     "CODEXTHEME": {
       "HEADLINE": "Welcome to the CODEX Feasibility Platform!",
       "PARAGRAPH1": "Die CODEX Feasibility Plattform ist ein Angebot für Wissenschaftler:innen, die für ihre Forschung nach COVID-19 spezifischen Daten suchen.",
-      "PARAGRAPH2": "Auf dieser Plattform steht hierfür ein frei zugängliches Suchtool zur Verfügung, das eine erste, unverbindliche Machbarkeitsabfrage ermöglicht. Auf diesem Weg kann festgestellt werden, wie viele Daten an den angeschlossenen CODEX-Standorten zur Verfügung stehen.",
-      "PARAGRAPH3": "Anhand dieser Information können dann in einem nächsten Schritt konkrete Anfragen an die entsprechenden Standorte gestellt werden."
+      "PARAGRAPH2_1": "Auf dieser Plattform steht hierfür ein frei zugängliches Suchtool zur Verfügung, das eine erste, unverbindliche Machbarkeitsabfrage ermöglicht. Auf diesem Weg kann festgestellt werden, wie viele Daten an den angeschlossenen CODEX-Standorten zur Verfügung stehen.",
+      "PARAGRAPH2_2":"",
+      "PARAGRAPH2_LINK":"",
+      "PARAGRAPH3_1": "Anhand dieser Information können dann in einem nächsten Schritt konkrete Anfragen an die entsprechenden Standorte gestellt werden.",
+      "PARAGRAPH3_2":"",
+      "PARAGRAPH3_LINK":"",
+      "PARAGRAPH4_1":"",
+      "PARAGRAPH4_2":"",
+      "PARAGRAPH5_1": "",
+      "PARAGRAPH5_2": ""
     },
     "ABIDETHEME": {
       "HEADLINE": "Welcome to the ABIDE Feasibility Platform!",
       "PARAGRAPH1": "Die ABIDE Feasibility Plattform ist ein Unterstützungsangebot für Wissenschaftler und Wissenschaftlerinnen bei der Umsetzung ihrer Forschungsvorhaben.",
-      "PARAGRAPH2": "Mit einer Machbarkeitsanfrage (Feasibility) erfahren Forschende, wie viele Fälle für ihre Suchkriterien (Ein- und Ausschlusskriterien) in den Datenintegrationszentren der universitätsmedizinischen Standorte bundesweit vorhanden sind und für medizinische Forschungszwecke beantragt werden können.",
-      "PARAGRAPH3": "Zur Formulierung der Abfrage stehen aktuell der Kerndatensatz der Medizininformatikinitiative und der COVID-19 spezifische Datensatz GECCO zur Verfügung."
+      "PARAGRAPH2_1": "Mit einer Machbarkeitsanfrage (Feasibility) erfahren Forschende, wie viele Fälle für ihre Suchkriterien (Ein- und Ausschlusskriterien) in den Datenintegrationszentren der universitätsmedizinischen Standorte bundesweit vorhanden sind und für medizinische Forschungszwecke beantragt werden können.",
+      "PARAGRAPH2_2":"",
+      "PARAGRAPH2_LINK":"",
+      "PARAGRAPH3_1": "Zur Formulierung der Abfrage stehen aktuell der Kerndatensatz der Medizininformatikinitiative und der COVID-19 spezifische Datensatz GECCO zur Verfügung.",
+      "PARAGRAPH3_2":"",
+      "PARAGRAPH3_LINK":"",
+      "PARAGRAPH4_1":"",
+      "PARAGRAPH4_2":"",
+      "PARAGRAPH5_1": "",
+      "PARAGRAPH5_2": ""
+    },
+    "FDPGTHEME": {
+      "HEADLINE": "Welcome to the „Find data and biospecimens“ section of the German Research Data Portal for Health",
+      "PARAGRAPH1": "Here you will find a support service for scientists in the implementation of your research projects.",
+      "PARAGRAPH2_1": "By submitting a feasibility request, you can find out how many data sets for your search criteria are available at sites nationwide. Inclusion and exclusion criteria can be used to estimate the availability of health data for medical research purposes. The ",
+      "PARAGRAPH2_2":" is available to help you formulate your query.",
+      "PARAGRAPH2_LINK":"Medical Informatics Initiative's core data set",
+      "PARAGRAPH3_1": "To use all funktions of the tool you have to ",
+      "PARAGRAPH3_2": "",
+      "PARAGRAPH3_LINK": "registrate at the German Research Data Portal for Health",
+      "PARAGRAPH4_1":"Registrated user",
+      "PARAGRAPH4_2":", can log in and use the FDPG Feasibility Tool to assemble and submit their feasibility request.",
+      "PARAGRAPH5_1": "Without Login",
+      "PARAGRAPH5_2": " you can use the Query Viewer to import feasibility requests in JSON-Format and visualize them in the FDPG Feasibility Tool."
     },
     "NEWQUERY": {
       "HEADLINE": "New Query",
-      "TEXT": "Führen Sie eine Suche anhand Ihrer Ein- und Ausschlusskriterien durch"
+      "TEXT": "Perform a search query based on your inclusion and exclusion criteria"
     },
     "MYQUERY": {
       "HEADLINE": "My Queries",
-      "TEXT": "Erhalten Sie eine Übersicht über Ihre bereits durchgeführten Suchanfragen"
+      "TEXT": "Get an overview of your saved search queries"
+    },
+    "FEASPORTAL": {
+      "HEADLINE": "Create proposal",
+      "TEXT": "Request access to data by creating a research proposal"
     }
   },
   "LANGUAGE": {

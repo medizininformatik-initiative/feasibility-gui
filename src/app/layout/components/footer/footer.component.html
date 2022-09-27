@@ -9,13 +9,16 @@
     <span fxFlex></span>
     <div>
       <mat-toolbar-row>
-        <a mat-button href="https://www.netzwerk-universitaetsmedizin.de/impressum">{{
+        <a mat-button href="https://forschen-fuer-gesundheit.de/impressum.php">{{
           'LEGAL.DISCLOSURE' | translate
         }}</a>
         <mat-divider [vertical]="true"></mat-divider>
-        <a mat-button href="https://www.netzwerk-universitaetsmedizin.de/datenschutz">{{
-          'LEGAL.DATAPROTECTION' | translate
-        }}</a>
+        <a
+          routerLink="/data-protection"
+          mat-button
+          href="https://feasibility.forschen-fuer-gesundheit.de/datenschutz"
+          >{{ 'LEGAL.DATAPROTECTION' | translate }}</a
+        >
       </mat-toolbar-row>
       <div class="version">Version {{ config.legal.version }}</div>
     </div>
