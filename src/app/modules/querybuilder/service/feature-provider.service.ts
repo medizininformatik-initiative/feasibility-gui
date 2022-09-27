@@ -69,9 +69,9 @@ export class FeatureProviderService {
       document.getElementById('footer-logo').setAttribute('alt', 'MII Logo')
     }
     if (newTheme === 'bzkfTheme') {
-      document.getElementById('header-logo').setAttribute('src', 'assets/img/bzkf_logo_groß.png')
+      document.getElementById('header-logo').setAttribute('src', 'assets/img/bzkf-logo.jpg')
       document.getElementById('header-logo').setAttribute('alt', 'BZKF Logo')
-      document.getElementById('footer-logo').setAttribute('src', 'assets/img/bzkf_logo_groß.png')
+      document.getElementById('footer-logo').setAttribute('src', 'assets/img/bzkf-logo.jpg')
       document.getElementById('footer-logo').setAttribute('alt', 'BZKF Logo')
     }
   }
