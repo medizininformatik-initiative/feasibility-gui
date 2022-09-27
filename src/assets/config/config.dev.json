@@ -6,10 +6,10 @@
     "baseUrl": "/api"
   },
   "uiBackendApi": {
-    "baseUrl": "http://localhost:8090/api/v2"
+    "baseUrl": "https://localhost:8091/api/v2"
   },
   "auth": {
-    "baseUrl": "http://localhost:8080",
+    "baseUrl": "https://localhost",
     "realm": "codex-develop",
     "clientId": "feasibility-gui",
     "roles": ["FEASIBILITY_USER"]
