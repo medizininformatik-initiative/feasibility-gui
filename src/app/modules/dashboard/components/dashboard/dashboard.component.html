@@ -1,7 +1,9 @@
 <h2>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.HEADLINE' | translate }}</h2>
 <div class="paragraphBox">
   <p>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH1' | translate }}</p>
-  <p>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH2' | translate }}</p>
+  <p *ngIf="translate.currentLang === 'de'">
+    {{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH2' | translate }}
+  </p>
   <p>
     {{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH3_1' | translate }}
     <b>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH3_2' | translate }}</b>
