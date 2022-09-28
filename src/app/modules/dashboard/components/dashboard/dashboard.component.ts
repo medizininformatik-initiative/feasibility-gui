@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { AppConfigService } from '../../../../config/app-config.service'
 import { FeatureService } from '../../../../service/feature.service'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-dashboard',
@@ -12,7 +13,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private appConfig: AppConfigService,
     private oauthService: OAuthService,
-    private featureService: FeatureService
+    private featureService: FeatureService,
+    public translate: TranslateService
   ) {}
 
   config = this.appConfig.config

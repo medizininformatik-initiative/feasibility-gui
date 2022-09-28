@@ -1,31 +1,30 @@
 <h2>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.HEADLINE' | translate }}</h2>
 <div class="paragraphBox">
   <p>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH1' | translate }}</p>
+  <p *ngIf="translate.currentLang === 'de'">
+    {{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH2' | translate }}
+  </p>
   <p>
-    {{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH2_1' | translate
-    }}<a
+    {{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH3_1' | translate }}
+    <b>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH3_2' | translate }}</b>
+    {{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH3_3' | translate }}
+    <a
       *ngIf="stylesheet === 'FDPGTheme'"
       class="dashboard-link"
       href="https://www.medizininformatik-initiative.de/de/der-kerndatensatz-der-medizininformatik-initiative"
-      >{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH2_LINK' | translate }}</a
-    >{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH2_2' | translate }}
-  </p>
-  <p>
-    {{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH3_1' | translate
-    }}<a
-      *ngIf="stylesheet === 'FDPGTheme'"
-      class="dashboard-link"
-      href="https://forschen-fuer-gesundheit.de/register.php"
+      target="_blank"
       >{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH3_LINK' | translate }}</a
-    >{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH3_2' | translate }}
+    >{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH3_4' | translate }}
   </p>
   <p>
-    <b>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH4_1' | translate }}</b
-    >{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH4_2' | translate }}
+    {{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH4_1' | translate }}
+    <b>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH4_2' | translate }}</b
+    >{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH4_3' | translate }}
   </p>
   <p>
-    <b>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH5_1' | translate }}</b
-    >{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH5_2' | translate }}
+    {{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH5_1' | translate }}
+    <b>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH5_2' | translate }}</b
+    >{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.PARAGRAPH5_3' | translate }}
   </p>
 </div>
 
@@ -43,7 +42,7 @@
     </a>
   </div>
   <div class="linkBox feasPortal">
-    <a href="https://antrag.prelive.forschen-fuer-gesundheit.de/">
+    <a href="https://antrag.prelive.forschen-fuer-gesundheit.de/" target="_blank">
       <div class="queryBoxHeader">{{ 'DASHBOARD.FEASPORTAL.HEADLINE' | translate }}</div>
       <div class="queryBoxText">{{ 'DASHBOARD.FEASPORTAL.TEXT' | translate }}</div>
     </a>
