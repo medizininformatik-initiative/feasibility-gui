@@ -41,7 +41,8 @@ mat-form-field {
 .value-filter-content-with-border {
   margin-bottom: 1em;
   padding: 1em;
-  border: 2px solid var(--num-color--accent-200);
+  box-shadow: 0px 3px 1px -2px var(--num-color--accent-200),
+    0px 2px 2px 0px var(--num-color--accent-200), 0px 1px 5px 0px var(--num-color--accent-200) !important;
   border-radius: 5px;
 }
 mat-expansion-panel {
