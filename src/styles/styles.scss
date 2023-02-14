@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 @import './font';
 @import './themes';
 @import './custom-material';
@@ -41,6 +41,7 @@ body {
 *:after {
   box-sizing: inherit;
 }
+/*TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
 .mat-chip-ripple {
   display: none;
 }

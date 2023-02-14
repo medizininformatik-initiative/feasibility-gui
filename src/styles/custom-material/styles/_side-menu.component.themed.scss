@@ -3,8 +3,12 @@
   $primary: map-get($theme, primary);
   $name: map-get($theme, name);
 
+  .mdc-list-item__primary-text {
+    display: flex;
+  }
+
   @if ($name == 'fdpg') {
-    .mat-nav-list {
+    .mat-mdc-nav-list {
       background: mat-color($primary, A400) !important;
       color: mat-contrast($primary, 200) !important;
     }
@@ -18,7 +22,7 @@
     }
   }
   @if ($name == 'codex') {
-    .mat-nav-list {
+    .mat-mdc-nav-list {
       background: mat-color($primary, 200) !important;
       color: mat-contrast($primary, 200) !important;
     }
@@ -32,7 +36,7 @@
     }
   }
   @if ($name == 'abide') {
-    .mat-nav-list {
+    .mat-mdc-nav-list {
       background: mat-color($primary, A400) !important;
       color: mat-contrast($primary, 200) !important;
     }

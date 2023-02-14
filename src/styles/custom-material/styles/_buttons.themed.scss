@@ -5,28 +5,29 @@
   $additional: map-get($theme, additional);
   $name: map-get($theme, name);
 
-  .mat-button-base {
+  .mat-mdc-button-base {
     text-transform: uppercase !important;
   }
 
   .num-button {
-    &.mat-button .mat-button-wrapper > *,
-    &.mat-stroked-button .mat-button-wrapper > *,
-    &.mat-raised-button .mat-button-wrapper > *,
-    &.mat-flat-button .mat-button-wrapper > * {
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+    &.mat-mdc-button .mat-button-wrapper > *,
+    &.mat-mdc-outlined-button .mat-button-wrapper > *,
+    &.mat-mdc-raised-button .mat-button-wrapper > *,
+    &.mat-mdc-unelevated-button .mat-button-wrapper > * {
       vertical-align: baseline !important;
     }
 
     fa-icon {
       margin: 0 4px 0 0;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
     &.cdk-keyboard-focused .mat-button-focus-overlay {
       display: none;
     }
 
     // Primaray Button
-    &.mat-flat-button.mat-primary {
+    &.mat-mdc-unelevated-button.mat-primary {
       min-width: 8em !important;
       line-height: 34px;
       border-width: 1px;
@@ -55,6 +56,7 @@
           color: mat-contrast($primary, 900);
         }
       }
+      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.mat-button-disabled) {
         background: mat-color($primary, 700);
         box-shadow: $raised-shadow;
@@ -64,7 +66,7 @@
         background: mat-color($primary, 700);
         border-color: mat-color($accent, 500);
       }
-
+      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &.mat-button-disabled {
         @if ($name == 'fdpg') {
           background: mat-color($primary, 100);
@@ -88,14 +90,14 @@
     }
 
     // Secondary Button
-    &.mat-stroked-button.mat-primary {
+    &.mat-mdc-outlined-button.mat-primary {
       border-color: mat-color($primary, 500);
       min-width: 8em !important;
 
       fa-icon {
         color: mat-color($accent, 500);
       }
-
+      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.mat-button-disabled) {
         @if ($name == 'fdpg') {
           background: mat-color($primary, 200);
@@ -118,7 +120,7 @@
       &.cdk-keyboard-focused {
         background: mat-color($accent, 200);
       }
-
+      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &.mat-button-disabled {
         @if ($name == 'fdpg') {
           background: mat-color($primary, 100);
@@ -142,14 +144,14 @@
     }
 
     // Basic Button
-    &.mat-button.mat-primary {
+    &.mat-mdc-button.mat-primary {
       color: mat-color($additional, mid-grey);
       min-width: 8em !important;
 
       fa-icon {
         color: mat-color($accent, 500);
       }
-
+      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.mat-button-disabled) {
         background: mat-color($accent, 100);
         box-shadow: $raised-shadow;
@@ -159,7 +161,7 @@
         background: mat-color($accent, 200);
         border-color: mat-color($accent, 500);
       }
-
+      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &.mat-button-disabled {
         fa-icon {
           color: mat-color($accent, 200);

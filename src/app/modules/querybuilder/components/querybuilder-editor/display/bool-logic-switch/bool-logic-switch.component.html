@@ -5,11 +5,11 @@
     'container-bool-logic-outer': position === 'outer'
   }"
 >
-  <mat-chip (click)="switch()">
+  <mat-chip-option (click)="switch()">
     <span [ngClass]="{ 'container-bool-logic-inner-margin': position === 'inner' }">
       <fa-icon icon="circle" *ngIf="position === 'inner'"></fa-icon>
       {{ getLabelKey() | translate }}
       <fa-icon icon="circle" *ngIf="position === 'outer'"></fa-icon>
     </span>
-  </mat-chip>
+  </mat-chip-option>
 </div>
