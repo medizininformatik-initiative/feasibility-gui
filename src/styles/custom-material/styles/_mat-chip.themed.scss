@@ -1,3 +1,4 @@
+@use 'node_modules/@angular/material' as mat;
 @mixin mat-chip_themed($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
@@ -6,11 +7,11 @@
     font-size: 14px;
     /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
     &.mat-chip-selected.mat-primary {
-      background: mat-color($primary, 500);
-      color: mat-contrast($primary, 500);
+      background: mat.get-color-from-palette($primary, 500);
+      color: mat.get-contrast-color-from-palette($primary, 500);
 
       fa-icon {
-        color: mat-color($accent, 500);
+        color: mat.get-color-from-palette($accent, 500);
       }
     }
   }

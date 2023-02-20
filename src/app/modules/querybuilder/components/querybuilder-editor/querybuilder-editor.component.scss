@@ -15,7 +15,12 @@
 .button-save {
   margin-right: 1em;
 }
-
+.button-save {
+  min-width: 11em!important;
+}
+.button-send {
+  min-width: 10em!important;
+}
 .result-simple-box {
   margin-left: 2%;
   width: 100%;

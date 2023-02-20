@@ -1,3 +1,4 @@
+@use 'node_modules/@angular/material' as mat;
 @import './colors/accent-theme.palette.scss';
 @import './colors/primary-theme.palette.scss';
 @import 'src/styles/themes/colors/codex-accent-theme.palette';
@@ -11,15 +12,17 @@
 @import './theme-palettes/mat-light-theme-foreground';
 @import './typography/typography.config';
 
-$num-portal-webapp-primary: mat-palette($num-primary-palette);
-$num-portal-webapp-accent: mat-palette($num-accent-palette);
-$num-portal-webapp-primary-fdpg: mat-palette($num-fdpg-primary-palette);
-$num-portal-webapp-accent-fdpg: mat-palette($num-fdpg-accent-palette);
-$num-portal-webapp-primary-codex: mat-palette($num-codex-primary-palette);
-$num-portal-webapp-accent-codex: mat-palette($num-codex-accent-palette);
-$num-portal-webapp-primary-abide: mat-palette($num-abide-primary-palette);
-$num-portal-webapp-accent-abide: mat-palette($num-abide-accent-palette);
-$num-portal-webapp-additional: mat-palette($num-additional-palette, warning);
+@include mat.core();
+
+$num-portal-webapp-primary: mat.define-palette($num-primary-palette);
+$num-portal-webapp-accent: mat.define-palette($num-accent-palette);
+$num-portal-webapp-primary-fdpg: mat.define-palette($num-fdpg-primary-palette);
+$num-portal-webapp-accent-fdpg: mat.define-palette($num-fdpg-accent-palette);
+$num-portal-webapp-primary-codex: mat.define-palette($num-codex-primary-palette);
+$num-portal-webapp-accent-codex: mat.define-palette($num-codex-accent-palette);
+$num-portal-webapp-primary-abide: mat.define-palette($num-abide-primary-palette);
+$num-portal-webapp-accent-abide: mat.define-palette($num-abide-accent-palette);
+$num-portal-webapp-additional: mat.define-palette($num-additional-palette, warning);
 
 $mat-light-theme-fdpg-foreground: mat-light-theme-foreground(
   $num-portal-webapp-primary-fdpg,

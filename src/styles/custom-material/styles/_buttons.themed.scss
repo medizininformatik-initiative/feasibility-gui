@@ -1,3 +1,4 @@
+@use 'node_modules/@angular/material' as mat;
 @mixin buttons($theme) {
   $raised-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
   $accent: map-get($theme, accent);
@@ -33,140 +34,140 @@
       border-width: 1px;
       border-style: solid;
       @if ($name == 'fdpg') {
-        color: mat-contrast($primary, 900);
-        background-color: mat-color($primary, 900);
-        border-color: mat-color($primary, 500);
+        color: mat.get-contrast-color-from-palette($primary, 900);
+        background-color: mat.get-color-from-palette($primary, 900);
+        border-color: mat.get-color-from-palette($primary, 500);
         fa-icon {
-          color: mat-contrast($primary, 900);
+          color: mat.get-contrast-color-from-palette($primary, 900);
         }
       }
       @if ($name == 'codex') {
-        color: mat-contrast($primary, 900);
-        background-color: mat-color($primary, 900);
-        border-color: mat-color($primary, 500);
+        color: mat.get-contrast-color-from-palette($primary, 900);
+        background-color: mat.get-color-from-palette($primary, 900);
+        border-color: mat.get-color-from-palette($primary, 500);
         fa-icon {
-          color: mat-contrast($primary, 900);
+          color: mat.get-contrast-color-from-palette($primary, 900);
         }
       }
       @if ($name == 'abide') {
-        color: mat-contrast($primary, 900);
-        background-color: mat-color($primary, 900);
-        border-color: mat-color($primary, 500);
+        color: mat.get-contrast-color-from-palette($primary, 900);
+        background-color: mat.get-color-from-palette($primary, 900);
+        border-color: mat.get-color-from-palette($primary, 500);
         fa-icon {
-          color: mat-contrast($primary, 900);
+          color: mat.get-contrast-color-from-palette($primary, 900);
         }
       }
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.mat-button-disabled) {
-        background: mat-color($primary, 700);
+        background: mat.get-color-from-palette($primary, 700);
         box-shadow: $raised-shadow;
       }
 
       &.cdk-keyboard-focused {
-        background: mat-color($primary, 700);
-        border-color: mat-color($accent, 500);
+        background: mat.get-color-from-palette($primary, 700);
+        border-color: mat.get-color-from-palette($accent, 500);
       }
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &.mat-button-disabled {
         @if ($name == 'fdpg') {
-          background: mat-color($primary, 100);
-          border-color: mat-color($primary, 500);
-          color: mat-color($primary, 500);
+          background: mat.get-color-from-palette($primary, 100);
+          border-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-color-from-palette($primary, 500);
         }
         @if ($name == 'codex') {
-          background: mat-color($primary, 100);
-          border-color: mat-color($primary, 500);
-          color: mat-color($primary, 500);
+          background: mat.get-color-from-palette($primary, 100);
+          border-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-color-from-palette($primary, 500);
         }
         @if ($name == 'abide') {
-          background: mat-color($primary, 100);
-          border-color: mat-color($primary, 500);
-          color: mat-color($primary, 500);
+          background: mat.get-color-from-palette($primary, 100);
+          border-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-color-from-palette($primary, 500);
         }
         fa-icon {
-          color: mat-color($accent, 200);
+          color: mat.get-color-from-palette($accent, 200);
         }
       }
     }
 
     // Secondary Button
-    &.mat-mdc-outlined-button.mat-primary {
-      border-color: mat-color($primary, 500);
+    &.mat-mdc-unelevated-button.mat-primary {
+      border-color: mat.get-color-from-palette($primary, 500);
       min-width: 8em !important;
 
       fa-icon {
-        color: mat-color($accent, 500);
+        color: mat.get-color-from-palette($accent, 500);
       }
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.mat-button-disabled) {
         @if ($name == 'fdpg') {
-          background: mat-color($primary, 200);
-          border-color: mat-color($primary, 500);
-          color: mat-color($primary, 500);
+          background: mat.get-color-from-palette($primary, 200);
+          border-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-color-from-palette($primary, 500);
         }
         @if ($name == 'codex') {
-          background: mat-color($primary, 200);
-          border-color: mat-color($primary, 500);
-          color: mat-color($primary, 500);
+          background: mat.get-color-from-palette($primary, 200);
+          border-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-color-from-palette($primary, 500);
         }
         @if ($name == 'abide') {
-          background: mat-color($primary, 200);
-          border-color: mat-color($primary, 500);
-          color: mat-color($primary, 500);
+          background: mat.get-color-from-palette($primary, 200);
+          border-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-color-from-palette($primary, 500);
         }
         box-shadow: $raised-shadow;
       }
 
       &.cdk-keyboard-focused {
-        background: mat-color($accent, 200);
+        background: mat.get-color-from-palette($accent, 200);
       }
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-      &.mat-button-disabled {
+      &.mdc-button[disabled] {
         @if ($name == 'fdpg') {
-          background: mat-color($primary, 100);
-          border-color: mat-color($primary, 500);
-          color: mat-color($primary, 500);
+          background: mat.get-color-from-palette($primary, 100);
+          border-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-color-from-palette($primary, 500);
         }
         @if ($name == 'codex') {
-          background: mat-color($primary, 100);
-          border-color: mat-color($primary, 500);
-          color: mat-color($primary, 500);
+          background: mat.get-color-from-palette($primary, 100);
+          border-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-color-from-palette($primary, 500);
         }
         @if ($name == 'abide') {
-          background: mat-color($primary, 100);
-          border-color: mat-color($primary, 500);
-          color: mat-color($primary, 500);
+          background: mat.get-color-from-palette($primary, 100);
+          border-color: mat.get-color-from-palette($primary, 500);
+          color: mat.get-color-from-palette($primary, 500);
         }
         fa-icon {
-          color: mat-color($accent, 200);
+          color: mat.get-color-from-palette($accent, 200);
         }
       }
     }
 
     // Basic Button
     &.mat-mdc-button.mat-primary {
-      color: mat-color($additional, mid-grey);
+      color: mat.get-color-from-palette($additional, mid-grey);
       min-width: 8em !important;
 
       fa-icon {
-        color: mat-color($accent, 500);
+        color: mat.get-color-from-palette($accent, 500);
       }
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.mat-button-disabled) {
-        background: mat-color($accent, 100);
+        background: mat.get-color-from-palette($accent, 100);
         box-shadow: $raised-shadow;
       }
 
       &.cdk-keyboard-focused {
-        background: mat-color($accent, 200);
-        border-color: mat-color($accent, 500);
+        background: mat.get-color-from-palette($accent, 200);
+        border-color: mat.get-color-from-palette($accent, 500);
       }
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &.mat-button-disabled {
         fa-icon {
-          color: mat-color($accent, 200);
+          color: mat.get-color-from-palette($accent, 200);
         }
-        color: mat-color($additional, mid-grey);
+        color: mat.get-color-from-palette($additional, mid-grey);
       }
     }
   }

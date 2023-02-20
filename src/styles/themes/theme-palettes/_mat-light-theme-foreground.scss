@@ -1,16 +1,17 @@
+@use 'node_modules/@angular/material' as mat;
 @function mat-light-theme-foreground($primary, $accent, $additional) {
   @return (
-    text: mat-color($additional, dark-grey),
+    text: mat.get-color-from-palette($additional, dark-grey),
     disabled-button: rgba(white, 0.65),
     // defaults below
     base: black,
-    divider: $dark-dividers,
-    dividers: $dark-dividers,
-    disabled: $dark-disabled-text,
-    disabled-text: $dark-disabled-text,
+    divider: dark-grey,
+    dividers: dark-grey,
+    disabled: dark-grey,
+    disabled-text: dark-grey,
     elevation: black,
-    hint-text: $dark-disabled-text,
-    secondary-text: $dark-secondary-text,
+    hint-text: dark-grey,
+    secondary-text: dark-grey,
     icon: rgba(black, 0.54),
     icons: rgba(black, 0.54),
     slider-min: rgba(black, 0.87),
