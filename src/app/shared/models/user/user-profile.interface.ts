@@ -1,6 +1,6 @@
 export interface IUserProfile {
   info: {
-    groups: string[];
-    name: string;
-  };
+    groups: string[]
+    name: string
+  }
 }
