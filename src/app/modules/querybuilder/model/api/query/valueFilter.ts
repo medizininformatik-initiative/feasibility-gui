@@ -1,44 +1,44 @@
-import { TerminologyCode } from '../terminology/terminology'
-import { transient } from '../annotations'
-import { AttributeDefinition, ValueDefinition } from '../terminology/valuedefinition'
+import { TerminologyCode } from '../terminology/terminology';
+import { transient } from '../annotations';
+import { AttributeDefinition, ValueDefinition } from '../terminology/valuedefinition';
 
 export class ValueFilter {
-  type: OperatorOptions
+  type: OperatorOptions;
 
   @transient()
-  valueDefinition?: ValueDefinition
+  valueDefinition?: ValueDefinition;
 
   @transient()
-  attributeDefinition?: AttributeDefinition
+  attributeDefinition?: AttributeDefinition;
 
   @transient()
-  display?: string
+  display?: string;
 
   // QUANTITY_COMPARATOR & QUANTITY_RANGE
-  unit?: QuantityUnit
+  unit?: QuantityUnit;
   @transient()
-  precision?: number
+  precision?: number;
   @transient()
-  min?: number
+  min?: number;
   @transient()
-  max?: number
+  max?: number;
 
   // QUANTITY_COMPARATOR
-  value?: number
-  comparator?: Comparator
+  value?: number;
+  comparator?: Comparator;
 
   // QUANTITY_RANGE
-  minValue?: number
-  maxValue?: number
+  minValue?: number;
+  maxValue?: number;
 
   // CONCEPT
-  selectedConcepts?: TerminologyCode[] = []
+  selectedConcepts?: TerminologyCode[] = [];
 }
 
 export class QuantityUnit {
   // UCUM
-  code: string
-  display: string
+  code: string;
+  display: string;
 }
 
 export enum Comparator {

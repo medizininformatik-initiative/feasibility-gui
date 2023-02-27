@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { TerminologyCode } from '../../../../model/api/terminology/terminology'
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TerminologyCode } from '../../../../model/api/terminology/terminology';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'num-edit-value-filter-concept-line',
@@ -9,25 +9,25 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms'
 })
 export class EditValueFilterConceptLineComponent implements OnInit {
   @Input()
-  concept: TerminologyCode
+  concept: TerminologyCode;
 
   @Input()
-  checked: boolean
+  checked: boolean;
 
-  checkedControlForm: UntypedFormGroup
+  checkedControlForm: UntypedFormGroup;
 
   @Output()
-  selectConcept = new EventEmitter<void>()
+  selectConcept = new EventEmitter<void>();
 
   constructor() {}
 
   ngOnInit(): void {
     this.checkedControlForm = new UntypedFormGroup({
       checkedControl: new UntypedFormControl(this.checked),
-    })
+    });
   }
 
   doSelectConcept(): void {
-    this.selectConcept.emit()
+    this.selectConcept.emit();
   }
 }

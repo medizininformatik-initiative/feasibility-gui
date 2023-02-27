@@ -1,4 +1,4 @@
-import { debounceTime } from 'rxjs/operators'
+import { debounceTime } from 'rxjs/operators';
 import {
   Component,
   EventEmitter,
@@ -8,10 +8,10 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-} from '@angular/core'
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms'
-import { Subscription } from 'rxjs'
-import { environment } from '../../../../environments/environment'
+} from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'num-search',
@@ -20,42 +20,42 @@ import { environment } from '../../../../environments/environment'
 })
 export class SearchComponent implements OnInit, OnChanges, OnDestroy {
   /* istanbul ignore next */
-  private readonly debounceTime = environment.name === 'test' ? 10 : 200
-  searchForm: UntypedFormGroup
+  private readonly debounceTime = environment.name === 'test' ? 10 : 200;
+  searchForm: UntypedFormGroup;
   constructor() {}
 
-  private subscriptions = new Subscription()
+  private subscriptions = new Subscription();
 
-  @Input() label: string
-  @Input() searchText: string
-  @Output() searchTextChange = new EventEmitter()
+  @Input() label: string;
+  @Input() searchText: string;
+  @Output() searchTextChange = new EventEmitter();
 
-  currentText = ''
+  currentText = '';
 
   ngOnInit(): void {
     this.searchForm = new UntypedFormGroup({
       query: new UntypedFormControl(this.searchText || ''),
-    })
+    });
 
     this.subscriptions.add(
       this.searchForm
         .get('query')
         .valueChanges.pipe(debounceTime(this.debounceTime))
         .subscribe((value) => {
-          this.currentText = value
-          this.searchTextChange.emit(value)
+          this.currentText = value;
+          this.searchTextChange.emit(value);
         })
-    )
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
-        const change = changes[propName]
+        const change = changes[propName];
         switch (propName) {
           case 'searchText': {
             if (!change.isFirstChange() && this.currentText !== change.currentValue) {
-              this.patchInput(change.currentValue)
+              this.patchInput(change.currentValue);
             }
           }
         }
@@ -64,18 +64,18 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe()
+    this.subscriptions.unsubscribe();
   }
 
   patchInput(value: string): void {
     if (this.searchForm.value.query !== undefined) {
       this.searchForm.patchValue({
         query: value,
-      })
+      });
     }
   }
 
   clearInput(): void {
-    this.patchInput('')
+    this.patchInput('');
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'num-bool-logic-switch',
@@ -7,23 +7,23 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 })
 export class BoolLogicSwitchComponent implements OnInit {
   @Output()
-  switched = new EventEmitter()
+  switched = new EventEmitter();
 
   @Input()
-  label: 'AND' | 'OR' = 'AND'
+  label: 'AND' | 'OR' = 'AND';
 
   @Input()
-  position: 'inner' | 'outer' = 'outer'
+  position: 'inner' | 'outer' = 'outer';
 
   constructor() {}
 
   ngOnInit(): void {}
 
   getLabelKey(): string {
-    return 'QUERYBUILDER.SWITCH.LABEL_' + this.label
+    return 'QUERYBUILDER.SWITCH.LABEL_' + this.label;
   }
 
   switch(): void {
-    this.switched.emit(this.position)
+    this.switched.emit(this.position);
   }
 }

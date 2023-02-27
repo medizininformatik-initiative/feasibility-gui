@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
-import { Criterion } from '../../../../model/api/query/criterion'
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
-import { EditSingleCriterionComponent } from '../../edit/edit-single-criterion/edit-single-criterion.component'
-import { Query } from '../../../../model/api/query/query'
-import { Subscription } from 'rxjs'
-import { ValueFilter } from '../../../../model/api/query/valueFilter'
-import { FeatureService } from '../../../../../../service/feature.service'
-import { CritGroupPosition } from '../../../../controller/CritGroupArranger'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Criterion } from '../../../../model/api/query/criterion';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { EditSingleCriterionComponent } from '../../edit/edit-single-criterion/edit-single-criterion.component';
+import { Query } from '../../../../model/api/query/query';
+import { Subscription } from 'rxjs';
+import { ValueFilter } from '../../../../model/api/query/valueFilter';
+import { FeatureService } from '../../../../../../service/feature.service';
+import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
 
 @Component({
   selector: 'num-display-criterion',
@@ -15,66 +15,66 @@ import { CritGroupPosition } from '../../../../controller/CritGroupArranger'
 })
 export class DisplayCriterionComponent implements OnInit, OnDestroy {
   @Input()
-  criterion: Criterion
+  criterion: Criterion;
 
   @Input()
-  query: Query
+  query: Query;
 
   @Input()
-  position: CritGroupPosition
+  position: CritGroupPosition;
 
   @Input()
-  showCancelButton: boolean
+  showCancelButton: boolean;
 
   @Output()
-  delete = new EventEmitter<Criterion>()
+  delete = new EventEmitter<Criterion>();
 
   @Output()
-  storeQuery = new EventEmitter<Query>()
+  storeQuery = new EventEmitter<Query>();
 
-  private subscriptionDialog: Subscription
-  isinvalid: boolean
+  private subscriptionDialog: Subscription;
+  isinvalid: boolean;
 
   constructor(public dialog: MatDialog, public featureService: FeatureService) {}
 
   ngOnInit(): void {
-    this.isinvalid = this.criterion.isinvalid === true
+    this.isinvalid = this.criterion.isinvalid === true;
   }
 
   ngOnDestroy(): void {
-    this.subscriptionDialog?.unsubscribe()
+    this.subscriptionDialog?.unsubscribe();
   }
 
   openDetailsPopUp(): void {
-    const dialogConfig = new MatDialogConfig()
+    const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true
-    dialogConfig.autoFocus = true
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
     dialogConfig.data = {
       criterion: this.criterion,
       query: this.query,
       position: this.position,
-    }
-    const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig)
-    this.subscriptionDialog?.unsubscribe()
+    };
+    const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig);
+    this.subscriptionDialog?.unsubscribe();
     this.subscriptionDialog = dialogRef
       .afterClosed()
-      .subscribe((query) => this.storeQuery.emit(query))
+      .subscribe((query) => this.storeQuery.emit(query));
   }
 
   doDelete(): void {
-    this.delete.emit(this.criterion)
+    this.delete.emit(this.criterion);
   }
 
   getValueFilters(): ValueFilter[] {
     if (this.criterion.valueFilters) {
       if (!this.featureService.useFeatureMultipleValueDefinitions()) {
-        return this.criterion.valueFilters.length === 0 ? [] : [this.criterion.valueFilters[0]]
+        return this.criterion.valueFilters.length === 0 ? [] : [this.criterion.valueFilters[0]];
       }
 
-      return this.criterion.valueFilters
+      return this.criterion.valueFilters;
     } else {
-      return []
+      return [];
     }
   }
   getAttributeFilters(): ValueFilter[] {
@@ -82,12 +82,12 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
       if (!this.featureService.useFeatureMultipleValueDefinitions()) {
         return this.criterion.attributeFilters.length === 0
           ? []
-          : [this.criterion.attributeFilters[0]]
+          : [this.criterion.attributeFilters[0]];
       }
 
-      return this.criterion.attributeFilters
+      return this.criterion.attributeFilters;
     } else {
-      return []
+      return [];
     }
   }
 }

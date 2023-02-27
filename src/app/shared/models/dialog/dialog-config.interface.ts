@@ -1,4 +1,4 @@
-import { DialogSize } from './dialog-size.enum'
+import { DialogSize } from './dialog-size.enum';
 
 export interface DialogConfig {
   dialogContentComponent: any

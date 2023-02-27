@@ -1,3 +1,3 @@
 export class QueryResponse {
-  location: string
+  location: string;
 }

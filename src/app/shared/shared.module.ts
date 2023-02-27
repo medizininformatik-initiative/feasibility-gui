@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { LayoutModule } from '../layout/layout.module'
-import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { DirectivesModule } from './directives/directives.module'
-import { SharedComponentsModule } from './components/shared-components.module'
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LayoutModule } from '../layout/layout.module';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { DirectivesModule } from './directives/directives.module';
+import { SharedComponentsModule } from './components/shared-components.module';
 
 const SHARED_MODULES = [
   TranslateModule,
@@ -12,8 +12,8 @@ const SHARED_MODULES = [
   ReactiveFormsModule,
   DirectivesModule,
   SharedComponentsModule,
-]
-const SHARED_DECLARATIONS = []
+];
+const SHARED_DECLARATIONS = [];
 
 @NgModule({
   declarations: [...SHARED_DECLARATIONS],

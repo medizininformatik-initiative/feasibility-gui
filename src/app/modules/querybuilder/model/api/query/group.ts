@@ -1,5 +1,5 @@
-import { Criterion } from './criterion'
-import { V2 } from '../annotations'
+import { Criterion } from './criterion';
+import { V2 } from '../annotations';
 
 // Example
 //     {
@@ -17,30 +17,30 @@ import { V2 } from '../annotations'
 //
 @V2()
 export class GroupDependencyInfo {
-  linked = false
+  linked = false;
 
-  restrictionType: InstanceRestrictionType
-  dependentGroupRestrictionType: InstanceRestrictionType
+  restrictionType: InstanceRestrictionType;
+  dependentGroupRestrictionType: InstanceRestrictionType;
 
-  atMostEarlierThanRelatedGroupTimeRelation?: TimeRelation
-  atMostEarlierThanRelatedGroup?: number // negative values allowed
-  atMostEarlierThanRelatedGroupUnit?: PeriodUnit
-  atMostLaterThanRelatedGroupTimeRelation?: TimeRelation
-  atMostLaterThanRelatedGroup?: number // negative values allowed
-  atMostLaterThanRelatedGroupUnit?: PeriodUnit
+  atMostEarlierThanRelatedGroupTimeRelation?: TimeRelation;
+  atMostEarlierThanRelatedGroup?: number; // negative values allowed
+  atMostEarlierThanRelatedGroupUnit?: PeriodUnit;
+  atMostLaterThanRelatedGroupTimeRelation?: TimeRelation;
+  atMostLaterThanRelatedGroup?: number; // negative values allowed
+  atMostLaterThanRelatedGroupUnit?: PeriodUnit;
 }
 
 export class Group {
-  id: number
-  display: string
+  id: number;
+  display: string;
 
   // conjunctive normal form (without negation)
-  inclusionCriteria: Criterion[][] = []
+  inclusionCriteria: Criterion[][] = [];
   // disjunctive normal form (without negation)
-  exclusionCriteria: Criterion[][] = []
+  exclusionCriteria: Criterion[][] = [];
 
   @V2()
-  dependencyInfo?: GroupDependencyInfo
+  dependencyInfo?: GroupDependencyInfo;
 }
 
 // Determines which items are considered for comparison
@@ -61,4 +61,4 @@ export enum PeriodUnit {
   YEAR = 'YEAR',
 }
 
-export type CritType = 'exclusion' | 'inclusion'
+export type CritType = 'exclusion' | 'inclusion';

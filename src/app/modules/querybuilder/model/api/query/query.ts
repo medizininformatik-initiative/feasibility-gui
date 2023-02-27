@@ -1,5 +1,5 @@
-import { Group } from './group'
-import { CriterionOnlyV1, CriterionOnlyV2 } from './criterion'
+import { Group } from './group';
+import { CriterionOnlyV1, CriterionOnlyV2 } from './criterion';
 
 // The atomic building block of a query is a Criterion (e.g. "Geschlecht: weiblich")
 //
@@ -26,26 +26,26 @@ import { CriterionOnlyV1, CriterionOnlyV2 } from './criterion'
 //
 
 export class Query {
-  display = ''
-  groups: Group[] = [new Group()]
+  display = '';
+  groups: Group[] = [new Group()];
 }
 
 // agreed CODEX format of queries in version 1 (without groups)
 export class QueryOnlyV1 {
-  version = 'http://to_be_decided.com/draft-1/schema#'
-  display = ''
+  version = 'http://to_be_decided.com/draft-1/schema#';
+  display = '';
 
   // conjunctive normal form (without negation)
-  inclusionCriteria: CriterionOnlyV1[][] = []
+  inclusionCriteria: CriterionOnlyV1[][] = [];
   // disjunctive normal form (without negation)
-  exclusionCriteria: CriterionOnlyV1[][] = []
+  exclusionCriteria: CriterionOnlyV1[][] = [];
 }
 export class QueryOnlyV2 {
-  version = 'http://to_be_decided.com/draft-1/schema#'
-  display = ''
+  version = 'http://to_be_decided.com/draft-1/schema#';
+  display = '';
 
   // conjunctive normal form (without negation)
-  inclusionCriteria: CriterionOnlyV2[][] = []
+  inclusionCriteria: CriterionOnlyV2[][] = [];
   // disjunctive normal form (without negation)
-  exclusionCriteria: CriterionOnlyV2[][] = []
+  exclusionCriteria: CriterionOnlyV2[][] = [];
 }

@@ -1,41 +1,41 @@
-import { Criterion } from '../model/api/query/criterion'
-import { CritType, Group } from '../model/api/query/group'
+import { Criterion } from '../model/api/query/criterion';
+import { CritType, Group } from '../model/api/query/group';
 
 export class CritGroupArranger {
   public static splitInnerArray(critGroup: Criterion[][], i: number, j: number): Criterion[][] {
-    const critGroupTemp: Criterion[][] = []
+    const critGroupTemp: Criterion[][] = [];
 
-    let index = 0
+    let index = 0;
     critGroup.forEach((subarray) => {
       if (index === i) {
-        critGroupTemp.push(subarray.slice(0, j + 1))
-        critGroupTemp.push(subarray.slice(j + 1))
+        critGroupTemp.push(subarray.slice(0, j + 1));
+        critGroupTemp.push(subarray.slice(j + 1));
       } else {
-        critGroupTemp.push(subarray)
+        critGroupTemp.push(subarray);
       }
-      index++
-    })
+      index++;
+    });
 
-    return critGroupTemp
+    return critGroupTemp;
   }
 
   public static joinInnerArrays(critGroup: Criterion[][], i: number): Criterion[][] {
-    const critGroupTemp: Criterion[][] = []
+    const critGroupTemp: Criterion[][] = [];
 
-    let index = 0
-    let subarrayTemp
+    let index = 0;
+    let subarrayTemp;
     critGroup.forEach((subarray) => {
       if (index === i) {
-        subarrayTemp = subarray
+        subarrayTemp = subarray;
       } else if (index === i + 1) {
-        critGroupTemp.push(subarrayTemp.concat(subarray))
+        critGroupTemp.push(subarrayTemp.concat(subarray));
       } else {
-        critGroupTemp.push(subarray)
+        critGroupTemp.push(subarray);
       }
-      index++
-    })
+      index++;
+    });
 
-    return critGroupTemp
+    return critGroupTemp;
   }
 
   public static addCriterion(
@@ -43,17 +43,17 @@ export class CritGroupArranger {
     position: CritGroupPosition,
     criterion: Criterion
   ): Group[] {
-    const groupsTemp: Group[] = []
+    const groupsTemp: Group[] = [];
 
     groups.forEach((group) => {
       if (group.id !== position.groupId) {
-        groupsTemp.push(group)
+        groupsTemp.push(group);
       } else {
-        groupsTemp.push(CritGroupArranger.addToGroup(group, position, criterion))
+        groupsTemp.push(CritGroupArranger.addToGroup(group, position, criterion));
       }
-    })
+    });
 
-    return groupsTemp
+    return groupsTemp;
   }
 
   public static addCriterionToEndOfGroup(
@@ -61,20 +61,20 @@ export class CritGroupArranger {
     position: CritGroupPosition,
     criterion: Criterion
   ): Group[] {
-    const groupsTemp: Group[] = []
+    const groupsTemp: Group[] = [];
 
     groups.forEach((group) => {
       if (group.id === position.groupId) {
         if (position.critType === 'inclusion') {
-          group.inclusionCriteria.push([criterion])
+          group.inclusionCriteria.push([criterion]);
         } else if (position.critType === 'exclusion') {
-          group.exclusionCriteria.push([criterion])
+          group.exclusionCriteria.push([criterion]);
         }
       }
-      groupsTemp.push(group)
-    })
+      groupsTemp.push(group);
+    });
 
-    return groupsTemp
+    return groupsTemp;
   }
 
   private static addToGroup(
@@ -82,66 +82,66 @@ export class CritGroupArranger {
     position: CritGroupPosition,
     criterion: Criterion
   ): Group {
-    const groupTemp: Group = JSON.parse(JSON.stringify(group))
+    const groupTemp: Group = JSON.parse(JSON.stringify(group));
     if (position.critType === 'inclusion') {
       groupTemp.inclusionCriteria[position.row] = group.inclusionCriteria[position.row].slice(
         0,
         position.column
-      )
-      groupTemp.inclusionCriteria[position.row].push(criterion)
+      );
+      groupTemp.inclusionCriteria[position.row].push(criterion);
       groupTemp.inclusionCriteria[position.row].push(
         ...group.inclusionCriteria[position.row].slice(position.column)
-      )
+      );
 
-      groupTemp.exclusionCriteria = group.exclusionCriteria
+      groupTemp.exclusionCriteria = group.exclusionCriteria;
     } else if (position.critType === 'exclusion') {
       groupTemp.exclusionCriteria[position.row] = group.exclusionCriteria[position.row].slice(
         0,
         position.column
-      )
-      groupTemp.exclusionCriteria[position.row].push(criterion)
+      );
+      groupTemp.exclusionCriteria[position.row].push(criterion);
       groupTemp.exclusionCriteria[position.row].push(
         ...group.exclusionCriteria[position.row].slice(position.column)
-      )
+      );
 
-      groupTemp.inclusionCriteria = group.inclusionCriteria
+      groupTemp.inclusionCriteria = group.inclusionCriteria;
     }
 
-    return groupTemp
+    return groupTemp;
   }
 
   public static removeCriterion(groups: Group[], position: CritGroupPosition): Group[] {
-    const groupsTemp: Group[] = []
+    const groupsTemp: Group[] = [];
 
     groups.forEach((group) => {
       if (group.id !== position.groupId) {
-        groupsTemp.push(group)
+        groupsTemp.push(group);
       } else {
-        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position))
+        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position));
       }
-    })
+    });
 
-    return groupsTemp
+    return groupsTemp;
   }
 
   public static removeFromGroup(group: Group, position: CritGroupPosition): Group {
-    const groupTemp: Group = JSON.parse(JSON.stringify(group))
+    const groupTemp: Group = JSON.parse(JSON.stringify(group));
 
     if (position.critType === 'inclusion') {
       if (groupTemp.inclusionCriteria[position.row].length === 1) {
-        groupTemp.inclusionCriteria.splice(position.row, 1)
+        groupTemp.inclusionCriteria.splice(position.row, 1);
       } else {
-        groupTemp.inclusionCriteria[position.row].splice(position.column, 1)
+        groupTemp.inclusionCriteria[position.row].splice(position.column, 1);
       }
     } else if (position.critType === 'exclusion') {
       if (groupTemp.exclusionCriteria[position.row].length === 1) {
-        groupTemp.exclusionCriteria.splice(position.row, 1)
+        groupTemp.exclusionCriteria.splice(position.row, 1);
       } else {
-        groupTemp.exclusionCriteria[position.row].splice(position.column, 1)
+        groupTemp.exclusionCriteria[position.row].splice(position.column, 1);
       }
     }
 
-    return groupTemp
+    return groupTemp;
   }
 
   public static moveCriterion(
@@ -150,18 +150,18 @@ export class CritGroupArranger {
     positionTo: CritGroupPosition
   ): Group[] {
     if (JSON.stringify(positionFrom) === JSON.stringify(positionTo)) {
-      return groups
+      return groups;
     }
 
-    let groupsResult: Group[] = []
-    let criterion: Criterion
+    let groupsResult: Group[] = [];
+    let criterion: Criterion;
 
     groups.forEach((group) => {
       if (group.id === positionFrom.groupId) {
         if (positionFrom.critType === 'inclusion') {
-          criterion = group.inclusionCriteria[positionFrom.row][positionFrom.column]
+          criterion = group.inclusionCriteria[positionFrom.row][positionFrom.column];
         } else {
-          criterion = group.exclusionCriteria[positionFrom.row][positionFrom.column]
+          criterion = group.exclusionCriteria[positionFrom.row][positionFrom.column];
         }
 
         if (
@@ -175,21 +175,21 @@ export class CritGroupArranger {
               group.exclusionCriteria[positionFrom.row].length === 1)
           ) {
             if (positionTo.row > positionFrom.row) {
-              positionTo.row = positionTo.row - 1
+              positionTo.row = positionTo.row - 1;
             }
           }
         }
       }
-    })
+    });
 
     if (!criterion) {
-      return groups
+      return groups;
     }
 
-    groupsResult = CritGroupArranger.removeCriterion(groups, positionFrom)
-    groupsResult = CritGroupArranger.addCriterion(groupsResult, positionTo, criterion)
+    groupsResult = CritGroupArranger.removeCriterion(groups, positionFrom);
+    groupsResult = CritGroupArranger.addCriterion(groupsResult, positionTo, criterion);
 
-    return groupsResult
+    return groupsResult;
   }
 
   public static moveCriterionToEndOfGroup(
@@ -197,33 +197,33 @@ export class CritGroupArranger {
     positionFrom: CritGroupPosition,
     positionTo: CritGroupPosition
   ): Group[] {
-    let groupsResult: Group[] = []
-    let criterion: Criterion
+    let groupsResult: Group[] = [];
+    let criterion: Criterion;
 
     groups.forEach((group) => {
       if (group.id === positionFrom.groupId) {
         if (positionFrom.critType === 'inclusion') {
-          criterion = group.inclusionCriteria[positionFrom.row][positionFrom.column]
+          criterion = group.inclusionCriteria[positionFrom.row][positionFrom.column];
         } else {
-          criterion = group.exclusionCriteria[positionFrom.row][positionFrom.column]
+          criterion = group.exclusionCriteria[positionFrom.row][positionFrom.column];
         }
       }
-    })
+    });
 
     if (!criterion) {
-      return groups
+      return groups;
     }
 
-    groupsResult = CritGroupArranger.removeCriterion(groups, positionFrom)
-    groupsResult = CritGroupArranger.addCriterionToEndOfGroup(groupsResult, positionTo, criterion)
+    groupsResult = CritGroupArranger.removeCriterion(groups, positionFrom);
+    groupsResult = CritGroupArranger.addCriterionToEndOfGroup(groupsResult, positionTo, criterion);
 
-    return groupsResult
+    return groupsResult;
   }
 }
 
 export class CritGroupPosition {
-  groupId: number
-  critType: CritType
-  row: number
-  column: number
+  groupId: number;
+  critType: CritType;
+  row: number;
+  column: number;
 }

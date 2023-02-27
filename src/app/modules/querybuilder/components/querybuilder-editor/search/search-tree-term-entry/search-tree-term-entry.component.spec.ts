@@ -1,15 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchTreeTermEntryComponent } from './search-tree-term-entry.component'
-import { MaterialModule } from '../../../../../../layout/material/material.module'
-import { FormsModule } from '@angular/forms'
-import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
-import { CdkTree, CdkTreeNode } from '@angular/cdk/tree'
-import { ChangeDetectorRef, ElementRef } from '@angular/core'
+import { SearchTreeTermEntryComponent } from './search-tree-term-entry.component';
+import { MaterialModule } from '../../../../../../layout/material/material.module';
+import { FormsModule } from '@angular/forms';
+import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
+import { CdkTree, CdkTreeNode } from '@angular/cdk/tree';
+import { ChangeDetectorRef, ElementRef } from '@angular/core';
 
 describe('SearchInputTermEntryComponent', () => {
-  let component: SearchTreeTermEntryComponent
-  let fixture: ComponentFixture<SearchTreeTermEntryComponent>
+  let component: SearchTreeTermEntryComponent;
+  let fixture: ComponentFixture<SearchTreeTermEntryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,19 +21,19 @@ describe('SearchInputTermEntryComponent', () => {
         ChangeDetectorRef,
         { provide: ElementRef, useClass: MockElementRef },
       ],
-    }).compileComponents()
-  })
+    }).compileComponents();
+  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchTreeTermEntryComponent)
-    component = fixture.componentInstance
-    component.node = new TerminologyEntry()
-    fixture.detectChanges()
-  })
+    fixture = TestBed.createComponent(SearchTreeTermEntryComponent);
+    component = fixture.componentInstance;
+    component.node = new TerminologyEntry();
+    fixture.detectChanges();
+  });
 
   it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-})
+    expect(component).toBeTruthy();
+  });
+});
 
 class MockElementRef {}

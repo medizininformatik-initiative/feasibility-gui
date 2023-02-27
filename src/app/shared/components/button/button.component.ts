@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'num-button',
@@ -7,8 +7,8 @@ import { Component, Input } from '@angular/core'
 export class ButtonComponent {
   constructor() {}
 
-  @Input() icon?: string
-  @Input() type?: 'primary' | 'secondary' | 'basic' = 'primary'
-  @Input() isDisabled?: boolean
-  @Input() tooltip?: string
+  @Input() icon?: string;
+  @Input() type?: 'primary' | 'secondary' | 'basic' = 'primary';
+  @Input() isDisabled?: boolean;
+  @Input() tooltip?: string;
 }

@@ -1,13 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
-import { QueryResult } from '../../../../model/api/result/QueryResult'
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { QueryResult } from '../../../../model/api/result/QueryResult';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
   ResultDetailsDialogComponentData,
   ResultDetailsDialogComponent,
-} from '../result-details-dialog/result-details-dialog.component'
-import { Observable, Subscription } from 'rxjs'
-import { BackendService } from '../../../../service/backend.service'
-import { FeatureService } from '../../../../../../service/feature.service'
+} from '../result-details-dialog/result-details-dialog.component';
+import { Observable, Subscription } from 'rxjs';
+import { BackendService } from '../../../../service/backend.service';
+import { FeatureService } from '../../../../../../service/feature.service';
 
 @Component({
   selector: 'num-result-simple',
@@ -16,66 +16,66 @@ import { FeatureService } from '../../../../../../service/feature.service'
 })
 export class ResultSimpleComponent implements OnInit, OnDestroy {
   @Input()
-  resultObservable: Observable<QueryResult>
+  resultObservable: Observable<QueryResult>;
 
   @Input()
-  result: QueryResult
+  result: QueryResult;
 
   @Input()
-  isResultLoaded: boolean
+  isResultLoaded: boolean;
 
   @Input()
-  showSpinner: boolean
+  showSpinner: boolean;
 
-  clickEventsubscription: Subscription
-  spinnerValue: number
-  pollingTime: number
-  interval
+  clickEventsubscription: Subscription;
+  spinnerValue: number;
+  pollingTime: number;
+  interval;
 
   constructor(
     public dialog: MatDialog,
     public backend: BackendService,
     private featureService: FeatureService
   ) {
-    this.clickEventsubscription?.unsubscribe()
+    this.clickEventsubscription?.unsubscribe();
     this.clickEventsubscription = this.featureService.getClickEvent().subscribe((pollingTime) => {
-      clearInterval(this.interval)
-      this.spinnerValue = 100
-      this.pollingTime = pollingTime
-      this.startProgressSpinner(pollingTime)
-    })
+      clearInterval(this.interval);
+      this.spinnerValue = 100;
+      this.pollingTime = pollingTime;
+      this.startProgressSpinner(pollingTime);
+    });
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.clickEventsubscription?.unsubscribe()
+    this.clickEventsubscription?.unsubscribe();
   }
 
   openDialogResultDetails(): void {
-    const dialogConfig = new MatDialogConfig<ResultDetailsDialogComponentData>()
+    const dialogConfig = new MatDialogConfig<ResultDetailsDialogComponentData>();
 
-    dialogConfig.disableClose = true
-    dialogConfig.autoFocus = true
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
     dialogConfig.data = {
       resultObservable$: this.resultObservable,
       myResult: this.result,
       isResultLoaded: this.isResultLoaded,
-    }
-    this.dialog.open(ResultDetailsDialogComponent, dialogConfig)
+    };
+    this.dialog.open(ResultDetailsDialogComponent, dialogConfig);
   }
 
   startProgressSpinner(pollingTime: number): void {
     this.interval = setInterval(() => {
       if (this.pollingTime > 0) {
         // console.log(this.spinnerValue)
-        this.pollingTime--
-        this.spinnerValue = this.spinnerValue - 100 / pollingTime
+        this.pollingTime--;
+        this.spinnerValue = this.spinnerValue - 100 / pollingTime;
       } else {
-        this.pollingTime = pollingTime
-        this.spinnerValue = 100
-        clearInterval(this.interval)
+        this.pollingTime = pollingTime;
+        this.spinnerValue = 100;
+        clearInterval(this.interval);
       }
-    }, 1000)
+    }, 1000);
   }
 }

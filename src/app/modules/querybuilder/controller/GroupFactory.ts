@@ -1,26 +1,26 @@
-import { Query } from '../model/api/query/query'
+import { Query } from '../model/api/query/query';
 import {
   Group,
   GroupDependencyInfo,
   InstanceRestrictionType,
   PeriodUnit,
   TimeRelation,
-} from '../model/api/query/group'
+} from '../model/api/query/group';
 
 export class GroupFactory {
   public static createGroup(query: Query): Group {
-    const group = new Group()
+    const group = new Group();
 
-    const ids = query.groups.map((groupTemp) => groupTemp.id)
-    let newId = 1
+    const ids = query.groups.map((groupTemp) => groupTemp.id);
+    let newId = 1;
     while (ids.findIndex((id) => id === newId) >= 0) {
-      newId++
+      newId++;
     }
 
-    group.id = newId
-    group.display = 'Ausgewählte Merkmale'
+    group.id = newId;
+    group.display = 'Ausgewählte Merkmale';
 
-    return group
+    return group;
   }
 
   static createGroupDependencyInfo(): GroupDependencyInfo {
@@ -37,6 +37,6 @@ export class GroupFactory {
 
       atMostLaterThanRelatedGroupUnit: PeriodUnit.DAY,
       atMostEarlierThanRelatedGroupUnit: PeriodUnit.DAY,
-    }
+    };
   }
 }

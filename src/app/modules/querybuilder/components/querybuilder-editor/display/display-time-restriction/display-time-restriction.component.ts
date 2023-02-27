@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/query/timerestriction'
+import { Component, Input, OnInit } from '@angular/core';
+import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/query/timerestriction';
 // @ts-ignore
-import moment from 'moment'
+import moment from 'moment';
 
 @Component({
   selector: 'num-display-time-restriction',
@@ -10,16 +10,16 @@ import moment from 'moment'
 })
 export class DisplayTimeRestrictionComponent implements OnInit {
   @Input()
-  timeRestriction: TimeRestriction
+  timeRestriction: TimeRestriction;
 
-  readonly typeLatest = TimeRestrictionType.BETWEEN
-  timeRestrictionType: typeof TimeRestrictionType = TimeRestrictionType
+  readonly typeLatest = TimeRestrictionType.BETWEEN;
+  timeRestrictionType: typeof TimeRestrictionType = TimeRestrictionType;
 
   constructor() {}
 
   ngOnInit(): void {}
 
   getDateFormatted(date: Date): string {
-    return date ? moment(date).format('DD.MM.YYYY') : ''
+    return date ? moment(date).format('DD.MM.YYYY') : '';
   }
 }
