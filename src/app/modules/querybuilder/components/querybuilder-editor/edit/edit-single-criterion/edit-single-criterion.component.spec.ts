@@ -1,71 +1,59 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditSingleCriterionComponent } from './edit-single-criterion.component'
-import { EditCriterionComponent } from '../edit-criterion/edit-criterion.component'
-import { MaterialModule } from '../../../../../../layout/material/material.module'
-import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component'
-import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { MatInputNumberDirective } from '../mat-input-number.directive'
-import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component'
-import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { Query } from '../../../../model/api/query/query'
-import { Criterion } from '../../../../model/api/query/criterion'
-import { OperatorOptions } from '../../../../model/api/query/valueFilter'
-import { ValueType } from '../../../../model/api/terminology/valuedefinition'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { FeatureService } from '../../../../../../service/feature.service'
-import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { DisplayEntitiesComponent } from '../../display/display-entities/display-entities.component'
-import { DisplayCriterionComponent } from '../../display/display-criterion/display-criterion.component'
-import { BoolLogicSwitchComponent } from '../../display/bool-logic-switch/bool-logic-switch.component'
-import { DisplayValueFilterComponent } from '../../display/display-value-filter/display-value-filter.component'
-import { DisplayTimeRestrictionComponent } from '../../display/display-time-restriction/display-time-restriction.component'
-import { OAuthStorage } from 'angular-oauth2-oidc'
-import { MatTooltipModule } from '@angular/material/tooltip'
+import { EditSingleCriterionComponent } from './edit-single-criterion.component';
+import { EditCriterionComponent } from '../edit-criterion/edit-criterion.component';
+import { MaterialModule } from '../../../../../../layout/material/material.module';
+import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component';
+import { ButtonComponent } from '../../../../../../shared/components/button/button.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputNumberDirective } from '../mat-input-number.directive';
+import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Query } from '../../../../model/api/query/query';
+import { Criterion } from '../../../../model/api/query/criterion';
+import { OperatorOptions } from '../../../../model/api/query/valueFilter';
+import { ValueType } from '../../../../model/api/terminology/valuedefinition';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FeatureService } from '../../../../../../service/feature.service';
+import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DisplayEntitiesComponent } from '../../display/display-entities/display-entities.component';
+import { DisplayCriterionComponent } from '../../display/display-criterion/display-criterion.component';
+import { BoolLogicSwitchComponent } from '../../display/bool-logic-switch/bool-logic-switch.component';
+import { DisplayValueFilterComponent } from '../../display/display-value-filter/display-value-filter.component';
+import { DisplayTimeRestrictionComponent } from '../../display/display-time-restriction/display-time-restriction.component';
+import { OAuthStorage } from 'angular-oauth2-oidc';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('EditSingleCriterionComponent', () => {
-  let component: EditSingleCriterionComponent
-  let fixture: ComponentFixture<EditSingleCriterionComponent>
-  let matDialogRef
+  let component: EditSingleCriterionComponent;
+  let fixture: ComponentFixture<EditSingleCriterionComponent>;
+  let matDialogRef;
 
-  const querySnapshot = new Query()
-  querySnapshot.display = 'SNAPSHOT'
-  const queryModified = new Query()
-  queryModified.display = 'MODIFIED'
+  const querySnapshot = new Query();
+  querySnapshot.display = 'SNAPSHOT';
+  const queryModified = new Query();
+  queryModified.display = 'MODIFIED';
 
   beforeEach(async () => {
     matDialogRef = {
       close: () => {},
-    } as MatDialogRef<EditSingleCriterionComponent>
+    } as MatDialogRef<EditSingleCriterionComponent>;
 
     const featureService = {
-      useFeatureMultipleValueDefinitions(): boolean {
-        return true
-      },
-      useFeatureTimeRestriction(): boolean {
-        return true
-      },
-      useFeatureMultipleGroups(): boolean {
-        return true
-      },
-      useFeatureDependentGroups(): boolean {
-        return true
-      },
-      getPatientResultLowerBoundary(): number {
-        return 0
-      },
-      mockLoadnSave(): boolean {
-        return true
-      },
-    } as FeatureService
+      useFeatureMultipleValueDefinitions: (): boolean => true,
+      useFeatureTimeRestriction: (): boolean => true,
+      useFeatureMultipleGroups: (): boolean => true,
+      useFeatureDependentGroups: (): boolean => true,
+      getPatientResultLowerBoundary: (): number => 0,
+      mockLoadnSave: (): boolean => true,
+    } as FeatureService;
 
     const authStorage = {
       getItem: (accessToken: string) => 'test_token',
-    } as OAuthStorage
+    } as OAuthStorage;
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -107,19 +95,19 @@ describe('EditSingleCriterionComponent', () => {
         },
         { provide: OAuthStorage, useValue: authStorage },
       ],
-    }).compileComponents()
-  })
+    }).compileComponents();
+  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditSingleCriterionComponent)
-    component = fixture.componentInstance
+    fixture = TestBed.createComponent(EditSingleCriterionComponent);
+    component = fixture.componentInstance;
 
     const valueDefinition = {
       type: ValueType.CONCEPT,
       precision: 1,
-    }
+    };
 
-    const criterion = new Criterion()
+    const criterion = new Criterion();
     criterion.valueFilters = [
       {
         precision: 1,
@@ -127,46 +115,46 @@ describe('EditSingleCriterionComponent', () => {
         selectedConcepts: [],
         valueDefinition,
       },
-    ]
+    ];
     criterion.termCodes = [
       {
         code: 'a',
         system: 'http://test',
         display: 'none',
       },
-    ]
-    component.criterion = criterion
+    ];
+    component.criterion = criterion;
 
-    fixture.detectChanges()
-  })
+    fixture.detectChanges();
+  });
 
   it('should create', () => {
-    expect(component).toBeTruthy()
-  })
+    expect(component).toBeTruthy();
+  });
 
   it('should store original query', () => {
-    spyOn(matDialogRef, 'close')
+    spyOn(matDialogRef, 'close');
 
-    component.dialogRef = matDialogRef
+    component.dialogRef = matDialogRef;
 
-    component.querySnapshot = querySnapshot
-    component.queryModified = queryModified
+    component.querySnapshot = querySnapshot;
+    component.queryModified = queryModified;
 
-    component.doCancel()
+    component.doCancel();
 
-    expect(matDialogRef.close).toBeCalledWith(querySnapshot)
-  })
+    expect(matDialogRef.close).toBeCalledWith(querySnapshot);
+  });
 
   it('should store modified query', () => {
-    spyOn(matDialogRef, 'close')
+    spyOn(matDialogRef, 'close');
 
-    component.dialogRef = matDialogRef
+    component.dialogRef = matDialogRef;
 
-    component.querySnapshot = querySnapshot
-    component.queryModified = queryModified
+    component.querySnapshot = querySnapshot;
+    component.queryModified = queryModified;
 
-    component.doSave()
+    component.doSave();
 
-    expect(matDialogRef.close).toBeCalledWith(queryModified)
-  })
-})
+    expect(matDialogRef.close).toBeCalledWith(queryModified);
+  });
+});

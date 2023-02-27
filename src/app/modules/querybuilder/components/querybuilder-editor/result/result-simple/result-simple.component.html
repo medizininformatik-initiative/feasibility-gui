@@ -28,7 +28,7 @@
   </div>
   <num-button
     *ngIf="
-      result?.totalNumberOfPatients > 0 || result?.totalNumberOfPatients == 0;
+      result?.totalNumberOfPatients > 0 || result?.totalNumberOfPatients === 0;
       else showPlaceholder
     "
     [type]="'primary'"

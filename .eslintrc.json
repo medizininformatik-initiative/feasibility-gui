@@ -3,6 +3,18 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
+  "plugins": ["prefer-arrow-functions"],
+  "rules": {
+    "prefer-arrow-functions/prefer-arrow-functions": [
+      "warn",
+      {
+        "classPropertiesAllowed": false,
+        "disallowPrototype": false,
+        "returnStyle": "unchanged",
+        "singleReturnOnly": false
+      }
+    ]
+  },
   "overrides": [
     {
       "files": [
@@ -21,6 +33,7 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "max-len": "off",
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -54,6 +67,11 @@
             "path": "always",
             "types": "prefer-import",
             "lib": "always"
+          }
+        ],
+        "@typescript-eslint/member-ordering": [
+          "off", {
+            "default": [ "constructor",  "public-decorated-field"]
           }
         ]
       }

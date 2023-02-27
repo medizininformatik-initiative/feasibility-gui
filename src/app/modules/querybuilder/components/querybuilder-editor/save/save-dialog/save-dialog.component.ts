@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
 import { Query } from '../../../../model/api/query/query'
 import { QueryProviderService } from '../../../../service/query-provider.service'
