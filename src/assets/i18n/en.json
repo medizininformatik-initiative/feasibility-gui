@@ -97,7 +97,10 @@
       "EXCLUSION": "Exclusion criteria",
       "LABEL": "enter code or display",
       "ALL": "All",
-      "CATEGORY_FILTER": "Filter by"
+      "CATEGORY_FILTER": "Filter by",
+      "CONSENT_HEADER": "Art der Datennutzung.",
+      "CONSENT_CENTRAL": "Pseudonymisierte Daten zentral zur Analyse zusammenführen.",
+      "CONSENT_DISTRIBUTED": "Daten verteilt analysieren und Ergebnisse erhalten."
     },
     "SWITCH": {
       "LABEL_AND": "AND",

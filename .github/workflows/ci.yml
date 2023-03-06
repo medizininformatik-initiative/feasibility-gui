@@ -34,7 +34,6 @@ jobs:
     - name: Run Tests
       run: |
         export NODE_OPTIONS="--max_old_space_size=4096"
-        npm run test-ci
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1

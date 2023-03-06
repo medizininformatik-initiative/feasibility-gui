@@ -24,4 +24,5 @@
 }
 ::ng-deep num-search-tree-term-entry .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
   background-color: var(--num-color--accent-600) !important;
+  border-color: black!important;
 }

@@ -66,3 +66,6 @@ mat-expansion-panel {
 ::ng-deep .operator-part .mat-select-arrow-wrapper {
   transform: none !important;
 }
+::ng-deep num-edit-value-filter-concept-line label {
+  font-weight: 400!important;
+}

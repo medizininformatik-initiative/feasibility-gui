@@ -9,6 +9,7 @@ import { FeatureService } from '../../../../service/feature.service';
 import { GroupFactory } from '../../controller/GroupFactory';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'num-querybuilder',
@@ -152,5 +153,14 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.query = QueryProviderService.createDefaultQuery();
     this.queryProviderService.store(this.query);
     this.result = null;
+  }
+
+  setCentralAnalysis(checked: MatCheckboxChange): void {
+    this.query.consentCentral = checked.checked
+    this.storeQuery(this.query);
+  }
+  setDistributedAnalysis(checked: MatCheckboxChange): void {
+    this.query.consentDistr = checked.checked
+    this.storeQuery(this.query);
   }
 }

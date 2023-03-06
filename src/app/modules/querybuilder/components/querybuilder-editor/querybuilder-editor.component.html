@@ -14,7 +14,7 @@
         <num-button
           [type]="'primary'"
           [isDisabled]="actionDisabledReset"
-          (click)="doReset()"
+          (click)="!actionDisabledReset && doReset()"
           class="button-reset"
         >
           {{ 'BUTTON.RESET' | translate }}
@@ -22,7 +22,7 @@
         <num-button
           [type]="'primary'"
           [isDisabled]="actionDisabledReset"
-          (click)="doSave()"
+          (click)="!actionDisabledReset && doSave()"
           class="button-save"
         >
           {{ 'BUTTON.SAVEQUERY' | translate }}
@@ -30,7 +30,7 @@
         <num-button
           [type]="'primary'"
           [isDisabled]="actionDisabledSend"
-          (click)="doSend()"
+          (click)="!actionDisabledSend && doSend()"
           class="button-send"
         >
           {{ 'BUTTON.SEND' | translate }}
@@ -42,6 +42,29 @@
     </div>
   </div>
 
+  <div class="container-consent">
+    <div class="consent-header">{{ 'QUERYBUILDER.SEARCH.CONSENT_HEADER' | translate }}</div>
+    <div>
+      <mat-checkbox
+        class="example-margin"
+        id="multiplevaluedefinitions"
+        [checked]="query.consentCentral"
+        (change)="setCentralAnalysis($event)"
+      >
+        {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL' | translate }}
+      </mat-checkbox>
+    </div>
+    <div>
+      <mat-checkbox
+        class="example-margin"
+        id="multiplegroups"
+        [checked]="query.consentDistr"
+        (change)="setDistributedAnalysis($event)"
+      >
+        {{ 'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED' | translate }}
+      </mat-checkbox>
+    </div>
+  </div>
   <div fxLayout="row" fxLayoutAlign="space-between" class="container">
     <num-search-input
       [critType]="'inclusion'"

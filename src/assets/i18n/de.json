@@ -97,7 +97,10 @@
       "EXCLUSION": "Ausschlusskriterien",
       "LABEL": "Code oder Suchbegriff eingeben",
       "ALL": "Alle",
-      "CATEGORY_FILTER": "Filtern nach"
+      "CATEGORY_FILTER": "Filtern nach",
+      "CONSENT_HEADER": "Art der Datennutzung",
+      "CONSENT_CENTRAL": "Pseudonymisierte Daten zentral zur Analyse zusammenführen",
+      "CONSENT_DISTRIBUTED": "Daten verteilt analysieren und Ergebnisse erhalten"
     },
     "SWITCH": {
       "LABEL_AND": "UND",

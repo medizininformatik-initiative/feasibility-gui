@@ -35,6 +35,8 @@ export class QueryProviderService {
     const query = {
       groups: [],
       display: '',
+      consentCentral: false,
+      consentDistr: false
     };
     const group = GroupFactory.createGroup(query);
     query.groups.push(group);
@@ -217,6 +219,8 @@ export class QueryProviderService {
         },
       ],
       display: 'Beispiel-Query',
+      consentCentral: false,
+      consentDistr: false
     };
   }
 }

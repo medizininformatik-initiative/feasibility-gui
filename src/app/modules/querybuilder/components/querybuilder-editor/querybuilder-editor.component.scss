@@ -15,11 +15,9 @@
 .button-save {
   margin-right: 1em;
 }
-.button-save {
-  min-width: 11em!important;
-}
-.button-send {
-  min-width: 10em!important;
+
+num-button {
+  white-space: nowrap;
 }
 .result-simple-box {
   margin-left: 2%;
@@ -59,7 +57,33 @@
   border-radius: 4px;
 }
 
-::ng-deep .mat-mdc-dialog-container {
-  box-shadow: 0px 11px 15px -4px rgba(0, 0, 0, 0.2), 0px 24px 38px 5px rgba(0, 0, 0, 0.14),
-    0px 9px 46px 8px rgba(0, 0, 0, 0.12) !important;
+.container-consent {
+  margin: 10px 0 15px 5px;
+}
+.consent-header {
+  font-weight: 500;
+  color: var(--num-color--accent-600);
+}
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  padding: 24px;
+}
+::ng-deep .querybuilder-container .mat-mdc-card-header {
+  padding: 0 16px;
+}
+::ng-deep .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+  background-color: var(--num-color--accent-600) !important;
+  border-color: black!important;
+}
+::ng-deep mat-checkbox label {
+  font-weight: 400!important;
+}
+::ng-deep .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__background {
+  top: 6px!important;
+}
+::ng-deep .mat-mdc-checkbox .mdc-checkbox {
+  padding: 6px 10px!important;
+}
+::ng-deep .mat-mdc-checkbox-touch-target {
+  width: 40px!important;
+  height: 40px!important;
 }
