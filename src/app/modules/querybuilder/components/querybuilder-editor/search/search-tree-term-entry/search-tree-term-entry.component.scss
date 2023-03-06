@@ -8,7 +8,7 @@
 }
 
 .display-part {
-  padding: 0 0.5em;
+  padding: 6px 0.5em 0 0.5em;
 }
 
 .container {
@@ -16,13 +16,16 @@
   cursor: pointer;
 }
 ::ng-deep num-search-tree-term-entry .mdc-checkbox {
-  padding: 5px!important;
+  padding: 5px !important;
 }
 ::ng-deep num-search-tree-term-entry .mdc-checkbox__background {
-  top: 0!important;
-  left: 5px!important;
+  top: 0 !important;
+  left: 5px !important;
 }
-::ng-deep num-search-tree-term-entry .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+::ng-deep
+  num-search-tree-term-entry
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
   background-color: var(--num-color--accent-600) !important;
-  border-color: black!important;
+  border-color: black !important;
 }

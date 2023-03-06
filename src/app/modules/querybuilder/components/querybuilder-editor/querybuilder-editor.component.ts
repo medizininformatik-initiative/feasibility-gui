@@ -156,11 +156,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   }
 
   setCentralAnalysis(checked: MatCheckboxChange): void {
-    this.query.consentCentral = checked.checked
+    this.query.consentCentral = checked.checked;
     this.storeQuery(this.query);
   }
   setDistributedAnalysis(checked: MatCheckboxChange): void {
-    this.query.consentDistr = checked.checked
+    this.query.consentDistr = checked.checked;
     this.storeQuery(this.query);
   }
 }
