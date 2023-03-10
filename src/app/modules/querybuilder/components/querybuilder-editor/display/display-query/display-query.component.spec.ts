@@ -18,8 +18,9 @@ import { FeatureService } from '../../../../../../service/feature.service'
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component'
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { GroupFactory } from '../../../../controller/GroupFactory'
-import { OAuthStorage } from 'angular-oauth2-oidc'
+import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { DisplayCritGroupViewonlyComponent } from '../display-crit-group-viewonly/display-crit-group-viewonly.component'
 
 describe('DisplayQueryComponent', () => {
   let component: DisplayQueryComponent
@@ -51,8 +52,13 @@ describe('DisplayQueryComponent', () => {
       getItem: (accessToken: string) => 'test_token',
     } as OAuthStorage
 
+    const authService = {
+      hasValidAccessToken: () => true,
+    } as OAuthService
+
     await TestBed.configureTestingModule({
       declarations: [
+        DisplayCritGroupViewonlyComponent,
         DisplayQueryComponent,
         DisplayGroupComponent,
         DisplayCritGroupComponent,
@@ -71,6 +77,7 @@ describe('DisplayQueryComponent', () => {
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },
+        { provide: OAuthService, useValue: authService },
         {
           provide: FeatureService,
           useValue: featureService,

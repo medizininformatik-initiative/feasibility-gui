@@ -11,6 +11,7 @@ import { GroupFactory } from '../../../../controller/GroupFactory'
 import { Subscription } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { FeatureService } from '../../../../../../service/feature.service'
+import { OAuthService } from 'angular-oauth2-oidc'
 
 @Component({
   selector: 'num-display-group',
@@ -47,15 +48,19 @@ export class DisplayGroupComponent implements OnInit {
 
   subscriptionTranslation: Subscription
   subscriptionDialog: Subscription
+  isLoggedIn: boolean
 
   constructor(
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     private translation: TranslateService,
-    public featureService: FeatureService
+    public featureService: FeatureService,
+    private oauthService: OAuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isLoggedIn = this.oauthService.hasValidAccessToken()
+  }
 
   doDrop($event: any): void {
     this.dropped.emit($event)

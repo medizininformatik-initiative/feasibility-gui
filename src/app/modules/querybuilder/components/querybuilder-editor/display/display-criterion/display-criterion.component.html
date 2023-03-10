@@ -1,4 +1,4 @@
-<div class="crit-box" fxLayout="row">
+<div [ngClass]="isEditable ? 'crit-box' : 'crit-box-viewonly'" fxLayout="row">
   <div fxFlex="15" class="code-part">
     <!--<div *ngFor="let termcode of criterion.termCodes">{{ termcode?.code }}</div>-->
     <div *ngIf="isinvalid" class="invalid-Criterion">
@@ -20,7 +20,7 @@
       [timeRestriction]="criterion.timeRestriction"
     ></num-display-time-restriction>
   </div>
-  <div *ngIf="showCancelButton" class="cancel-button-wrapper">
+  <div *ngIf="isEditable" class="cancel-button-wrapper">
     <button class="cancel-button" type="button" mat-icon-button (click)="doDelete()">
       <fa-icon size="lg" icon="times"></fa-icon>
     </button>

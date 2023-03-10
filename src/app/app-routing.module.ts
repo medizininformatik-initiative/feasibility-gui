@@ -7,7 +7,8 @@ import { DataProtectionComponent } from './site/data-protection/data-protection.
 export const routes: Routes = [
   {
     path: 'home',
-    canLoad: [AuthGuard],
+    //  canLoad: [AuthGuard],
+    canActivate: [RoleGuard],
     data: {
       navId: 'home',
     },

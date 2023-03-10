@@ -79,6 +79,7 @@
     "QUERYBUILDER_EDITOR": "New query",
     "QUERYBUILDER_OVERVIEW": "My queries",
     "OPTIONS": "Options",
+    "SIGNIN": "Sign in",
     "SIGNOUT": "Sign out"
   },
   "OPTIONSPAGE": {
@@ -221,6 +222,8 @@
     "RESET": "Reset",
     "RESULTDETAILS": "Details",
     "SAVEQUERY": "Save query",
-    "VALIDATE": "Validate"
+    "VALIDATE": "Validate",
+    "IMPORT": "Import query",
+    "IMPORT_FROM_FILE": "Import from file"
   }
 }

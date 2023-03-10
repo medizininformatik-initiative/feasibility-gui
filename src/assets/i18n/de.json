@@ -79,6 +79,7 @@
     "QUERYBUILDER_EDITOR": "Neue Abfrage",
     "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
     "OPTIONS": "Einstellungen",
+    "SIGNIN": "Anmelden",
     "SIGNOUT": "Abmelden"
   },
   "OPTIONSPAGE": {
@@ -221,6 +222,8 @@
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
     "SAVEQUERY": "Abfrage speichern",
-    "VALIDATE": "Validieren"
+    "VALIDATE": "Validieren",
+    "IMPORT": "Query importieren",
+    "IMPORT_FROM_FILE": "aus Datei importieren"
   }
 }

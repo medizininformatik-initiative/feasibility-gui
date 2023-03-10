@@ -20,7 +20,8 @@ import { Observable, of } from 'rxjs'
 import { MatDialogRef } from '@angular/material/dialog'
 import { EditGroupConnectionComponent } from '../../edit/edit-group-connection/edit-group-connection.component'
 import anything = jasmine.anything
-import { OAuthStorage } from 'angular-oauth2-oidc'
+import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc'
+import { DisplayCritGroupViewonlyComponent } from '../display-crit-group-viewonly/display-crit-group-viewonly.component'
 
 describe('DisplayGroupComponent', () => {
   let component: DisplayGroupComponent
@@ -51,6 +52,10 @@ describe('DisplayGroupComponent', () => {
     getItem: (accessToken: string) => 'test_token',
   } as OAuthStorage
 
+  const authService = {
+    hasValidAccessToken: () => true,
+  } as OAuthService
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -60,6 +65,7 @@ describe('DisplayGroupComponent', () => {
         DisplayValueFilterComponent,
         BoolLogicSwitchComponent,
         DisplayTimeRestrictionComponent,
+        DisplayCritGroupViewonlyComponent,
       ],
       imports: [
         MaterialModule,
@@ -69,6 +75,7 @@ describe('DisplayGroupComponent', () => {
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },
+        { provide: OAuthService, useValue: authService },
         {
           provide: FeatureService,
           useValue: featureService,

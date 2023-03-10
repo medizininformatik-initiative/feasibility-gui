@@ -36,9 +36,10 @@ import { QueryResponse } from '../../model/api/result/QueryResponse'
 import { Query } from '../../model/api/query/query'
 import { Group } from '../../model/api/query/group'
 import { RouterTestingModule } from '@angular/router/testing'
-import { OAuthStorage } from 'angular-oauth2-oidc'
+import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { DisplayCritGroupViewonlyComponent } from './display/display-crit-group-viewonly/display-crit-group-viewonly.component'
 
 describe('QuerybuilderEditorComponent', () => {
   let component: QuerybuilderEditorComponent
@@ -78,6 +79,10 @@ describe('QuerybuilderEditorComponent', () => {
     getItem: (accessToken: string) => 'test_token',
   } as OAuthStorage
 
+  const authService = {
+    hasValidAccessToken: () => true,
+  } as OAuthService
+
   @Component({ selector: 'num-unapproved-users-table', template: '' })
   class UserTableStubComponent {}
 
@@ -103,6 +108,7 @@ describe('QuerybuilderEditorComponent', () => {
         EditTimeRestrictionComponent,
         DisplayTimeRestrictionComponent,
         ResultSimpleComponent,
+        DisplayCritGroupViewonlyComponent,
       ],
       imports: [
         BrowserAnimationsModule,
@@ -119,6 +125,7 @@ describe('QuerybuilderEditorComponent', () => {
       ],
       providers: [
         { provide: OAuthStorage, useValue: authStorage },
+        { provide: OAuthService, useValue: authService },
         {
           provide: FeatureService,
           useValue: featureService,

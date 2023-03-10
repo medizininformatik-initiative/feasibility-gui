@@ -9,6 +9,7 @@ import { OAuthService } from 'angular-oauth2-oidc'
 import { DirectivesModule } from 'src/app/shared/directives/directives.module'
 import { RoleGuard } from '../../../core/auth/guards/role.guard'
 import { FeatureService } from '../../../service/feature.service'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('SideMenuComponent', () => {
   let component: SideMenuComponent
@@ -17,6 +18,7 @@ describe('SideMenuComponent', () => {
   const authService = {
     logOut: () => {},
     loadUserProfile: () => Promise.resolve({}),
+    hasValidAccessToken: () => true,
   } as OAuthService
 
   beforeEach(async () => {
@@ -37,6 +39,7 @@ describe('SideMenuComponent', () => {
         RouterTestingModule.withRoutes([]),
         TranslateModule.forRoot(),
         DirectivesModule,
+        HttpClientTestingModule,
       ],
       providers: [
         {

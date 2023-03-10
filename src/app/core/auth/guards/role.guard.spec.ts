@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, Route, RouterStateSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, Route, Router, RouterStateSnapshot } from '@angular/router'
 import { OAuthService } from 'angular-oauth2-oidc'
 
 import { RoleGuard } from './role.guard'
@@ -13,8 +13,12 @@ describe('RoleGuard', () => {
     loadDiscoveryDocumentAndLogin: () => Promise.resolve(true),
   } as unknown) as OAuthService
 
+  const router = {
+    navigate: ([]) => Promise.resolve(true),
+  } as Router
+
   beforeEach(() => {
-    guard = new RoleGuard(authService)
+    guard = new RoleGuard(authService, router)
   })
 
   afterEach(() => {

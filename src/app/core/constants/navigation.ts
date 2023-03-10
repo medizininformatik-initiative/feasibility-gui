@@ -27,10 +27,17 @@ export const mainNavItems: INavItem[] = [
   },
 ]
 
-export const secondaryNavItems: INavItem[] = [
+export const secondaryNavItemsLoggedIn: INavItem[] = [
   {
     routeTo: '#logout',
     icon: 'sign-out-alt',
     translationKey: 'NAVIGATION.SIGNOUT',
+  },
+]
+export const secondaryNavItemsLoggedOut: INavItem[] = [
+  {
+    routeTo: '#login',
+    icon: 'sign-in-alt',
+    translationKey: 'NAVIGATION.SIGNIN',
   },
 ]

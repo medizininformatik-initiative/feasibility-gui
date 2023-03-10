@@ -21,6 +21,7 @@ import { ActivatedRouteSnapshot, ActivationEnd, ActivationStart, Router } from '
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service'
 import { IAppConfig } from '../../../config/app-config.model'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('AppLayoutComponent', () => {
   let component: AppLayoutComponent
@@ -32,6 +33,7 @@ describe('AppLayoutComponent', () => {
   const authService = {
     logOut: () => {},
     loadUserProfile: () => Promise.resolve({}),
+    hasValidAccessToken: () => true,
   } as OAuthService
 
   @Component({ selector: 'num-footer', template: '' })
@@ -81,6 +83,7 @@ describe('AppLayoutComponent', () => {
         StubComponent,
       ],
       imports: [
+        HttpClientTestingModule,
         BrowserAnimationsModule,
         MaterialModule,
         FontAwesomeModule,
