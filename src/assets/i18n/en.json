@@ -132,6 +132,7 @@
       "COMMENT_LABEL": "Comment",
       "SAVE_HEADER": "Save the current query",
       "LOAD_HEADER": "Previous Queries",
+      "IMPORT_HEADER": "Import Queries",
       "SAVE_WITH_QUERY": "Save whole query",
       "SAVE_TEMPLATE": "save as template",
       "SAVED_QUERIES": "Saved Queries (with result)",
@@ -224,6 +225,8 @@
     "RESET": "Reset",
     "RESULTDETAILS": "Details",
     "SAVEQUERY": "Save query",
-    "VALIDATE": "Validate"
+    "VALIDATE": "Validate",
+    "IMPORT": "Load query",
+    "IMPORT_FROM_FILE": "Import from file"
   }
 }

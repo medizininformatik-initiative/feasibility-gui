@@ -45,24 +45,18 @@
   <div class="container-consent">
     <div class="consent-header">{{ 'QUERYBUILDER.SEARCH.CONSENT_HEADER' | translate }}</div>
     <div>
-      <mat-checkbox
-        class="example-margin"
-        id="multiplevaluedefinitions"
-        [checked]="query.consentCentral"
-        (change)="setCentralAnalysis($event)"
+      <mat-radio-group
+        class="consent-radio-group"
+        (change)="setConsent($event)"
+        [(ngModel)]="query.consent"
       >
-        {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL' | translate }}
-      </mat-checkbox>
-    </div>
-    <div>
-      <mat-checkbox
-        class="example-margin"
-        id="multiplegroups"
-        [checked]="query.consentDistr"
-        (change)="setDistributedAnalysis($event)"
-      >
-        {{ 'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED' | translate }}
-      </mat-checkbox>
+        <mat-radio-button class="consent-radio-button" [value]="true">{{
+          'QUERYBUILDER.SEARCH.CONSENT_CENTRAL' | translate
+        }}</mat-radio-button>
+        <mat-radio-button class="consent-radio-button" [value]="false">{{
+          'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="space-between" class="container">

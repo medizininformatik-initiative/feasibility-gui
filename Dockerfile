@@ -1,5 +1,5 @@
 ### STAGE 1: Build ###
-FROM node:14.13.1-alpine3.12 AS build
+FROM node:lts AS build
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install

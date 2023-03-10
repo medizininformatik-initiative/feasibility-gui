@@ -246,13 +246,13 @@ This translation is done by the controller class ApiTranslator.
 
 A query (internal model) has several levels
 
-| Level 1 | Level 2 | Level 3 | Level 4 | Level 5 |
-|---|---|---|---|---|
-| **Query** | groups
-| | **Group** | inclusionCriteria / exclusionCriteria
-| | | **Criterion[][]** <br/><br/>(refered to as CritGroup) | Criterion[ i ][ j ]
-| | | | **Criterion** | valueFilters
-| | | | | **ValueFilter**
+| Level 1  | Level 2   | Level 3                                               | Level 4             | Level 5         |
+|----------|-----------|-------------------------------------------------------|---------------------|-----------------|
+| **Query** | groups    |                                                       |                     |                 |
+|          | **Group** | inclusionCriteria / exclusionCriteria                 |                     |                 |
+|          |           | **Criterion[][]** <br/><br/>(refered to as CritGroup) | Criterion[ i ][ j ] |                 |
+|          |           |                                                       | **Criterion**       | valueFilters    |
+|          |           |                                                       |                     | **ValueFilter** |
 
 These levels are also reflected by hierarchies of components
 

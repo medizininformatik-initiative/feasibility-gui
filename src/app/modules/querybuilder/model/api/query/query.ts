@@ -27,8 +27,7 @@ import { CriterionOnlyV1, CriterionOnlyV2 } from './criterion';
 
 export class Query {
   display = '';
-  consentCentral = false;
-  consentDistr = false;
+  consent = false;
   groups: Group[] = [new Group()];
 }
 

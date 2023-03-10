@@ -1,3 +1,18 @@
+<h2 class="loading-header">{{ 'QUERYBUILDER.OVERVIEW.IMPORT_HEADER' | translate }}</h2>
+<div fxLayout="row" class="div-import-from-file">
+  <input type="file" class="file-input" (change)="doImportFromFile($event)" #fileUpload />
+  <num-button [type]="'primary'" (click)="fileUpload.click()" class="button-import-from-file">
+    {{ 'BUTTON.IMPORT_FROM_FILE' | translate }}
+  </num-button>
+  <num-button
+    [type]="'primary'"
+    [isDisabled]="actionDisabled"
+    (click)="!actionDisabled && doImport()"
+    class="button-import"
+  >
+    {{ 'BUTTON.IMPORT' | translate }}
+  </num-button>
+</div>
 <h2 class="loading-header">{{ 'QUERYBUILDER.OVERVIEW.LOAD_HEADER' | translate }}</h2>
 <div class="saved-queries">
   <div fxLayout="row" fxLayoutAlign="end center">

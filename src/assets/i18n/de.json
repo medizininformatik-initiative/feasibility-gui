@@ -132,6 +132,7 @@
       "COMMENT_LABEL": "Kommentar",
       "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
       "LOAD_HEADER": "Bisherige Suchanfragen",
+      "IMPORT_HEADER": "Suchanfragen importieren",
       "SAVE_WITH_QUERY": "komplette Abfrage speichern",
       "SAVE_TEMPLATE": "als Template speichern",
       "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
@@ -224,6 +225,8 @@
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
     "SAVEQUERY": "Abfrage speichern",
-    "VALIDATE": "Validieren"
+    "VALIDATE": "Validieren",
+    "IMPORT": "Query laden",
+    "IMPORT_FROM_FILE": "aus Datei importieren"
   }
 }
