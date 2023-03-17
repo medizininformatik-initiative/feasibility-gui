@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { QueryProviderService } from '../../service/query-provider.service';
 import { HttpClient } from '@angular/common/http';
 import { Query } from '../../model/api/query/query';
@@ -15,7 +15,7 @@ import { IAppConfig } from '../../../../config/app-config.model';
   templateUrl: './querybuilder-overview.component.html',
   styleUrls: ['./querybuilder-overview.component.scss'],
 })
-export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
+export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterViewChecked {
   private features: IAppConfig;
   queryVersion: string;
   importQuery: Query;
@@ -56,6 +56,8 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     isValid?: boolean
   }> = [];
 
+  fileName: string;
+
   ngOnInit(): void {
     this.query = this.queryProviderService.query();
     this.savedQueriesSubscription?.unsubscribe();
@@ -72,6 +74,13 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     this.queryVersion = this.features.queryVersion;
   }
 
+  ngOnDestroy(): void {
+    this.singleTemplateSubscription?.unsubscribe();
+    this.savedQueriesSubscription?.unsubscribe();
+    this.savedTemplatesSubscription?.unsubscribe();
+    this.singleQuerySubscription?.unsubscribe();
+  }
+
   ngAfterViewChecked(): void {
     if (this.importQuery) {
       this.actionDisabled = false;
@@ -85,6 +94,7 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     const reader = new FileReader();
     reader.onload = this.onReaderLoad.bind(this);
     reader.readAsText(file);
+    this.fileName = file.name;
   }
   onReaderLoad(event): void {
     this.importQuery = JSON.parse(event.target.result);

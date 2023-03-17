@@ -85,7 +85,7 @@
         [(ngModel)]="pollingTime"
         (ngModelChange)="setPollingTimes()"
         [min]="1"
-        [max]="100"
+        [max]="120"
       />
     </mat-form-field>
     <mat-form-field appearance="outline" class="pollingintervall">
@@ -93,11 +93,10 @@
       <input
         matInput
         type="number"
-        step="0.5"
         [(ngModel)]="pollingIntervall"
         (ngModelChange)="setPollingTimes()"
-        [min]="0.5"
-        [max]="10"
+        [min]="1"
+        [max]="120"
       />
     </mat-form-field>
   </div>

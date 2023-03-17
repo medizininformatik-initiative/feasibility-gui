@@ -27,6 +27,9 @@ export class ResultSimpleComponent implements OnInit, OnDestroy {
   @Input()
   showSpinner: boolean;
 
+  @Input()
+  resultUrl: string;
+
   clickEventsubscription: Subscription;
   spinnerValue: number;
   pollingTime: number;
@@ -61,6 +64,7 @@ export class ResultSimpleComponent implements OnInit, OnDestroy {
       resultObservable$: this.resultObservable,
       myResult: this.result,
       isResultLoaded: this.isResultLoaded,
+      resultUrl: this.resultUrl,
     };
     this.dialog.open(ResultDetailsDialogComponent, dialogConfig);
   }

@@ -2,6 +2,7 @@ import { Injectable, isDevMode } from '@angular/core';
 import { AppConfigService } from '../config/app-config.service';
 import { FeatureProviderService } from '../modules/querybuilder/service/feature-provider.service';
 import { Observable, Subject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -112,7 +113,8 @@ export class FeatureService {
   }
 
   public isDevelopMode(): boolean {
-    return isDevMode();
+    //return isDevMode();
+    return !environment.production;
   }
 
   public mockTerminology(): boolean {

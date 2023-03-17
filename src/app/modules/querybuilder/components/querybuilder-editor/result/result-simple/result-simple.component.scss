@@ -38,3 +38,6 @@
   width: 112px;
   margin-right: 1em;
 }
+::ng-deep .mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: var(--num-color--accent-600);
+}

@@ -37,7 +37,7 @@
       border-bottom-style: solid;
       border-bottom-color: mat.get-color-from-palette($accent, 500);
       font-weight: 500;
-      font-family: Roboto,Helvetica Neue,sans-serif;
+      font-family: Roboto, Helvetica Neue, sans-serif;
     }
 
     &.mat-headline-3 {
@@ -76,9 +76,11 @@
     letter-spacing: 0 !important;
   }
 
-  a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.command-bar__scenario-link):not(.dashboard-link) {
+  a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(
+      .command-bar__scenario-link
+    ):not(.dashboard-link) {
     color: mat.get-color-from-palette($primary, 500);
-    font-size: 16px !important;
+    font-size: 16px;
     font-weight: 400 !important;
     line-height: 24px !important;
     letter-spacing: 0.5px !important;

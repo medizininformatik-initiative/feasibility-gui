@@ -89,13 +89,13 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.queryProviderService.store(query);
   }
 
-  startRequestingResult(resultUrl: string): void {
-    this.resultUrl = resultUrl + '/result';
+  startRequestingResult(): void {
+    const summaryResultUrl = this.resultUrl + '/summary-result';
     this.loadedResult = false;
 
     this.resultObservable$ = interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
-      takeUntil(timer(this.POLLING_MAXL_MILLISECONDS)),
-      map(() => this.backend.getResult(this.resultUrl)),
+      takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 100)),
+      map(() => this.backend.getSummaryResult(summaryResultUrl)),
       share(),
       switchAll()
     );
@@ -109,9 +109,12 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         }
       },
       (error) => {
-        console.error(error);
+        console.log(error);
         this.showSpinningIcon = false;
         this.hasQuerySend = false;
+        if (error.status === 404) {
+          window.alert('Site not found');
+        }
       },
       () => {
         console.log('done');
@@ -135,7 +138,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.subscriptionPolling?.unsubscribe();
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
     this.subscriptionResult = this.backend.postQuery(this.query).subscribe((response) => {
-      this.startRequestingResult(response.headers.get('location')); // response.location))
+      this.resultUrl = response.headers.get('location'); // response.location)
+      this.startRequestingResult();
     });
   }
 

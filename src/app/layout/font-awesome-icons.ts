@@ -38,6 +38,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faWrench } from '@fortawesome/free-solid-svg-icons';
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 export const FONT_AWESOME_ICONS = [
   faTh,
   faMicroscope,
@@ -79,4 +80,5 @@ export const FONT_AWESOME_ICONS = [
   faWrench,
   faAngleDoubleLeft,
   faAngleDoubleRight,
+  faFileUpload,
 ];

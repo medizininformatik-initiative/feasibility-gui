@@ -93,7 +93,20 @@ export class BackendService {
     }
   }
 
-  public getResult(resultUrl: string): Observable<QueryResult> {
+  public getSummaryResult(resultUrl: string): Observable<QueryResult> {
+    if (this.feature.mockResult()) {
+      const result = {
+        totalNumberOfPatients: Math.floor(Math.random() * 1000),
+        queryId: '12345',
+        resultLines: [],
+      };
+
+      return of(result);
+    }
+
+    return this.http.get<QueryResult>(resultUrl);
+  }
+  public getDetailedResult(resultUrl: string): Observable<QueryResult> {
     if (this.feature.mockResult()) {
       const result = {
         totalNumberOfPatients: Math.floor(Math.random() * 1000),
@@ -111,7 +124,6 @@ export class BackendService {
 
     return this.http.get<QueryResult>(resultUrl);
   }
-
   public saveQuery(
     query: Query,
     title: string,

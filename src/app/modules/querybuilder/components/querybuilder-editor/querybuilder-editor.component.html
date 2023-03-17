@@ -7,6 +7,7 @@
         [result]="result"
         [showSpinner]="showSpinningIcon"
         [isResultLoaded]="loadedResult"
+        [resultUrl]="resultUrl"
       ></num-result-simple>
     </div>
     <div fxLayout="column" fxLayoutAlign="space-between" class="query-buttons-box">
@@ -50,9 +51,15 @@
         (change)="setConsent($event)"
         [(ngModel)]="query.consent"
       >
-        <mat-radio-button class="consent-radio-button" [value]="true">{{
-          'QUERYBUILDER.SEARCH.CONSENT_CENTRAL' | translate
-        }}</mat-radio-button>
+        <mat-radio-button class="consent-radio-button" [value]="true">
+          <a
+            target="_blank"
+            href="https://www.medizininformatik-initiative.de/de/mustertext-zur-patienteneinwilligung"
+          >
+            {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL_LINK' | translate }}
+          </a>
+          {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL' | translate }}
+        </mat-radio-button>
         <mat-radio-button class="consent-radio-button" [value]="false">{{
           'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED' | translate
         }}</mat-radio-button>
