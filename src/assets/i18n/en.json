@@ -136,6 +136,8 @@
       "IMPORT_HEADER": "Import Queries",
       "SAVE_WITH_QUERY": "Save for Feasibility Portal",
       "SAVE_TEMPLATE": "Save as template",
+      "DOWNLOAD_SQ": "Save as file",
+      "FILENAME": "File name",
       "SAVED_QUERIES": "Saved Queries (with result)",
       "SAVED_TEMPLATES": "Saved Templates"
     },

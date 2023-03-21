@@ -1,12 +1,12 @@
 <h2>{{ 'QUERYBUILDER.OVERVIEW.SAVE_HEADER' | translate }}</h2>
 <div class="save-query-box">
   <div fxLayout="column" fxLayoutAlign="space-around center">
-    <mat-form-field class="input-field">
+    <mat-form-field *ngIf="!downloadQuery" class="input-field">
       <mat-label>{{ 'QUERYBUILDER.OVERVIEW.TITLE_LABEL' | translate }}</mat-label>
       <!--suppress HtmlFormInputWithoutLabel -->
-      <input matInput type="text" [(ngModel)]="title" />
+      <input matInput type="text" [(ngModel)]="title" (input)="isEmpty()" />
     </mat-form-field>
-    <mat-form-field class="input-field" appearance="fill">
+    <mat-form-field *ngIf="!downloadQuery" class="input-field" appearance="fill">
       <mat-label>{{ 'QUERYBUILDER.OVERVIEW.COMMENT_LABEL' | translate }}</mat-label>
       <textarea
         matInput
@@ -16,8 +16,16 @@
         [(ngModel)]="comment"
       ></textarea>
     </mat-form-field>
+    <mat-form-field *ngIf="downloadQuery" class="input-field">
+      <mat-label>{{ 'QUERYBUILDER.OVERVIEW.FILENAME' | translate }}</mat-label>
+      <!--suppress HtmlFormInputWithoutLabel -->
+      <input matInput type="text" [(ngModel)]="filename" (input)="isEmpty()" />
+    </mat-form-field>
     <div>
       <mat-radio-group class="save-query-radio-group" (change)="setQuerySaving($event)">
+        <mat-radio-button class="save-query-radio-button" value="template" [checked]="letQuerySave"
+          >{{ 'QUERYBUILDER.OVERVIEW.SAVE_TEMPLATE' | translate }}
+        </mat-radio-button>
         <mat-radio-button
           class="save-query-radio-button"
           value="saveQuery"
@@ -25,8 +33,8 @@
           [checked]="!letQuerySave"
           >{{ 'QUERYBUILDER.OVERVIEW.SAVE_WITH_QUERY' | translate }}
         </mat-radio-button>
-        <mat-radio-button class="save-query-radio-button" value="template" [checked]="letQuerySave"
-          >{{ 'QUERYBUILDER.OVERVIEW.SAVE_TEMPLATE' | translate }}
+        <mat-radio-button class="save-query-radio-button" value="download"
+          >{{ 'QUERYBUILDER.OVERVIEW.DOWNLOAD_SQ' | translate }}
         </mat-radio-button>
       </mat-radio-group>
     </div>
@@ -35,7 +43,12 @@
 <div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
   <div fxFlex="fill"></div>
 
-  <num-button [type]="'primary'" [isDisabled]="" (click)="doSave()" class="button-save">
+  <num-button
+    [type]="'primary'"
+    [isDisabled]="saveButtonDisabled"
+    (click)="!saveButtonDisabled && doSave()"
+    class="button-save"
+  >
     {{ 'BUTTON.SAVE' | translate }}
   </num-button>
   <num-button [type]="'primary'" (click)="doDiscard()">
