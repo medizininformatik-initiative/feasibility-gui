@@ -136,6 +136,8 @@
       "IMPORT_HEADER": "Suchanfragen importieren",
       "SAVE_WITH_QUERY": "für Machbarkeitsanfrage speichern",
       "SAVE_TEMPLATE": "als Vorlage speichern",
+      "DOWNLOAD_SQ": "als Datei speichern",
+      "FILENAME": "Dateiname",
       "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
       "SAVED_TEMPLATES": "Gespeicherte Vorlagen"
     },

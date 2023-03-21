@@ -27,6 +27,9 @@
 .file-upload-text {
   margin: 8px 5px;
 }
+.file-upload:hover {
+  font-weight: bold;
+}
 .file-name {
   color: var(--num-color--accent-300);
   margin: 5px;

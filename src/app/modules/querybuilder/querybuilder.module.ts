@@ -42,6 +42,7 @@ import { SingleQueryComponent } from './components/querybuilder-overview/single-
 import { SaveDialogComponent } from './components/querybuilder-editor/save/save-dialog/save-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FileSaverModule } from 'ngx-filesaver';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -96,6 +97,7 @@ export const FORMATS_GERMAN = {
     OverlayModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    FileSaverModule,
   ],
   providers: [
     {

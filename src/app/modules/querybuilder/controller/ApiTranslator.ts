@@ -245,7 +245,7 @@ export class ApiTranslator {
     uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(inclusion, invalidCriteria);
     const exclusion = sqquery.content.exclusionCriteria ? sqquery.content.exclusionCriteria : [];
     uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria);
-    uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery);
+    uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery.content);
     return uiquery;
   }
 
