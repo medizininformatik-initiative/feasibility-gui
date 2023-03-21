@@ -10,6 +10,7 @@ import { GroupFactory } from '../../controller/GroupFactory';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
 import { MatRadioChange } from '@angular/material/radio';
+import { QueryResultRateLimit } from '../../model/api/result/QueryResultRateLimit';
 
 @Component({
   selector: 'num-querybuilder',
@@ -35,6 +36,9 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   private subscriptionResult: Subscription;
   public resultObservable$: Observable<QueryResult>;
   loadedResult: boolean;
+  gottenDetailedResult: boolean;
+  callsLimit: number;
+  callsRemaining: number;
 
   constructor(
     public queryProviderService: QueryProviderService,
@@ -56,6 +60,13 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     } else {
       this.loadedResult = false;
     }
+
+    this.gottenDetailedResult = false;
+    this.getDetailedResultRateLimit();
+  }
+
+  updateResultGotten(resultGotten: boolean) {
+    this.gottenDetailedResult = resultGotten;
   }
 
   ngOnDestroy(): void {
@@ -131,12 +142,15 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   }
 
   doSend(): void {
+    this.gottenDetailedResult = false;
+    this.loadedResult = false;
     this.resultUrl = '';
     this.result = undefined;
     this.showSpinningIcon = true;
     this.subscriptionResult?.unsubscribe();
     this.subscriptionPolling?.unsubscribe();
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
+    this.getDetailedResultRateLimit();
     this.subscriptionResult = this.backend.postQuery(this.query).subscribe((response) => {
       this.resultUrl = response.headers.get('location'); // response.location)
       this.startRequestingResult();
@@ -157,10 +171,25 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.query = QueryProviderService.createDefaultQuery();
     this.queryProviderService.store(this.query);
     this.result = null;
+    this.gottenDetailedResult = false;
+    this.loadedResult = false;
+    this.getDetailedResultRateLimit();
   }
 
   setConsent(radio: MatRadioChange): void {
     this.query.consent = radio.value;
     this.storeQuery(this.query);
+  }
+
+  getDetailedResultRateLimit(): void {
+    this.backend.getDetailedResultRateLimit().subscribe(
+      (result) => {
+        this.callsLimit = result.limit;
+        this.callsRemaining = result.remaining;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

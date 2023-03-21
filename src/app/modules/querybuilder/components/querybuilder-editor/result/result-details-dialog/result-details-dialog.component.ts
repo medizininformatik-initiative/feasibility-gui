@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { QueryResult } from '../../../../model/api/result/QueryResult';
 import { interval, Observable, Subscription, timer } from 'rxjs';
@@ -10,6 +10,7 @@ export class ResultDetailsDialogComponentData {
   resultObservable$: Observable<QueryResult>;
   myResult: QueryResult;
   isResultLoaded: boolean;
+  gottenDetailedResult: boolean;
   resultUrl: string;
 }
 
@@ -22,6 +23,9 @@ export class ResultDetailsDialogComponent implements OnInit {
   result: QueryResult;
   resultSubscription: Subscription;
   resultStatus: string;
+  getStoredResult: boolean;
+
+  @Output() resultGotten = new EventEmitter<boolean>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsDialogComponentData,
@@ -39,8 +43,6 @@ export class ResultDetailsDialogComponent implements OnInit {
   ngOnInit(): void {
     const detailedResultUrl = this.data.resultUrl + '/detailed-obfuscated-result';
     this.resultStatus = '';
-    //this.loadedResult = false;
-
     this.getDetailedResult(detailedResultUrl);
   }
 
@@ -50,28 +52,31 @@ export class ResultDetailsDialogComponent implements OnInit {
   }
 
   getDetailedResult(url: string): void {
-    this.resultSubscription = this.backend.getDetailedResult(url).subscribe(
-      (result) => {
-        this.resultStatus = '200';
-        console.log(this.result);
-        this.sortResult(result);
-      },
-      (error) => {
-        console.log(error);
-        //this.showSpinningIcon = false;
-        if (error.status === 404) {
-          this.resultStatus = '404';
-          //window.alert('Site not found');
+    this.resultSubscription = this.backend
+      .getDetailedResult(url, this.data.gottenDetailedResult)
+      .subscribe(
+        (result) => {
+          this.resultStatus = '200';
+          console.log(this.result);
+          this.sortResult(result);
+          this.resultGotten.emit(true);
+        },
+        (error) => {
+          console.log(error);
+          //this.showSpinningIcon = false;
+          if (error.status === 404) {
+            this.resultStatus = '404';
+            //window.alert('Site not found');
+          }
+          if (error.status === 429) {
+            this.resultStatus = '429';
+            //window.alert('to many request');
+          }
+        },
+        () => {
+          console.log('done');
         }
-        if (error.status === 429) {
-          this.resultStatus = '429';
-          //window.alert('to many request');
-        }
-      },
-      () => {
-        console.log('done');
-      }
-    );
+      );
   }
   sortResult(resultTemp): void {
     this.result = resultTemp;

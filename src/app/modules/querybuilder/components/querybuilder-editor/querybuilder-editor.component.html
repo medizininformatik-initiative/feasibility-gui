@@ -7,7 +7,11 @@
         [result]="result"
         [showSpinner]="showSpinningIcon"
         [isResultLoaded]="loadedResult"
+        [gottenDetailedResult]="gottenDetailedResult"
         [resultUrl]="resultUrl"
+        [callsRemaining]="callsRemaining"
+        [callsLimit]="callsLimit"
+        (resultGotten)="updateResultGotten($event)"
       ></num-result-simple>
     </div>
     <div fxLayout="column" fxLayoutAlign="space-between" class="query-buttons-box">

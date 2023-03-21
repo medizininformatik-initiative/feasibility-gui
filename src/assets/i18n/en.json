@@ -210,7 +210,8 @@
     "PATIENT_NUMBER": "Number of patients",
     "TOTAL": "Total",
     "SITE": "Site",
-    "MESSAGE429": "You reached your maximum request limit."
+    "MESSAGE429": "You reached your maximum request limit.",
+    "DETAILS_TOOLTIP": "The number shows many views of the detailed result view you have already used - will be reset daily"
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",

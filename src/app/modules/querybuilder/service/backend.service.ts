@@ -11,6 +11,7 @@ import { MockBackendDataProvider } from './MockBackendDataProvider';
 import { ApiTranslator } from '../controller/ApiTranslator';
 import { QueryProviderService } from './query-provider.service';
 import { OAuthStorage } from 'angular-oauth2-oidc';
+import { QueryResultRateLimit } from '../model/api/result/QueryResultRateLimit';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +30,10 @@ export class BackendService {
   private static PATH_SEARCH = 'terminology/selectable-entries';
   private static PATH_RUN_QUERY = 'query';
   private static PATH_STORED_QUERY = 'query/template';
-
+  private static PATH_QUERY_RESULT_LIMIT = 'query/detailed-obfuscated-result-rate-limit';
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345';
+  private storedResult = null;
+  private resultObservable = null;
 
   private readonly mockBackendDataProvider = new MockBackendDataProvider();
   lowerBoundaryPatient: number = this.feature.getPatientResultLowerBoundary();
@@ -106,9 +109,13 @@ export class BackendService {
 
     return this.http.get<QueryResult>(resultUrl);
   }
-  public getDetailedResult(resultUrl: string): Observable<QueryResult> {
+
+  public getDetailedResult(
+    resultUrl: string,
+    gottenDetailedResult: boolean
+  ): Observable<QueryResult> {
     if (this.feature.mockResult()) {
-      const result = {
+      const mockResult = {
         totalNumberOfPatients: Math.floor(Math.random() * 1000),
         queryId: '12345',
         resultLines: [
@@ -119,11 +126,43 @@ export class BackendService {
         ],
       };
 
-      return of(result);
+      return of(mockResult);
     }
 
-    return this.http.get<QueryResult>(resultUrl);
+    if (gottenDetailedResult) {
+      return this.resultObservable;
+    }
+
+    const result = this.http.get<QueryResult>(resultUrl);
+
+    return Observable.create((obs: any) => {
+      result.subscribe(
+        (queryResult) => {
+          this.resultObservable = Observable.create((queryResultObs: any) => {
+            queryResultObs.next(queryResult);
+            queryResultObs.complete();
+          });
+          obs.next(queryResult);
+          obs.complete();
+        },
+        (error) => {
+          this.resultObservable = Observable.create((innerObs: any) => {
+            innerObs.error(error);
+            innerObs.complete();
+          });
+          obs.error(error);
+          obs.complete();
+        }
+      );
+    });
   }
+
+  public getDetailedResultRateLimit(): Observable<QueryResultRateLimit> {
+    return this.http.get<QueryResultRateLimit>(
+      this.createUrl(BackendService.PATH_QUERY_RESULT_LIMIT)
+    );
+  }
+
   public saveQuery(
     query: Query,
     title: string,

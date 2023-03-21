@@ -22,11 +22,14 @@
   </div>
   <num-button
     *ngIf="isResultLoaded; else showPlaceholder"
+    [matTooltip]="'RESULT.DETAILS_TOOLTIP' | translate"
+    matTooltipPosition="right"
     [type]="'primary'"
     (click)="openDialogResultDetails()"
     class="button-dialog-result-details"
-    >{{ 'BUTTON.RESULTDETAILS' | translate }}
+    >{{ 'BUTTON.RESULTDETAILS' | translate }} ({{ callsLimit - callsRemaining }}/{{ callsLimit }})
   </num-button>
+
   <ng-template #showPlaceholder>
     <div class="button-placeholder"></div>
   </ng-template>

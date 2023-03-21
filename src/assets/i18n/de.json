@@ -210,7 +210,8 @@
     "PATIENT_NUMBER": "Anzahl der Patienten",
     "TOTAL": "Gesamt",
     "SITE": "Standort",
-    "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht."
+    "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
+    "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",

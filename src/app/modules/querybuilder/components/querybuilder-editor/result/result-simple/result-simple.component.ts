@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { QueryResult } from '../../../../model/api/result/QueryResult';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
@@ -8,6 +8,8 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { BackendService } from '../../../../service/backend.service';
 import { FeatureService } from '../../../../../../service/feature.service';
+import { BooleanArraySupportOption } from 'prettier';
+import { QueryResultRateLimit } from 'src/app/modules/querybuilder/model/api/result/QueryResultRateLimit';
 
 @Component({
   selector: 'num-result-simple',
@@ -29,6 +31,17 @@ export class ResultSimpleComponent implements OnInit, OnDestroy {
 
   @Input()
   resultUrl: string;
+
+  @Input()
+  gottenDetailedResult: boolean;
+
+  @Input()
+  callsRemaining: number;
+
+  @Input()
+  callsLimit: number;
+
+  @Output() resultGotten = new EventEmitter<boolean>();
 
   clickEventsubscription: Subscription;
   spinnerValue: number;
@@ -65,8 +78,14 @@ export class ResultSimpleComponent implements OnInit, OnDestroy {
       myResult: this.result,
       isResultLoaded: this.isResultLoaded,
       resultUrl: this.resultUrl,
+      gottenDetailedResult: this.gottenDetailedResult,
     };
-    this.dialog.open(ResultDetailsDialogComponent, dialogConfig);
+
+    const diag = this.dialog.open(ResultDetailsDialogComponent, dialogConfig);
+
+    diag.componentInstance.resultGotten.subscribe((resultGotten: boolean) => {
+      this.resultGotten.emit(resultGotten);
+    });
   }
 
   startProgressSpinner(pollingTime: number): void {
