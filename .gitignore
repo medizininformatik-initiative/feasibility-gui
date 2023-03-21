@@ -47,6 +47,7 @@ testem.log
 Thumbs.db
 
 junit.xml
+/.angular
 /.angular/cache/15.1.5/angular-webpack/5cd2aacc2890e5ec38e134c2a81fa148d2c8ab05/0.pack
 /.angular/cache/15.1.5/angular-webpack/5cd2aacc2890e5ec38e134c2a81fa148d2c8ab05/1.pack
 /.angular/cache/15.1.5/angular-webpack/5cd2aacc2890e5ec38e134c2a81fa148d2c8ab05/2.pack
