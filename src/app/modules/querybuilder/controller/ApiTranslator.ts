@@ -323,14 +323,15 @@ export class ApiTranslator {
       {
         termCodes: [
           {
-            code: 'combined-consent',
+            code: 'central-consent',
             system: 'mii.abide',
-            display: 'Einwilligung für die zentrale Datenanalyse',
+            display: 'MDAT wissenschaftlich nutzen - EU DSGVO Niveau',
           },
         ],
       },
     ];
   }
+
   private hasConsentAndIfSoDeleteIt(sqquery: any): boolean {
     let consent = false;
     let index = [undefined, undefined];
@@ -338,7 +339,7 @@ export class ApiTranslator {
       sqquery.inclusionCriteria.forEach((and, indexAnd) => {
         and.forEach((or, indexOr) => {
           if (
-            or.termCodes[0].code === 'combined-consent' &&
+            or.termCodes[0].code === 'central-consent' &&
             or.termCodes[0].system === 'mii.abide'
           ) {
             consent = true;
