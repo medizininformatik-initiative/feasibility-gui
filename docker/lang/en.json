@@ -44,7 +44,7 @@
       "PARAGRAPH4_1":"You can view and further edit saved queries or saved drafts via ",
       "PARAGRAPH4_2":"My Queries",
       "PARAGRAPH4_3": ".",
-      "PARAGRAPH5_1": "Once you have all the relevant information for your research project, you can submit an application for data use in the proposal portal of the German Research Data Portal for Health via ",
+      "PARAGRAPH5_1": "Once you have all the relevant information for your research project, you can submit an application for data use in the proposal portal of the German Research Data Portal for Health via",
       "PARAGRAPH5_2": "Submit Application",
       "PARAGRAPH5_3": "."
     },
@@ -98,7 +98,7 @@
       "LABEL": "enter code or display",
       "ALL": "All",
       "CATEGORY_FILTER": "Filter by",
-      "CONSENT_HEADER": "Art der Datennutzung.",
+      "CONSENT_HEADER": "Type of data use",
       "CONSENT_CENTRAL": " is assumed (Data consolidated centrally)",
       "CONSENT_CENTRAL_LINK": "„Broad Consent“ (MII or compatible with MII)",
       "CONSENT_DISTRIBUTED": "No „Broad Consent“ requested (data available for „federated analysis“)"
@@ -136,6 +136,8 @@
       "IMPORT_HEADER": "Import Queries",
       "SAVE_WITH_QUERY": "Save for Feasibility Portal",
       "SAVE_TEMPLATE": "Save as template",
+      "DOWNLOAD_SQ": "Save as file",
+      "FILENAME": "File name",
       "SAVED_QUERIES": "Saved Queries (with result)",
       "SAVED_TEMPLATES": "Saved Templates"
     },
@@ -210,7 +212,8 @@
     "PATIENT_NUMBER": "Number of patients",
     "TOTAL": "Total",
     "SITE": "Site",
-    "MESSAGE429": "You reached your maximum request limit."
+    "MESSAGE429": "You reached your maximum request limit.",
+    "DETAILS_TOOLTIP": "The number shows many views of the detailed result view you have already used - will be reset daily"
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",
