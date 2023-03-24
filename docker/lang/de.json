@@ -100,7 +100,7 @@
       "CATEGORY_FILTER": "Filtern nach",
       "CONSENT_HEADER": "Art der Datennutzung",
       "CONSENT_CENTRAL": " voraussetzen (Daten können zentral zusammengeführt werden)",
-      "CONSENT_CENTRAL_LINK": "Broad Consent (der MII oder MII-kompatibel)",
+      "CONSENT_CENTRAL_LINK": "„Broad Consent (der MII oder MII-kompatibel)",
       "CONSENT_DISTRIBUTED": "Kein „Broad Consent“ voraussetzen (Daten stehen nur für „Verteilte Analysen“ zur Verfügung)"
     },
     "SWITCH": {
@@ -136,6 +136,8 @@
       "IMPORT_HEADER": "Suchanfragen importieren",
       "SAVE_WITH_QUERY": "für Machbarkeitsanfrage speichern",
       "SAVE_TEMPLATE": "als Vorlage speichern",
+      "DOWNLOAD_SQ": "als Datei speichern",
+      "FILENAME": "Dateiname",
       "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
       "SAVED_TEMPLATES": "Gespeicherte Vorlagen"
     },
@@ -210,7 +212,8 @@
     "PATIENT_NUMBER": "Anzahl der Patienten",
     "TOTAL": "Gesamt",
     "SITE": "Standort",
-    "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht."
+    "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
+    "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",
