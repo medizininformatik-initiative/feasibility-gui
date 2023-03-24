@@ -63,6 +63,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: .
+        file: docker/aktin-client/Dockerfile
         tags: |
           ghcr.io/${{ steps.prep.outputs.repository }}:${{ steps.prep.outputs.version }}
           ghcr.io/${{ steps.prep.outputs.repository }}:latest

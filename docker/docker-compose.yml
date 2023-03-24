@@ -2,11 +2,14 @@ version: '3.7'
 services:
   feasibility-gui:
     container_name: feasibility-gui
-    build: .
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
     ports:
     - ${PORT_FEASIBILITY_GUI:-127.0.0.1:80}:8080
     volumes:
       - ./deploy-config.json:/usr/share/nginx/html/assets/config/config.deploy.json
-      - ./de.json:/usr/share/nginx/html/assets/i18n/de.json
-      - ./en.json:/usr/share/nginx/html/assets/i18n/en.json
+      - ../src/assets/i18n/de.json:/usr/share/nginx/html/assets/i18n/de.json
+      - ../src/assets/i18n/en.json:/usr/share/nginx/html/assets/i18n/en.json
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./mime.types:/etc/nginx/mime.types
