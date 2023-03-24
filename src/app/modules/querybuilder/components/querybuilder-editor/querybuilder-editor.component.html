@@ -63,10 +63,22 @@
             {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL_LINK' | translate }}
           </a>
           {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL' | translate }}
+          <fa-icon
+            size="1x"
+            [matTooltip]="'QUERYBUILDER.SEARCH.CONSENT_CENTRAL_TOOLTIP' | translate"
+            matTooltipPosition="right"
+            icon="question-circle"
+          ></fa-icon>
         </mat-radio-button>
-        <mat-radio-button class="consent-radio-button" [value]="false">{{
-          'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED' | translate
-        }}</mat-radio-button>
+        <mat-radio-button class="consent-radio-button" [value]="false"
+          >{{ 'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED' | translate }}
+          <fa-icon
+            size="1x"
+            [matTooltip]="'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED_TOOLTIP' | translate"
+            matTooltipPosition="right"
+            icon="question-circle"
+          ></fa-icon>
+        </mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
