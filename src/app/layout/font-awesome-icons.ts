@@ -39,7 +39,12 @@ import { faWrench } from '@fortawesome/free-solid-svg-icons';
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+
 export const FONT_AWESOME_ICONS = [
+  faQuestionCircle,
+  faExclamationCircle,
   faTh,
   faMicroscope,
   faBars,

@@ -9,6 +9,10 @@
   margin-right: 1em;
 }
 
+::ng-deep .mdc-tooltip__surface {
+  max-width: 250px !important;
+}
+
 .result-spinning-icon {
   margin-left: 1em;
   height: 2em;

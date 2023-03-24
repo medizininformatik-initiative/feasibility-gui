@@ -16,6 +16,7 @@ export interface IAppConfig {
   }
   legal: {
     version: string
+    copyrightYear: string
     copyrightOwner: string
   }
   features: {
