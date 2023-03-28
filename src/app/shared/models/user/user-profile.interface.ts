@@ -1,6 +1,8 @@
 export interface IUserProfile {
   info: {
-    groups: string[]
     name: string
+    realm_access: {
+      roles: string[]
+    }
   }
 }

@@ -1,5 +1,5 @@
 <h2>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.HEADLINE' | translate }}</h2>
-<div class="link-boxes" fxLayout="row" fxLayoutAlign="space-between">
+<div class="link-boxes" fxLayout="row" fxLayoutAlign="space-between" *numUserHasRole="roles">
   <div class="linkBox newQueryBox">
     <a routerLink="/querybuilder/editor">
       <div class="queryBoxHeader">{{ 'DASHBOARD.NEWQUERY.HEADLINE' | translate }}</div>

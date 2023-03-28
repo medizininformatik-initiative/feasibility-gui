@@ -21,6 +21,7 @@ export const routes: Routes = [
     canLoad: [RoleGuard],
     data: {
       navId: 'querybuilder',
+      roles: ['main'],
     },
     loadChildren: () =>
       import(
@@ -32,6 +33,7 @@ export const routes: Routes = [
     canLoad: [RoleGuard],
     data: {
       navId: 'options',
+      roles: ['option'],
     },
     loadChildren: () =>
       import(/* webpackChunkName: "Options.Module" */ './modules/options/options.module').then(
@@ -49,8 +51,8 @@ export const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-    enableTracing: false
-}),
+      enableTracing: false,
+    }),
   ],
   exports: [RouterModule],
 })
