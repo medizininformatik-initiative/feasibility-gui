@@ -22,8 +22,10 @@ export class DashboardComponent implements OnInit {
   config = this.appConfig.config;
   authTest: string;
   stylesheet: string;
+  roles: string[];
 
   ngOnInit(): void {
+    this.roles = this.featureService.getRoles('main');
     this.init();
     this.stylesheet = this.featureService.getStylesheet();
   }
@@ -34,7 +36,7 @@ export class DashboardComponent implements OnInit {
     const isLoggedIn = this.oauthService.hasValidAccessToken();
     if (isLoggedIn) {
       const profile: IUserProfile = (await this.oauthService.loadUserProfile()) as IUserProfile;
-      const roles = profile.info.groups;
+      const roles = profile.info.realm_access.roles;
       this.authTest = 'Hello ' + profile.info.name;
       if (roles) {
         this.authTest = this.authTest + ', Roles: ' + roles.join(', ');

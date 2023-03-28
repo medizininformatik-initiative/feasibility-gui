@@ -9,10 +9,10 @@
     "baseUrl": "http://localhost:8090/api/v2"
   },
   "auth": {
-    "baseUrl": "http://localhost:8080/auth",
-    "realm": "codex-develop",
-    "clientId": "feasibility-gui",
-    "roles": ["FEASIBILITY_USER"]
+    "baseUrl": "http://localhost:8080",
+    "realm": "feasibility",
+    "clientId": "feasibility-webapp",
+    "roles": ["FeasibilityUser"]
   },
   "legal": {
     "version": "0.9.0",
@@ -29,7 +29,7 @@
     "extra": {
       "displayvaluefiltericon": false,
       "showoptionspage": true,
-      "optionpageroles": ["FEASIBILITY_USER"]
+      "optionpageroles": ["FeasibilityUser"]
     }
   },
   "options": {

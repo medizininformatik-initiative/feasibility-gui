@@ -14,8 +14,9 @@ export class UserHasRoleDirective {
 
   @Input() set numUserHasRole(allowedRoles: string[]) {
     let userRoles: string[];
+
     this.oauthService.loadUserProfile().then((userinfo: IUserProfile) => {
-      userRoles = userinfo.info.groups;
+      userRoles = userinfo.info.realm_access.roles;
 
       if (allowedRoles && allowedRoles.length) {
         if (userRoles && userRoles.length) {
