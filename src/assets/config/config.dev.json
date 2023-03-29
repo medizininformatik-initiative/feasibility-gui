@@ -15,7 +15,7 @@
     "roles": ["FeasibilityUser"]
   },
   "legal": {
-    "version": "0.9.0",
+    "version": "1.0.0",
     "copyrightYear": "2023",
     "copyrightOwner": "MII Team"
   },
