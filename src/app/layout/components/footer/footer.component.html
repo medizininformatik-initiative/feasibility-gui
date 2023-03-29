@@ -13,17 +13,17 @@
           'LEGAL.DISCLOSURE' | translate
         }}</a>
         <mat-divider [vertical]="true"></mat-divider>
-        <a
-          mat-button
-          href="https://forschen-fuer-gesundheit.de/nutzungsbedingungen.php#datenschutz"
-          >{{ 'LEGAL.DATAPROTECTION' | translate }}</a
-        >
+        <a mat-button href="https://forschen-fuer-gesundheit.de/nutzungsbedingungen.php#datenschutz"
+          >{{ 'LEGAL.DATAPROTECTION' | translate }}
+        </a>
       </mat-toolbar-row>
       <div class="version">Version {{ config.legal.version }}</div>
     </div>
     <span fxFlex></span>
     <div>
-      <div class="copyright">© 2021 {{ config.legal.copyrightOwner }}</div>
+      <div class="copyright">
+        © {{ config.legal.copyrightYear }} {{ config.legal.copyrightOwner }}
+      </div>
       <num-language></num-language>
     </div>
   </mat-toolbar-row>

@@ -1,16 +1,33 @@
+@use 'node_modules/@angular/material' as mat;
 @mixin mat-chip_themed($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
 
-  .mat-chip.mat-standard-chip {
+  .mat-mdc-chip.mat-mdc-standard-chip {
     font-size: 14px;
-    &.mat-chip-selected.mat-primary {
-      background: mat-color($primary, 500);
-      color: mat-contrast($primary, 500);
+    /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
+    &.mat-mdc-chip-selected.mat-primary {
+      background: mat.get-color-from-palette($primary, 500);
+      color: mat.get-contrast-color-from-palette($primary, 500);
 
       fa-icon {
-        color: mat-color($accent, 500);
+        color: mat.get-color-from-palette($accent, 500);
       }
     }
+  }
+  .container-bool-logic-outer .mat-mdc-chip.mat-mdc-standard-chip,
+  .container-bool-logic-inner .mat-mdc-chip.mat-mdc-standard-chip {
+    padding-left: 0;
+  }
+  .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic
+    .mdc-evolution-chip__action--primary {
+    padding-right: 2px;
+  }
+  .mat-mdc-standard-chip {
+    height: 26px;
+  }
+  .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic .mdc-evolution-chip__graphic {
+    padding-left: 5px;
+    padding-right: 2px;
   }
 }

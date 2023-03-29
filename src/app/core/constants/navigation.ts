@@ -1,4 +1,4 @@
-import INavItem from '../../layout/models/nav-item.interface'
+import INavItem from '../../layout/models/nav-item.interface';
 
 export const mainNavItems: INavItem[] = [
   {
@@ -25,7 +25,7 @@ export const mainNavItems: INavItem[] = [
     icon: 'wrench',
     translationKey: 'NAVIGATION.OPTIONS',
   },
-]
+];
 
 export const secondaryNavItems: INavItem[] = [
   {
@@ -33,4 +33,4 @@ export const secondaryNavItems: INavItem[] = [
     icon: 'sign-out-alt',
     translationKey: 'NAVIGATION.SIGNOUT',
   },
-]
+];

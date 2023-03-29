@@ -1,15 +1,15 @@
-import { OAuthService } from 'angular-oauth2-oidc'
-import { AppConfigService } from 'src/app/config/app-config.service'
-import { OAuthInitService } from './oauth-init.service'
+import { OAuthService } from 'angular-oauth2-oidc';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { OAuthInitService } from './oauth-init.service';
 
 describe('OAuth Init Service', () => {
-  let initService: OAuthInitService
+  let initService: OAuthInitService;
 
-  const authService = ({
+  const authService = {
     configure: () => {},
     loadDiscoveryDocumentAndLogin: () => Promise.resolve(true),
     setupAutomaticSilentRefresh: () => {},
-  } as unknown) as OAuthService
+  } as unknown as OAuthService;
 
   const appConfig = {
     config: {
@@ -19,19 +19,19 @@ describe('OAuth Init Service', () => {
         realm: 'test-realm',
       },
     },
-  } as AppConfigService
+  } as AppConfigService;
 
   beforeEach(() => {
-    initService = new OAuthInitService(authService, appConfig)
-  })
+    initService = new OAuthInitService(authService, appConfig);
+  });
 
   it('should be created', () => {
-    expect(initService).toBeTruthy()
-  })
+    expect(initService).toBeTruthy();
+  });
 
   describe('When OAuth Server gets initialized with success', () => {
     const authConfig = {
-      issuer: `${appConfig.config.auth.baseUrl}/auth/realms/${appConfig.config.auth.realm}`,
+      issuer: `${appConfig.config.auth.baseUrl}/realms/${appConfig.config.auth.realm}`,
       clientId: `${appConfig.config.auth.clientId}`,
       responseType: 'code',
       redirectUri: window.location.origin + '/home',
@@ -43,47 +43,47 @@ describe('OAuth Init Service', () => {
       sessionChecksEnabled: true,
       clearHashAfterLogin: false,
       nonceStateSeparator: 'semicolon',
-    }
+    };
 
     it('Calls init on OAuth Server with correct config and options', async () => {
-      jest.spyOn(authService, 'configure')
-      jest.spyOn(authService, 'loadDiscoveryDocumentAndLogin')
-      jest.spyOn(authService, 'setupAutomaticSilentRefresh')
+      jest.spyOn(authService, 'configure');
+      jest.spyOn(authService, 'loadDiscoveryDocumentAndLogin');
+      jest.spyOn(authService, 'setupAutomaticSilentRefresh');
 
-      await initService.initOAuth()
+      await initService.initOAuth();
 
-      expect(authService.configure).toHaveBeenCalledWith(authConfig)
-      expect(authService.loadDiscoveryDocumentAndLogin).toHaveBeenCalled()
-      expect(authService.setupAutomaticSilentRefresh).toHaveBeenCalled()
-    })
-  })
+      expect(authService.configure).toHaveBeenCalledWith(authConfig);
+      expect(authService.loadDiscoveryDocumentAndLogin).toHaveBeenCalled();
+      expect(authService.setupAutomaticSilentRefresh).toHaveBeenCalled();
+    });
+  });
 
   describe('When OAuth Server gets initialized with no success', () => {
     it('fails', async () => {
-      jest.spyOn(authService, 'loadDiscoveryDocumentAndLogin').mockImplementation(() => {
-        return Promise.reject()
-      })
+      jest
+        .spyOn(authService, 'loadDiscoveryDocumentAndLogin')
+        .mockImplementation(() => Promise.reject());
 
       initService.initOAuth().catch((error) => {
-        expect(error).toBeDefined()
-      })
-    })
-  })
+        expect(error).toBeDefined();
+      });
+    });
+  });
 
   describe('When OAuth Server gets initialized with no success within more than 20 seconds', () => {
     beforeEach(() => {
-      jest.useFakeTimers()
-    })
+      jest.useFakeTimers();
+    });
 
     it('fails', async () => {
       jest.spyOn(authService, 'loadDiscoveryDocumentAndLogin').mockImplementation(() => {
-        jest.advanceTimersByTime(25_000)
-        return Promise.resolve(true)
-      })
+        jest.advanceTimersByTime(25_000);
+        return Promise.resolve(true);
+      });
 
       initService.initOAuth().catch((error) => {
-        expect(error).toBeDefined()
-      })
-    })
-  })
-})
+        expect(error).toBeDefined();
+      });
+    });
+  });
+});

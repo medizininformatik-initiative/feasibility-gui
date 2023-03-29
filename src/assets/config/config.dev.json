@@ -10,13 +10,14 @@
   },
   "auth": {
     "baseUrl": "http://localhost:8080",
-    "realm": "codex-develop",
-    "clientId": "feasibility-gui",
-    "roles": ["FEASIBILITY_USER"]
+    "realm": "feasibility",
+    "clientId": "feasibility-webapp",
+    "roles": ["FeasibilityUser"]
   },
   "legal": {
-    "version": "0.9.0",
-    "copyrightOwner": "ABIDE Team"
+    "version": "1.0.0",
+    "copyrightYear": "2023",
+    "copyrightOwner": "MII Team"
   },
   "features": {
     "v2": {
@@ -28,14 +29,14 @@
     "extra": {
       "displayvaluefiltericon": false,
       "showoptionspage": true,
-      "optionpageroles": ["FEASIBILITY_USER"]
+      "optionpageroles": ["FeasibilityUser"]
     }
   },
   "options": {
     "pollingtimeinseconds": 10,
-    "pollingintervallinseconds": 1,
+    "pollingintervallinseconds": 10,
     "lowerboundarypatientresult": 10,
-    "lowerboundarylocationresult": 3
+    "lowerboundarylocationresult": 1
   },
   "mock": {
     "terminology": false,

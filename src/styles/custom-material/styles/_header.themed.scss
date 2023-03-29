@@ -1,3 +1,4 @@
+@use 'node_modules/@angular/material' as mat;
 @mixin header_themed($theme) {
   $accent: map-get($theme, accent);
   $primary: map-get($theme, primary);
@@ -5,20 +6,20 @@
 
   @if ($name == 'fdpg') {
     num-header mat-toolbar {
-      background: mat-color($primary, A400) !important;
-      color: mat-contrast($primary, 200) !important;
+      background: mat.get-color-from-palette($primary, A400) !important;
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
   }
   @if ($name == 'codex') {
     num-header mat-toolbar {
-      background: mat-color($primary, 200) !important;
-      color: mat-contrast($primary, 200) !important;
+      background: mat.get-color-from-palette($primary, 200) !important;
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
   }
   @if ($name == 'abide') {
     num-header mat-toolbar {
-      background: mat-color($primary, A400) !important;
-      color: mat-contrast($primary, 200) !important;
+      background: mat.get-color-from-palette($primary, A400) !important;
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
   }
 }

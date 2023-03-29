@@ -7,30 +7,41 @@
 
 .input-field {
   padding: 1em 1em 0 0.2em;
+  font-size: 14px;
 }
 
 .show-above-overlay {
   z-index: 2000;
 }
 
-::ng-deep .input-field .mat-form-field-wrapper .mat-form-field-flex {
+::ng-deep .input-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
   border: 1px solid var(--num-color--primary-300);
   padding: 0px 6px;
   border-radius: 10px;
 }
-::ng-deep .input-field.mat-focused .mat-form-field-wrapper .mat-form-field-flex {
+::ng-deep .input-field.mat-focused .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
   border: 3px solid var(--num-color--accent-500);
 }
-::ng-deep .input-field .mat-form-field-wrapper .mat-form-field-underline {
+::ng-deep .input-field .mat-mdc-text-field-wrapper .mdc-line-ripple {
   display: none;
 }
-::ng-deep .input-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+::ng-deep .input-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix {
   padding: 0.5em 0;
 }
-::ng-deep .input-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-prefix svg {
+::ng-deep .input-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix .mdc-floating-label {
+  color: #0000008a;
+  top: 45%;
+}
+::ng-deep .input-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-infix input {
+  padding-top: 7px;
+}
+::ng-deep .input-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-icon-prefix svg {
   font-size: 1.5em;
   color: grey;
   margin-right: 0.5em;
+}
+::ng-deep .input-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-form-field-icon-suffix {
+  width: 48px;
 }
 .header-label {
   /*width: 36%;*/
@@ -58,19 +69,19 @@
   color: var(--num-color--primary-100);
   font-size: 11px;
 }
-.mat-icon-button {
+.mat-mdc-icon-button {
   height: 44px;
   width: 44px;
   line-height: unset;
   color: var(--num-color--primary);
 }
-.button-tree-view.mat-icon-button {
+.button-tree-view.mat-mdc-icon-button {
   border-radius: 4px;
   border-width: 1px;
   border-style: solid;
   margin-left: 5%;
 }
 
-::ng-deep .container-search-input .mat-checkbox {
+::ng-deep .container-search-input .mat-mdc-checkbox {
   padding: 0 0.5em 0 0;
 }

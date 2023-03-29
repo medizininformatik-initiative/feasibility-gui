@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core'
-import { OAuthService, UserInfo } from 'angular-oauth2-oidc'
-import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service'
-import { FeatureService } from '../../../service/feature.service'
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service';
+import { FeatureService } from '../../../service/feature.service';
+import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 
 @Component({
   selector: 'num-header',
@@ -9,10 +10,10 @@ import { FeatureService } from '../../../service/feature.service'
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  profile: UserInfo
-  stylesheet: string
-  urlSrc: string
-  urlAlt: string
+  profile: IUserProfile;
+  stylesheet: string;
+  urlSrc: string;
+  urlAlt: string;
 
   constructor(
     private oauthService: OAuthService,
@@ -21,17 +22,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.initProfile()
-    this.stylesheet = this.featureService.getStylesheet()
+    this.initProfile();
+    this.stylesheet = this.featureService.getStylesheet();
   }
   ngAfterViewInit(): void {
-    this.featureProviderService.setTheme(this.stylesheet, this.stylesheet)
+    this.featureProviderService.setTheme(this.stylesheet, this.stylesheet);
   }
 
   async initProfile(): Promise<void> {
-    const isLoggedIn = this.oauthService.hasValidAccessToken()
+    const isLoggedIn = this.oauthService.hasValidAccessToken();
     if (isLoggedIn) {
-      this.profile = await this.oauthService.loadUserProfile()
+      this.profile = (await this.oauthService.loadUserProfile()) as IUserProfile;
     }
   }
 }

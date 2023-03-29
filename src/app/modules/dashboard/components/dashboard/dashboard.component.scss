@@ -28,6 +28,9 @@ h2 {
   line-height: 2.4vw;
   color: var(--num-color--accent-400);
 }
+.paragraphBox p {
+  margin-top: 0;
+}
 @media screen and (min-width: 1601px) {
   .paragraphBox,
   .paragraphBox a {

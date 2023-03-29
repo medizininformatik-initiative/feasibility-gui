@@ -7,6 +7,11 @@
         [result]="result"
         [showSpinner]="showSpinningIcon"
         [isResultLoaded]="loadedResult"
+        [gottenDetailedResult]="gottenDetailedResult"
+        [resultUrl]="resultUrl"
+        [callsRemaining]="callsRemaining"
+        [callsLimit]="callsLimit"
+        (resultGotten)="updateResultGotten($event)"
       ></num-result-simple>
     </div>
     <div fxLayout="column" fxLayoutAlign="space-between" class="query-buttons-box">
@@ -14,7 +19,7 @@
         <num-button
           [type]="'primary'"
           [isDisabled]="actionDisabledReset"
-          (click)="doReset()"
+          (click)="!actionDisabledReset && doReset()"
           class="button-reset"
         >
           {{ 'BUTTON.RESET' | translate }}
@@ -22,7 +27,7 @@
         <num-button
           [type]="'primary'"
           [isDisabled]="actionDisabledReset"
-          (click)="doSave()"
+          (click)="!actionDisabledReset && doSave()"
           class="button-save"
         >
           {{ 'BUTTON.SAVEQUERY' | translate }}
@@ -30,7 +35,7 @@
         <num-button
           [type]="'primary'"
           [isDisabled]="actionDisabledSend"
-          (click)="doSend()"
+          (click)="!actionDisabledSend && doSend()"
           class="button-send"
         >
           {{ 'BUTTON.SEND' | translate }}
@@ -42,6 +47,41 @@
     </div>
   </div>
 
+  <div class="container-consent">
+    <div class="consent-header">{{ 'QUERYBUILDER.SEARCH.CONSENT_HEADER' | translate }}</div>
+    <div>
+      <mat-radio-group
+        class="consent-radio-group"
+        (change)="setConsent($event)"
+        [(ngModel)]="query.consent"
+      >
+        <mat-radio-button class="consent-radio-button" [value]="true">
+          <a
+            target="_blank"
+            href="https://www.medizininformatik-initiative.de/de/mustertext-zur-patienteneinwilligung"
+          >
+            {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL_LINK' | translate }}
+          </a>
+          {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL' | translate }}
+          <fa-icon
+            size="1x"
+            [matTooltip]="'QUERYBUILDER.SEARCH.CONSENT_CENTRAL_TOOLTIP' | translate"
+            matTooltipPosition="right"
+            icon="question-circle"
+          ></fa-icon>
+        </mat-radio-button>
+        <mat-radio-button class="consent-radio-button" [value]="false"
+          >{{ 'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED' | translate }}
+          <fa-icon
+            size="1x"
+            [matTooltip]="'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED_TOOLTIP' | translate"
+            matTooltipPosition="right"
+            icon="question-circle"
+          ></fa-icon>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
   <div fxLayout="row" fxLayoutAlign="space-between" class="container">
     <num-search-input
       [critType]="'inclusion'"

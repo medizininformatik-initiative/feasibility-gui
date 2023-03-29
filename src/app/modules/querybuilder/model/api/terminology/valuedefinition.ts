@@ -1,31 +1,31 @@
-import { TerminologyCode } from './terminology'
-import { QuantityUnit } from '../query/valueFilter'
+import { TerminologyCode } from './terminology';
+import { QuantityUnit } from '../query/valueFilter';
 
 export abstract class ValueDefinition {
-  type: ValueType
+  type: ValueType;
 
-  display?: string
+  display?: string;
 
-  precision = 1
-  max?: number
-  min?: number
-  allowedUnits?: QuantityUnit[] = []
+  precision = 1;
+  max?: number;
+  min?: number;
+  allowedUnits?: QuantityUnit[] = [];
 
-  selectableConcepts?: TerminologyCode[]
+  selectableConcepts?: TerminologyCode[];
 }
 
 export abstract class AttributeDefinition {
-  type: ValueType
-  attributeCode: TerminologyCode
-  display?: string
-  optional?: boolean
+  type: ValueType;
+  attributeCode: TerminologyCode;
+  display?: string;
+  optional?: boolean;
 
-  precision = 1
-  max?: number
-  min?: number
-  allowedUnits?: QuantityUnit[] = []
+  precision = 1;
+  max?: number;
+  min?: number;
+  allowedUnits?: QuantityUnit[] = [];
 
-  selectableConcepts?: TerminologyCode[]
+  selectableConcepts?: TerminologyCode[];
 }
 
 export enum ValueType {

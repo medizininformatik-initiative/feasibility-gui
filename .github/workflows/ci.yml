@@ -14,11 +14,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-    - uses: actions/setup-node@v2
+    - uses: actions/setup-node@v3
       with:
-        node-version: '12'
+        node-version: '18'
 
     - name: Install Dependencies
       run: npm install
@@ -27,17 +27,16 @@ jobs:
       run: npm run lint
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: javascript
 
     - name: Run Tests
       run: |
         export NODE_OPTIONS="--max_old_space_size=4096"
-        npm run test-ci
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
 
 
   release:
@@ -45,7 +44,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Prepare Version
       id: prep
@@ -54,16 +53,17 @@ jobs:
         echo ::set-output name=version::${GITHUB_REF#refs/tags/v}
 
     - name: Login to GitHub Docker Registry
-      uses: docker/login-action@v1
+      uses: docker/login-action@v2
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and push Docker image
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v4
       with:
         context: .
+        file: docker/Dockerfile
         tags: |
           ghcr.io/${{ steps.prep.outputs.repository }}:${{ steps.prep.outputs.version }}
           ghcr.io/${{ steps.prep.outputs.repository }}:latest

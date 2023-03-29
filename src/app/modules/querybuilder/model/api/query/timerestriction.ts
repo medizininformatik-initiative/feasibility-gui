@@ -1,13 +1,13 @@
-import { V2 } from '../annotations'
+import { V2 } from '../annotations';
 
 @V2()
 export class TimeRestriction {
-  tvpe = TimeRestrictionType.BETWEEN
+  tvpe = TimeRestrictionType.BETWEEN;
 
-  minDate?: Date // implicitly included date
-  maxDate?: Date // implicitly included date
-  beforeDate?: string
-  afterDate?: string
+  minDate?: Date; // implicitly included date
+  maxDate?: Date; // implicitly included date
+  beforeDate?: string;
+  afterDate?: string;
 }
 
 export enum TimeRestrictionType {

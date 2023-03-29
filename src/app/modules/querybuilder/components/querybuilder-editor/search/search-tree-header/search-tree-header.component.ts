@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { CategoryEntry } from '../../../../model/api/terminology/terminology'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CategoryEntry } from '../../../../model/api/terminology/terminology';
 
 @Component({
   selector: 'num-search-tree-header',
@@ -8,19 +8,19 @@ import { CategoryEntry } from '../../../../model/api/terminology/terminology'
 })
 export class SearchTreeHeaderComponent implements OnInit {
   @Input()
-  selectedId: string
+  selectedId: string;
 
   @Input()
-  categories: Array<CategoryEntry> = []
+  categories: Array<CategoryEntry> = [];
 
   @Output()
-  switchCategory = new EventEmitter<string>()
+  switchCategory = new EventEmitter<string>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
   fireSwitchCategory(catId: string): void {
-    this.switchCategory.emit(catId)
+    this.switchCategory.emit(catId);
   }
 }

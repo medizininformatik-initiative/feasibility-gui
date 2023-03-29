@@ -1,20 +1,21 @@
+@use 'node_modules/@angular/material' as mat;
 @function mat-light-theme-background($primary, $accent, $additional) {
   @return (
-    background: mat-color($additional, page-background),
-    disabled-button: mat-color($primary, 200),
+    background: mat.get-color-from-palette($additional, page-background),
+    disabled-button: mat.get-color-from-palette($primary, 200),
     // Defaults below
-    status-bar: map_get($mat-grey, 300),
-    app-bar: map_get($mat-grey, 100),
+    status-bar: grey,
+    app-bar: grey,
     hover: rgba(black, 0.04),
     card: white,
     dialog: white,
     raised-button: white,
-    focused-button: $dark-focused,
-    selected-button: map_get($mat-grey, 300),
-    selected-disabled-button: map_get($mat-grey, 400),
-    disabled-button-toggle: map_get($mat-grey, 200),
-    unselected-chip: map_get($mat-grey, 300),
-    disabled-list-option: map_get($mat-grey, 200),
-    tooltip: map_get($mat-grey, 700)
+    focused-button: grey,
+    selected-button: grey,
+    selected-disabled-button: grey,
+    disabled-button-toggle: grey,
+    unselected-chip: grey,
+    disabled-list-option: grey,
+    tooltip: grey
   );
 }

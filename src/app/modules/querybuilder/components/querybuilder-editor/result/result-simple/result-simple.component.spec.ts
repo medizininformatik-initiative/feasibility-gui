@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ResultSimpleComponent } from './result-simple.component'
@@ -21,15 +22,9 @@ describe('ResultSimpleComponent', () => {
   let fixture: ComponentFixture<ResultSimpleComponent>
 
   const featureService = {
-    getPatientResultLowerBoundary(): number {
-      return 10
-    },
-    getLocationResultLowerBoundary(): number {
-      return 3
-    },
-    getClickEvent(): Observable<any> {
-      return of(null)
-    },
+    getPatientResultLowerBoundary: (): number => 10,
+    getLocationResultLowerBoundary: (): number => 3,
+    getClickEvent: (): Observable<any> => of(null),
   } as FeatureService
 
   const authStorage = {

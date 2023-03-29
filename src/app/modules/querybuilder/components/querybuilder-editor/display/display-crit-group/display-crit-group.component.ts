@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { Criterion } from '../../../../model/api/query/criterion'
-import { CritGroupArranger } from '../../../../controller/CritGroupArranger'
-import { CritType } from '../../../../model/api/query/group'
-import { Query } from '../../../../model/api/query/query'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Criterion } from '../../../../model/api/query/criterion';
+import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
+import { CritType } from '../../../../model/api/query/group';
+import { Query } from '../../../../model/api/query/query';
 
 @Component({
   selector: 'num-display-crit-group',
@@ -11,49 +11,49 @@ import { Query } from '../../../../model/api/query/query'
 })
 export class DisplayCritGroupComponent implements OnInit {
   @Input()
-  critGroup: Criterion[][]
+  critGroup: Criterion[][];
 
   @Input()
-  query: Query
+  query: Query;
 
   @Input()
-  groupId: number
+  groupId: number;
 
   @Input()
-  critType: CritType
+  critType: CritType;
 
   @Output()
-  dropped = new EventEmitter()
+  dropped = new EventEmitter();
 
   @Output()
-  switch = new EventEmitter()
+  switch = new EventEmitter();
 
   @Output()
-  storeQuery = new EventEmitter<Query>()
+  storeQuery = new EventEmitter<Query>();
 
   @Output()
-  delete = new EventEmitter<{ row: number; column: number }>()
+  delete = new EventEmitter<{ row: number; column: number }>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
   getInnerLabelKey(): 'AND' | 'OR' {
-    return this.critType === 'inclusion' ? 'OR' : 'AND'
+    return this.critType === 'inclusion' ? 'OR' : 'AND';
   }
 
   getOuterLabelKey(): 'AND' | 'OR' {
-    return this.critType === 'exclusion' ? 'OR' : 'AND'
+    return this.critType === 'exclusion' ? 'OR' : 'AND';
   }
 
   splitInnerArray(i: number, j: number): void {
-    this.critGroup = CritGroupArranger.splitInnerArray(this.critGroup, i, j)
-    this.switch.emit(this.critGroup)
+    this.critGroup = CritGroupArranger.splitInnerArray(this.critGroup, i, j);
+    this.switch.emit(this.critGroup);
   }
 
   joinInnerArrays(i: number): void {
-    this.critGroup = CritGroupArranger.joinInnerArrays(this.critGroup, i)
-    this.switch.emit(this.critGroup)
+    this.critGroup = CritGroupArranger.joinInnerArrays(this.critGroup, i);
+    this.switch.emit(this.critGroup);
   }
 
   doDrop($event: any): void {
@@ -61,15 +61,15 @@ export class DisplayCritGroupComponent implements OnInit {
       addMode: 'position',
       from: $event.previousContainer.data,
       to: $event.container.data,
-    })
+    });
   }
 
   doStoreQuery(query: Query): void {
-    this.storeQuery.emit(query)
+    this.storeQuery.emit(query);
   }
 
   doDelete({ row, column }: { row: number; column: number }): void {
-    this.delete.emit({ row, column })
+    this.delete.emit({ row, column });
   }
 
   doDropAtEnd($event: any): void {
@@ -77,6 +77,6 @@ export class DisplayCritGroupComponent implements OnInit {
       addMode: 'end',
       from: $event.previousContainer.data,
       to: $event.container.data,
-    })
+    });
   }
 }

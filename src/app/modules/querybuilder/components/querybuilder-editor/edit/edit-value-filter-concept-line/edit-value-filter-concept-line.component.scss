@@ -1,16 +1,33 @@
+
+/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
 ::ng-deep .mat-checkbox-layout {
-  margin-top: -6px;
+//  margin-top: -6px;
 }
-.mat-checkbox {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
+.mat-mdc-checkbox {
+//  display: inline-block;
+//  width: 16px;
+//  height: 16px;
 }
 .checkbox-line {
-  margin: 0.3em 0.1em;
-  height: 20px;
+//  margin: 0.3em 0.1em;
+//  height: 20px;
 }
+/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
 ::ng-deep .mat-checkbox-ripple {
-  height: 39px !important;
-  width: 39px !important;
+//  height: 39px !important;
+//  width: 39px !important;
+}
+::ng-deep .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__background {
+  top: 6px;
+}
+::ng-deep .mat-mdc-checkbox .mdc-checkbox {
+  padding: 6px 10px!important;
+}
+::ng-deep .mat-mdc-checkbox-touch-target {
+  width: 40px!important;
+  height: 40px!important;
+}
+::ng-deep .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+  background-color: var(--num-color--accent-600) !important;
+  border-color: black!important;
 }

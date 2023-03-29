@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core'
-import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/query/timerestriction'
-import { MAT_DATE_FORMATS } from '@angular/material/core'
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/query/timerestriction';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -12,7 +12,7 @@ export const MY_DATE_FORMATS = {
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
   },
-}
+};
 
 @Component({
   selector: 'num-edit-time-restriction',
@@ -22,11 +22,11 @@ export const MY_DATE_FORMATS = {
 })
 export class EditTimeRestrictionComponent implements OnInit, AfterViewInit {
   @Input()
-  timeRestriction: TimeRestriction
+  timeRestriction: TimeRestriction;
 
-  timeRestrictionOptions = Object.keys(TimeRestrictionType)
-  timeRestrictionType: typeof TimeRestrictionType = TimeRestrictionType
-  disableAnimation = true
+  timeRestrictionOptions = Object.keys(TimeRestrictionType);
+  timeRestrictionType: typeof TimeRestrictionType = TimeRestrictionType;
+  disableAnimation = true;
 
   constructor() {}
 
@@ -35,6 +35,6 @@ export class EditTimeRestrictionComponent implements OnInit, AfterViewInit {
   // Workaround for angular component issue #13870
   ngAfterViewInit(): void {
     // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
-    setTimeout(() => (this.disableAnimation = false))
+    setTimeout(() => (this.disableAnimation = false));
   }
 }

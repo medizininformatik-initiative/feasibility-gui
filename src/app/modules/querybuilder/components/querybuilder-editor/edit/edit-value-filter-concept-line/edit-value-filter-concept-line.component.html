@@ -1,5 +1,6 @@
 <div [formGroup]="checkedControlForm" class="checkbox-line">
-  <mat-checkbox (click)="doSelectConcept()" formControlName="checkedControl"></mat-checkbox>
+  <mat-checkbox (click)="doSelectConcept()" formControlName="checkedControl">
   <!--{{ concept.code }} - -->
-  {{ concept.display }}
+    {{ concept.display }}
+  </mat-checkbox>
 </div>

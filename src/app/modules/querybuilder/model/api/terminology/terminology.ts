@@ -1,5 +1,5 @@
-import { transient } from '../annotations'
-import { AttributeDefinition, ValueDefinition } from './valuedefinition'
+import { transient } from '../annotations';
+import { AttributeDefinition, ValueDefinition } from './valuedefinition';
 
 // 1.) Example of terminology tree
 //
@@ -46,36 +46,36 @@ import { AttributeDefinition, ValueDefinition } from './valuedefinition'
 //                                                                      |      . . .
 
 export class TerminologyEntry {
-  id: string
-  termCode?: TerminologyCode
-  termCodes?: Array<TerminologyCode> = []
-  display: string
+  id: string;
+  termCode?: TerminologyCode;
+  termCodes?: Array<TerminologyCode> = [];
+  display: string;
 
-  selectable: boolean
+  selectable: boolean;
   @transient()
-  selected = false
+  selected = false;
 
-  timeRestrictionAllowed: boolean
+  timeRestrictionAllowed: boolean;
 
-  leaf: boolean
-  entity: boolean
-  children: TerminologyEntry[] = []
-  optional?: boolean
+  leaf: boolean;
+  entity: boolean;
+  children: TerminologyEntry[] = [];
+  optional?: boolean;
 
-  valueDefinition?: ValueDefinition
-  valueDefinitions?: Array<ValueDefinition> = []
-  attributeDefinitions?: Array<AttributeDefinition> = []
+  valueDefinition?: ValueDefinition;
+  valueDefinitions?: Array<ValueDefinition> = [];
+  attributeDefinitions?: Array<AttributeDefinition> = [];
 }
 
 export class TerminologyCode {
-  code: string
-  display: string
-  system: string
-  version?: string
+  code: string;
+  display: string;
+  system: string;
+  version?: string;
 }
 
 export class CategoryEntry {
-  catId: string
-  display: string
-  shortDisplay = ''
+  catId: string;
+  display: string;
+  shortDisplay = '';
 }

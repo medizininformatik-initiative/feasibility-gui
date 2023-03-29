@@ -7,15 +7,15 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-} from '@angular/core'
-import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminology/terminology'
-import { Subscription } from 'rxjs'
-import { BackendService } from '../../../../service/backend.service'
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
-import { SearchMode } from '../search-input/search-input.component'
-import { CritType } from '../../../../model/api/query/group'
-import { Query } from '../../../../model/api/query/query'
-import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component'
+} from '@angular/core';
+import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminology/terminology';
+import { Subscription } from 'rxjs';
+import { BackendService } from '../../../../service/backend.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SearchMode } from '../search-input/search-input.component';
+import { CritType } from '../../../../model/api/query/group';
+import { Query } from '../../../../model/api/query/query';
+import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component';
 
 @Component({
   selector: 'num-search-text-overlay-content',
@@ -24,74 +24,74 @@ import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/ent
 })
 export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnDestroy {
   @Output()
-  closeOverlay = new EventEmitter<SearchMode>()
+  closeOverlay = new EventEmitter<SearchMode>();
 
   @Output()
-  switchSearchMode = new EventEmitter<void>()
+  switchSearchMode = new EventEmitter<void>();
 
   @Input()
-  text: string
+  text: string;
 
   @Input()
-  critType: CritType
+  critType: CritType;
 
   @Input()
-  query: Query
+  query: Query;
 
-  catId: string
-  categories: Array<CategoryEntry>
+  catId: string;
+  categories: Array<CategoryEntry>;
 
-  resultList: Array<TerminologyEntry> = []
+  resultList: Array<TerminologyEntry> = [];
 
-  private subscription: Subscription
-  private subscriptionCategories: Subscription
+  private subscription: Subscription;
+  private subscriptionCategories: Subscription;
 
   constructor(private backend: BackendService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.subscriptionCategories = this.backend.getCategories().subscribe((categories) => {
-      this.categories = categories
-      this.readTextData('')
-    })
+      this.categories = categories;
+      this.readTextData('');
+    });
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe()
-    this.subscriptionCategories?.unsubscribe()
+    this.subscription?.unsubscribe();
+    this.subscriptionCategories?.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.readTextData(this.catId)
+    this.readTextData(this.catId);
   }
 
   public readTextData(catId: string): void {
-    this.catId = catId
+    this.catId = catId;
 
-    this.subscription?.unsubscribe()
+    this.subscription?.unsubscribe();
     this.subscription = this.backend
       .getTerminolgyEntrySearchResult(this.catId, this.text)
       .subscribe((termEntryList) => {
-        this.resultList = termEntryList
-      })
+        this.resultList = termEntryList;
+      });
   }
 
   openDetailsPopUp(terminologyEntry: TerminologyEntry): void {
-    const dialogConfig = new MatDialogConfig()
+    const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true
-    dialogConfig.autoFocus = true
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
     dialogConfig.data = {
       termEntryList: [terminologyEntry],
       groupIndex: 0,
       critType: this.critType,
       query: this.query,
-    }
+    };
 
-    this.dialog.open(EnterCriterionListComponent, dialogConfig)
-    this.closeOverlay.emit('text')
+    this.dialog.open(EnterCriterionListComponent, dialogConfig);
+    this.closeOverlay.emit('text');
   }
 
   doSwitchSearchMode(): void {
-    this.switchSearchMode.emit()
+    this.switchSearchMode.emit();
   }
 }

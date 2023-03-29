@@ -1,20 +1,20 @@
-import { Component, Inject, OnInit } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   Group,
   GroupDependencyInfo,
   InstanceRestrictionType,
   PeriodUnit,
   TimeRelation,
-} from '../../../../model/api/query/group'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { ObjectHelper } from '../../../../controller/ObjectHelper'
-import { Query } from '../../../../model/api/query/query'
+} from '../../../../model/api/query/group';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ObjectHelper } from '../../../../controller/ObjectHelper';
+import { Query } from '../../../../model/api/query/query';
 
 export class EditGroupConnectionComponentData {
-  query: Query
-  connection: GroupDependencyInfo
-  parentGroup: Group
-  dependentGroup: Group
+  query: Query;
+  connection: GroupDependencyInfo;
+  parentGroup: Group;
+  dependentGroup: Group;
 }
 
 @Component({
@@ -23,41 +23,41 @@ export class EditGroupConnectionComponentData {
   styleUrls: ['./edit-group-connection.component.scss'],
 })
 export class EditGroupConnectionComponent implements OnInit {
-  connection: GroupDependencyInfo
-  parentGroup: Group
-  dependentGroup: Group
-  queryModified: Query
-  querySnapshot: Query
+  connection: GroupDependencyInfo;
+  parentGroup: Group;
+  dependentGroup: Group;
+  queryModified: Query;
+  querySnapshot: Query;
 
-  restrictionTypeEver = InstanceRestrictionType.EVERY
-  restrictionTypeFirst = InstanceRestrictionType.FIRST
-  restrictionTypeLatest = InstanceRestrictionType.LATEST
+  restrictionTypeEver = InstanceRestrictionType.EVERY;
+  restrictionTypeFirst = InstanceRestrictionType.FIRST;
+  restrictionTypeLatest = InstanceRestrictionType.LATEST;
 
-  day = PeriodUnit.DAY
-  month = PeriodUnit.MONTH
-  year = PeriodUnit.YEAR
+  day = PeriodUnit.DAY;
+  month = PeriodUnit.MONTH;
+  year = PeriodUnit.YEAR;
 
-  before = TimeRelation.BEFORE
-  after = TimeRelation.AFTER
+  before = TimeRelation.BEFORE;
+  after = TimeRelation.AFTER;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EditGroupConnectionComponentData,
     public dialogRef: MatDialogRef<EditGroupConnectionComponent, Query>
   ) {
-    this.connection = data.connection
-    this.parentGroup = data.parentGroup
-    this.dependentGroup = data.dependentGroup
-    this.queryModified = data.query
-    this.querySnapshot = ObjectHelper.clone(data.query)
+    this.connection = data.connection;
+    this.parentGroup = data.parentGroup;
+    this.dependentGroup = data.dependentGroup;
+    this.queryModified = data.query;
+    this.querySnapshot = ObjectHelper.clone(data.query);
   }
 
   ngOnInit(): void {}
 
   doSave(): void {
-    this.dialogRef.close(this.queryModified)
+    this.dialogRef.close(this.queryModified);
   }
 
   doDiscard(): void {
-    this.dialogRef.close(this.querySnapshot)
+    this.dialogRef.close(this.querySnapshot);
   }
 }

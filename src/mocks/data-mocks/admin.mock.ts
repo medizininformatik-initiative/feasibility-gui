@@ -1,5 +1,5 @@
-import { IUserDetails } from 'src/app/shared/models/user/user-details.interface'
-import { IUser } from 'src/app/shared/models/user/user.interface'
+import { IUserDetails } from 'src/app/shared/models/user/user-details.interface';
+import { IUser } from 'src/app/shared/models/user/user.interface';
 
 export const mockUnapprovedUsers: IUser[] = [
   {
@@ -22,10 +22,10 @@ export const mockUnapprovedUsers: IUser[] = [
     roles: ['no', 'roles'],
     username: 'mock-user-2',
   },
-]
+];
 
 export const mockUserDetails: IUserDetails = {
   approved: false,
   organizationId: 'mock-organization',
   userId: '123-456',
-}
+};

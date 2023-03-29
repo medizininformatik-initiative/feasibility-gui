@@ -1,41 +1,41 @@
 {
   "env": {
-    "name": "dev-test"
+    "name": "dev"
   },
   "api": {
     "baseUrl": "/api"
   },
   "uiBackendApi": {
-    "baseUrl": "http://localhost:8091/api/v1"
+    "baseUrl": "http://localhost:8090/api/v2"
   },
   "auth": {
-    "baseUrl": "http://localhost:8080",
+    "baseUrl": "http://localhost:8080/auth",
     "realm": "codex-develop",
     "clientId": "feasibility-gui",
-    "roles": ["CODEX_USER"]
+    "roles": ["FEASIBILITY_USER"]
   },
   "legal": {
     "version": "0.9.0",
-    "copyrightOwner": "CODEX Team"
+    "copyrightOwner": "ABIDE Team"
   },
   "features": {
     "v2": {
-      "multiplevaluedefinitions": false,
+      "multiplevaluedefinitions": true,
       "multiplegroups": false,
-      "dependentgroups": false,
-      "timerestriction": false
+      "dependentgroups": true,
+      "timerestriction": true
     },
     "extra": {
       "displayvaluefiltericon": false,
-      "showoptionspage": false,
-      "optionpageroles": ["CODEX_USER"]
+      "showoptionspage": true,
+      "optionpageroles": ["FEASIBILITY_USER"]
     }
   },
   "options": {
     "pollingtimeinseconds": 10,
-    "pollingintervallinseconds": 1,
+    "pollingintervallinseconds": 10,
     "lowerboundarypatientresult": 10,
-    "lowerboundarylocationresult": 3
+    "lowerboundarylocationresult": 1
   },
   "mock": {
     "terminology": false,

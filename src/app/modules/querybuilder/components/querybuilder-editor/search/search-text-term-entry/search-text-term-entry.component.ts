@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
 
 @Component({
   selector: 'num-search-text-term-entry',
@@ -8,13 +8,13 @@ import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
 })
 export class SearchTextTermEntryComponent implements OnInit {
   @Input()
-  node: TerminologyEntry
+  node: TerminologyEntry;
 
   @Output()
-  choose = new EventEmitter<TerminologyEntry>()
+  choose = new EventEmitter<TerminologyEntry>();
 
   fireChoose(): void {
-    this.choose.emit(this.node)
+    this.choose.emit(this.node);
   }
 
   constructor() {}

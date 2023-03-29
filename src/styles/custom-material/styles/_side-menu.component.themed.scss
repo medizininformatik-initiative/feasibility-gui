@@ -1,53 +1,60 @@
+@use 'node_modules/@angular/material' as mat;
 @mixin side-menu-component_themed($theme) {
   $accent: map-get($theme, accent);
   $primary: map-get($theme, primary);
   $name: map-get($theme, name);
 
+  .mdc-list-item__primary-text {
+    display: flex;
+  }
+  .mdc-list-item.mdc-list-item--with-one-line {
+    height: 48px!important;
+  }
   @if ($name == 'fdpg') {
-    .mat-nav-list {
-      background: mat-color($primary, A400) !important;
-      color: mat-contrast($primary, 200) !important;
+    .mat-mdc-nav-list {
+      background: mat.get-color-from-palette($primary, A400) !important;
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
     .num-logo-row a {
-      /*background: mat-color($accent, 500) !important;*/
-      color: mat-contrast($primary, 200) !important;
+      /*background: mat.get-color-from-palette($accent, 500) !important;*/
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
     .num-mat-list-item {
-      /*background: mat-color($accent, 500) !important;*/
-      color: mat-contrast($primary, 200) !important;
+      /*background: mat.get-color-from-palette($accent, 500) !important;*/
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
   }
   @if ($name == 'codex') {
-    .mat-nav-list {
-      background: mat-color($primary, 200) !important;
-      color: mat-contrast($primary, 200) !important;
+    .mat-mdc-nav-list {
+      background: mat.get-color-from-palette($primary, 200) !important;
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
     .num-logo-row a {
-      /*background: mat-color($accent, 500) !important;*/
-      color: mat-contrast($primary, 200) !important;
+      /*background: mat.get-color-from-palette($accent, 500) !important;*/
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
     .num-mat-list-item {
-      /*background: mat-color($accent, 500) !important;*/
-      color: mat-contrast($primary, 200) !important;
+      /*background: mat.get-color-from-palette($accent, 500) !important;*/
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
   }
   @if ($name == 'abide') {
-    .mat-nav-list {
-      background: mat-color($primary, A400) !important;
-      color: mat-contrast($primary, 200) !important;
+    .mat-mdc-nav-list {
+      background: mat.get-color-from-palette($primary, A400) !important;
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
     .num-logo-row a {
-      /*background: mat-color($accent, 500) !important;*/
-      color: mat-contrast($primary, 200) !important;
+      /*background: mat.get-color-from-palette($accent, 500) !important;*/
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
     .num-mat-list-item {
-      /*background: mat-color($accent, 500) !important;*/
-      color: mat-contrast($primary, 200) !important;
+      /*background: mat.get-color-from-palette($accent, 500) !important;*/
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
   }
   .num-logo-row button:hover {
-    background: mat-color($accent, 200) !important;
-    color: mat-contrast($accent, 200) !important;
+    background: mat.get-color-from-palette($accent, 200) !important;
+    color: mat.get-contrast-color-from-palette($accent, 200) !important;
   }
   @if ($name == 'fdpg') {
     .num-mat-list-item {
@@ -57,19 +64,19 @@
       letter-spacing: 0.25px !important;
 
       &--active {
-        background: mat-color($accent, 100) !important;
-        color: mat-color($primary, A200) !important;
+        background: mat.get-color-from-palette($accent, 100) !important;
+        color: mat.get-color-from-palette($primary, A200) !important;
         font-weight: 500 !important;
       }
 
       &:hover {
-        background: mat-color($accent, 100) !important;
-        color: mat-contrast($accent, 100) !important;
+        background: mat.get-color-from-palette($accent, 100) !important;
+        color: mat.get-contrast-color-from-palette($accent, 100) !important;
       }
 
       &:focus {
-        background: mat-color($accent, 200) !important;
-        color: mat-contrast($accent, 200) !important;
+        background: mat.get-color-from-palette($accent, 200) !important;
+        color: mat.get-contrast-color-from-palette($accent, 200) !important;
       }
     }
   }
@@ -81,19 +88,19 @@
       letter-spacing: 0.25px !important;
 
       &--active {
-        background: mat-color($accent, 200) !important;
-        color: mat-contrast($accent, 200) !important;
+        background: mat.get-color-from-palette($accent, 200) !important;
+        color: mat.get-contrast-color-from-palette($accent, 200) !important;
         font-weight: 500 !important;
       }
 
       &:hover {
-        background: mat-color($accent, 100) !important;
-        color: mat-contrast($accent, 100) !important;
+        background: mat.get-color-from-palette($accent, 100) !important;
+        color: mat.get-contrast-color-from-palette($accent, 100) !important;
       }
 
       &:focus {
-        background: mat-color($accent, 200) !important;
-        color: mat-contrast($accent, 200) !important;
+        background: mat.get-color-from-palette($accent, 200) !important;
+        color: mat.get-contrast-color-from-palette($accent, 200) !important;
       }
     }
   }
@@ -105,19 +112,19 @@
       letter-spacing: 0.25px !important;
 
       &--active {
-        background: mat-color($accent, 500) !important;
-        color: mat-color($primary, A200) !important;
+        background: mat.get-color-from-palette($accent, 500) !important;
+        color: mat.get-color-from-palette($primary, A200) !important;
         font-weight: 500 !important;
       }
 
       &:hover {
-        background: mat-color($accent, 100) !important;
-        color: mat-contrast($accent, 100) !important;
+        background: mat.get-color-from-palette($accent, 100) !important;
+        color: mat.get-contrast-color-from-palette($accent, 100) !important;
       }
 
       &:focus {
-        background: mat-color($accent, 200) !important;
-        color: mat-contrast($accent, 200) !important;
+        background: mat.get-color-from-palette($accent, 200) !important;
+        color: mat.get-contrast-color-from-palette($accent, 200) !important;
       }
     }
   }

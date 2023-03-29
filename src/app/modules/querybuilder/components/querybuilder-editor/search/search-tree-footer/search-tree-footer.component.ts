@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'num-search-tree-footer',
@@ -7,13 +7,13 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 })
 export class SearchTreeFooterComponent implements OnInit {
   @Output()
-  addEvent = new EventEmitter<boolean>()
+  addEvent = new EventEmitter<boolean>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
   fireAddEvent(shouldAdd: boolean): void {
-    this.addEvent.emit(shouldAdd)
+    this.addEvent.emit(shouldAdd);
   }
 }

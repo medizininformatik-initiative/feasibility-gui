@@ -15,7 +15,7 @@
   border-radius: 1em;
 }
 
-.mat-standard-chip {
+.mat-mdc-standard-chip {
   cursor: pointer;
   border-radius: 1em;
   border: 1px solid black;
@@ -24,16 +24,17 @@
   user-select: none;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
 mat-chip {
   cursor: pointer;
 }
 
-::ng-deep .container-bool-logic-outer .mat-chip.mat-standard-chip {
+::ng-deep .container-bool-logic-outer .mat-mdc-chip.mat-mdc-standard-chip {
   background-color: transparent;
   padding-left: 6px;
 }
 
-::ng-deep .container-bool-logic-inner .mat-chip.mat-standard-chip {
+::ng-deep .container-bool-logic-inner .mat-mdc-chip.mat-mdc-standard-chip {
   background-color: white;
   border-radius: 1em;
 }

@@ -1,59 +1,53 @@
-import { Component } from '@angular/core'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RouterTestingModule } from '@angular/router/testing'
-import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
-import { TranslateModule } from '@ngx-translate/core'
-import { MaterialModule } from '../../material/material.module'
-import { ButtonComponent } from '../../../shared/components/button/button.component'
-import { LanguageComponent } from '../language/language.component'
-import { HeaderComponent } from './header.component'
-import { OAuthService, UserInfo } from 'angular-oauth2-oidc'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service'
-import { IAppConfig } from '../../../config/app-config.model'
-import { FeatureService } from '../../../service/feature.service'
+import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../../material/material.module';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { LanguageComponent } from '../language/language.component';
+import { HeaderComponent } from './header.component';
+import { OAuthService, UserInfo } from 'angular-oauth2-oidc';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service';
+import { IAppConfig } from '../../../config/app-config.model';
+import { FeatureService } from '../../../service/feature.service';
 
 describe('HeaderComponent', () => {
-  let component: HeaderComponent
-  let fixture: ComponentFixture<HeaderComponent>
+  let component: HeaderComponent;
+  let fixture: ComponentFixture<HeaderComponent>;
 
   @Component({ selector: 'num-stub', template: '' })
   class StubComponent {}
 
-  const profile = { sub: 'codex' } as UserInfo
+  const profile = { sub: 'codex' } as UserInfo;
   const authService = {
     logOut: () => {},
     loadUserProfile: () => Promise.resolve(profile),
-    hasValidAccessToken(): boolean {
-      return true
-    },
-  } as OAuthService
+    hasValidAccessToken: (): boolean => true,
+  } as OAuthService;
 
   const featureService = {
-    getStylesheet(): string {
-      return 'abideTheme'
-    },
-  } as FeatureService
+    getStylesheet: (): string => 'abideTheme',
+  } as FeatureService;
 
   const featureProviderService = {
-    getFeatures(): IAppConfig {
-      return {
-        env: null,
-        api: null,
-        uiBackendApi: null,
-        features: null,
-        stylesheet: 'abide',
-        auth: null,
-        dataset: null,
-        queryVersion: null,
-        options: null,
-        fhirport: null,
-        legal: null,
-        mock: null,
-      }
-    },
-    setTheme(oldTheme: string, newTheme: string): void {},
-  } as FeatureProviderService
+    getFeatures: (): IAppConfig => ({
+      env: null,
+      api: null,
+      uiBackendApi: null,
+      features: null,
+      stylesheet: 'abide',
+      auth: null,
+      dataset: null,
+      queryVersion: null,
+      options: null,
+      fhirport: null,
+      legal: null,
+      mock: null,
+    }),
+    setTheme: (oldTheme: string, newTheme: string): void => {},
+  } as FeatureProviderService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -79,29 +73,29 @@ describe('HeaderComponent', () => {
           useValue: featureService,
         },
       ],
-    }).compileComponents()
-  })
+    }).compileComponents();
+  });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent, LanguageComponent, StubComponent, ButtonComponent],
       imports: [FontAwesomeTestingModule, MaterialModule, TranslateModule.forRoot()],
-    }).compileComponents()
-  })
+    }).compileComponents();
+  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
+    fixture = TestBed.createComponent(HeaderComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should create', () => {
-    expect(component).toBeTruthy()
-  })
+    expect(component).toBeTruthy();
+  });
 
   it('should load profile', async () => {
-    await component.initProfile()
+    await component.initProfile();
 
-    expect(component.profile).toEqual(profile)
-  })
-})
+    expect(component.profile).toEqual(profile);
+  });
+});

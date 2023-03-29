@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
 
 @Component({
   selector: 'num-search-tree-term-entry',
@@ -8,16 +8,16 @@ import { TerminologyEntry } from '../../../../model/api/terminology/terminology'
 })
 export class SearchTreeTermEntryComponent implements OnInit {
   @Input()
-  node: TerminologyEntry
+  node: TerminologyEntry;
 
   @Output()
-  toggleEvent = new EventEmitter()
+  toggleEvent = new EventEmitter();
 
   constructor() {}
 
   ngOnInit(): void {}
 
   toggleTreeNode(): void {
-    this.toggleEvent.emit(this.node)
+    this.toggleEvent.emit(this.node);
   }
 }

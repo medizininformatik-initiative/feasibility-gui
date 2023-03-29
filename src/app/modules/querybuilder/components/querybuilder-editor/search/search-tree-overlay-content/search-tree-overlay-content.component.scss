@@ -26,6 +26,10 @@
 .mat-tree {
   margin: 1em;
 }
-.mat-icon-button.mat-button-disabled {
+/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+.mat-mdc-icon-button.mat-button-disabled {
   width: 11px;
+}
+.mat-tree-node, .mat-nested-tree-node {
+  font-weight: 400;
 }

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { Query } from '../../../model/api/query/query'
+import { Component, Input, OnInit } from '@angular/core';
+import { Query } from '../../../model/api/query/query';
 
 @Component({
   selector: 'num-single-query',
@@ -8,33 +8,33 @@ import { Query } from '../../../model/api/query/query'
 })
 export class SingleQueryComponent implements OnInit {
   @Input()
-  index: number
+  index: number;
 
   @Input()
-  id: number
+  id: number;
 
   @Input()
-  isValid: boolean
+  isValid: boolean;
 
   @Input()
-  singleLabel: string
+  singleLabel: string;
 
   @Input()
-  singleComment: string
+  singleComment: string;
 
   @Input()
-  singleDate: Date
+  singleDate: Date;
 
   @Input()
-  createdBy: string
+  createdBy: string;
 
-  isInvalid: boolean
+  isInvalid: boolean;
 
   constructor() {}
 
   ngOnInit(): void {
     if (this.isValid === false) {
-      this.isInvalid = true
+      this.isInvalid = true;
     }
   }
 }
