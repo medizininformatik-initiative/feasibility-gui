@@ -117,6 +117,11 @@ export class FeatureService {
     return !environment.production;
   }
 
+  public showInfoPage(): boolean {
+    //return isDevMode();
+    return this.appConfig.getConfig().features.extra.displayInfoMessage;
+  }
+
   public mockTerminology(): boolean {
     return this.appConfig.getConfig().mock.terminology && this.isDevelopMode();
   }

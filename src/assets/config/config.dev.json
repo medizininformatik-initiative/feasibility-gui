@@ -29,7 +29,8 @@
     "extra": {
       "displayvaluefiltericon": false,
       "showoptionspage": true,
-      "optionpageroles": ["FeasibilityUser"]
+      "optionpageroles": ["FeasibilityUser"],
+      "displayInfoMessage": true
     }
   },
   "options": {

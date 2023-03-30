@@ -48,6 +48,9 @@
       "PARAGRAPH5_2": "Antrag stellen",
       "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen."
     },
+    "INFO":{
+      "TEXT": " Wir arbeiten gerade am Machbarkeitsportal, sodass es bei manchen Anfragen zu Verzögerungen und abweichenden Ergebnissen kommen kann."
+    },
     "NEWQUERY": {
       "HEADLINE": "Neue Abfrage",
       "TEXT": "Führen Sie eine Suche anhand Ihrer Ein- und Ausschlusskriterien durch"

@@ -30,6 +30,7 @@ export interface IAppConfig {
       displayvaluefiltericon: boolean
       showoptionspage: boolean
       optionpageroles: string[]
+      displayInfoMessage: boolean
     }
   }
   options: {
