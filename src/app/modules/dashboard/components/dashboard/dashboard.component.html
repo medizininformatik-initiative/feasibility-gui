@@ -1,4 +1,10 @@
 <h2>{{ 'DASHBOARD.' + stylesheet.toUpperCase() + '.HEADLINE' | translate }}</h2>
+
+<div *ngIf="displayInfoMessage" class="infoMessage">
+  <fa-icon size="1x" icon="exclamation-circle"></fa-icon>
+  {{ 'DASHBOARD.INFO.TEXT' | translate }}
+</div>
+
 <div class="link-boxes" fxLayout="row" fxLayoutAlign="space-between" *numUserHasRole="roles">
   <div class="linkBox newQueryBox">
     <a routerLink="/querybuilder/editor">
