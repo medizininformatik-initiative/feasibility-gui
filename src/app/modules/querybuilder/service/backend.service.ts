@@ -99,7 +99,7 @@ export class BackendService {
   public getSummaryResult(resultUrl: string): Observable<QueryResult> {
     if (this.feature.mockResult()) {
       const result = {
-        totalNumberOfPatients: Math.floor(Math.random() * 1000),
+        totalNumberOfPatients: Math.floor(Math.random() * 10000000),
         queryId: '12345',
         resultLines: [],
       };
@@ -116,12 +116,12 @@ export class BackendService {
   ): Observable<QueryResult> {
     if (this.feature.mockResult()) {
       const mockResult = {
-        totalNumberOfPatients: Math.floor(Math.random() * 1000),
+        totalNumberOfPatients: Math.floor(Math.random() * 10000000),
         queryId: '12345',
         resultLines: [
           { siteName: 'Standort 1', numberOfPatients: 351 },
           { siteName: 'Standort 2', numberOfPatients: 1277 },
-          { siteName: 'Standort 3', numberOfPatients: 63 },
+          { siteName: 'Standort 3', numberOfPatients: 63000000 },
           { siteName: 'Standort 4', numberOfPatients: 0 },
         ],
       };
