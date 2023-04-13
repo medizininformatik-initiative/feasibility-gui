@@ -30,7 +30,6 @@ export class SideMenuComponent implements OnInit {
         roles = [].concat(this.featureService.getRoles('optionpage'));
       }
       const routesForNavItem = this.routes.filter((route) => item.routeTo === route.path);
-
       if (routesForNavItem && routesForNavItem.length > 0) {
         if (routesForNavItem[0].data?.roles) {
           roles = roles.concat(routesForNavItem[0].data?.roles);
