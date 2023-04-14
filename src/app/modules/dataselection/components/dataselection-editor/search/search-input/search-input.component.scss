@@ -1,0 +1,15 @@
+.container-search-input {
+  position: relative;
+  min-height: 6em;
+  border: 1px solid var(--num-color--primary);
+  border-radius: 5px;
+}
+
+.header-label {
+  min-width: min-content;
+  background-color: var(--num-color--accent-600);
+  color: var(--num-color--accent-contrast);
+  text-align: center;
+  font-size: 16px;
+  padding: 2px 0px;
+}

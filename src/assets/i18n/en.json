@@ -77,6 +77,12 @@
       "LABEL": "Toggle sidenav"
     }
   },
+  "DATASELECTION": {
+    "SEARCH":{
+      "LABEL": "enter code or display"
+    },
+    "DATASELECTION": "Dataselection"
+  },
   "NAVIGATION": {
     "DASHBOARD": "Home",
     "QUERYBUILDER_EDITOR": "New query",

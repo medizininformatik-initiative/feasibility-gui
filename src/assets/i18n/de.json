@@ -64,6 +64,12 @@
       "TEXT": "Stellen Sie einen Antrag zur Datennutzung im Antragsportal"
     }
   },
+  "DATASELECTION": {
+    "DATASELECTION": "Datenselektion",
+    "SEARCH": {
+      "LABEL": "Code oder Suchbegriff eingeben"
+    }
+  },
   "LANGUAGE": {
     "GERMAN": "Deutsch",
     "ENGLISH": "Englisch",
