@@ -78,10 +78,13 @@
     }
   },
   "DATASELECTION": {
+    "DATASELECTION": "Dataselection",
     "SEARCH":{
       "LABEL": "enter code or display"
     },
-    "DATASELECTION": "Dataselection"
+    "DISPLAY": {
+      "LABEL": "Selected criteria"
+    }
   },
   "NAVIGATION": {
     "DASHBOARD": "Home",
