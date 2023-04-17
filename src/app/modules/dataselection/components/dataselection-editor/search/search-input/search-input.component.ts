@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SearchMode } from 'src/app/modules/querybuilder/components/querybuilder-editor/search/search-input/search-input.component';
 import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
 
 @Component({
@@ -25,3 +24,5 @@ export class SearchInputComponent {
     }
   }
 }
+
+export type SearchMode = 'text' | 'tree';
