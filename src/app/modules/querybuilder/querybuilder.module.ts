@@ -115,6 +115,14 @@ export const FORMATS_GERMAN = {
     DisplayCritGroupComponent,
     DisplayCriterionComponent,
     DisplayQueryComponent,
+    EditCriterionComponent,
+    EditValueFilterComponent,
+    EditSingleCriterionComponent,
+    EditValueFilterConceptLineComponent,
+    DisplayTimeRestrictionComponent,
+    ResultSimpleComponent,
+    ResultDetailsDialogComponent,
+    DisplayEntitiesComponent,
   ],
   providers: [
     {
