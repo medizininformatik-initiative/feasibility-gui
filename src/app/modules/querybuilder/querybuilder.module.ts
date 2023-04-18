@@ -109,6 +109,14 @@ export const FORMATS_GERMAN = {
     SearchTextOverlayContentComponent,
     SearchTextHeaderComponent,
     SearchTextTermEntryComponent,
+    EditCriterionComponent,
+    EditValueFilterComponent,
+    EditSingleCriterionComponent,
+    EditValueFilterConceptLineComponent,
+    DisplayTimeRestrictionComponent,
+    ResultSimpleComponent,
+    ResultDetailsDialogComponent,
+    DisplayEntitiesComponent,
   ],
   providers: [
     {
