@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Criterion } from '../../../../model/api/query/criterion';
@@ -16,6 +16,7 @@ export class EnterCriterionListComponentData {
   critType: CritType;
   termEntryList: Array<TerminologyEntry>;
   query: Query;
+  searchType: string;
 }
 
 @Component({
@@ -23,14 +24,13 @@ export class EnterCriterionListComponentData {
   templateUrl: './enter-criterion-list.component.html',
   styleUrls: ['./enter-criterion-list.component.scss'],
 })
-export class EnterCriterionListComponent implements OnInit, OnDestroy {
+export class EnterCriterionListComponent implements OnInit {
   private subscriptionCritProfile: Subscription;
   criterionList: Array<Criterion> = [];
   groupIndex: number;
   critType: CritType;
   query: Query;
-  queryCriterionList: Array<Criterion> = [];
-  queryCriteriaHashes: Array<string> = [];
+  searchType: string;
   actionDisabled = true;
   criterionAddibleList: Array<{
     criterion: Criterion
@@ -55,9 +55,12 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
+    this.query = data.query;
+    this.searchType = data.searchType;
   }
 
   ngOnInit(): void {
+    console.log(this.query);
     this.criterionList.forEach((curCriterion) => {
       this.criterionAddibleList.push({
         criterion: curCriterion,

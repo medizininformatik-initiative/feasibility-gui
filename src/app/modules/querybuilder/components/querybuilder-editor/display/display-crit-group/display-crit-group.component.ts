@@ -14,13 +14,16 @@ export class DisplayCritGroupComponent implements OnInit {
   critGroup: Criterion[][];
 
   @Input()
+  searchType: string;
+
+  @Input()
+  critType: CritType;
+
+  @Input()
   query: Query;
 
   @Input()
   groupId: number;
-
-  @Input()
-  critType: CritType;
 
   @Output()
   dropped = new EventEmitter();

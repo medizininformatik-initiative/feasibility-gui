@@ -14,6 +14,10 @@ import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
   styleUrls: ['./display-criterion.component.scss'],
 })
 export class DisplayCriterionComponent implements OnInit, OnDestroy {
+
+  @Input()
+  searchType: string;
+  
   @Input()
   criterion: Criterion;
 

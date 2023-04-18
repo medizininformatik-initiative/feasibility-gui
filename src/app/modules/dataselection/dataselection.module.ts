@@ -6,7 +6,6 @@ import { DataselectionEditorComponent } from './components/dataselection-editor/
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { DisplayGroupComponent } from './components/dataselection-editor/display/display-group/display-group.component';
-import { DisplayCritGroupComponent } from './components/dataselection-editor/display/display-crit-group/display-crit-group.component';
 import { ResultSimpleComponent } from './components/dataselection-editor/result/result-simple/result-simple.component';
 import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 
@@ -14,7 +13,6 @@ import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
   declarations: [
     DataselectionEditorComponent,
     DisplayGroupComponent,
-    DisplayCritGroupComponent,
     ResultSimpleComponent,
   ],
   imports: [

@@ -24,6 +24,9 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   critType: CritType;
 
   @Input()
+  searchType: string;
+
+  @Input()
   query: Query;
 
   catId: string;
@@ -112,6 +115,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
           groupIndex: 0,
           critType: this.critType,
           query: this.query,
+          searchType: this.searchType,
         };
 
         this.dialog.open(EnterCriterionListComponent, dialogConfig);

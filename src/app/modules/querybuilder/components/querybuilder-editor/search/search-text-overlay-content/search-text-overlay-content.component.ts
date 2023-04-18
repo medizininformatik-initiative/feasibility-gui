@@ -30,6 +30,9 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
   switchSearchMode = new EventEmitter<void>();
 
   @Input()
+  searchType: string;
+
+  @Input()
   text: string;
 
   @Input()
@@ -85,6 +88,7 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
       groupIndex: 0,
       critType: this.critType,
       query: this.query,
+      searchType: this.searchType,
     };
 
     this.dialog.open(EnterCriterionListComponent, dialogConfig);

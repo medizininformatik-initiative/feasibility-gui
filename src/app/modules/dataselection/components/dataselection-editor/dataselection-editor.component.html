@@ -21,8 +21,12 @@
       [searchType]="'dataselection'"
     ></num-search-input>
   </div>
-  <div class="container">
-    <num-display-group>Hey</num-display-group>
-    <num-display-crit-group> </num-display-crit-group>
+  <div class="dialog-frame">
+    <num-display-query
+      [searchType]="'dataselection'"
+      [query]="query"
+      (storeQuery)="storeQuery($event)"
+    >
+    </num-display-query>
   </div>
 </div>
