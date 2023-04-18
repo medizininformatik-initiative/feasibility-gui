@@ -78,7 +78,6 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   ngOnInit(): void {
-    console.log(this.searchType);
     if (this.position) {
       this.selectedGroupId = this.position.groupId;
     } else {
