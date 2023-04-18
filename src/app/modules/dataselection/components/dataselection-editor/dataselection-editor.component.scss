@@ -27,3 +27,14 @@ num-button {
   background-color: var(--num-color--accent-300);
   margin: 1em;
 }
+
+::ng-deep .cdk-overlay-connected-position-bounding-box {
+  overflow: auto;
+}
+
+.query-buttons-box {
+  position: sticky;
+  width: 100%;
+  height: 4.5em;
+  padding-top: 1em;
+}
