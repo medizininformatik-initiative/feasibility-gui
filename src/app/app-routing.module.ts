@@ -36,7 +36,9 @@ export const routes: Routes = [
       roles: ['main'],
     },
     loadChildren: () =>
-      import('./modules/dataselection/dataselection.module').then((m) => m.DataselectionModule),
+      import(
+        /* webpackChunkName: "Dataselection.Module" */ './modules/dataselection/dataselection.module'
+      ).then((m) => m.DataselectionModule),
   },
   {
     path: 'options',
