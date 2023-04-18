@@ -1,10 +1,7 @@
 <div class="header-line">
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxLayout="row" fxLayoutAlign="space-between center" class="result-header-line">
-      <num-result-simple> Hey </num-result-simple>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="space-between" class="query-buttons-box">
-      <div fxLayout="row" fxLayoutAlign="end center">
+  <div fxLayoutAlign="space-between center">
+    <div fxLayout="column" class="query-buttons-box">
+      <div fxLayout="row" fxLayoutAlign="end right">
         <num-button [type]="'primary'" class="button-reset">
           {{ 'BUTTON.RESET' | translate }}
         </num-button>
@@ -18,7 +15,11 @@
     </div>
   </div>
   <div class="container">
-    <num-search-input></num-search-input>
+    <num-search-input
+      [critType]="'inclusion'"
+      [query]="query"
+      [searchType]="'dataselection'"
+    ></num-search-input>
   </div>
   <div class="container">
     <num-display-group>Hey</num-display-group>

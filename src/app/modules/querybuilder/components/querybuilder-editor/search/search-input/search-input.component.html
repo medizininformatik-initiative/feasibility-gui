@@ -42,6 +42,7 @@
     *ngIf="searchMode === 'tree'"
     [critType]="critType"
     [query]="query"
+    [searchType]="searchType"
     (closeOverlay)="closeOverlay($event)"
   >
   </num-search-tree-overlay-content>
@@ -50,6 +51,7 @@
     [text]="search"
     [critType]="critType"
     [query]="query"
+    [searchType]="searchType"
     (switchSearchMode)="switchSearchMode()"
     (closeOverlay)="closeOverlay($event)"
   >
