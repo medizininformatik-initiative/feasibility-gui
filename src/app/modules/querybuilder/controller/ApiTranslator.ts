@@ -1,4 +1,4 @@
-import { Query, QueryOnlyV1, QueryOnlyV2 } from '../model/api/query/query';
+import { DataSelectionOnly, Query, QueryOnlyV1, QueryOnlyV2 } from '../model/api/query/query';
 import { Criterion, CriterionOnlyV1, CriterionOnlyV2 } from '../model/api/query/criterion';
 import { ObjectHelper } from './ObjectHelper';
 import { OperatorOptions } from '../model/api/query/valueFilter';
@@ -100,6 +100,15 @@ export class ApiTranslator {
     if (query.consent) {
       result.inclusionCriteria.push(this.getConsent());
     }
+    return result;
+  }
+
+  translateForDataselection(query: Query) {
+    const result = new DataSelectionOnly();
+    const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria);
+    result.selectedCriteria = this.translateCritGroupV2(inclusionCriteria);
+
+    console.log(result);
     return result;
   }
 

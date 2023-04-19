@@ -50,3 +50,10 @@ export class QueryOnlyV2 {
   // disjunctive normal form (without negation)
   exclusionCriteria: CriterionOnlyV2[][] = [];
 }
+
+export class DataSelectionOnly {
+  version = 'http://to_be_decided.com/draft-1/schema#';
+  display = '';
+
+  selectedCriteria: CriterionOnlyV2[][] = [];
+}
