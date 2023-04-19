@@ -8,7 +8,7 @@
         <num-button [type]="'primary'" class="button-save">
           {{ 'BUTTON.SAVEQUERY' | translate }}
         </num-button>
-        <num-button [type]="'primary'" class="button-send">
+        <num-button [type]="'primary'" (click)="doShowStoredQuery()" class="button-send">
           {{ 'BUTTON.SEND' | translate }}
         </num-button>
       </div>
