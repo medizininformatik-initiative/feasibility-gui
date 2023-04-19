@@ -67,6 +67,8 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
     // this.router.navigate(['/querybuilder/overview'])
   }
 
+  doSaveForDataselection() {}
+
   doDiscard(): void {
     this.dialogRef.close()
   }
