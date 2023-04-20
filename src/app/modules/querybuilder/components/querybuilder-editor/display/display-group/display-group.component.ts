@@ -22,6 +22,9 @@ export class DisplayGroupComponent implements OnInit {
   group: Group;
 
   @Input()
+  searchType: string;
+
+  @Input()
   parentGroup: Group;
 
   @Input()
