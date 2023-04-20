@@ -29,9 +29,6 @@ export class DisplayQueryComponent implements OnInit {
   @Output()
   storeQuery = new EventEmitter<Query>();
 
-  @Input()
-  searchType: string;
-
   subscriptionTranslation: Subscription;
 
   ngOnInit(): void {}
