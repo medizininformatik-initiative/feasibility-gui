@@ -1,5 +1,5 @@
-<h2>{{ 'QUERYBUILDER.OVERVIEW.SAVE_HEADER' | translate }}</h2>
-<div class="save-query-box">
+<div class="dialog-frame">
+  <h2>{{ 'QUERYBUILDER.OVERVIEW.SAVE_HEADER' | translate }}</h2>
   <div fxLayout="column" fxLayoutAlign="space-around center">
     <mat-form-field *ngIf="!downloadQuery" class="input-field">
       <mat-label>{{ 'QUERYBUILDER.OVERVIEW.TITLE_LABEL' | translate }}</mat-label>
@@ -22,19 +22,19 @@
       <input matInput type="text" [(ngModel)]="filename" (input)="isEmpty()" />
     </mat-form-field>
   </div>
-</div>
-<div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
-  <div fxFlex="fill"></div>
+  <div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
+    <div fxFlex="fill"></div>
 
-  <num-button
-    [type]="'primary'"
-    [isDisabled]="saveButtonDisabled"
-    (click)="!saveButtonDisabled && doSaveForDataselection()"
-    class="button-save"
-  >
-    {{ 'BUTTON.SAVE' | translate }}
-  </num-button>
-  <num-button [type]="'primary'" (click)="doDiscard()">
-    {{ 'BUTTON.CANCEL' | translate }}
-  </num-button>
+    <num-button
+      [type]="'primary'"
+      [isDisabled]="saveButtonDisabled"
+      (click)="!saveButtonDisabled && doSaveForDataselection()"
+      class="button-save"
+    >
+      {{ 'BUTTON.SAVE' | translate }}
+    </num-button>
+    <num-button [type]="'primary'" (click)="doDiscard()">
+      {{ 'BUTTON.CANCEL' | translate }}
+    </num-button>
+  </div>
 </div>
