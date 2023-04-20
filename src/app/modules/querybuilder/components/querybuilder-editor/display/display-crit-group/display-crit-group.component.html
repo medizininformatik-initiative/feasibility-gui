@@ -12,6 +12,7 @@
       (cdkDropListDropped)="doDrop($event)"
     >
       <num-display-criterion
+        [searchType]="searchType"
         [criterion]="criterion"
         [query]="query"
         [position]="{ groupId: groupId, critType: critType, row: i, column: j }"

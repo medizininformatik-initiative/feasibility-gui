@@ -6,27 +6,30 @@
     </h4>
   </mat-card-header>
   <mat-card-content>
-    <num-edit-value-definition
-      *ngFor="let valueFilter of getValueFilters()"
-      [filter]="valueFilter"
-      [filterType]="'value'"
-    >
-    </num-edit-value-definition>
-    <num-edit-value-definition
-      *ngFor="let attributeFilter of getAttributeFilters()"
-      [filter]="attributeFilter"
-      [filterType]="'attribute'"
-    >
-    </num-edit-value-definition>
-    <num-display-entities
-      *ngIf="criterion.entity"
-      [criterionEntity]="criterion"
-      [query]="query"
-    ></num-display-entities>
+    <div *ngIf="searchType === 'querybuilder'">
+      <num-edit-value-definition
+        *ngFor="let valueFilter of getValueFilters()"
+        [filter]="valueFilter"
+        [filterType]="'value'"
+      >
+      </num-edit-value-definition>
+      <num-edit-value-definition
+        *ngFor="let attributeFilter of getAttributeFilters()"
+        [filter]="attributeFilter"
+        [filterType]="'attribute'"
+      >
+      </num-edit-value-definition>
+      <num-display-entities
+        *ngIf="criterion.entity"
+        [criterionEntity]="criterion"
+        [query]="query"
+      ></num-display-entities>
+    </div>
     <num-edit-time-restriction
       *ngIf="featureService.useFeatureTimeRestriction()"
       [timeRestriction]="criterion.timeRestriction"
-    ></num-edit-time-restriction>
+    >
+    </num-edit-time-restriction>
   </mat-card-content>
   <mat-card-footer>
     <div fxLayout="row" fxLayoutAlign="center center">

@@ -15,6 +15,9 @@ import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
 })
 export class DisplayCriterionComponent implements OnInit, OnDestroy {
   @Input()
+  searchType: string;
+
+  @Input()
   criterion: Criterion;
 
   @Input()
