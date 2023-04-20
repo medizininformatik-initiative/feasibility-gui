@@ -42,9 +42,13 @@ export class DataselectionEditorComponent implements OnInit {
     }
   }
 
+  storeQuery(query: Query): void {
+    this.query = query;
+    this.queryProviderService.store(query);
+  }
+
   doShowStoredQuery(): void {
     const dialogConfig = new MatDialogConfig();
-
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       hasQuerySend: this.hasQuerySend,
