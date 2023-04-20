@@ -99,8 +99,11 @@
   </div>
 </div>
 <div class="querybuilder-container">
-  hey
-  <num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>
+  <num-display-query
+    [searchType]="'querybuilder'"
+    [query]="query"
+    (storeQuery)="storeQuery($event)"
+  ></num-display-query>
 </div>
 <div *ngIf="featureService.useFeatureMultipleGroups()">
   <button class="button-add-group" type="button" mat-icon-button (click)="addGroup()">
