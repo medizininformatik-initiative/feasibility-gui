@@ -17,6 +17,9 @@ export class DisplayQueryComponent implements OnInit {
   @Input()
   query: Query;
 
+  @Input()
+  searchType: string;
+
   constructor(
     public featureService: FeatureService,
     private snackBar: MatSnackBar,
