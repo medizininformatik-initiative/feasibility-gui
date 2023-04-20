@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Query } from 'src/app/modules/querybuilder/model/api/query/query';
 import { QueryResult } from 'src/app/modules/querybuilder/model/api/result/QueryResult';
@@ -12,10 +12,13 @@ import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
   templateUrl: './dataselection-editor.component.html',
   styleUrls: ['./dataselection-editor.component.scss'],
 })
-export class DataselectionEditorComponent implements OnInit {
+export class DataselectionEditorComponent implements OnInit, AfterViewChecked {
   query: Query;
 
   storedQuery: QueryProviderService;
+
+  actionDisabledSend: boolean;
+  actionDisabledReset: boolean;
 
   result: QueryResult;
 
@@ -31,7 +34,8 @@ export class DataselectionEditorComponent implements OnInit {
     public featureService: FeatureService,
     public queryProviderService: QueryProviderService,
     public backend: BackendService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -76,5 +80,26 @@ export class DataselectionEditorComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  ngAfterViewChecked(): void {
+    this.actionDisabledSend = this.isActionDisabled('Send');
+    this.actionDisabledReset = this.isActionDisabled('Reset');
+    this.changeDetector.detectChanges();
+  }
+
+  isActionDisabled(button: string): boolean {
+    if (button === 'Send') {
+      return !(this.query.groups[0].inclusionCriteria.length > 0);
+    }
+
+    if (button === 'Reset') {
+      return (
+        !(this.query.groups[0].inclusionCriteria.length > 0) &&
+        !(this.query.groups[0].exclusionCriteria.length > 0) &&
+        !(this.query.groups.length > 1)
+      );
+    }
+    return false;
   }
 }
