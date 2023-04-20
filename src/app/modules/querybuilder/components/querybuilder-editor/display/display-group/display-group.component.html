@@ -92,6 +92,7 @@
     <div fxLayout="row" fxLayoutAlign="space-between stretch">
       <num-display-crit-group
         [ngClass]="{ dataselectionClass: searchType === 'dataselection' }"
+        [searchType]="searchType"
         [query]="query"
         [critGroup]="group.inclusionCriteria"
         [groupId]="group.id"
