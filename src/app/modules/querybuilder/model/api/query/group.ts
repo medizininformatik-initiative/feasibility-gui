@@ -39,6 +39,8 @@ export class Group {
   // disjunctive normal form (without negation)
   exclusionCriteria: Criterion[][] = [];
 
+  selectedCriteria?: Criterion[][] = [];
+
   @V2()
   dependencyInfo?: GroupDependencyInfo;
 }
