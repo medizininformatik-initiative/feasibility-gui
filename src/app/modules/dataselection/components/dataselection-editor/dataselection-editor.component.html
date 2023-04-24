@@ -2,6 +2,7 @@
   <div fxLayoutAlign="space-between center">
     <div fxLayout="column" class="query-buttons-box">
       <div fxLayout="row" fxLayoutAlign="end right">
+        <num-upload-dataselection (parentComponent)="test($event)"></num-upload-dataselection>
         <num-button
           [type]="'primary'"
           class="button-reset"
@@ -34,6 +35,7 @@
       [query]="query"
       (storeQuery)="storeQuery($event)"
     >
+      {{ query }}
     </num-display-query>
   </div>
 </div>
