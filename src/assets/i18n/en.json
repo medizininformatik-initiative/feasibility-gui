@@ -80,7 +80,8 @@
   "DATASELECTION": {
     "DATASELECTION": "Dataselection",
     "SEARCH":{
-      "LABEL": "enter code or display"
+      "LABEL": "enter code or display",
+      "CRITERIA": "Search criteria"
     },
     "DISPLAY": {
       "LABEL": "Selected criteria"
