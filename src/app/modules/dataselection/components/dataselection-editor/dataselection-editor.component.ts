@@ -56,7 +56,6 @@ export class DataselectionEditorComponent implements OnInit, AfterViewChecked {
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       hasQuerySend: this.hasQuerySend,
-      searchType: 'dataselection',
     };
     this.dialog.open(SaveDialogComponent, dialogConfig);
   }
