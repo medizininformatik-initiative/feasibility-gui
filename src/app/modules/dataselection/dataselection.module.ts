@@ -8,6 +8,7 @@ import { DisplayGroupComponent } from './components/dataselection-editor/display
 import { ResultSimpleComponent } from './components/dataselection-editor/result/result-simple/result-simple.component';
 import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 import { SaveDialogComponent } from './components/dataselection-editor/save/save-dialog/save-dialog.component';
+import { UploadDataselectionComponent } from './components/dataselection-editor/upload/upload-dataselection/upload-dataselection.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SaveDialogComponent } from './components/dataselection-editor/save/save
     DisplayGroupComponent,
     ResultSimpleComponent,
     SaveDialogComponent,
+    UploadDataselectionComponent,
   ],
   imports: [
     CommonModule,
