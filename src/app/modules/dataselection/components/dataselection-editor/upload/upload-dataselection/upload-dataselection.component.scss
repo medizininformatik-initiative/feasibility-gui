@@ -1,9 +1,13 @@
 .button-upload {
+  text-transform: none !important;
+  width: 160px;
+  font-size: 13px;
+  color: var(--num-color--primary-900);
+  display: flex;
   margin-right: 1em;
 }
 
 .div-import-from-file {
-  margin-right: 1em;
   margin-bottom: 5em;
 }
 
@@ -13,6 +17,19 @@
 
 .file-upload-text {
   margin: 8px 5px;
+  text-align: center;
+}
+
+.file-upload {
+  text-transform: none !important;
+  width: 160px;
+  font-size: 13px;
+  color: var(--num-color--primary-900);
+  display: flex;
+}
+
+.file-upload:hover {
+  font-weight: bold;
 }
 
 .button-import {
@@ -23,4 +40,10 @@
   color: var(--num-color--accent-300);
   margin: 5px;
   height: 20px;
+}
+
+::ng-deep .file-upload fa-icon svg {
+  width: 30px !important;
+  height: 30px !important;
+  color: var(--num-color--primary-900);
 }
