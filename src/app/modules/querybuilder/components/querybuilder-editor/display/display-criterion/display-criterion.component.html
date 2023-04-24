@@ -11,10 +11,12 @@
     (click)="openDetailsPopUp()"
   >
     <div class="header-display">{{ criterion.display }}</div>
-    <num-display-value-filter
-      *ngFor="let filter of getValueFilters()"
-      [filter]="filter"
-    ></num-display-value-filter>
+    <div *ngIf="searchType == 'querybuilder'">
+      <num-display-value-filter
+        *ngFor="let filter of getValueFilters()"
+        [filter]="filter"
+      ></num-display-value-filter>
+    </div>
     <num-display-value-filter
       *ngFor="let filter of getAttributeFilters()"
       [filter]="filter"
