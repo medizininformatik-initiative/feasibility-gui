@@ -60,7 +60,6 @@ export class EnterCriterionListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.query);
     this.criterionList.forEach((curCriterion) => {
       this.criterionAddibleList.push({
         criterion: curCriterion,
