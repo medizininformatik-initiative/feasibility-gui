@@ -119,8 +119,11 @@ export class ApiTranslator {
     const result = new DataSelectionOnly();
     const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria);
     result.selectedCriteria = this.translateCritGroupV2(inclusionCriteria);
-
-    console.log(result);
+    result.selectedCriteria.forEach((criteria) => {
+      criteria.forEach((criterion) => {
+        delete criterion.valueFilter;
+      });
+    });
     return result;
   }
 
