@@ -76,6 +76,16 @@
   padding: 2px 0px;
 }
 
+.header-label-dataselection {
+  /*width: 36%;*/
+  min-width: min-content;
+  background-color: var(--num-color--accent-600);
+  color: var(--num-color--accent-contrast);
+  text-align: center;
+  font-size: 16px;
+  padding: 8px 0px;
+}
+
 .button-tree-view {
   background-color: var(--num-color--primary-900);
   margin-top: 13px;
