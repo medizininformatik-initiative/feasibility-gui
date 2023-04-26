@@ -39,7 +39,9 @@ export class DisplayCritGroupComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('hey');
+  }
 
   getInnerLabelKey(): 'AND' | 'OR' {
     return this.critType === 'inclusion' ? 'OR' : 'AND';

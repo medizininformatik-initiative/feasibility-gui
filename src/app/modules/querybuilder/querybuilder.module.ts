@@ -122,6 +122,7 @@ export const FORMATS_GERMAN = {
     DisplayTimeRestrictionComponent,
     ResultSimpleComponent,
     ResultDetailsDialogComponent,
+    DisplayGroupComponent,
     DisplayCritGroupComponent,
     DisplayCriterionComponent,
     DisplayQueryComponent,
