@@ -254,6 +254,7 @@
     "SAVEQUERY": "Abfrage speichern",
     "VALIDATE": "Validieren",
     "IMPORT": "Query laden",
-    "IMPORT_FROM_FILE": "Datei auswählen"
+    "IMPORT_FROM_FILE": "Datei auswählen",
+    "IMPORT_DATASELECTION": "Datenselektion laden"
   }
 }
