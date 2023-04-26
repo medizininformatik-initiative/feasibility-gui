@@ -1,10 +1,10 @@
-<div fxLayout="row" class="div-import-from-file">
+<div fxLayout="row">
   <div fxLayout="column">
     <input type="file" class="file-input" (change)="doImportFromFile($event)" #fileUpload />
     <button class="button-upload" type="button" mat-icon-button (click)="fileUpload.click()">
-      <fa-icon size="3x" icon="file-upload"></fa-icon>
+      <fa-icon size="9x" icon="file-upload"></fa-icon>
     </button>
-    <span>{{ 'BUTTON.IMPORT_FROM_FILE' | translate }}</span>
+    <span class="text-alignment">{{ 'BUTTON.IMPORT_FROM_FILE' | translate }}</span>
   </div>
   <div class="file-name">{{ fileName }}</div>
   <num-button
@@ -13,6 +13,6 @@
     (click)="!actionDisabled && doImport()"
     class="button-import"
   >
-    {{ 'BUTTON.IMPORT' | translate }}
+    {{ 'BUTTON.IMPORT_DATASELECTION' | translate }}
   </num-button>
 </div>

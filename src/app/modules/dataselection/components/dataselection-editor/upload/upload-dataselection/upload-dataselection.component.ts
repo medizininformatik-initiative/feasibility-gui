@@ -24,11 +24,6 @@ export class UploadDataselectionComponent implements AfterViewChecked {
     private changeDetector: ChangeDetectorRef
   ) {}
 
-  callParent(): void {
-    window.history.state.preventRese = true;
-    this.parentComponent.next('somePhone');
-  }
-
   ngAfterViewChecked(): void {
     if (this.importQuery) {
       this.actionDisabled = false;
@@ -38,12 +33,11 @@ export class UploadDataselectionComponent implements AfterViewChecked {
     this.changeDetector.detectChanges();
   }
   doImport(): void {
-    this.query = new ApiTranslator().translateImportedSQtoUIQuery(
+    this.query = new ApiTranslator().translateImportedDsToUIQuery(
       QueryProviderService.createDefaultQuery(),
       this.importQuery
     );
     this.queryProviderService.store(this.query);
-    window.history.state.preventRese = true;
     this.parentComponent.next('');
     this.router.navigate(['/dataselection/editor'], {
       onSameUrlNavigation: 'reload',
@@ -61,6 +55,5 @@ export class UploadDataselectionComponent implements AfterViewChecked {
 
   onReaderLoad(event): void {
     this.importQuery = JSON.parse(event.target.result);
-    console.log(this.importQuery);
   }
 }
