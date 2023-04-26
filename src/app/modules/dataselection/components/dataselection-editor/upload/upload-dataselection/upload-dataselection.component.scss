@@ -5,10 +5,11 @@
   color: var(--num-color--primary-900);
   display: flex;
   margin-right: 1em;
+  justify-content: center;
 }
 
-.div-import-from-file {
-  margin-bottom: 5em;
+.text-alignment {
+  text-align: center;
 }
 
 .file-input {
