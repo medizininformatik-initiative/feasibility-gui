@@ -44,6 +44,7 @@
     "angular-oauth2-oidc": "^13.0.1",
     "angular-playground": "^10.1.0",
     "file-saver": "^2.0.5",
+    "file-saver-es": "^2.0.5",
     "jest": "^27.4.4",
     "jest-junit": "^13.0.0",
     "jest-preset-angular": "^11.0.1",

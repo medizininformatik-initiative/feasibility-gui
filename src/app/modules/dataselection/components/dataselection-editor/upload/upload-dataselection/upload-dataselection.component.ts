@@ -11,7 +11,7 @@ import { QueryProviderService } from 'src/app/modules/querybuilder/service/query
 })
 export class UploadDataselectionComponent implements AfterViewChecked {
   @Output()
-  parentComponent = new EventEmitter();
+  parentComponent = new EventEmitter<Query>();
 
   query: Query;
   importQuery: Query;
@@ -38,11 +38,7 @@ export class UploadDataselectionComponent implements AfterViewChecked {
       this.importQuery
     );
     this.queryProviderService.store(this.query);
-    this.parentComponent.next('');
-    this.router.navigate(['/dataselection/editor'], {
-      onSameUrlNavigation: 'reload',
-      state: { preventReset: true },
-    });
+    this.parentComponent.emit(this.query);
   }
 
   doImportFromFile(event: Event): void {

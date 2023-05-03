@@ -248,6 +248,7 @@ export class ApiTranslator {
       selectedCriteria,
       invalidCriteria
     );
+    delete uiquery.groups[0].selectedCriteria;
     return uiquery;
   }
 
