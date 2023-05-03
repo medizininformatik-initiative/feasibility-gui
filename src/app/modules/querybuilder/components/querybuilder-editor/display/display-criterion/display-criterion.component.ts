@@ -17,9 +17,6 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
 
   @Input()
   searchType: string;
-  
-  @Input()
-  searchType: string;
 
   @Input()
   criterion: Criterion;

@@ -90,7 +90,6 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
       query: this.query,
       searchType: this.searchType,
     };
-
     this.dialog.open(EnterCriterionListComponent, dialogConfig);
     this.closeOverlay.emit('text');
   }
