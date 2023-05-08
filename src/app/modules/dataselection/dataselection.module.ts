@@ -8,6 +8,8 @@ import { ResultSimpleComponent } from './components/dataselection-editor/result/
 import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 import { SaveDialogComponent } from './components/dataselection-editor/save/save-dialog/save-dialog.component';
 import { UploadDataselectionComponent } from './components/dataselection-editor/upload/upload-dataselection/upload-dataselection.component';
+import { RatingDialogComponent } from './components/dataselection-editor/rating/rating-dialog/rating-dialog.component';
+import { RatingOverviewComponent } from './components/dataselection-editor/rating/rating-overview/rating-overview.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { UploadDataselectionComponent } from './components/dataselection-editor/
     ResultSimpleComponent,
     SaveDialogComponent,
     UploadDataselectionComponent,
+    RatingDialogComponent,
+    RatingOverviewComponent,
   ],
   imports: [
     CommonModule,

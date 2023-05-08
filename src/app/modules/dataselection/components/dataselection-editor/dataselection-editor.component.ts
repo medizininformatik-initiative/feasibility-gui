@@ -47,7 +47,6 @@ export class DataselectionEditorComponent implements OnInit, AfterViewChecked {
   }
 
   loadQuery($event) {
-    console.log($event);
     this.query = $event;
   }
   storeQuery(query: Query): void {
