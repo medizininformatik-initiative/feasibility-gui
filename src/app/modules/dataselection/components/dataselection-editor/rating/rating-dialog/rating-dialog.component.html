@@ -1,0 +1,23 @@
+<div class="dialog-container">
+  <h1 mat-dialog-title>Hi</h1>
+  <div mat-dialog-content fxLayout="column" fxlayoutalign="space-between">
+    <div mat-dialog-actions>
+      <button
+        mat-icon-button
+        [color]="color"
+        *ngFor="let ratingId of ratingArr; index as i"
+        [id]="'star_' + i"
+        (click)="onClick(i + 1)"
+        [matTooltip]="ratingId + 1"
+        matTooltipPosition="above"
+      >
+        <fa-icon size="3x" icon="star"></fa-icon>
+      </button>
+    </div>
+    <div>
+      <p>
+        Your rated <span>{{ rating }}</span> / <span>{{ starCount }}</span>
+      </p>
+    </div>
+  </div>
+</div>
