@@ -1,4 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RatingOverviewComponent } from '../rating-overview/rating-overview.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'num-rating-dialog',
@@ -6,43 +9,25 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./rating-dialog.component.scss'],
 })
 export class RatingDialogComponent implements OnInit {
-  @Input()
-  public rating = 3;
-
-  @Input()
-  public starCount = 5;
-
-  @Input()
-  private color = 'accent';
-
-  @Output()
-  private ratingUpdated = new EventEmitter();
-
-  private snackBarDuration = 2000;
-  public ratingArr = [];
-
-  constructor() {}
+  stars: number[] = [1, 2, 3, 4, 5];
+  selectedValue: number;
+  ratingComment = '';
+  constructor(private dialogRef: MatDialogRef<RatingOverviewComponent, void>) {}
 
   ngOnInit() {
-    for (let index = 0; index < this.starCount; index++) {
-      this.ratingArr.push(index);
-    }
-  }
-  onClick(rating: number) {
-    this.rating = rating;
+    this.selectedValue = 3;
+    console.log(this.ratingComment);
   }
 
-  showIcon(index: number) {
-    if (this.rating >= index + 1) {
-      return 'star';
-    } else {
-      return 'star_border';
-    }
+  countStar(star) {
+    this.selectedValue = star;
   }
-}
 
-export enum StarRatingColor {
-  primary = 'primary',
-  accent = 'accent',
-  warn = 'warn',
+  mouseEnter(star: number) {
+    this.selectedValue = star;
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }
