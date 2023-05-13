@@ -2,6 +2,7 @@ import { ActivatedRouteSnapshot, Route, RouterStateSnapshot } from '@angular/rou
 import { OAuthService } from 'angular-oauth2-oidc';
 
 import { RoleGuard } from './role.guard';
+import { FeatureService } from '../../../service/feature.service';
 
 describe('RoleGuard', () => {
   let guard: RoleGuard;
@@ -13,8 +14,12 @@ describe('RoleGuard', () => {
     loadDiscoveryDocumentAndLogin: () => Promise.resolve(true),
   } as unknown as OAuthService;
 
+  const featureService = {
+    getRoles: (site: string): string[] => ['test'],
+  } as FeatureService;
+
   beforeEach(() => {
-    guard = new RoleGuard(authService);
+    guard = new RoleGuard(authService, featureService);
   });
 
   afterEach(() => {
