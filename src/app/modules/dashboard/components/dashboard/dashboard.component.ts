@@ -23,11 +23,13 @@ export class DashboardComponent implements OnInit {
   authTest: string;
   stylesheet: string;
   roles: string[];
+  displayInfoMessage: boolean;
 
   ngOnInit(): void {
     this.roles = this.featureService.getRoles('main');
     this.init();
     this.stylesheet = this.featureService.getStylesheet();
+    this.displayInfoMessage = this.featureService.showInfoPage();
   }
 
   newQuery(): void {}
