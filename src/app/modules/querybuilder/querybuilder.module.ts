@@ -43,7 +43,7 @@ import { SaveDialogComponent } from './components/querybuilder-editor/save/save-
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileSaverModule } from 'ngx-filesaver';
-
+import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 export const FORMATS_GERMAN = {
   parse: {
     dateInput: 'LL',
@@ -98,6 +98,7 @@ export const FORMATS_GERMAN = {
     MatProgressSpinnerModule,
     MatTooltipModule,
     FileSaverModule,
+    SnackBarComponent,
   ],
   providers: [
     {
