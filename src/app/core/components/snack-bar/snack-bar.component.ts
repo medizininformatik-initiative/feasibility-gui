@@ -1,7 +1,6 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, Output, inject } from '@angular/core';
 import {
   MatSnackBar,
-  MatSnackBarRef,
   MatSnackBarModule,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
@@ -11,8 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SnackBarContentComponent } from './snack-bar-content/snack-bar-content.component';
-import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { ResultDetailsDialogComponentData } from 'src/app/modules/querybuilder/components/querybuilder-editor/result/result-details-dialog/result-details-dialog.component';
 
 @Component({
   selector: 'num-snack-bar',
@@ -26,6 +26,7 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
     MatButtonModule,
     MatSnackBarModule,
     SharedComponentsModule,
+    SnackBarContentComponent,
   ],
 })
 export class SnackBarComponent {
@@ -34,9 +35,21 @@ export class SnackBarComponent {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  snackBarMessage = 'Message recieved';
+  resultStatus: ResultDetailsDialogComponentData;
 
-  constructor(private snackBar: MatSnackBar) {}
+  backEndResponse = 'test';
+
+  queryResult = true;
+
+  constructor(public snackBar: MatSnackBar, public backend: BackendService) {}
+
+  public getBackendResponse(error) {
+    console.log(error);
+    if (this.queryResult) {
+      this.backEndResponse = 'Hello';
+      this.openSnackBar();
+    }
+  }
 
   openSnackBar() {
     this.snackBar.openFromComponent(SnackBarContentComponent, {
