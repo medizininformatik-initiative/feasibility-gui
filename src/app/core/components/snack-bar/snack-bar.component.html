@@ -1,4 +1,6 @@
-<button mat-stroked-button (click)="openSnackBar()" aria-label="Show an example snack-bar">
-  Pizza party
-</button>
-<num-snack-bar-content [snackbarMessage]="backEndResponse"></num-snack-bar-content>
+<div class="snackbarAlignment" matSnackBarLabel>
+  {{ snackbarService.errorMessage }}
+  <button mat-raised-button class="buttonColor" (click)="snackbarService.closeSnackbar()">
+    Close
+  </button>
+</div>

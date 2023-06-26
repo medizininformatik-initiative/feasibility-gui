@@ -11,6 +11,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
 import { MatRadioChange } from '@angular/material/radio';
 import { QueryResultRateLimit } from '../../model/api/result/QueryResultRateLimit';
+import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'num-querybuilder',
@@ -45,7 +46,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     public backend: BackendService,
     public featureService: FeatureService,
     private changeDetector: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackbar: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -180,6 +182,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   setConsent(radio: MatRadioChange): void {
     this.query.consent = radio.value;
     this.storeQuery(this.query);
+    this.snackbar.openSnackbar('test');
   }
 
   getDetailedResultRateLimit(): void {
