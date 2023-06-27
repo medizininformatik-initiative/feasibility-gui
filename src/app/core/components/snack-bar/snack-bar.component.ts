@@ -20,6 +20,7 @@ export class SnackbarService {
   private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   private verticalPosition: MatSnackBarVerticalPosition = 'top';
 
+  private duration: 1000;
   public errorMessage: string;
   constructor(private snackBar: MatSnackBar) {}
 
@@ -32,13 +33,20 @@ export class SnackbarService {
     });
   }
 */
-  public openSnackbar(message: string) {
-    this.errorMessage = message;
+  displayErrorMessage(errorMessage) {
+    if (errorMessage) {
+      this.errorMessage = errorMessage;
+      this.openSnackbar(this.errorMessage);
+    }
+  }
+
+  private openSnackbar(message: string) {
     this.snackBar.openFromComponent(SnackBarComponent, {
+      data: this.errorMessage,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      panelClass: ['snackbar-container', '.mat-mdc-button'],
-      duration: 5000 * 1000,
+      duration: this.duration * 1000,
+      panelClass: ['snackbar-container'],
     });
   }
   public closeSnackbar() {
