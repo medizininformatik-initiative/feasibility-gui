@@ -182,7 +182,6 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   setConsent(radio: MatRadioChange): void {
     this.query.consent = radio.value;
     this.storeQuery(this.query);
-    this.snackbar.openSnackbar('test');
   }
 
   getDetailedResultRateLimit(): void {
