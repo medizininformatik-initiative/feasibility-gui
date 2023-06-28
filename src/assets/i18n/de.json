@@ -239,5 +239,11 @@
     "VALIDATE": "Validieren",
     "IMPORT": "Query laden",
     "IMPORT_FROM_FILE": "Datei auswählen"
+  },
+  "Error": {
+    "THE_NUMBER_OF_SITES_WHICH_ANSWERED_IS_TOO_SMALL_DETAILED_RESULTS_ARE_NOT_SHOWN":"Die Anzahl der Standorte die geantwortet haben ist zu klein -> Detailergebnis wird nicht angezeigt",
+    "HE_RESULT_SIZE_IS_TOO_SMALL_RESULT_WILL_NOT_BE_SHOWN": "Die Ergebnismenge ist zu klein -> Ergebnis wird nicht angezeigt",
+    "YOU_SENT_TOO_MANY_QUERIES_PLEASE_WAIT_RETRY_AFTER_SECONDS_AND_TRY_AGAIN":"Sie haben zu viele Anfragen gestellt, bitte warten Sie RETRY_AFTER Sekunden und probieren Sie es erneut",
+    "YOUR_USER_WAS_BLACKLISTED_BECAUSE_YOU_SEND_TO_MANY_QUERIES_PLEASE_CONTACT": "Ihr Benutzer wurde wegen zu vielen Anfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de"
   }
 }

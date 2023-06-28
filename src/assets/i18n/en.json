@@ -239,5 +239,12 @@
     "VALIDATE": "Validate",
     "IMPORT": "Load query",
     "IMPORT_FROM_FILE": "choose file"
+  },
+  "Error": {
+    "THE_NUMBER_OF_SITES_WHICH_ANSWERED_IS_TOO_SMALL_DETAILED_RESULTS_ARE_NOT_SHOWN":"The number of sites which answered is too small -> detailed results are not shown",
+    "HE_RESULT_SIZE_IS_TOO_SMALL_RESULT_WILL_NOT_BE_SHOWN": "The result size is too small -> result will not be shown",
+    "YOU_SENT_TOO_MANY_QUERIES_PLEASE_WAIT_RETRY_AFTER_SECONDS_AND_TRY_AGAIN":"You sent too many queries, please wait RETRY_AFTER seconds and try again",
+    "YOUR_USER_WAS_BLACKLISTED_BECAUSE_YOU_SEND_TO_MANY_QUERIES_PLEASE_CONTACT": "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de"
+  }
   }
 }
