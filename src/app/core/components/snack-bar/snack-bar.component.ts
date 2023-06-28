@@ -4,8 +4,6 @@ import {
   MatSnackBarModule,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
-  MatSnackBarRef,
-  MAT_SNACK_BAR_DATA,
 } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -20,20 +18,11 @@ export class SnackbarService {
   private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   private verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  private duration: 1000;
   public errorMessage: string;
+
   constructor(private snackBar: MatSnackBar) {}
 
-  /*  public openSnackbar(message: string) {
-    this.snackBar.open(message,'Close', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      panelClass: ['snackbar-container', '.mat-mdc-button'],
-      duration: 5000 * 1000,
-    });
-  }
-*/
-  displayErrorMessage(errorMessage) {
+  public displayErrorMessage(errorMessage: string) {
     if (errorMessage) {
       this.errorMessage = errorMessage;
       this.openSnackbar(this.errorMessage);
@@ -45,10 +34,11 @@ export class SnackbarService {
       data: this.errorMessage,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: this.duration * 1000,
+      duration: 1000000,
       panelClass: ['snackbar-container'],
     });
   }
+
   public closeSnackbar() {
     this.snackBar.dismiss();
   }
@@ -69,7 +59,5 @@ export class SnackbarService {
   ],
 })
 export class SnackBarComponent {
-  errorMessage: string;
-
   constructor(public snackbarService: SnackbarService) {}
 }

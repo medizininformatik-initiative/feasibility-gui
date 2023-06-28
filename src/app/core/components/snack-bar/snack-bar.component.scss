@@ -7,7 +7,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 50px;
   background-color: white;
+  padding: 30px 20px;
+  border-radius: (--mdc-snackbar-container-shape, var(--mdc-shape-small, 6px));
+}
+
+::ng-deep .mat-snack-bar-container {
+  max-width: 800px;
 }
 
 .buttonColor {
