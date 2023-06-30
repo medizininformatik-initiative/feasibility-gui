@@ -5,6 +5,7 @@ import { interval, Observable, Subscription, timer } from 'rxjs';
 import { map, share, switchAll, takeUntil, startWith } from 'rxjs/operators';
 import { BackendService } from '../../../../service/backend.service';
 import { FeatureService } from '../../../../../../service/feature.service';
+import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 
 export class ResultDetailsDialogComponentData {
   resultObservable$: Observable<QueryResult>;
@@ -24,6 +25,8 @@ export class ResultDetailsDialogComponent implements OnInit {
   resultSubscription: Subscription;
   resultStatus: string;
   getStoredResult: boolean;
+
+  snackbar: SnackbarService;
 
   @Output() resultGotten = new EventEmitter<boolean>();
 
@@ -58,6 +61,11 @@ export class ResultDetailsDialogComponent implements OnInit {
         (result) => {
           this.resultStatus = '200';
           console.log(this.result);
+          if ('issues' in result) {
+            if (result.issues.some((issue) => issue.code === 'FEAS-10005')) {
+              this.snackbar.displayErrorMessage(this.snackbar.errorCodes['200_FEAS_10005']);
+            }
+          }
           this.sortResult(result);
           this.resultGotten.emit(true);
         },

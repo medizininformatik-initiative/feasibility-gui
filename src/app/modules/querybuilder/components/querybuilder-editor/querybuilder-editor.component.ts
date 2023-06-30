@@ -12,7 +12,6 @@ import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
 import { MatRadioChange } from '@angular/material/radio';
 import { QueryResultRateLimit } from '../../model/api/result/QueryResultRateLimit';
 import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
-
 @Component({
   selector: 'num-querybuilder',
   templateUrl: './querybuilder-editor.component.html',
@@ -25,6 +24,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   query: Query;
 
   result: QueryResult;
+
+  resultsLargeEnough: boolean;
 
   resultUrl: string;
 
@@ -106,7 +107,6 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   startRequestingResult(): void {
     const summaryResultUrl = this.resultUrl + '/summary-result';
     this.loadedResult = false;
-
     this.resultObservable$ = interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 100)),
       map(() => this.backend.getSummaryResult(summaryResultUrl)),
@@ -115,7 +115,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     );
     this.subscriptionPolling = this.resultObservable$.subscribe(
       (result) => {
-        this.result = result;
+        if (result.issues.some((issue) => issue.code === 'FEAS-10004')) {
+        } else {
+          this.resultsLargeEnough = false;
+          this.result = result;
+        }
         if (result.queryId !== undefined) {
           this.hasQuerySend = result.queryId;
         } else {
@@ -127,14 +131,17 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         this.showSpinningIcon = false;
         this.hasQuerySend = false;
         if (error.status === 404) {
-          window.alert('Site not found');
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['404']);
         }
       },
       () => {
         console.log('done');
-        //  this.resultUrl = ''
+        if (this.resultsLargeEnough === false) {
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['429_FEAS_10002']);
+        } else {
+          this.loadedResult = true;
+        }
         this.showSpinningIcon = false;
-        this.loadedResult = true;
       }
     );
   }
@@ -191,7 +198,16 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         this.callsRemaining = result.remaining;
       },
       (error) => {
-        console.log(error);
+        if ('issues' in error.error) {
+          if (error.error.issues.some((issue) => issue.code === 'FEAS-10001')) {
+            console.log('reached blacklisted');
+            this.snackbar.displayErrorMessage(this.snackbar.errorCodes['403_FEAS_10001']);
+          }
+        }
+        if (error.error.issues.some((issue) => issue.code === 'FEAS-10002')) {
+          console.log('too many requests');
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['403_FEAS_10002']);
+        }
       }
     );
   }
