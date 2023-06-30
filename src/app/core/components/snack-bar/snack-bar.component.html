@@ -1,8 +1,8 @@
-<div fxLayout="row" fxLayoutAlign="space-between" class="snackbarAlignment" matSnackBarLabel>
-  <div>
+<div fxLayout="column" fxLayoutAlign="space-between" class="snackbarAlignment" matSnackBarLabel>
+  <div class="textAlignment">
     {{ 'ERROR.' + snackbarService.errorMessage | translate }}
   </div>
-  <div fxLayoutAlign="end">
+  <div class="buttoAlignment">
     <button mat-raised-button class="buttonColor" (click)="snackbarService.closeSnackbar()">
       {{ 'BUTTON.CLOSE' | translate }}
     </button>

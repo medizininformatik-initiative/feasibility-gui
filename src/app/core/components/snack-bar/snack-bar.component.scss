@@ -5,12 +5,16 @@
 
 .snackbarAlignment {
   background-color: white;
-  padding: 25px 20px;
-  border-radius: (--mdc-snackbar-container-shape, var(--mdc-shape-small, 6px));
+  display: flex;
+  flex-direction: row;
 }
 
 ::ng-deep .mat-snack-bar-container {
   max-width: 800px;
+}
+
+.textAlignment {
+  padding: 25px 20px;
 }
 
 .buttonColor {
@@ -28,4 +32,12 @@
 
 ::ng-deep .mdc-snackbar__label {
   padding: 0px;
+}
+
+.buttoAlignment {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  align-self: self-end;
+  padding: 10px;
 }
