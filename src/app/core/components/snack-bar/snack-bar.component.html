@@ -1,6 +1,10 @@
-<div class="snackbarAlignment" matSnackBarLabel>
-  {{ snackbarService.errorMessage }}
-  <button mat-raised-button class="buttonColor" (click)="snackbarService.closeSnackbar()">
-    Close
-  </button>
+<div fxLayout="row" fxLayoutAlign="space-between" class="snackbarAlignment" matSnackBarLabel>
+  <div>
+    {{ 'ERROR.' + snackbarService.errorMessage | translate }}
+  </div>
+  <div fxLayoutAlign="end">
+    <button mat-raised-button class="buttonColor" (click)="snackbarService.closeSnackbar()">
+      {{ 'BUTTON.CLOSE' | translate }}
+    </button>
+  </div>
 </div>
