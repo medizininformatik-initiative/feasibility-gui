@@ -285,10 +285,12 @@ export class BackendService {
     if (result === 0) {
       return '0';
     } else {
-      if (result <= this.lowerBoundaryPatient) {
-        return '< ' + this.lowerBoundaryPatient.toString();
-      } else {
-        return result.toString();
+      if (result) {
+        if (result <= this.lowerBoundaryPatient) {
+          return '< ' + this.lowerBoundaryPatient.toString();
+        } else {
+          return result.toString();
+        }
       }
     }
   }
