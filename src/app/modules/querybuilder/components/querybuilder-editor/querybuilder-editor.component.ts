@@ -115,6 +115,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     );
     this.subscriptionPolling = this.resultObservable$.subscribe(
       (result) => {
+        console.log(result);
         if (result.issues.some((issue) => issue.code === 'FEAS-10004')) {
         } else {
           this.resultsLargeEnough = false;
