@@ -138,7 +138,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
       () => {
         console.log('done');
         if (this.resultsLargeEnough === false) {
-          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['429_FEAS_10002']);
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
         } else {
           this.loadedResult = true;
         }
@@ -201,13 +201,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
       (error) => {
         if ('issues' in error.error) {
           if (error.error.issues.some((issue) => issue.code === 'FEAS-10001')) {
-            console.log('reached blacklisted');
-            this.snackbar.displayErrorMessage(this.snackbar.errorCodes['403_FEAS_10001']);
+            this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10001']);
           }
         }
         if (error.error.issues.some((issue) => issue.code === 'FEAS-10002')) {
-          console.log('too many requests');
-          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['403_FEAS_10002']);
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
         }
       }
     );

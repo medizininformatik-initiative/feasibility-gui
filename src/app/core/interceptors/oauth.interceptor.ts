@@ -35,7 +35,6 @@ export class OAuthInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error.error);
         if (error.status === 401) {
           if (req.url === 'http://localhost:8090/api/v1/query-handler/stored-query') {
             window.alert('User unauthorized');
@@ -43,28 +42,17 @@ export class OAuthInterceptor implements HttpInterceptor {
             this.oauthService.logOut();
           }
         }
-        if (error.status === 200) {
-          this.snackbar.displayErrorMessage(error.message);
-        }
-        if (error.status === 403) {
-          if ('issues' in error.error) {
-            if (error.error.issues.some((issue) => issue.code === 'FEAS-10001')) {
-              this.snackbar.displayErrorMessage(this.snackbar.errorCodes['403_FEAS_10001']);
-            }
-          }
-          if (error.error.issues.some((issue) => issue.code === 'FEAS-10002')) {
-            this.snackbar.displayErrorMessage(this.snackbar.errorCodes['403_FEAS_10002']);
-            console.log('too many requests');
-          }
-        }
-        if (error.status === 404) {
-          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['404']);
-        }
-        if (error.status === 429) {
-          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['429']);
+        if (error.error.issues[0]) {
+          this.handleErroCodes(error.error.issues[0].code);
+        } else {
+          this.handleErroCodes(error.status);
         }
         return throwError(error);
       })
     );
+  }
+
+  public handleErroCodes(issue) {
+    this.snackbar.displayErrorMessage(this.snackbar.errorCodes[issue]);
   }
 }

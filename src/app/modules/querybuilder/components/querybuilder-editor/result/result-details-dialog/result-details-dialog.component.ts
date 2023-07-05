@@ -60,17 +60,15 @@ export class ResultDetailsDialogComponent implements OnInit {
       .subscribe(
         (result) => {
           this.resultStatus = '200';
-          console.log(this.result);
           if ('issues' in result) {
             if (result.issues.some((issue) => issue.code === 'FEAS-10005')) {
-              this.snackbar.displayErrorMessage(this.snackbar.errorCodes['200_FEAS_10005']);
+              this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10005']);
             }
           }
           this.sortResult(result);
           this.resultGotten.emit(true);
         },
         (error) => {
-          console.log(error);
           //this.showSpinningIcon = false;
           if (error.status === 404) {
             this.resultStatus = '404';
@@ -88,6 +86,6 @@ export class ResultDetailsDialogComponent implements OnInit {
   }
   sortResult(resultTemp): void {
     this.result = resultTemp;
-    this.result.resultLines.sort((a, b) => b.numberOfPatients - a.numberOfPatients);
+    this.result?.resultLines.sort((a, b) => b.numberOfPatients - a.numberOfPatients);
   }
 }
