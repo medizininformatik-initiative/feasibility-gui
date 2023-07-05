@@ -60,11 +60,6 @@ export class ResultDetailsDialogComponent implements OnInit {
       .subscribe(
         (result) => {
           this.resultStatus = '200';
-          if ('issues' in result) {
-            if (result.issues.some((issue) => issue.code === 'FEAS-10005')) {
-              this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10005']);
-            }
-          }
           this.sortResult(result);
           this.resultGotten.emit(true);
         },
