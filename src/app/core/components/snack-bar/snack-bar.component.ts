@@ -21,7 +21,7 @@ export class SnackbarService {
   public errorCodes = {
     'FEAS-10001': 'FEAS-10001',
     'FEAS-10002': 'FEAS-10002',
-    'FEAS-10004': 'FEAS_10004',
+    'FEAS-10004': 'FEAS-10004',
     'FEAS-10005': 'FEAS-10005',
     404: 'SITE_NOT_FOUND',
   };

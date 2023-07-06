@@ -242,8 +242,8 @@
   },
   "ERROR": {
     "FEAS-10001": "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
-    "FEAS-10002":"You sent too many queries, please wait {{RETRY_AFTER}} seconds and try again",
-    "FEAS-10004":"The number of sites which answered is too small -> detailed results are not shown",
+    "FEAS-10002": "You sent too many queries, please wait {{RETRY_AFTER}} seconds and try again",
+    "FEAS-10004": "The number of sites which answered is too small -> detailed results are not shown",
     "FEAS-10005": "The result size is too small -> result will not be shown"
   }
 }
