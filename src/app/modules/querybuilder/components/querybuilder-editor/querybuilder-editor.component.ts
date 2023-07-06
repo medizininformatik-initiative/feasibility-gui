@@ -115,7 +115,6 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     );
     this.subscriptionPolling = this.resultObservable$.subscribe(
       (result) => {
-        console.log(result);
         this.resultsLargeEnough = false;
         this.result = result;
         if (result.queryId !== undefined) {
@@ -125,7 +124,6 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         }
       },
       (error) => {
-        console.log(error);
         this.showSpinningIcon = false;
         this.hasQuerySend = false;
         if (error.status === 404) {

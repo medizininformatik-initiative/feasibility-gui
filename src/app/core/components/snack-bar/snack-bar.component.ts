@@ -25,18 +25,17 @@ export class SnackbarService {
     'FEAS-10005': 'FEAS-10005',
     404: 'SITE_NOT_FOUND',
   };
+
   public errorMessage: string;
 
   constructor(private snackBar: MatSnackBar) {}
 
   public displayErrorMessage(errorMessage: string) {
-    if (errorMessage) {
-      this.errorMessage = errorMessage;
-      this.openSnackbar(this.errorMessage);
-    }
+    this.errorMessage = errorMessage;
+    this.openSnackbar();
   }
 
-  private openSnackbar(message: string) {
+  private openSnackbar() {
     this.snackBar.openFromComponent(SnackBarComponent, {
       data: this.errorMessage,
       horizontalPosition: this.horizontalPosition,
