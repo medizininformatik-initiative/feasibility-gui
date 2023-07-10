@@ -17,7 +17,7 @@
       </thead>
       <tr class="empty-row"></tr>
       <ng-container
-        *ngIf="resultStatus === '200' && result?.resultLines.length >= lowerBoundaryLocation"
+        *ngIf="resultStatus === '200' && result?.resultLines?.length >= lowerBoundaryLocation"
       >
         <tr *ngFor="let location of result.resultLines; index as i" class="result-lines">
           <td class="left-column">{{ 'RESULT.SITE' | translate }} {{ i + 1 }}</td>
