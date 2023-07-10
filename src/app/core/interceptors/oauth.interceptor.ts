@@ -53,6 +53,9 @@ export class OAuthInterceptor implements HttpInterceptor {
   }
 
   public handleErroCodes(issue) {
+    console.log('1');
+    console.log(issue);
+    console.log('2');
     this.snackbar.displayErrorMessage(this.snackbar.errorCodes[issue]);
   }
 }
