@@ -115,12 +115,18 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     );
     this.subscriptionPolling = this.resultObservable$.subscribe(
       (result) => {
-        this.resultsLargeEnough = false;
-        this.result = result;
-        if (result.queryId !== undefined) {
-          this.hasQuerySend = result.queryId;
+        if (result.issues !== undefined) {
+          if (result.issues[0].code !== undefined) {
+            this.resultsLargeEnough = false;
+          }
         } else {
-          this.hasQuerySend = false;
+          this.resultsLargeEnough = true;
+          this.result = result;
+          if (result.queryId !== undefined) {
+            this.hasQuerySend = result.queryId;
+          } else {
+            this.hasQuerySend = false;
+          }
         }
       },
       (error) => {
@@ -128,6 +134,9 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         this.hasQuerySend = false;
         if (error.status === 404) {
           this.snackbar.displayErrorMessage(this.snackbar.errorCodes['404']);
+        }
+        if (error.status === 429) {
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
         }
       },
       () => {
