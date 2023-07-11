@@ -28,10 +28,13 @@ export class SnackbarService {
 
   public errorMessage: string;
 
+  public retryAfter: 0;
+
   constructor(private snackBar: MatSnackBar) {}
 
-  public displayErrorMessage(errorMessage: string) {
+  public displayErrorMessage(errorMessage: string, retryAfter?) {
     this.errorMessage = errorMessage;
+    this.retryAfter = retryAfter;
     this.openSnackbar();
   }
 

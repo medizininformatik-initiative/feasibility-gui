@@ -32,30 +32,26 @@ export class OAuthInterceptor implements HttpInterceptor {
     const token = this.authStorage.getItem('access_token');
     const headers = req.headers.set('Authorization', 'Bearer ' + token);
     req = req.clone({ headers });
-
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
           if (req.url === 'http://localhost:8090/api/v1/query-handler/stored-query') {
-            window.alert('User unauthorized');
+            this.handleErrorCodes(error.status);
           } else {
             this.oauthService.logOut();
           }
         }
         if (error.error.issues[0]) {
-          this.handleErroCodes(error.error.issues[0].code);
+          this.handleErrorCodes(error.error.issues[0].code, error.headers.get('Retry-After'));
         } else {
-          this.handleErroCodes(error.status);
+          this.handleErrorCodes(error.status);
         }
         return throwError(error);
       })
     );
   }
 
-  public handleErroCodes(issue) {
-    console.log('1');
-    console.log(issue);
-    console.log('2');
-    this.snackbar.displayErrorMessage(this.snackbar.errorCodes[issue]);
+  public handleErrorCodes(issue, retryAfter?) {
+    this.snackbar.displayErrorMessage(this.snackbar.errorCodes[issue], retryAfter);
   }
 }
