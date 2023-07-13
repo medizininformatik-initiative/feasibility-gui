@@ -43,7 +43,7 @@ export class SnackbarService {
       data: this.errorMessage,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: 1000000,
+      duration: 10000,
       panelClass: ['snackbar-container'],
     });
   }
