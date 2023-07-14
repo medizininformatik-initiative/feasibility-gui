@@ -203,13 +203,10 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         this.callsRemaining = result.remaining;
       },
       (error) => {
-        if ('issues' in error.error) {
-          if (error.error.issues.some((issue) => issue.code === 'FEAS-10001')) {
-            this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10001']);
+        if (error.error.issues !== undefined) {
+          if (error.error.issues[0].code !== undefined) {
+            this.snackbar.displayErrorMessage(error.error.issues[0].code);
           }
-        }
-        if (error.error.issues.some((issue) => issue.code === 'FEAS-10002')) {
-          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
         }
       }
     );
