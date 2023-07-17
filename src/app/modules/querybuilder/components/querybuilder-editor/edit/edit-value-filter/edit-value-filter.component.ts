@@ -7,6 +7,7 @@ import {
 } from '../../../../model/api/query/valueFilter';
 import { TerminologyCode } from '../../../../model/api/terminology/terminology';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -196,5 +197,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   // values come from the for-iteration (unit), option is the selected one ([(value)]="filter.unit")
   compareFunction(values, option): boolean {
     return values.code === option.code;
+  }
+
+  disableSelect() {
+    return this.filter.valueDefinition?.allowedUnits.length > 1 ? false : true;
   }
 }
