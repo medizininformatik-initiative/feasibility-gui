@@ -92,10 +92,10 @@
             [max]="filter?.max"
           />
           <mat-hint *ngIf="valueTooSmall(filter.minValue)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
           }}</mat-hint>
           <mat-hint *ngIf="valueTooLarge(filter.minValue)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
         <span *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE">{{
@@ -117,10 +117,10 @@
             [precision]="filter.precision"
           />
           <mat-hint *ngIf="valueTooSmall(filter.maxValue)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
           }}</mat-hint>
           <mat-hint *ngIf="valueTooLarge(filter.maxValue)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
         <mat-form-field
@@ -139,16 +139,17 @@
             [precision]="filter.precision"
           />
           <mat-hint *ngIf="valueTooSmall(filter.value)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
           }}</mat-hint>
           <mat-hint *ngIf="valueTooLarge(filter.value)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
           <mat-label>{{ 'QUERYBUILDER.EDIT.UNIT' | translate }}</mat-label>
           <mat-select
-            *ngIf="filterType === 'value'"
+            [disabled]="false"
+            *ngIf="filterType === 'value' && !disableSelect()"
             [(value)]="filter.unit"
             [compareWith]="compareFunction"
           >
@@ -156,6 +157,13 @@
               {{ unit.display }}
             </mat-option>
           </mat-select>
+          <input
+            matInput
+            *ngIf="filterType === 'value' && disableSelect()"
+            [value]="filter.unit.display"
+            placeholder="filter.unit.display"
+            disabled
+          />
           <mat-select
             *ngIf="filterType === 'attribute'"
             [(value)]="filter.unit"
