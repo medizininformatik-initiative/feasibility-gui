@@ -92,10 +92,10 @@
             [max]="filter?.max"
           />
           <mat-hint *ngIf="valueTooSmall(filter.minValue)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
           }}</mat-hint>
           <mat-hint *ngIf="valueTooLarge(filter.minValue)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
         <span *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE">{{
@@ -117,10 +117,10 @@
             [precision]="filter.precision"
           />
           <mat-hint *ngIf="valueTooSmall(filter.maxValue)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
           }}</mat-hint>
           <mat-hint *ngIf="valueTooLarge(filter.maxValue)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
         <mat-form-field
@@ -139,10 +139,10 @@
             [precision]="filter.precision"
           />
           <mat-hint *ngIf="valueTooSmall(filter.value)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
           }}</mat-hint>
           <mat-hint *ngIf="valueTooLarge(filter.value)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
@@ -221,6 +221,7 @@
 
         <div *ngIf="filterType === 'value'" class="concept-list">
           <num-edit-value-filter-concept-line
+            #checkboxes
             *ngFor="let concept of filter.valueDefinition?.selectableConcepts"
             [checked]="isSelected(concept)"
             [concept]="concept"
@@ -230,6 +231,7 @@
         </div>
         <div *ngIf="filterType === 'attribute'" class="concept-list">
           <num-edit-value-filter-concept-line
+            #checkboxes
             *ngFor="let concept of filter.attributeDefinition?.selectableConcepts"
             [checked]="isSelected(concept)"
             [concept]="concept"
@@ -247,6 +249,13 @@
           >{{ 'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate }}</mat-hint
         >
       </div>
+      <num-button
+        type="primary"
+        (click)="deselectAllCheckboxes()"
+        fxLayoutAlign="end"
+        [isDisabled]="resetButtonDisabled()"
+        >{{ 'BUTTON.RESET' | translate }}</num-button
+      >
     </div>
   </ng-template>
 </div>
