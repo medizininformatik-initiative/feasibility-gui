@@ -230,6 +230,7 @@
 
         <div *ngIf="filterType === 'value'" class="concept-list">
           <num-edit-value-filter-concept-line
+            #checkboxes
             *ngFor="let concept of filter.valueDefinition?.selectableConcepts"
             [checked]="isSelected(concept)"
             [concept]="concept"
@@ -239,6 +240,7 @@
         </div>
         <div *ngIf="filterType === 'attribute'" class="concept-list">
           <num-edit-value-filter-concept-line
+            #checkboxes
             *ngFor="let concept of filter.attributeDefinition?.selectableConcepts"
             [checked]="isSelected(concept)"
             [concept]="concept"
@@ -256,6 +258,13 @@
           >{{ 'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate }}</mat-hint
         >
       </div>
+      <num-button
+        type="primary"
+        (click)="deselectAllCheckboxes()"
+        fxLayoutAlign="end"
+        [isDisabled]="resetButtonDisabled()"
+        >{{ 'BUTTON.RESET' | translate }}</num-button
+      >
     </div>
   </ng-template>
 </div>

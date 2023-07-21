@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import {
   Comparator,
   OperatorOptions,
@@ -10,6 +10,8 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Query } from '../../../../model/api/query/query';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { ValueType } from '../../../../model/api/terminology/valuedefinition';
+import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -19,6 +21,9 @@ import { ValueType } from '../../../../model/api/terminology/valuedefinition';
 export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   filter: ValueFilter;
+
+  @ViewChildren(EditValueFilterConceptLineComponent)
+  private checkboxes: QueryList<EditValueFilterConceptLineComponent>;
 
   @Input()
   filterType: string;
@@ -248,6 +253,24 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
     return isLinked;
   }
+  resetButtonDisabled() {
+    if (this.filter.selectedConcepts?.length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  deselectAllCheckboxes() {
+    this.checkboxes.forEach((checkbox) => {
+      if (checkbox.checked) {
+        checkbox.checked = false;
+        checkbox.checkedControlForm.patchValue(['checkedControl', false]);
+        this.selectedConceptsAsJson = new Set();
+        this.filter.selectedConcepts = [];
+      }
+    });
+  }
+
   public isActionDisabled(): boolean {
     if (this.filter?.attributeDefinition) {
       if (this.filter?.attributeDefinition?.optional) {
