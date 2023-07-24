@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/query/timerestriction';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 
@@ -24,6 +24,9 @@ export class EditTimeRestrictionComponent implements OnInit, AfterViewInit {
   @Input()
   timeRestriction: TimeRestriction;
 
+  @Output()
+  doResetTimeRestriction = new EventEmitter<boolean>();
+
   timeRestrictionOptions = Object.keys(TimeRestrictionType);
   timeRestrictionType: typeof TimeRestrictionType = TimeRestrictionType;
   disableAnimation = true;
@@ -38,12 +41,18 @@ export class EditTimeRestrictionComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
     setTimeout(() => (this.disableAnimation = false));
+    if ((this.timeRestriction.minDate || this.timeRestriction.maxDate) !== undefined) {
+      this.disableReset = false;
+    }
   }
 
   resetDate() {
     if ((this.timeRestriction.minDate || this.timeRestriction.maxDate) !== undefined) {
       this.disableReset = true;
       this.timeRestriction = new TimeRestriction();
+      this.doResetTimeRestriction.emit();
+    } else {
+      this.disableReset = false;
     }
   }
 }

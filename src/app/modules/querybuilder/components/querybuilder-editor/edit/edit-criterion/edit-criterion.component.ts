@@ -19,7 +19,7 @@ import { CritGroupArranger, CritGroupPosition } from '../../../../controller/Cri
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Subscription } from 'rxjs';
 import { BackendService } from '../../../../service/backend.service';
-import { TimeRestrictionType } from '../../../../model/api/query/timerestriction';
+import { TimeRestrictionType, TimeRestriction } from '../../../../model/api/query/timerestriction';
 import { TermEntry2CriterionTranslator } from 'src/app/modules/querybuilder/controller/TermEntry2CriterionTranslator';
 import { TerminologyCode } from '../../../../model/api/terminology/terminology';
 
@@ -240,6 +240,10 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   doDiscard(): void {
     this.discard.emit();
+  }
+
+  resetTimeRestriction() {
+    this.criterion.timeRestriction = new TimeRestriction();
   }
 
   isActionDisabled(): boolean {
