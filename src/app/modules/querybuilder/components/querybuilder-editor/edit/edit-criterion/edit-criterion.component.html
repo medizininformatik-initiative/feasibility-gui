@@ -26,6 +26,7 @@
     <num-edit-time-restriction
       *ngIf="featureService.useFeatureTimeRestriction()"
       [timeRestriction]="criterion.timeRestriction"
+      (doResetTimeRestriction)="resetTimeRestriction()"
     ></num-edit-time-restriction>
   </mat-card-content>
   <mat-card-footer>
