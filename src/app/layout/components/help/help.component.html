@@ -1,0 +1,12 @@
+<div>help works!</div>
+<div fxLayout="row" fxLayoutAlign="end center" class="num-logo-row">
+  <num-button
+    type="button"
+    [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate"
+    (click)="toggleMenu()"
+  >
+    <fa-icon *ngIf="isHelpExpanded" size="1x" icon="angle-double-left"></fa-icon>
+    <fa-icon *ngIf="!isHelpExpanded" size="1x" icon="angle-double-right"></fa-icon>
+  </num-button>
+  <num-tooltip></num-tooltip>
+</div>

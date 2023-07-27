@@ -13,7 +13,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectivesModule } from '../shared/directives/directives.module';
 import { SharedComponentsModule } from '../shared/components/shared-components.module';
-
+import { HelpComponent } from './components/help/help.component';
 const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
 
 @NgModule({
@@ -23,6 +23,7 @@ const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
     SideMenuComponent,
     LanguageComponent,
     FooterComponent,
+    HelpComponent,
   ],
   imports: [
     ...SHARED_MODULES,
