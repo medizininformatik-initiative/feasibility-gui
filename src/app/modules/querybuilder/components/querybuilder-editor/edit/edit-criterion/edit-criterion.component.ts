@@ -87,17 +87,25 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     this.changeDetector.detectChanges();
   }
 
+  getTermcodeParameters(): string {
+    const termCode = this.criterion.termCodes[0];
+    const termCodeVersion = termCode.version ? '&version=' + termCode.version : '';
+    return 'code=' + termCode.code + '&system=' + termCode.system + termCodeVersion;
+  }
+
+  getContextParameters(): string {
+    const context = this.criterion.context;
+    const contextVersion = context.version ? '&context_version=' + context.version : '';
+    return '&context_system=' + context.system + '&context_code=' + context.code + contextVersion;
+  }
+
+  getRequestParameters(): string {
+    return this.getTermcodeParameters() + this.getContextParameters();
+  }
+
   loadUIProfile(): void {
     this.subscriptionCritProfile?.unsubscribe();
-    const version = this.criterion.termCodes[0].version
-      ? '&version=' + this.criterion.termCodes[0].version
-      : '';
-    const param =
-      'code=' +
-      this.criterion.termCodes[0].code +
-      '&system=' +
-      this.criterion.termCodes[0].system +
-      version;
+    const param = this.getRequestParameters();
     this.subscriptionCritProfile = this.backend
       .getTerminologyProfile(param)
       .subscribe((profile) => {
