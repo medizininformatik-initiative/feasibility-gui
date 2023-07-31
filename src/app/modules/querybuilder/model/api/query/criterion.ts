@@ -16,6 +16,7 @@ export class Criterion {
   attributeFilters?: Array<AttributeFilter> = [];
   children?: Array<TerminologyEntry> = [];
   isinvalid?: boolean;
+  context?: TerminologyCode;
 
   @V2()
   timeRestriction?: TimeRestriction;

@@ -46,6 +46,7 @@ export class EnterCriterionListComponent implements OnInit {
     );
 
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
+    this.criterionList[0].context = data.termEntryList[0].context;
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
     this.query = data.query;
