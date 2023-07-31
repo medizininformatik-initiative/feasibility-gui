@@ -24,14 +24,14 @@ export class Criterion {
 
 export class CriterionOnlyV1 {
   termCode: TerminologyCode;
-
+  context?: TerminologyCode;
   valueFilter?: ValueFilter;
   @V2()
   timeRestriction?: TimeRestriction;
 }
 export class CriterionOnlyV2 {
   termCodes: Array<TerminologyCode> = [];
-
+  context?: TerminologyCode;
   valueFilter?: ValueFilter;
   attributeFilters?: Array<AttributeFilter> = [];
   timeRestriction?: TimeRestriction;

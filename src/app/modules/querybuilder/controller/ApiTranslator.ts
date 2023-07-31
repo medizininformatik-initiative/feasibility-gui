@@ -31,6 +31,7 @@ export class ApiTranslator {
       criterionArray.forEach((criterion) => {
         const criterionV1 = new CriterionOnlyV1();
         criterionV1.termCode = criterion.termCodes[0];
+        criterionV1.context = criterion.context;
         criterionV1.timeRestriction = criterion.timeRestriction;
         if (criterion.valueFilters.length > 0) {
           criterionV1.valueFilter = criterion.valueFilters[0];
@@ -110,6 +111,7 @@ export class ApiTranslator {
       criterionArray.forEach((criterion) => {
         const criterionV2 = new CriterionOnlyV2();
         criterionV2.termCodes = criterion.termCodes;
+        criterionV2.context = criterion.context;
         criterionV2.timeRestriction = criterion.timeRestriction;
         if (criterion.valueFilters.length > 0) {
           criterionV2.valueFilter = criterion.valueFilters[0];
