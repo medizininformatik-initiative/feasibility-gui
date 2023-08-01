@@ -10,6 +10,8 @@ import { QueryProviderService } from '../../../querybuilder/service/query-provid
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TerminologyCode } from 'src/app/modules/querybuilder/model/api/terminology/terminology';
+import { Criterion } from 'src/app/modules/querybuilder/model/api/query/criterion';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -27,6 +29,7 @@ export class SafePipe implements PipeTransform {
 })
 export class OptionsComponent implements OnInit {
   public features: IAppConfig;
+  addContext = false;
   stylesheet: string;
   query: Query;
   translatedQueryv1: QueryOnlyV1;
@@ -132,9 +135,20 @@ export class OptionsComponent implements OnInit {
     this.featureProviderService.storeFeatures(this.features);
   }
 
+  removeContext() {
+    if (this.addContext === false) {
+      this.query.groups[0].inclusionCriteria.forEach((element) => {
+        element.slice();
+        console.log(element);
+      });
+    }
+    console.log(this.query);
+  }
+
   setQueryVersion(version: MatRadioChange): void {
     this.features.queryVersion = version.value;
     this.featureProviderService.storeFeatures(this.features);
+    this.removeContext();
     if (this.queryVersion === 'v1') {
       this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query);
     }
