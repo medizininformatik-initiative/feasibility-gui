@@ -3,13 +3,20 @@ import { Criterion, CriterionOnlyV1, CriterionOnlyV2 } from '../model/api/query/
 import { ObjectHelper } from './ObjectHelper';
 import { OperatorOptions } from '../model/api/query/valueFilter';
 import { TimeRestrictionType } from '../model/api/query/timerestriction';
-
+import { FeatureService } from 'src/app/service/feature.service';
+import { Injectable } from '@angular/core';
 // translates a query with groups to the agreed format of queries in version 1 (without groups)
+@Injectable({
+  providedIn: 'root',
+})
 export class ApiTranslator {
+  constructor(public featureService: FeatureService) {}
   translateToV1(query: Query): QueryOnlyV1 {
     const result = new QueryOnlyV1();
 
-    result.display = query.display;
+    if (query.display) {
+      result.display = query.display;
+    }
     const exclusionCriteria = ObjectHelper.clone(query.groups[0].exclusionCriteria);
     const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria);
 
@@ -31,7 +38,7 @@ export class ApiTranslator {
       criterionArray.forEach((criterion) => {
         const criterionV1 = new CriterionOnlyV1();
         criterionV1.termCode = criterion.termCodes[0];
-        if (criterion.context) {
+        if (this.featureService.getSqToBackend()) {
           criterionV1.context = criterion.context;
         }
         criterionV1.timeRestriction = criterion.timeRestriction;
@@ -83,7 +90,10 @@ export class ApiTranslator {
 
   translateToV2(query: Query): QueryOnlyV2 {
     const result = new QueryOnlyV2();
-    result.display = query.display;
+
+    if (query.display) {
+      result.display = query.display;
+    }
     const exclusionCriteria = ObjectHelper.clone(query.groups[0].exclusionCriteria);
     const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria);
 
@@ -112,7 +122,8 @@ export class ApiTranslator {
       criterionArray.forEach((criterion) => {
         const criterionV2 = new CriterionOnlyV2();
         criterionV2.termCodes = criterion.termCodes;
-        if (criterion.context) {
+        console.log(this.featureService);
+        if (this.featureService.getSqToBackend()) {
           criterionV2.context = criterion.context;
         }
         criterionV2.timeRestriction = criterion.timeRestriction;
