@@ -24,10 +24,11 @@ export class BackendService {
     private http: HttpClient,
     private authStorage: OAuthStorage
   ) {}
-  private static PATH_ROOT_ENTRIES = 'terminology/root-entries';
+  private static PATH_ROOT_ENTRIES = 'terminology/entries/categories';
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
   private static PATH_TERMINOLOGY_PROFILE = 'terminology/ui_profile';
-  private static PATH_SEARCH = 'terminology/selectable-entries';
+  private static PATH_SEARCH = 'terminology/search';
+
   private static PATH_RUN_QUERY = 'query';
   private static PATH_STORED_QUERY = 'query/template';
   private static PATH_QUERY_RESULT_LIMIT = 'query/detailed-obfuscated-result-rate-limit';
@@ -47,7 +48,6 @@ export class BackendService {
     if (this.feature.mockTerminology()) {
       return of(this.mockBackendDataProvider.getCategoryEntries());
     }
-
     return this.http.get<Array<CategoryEntry>>(this.createUrl(BackendService.PATH_ROOT_ENTRIES));
   }
 
