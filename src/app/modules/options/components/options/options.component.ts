@@ -10,8 +10,7 @@ import { QueryProviderService } from '../../../querybuilder/service/query-provid
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TerminologyCode } from 'src/app/modules/querybuilder/model/api/terminology/terminology';
-import { Criterion } from 'src/app/modules/querybuilder/model/api/query/criterion';
+import { ObjectHelper } from 'src/app/modules/querybuilder/controller/ObjectHelper';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -29,9 +28,11 @@ export class SafePipe implements PipeTransform {
 })
 export class OptionsComponent implements OnInit {
   public features: IAppConfig;
-  addContext = false;
-  stylesheet: string;
+  doQueryCopy = true;
+  queryCopy: Query;
+  removeContext = false;
   query: Query;
+  stylesheet: string;
   translatedQueryv1: QueryOnlyV1;
   translatedQueryv2: QueryOnlyV2;
   pollingTime: number;
@@ -57,7 +58,6 @@ export class OptionsComponent implements OnInit {
     this.pollingIntervall = this.features.options.pollingintervallinseconds;
     this.fhirport = this.features.fhirport;
     this.queryVersion = this.features.queryVersion;
-
     if (this.queryVersion === 'v1') {
       this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query);
     }
@@ -135,20 +135,34 @@ export class OptionsComponent implements OnInit {
     this.featureProviderService.storeFeatures(this.features);
   }
 
-  removeContext() {
-    if (this.addContext === false) {
-      this.query.groups[0].inclusionCriteria.forEach((element) => {
-        element.slice();
-        console.log(element);
-      });
+  createQueryCopy() {
+    if (this.doQueryCopy === true) {
+      this.doQueryCopy = false;
+      this.queryCopy = ObjectHelper.clone(this.query);
+    } else {
+      return;
     }
-    console.log(this.query);
+  }
+
+  removeContextFromSQ() {
+    if (this.removeContext === true) {
+      this.createQueryCopy();
+      this.query.groups[0].inclusionCriteria.forEach((element) => {
+        delete element[0].context;
+      });
+    } else {
+      this.query = ObjectHelper.clone(this.queryCopy);
+    }
+    this.translateQueryVersion();
   }
 
   setQueryVersion(version: MatRadioChange): void {
     this.features.queryVersion = version.value;
     this.featureProviderService.storeFeatures(this.features);
-    this.removeContext();
+    this.translateQueryVersion();
+  }
+
+  translateQueryVersion() {
     if (this.queryVersion === 'v1') {
       this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query);
     }
@@ -156,7 +170,6 @@ export class OptionsComponent implements OnInit {
       this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query);
     }
   }
-
   postQuery(modus: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
