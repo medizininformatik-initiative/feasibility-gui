@@ -26,9 +26,7 @@ export class AppConfigService {
           this.featureProviderService.initFeatures(this.config)
           return resolve()
         })
-        .catch((error) => {
-          return reject(`Could not load AppConfig': ${JSON.stringify(error)}`)
-        })
+        .catch((error) => reject(`Could not load AppConfig': ${JSON.stringify(error)}`))
     })
   }
 }

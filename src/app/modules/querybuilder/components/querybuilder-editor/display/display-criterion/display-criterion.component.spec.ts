@@ -28,15 +28,9 @@ describe('DisplayCriterionComponent', () => {
   let dialogRef
 
   const featureService = {
-    useFeatureMultipleValueDefinitions(): boolean {
-      return true
-    },
-    useFeatureTimeRestriction(): boolean {
-      return true
-    },
-    getPatientResultLowerBoundary(): number {
-      return 0
-    },
+    useFeatureMultipleValueDefinitions: (): boolean => true,
+    useFeatureTimeRestriction: (): boolean => true,
+    getPatientResultLowerBoundary: (): number => 0,
   } as FeatureService
 
   const valueFilter2: ValueFilter = {
@@ -71,19 +65,15 @@ describe('DisplayCriterionComponent', () => {
 
   beforeEach(() => {
     dialogRef = {
-      afterClosed(): Observable<any | undefined> {
-        return of(new Query())
-      },
+      afterClosed: (): Observable<any | undefined> => of(new Query()),
     } as MatDialogRef<any>
 
     // noinspection JSUnusedLocalSymbols
     dialog = {
-      open<T, D = any, R = any>(
+      open: <T, D = any, R = any>(
         componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
         config?: MatDialogConfig<D>
-      ): MatDialogRef<T, R> {
-        return dialogRef
-      },
+      ): MatDialogRef<T, R> => dialogRef,
     } as MatDialog
 
     fixture = TestBed.createComponent(DisplayCriterionComponent)

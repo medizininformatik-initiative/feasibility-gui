@@ -538,15 +538,13 @@ describe('CritGroupArranger', () => {
     expect(actual).toEqual(groupsExpected)
   })
 
-  function createCriterion(code: string): Criterion {
-    return {
-      display: code,
-      termCodes: [{ code, display: code, system: code }],
-      valueFilters: [],
-    }
-  }
+  const createCriterion = (code: string): Criterion => ({
+    display: code,
+    termCodes: [{ code, display: code, system: code }],
+    valueFilters: [],
+  })
 
-  function createDefaultGroup(id: number): Group {
+  const createDefaultGroup = (id: number): Group => {
     const group = new Group()
 
     group.id = id
@@ -556,7 +554,7 @@ describe('CritGroupArranger', () => {
     return group
   }
 
-  function createDefaultCriterionArray(critType: string, id: number): Criterion[][] {
+  const createDefaultCriterionArray = (critType: string, id: number): Criterion[][] => {
     const result: Criterion[][] = []
 
     result[0] = [

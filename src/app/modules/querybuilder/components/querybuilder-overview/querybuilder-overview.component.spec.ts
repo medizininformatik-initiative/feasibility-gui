@@ -21,21 +21,14 @@ describe('QuerybuilderOverviewComponent', () => {
   let fixture: ComponentFixture<QuerybuilderOverviewComponent>
 
   const featureService = {
-    mockLoadnSave(): boolean {
-      return true
-    },
-    getPatientResultLowerBoundary(): number {
-      return 0
-    },
+    mockLoadnSave: (): boolean => true,
+    getPatientResultLowerBoundary: (): number => 0,
   } as FeatureService
 
   const backendService = {
-    loadSavedQueries(): Observable<any> {
-      return of([{ id: 0, label: 'label', created_at: '' }])
-    },
-    loadSavedTemplates(): Observable<any> {
-      return of([{ id: 0, label: 'label', comment: 'comment', lastModified: '' }])
-    },
+    loadSavedQueries: (): Observable<any> => of([{ id: 0, label: 'label', created_at: '' }]),
+    loadSavedTemplates: (): Observable<any> =>
+      of([{ id: 0, label: 'label', comment: 'comment', lastModified: '' }]),
   } as BackendService
 
   const authStorage = {

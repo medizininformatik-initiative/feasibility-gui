@@ -39,12 +39,12 @@ export class OAuthInterceptor implements HttpInterceptor {
           }
         }
         if (error.status === 404) {
-          window.alert('Site not found')
+          //window.alert('Site not found');
         }
         if (error.status === 429) {
-          window.alert('to many request')
+          //window.alert('to many request');
         }
-        return throwError(error.message)
+        return throwError(error)
       })
     )
   }

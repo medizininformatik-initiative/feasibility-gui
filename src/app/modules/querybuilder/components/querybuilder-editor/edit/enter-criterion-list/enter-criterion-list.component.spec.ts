@@ -34,19 +34,13 @@ describe('EnterCriterionListComponent', () => {
   } as MatDialogRef<EnterCriterionListComponent>
   // noinspection JSUnusedLocalSymbols
   const providerService = {
-    store(query: Query): void {},
-    query(): Query {
-      return undefined
-    },
+    store: (query: Query): void => {},
+    query: (): Query => undefined,
   } as QueryProviderService
 
   const featureService = {
-    useFeatureTimeRestriction(): boolean {
-      return true
-    },
-    getQueryVersion(): string {
-      return 'v2'
-    },
+    useFeatureTimeRestriction: (): boolean => true,
+    getQueryVersion: (): string => 'v2',
   } as FeatureService
 
   beforeEach(async () => {
@@ -96,9 +90,7 @@ describe('EnterCriterionListComponent', () => {
     // noinspection JSUnusedLocalSymbols
     Object.defineProperty(window, 'getComputedStyle', {
       value: () => ({
-        getPropertyValue: (prop) => {
-          return ''
-        },
+        getPropertyValue: (prop) => '',
       }),
     })
   })

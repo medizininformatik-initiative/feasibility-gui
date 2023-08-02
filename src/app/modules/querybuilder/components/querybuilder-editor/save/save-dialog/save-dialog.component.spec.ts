@@ -22,12 +22,8 @@ describe('SaveDialogComponent', () => {
   let data: SaveDialogComponentData
 
   const featureService = {
-    mockLoadnSave(): boolean {
-      return true
-    },
-    getPatientResultLowerBoundary(): number {
-      return 0
-    },
+    mockLoadnSave: (): boolean => true,
+    getPatientResultLowerBoundary: (): number => 0,
   } as FeatureService
 
   const authStorage = {
@@ -69,9 +65,7 @@ describe('SaveDialogComponent', () => {
     // noinspection JSUnusedLocalSymbols
     Object.defineProperty(window, 'getComputedStyle', {
       value: () => ({
-        getPropertyValue: (prop) => {
-          return ''
-        },
+        getPropertyValue: (prop) => '',
       }),
     })
     fixture = TestBed.createComponent(SaveDialogComponent)

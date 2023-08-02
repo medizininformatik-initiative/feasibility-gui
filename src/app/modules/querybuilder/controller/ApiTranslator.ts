@@ -97,6 +97,9 @@ export class ApiTranslator {
       result.exclusionCriteria = undefined
     }
 
+    if (query.consent) {
+      result.inclusionCriteria.push(this.getConsent())
+    }
     return result
   }
 
@@ -226,12 +229,23 @@ export class ApiTranslator {
     }
   }
 
+  translateImportedSQtoUIQuery(uiquery: Query, sqquery: any): Query {
+    const invalidCriteria = []
+    const inclusion = sqquery.inclusionCriteria ? sqquery.inclusionCriteria : []
+    uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(inclusion, invalidCriteria)
+    const exclusion = sqquery.exclusionCriteria ? sqquery.exclusionCriteria : []
+    uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria)
+    uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery)
+    return uiquery
+  }
+
   translateSQtoUIQuery(uiquery: Query, sqquery: any): Query {
     const invalidCriteria = sqquery.invalidTerms
     const inclusion = sqquery.content.inclusionCriteria ? sqquery.content.inclusionCriteria : []
     uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(inclusion, invalidCriteria)
     const exclusion = sqquery.content.exclusionCriteria ? sqquery.content.exclusionCriteria : []
     uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria)
+    uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery.content)
     return uiquery
   }
 
@@ -302,5 +316,45 @@ export class ApiTranslator {
       })
     })
     return inexclusion
+  }
+
+  private getConsent(): CriterionOnlyV2[] {
+    return [
+      {
+        termCodes: [
+          {
+            code: 'central-consent',
+            system: 'mii.abide',
+            display: 'MDAT wissenschaftlich nutzen - EU DSGVO Niveau',
+          },
+        ],
+      },
+    ]
+  }
+
+  private hasConsentAndIfSoDeleteIt(sqquery: any): boolean {
+    let consent = false
+    let index = [undefined, undefined]
+    if (sqquery.inclusionCriteria) {
+      sqquery.inclusionCriteria.forEach((and, indexAnd) => {
+        and.forEach((or, indexOr) => {
+          if (
+            or.termCodes[0].code === 'central-consent' &&
+            or.termCodes[0].system === 'mii.abide'
+          ) {
+            consent = true
+            index = [indexAnd, indexOr]
+          }
+        })
+      })
+    }
+
+    if (index[0] !== undefined && index[1] !== undefined) {
+      sqquery.inclusionCriteria[index[0]].splice(index[1], 1)
+      if (sqquery.inclusionCriteria[index[0]].length === 0) {
+        sqquery.inclusionCriteria.splice(index[0], 1)
+      }
+    }
+    return consent
   }
 }

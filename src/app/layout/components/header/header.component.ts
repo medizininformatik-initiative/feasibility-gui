@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core'
-import { OAuthService, UserInfo } from 'angular-oauth2-oidc'
+import { OAuthService } from 'angular-oauth2-oidc'
 import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service'
 import { FeatureService } from '../../../service/feature.service'
+import { IUserProfile } from '../../../shared/models/user/user-profile.interface'
 
 @Component({
   selector: 'num-header',
@@ -9,7 +10,7 @@ import { FeatureService } from '../../../service/feature.service'
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  profile: UserInfo
+  profile: IUserProfile
   stylesheet: string
   urlSrc: string
   urlAlt: string
@@ -31,7 +32,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   async initProfile(): Promise<void> {
     const isLoggedIn = this.oauthService.hasValidAccessToken()
     if (isLoggedIn) {
-      this.profile = await this.oauthService.loadUserProfile()
+      this.profile = (await this.oauthService.loadUserProfile()) as IUserProfile
     }
   }
 }

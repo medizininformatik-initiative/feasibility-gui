@@ -26,7 +26,7 @@
 
 .code-part {
   color: var(--num-color--accent-contrast);
-  background-color: var(--num-color--accent-100);
+  background-color: var(--num-color--accent-600);
 
   padding: 0.5em;
 }
@@ -43,7 +43,7 @@
 }
 
 .crit-box .cancel-button-wrapper {
-  background-color: var(--num-color--accent-100);
+  background-color: var(--num-color--accent-600);
 }
 
 .crit-box .cancel-button {
@@ -56,7 +56,7 @@
   background-color: var(--num-color--accent-200);
 }
 
-.mat-icon-button {
+.mat-mdc-icon-button {
   border-radius: 0;
   line-height: unset;
 }

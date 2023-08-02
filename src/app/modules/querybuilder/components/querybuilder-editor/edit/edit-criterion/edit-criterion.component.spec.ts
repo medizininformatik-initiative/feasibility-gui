@@ -33,30 +33,16 @@ describe('EditCriterionComponent', () => {
   let fixture: ComponentFixture<EditCriterionComponent>
 
   const backendService = {
-    getTerminologyProfile(termcode: string): Observable<any> {
-      return of({})
-    },
+    getTerminologyProfile: (termcode: string): Observable<any> => of({}),
   } as BackendService
 
   const featureService = {
-    useFeatureMultipleValueDefinitions(): boolean {
-      return true
-    },
-    useFeatureTimeRestriction(): boolean {
-      return true
-    },
-    useFeatureMultipleGroups(): boolean {
-      return true
-    },
-    useFeatureDependentGroups(): boolean {
-      return true
-    },
-    getPatientResultLowerBoundary(): number {
-      return 0
-    },
-    mockLoadnSave(): boolean {
-      return false
-    },
+    useFeatureMultipleValueDefinitions: (): boolean => true,
+    useFeatureTimeRestriction: (): boolean => true,
+    useFeatureMultipleGroups: (): boolean => true,
+    useFeatureDependentGroups: (): boolean => true,
+    getPatientResultLowerBoundary: (): number => 0,
+    mockLoadnSave: (): boolean => false,
   } as FeatureService
 
   const authStorage = {

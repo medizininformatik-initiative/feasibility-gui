@@ -21,24 +21,12 @@ describe('BackendService', () => {
   const EXAMPLE_URL = 'http:/abc/querybuillder/result?id=123456'
 
   const featureService = {
-    getPatientResultLowerBoundary(): number {
-      return 10
-    },
-    getLocationResultLowerBoundary(): number {
-      return 3
-    },
-    mockTerminology(): boolean {
-      return true
-    },
-    mockQuery(): boolean {
-      return true
-    },
-    mockResult(): boolean {
-      return true
-    },
-    getQueryVersion(): string {
-      return 'v2'
-    },
+    getPatientResultLowerBoundary: (): number => 10,
+    getLocationResultLowerBoundary: (): number => 3,
+    mockTerminology: (): boolean => true,
+    mockQuery: (): boolean => true,
+    mockResult: (): boolean => true,
+    getQueryVersion: (): string => 'v2',
   } as FeatureService
 
   const authStorage = {

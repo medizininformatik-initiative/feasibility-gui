@@ -44,7 +44,7 @@
     "loadnsave": false
   },
   "stylesheet": "bzkfTheme",
-  "fhirport": "8086",
+  "fhirport": "8082",
   "dataset": "codex",
   "queryVersion": "v2"
 }

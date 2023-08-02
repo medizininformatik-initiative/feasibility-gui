@@ -17,14 +17,16 @@ import { MatSelectModule } from '@angular/material/select'
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatExpansionModule } from '@angular/material/expansion'
-import { MatCheckboxModule } from '@angular/material/checkbox'
+//import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox'
 import { MatTreeModule } from '@angular/material/tree'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { MatDatepickerModule } from '@angular/material/datepicker'
-import { MatRadioModule } from '@angular/material/radio'
+//import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatRadioModule } from '@angular/material/radio'
 
 const MATERIAL_MODULES = [
   MatSidenavModule,

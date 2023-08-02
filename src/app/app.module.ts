@@ -12,13 +12,13 @@ import { OAuthInitService } from './core/auth/oauth-init.service'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { OAuthInterceptor } from './core/interceptors/oauth.interceptor'
+import { DataProtectionComponent } from './site/data-protection/data-protection.component'
 
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http)
-}
+export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
+  new TranslateHttpLoader(http)
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DataProtectionComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

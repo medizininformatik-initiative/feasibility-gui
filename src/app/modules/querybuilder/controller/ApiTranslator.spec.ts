@@ -23,7 +23,7 @@ describe('ApiTranslator', () => {
   describe('ValueFilter properties', () => {
     const translator = new ApiTranslator()
 
-    function createOuterCritArray(...types: OperatorOptions[]): Array<Criterion[]> {
+    const createOuterCritArray = (...types: OperatorOptions[]): Array<Criterion[]> => {
       const outerCritArray: Array<Criterion[]> = []
       const innerCritArray: Array<Criterion> = []
 
@@ -70,7 +70,7 @@ describe('ApiTranslator', () => {
       return outerCritArray
     }
 
-    function createQuery(...types: OperatorOptions[]): Query {
+    const createQuery = (...types: OperatorOptions[]): Query => {
       const queryTemp = new Query()
 
       queryTemp.display = displayQuery

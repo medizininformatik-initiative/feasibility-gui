@@ -12,9 +12,7 @@ describe('DisplayValueFilterComponent', () => {
   let fixture: ComponentFixture<DisplayValueFilterComponent>
 
   const featureService = {
-    useFeatureShowDisplayValueFilterIcon(): boolean {
-      return true
-    },
+    useFeatureShowDisplayValueFilterIcon: (): boolean => true,
   } as FeatureService
 
   const testBedConfig = {

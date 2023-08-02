@@ -7,12 +7,14 @@ import {
   RouterStateSnapshot,
 } from '@angular/router'
 import { OAuthService } from 'angular-oauth2-oidc'
+import { IUserProfile } from '../../../shared/models/user/user-profile.interface'
+import { FeatureService } from '../../../service/feature.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleGuard implements CanActivate, CanLoad {
-  constructor(private oauthService: OAuthService) {}
+  constructor(private oauthService: OAuthService, public featureService: FeatureService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const redirectUri = window.location.origin + state.url
@@ -31,6 +33,20 @@ export class RoleGuard implements CanActivate, CanLoad {
       return Promise.resolve(true)
     }
 
+    let expandedAllowedRoles = []
+
+    allowedRoles.forEach((role) => {
+      if (role === 'main') {
+        expandedAllowedRoles = expandedAllowedRoles.concat(this.featureService.getRoles('main'))
+      } else if (role === 'option') {
+        expandedAllowedRoles = expandedAllowedRoles.concat(
+          this.featureService.getRoles('optionpage')
+        )
+      } else {
+        expandedAllowedRoles.push(role)
+      }
+    })
+
     const isLoggedIn =
       this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken()
 
@@ -39,12 +55,12 @@ export class RoleGuard implements CanActivate, CanLoad {
     }
 
     let userRoles: string[]
-    await this.oauthService.loadUserProfile().then((userinfo) => {
-      userRoles = userinfo.groups
+    await this.oauthService.loadUserProfile().then((userinfo: IUserProfile) => {
+      userRoles = userinfo.info.realm_access.roles
     })
 
     if (userRoles) {
-      return Promise.resolve(allowedRoles.some((role) => userRoles.indexOf(role) >= 0))
+      return Promise.resolve(expandedAllowedRoles.some((role) => userRoles.indexOf(role) >= 0))
     }
     return Promise.resolve(false)
   }

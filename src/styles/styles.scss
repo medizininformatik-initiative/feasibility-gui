@@ -1,22 +1,24 @@
-@import '~@angular/material/theming';
+//@import '@angular/material/theming';
+@use 'node_modules/@angular/material' as mat;
 @import './font';
 @import './themes';
 @import './custom-material';
 @import './general-styles/_margin-bottom-classes';
 
-@include mat-core();
+//@include mat-core();
+@include mat.core();
 
-.primaryTheme {
-  @include angular-material-theme($num-portal-webapp-theme);
-  @include custom-material_themed($num-portal-webapp-theme);
+.FDPGTheme {
+  @include mat.core-theme($num-portal-webapp-theme-fdpg);
+  @include custom-material_themed($num-portal-webapp-theme-fdpg);
 }
 .codexTheme {
-  @include angular-material-theme($num-portal-webapp-theme-codex);
+  @include mat.core-theme($num-portal-webapp-theme-codex);
   @include custom-material_themed($num-portal-webapp-theme-codex);
 }
 
 .abideTheme {
-  @include angular-material-theme($num-portal-webapp-theme-abide);
+  @include mat.core-theme($num-portal-webapp-theme-abide);
   @include custom-material_themed($num-portal-webapp-theme-abide);
 }
 .bzkfTheme {
@@ -45,6 +47,7 @@ body {
 *:after {
   box-sizing: inherit;
 }
+/*TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
 .mat-chip-ripple {
   display: none;
 }

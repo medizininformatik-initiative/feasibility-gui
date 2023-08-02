@@ -18,29 +18,25 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     const featureService = {
-      getStylesheet(): string {
-        return 'abideTheme'
-      },
+      getStylesheet: (): string => 'abideTheme',
     } as FeatureService
 
     const featureProviderService = {
-      getFeatures(): IAppConfig {
-        return {
-          env: null,
-          api: null,
-          uiBackendApi: null,
-          features: null,
-          stylesheet: 'abide',
-          auth: null,
-          dataset: null,
-          queryVersion: null,
-          options: null,
-          fhirport: null,
-          legal: null,
-          mock: null,
-        }
-      },
-      setTheme(oldTheme: string, newTheme: string): void {},
+      getFeatures: (): IAppConfig => ({
+        env: null,
+        api: null,
+        uiBackendApi: null,
+        features: null,
+        stylesheet: 'abide',
+        auth: null,
+        dataset: null,
+        queryVersion: null,
+        options: null,
+        fhirport: null,
+        legal: null,
+        mock: null,
+      }),
+      setTheme: (oldTheme: string, newTheme: string): void => {},
     } as FeatureProviderService
 
     await TestBed.configureTestingModule({

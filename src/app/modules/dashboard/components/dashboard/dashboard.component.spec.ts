@@ -13,9 +13,7 @@ describe('DashboardComponent', () => {
 
   const authService = {
     loadUserProfile: () => Promise.resolve({}),
-    hasValidAccessToken(): boolean {
-      return true
-    },
+    hasValidAccessToken: (): boolean => true,
   } as OAuthService
 
   const config = ({
@@ -23,9 +21,7 @@ describe('DashboardComponent', () => {
   } as unknown) as IAppConfig
 
   const featureService = {
-    getStylesheet(): string {
-      return 'abideTheme'
-    },
+    getStylesheet: (): string => 'abideTheme',
   } as FeatureService
 
   const testBedConfig = {

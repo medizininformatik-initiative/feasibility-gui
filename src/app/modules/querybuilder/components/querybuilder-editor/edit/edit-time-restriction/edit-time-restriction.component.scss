@@ -12,14 +12,15 @@
   width: 15em;
 }
 
-.mat-radio-group {
+.mat-mdc-radio-group {
   padding: 0 0 1em 0;
 }
 
-.mat-radio-button {
+.mat-mdc-radio-button {
   padding: 0 0 0.5em 0;
   width: max-content;
 }
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 ::ng-deep num-edit-time-restriction .mat-form-field-wrapper {
   padding-bottom: 0px !important;
 }
@@ -33,10 +34,10 @@
   margin: 0 1em;
   width: 11em;
 }
-::ng-deep mat-datepicker-toggle > .mat-icon-button {
+::ng-deep mat-datepicker-toggle > .mat-mdc-icon-button {
   padding-top: 1em;
 }
-::ng-deep mat-datepicker-toggle > .mat-icon-button > .mat-button-ripple.mat-ripple,
+::ng-deep mat-datepicker-toggle > .mat-mdc-icon-button > .mat-button-ripple.mat-ripple,
 ::ng-deep mat-datepicker-toggle > .mat-icon-button > .mat-button-focus-overlay {
   top: 7px;
   bottom: -7px;
@@ -49,4 +50,27 @@ mat-expansion-panel {
 .mat-expansion-panel-header-title {
   font-size: 16px;
   font-weight: normal;
+}
+.mat-expansion-panel-header {
+  height: 48px;
+}
+::ng-deep mat-datepicker-content {
+  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f;
+  background: white;
+}
+::ng-deep .mat-calendar-body-cell-content {
+  border-color: transparent;
+}
+::ng-deep
+  .mat-calendar-body-today:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+  border-color: #00000061;
+}
+::ng-deep .mat-calendar-body-selected {
+  background-color: var(--num-color--accent-600) !important;
+  color: white;
+}
+::ng-deep
+  .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover
+  > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+  background-color: var(--num-color--accent-200);
 }

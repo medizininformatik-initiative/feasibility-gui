@@ -1,5 +1,6 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core'
 import { OAuthService } from 'angular-oauth2-oidc'
+import { IUserProfile } from '../models/user/user-profile.interface'
 
 @Directive({
   selector: '[numUserHasRole]',
@@ -13,8 +14,9 @@ export class UserHasRoleDirective {
 
   @Input() set numUserHasRole(allowedRoles: string[]) {
     let userRoles: string[]
-    this.oauthService.loadUserProfile().then((userinfo) => {
-      userRoles = userinfo.groups
+
+    this.oauthService.loadUserProfile().then((userinfo: IUserProfile) => {
+      userRoles = userinfo.info.realm_access.roles
 
       if (allowedRoles && allowedRoles.length) {
         if (userRoles && userRoles.length) {

@@ -4,13 +4,49 @@
       "HEADLINE": "Willkommen auf der CODEX Feasibility Plattform!",
       "PARAGRAPH1": "Die CODEX Feasibility Plattform ist ein Angebot für Wissenschaftler:innen, die für ihre Forschung nach COVID-19 spezifischen Daten suchen.",
       "PARAGRAPH2": "Auf dieser Plattform steht hierfür ein frei zugängliches Suchtool zur Verfügung, das eine erste, unverbindliche Machbarkeitsabfrage ermöglicht. Auf diesem Weg kann festgestellt werden, wie viele Daten an den angeschlossenen CODEX-Standorten zur Verfügung stehen.",
-      "PARAGRAPH3": "Anhand dieser Information können dann in einem nächsten Schritt konkrete Anfragen an die entsprechenden Standorte gestellt werden."
+      "PARAGRAPH3_1": "Anhand dieser Information können dann in einem nächsten Schritt konkrete Anfragen an die entsprechenden Standorte gestellt werden.",
+      "PARAGRAPH3_2":"",
+      "PARAGRAPH3_3":"",
+      "PARAGRAPH3_4":"",
+      "PARAGRAPH3_LINK":"",
+      "PARAGRAPH4_1":"",
+      "PARAGRAPH4_2":"",
+      "PARAGRAPH4_3":"",
+      "PARAGRAPH5_1": "",
+      "PARAGRAPH5_2": "",
+      "PARAGRAPH5_3":""
     },
     "ABIDETHEME": {
       "HEADLINE": "Willkommen auf der ABIDE Feasibility Plattform!",
       "PARAGRAPH1": "Die ABIDE Feasibility Plattform ist ein Unterstützungsangebot für Wissenschaftler und Wissenschaftlerinnen bei der Umsetzung ihrer Forschungsvorhaben.",
       "PARAGRAPH2": "Mit einer Machbarkeitsanfrage (Feasibility) erfahren Forschende, wie viele Fälle für ihre Suchkriterien (Ein- und Ausschlusskriterien) in den Datenintegrationszentren der universitätsmedizinischen Standorte bundesweit vorhanden sind und für medizinische Forschungszwecke beantragt werden können.",
-      "PARAGRAPH3": "Zur Formulierung der Abfrage stehen aktuell der Kerndatensatz der Medizininformatikinitiative und der COVID-19 spezifische Datensatz GECCO zur Verfügung."
+      "PARAGRAPH3_1": "Zur Formulierung der Abfrage stehen aktuell der Kerndatensatz der Medizininformatikinitiative und der COVID-19 spezifische Datensatz GECCO zur Verfügung.",
+      "PARAGRAPH3_2":"",
+      "PARAGRAPH3_3":"",
+      "PARAGRAPH3_4":"",
+      "PARAGRAPH3_LINK":"",
+      "PARAGRAPH4_1":"",
+      "PARAGRAPH4_2":"",
+      "PARAGRAPH4_3":"",
+      "PARAGRAPH5_1": "",
+      "PARAGRAPH5_2": "",
+      "PARAGRAPH5_3":""
+    },
+    "FDPGTHEME": {
+      "HEADLINE": "Willkommen im Bereich „Daten und Bioproben finden“ des Forschungsdatenportals für Gesundheit",
+      "PARAGRAPH1": "Hier finden Sie ein Unterstützungsangebot für Wissenschaftlerinnen und Wissenschaftler zur Umsetzung Ihres Forschungsvorhabens.",
+      "PARAGRAPH2": "Mit einer Machbarkeitsanfrage erfahren Sie, wie viele Datensätze für Ihre Suchkriterien in den Universitätskliniken bundesweit vorhanden sind. Anhand von Ein- und Ausschlusskriterien kann die Verfügbarkeit von Gesundheitsdaten für medizinische Forschungszwecke abgeschätzt werden.",
+      "PARAGRAPH3_1": "Über ",
+      "PARAGRAPH3_2": "Neue Abfrage",
+      "PARAGRAPH3_3": " haben Sie die Möglichkeit, eine neue Suchanfrage auf Basis des ",
+      "PARAGRAPH3_4": " zu formulieren und abzuschicken, um einen Überblick über die verfügbaren Datensätze zu erhalten.",
+      "PARAGRAPH3_LINK": "Kerndatensatzes der MII",
+      "PARAGRAPH4_1":"Gespeicherte Abfragen oder gespeicherte Entwürfe können Sie über ",
+      "PARAGRAPH4_2":"Meine Abfragen",
+      "PARAGRAPH4_3": " einsehen und weiter bearbeiten.",
+      "PARAGRAPH5_1": "Sobald Ihnen alle relevanten Informationen für Ihr Forschungsvorhaben zur Verfügung stehen, können Sie über ",
+      "PARAGRAPH5_2": "Antrag stellen",
+      "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen."
     },
     "BZKFTHEME": {
       "HEADLINE": "Willkommen auf der BZKF Feasibility Plattform!",
@@ -25,6 +61,10 @@
     "MYQUERY": {
       "HEADLINE": "Meine Abfragen",
       "TEXT": "Erhalten Sie eine Übersicht über Ihre bereits durchgeführten Suchanfragen"
+    },
+    "FEASPORTAL": {
+      "HEADLINE": "Antrag stellen",
+      "TEXT": "Stellen Sie einen Antrag zur Datennutzung im Antragsportal"
     }
   },
   "LANGUAGE": {
@@ -63,7 +103,13 @@
       "EXCLUSION": "Ausschlusskriterien",
       "LABEL": "Code oder Suchbegriff eingeben",
       "ALL": "Alle",
-      "CATEGORY_FILTER": "Filtern nach"
+      "CATEGORY_FILTER": "Filtern nach",
+      "CONSENT_HEADER": "Art der Datennutzung",
+      "CONSENT_CENTRAL_TOOLTIP": "Bei der zentralen Analyse erhalten Sie von der MII pseudonymisierte Daten zu den Patienten, die zu Ihrem Forschungsprojekt passen. Pseudonyme Daten (die durch die Pseudonyme automatisch einen Bezug zu den Patienten ermöglichen) können aber nur genutzt werden, wenn die Patienten ihre Einwilligung in die Nutzung erteilt haben. Die Forschenden bekommen die pseudonymisierten Daten zum Download zur Verfügung gestellt und können darin ihre Analysen mit großer Flexibilität und Tiefe sowie häufig mit größerem Tempo ausführen, als es bei verteilten Analysen der Fall ist. Die Erhebung der Einwilligungen ist an den Standorten in vollem Gange, dennoch ist erwartbar, dass zu den meisten Anfragen weniger Patienten angezeigt werden als bei verteilten Analysen.",
+      "CONSENT_DISTRIBUTED_TOOLTIP": "Bei verteilten Analysen findet die Analyse auf den Daten an den Standorten statt. Die Forschenden erhalten anonyme Ergebnisdaten. An vielen Standorten kann bei verteilten Analysen auf einer anderen Rechtsgrundlage als der Einwilligung der Patienten gerechnet werden. Dadurch wird häufig eine größere Menge an Patienten gefunden, die zu Ihrer Forschungsfrage passen. Bei manchen Standorten erfolgen Machbarkeitsanfragen auch auf Basis der Patienteneinwilligung. Diese Standorte antworten auf Machbarkeitsanfragen mit vergleichsweise geringen Anzahlen. Möglicherweise stehen an diesen Standorten für verteilte Analysen aber höhere Patientenzahlen zur Verfügung. Die tatsächliche Anzahl wird erst nach dem Antragsprozess deutlich.",
+      "CONSENT_CENTRAL": " voraussetzen (Daten können zentral zusammengeführt werden)",
+      "CONSENT_CENTRAL_LINK": "„Broad Consent (der MII oder MII-kompatibel)",
+      "CONSENT_DISTRIBUTED": "Kein „Broad Consent“ voraussetzen (Daten stehen nur für „Verteilte Analysen“ zur Verfügung)"
     },
     "SWITCH": {
       "LABEL_AND": "UND",
@@ -95,8 +141,11 @@
       "COMMENT_LABEL": "Kommentar",
       "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
       "LOAD_HEADER": "Bisherige Suchanfragen",
-      "SAVE_WITH_QUERY": "komplette Abfrage speichern",
-      "SAVE_TEMPLATE": "als Template speichern",
+      "IMPORT_HEADER": "Suchanfragen importieren",
+      "SAVE_WITH_QUERY": "für Datennutzungsantrag speichern (muss vorher ausgeführt worden sein)",
+      "SAVE_TEMPLATE": "als Vorlage speichern",
+      "DOWNLOAD_SQ": "als Datei speichern",
+      "FILENAME": "Dateiname",
       "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
       "SAVED_TEMPLATES": "Gespeicherte Vorlagen"
     },
@@ -169,8 +218,11 @@
   },
   "RESULT": {
     "PATIENT_NUMBER": "Anzahl der Patienten",
+    "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsanfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Anfrage werden anonymisiert. In dem Prozess werden Abweichungen zum exakten Ergebnis bewusst eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts, sie sollten aber nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
     "TOTAL": "Gesamt",
-    "SITE": "Standort"
+    "SITE": "Standort",
+    "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
+    "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",
@@ -187,6 +239,8 @@
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
     "SAVEQUERY": "Abfrage speichern",
-    "VALIDATE": "Validieren"
+    "VALIDATE": "Validieren",
+    "IMPORT": "Query laden",
+    "IMPORT_FROM_FILE": "Datei auswählen"
   }
 }

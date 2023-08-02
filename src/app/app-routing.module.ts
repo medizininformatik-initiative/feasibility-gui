@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { AuthGuard } from './core/auth/guards/auth.guard'
 import { RoleGuard } from './core/auth/guards/role.guard'
+import { DataProtectionComponent } from './site/data-protection/data-protection.component'
 
 export const routes: Routes = [
   {
@@ -20,6 +21,7 @@ export const routes: Routes = [
     canLoad: [RoleGuard],
     data: {
       navId: 'querybuilder',
+      roles: ['main'],
     },
     loadChildren: () =>
       import(
@@ -31,11 +33,16 @@ export const routes: Routes = [
     canLoad: [RoleGuard],
     data: {
       navId: 'options',
+      roles: ['option'],
     },
     loadChildren: () =>
       import(/* webpackChunkName: "Options.Module" */ './modules/options/options.module').then(
         (m) => m.OptionsModule
       ),
+  },
+  {
+    path: 'data-protection',
+    component: DataProtectionComponent,
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },

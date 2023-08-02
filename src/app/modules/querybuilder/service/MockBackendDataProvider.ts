@@ -1,4 +1,5 @@
-/* tslint:disable:variable-name */
+/* eslint-disable @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match, max-len */
+/* eslint-disable @typescript-eslint/member-ordering */
 import {
   CategoryEntry,
   TerminologyCode,

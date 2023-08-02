@@ -31,7 +31,7 @@ describe('OAuth Init Service', () => {
 
   describe('When OAuth Server gets initialized with success', () => {
     const authConfig = {
-      issuer: `${appConfig.config.auth.baseUrl}/auth/realms/${appConfig.config.auth.realm}`,
+      issuer: `${appConfig.config.auth.baseUrl}/realms/${appConfig.config.auth.realm}`,
       clientId: `${appConfig.config.auth.clientId}`,
       responseType: 'code',
       redirectUri: window.location.origin + '/home',
@@ -60,9 +60,9 @@ describe('OAuth Init Service', () => {
 
   describe('When OAuth Server gets initialized with no success', () => {
     it('fails', async () => {
-      jest.spyOn(authService, 'loadDiscoveryDocumentAndLogin').mockImplementation(() => {
-        return Promise.reject()
-      })
+      jest
+        .spyOn(authService, 'loadDiscoveryDocumentAndLogin')
+        .mockImplementation(() => Promise.reject())
 
       initService.initOAuth().catch((error) => {
         expect(error).toBeDefined()

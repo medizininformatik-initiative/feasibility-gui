@@ -24,12 +24,12 @@ export class MatInputNumberDirective implements ControlValueAccessor {
   @HostListener('input', ['$event.target.value'])
   onInput(value): void {
     this.valueInternal = value.replace(/[^\d.-]/g, '')
-    this._onChange(value)
+    this.onChange(value)
   }
 
   @HostListener('blur')
   onBlur(): void {
-    this._onTouch(this.valueInternal) // here to notify Angular Validators
+    this.onTouch(this.valueInternal) // here to notify Angular Validators
   }
 
   @HostListener('focus')
@@ -38,10 +38,10 @@ export class MatInputNumberDirective implements ControlValueAccessor {
   }
 
   // noinspection JSUnusedLocalSymbols
-  _onChange(value: any): void {}
+  onChange(value: any): void {}
 
   // noinspection JSUnusedLocalSymbols
-  _onTouch(value: any): void {}
+  onTouch(value: any): void {}
 
   writeValue(value: any): void {
     this.valueInternal = this.round(value).toFixed(this.precision)
@@ -49,11 +49,11 @@ export class MatInputNumberDirective implements ControlValueAccessor {
   }
 
   registerOnChange(fn: (value: any) => void): void {
-    this._onChange = fn
+    this.onChange = fn
   }
 
   registerOnTouched(fn: (value: any) => void): void {
-    this._onTouch = (value) => {
+    this.onTouch = (value) => {
       this.writeValue(value)
       fn(value)
     }

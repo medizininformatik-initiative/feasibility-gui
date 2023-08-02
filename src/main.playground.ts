@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 import { BrowserModule } from '@angular/platform-browser'
 import { Component, NgModule } from '@angular/core'
@@ -7,6 +8,7 @@ import { SharedModule } from './app/shared/shared.module'
 import { RouterTestingModule } from '@angular/router/testing'
 
 PlaygroundModule.configure({
+  sandboxesDefined: undefined,
   selector: 'num-root',
   overlay: false,
   modules: [LayoutModule, SharedModule, RouterTestingModule],

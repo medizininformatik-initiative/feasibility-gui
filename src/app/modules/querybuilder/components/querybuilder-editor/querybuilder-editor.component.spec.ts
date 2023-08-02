@@ -45,33 +45,15 @@ describe('QuerybuilderEditorComponent', () => {
   let fixture: ComponentFixture<QuerybuilderEditorComponent>
 
   const featureService = {
-    useFeatureMultipleValueDefinitions(): boolean {
-      return true
-    },
-    useFeatureTimeRestriction(): boolean {
-      return true
-    },
-    useFeatureMultipleGroups(): boolean {
-      return true
-    },
-    useFeatureDependentGroups(): boolean {
-      return true
-    },
-    getPollingTime(): number {
-      return 300
-    },
-    getPollingIntervall(): number {
-      return 1
-    },
-    getPatientResultLowerBoundary(): number {
-      return 10
-    },
-    getLocationResultLowerBoundary(): number {
-      return 3
-    },
-    getClickEvent(): Observable<any> {
-      return of(null)
-    },
+    useFeatureMultipleValueDefinitions: (): boolean => true,
+    useFeatureTimeRestriction: (): boolean => true,
+    useFeatureMultipleGroups: (): boolean => true,
+    useFeatureDependentGroups: (): boolean => true,
+    getPollingTime: (): number => 300,
+    getPollingIntervall: (): number => 1,
+    getPatientResultLowerBoundary: (): number => 10,
+    getLocationResultLowerBoundary: (): number => 3,
+    getClickEvent: (): Observable<any> => of(null),
   } as FeatureService
 
   const authStorage = {
@@ -132,9 +114,7 @@ describe('QuerybuilderEditorComponent', () => {
     // noinspection JSUnusedLocalSymbols
     Object.defineProperty(window, 'getComputedStyle', {
       value: () => ({
-        getPropertyValue: (prop) => {
-          return ''
-        },
+        getPropertyValue: (prop) => '',
       }),
     })
     window.history.pushState({ preventReset: true }, '', '')
@@ -188,12 +168,8 @@ describe('QuerybuilderEditorComponent', () => {
 
     beforeEach(() => {
       backendService = {
-        getResult(resultUrlTemp: string): Observable<QueryResult> {
-          return null
-        },
-        postQuery(query: Query): Observable<QueryResponse> {
-          return null
-        },
+        getResult: (resultUrlTemp: string): Observable<QueryResult> => null,
+        postQuery: (query: Query): Observable<QueryResponse> => null,
       } as BackendService
       component.backend = backendService
     })

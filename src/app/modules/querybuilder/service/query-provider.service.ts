@@ -1,4 +1,4 @@
-/* tslint:disable:member-ordering */
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Inject, Injectable } from '@angular/core'
 import { Query } from '../model/api/query/query'
 import { Comparator, OperatorOptions } from '../model/api/query/valueFilter'
@@ -35,6 +35,7 @@ export class QueryProviderService {
     const query = {
       groups: [],
       display: '',
+      consent: false,
     }
     const group = GroupFactory.createGroup(query)
     query.groups.push(group)
@@ -217,6 +218,7 @@ export class QueryProviderService {
         },
       ],
       display: 'Beispiel-Query',
+      consent: false,
     }
   }
 }

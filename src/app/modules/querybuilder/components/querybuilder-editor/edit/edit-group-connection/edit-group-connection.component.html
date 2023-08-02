@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z3">
+<mat-card appearance="outlined" class="mat-elevation-z3">
   <mat-card-header>
     <h4>
       {{ 'QUERYBUILDER.EDIT.GROUPS.HEADER_LINKED_GROUPS' | translate }}
@@ -129,7 +129,7 @@
       <num-button [type]="'primary'" (click)="doSave()" class="button-save">{{
         'BUTTON.ADD' | translate
       }}</num-button>
-      <num-button [type]="'secondary'" (click)="doDiscard()">{{
+      <num-button [type]="'primary'" (click)="doDiscard()">{{
         'BUTTON.CANCEL' | translate
       }}</num-button>
     </div>

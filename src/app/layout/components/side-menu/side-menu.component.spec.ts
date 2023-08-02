@@ -21,12 +21,8 @@ describe('SideMenuComponent', () => {
 
   beforeEach(async () => {
     const featureService = {
-      useFeatureOptionsPage(): boolean {
-        return true
-      },
-      getRoles(site: string): string[] {
-        return ['test']
-      },
+      useFeatureOptionsPage: (): boolean => true,
+      getRoles: (site: string): string[] => ['test'],
     } as FeatureService
 
     await TestBed.configureTestingModule({
@@ -73,7 +69,7 @@ describe('SideMenuComponent', () => {
     ]
     fixture.detectChanges()
     const nativeElement = fixture.debugElement.nativeElement
-    const button = nativeElement.querySelector('.mat-list-item')
+    const button = nativeElement.querySelector('.mat-mdc-list-item')
     button.click()
     expect(component.toggleSideMenu.emit).toHaveBeenCalled()
   })
@@ -107,7 +103,7 @@ describe('SideMenuComponent', () => {
     ]
     fixture.detectChanges()
     const nativeElement = fixture.debugElement.nativeElement
-    const button = nativeElement.querySelector('.mat-list-item')
+    const button = nativeElement.querySelector('.mat-mdc-list-item')
     button.click()
     expect(component.mainNavItems[0].roles).toEqual(['test-role1', 'test-role2'])
   })
@@ -123,7 +119,7 @@ describe('SideMenuComponent', () => {
     ]
     fixture.detectChanges()
     const nativeElement = fixture.debugElement.nativeElement
-    const button = nativeElement.querySelector('.mat-list-item')
+    const button = nativeElement.querySelector('.mat-mdc-list-item')
     button.click()
     fixture.detectChanges()
     expect(authService.logOut).toHaveBeenCalled()

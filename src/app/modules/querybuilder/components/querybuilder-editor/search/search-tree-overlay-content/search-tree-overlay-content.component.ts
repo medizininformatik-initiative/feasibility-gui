@@ -71,9 +71,8 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
     }
   }
 
-  getChildren: (TerminologyEntry) => Observable<TerminologyEntry[]> = (node: TerminologyEntry) => {
-    return of(node.children)
-  }
+  getChildren: (TerminologyEntry) => Observable<TerminologyEntry[]> = (node: TerminologyEntry) =>
+    of(node.children)
 
   onToggleLoad(node): void {
     if (node.children.length > 0) {
@@ -90,9 +89,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
     })
   }
 
-  hasNestedChild = (_: number, nodeData: TerminologyEntry) => {
-    return !nodeData.leaf && !nodeData.entity
-  }
+  hasNestedChild = (_: number, nodeData: TerminologyEntry) => !nodeData.leaf && !nodeData.entity
 
   ngOnDestroy(): void {
     this.subscriptionTerminologyTree?.unsubscribe()

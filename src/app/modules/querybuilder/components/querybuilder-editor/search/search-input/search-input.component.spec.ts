@@ -60,9 +60,7 @@ describe('SearchInputComponent', () => {
     // noinspection JSUnusedLocalSymbols
     Object.defineProperty(window, 'getComputedStyle', {
       value: () => ({
-        getPropertyValue: (prop) => {
-          return ''
-        },
+        getPropertyValue: (prop) => '',
       }),
     })
   })
@@ -175,15 +173,12 @@ describe('SearchInputComponent', () => {
   describe('special TestBeds', () => {
     it('should close overlay on button click', () => {
       const backendService = {
-        getCategories(): Observable<Array<CategoryEntry>> {
-          return of([new CategoryEntry()])
-        },
-        getTerminolgyEntrySearchResult(
+        getCategories: (): Observable<Array<CategoryEntry>> => of([new CategoryEntry()]),
+        getTerminolgyEntrySearchResult: (
           catId: string,
           search: string
-        ): Observable<Array<TerminologyEntry>> {
-          return of(new MockBackendDataProvider().getTerminolgyEntrySearchResult(catId, search))
-        },
+        ): Observable<Array<TerminologyEntry>> =>
+          of(new MockBackendDataProvider().getTerminolgyEntrySearchResult(catId, search)),
       } as BackendService
 
       TestBed.overrideProvider(BackendService, { useValue: backendService })
@@ -207,10 +202,9 @@ describe('SearchInputComponent', () => {
 
     // noinspection JSUnusedLocalSymbols
     const focusMonitor = {
-      monitor(element: HTMLElement, checkChildren?: boolean): Observable<FocusOrigin> {
-        return of({} as FocusOrigin)
-      },
-      stopMonitoring(element: HTMLElement): void {},
+      monitor: (element: HTMLElement, checkChildren?: boolean): Observable<FocusOrigin> =>
+        of({} as FocusOrigin),
+      stopMonitoring: (element: HTMLElement): void => {},
     } as FocusMonitor
 
     it('overlay should remain closed when input field is not focused', () => {

@@ -27,24 +27,12 @@ describe('DisplayGroupComponent', () => {
   let fixture: ComponentFixture<DisplayGroupComponent>
 
   const featureService = {
-    useFeatureMultipleValueDefinitions(): boolean {
-      return true
-    },
-    useFeatureTimeRestriction(): boolean {
-      return true
-    },
-    useFeatureMultipleGroups(): boolean {
-      return true
-    },
-    useFeatureDependentGroups(): boolean {
-      return true
-    },
-    useFeatureShowDisplayValueFilterIcon(): boolean {
-      return true
-    },
-    getPatientResultLowerBoundary(): number {
-      return 0
-    },
+    useFeatureMultipleValueDefinitions: (): boolean => true,
+    useFeatureTimeRestriction: (): boolean => true,
+    useFeatureMultipleGroups: (): boolean => true,
+    useFeatureDependentGroups: (): boolean => true,
+    useFeatureShowDisplayValueFilterIcon: (): boolean => true,
+    getPatientResultLowerBoundary: (): number => 0,
   } as FeatureService
 
   const authStorage = {
@@ -212,9 +200,7 @@ describe('DisplayGroupComponent', () => {
     newQuery.display = 'Test'
 
     const dialogRef = {
-      afterClosed(): Observable<any | undefined> {
-        return of(newQuery)
-      },
+      afterClosed: (): Observable<any | undefined> => of(newQuery),
     } as MatDialogRef<EditGroupConnectionComponent>
 
     jest.spyOn(component.dialog, 'open').mockReturnValue(dialogRef)
@@ -234,7 +220,7 @@ describe('DisplayGroupComponent', () => {
       createGroup(4),
     ]
 
-    function createGroup(id: number, linked?: boolean): Group {
+    const createGroup = (id: number, linked?: boolean): Group => {
       const group = new Group()
       group.id = id
 

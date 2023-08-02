@@ -32,12 +32,8 @@ describe('ResultDetailsDialogComponent', () => {
     } as MatDialogRef<ResultDetailsDialogComponent>
 
     const featureService = {
-      getPatientResultLowerBoundary(): number {
-        return 10
-      },
-      getLocationResultLowerBoundary(): number {
-        return 3
-      },
+      getPatientResultLowerBoundary: (): number => 10,
+      getLocationResultLowerBoundary: (): number => 3,
     } as FeatureService
 
     const authStorage = {

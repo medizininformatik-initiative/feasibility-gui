@@ -97,12 +97,12 @@ describe('EditValueDefinitionComponent', () => {
   })
 
   describe('check validity of value', () => {
-    function createValueVilter(
+    const createValueVilter = (
       min: number,
       max: number,
       minValue: number,
       maxValue: number
-    ): ValueFilter {
+    ): ValueFilter => {
       const filter = new ValueFilter()
       filter.type = OperatorOptions.QUANTITY_RANGE
       filter.minValue = minValue

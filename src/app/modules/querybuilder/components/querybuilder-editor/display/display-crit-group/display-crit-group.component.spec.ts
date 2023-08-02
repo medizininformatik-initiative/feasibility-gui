@@ -23,18 +23,10 @@ describe('DisplayCritGroupComponent', () => {
 
   beforeEach(async () => {
     const featureService = {
-      useFeatureMultipleValueDefinitions(): boolean {
-        return true
-      },
-      useFeatureTimeRestriction(): boolean {
-        return true
-      },
-      useFeatureShowDisplayValueFilterIcon(): boolean {
-        return true
-      },
-      getPatientResultLowerBoundary(): number {
-        return 0
-      },
+      useFeatureMultipleValueDefinitions: (): boolean => true,
+      useFeatureTimeRestriction: (): boolean => true,
+      useFeatureShowDisplayValueFilterIcon: (): boolean => true,
+      getPatientResultLowerBoundary: (): number => 0,
     } as FeatureService
 
     const authStorage = {
@@ -78,13 +70,11 @@ describe('DisplayCritGroupComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  function createCriterion(code: string): Criterion {
-    return {
-      display: 'arbitrary',
-      termCodes: [{ code, display: code, system: code }],
-      valueFilters: [],
-    }
-  }
+  const createCriterion = (code: string): Criterion => ({
+    display: 'arbitrary',
+    termCodes: [{ code, display: code, system: code }],
+    valueFilters: [],
+  })
 
   it('should split inner array', () => {
     const criterionA = createCriterion('a')

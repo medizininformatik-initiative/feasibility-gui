@@ -1,4 +1,4 @@
-<div *ngIf="result" class="result-details-box">
+<div class="result-details-box">
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <div fxFlex="80" class="result-header">{{ 'RESULT.PATIENT_NUMBER' | translate }}</div>
     <button class="close-button" type="button" mat-icon-button (click)="doClose()">
@@ -10,16 +10,22 @@
       <thead>
         <tr>
           <td class="left-column">{{ 'RESULT.TOTAL' | translate }}</td>
-          <td class="right-column">{{ backend.obfuscateResult(result.totalNumberOfPatients) }}</td>
+          <td class="right-column">{{ backend.obfuscateResult(result?.totalNumberOfPatients) }}</td>
         </tr>
       </thead>
       <tr class="empty-row"></tr>
-      <ng-container *ngIf="result.resultLines.length >= lowerBoundaryLocation">
+      <ng-container
+        *ngIf="resultStatus === '200' && result?.resultLines.length >= lowerBoundaryLocation"
+      >
         <tr *ngFor="let location of result.resultLines; index as i" class="result-lines">
           <td class="left-column">{{ 'RESULT.SITE' | translate }} {{ i + 1 }}</td>
           <td class="right-column">{{ backend.obfuscateResult(location.numberOfPatients) }}</td>
         </tr>
       </ng-container>
     </table>
+
+    <div *ngIf="resultStatus === '429'" class="error-message">
+      {{ 'RESULT.MESSAGE429' | translate }}
+    </div>
   </div>
 </div>

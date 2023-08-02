@@ -27,24 +27,12 @@ describe('DisplayQueryComponent', () => {
 
   beforeEach(async () => {
     const featureService = {
-      useFeatureMultipleValueDefinitions(): boolean {
-        return true
-      },
-      useFeatureTimeRestriction(): boolean {
-        return true
-      },
-      useFeatureMultipleGroups(): boolean {
-        return true
-      },
-      useFeatureDependentGroups(): boolean {
-        return true
-      },
-      useFeatureShowDisplayValueFilterIcon(): boolean {
-        return true
-      },
-      getPatientResultLowerBoundary(): number {
-        return 0
-      },
+      useFeatureMultipleValueDefinitions: (): boolean => true,
+      useFeatureTimeRestriction: (): boolean => true,
+      useFeatureMultipleGroups: (): boolean => true,
+      useFeatureDependentGroups: (): boolean => true,
+      useFeatureShowDisplayValueFilterIcon: (): boolean => true,
+      getPatientResultLowerBoundary: (): number => 0,
     } as FeatureService
 
     const authStorage = {
@@ -202,7 +190,7 @@ describe('DisplayQueryComponent', () => {
     expect(component.getParentGroup(1)).toEqual(createGroup(1))
   })
 
-  function createGroups(...ids: number[]): Group[] {
+  const createGroups = (...ids: number[]): Group[] => {
     const groups: Group[] = []
 
     ids.forEach((id) => groups.push(createGroup(id)))
@@ -214,7 +202,7 @@ describe('DisplayQueryComponent', () => {
     return groups
   }
 
-  function createGroup(id: number): Group {
+  const createGroup = (id: number): Group => {
     const group = new Group()
     group.id = id
     return group
@@ -229,7 +217,7 @@ describe('DisplayQueryComponent', () => {
       component.query = query
     })
 
-    function extractIds(): number[] {
+    const extractIds = (): number[] => {
       const ids = []
       component.query.groups.forEach((group) => ids.push(group.id))
       return ids

@@ -8,80 +8,70 @@ import { TimeRestrictionType } from '../model/api/query/timerestriction'
 describe('TermEntry2CriterionTranslator', () => {
   const translator = new TermEntry2CriterionTranslator(false, 'v1')
 
-  function createTermEntry(): TerminologyEntry {
-    return {
-      id: 'abc',
-      termCode: { code: 'A', system: 'http://test', display: 'none' },
-      display: 'ui-display',
-      leaf: true,
-      entity: false,
-      children: [],
-      selectable: true,
-      selected: true,
-      valueDefinitions: [],
-      timeRestrictionAllowed: false,
-    }
-  }
+  const createTermEntry = (): TerminologyEntry => ({
+    id: 'abc',
+    termCode: { code: 'A', system: 'http://test', display: 'none' },
+    display: 'ui-display',
+    leaf: true,
+    entity: false,
+    children: [],
+    selectable: true,
+    selected: true,
+    valueDefinitions: [],
+    timeRestrictionAllowed: false,
+  })
 
-  function createExpectedCriterion(): Criterion {
-    return {
-      children: [],
-      termCodes: [
-        {
-          code: 'A',
-          display: 'none',
-          system: 'http://test',
-        },
-      ],
-      display: 'ui-display',
-      valueFilters: [],
-      attributeFilters: undefined,
-      entity: false,
-      timeRestriction: undefined,
-    }
-  }
+  const createExpectedCriterion = (): Criterion => ({
+    children: [],
+    termCodes: [
+      {
+        code: 'A',
+        display: 'none',
+        system: 'http://test',
+      },
+    ],
+    display: 'ui-display',
+    valueFilters: [],
+    attributeFilters: undefined,
+    entity: false,
+    timeRestriction: undefined,
+  })
 
-  function createValueDefinitionGeneral(): ValueDefinition {
-    return {
-      precision: 7,
-      type: ValueType.QUANTITY,
-      min: -80,
-      max: 20,
-      display: 'Laborwert',
-      allowedUnits: [
-        { code: 'cm', display: 'Centimeter' },
-        { code: 'm', display: 'meter' },
-      ],
-      selectableConcepts: [
-        { code: 'A', system: 'http://test1', display: 'Value A' },
-        { code: 'B', system: 'http://test2', display: 'Value B' },
-      ],
-    }
-  }
+  const createValueDefinitionGeneral = (): ValueDefinition => ({
+    precision: 7,
+    type: ValueType.QUANTITY,
+    min: -80,
+    max: 20,
+    display: 'Laborwert',
+    allowedUnits: [
+      { code: 'cm', display: 'Centimeter' },
+      { code: 'm', display: 'meter' },
+    ],
+    selectableConcepts: [
+      { code: 'A', system: 'http://test1', display: 'Value A' },
+      { code: 'B', system: 'http://test2', display: 'Value B' },
+    ],
+  })
 
-  function createExpectedValueFilterQuantity(): ValueFilter {
-    return {
-      type: OperatorOptions.QUANTITY_RANGE,
-      display: 'Laborwert',
-      unit: { code: 'cm', display: 'Centimeter' },
-      precision: 7,
-      min: -80,
-      max: 20,
-      value: -80,
-      comparator: Comparator.GREATER_OR_EQUAL,
-      minValue: -80,
-      maxValue: 20,
-      selectedConcepts: [],
-    }
-  }
+  const createExpectedValueFilterQuantity = (): ValueFilter => ({
+    type: OperatorOptions.QUANTITY_RANGE,
+    display: 'Laborwert',
+    unit: { code: 'cm', display: 'Centimeter' },
+    precision: 7,
+    min: -80,
+    max: 20,
+    value: -80,
+    comparator: Comparator.GREATER_OR_EQUAL,
+    minValue: -80,
+    maxValue: 20,
+    selectedConcepts: [],
+  })
 
-  function createExpectedValueFilterConcept(): ValueFilter {
-    return {
-      type: OperatorOptions.CONCEPT,
-      display: 'Laborwert',
-      selectedConcepts: [],
-    }
-  }
+  const createExpectedValueFilterConcept = (): ValueFilter => ({
+    type: OperatorOptions.CONCEPT,
+    display: 'Laborwert',
+    selectedConcepts: [],
+  })
 
   it('should create criterion without value filter and without time restriction', () => {
     const termEntry: TerminologyEntry = createTermEntry()

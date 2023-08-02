@@ -1,6 +1,6 @@
 <label for="filter-chips">Filter</label>
-<mat-chip-list id="filter-chips" aria-label="Filter" [multiple]="true">
-  <mat-chip
+<mat-chip-listbox id="filter-chips" aria-label="Filter" [multiple]="true">
+  <mat-chip-option
     color="primary"
     *ngFor="let chip of filterChips"
     [selected]="chip.isSelected"
@@ -8,5 +8,5 @@
   >
     <fa-icon icon="check"></fa-icon>
     {{ chip.title | translate }}
-  </mat-chip>
-</mat-chip-list>
+  </mat-chip-option>
+</mat-chip-listbox>

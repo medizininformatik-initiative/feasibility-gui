@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z3">
+<mat-card appearance="outlined" class="mat-elevation-z3">
   <mat-card-header>
     <h4>
       {{ criterion.display }}
@@ -52,7 +52,7 @@
         class="button-save"
         >{{ 'BUTTON.' + actionButtonKey | translate }}
       </num-button>
-      <num-button [type]="'secondary'" (click)="doDiscard()">
+      <num-button [type]="'primary'" (click)="doDiscard()">
         {{ 'BUTTON.CANCEL' | translate }}
       </num-button>
     </div>

@@ -1,23 +1,36 @@
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card {
   margin: 1em 0.5em;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card-footer {
-  margin: unset;
+  margin: 16px;
 }
-
+mat-card-content {
+  margin-bottom: 16px;
+}
 .button-save {
   margin: 0 1em 0 2em;
 }
 
-::ng-deep .mat-card-header-text {
+::ng-deep .mat-mdc-card-header-text {
   margin: 0 5px;
 }
-.mat-card-header h4 {
+.mat-mdc-card-header h4 {
   font-weight: 500;
   font-size: 16px;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 ::ng-deep num-edit-value-definition .mat-form-field-wrapper {
   padding-bottom: 0.5em !important;
+}
+::ng-deep .mat-mdc-form-field-infix {
+  padding: 1em 0;
+}
+::ng-deep .mdc-menu-surface.mat-mdc-select-panel {
+  padding: 0 !important;
+  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f;
+  background: white;
 }

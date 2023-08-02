@@ -1,26 +1,28 @@
+@use 'node_modules/@angular/material' as mat;
 @mixin footer_themed($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $name: map-get($theme, name);
   $background: map-get($theme, additional);
 
-  @if ($name == 'primary') {
+  @if ($name == 'fdpg') {
     .num-footer {
-      background: mat-color($accent, 500);
-      color: mat-contrast($primary, 900);
+      background: mat.get-color-from-palette($background, white);
+      color: mat.get-contrast-color-from-palette($primary, 200);
+      border-top: 1px rgba(0, 0, 0, 0.2) solid;
     }
   }
   @if ($name == 'codex') {
     .num-footer {
-      background: mat-color($background, white);
-      color: mat-contrast($primary, 200);
+      background: mat.get-color-from-palette($background, white);
+      color: mat.get-contrast-color-from-palette($primary, 200);
       border-top: 1px rgba(0, 0, 0, 0.2) solid;
     }
   }
   @if ($name == 'abide') {
     .num-footer {
-      background: mat-color($background, white);
-      color: mat-contrast($primary, 200);
+      background: mat.get-color-from-palette($background, white);
+      color: mat.get-contrast-color-from-palette($primary, 200);
       border-top: 1px rgba(0, 0, 0, 0.2) solid;
     }
   }
@@ -30,5 +32,8 @@
       color: mat-contrast($primary, 200);
       border-top: 1px rgba(0, 0, 0, 0.2) solid;
     }
+  }
+  .mat-toolbar-multiple-rows {
+    box-sizing: content-box;
   }
 }

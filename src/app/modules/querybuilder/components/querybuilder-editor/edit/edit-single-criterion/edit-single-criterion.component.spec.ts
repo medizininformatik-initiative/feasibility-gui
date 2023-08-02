@@ -43,24 +43,12 @@ describe('EditSingleCriterionComponent', () => {
     } as MatDialogRef<EditSingleCriterionComponent>
 
     const featureService = {
-      useFeatureMultipleValueDefinitions(): boolean {
-        return true
-      },
-      useFeatureTimeRestriction(): boolean {
-        return true
-      },
-      useFeatureMultipleGroups(): boolean {
-        return true
-      },
-      useFeatureDependentGroups(): boolean {
-        return true
-      },
-      getPatientResultLowerBoundary(): number {
-        return 0
-      },
-      mockLoadnSave(): boolean {
-        return true
-      },
+      useFeatureMultipleValueDefinitions: (): boolean => true,
+      useFeatureTimeRestriction: (): boolean => true,
+      useFeatureMultipleGroups: (): boolean => true,
+      useFeatureDependentGroups: (): boolean => true,
+      getPatientResultLowerBoundary: (): number => 0,
+      mockLoadnSave: (): boolean => true,
     } as FeatureService
 
     const authStorage = {

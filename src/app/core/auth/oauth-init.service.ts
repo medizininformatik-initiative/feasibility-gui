@@ -37,18 +37,14 @@ export class OAuthInitService {
         .then(() => {
           this.oauthService.setupAutomaticSilentRefresh()
         })
-        .catch(() => {
-          return reject(this.ERROR_UNREACHABLE)
-        })
+        .catch(() => reject(this.ERROR_UNREACHABLE))
 
       return Promise.race([init, terminationTimeout])
         .then(() => {
           clearTimeout(terminationTimer)
           return resolve(true)
         })
-        .catch((err) => {
-          return reject(err)
-        })
+        .catch((err) => reject(err))
     })
   }
 
@@ -58,7 +54,7 @@ export class OAuthInitService {
     this.CLIENT_ID = this.appConfig.config.auth.clientId
 
     this.AUTH_CONFIG = {
-      issuer: `${this.BASE_URL}/auth/realms/${this.REALM}`,
+      issuer: `${this.BASE_URL}/realms/${this.REALM}`,
       clientId: this.CLIENT_ID,
       responseType: 'code',
       redirectUri: window.location.origin + '/home',

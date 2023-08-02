@@ -31,7 +31,7 @@ describe('GroupFactory', () => {
     expect(newGroup.id).toBe(1)
   })
 
-  function createGroup(id: number): Group {
+  const createGroup = (id: number): Group => {
     const group = new Group()
     group.id = id
     return group

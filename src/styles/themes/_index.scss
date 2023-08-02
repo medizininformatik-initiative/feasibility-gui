@@ -1,3 +1,4 @@
+@use 'node_modules/@angular/material' as mat;
 @import './colors/accent-theme.palette.scss';
 @import './colors/primary-theme.palette.scss';
 @import 'src/styles/themes/colors/codex-accent-theme.palette';
@@ -6,6 +7,8 @@
 @import 'src/styles/themes/colors/abide-primary-theme.palette';
 @import 'src/styles/themes/colors/bzkf-accent-theme.palette';
 @import 'src/styles/themes/colors/bzkf-primary-theme.palette';
+@import 'src/styles/themes/colors/fdpg-accent-theme.palette';
+@import 'src/styles/themes/colors/fdpg-primary-theme.palette';
 @import './colors/additional-theme.palette.scss';
 @import './theme-palettes/mat-light-theme-background';
 @import './theme-palettes/mat-light-theme-foreground';
@@ -20,9 +23,20 @@ $num-portal-webapp-accent-abide: mat-palette($num-abide-accent-palette);
 $num-portal-webapp-primary-bzkf: mat-palette($num-bzkf-primary-palette);
 $num-portal-webapp-accent-bzkf: mat-palette($num-bzkf-accent-palette);
 $num-portal-webapp-additional: mat-palette($num-additional-palette, warning);
+@include mat.core();
 
-$mat-light-theme-foreground: mat-light-theme-foreground(
-  $num-portal-webapp-primary,
+$num-portal-webapp-primary: mat.define-palette($num-primary-palette);
+$num-portal-webapp-accent: mat.define-palette($num-accent-palette);
+$num-portal-webapp-primary-fdpg: mat.define-palette($num-fdpg-primary-palette);
+$num-portal-webapp-accent-fdpg: mat.define-palette($num-fdpg-accent-palette);
+$num-portal-webapp-primary-codex: mat.define-palette($num-codex-primary-palette);
+$num-portal-webapp-accent-codex: mat.define-palette($num-codex-accent-palette);
+$num-portal-webapp-primary-abide: mat.define-palette($num-abide-primary-palette);
+$num-portal-webapp-accent-abide: mat.define-palette($num-abide-accent-palette);
+$num-portal-webapp-additional: mat.define-palette($num-additional-palette, warning);
+
+$mat-light-theme-fdpg-foreground: mat-light-theme-foreground(
+  $num-portal-webapp-primary-fdpg,
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
@@ -61,17 +75,22 @@ $mat-light-theme-bzkf-background: mat-light-theme-background(
   $num-portal-webapp-accent,
   $num-portal-webapp-additional
 );
+$mat-light-theme-fdpg-background: mat-light-theme-background(
+  $num-portal-webapp-primary-fdpg,
+  $num-portal-webapp-accent,
+  $num-portal-webapp-additional
+);
 @function num-theme-builder($theme) {
-  @if ($theme == 'primary') {
+  @if ($theme == 'fdpg') {
     @return (
-      name: 'primary',
-      primary: $num-portal-webapp-primary,
-      accent: $num-portal-webapp-accent,
+      name: 'fdpg',
+      primary: $num-portal-webapp-primary-fdpg,
+      accent: $num-portal-webapp-accent-fdpg,
       warn: $num-portal-webapp-additional,
       additional: $num-portal-webapp-additional,
       is-dark: false,
-      foreground: $mat-light-theme-foreground,
-      background: $mat-light-theme-background,
+      foreground: $mat-light-theme-fdpg-foreground,
+      background: $mat-light-theme-fdpg-background,
       num-typography: $num-typography
     );
   }
@@ -116,7 +135,7 @@ $mat-light-theme-bzkf-background: mat-light-theme-background(
   }
 }
 
-$num-portal-webapp-theme: num-theme-builder('primary');
+$num-portal-webapp-theme-fdpg: num-theme-builder('fdpg');
 $num-portal-webapp-theme-codex: num-theme-builder('codex');
 $num-portal-webapp-theme-abide: num-theme-builder('abide');
 $num-portal-webapp-theme-bzkf: num-theme-builder('bzkf');

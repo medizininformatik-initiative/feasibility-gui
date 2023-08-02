@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
 import { Query } from '../../../../model/api/query/query'
 import { QueryProviderService } from '../../../../service/query-provider.service'
@@ -6,6 +7,8 @@ import { Router } from '@angular/router'
 import { BackendService } from '../../../../service/backend.service'
 import { Subscription } from 'rxjs'
 import { MatRadioChange } from '@angular/material/radio'
+import { FileSaverService } from 'ngx-filesaver'
+import { ApiTranslator } from '../../../../controller/ApiTranslator'
 
 export class SaveDialogComponentData {
   hasQuerySend: boolean | string
@@ -22,9 +25,9 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
   constructor(
     public queryProviderService: QueryProviderService,
     public backend: BackendService,
+    private fileSaverService: FileSaverService,
     @Inject(MAT_DIALOG_DATA) public data: SaveDialogComponentData,
-    private dialogRef: MatDialogRef<SaveDialogComponent, void>,
-    private router: Router
+    private dialogRef: MatDialogRef<SaveDialogComponent, void>
   ) {
     this.hasQuerySend = data.hasQuerySend
   }
@@ -32,8 +35,11 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
   query: Query
   title = ''
   comment = ''
+  filename = ''
   saveWithQuery: boolean | string = false
   letQuerySave: boolean
+  saveButtonDisabled: boolean = true
+  downloadQuery: boolean = false
 
   ngOnInit(): void {
     this.query = this.queryProviderService.query()
@@ -44,12 +50,18 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
     this.subscriptionResult?.unsubscribe()
   }
   doSave(): void {
-    this.subscriptionResult?.unsubscribe()
-    this.subscriptionResult = this.backend
-      .saveQuery(this.query, this.title, this.comment, this.saveWithQuery)
-      .subscribe((response) => {
-        console.log(response)
-      })
+    if (this.downloadQuery) {
+      const queryString = JSON.stringify(new ApiTranslator().translateToV2(this.query))
+      const fileData = new Blob([queryString], { type: 'text/plain;charset=utf-8' })
+      this.fileSaverService.save(fileData, this.filename + '.json')
+    } else {
+      this.subscriptionResult?.unsubscribe()
+      this.subscriptionResult = this.backend
+        .saveQuery(this.query, this.title, this.comment, this.saveWithQuery)
+        .subscribe((response) => {
+          console.log(response)
+        })
+    }
     this.dialogRef.close()
     // this.router.navigate(['/querybuilder/overview'])
   }
@@ -61,8 +73,22 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
   setQuerySaving(mode: MatRadioChange): void {
     if (mode.value === 'template') {
       this.saveWithQuery = false
-    } else {
-      this.saveWithQuery = this.hasQuerySend
+      this.downloadQuery = false
     }
+    if (mode.value === 'saveQuery') {
+      this.saveWithQuery = this.hasQuerySend
+      this.downloadQuery = false
+    }
+    if (mode.value === 'download') {
+      this.downloadQuery = true
+    }
+    this.isEmpty()
+  }
+
+  isEmpty(): void {
+    this.saveButtonDisabled = !(
+      (this.downloadQuery && this.filename !== '') ||
+      (!this.downloadQuery && this.title !== '')
+    )
   }
 }
