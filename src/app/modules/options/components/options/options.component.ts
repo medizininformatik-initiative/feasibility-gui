@@ -144,6 +144,10 @@ export class OptionsComponent implements OnInit {
     }
   }
 
+  setSqContextBackend() {
+    this.features.options.sqContextBackend = !this.removeContext;
+  }
+
   removeContextFromSQ() {
     if (this.removeContext === true) {
       this.createQueryCopy();
@@ -154,6 +158,7 @@ export class OptionsComponent implements OnInit {
       this.query = ObjectHelper.clone(this.queryCopy);
     }
     this.translateQueryVersion();
+    this.setSqContextBackend();
   }
 
   setQueryVersion(version: MatRadioChange): void {

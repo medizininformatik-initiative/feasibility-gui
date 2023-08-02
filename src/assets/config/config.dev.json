@@ -34,6 +34,7 @@
     }
   },
   "options": {
+    "sqContextBackend": true,
     "pollingtimeinseconds": 10,
     "pollingintervallinseconds": 10,
     "lowerboundarypatientresult": 10,
