@@ -22,7 +22,8 @@ export class BackendService {
     private feature: FeatureService,
     private queryProviderService: QueryProviderService,
     private http: HttpClient,
-    private authStorage: OAuthStorage
+    private authStorage: OAuthStorage,
+    private apiTranslator: ApiTranslator
   ) {}
   private static PATH_ROOT_ENTRIES = 'terminology/entries/categories';
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
@@ -85,11 +86,11 @@ export class BackendService {
     }
 
     if (this.feature.getQueryVersion() === 'v1') {
-      const queryV1 = new ApiTranslator().translateToV1(query);
+      const queryV1 = this.apiTranslator.translateToV1(query);
       return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV1);
     }
     if (this.feature.getQueryVersion() === 'v2') {
-      const queryV2 = new ApiTranslator().translateToV2(query);
+      const queryV2 = this.apiTranslator.translateToV2(query);
       return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV2, {
         observe: 'response',
       });
@@ -194,7 +195,7 @@ export class BackendService {
         const savedQuery = {
           label: title,
           comment,
-          content: new ApiTranslator().translateToV1(query),
+          content: this.apiTranslator.translateToV1(query),
         };
         return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
           headers,
@@ -205,7 +206,7 @@ export class BackendService {
           const savedQuery = {
             label: title,
             comment,
-            content: new ApiTranslator().translateToV2(query),
+            content: this.apiTranslator.translateToV2(query),
           };
           return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
             headers,
