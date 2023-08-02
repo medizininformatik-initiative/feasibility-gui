@@ -91,7 +91,7 @@
     "TIMERESTRICTION": "Time restricted criteria",
     "DISPLAYVALUEFILTERICON": "Use icons for comparator symbols",
     "POLLINGTIME": "Polling Time",
-    "REMOVE_SQ_FROM_CONTEXT": "Remove Context from Structured Query",
+    "REMOVE_SQ_FROM_CONTEXT": "Remove context from sq when sending to backend",
     "POLLINGINTERVALL": "Polling Intervall",
     "FHIRPORT": "FHIR Port"
   },

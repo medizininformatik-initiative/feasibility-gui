@@ -92,7 +92,7 @@
     "DISPLAYVALUEFILTERICON": "nutze Icons für Vergleichsoperatoren",
     "POLLINGTIME": "Polling Time",
     "POLLINGINTERVALL": "Polling Intervall",
-    "REMOVE_SQ_FROM_CONTEXT": "Context in der Structured Query entfernen",
+    "REMOVE_SQ_FROM_CONTEXT": "Entfernen des Kontexts von sq beim Senden ans Backend",
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
