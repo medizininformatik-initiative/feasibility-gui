@@ -97,6 +97,11 @@ export class FeatureService {
       return this.appConfig.getConfig().stylesheet;
     }
   }
+
+  public getSqToBackend() {
+    return this.appConfig.getConfig().options.sqContextBackend;
+  }
+
   public getDataset(): string {
     return this.appConfig.getConfig().dataset;
   }
