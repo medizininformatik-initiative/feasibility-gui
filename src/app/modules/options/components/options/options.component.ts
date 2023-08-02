@@ -30,7 +30,7 @@ export class OptionsComponent implements OnInit {
   public features: IAppConfig;
   doQueryCopy = true;
   queryCopy: Query;
-  removeContext = false;
+  removeContext: boolean;
   query: Query;
   stylesheet: string;
   translatedQueryv1: QueryOnlyV1;
@@ -47,7 +47,8 @@ export class OptionsComponent implements OnInit {
     public featureService: FeatureService,
     public featureProviderService: FeatureProviderService,
     public queryProviderService: QueryProviderService,
-    private http: HttpClient
+    private http: HttpClient,
+    private apiTranslator: ApiTranslator
   ) {}
 
   ngOnInit(): void {
@@ -58,11 +59,12 @@ export class OptionsComponent implements OnInit {
     this.pollingIntervall = this.features.options.pollingintervallinseconds;
     this.fhirport = this.features.fhirport;
     this.queryVersion = this.features.queryVersion;
+    this.removeContext = this.features.options.sqContextBackend;
     if (this.queryVersion === 'v1') {
-      this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query);
+      this.translatedQueryv1 = this.apiTranslator.translateToV1(this.query);
     }
     if (this.queryVersion === 'v2') {
-      this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query);
+      this.translatedQueryv2 = this.apiTranslator.translateToV2(this.query);
     }
 
     this.postQuery('translate').subscribe(
@@ -145,20 +147,13 @@ export class OptionsComponent implements OnInit {
   }
 
   setSqContextBackend() {
-    this.features.options.sqContextBackend = !this.removeContext;
+    this.features.options.sqContextBackend = this.removeContext;
+    this.featureProviderService.storeFeatures(this.features);
   }
 
   removeContextFromSQ() {
-    if (this.removeContext === true) {
-      this.createQueryCopy();
-      this.query.groups[0].inclusionCriteria.forEach((element) => {
-        delete element[0].context;
-      });
-    } else {
-      this.query = ObjectHelper.clone(this.queryCopy);
-    }
-    this.translateQueryVersion();
     this.setSqContextBackend();
+    this.translateQueryVersion();
   }
 
   setQueryVersion(version: MatRadioChange): void {
@@ -169,10 +164,10 @@ export class OptionsComponent implements OnInit {
 
   translateQueryVersion() {
     if (this.queryVersion === 'v1') {
-      this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query);
+      this.translatedQueryv1 = this.apiTranslator.translateToV1(this.query);
     }
     if (this.queryVersion === 'v2') {
-      this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query);
+      this.translatedQueryv2 = this.apiTranslator.translateToV2(this.query);
     }
   }
   postQuery(modus: string): Observable<any> {
