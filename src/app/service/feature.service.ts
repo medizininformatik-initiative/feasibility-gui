@@ -98,8 +98,12 @@ export class FeatureService {
     }
   }
 
-  public getSqToBackend() {
-    return this.appConfig.getConfig().options.sqContextBackend;
+  public getSendSQContextToBackend(): boolean {
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().options.sqContextBackend;
+    } else {
+      return this.appConfig.getConfig().options.sqContextBackend;
+    }
   }
 
   public getDataset(): string {

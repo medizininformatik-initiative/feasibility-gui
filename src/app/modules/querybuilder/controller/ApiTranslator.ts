@@ -38,7 +38,7 @@ export class ApiTranslator {
       criterionArray.forEach((criterion) => {
         const criterionV1 = new CriterionOnlyV1();
         criterionV1.termCode = criterion.termCodes[0];
-        if (this.featureService.getSqToBackend()) {
+        if (this.featureService.getSendSQContextToBackend()) {
           criterionV1.context = criterion.context;
         }
         criterionV1.timeRestriction = criterion.timeRestriction;
@@ -122,8 +122,7 @@ export class ApiTranslator {
       criterionArray.forEach((criterion) => {
         const criterionV2 = new CriterionOnlyV2();
         criterionV2.termCodes = criterion.termCodes;
-        console.log(this.featureService);
-        if (this.featureService.getSqToBackend()) {
+        if (this.featureService.getSendSQContextToBackend()) {
           criterionV2.context = criterion.context;
         }
         criterionV2.timeRestriction = criterion.timeRestriction;
