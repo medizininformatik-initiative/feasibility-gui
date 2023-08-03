@@ -9,7 +9,7 @@
       <mat-radio-button class="example-radio-button" value="v2">ABIDE - SQv2</mat-radio-button>
     </mat-radio-group>
     <div class="alignSlider">
-      <mat-slide-toggle (change)="removeContextFromSQ()" [(ngModel)]="removeContext">
+      <mat-slide-toggle (change)="updateContextInSQ()" [(ngModel)]="includeContext">
         {{ 'OPTIONSPAGE.CONTEXT_IN_SQ' | translate }}
       </mat-slide-toggle>
     </div>

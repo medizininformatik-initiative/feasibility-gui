@@ -100,9 +100,9 @@ export class FeatureService {
 
   public getSendSQContextToBackend(): boolean {
     if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().options.sqContextBackend;
+      return this.featureProviderService.getFeatures().options.sendsqcontexttobackend;
     } else {
-      return this.appConfig.getConfig().options.sqContextBackend;
+      return this.appConfig.getConfig().options.sendsqcontexttobackend;
     }
   }
 

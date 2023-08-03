@@ -34,7 +34,7 @@ export interface IAppConfig {
     }
   }
   options: {
-    sqContextBackend: boolean
+    sendsqcontexttobackend: boolean
     pollingtimeinseconds: number
     pollingintervallinseconds: number
     lowerboundarypatientresult: number

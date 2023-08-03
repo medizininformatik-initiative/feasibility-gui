@@ -10,7 +10,6 @@ import { QueryProviderService } from '../../../querybuilder/service/query-provid
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ObjectHelper } from 'src/app/modules/querybuilder/controller/ObjectHelper';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -29,8 +28,7 @@ export class SafePipe implements PipeTransform {
 export class OptionsComponent implements OnInit {
   public features: IAppConfig;
   doQueryCopy = true;
-  queryCopy: Query;
-  removeContext: boolean;
+  includeContext: boolean;
   query: Query;
   stylesheet: string;
   translatedQueryv1: QueryOnlyV1;
@@ -59,7 +57,7 @@ export class OptionsComponent implements OnInit {
     this.pollingIntervall = this.features.options.pollingintervallinseconds;
     this.fhirport = this.features.fhirport;
     this.queryVersion = this.features.queryVersion;
-    this.removeContext = this.features.options.sqContextBackend;
+    this.includeContext = this.features.options.sendsqcontexttobackend;
     if (this.queryVersion === 'v1') {
       this.translatedQueryv1 = this.apiTranslator.translateToV1(this.query);
     }
@@ -137,21 +135,12 @@ export class OptionsComponent implements OnInit {
     this.featureProviderService.storeFeatures(this.features);
   }
 
-  createQueryCopy() {
-    if (this.doQueryCopy === true) {
-      this.doQueryCopy = false;
-      this.queryCopy = ObjectHelper.clone(this.query);
-    } else {
-      return;
-    }
-  }
-
   setSqContextBackend() {
-    this.features.options.sqContextBackend = this.removeContext;
+    this.features.options.sendsqcontexttobackend = this.includeContext;
     this.featureProviderService.storeFeatures(this.features);
   }
 
-  removeContextFromSQ() {
+  updateContextInSQ() {
     this.setSqContextBackend();
     this.translateQueryVersion();
   }
