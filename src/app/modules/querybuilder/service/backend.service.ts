@@ -25,10 +25,10 @@ export class BackendService {
     private authStorage: OAuthStorage,
     private apiTranslator: ApiTranslator
   ) {}
-  private static PATH_ROOT_ENTRIES = 'terminology/entries/categories';
+  private static PATH_ROOT_ENTRIES = 'terminology/categories';
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
   private static PATH_TERMINOLOGY_PROFILE = 'terminology/ui_profile';
-  private static PATH_SEARCH = 'terminology/search';
+  private static PATH_SEARCH = 'terminology/entries';
 
   private static PATH_RUN_QUERY = 'query';
   private static PATH_STORED_QUERY = 'query/template';
