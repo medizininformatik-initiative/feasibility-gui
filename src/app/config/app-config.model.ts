@@ -20,7 +20,7 @@ export interface IAppConfig {
     copyrightOwner: string
   }
   features: {
-    v2: {
+    v3: {
       multiplevaluedefinitions: boolean
       multiplegroups: boolean
       dependentgroups: boolean
