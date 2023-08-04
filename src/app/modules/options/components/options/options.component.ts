@@ -92,19 +92,19 @@ export class OptionsComponent implements OnInit {
   setFeature(checked: MatCheckboxChange): void {
     switch (checked.source.id) {
       case 'multiplevaluedefinitions': {
-        this.features.features.v2.multiplevaluedefinitions = checked.checked;
+        this.features.features.v3.multiplevaluedefinitions = checked.checked;
         break;
       }
       case 'multiplegroups': {
-        this.features.features.v2.multiplegroups = checked.checked;
+        this.features.features.v3.multiplegroups = checked.checked;
         break;
       }
       case 'dependentgroups': {
-        this.features.features.v2.dependentgroups = checked.checked;
+        this.features.features.v3.dependentgroups = checked.checked;
         break;
       }
       case 'timerestriction': {
-        this.features.features.v2.timerestriction = checked.checked;
+        this.features.features.v3.timerestriction = checked.checked;
         break;
       }
       case 'displayvaluefiltericon': {
