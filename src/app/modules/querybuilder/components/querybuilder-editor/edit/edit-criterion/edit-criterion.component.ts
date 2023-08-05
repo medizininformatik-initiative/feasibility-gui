@@ -20,6 +20,7 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Subscription } from 'rxjs';
 import { BackendService } from '../../../../service/backend.service';
 import { TimeRestrictionType } from '../../../../model/api/query/timerestriction';
+import { TermEntry2CriterionTranslator } from 'src/app/modules/querybuilder/controller/TermEntry2CriterionTranslator';
 
 @Component({
   selector: 'num-edit-criterion',
@@ -58,11 +59,18 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   private subscriptionCritProfile: Subscription;
 
+  private readonly translator;
+
   constructor(
     public featureService: FeatureService,
     private changeDetector: ChangeDetectorRef,
     private backend: BackendService
-  ) {}
+  ) {
+    this.translator = new TermEntry2CriterionTranslator(
+      this.featureService.useFeatureTimeRestriction(),
+      this.featureService.getQueryVersion()
+    );
+  }
 
   ngOnInit(): void {
     if (this.position) {
@@ -109,6 +117,17 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     this.subscriptionCritProfile = this.backend
       .getTerminologyProfile(param)
       .subscribe((profile) => {
+        let attrDefs = [];
+        if (profile.attributeDefinitions) {
+          attrDefs = profile.attributeDefinitions;
+        }
+
+        this.criterion = this.translator.translateCrit(
+          this.criterion,
+          profile.valueDefinition,
+          attrDefs
+        );
+
         if (profile.timeRestrictionAllowed && !this.criterion.timeRestriction) {
           this.criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
         }
