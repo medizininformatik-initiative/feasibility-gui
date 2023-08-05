@@ -137,7 +137,16 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     this.subscriptionCritProfile = this.backend
       .getTerminologyProfile(this.criterion)
       .subscribe((profile) => {
-        this.initCriterion(profile);
+        let attrDefs = [];
+        if (profile.attributeDefinitions) {
+          attrDefs = profile.attributeDefinitions;
+        }
+
+        this.criterion = this.translator.translateCrit(
+          this.criterion,
+          profile.valueDefinition,
+          attrDefs
+        );
 
         if (profile.timeRestrictionAllowed && !this.criterion.timeRestriction) {
           this.criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
