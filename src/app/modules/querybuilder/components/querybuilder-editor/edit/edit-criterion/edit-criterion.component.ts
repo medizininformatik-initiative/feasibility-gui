@@ -4,7 +4,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
   QueryList,
@@ -17,17 +16,13 @@ import { FeatureService } from '../../../../../../service/feature.service';
 import { Query } from '../../../../model/api/query/query';
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { Subscription } from 'rxjs';
-import { BackendService } from '../../../../service/backend.service';
-import { TimeRestrictionType } from '../../../../model/api/query/timerestriction';
-import { TermEntry2CriterionTranslator } from 'src/app/modules/querybuilder/controller/TermEntry2CriterionTranslator';
 
 @Component({
   selector: 'num-edit-criterion',
   templateUrl: './edit-criterion.component.html',
   styleUrls: ['./edit-criterion.component.scss'],
 })
-export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class EditCriterionComponent implements OnInit, AfterViewChecked {
   @Input()
   criterion: Criterion;
 
@@ -57,20 +52,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   showGroups: boolean;
 
-  private subscriptionCritProfile: Subscription;
-
-  private readonly translator;
-
-  constructor(
-    public featureService: FeatureService,
-    private changeDetector: ChangeDetectorRef,
-    private backend: BackendService
-  ) {
-    this.translator = new TermEntry2CriterionTranslator(
-      this.featureService.useFeatureTimeRestriction(),
-      this.featureService.getQueryVersion()
-    );
-  }
+  constructor(public featureService: FeatureService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     if (this.position) {
@@ -80,97 +62,11 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     }
 
     this.showGroups = this.query.groups.length > 1;
-
-    if (!this.featureService.mockLoadnSave()) {
-      this.loadUIProfile();
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionCritProfile?.unsubscribe();
   }
 
   ngAfterViewChecked(): void {
     this.actionDisabled = this.isActionDisabled();
     this.changeDetector.detectChanges();
-  }
-
-  getTermcodeParameters(): string {
-    const termCode = this.criterion.termCodes[0];
-    const termCodeVersion = termCode.version ? '&version=' + termCode.version : '';
-    return 'code=' + termCode.code + '&system=' + termCode.system + termCodeVersion;
-  }
-
-  getContextParameters(): string {
-    const context = this.criterion.context;
-    const contextVersion = context.version ? '&context_version=' + context.version : '';
-    return '&context_system=' + context.system + '&context_code=' + context.code + contextVersion;
-  }
-
-  getRequestParameters(): string {
-    return this.getTermcodeParameters() + this.getContextParameters();
-  }
-
-  initCriterion(profile): void {
-    let attrDefs = [];
-    if (profile.attributeDefinitions) {
-      attrDefs = profile.attributeDefinitions;
-    }
-
-    this.criterion = this.translator.translateCrit(
-      this.criterion,
-      profile.valueDefinition,
-      attrDefs
-    );
-  }
-
-  loadUIProfile(): void {
-    if (this.criterion.valueFilters.length > 0 || this.criterion.attributeFilters.length > 0) {
-      return;
-    }
-
-    this.subscriptionCritProfile?.unsubscribe();
-    const param = this.getRequestParameters();
-    this.subscriptionCritProfile = this.backend
-      .getTerminologyProfile(this.criterion)
-      .subscribe((profile) => {
-        this.initCriterion(profile);
-
-        if (profile.timeRestrictionAllowed && !this.criterion.timeRestriction) {
-          this.criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
-        }
-
-        if (profile.valueDefinition?.type === 'concept') {
-          if (profile.valueDefinition?.selectableConcepts) {
-            this.criterion.valueFilters[0].valueDefinition = profile.valueDefinition;
-          }
-        }
-        if (profile.valueDefinition?.type === 'quantity') {
-          this.criterion.valueFilters[0].precision = profile.valueDefinition.precision;
-          if (profile.valueDefinition) {
-            this.criterion.valueFilters[0].valueDefinition = profile.valueDefinition;
-          }
-        }
-        this.criterion.attributeFilters?.forEach((attribute) => {
-          if (profile.attributeDefinitions) {
-            const find = profile.attributeDefinitions.find(
-              (attr) => attr.attributeCode.code === attribute.attributeDefinition.attributeCode.code
-            );
-            if (find.type === 'concept') {
-              if (find.selectableConcepts) {
-                attribute.attributeDefinition.selectableConcepts = find.selectableConcepts;
-              }
-            }
-            if (find.type === 'quantity') {
-              attribute.precision = find.precision;
-              attribute.attributeDefinition.allowedUnits = find.allowedUnits;
-              if (find.selectableConcepts) {
-                attribute.attributeDefinition.selectableConcepts = find.selectableConcepts;
-              }
-            }
-          }
-        });
-      });
   }
 
   doSave(): void {
