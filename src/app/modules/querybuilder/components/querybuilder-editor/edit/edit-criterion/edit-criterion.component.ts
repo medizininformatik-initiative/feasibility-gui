@@ -132,7 +132,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     this.subscriptionCritProfile?.unsubscribe();
     const param = this.getRequestParameters();
     this.subscriptionCritProfile = this.backend
-      .getTerminologyProfile(param)
+      .getTerminologyProfile(this.criterion)
       .subscribe((profile) => {
         this.initCriterion(profile);
 

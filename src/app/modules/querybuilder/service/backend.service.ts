@@ -12,6 +12,8 @@ import { ApiTranslator } from '../controller/ApiTranslator';
 import { QueryProviderService } from './query-provider.service';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { QueryResultRateLimit } from '../model/api/result/QueryResultRateLimit';
+import { v3 as uuidv3 } from 'uuid';
+import { Criterion } from '../model/api/query/criterion';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +27,11 @@ export class BackendService {
     private authStorage: OAuthStorage,
     private apiTranslator: ApiTranslator
   ) {}
+
+  private static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
   private static PATH_ROOT_ENTRIES = 'terminology/categories';
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
-  private static PATH_TERMINOLOGY_PROFILE = 'terminology/ui_profile';
+  private static PATH_TERMINOLOGY = 'terminology/';
   private static PATH_SEARCH = 'terminology/entries';
 
   private static PATH_RUN_QUERY = 'query';
@@ -62,8 +66,35 @@ export class BackendService {
     );
   }
 
-  public getTerminologyProfile(termcode: string): Observable<any> {
-    return this.http.get<any>(this.createUrl(BackendService.PATH_TERMINOLOGY_PROFILE, termcode));
+  public getTerminologyProfile(criterion: Criterion): Observable<any> {
+    const context = criterion.context;
+    const termcode = criterion.termCodes[0];
+    let contextVersion = '';
+    let termcodeVersion = '';
+
+    if (context.version) {
+      contextVersion = criterion.context.version;
+    }
+
+    if (termcode.version) {
+      termcodeVersion = termcode.version;
+    }
+
+    const contextTermcodeHashInput =
+      context.system +
+      context.code +
+      contextVersion +
+      termcode.system +
+      termcode.code +
+      termcodeVersion;
+    const contextTermcodeHash = uuidv3(
+      contextTermcodeHashInput,
+      BackendService.BACKEND_UUID_NAMESPACE
+    );
+
+    return this.http.get<any>(
+      this.createUrl(BackendService.PATH_TERMINOLOGY + contextTermcodeHash + '/ui_profile')
+    );
   }
 
   public getTerminolgyEntrySearchResult(
