@@ -122,15 +122,15 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
   }
 
   loadUIProfile(): void {
-    if (this.criterion.valueFilters.length > 0 || this.criterion.attributeFilters.length > 0) {
-      this.loadAllowedCriteria();
-      return;
-    }
-
     this.subscriptionCritProfile = this.backend
       .getTerminologyProfile(this.criterion)
       .subscribe((profile) => {
-        this.initCriterion(profile);
+        if (
+          this.criterion.valueFilters.length === 0 &&
+          this.criterion.attributeFilters.length === 0
+        ) {
+          this.initCriterion(profile);
+        }
 
         if (profile.timeRestrictionAllowed && !this.criterion.timeRestriction) {
           this.criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
