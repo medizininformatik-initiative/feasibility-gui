@@ -19,6 +19,7 @@ export abstract class AttributeDefinition {
   attributeCode: TerminologyCode;
   display?: string;
   optional?: boolean;
+  referenceValueSet: string;
 
   precision = 1;
   max?: number;

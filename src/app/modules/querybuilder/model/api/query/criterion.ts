@@ -17,6 +17,7 @@ export class Criterion {
   children?: Array<TerminologyEntry> = [];
   isinvalid?: boolean;
   context?: TerminologyCode;
+  criterionHash?: string;
 
   @V2()
   timeRestriction?: TimeRestriction;

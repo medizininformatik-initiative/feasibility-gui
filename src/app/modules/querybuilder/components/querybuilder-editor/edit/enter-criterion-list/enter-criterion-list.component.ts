@@ -9,7 +9,6 @@ import { QueryProviderService } from '../../../../service/query-provider.service
 import { FeatureService } from '../../../../../../service/feature.service';
 import { Subscription } from 'rxjs';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
-import { TimeRestrictionType } from '../../../../model/api/query/timerestriction';
 
 export class EnterCriterionListComponentData {
   groupIndex: number;
@@ -24,19 +23,20 @@ export class EnterCriterionListComponentData {
   styleUrls: ['./enter-criterion-list.component.scss'],
 })
 export class EnterCriterionListComponent implements OnInit, OnDestroy {
-  private readonly translator;
-
   private subscriptionCritProfile: Subscription;
   criterionList: Array<Criterion> = [];
   groupIndex: number;
   critType: CritType;
   query: Query;
+  queryCriterionList: Array<Criterion> = [];
+  queryCriteriaHashes: Array<string> = [];
   actionDisabled = true;
   criterionAddibleList: Array<{
     criterion: Criterion
     groupID: number
     isAddible: boolean
   }> = [];
+  private readonly translator;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
@@ -50,13 +50,10 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
       this.featureService.getQueryVersion()
     );
 
+    this.query = data.query;
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
-    this.addContextToCriterionList(data);
-    this.criterionList = this.criterionList.map((criterion) => this.loadUIProfile(criterion));
-
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
-    this.query = data.query;
   }
 
   ngOnInit(): void {
@@ -69,69 +66,7 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscriptionCritProfile.unsubscribe();
-  }
-
-  initCriterion(profile, criterion): void {
-    let attrDefs = [];
-    if (profile.attributeDefinitions) {
-      attrDefs = profile.attributeDefinitions;
-    }
-
-    criterion = this.translator.translateCrit(criterion, profile.valueDefinition, attrDefs);
-
-    return criterion;
-  }
-
-  loadUIProfile(criterion): Criterion {
-    if (criterion.valueFilters.length > 0 || criterion.attributeFilters.length > 0) {
-      return;
-    }
-
-    this.subscriptionCritProfile = this.backend
-      .getTerminologyProfile(criterion)
-      .subscribe((profile) => {
-        this.initCriterion(profile, criterion);
-
-        if (profile.timeRestrictionAllowed && !criterion.timeRestriction) {
-          criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
-        }
-
-        if (profile.valueDefinition?.type === 'concept') {
-          if (profile.valueDefinition?.selectableConcepts) {
-            criterion.valueFilters[0].valueDefinition = profile.valueDefinition;
-          }
-        }
-        if (profile.valueDefinition?.type === 'quantity') {
-          criterion.valueFilters[0].precision = profile.valueDefinition.precision;
-          if (profile.valueDefinition) {
-            criterion.valueFilters[0].valueDefinition = profile.valueDefinition;
-          }
-        }
-        criterion.attributeFilters?.forEach((attribute) => {
-          if (profile.attributeDefinitions) {
-            const find = profile.attributeDefinitions.find(
-              (attr) => attr.attributeCode.code === attribute.attributeDefinition.attributeCode.code
-            );
-            if (find.type === 'concept') {
-              if (find.selectableConcepts) {
-                attribute.attributeDefinition.selectableConcepts = find.selectableConcepts;
-              }
-            }
-            if (find.type === 'quantity') {
-              attribute.precision = find.precision;
-              attribute.attributeDefinition.allowedUnits = find.allowedUnits;
-              if (find.selectableConcepts) {
-                attribute.attributeDefinition.selectableConcepts = find.selectableConcepts;
-              }
-            }
-          }
-        });
-      });
-
-    return criterion;
-  }
+  ngOnDestroy(): void {}
 
   addContextToCriterionList(data: EnterCriterionListComponentData): void {
     data.termEntryList.forEach((termEntryListContext) => {
