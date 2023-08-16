@@ -32,9 +32,18 @@ export class EditSingleCriterionComponent implements OnInit {
     this.querySnapshot = ObjectHelper.clone(data.query);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('onInit (edit-single-criterion)');
+    console.log(this.querySnapshot);
+  }
 
-  doSave(): void {
+  doSave(event: { groupId: number }): void {
+    const index = this.queryModified.groups.findIndex((group) => group.id === event.groupId);
+
+    if (index < 0) {
+      return;
+    }
+
     this.dialogRef.close(this.queryModified);
   }
 

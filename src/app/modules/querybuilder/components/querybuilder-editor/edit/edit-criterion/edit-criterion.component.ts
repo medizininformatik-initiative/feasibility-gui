@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   QueryList,
@@ -11,7 +12,7 @@ import {
 } from '@angular/core';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component';
-import { ValueFilter } from '../../../../model/api/query/valueFilter';
+import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter';
 import { FeatureService } from '../../../../../../service/feature.service';
 import { Query } from '../../../../model/api/query/query';
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger';
@@ -20,14 +21,13 @@ import { Subscription } from 'rxjs';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { TimeRestrictionType } from '../../../../model/api/query/timerestriction';
 import { TermEntry2CriterionTranslator } from 'src/app/modules/querybuilder/controller/TermEntry2CriterionTranslator';
-import { TerminologyEntry } from 'src/app/modules/querybuilder/model/api/terminology/terminology';
 
 @Component({
   selector: 'num-edit-criterion',
   templateUrl: './edit-criterion.component.html',
   styleUrls: ['./edit-criterion.component.scss'],
 })
-export class EditCriterionComponent implements OnInit, AfterViewChecked {
+export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input()
   criterion: Criterion;
 
@@ -85,18 +85,13 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
     this.createListOfQueryCriteriaAndHashes();
     this.loadUIProfile();
   }
+  ngOnDestroy(): void {
+    this.subscriptionCritProfile?.unsubscribe();
+  }
 
-  loadAllowedCriteria(): void {
-    this.criterion.attributeFilters.forEach((attrFilter) => {
-      const refValSet = attrFilter.attributeDefinition.referenceValueSet;
-      if (refValSet) {
-        this.subscriptionCritProfile = this.backend
-          .getAllowedReferencedCriteria(refValSet, this.queryCriteriaHashes)
-          .subscribe((allowedCriteriaList) => {
-            console.log(allowedCriteriaList);
-          });
-      }
-    });
+  ngAfterViewChecked(): void {
+    this.actionDisabled = this.isActionDisabled();
+    this.changeDetector.detectChanges();
   }
 
   createListOfQueryCriteriaAndHashes(): void {
@@ -171,9 +166,42 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
       });
   }
 
-  ngAfterViewChecked(): void {
-    this.actionDisabled = this.isActionDisabled();
-    this.changeDetector.detectChanges();
+  loadAllowedCriteria(): void {
+    this.criterion.attributeFilters.forEach((attrFilter) => {
+      const refValSet = attrFilter.attributeDefinition.referenceValueSet;
+      if (refValSet) {
+        this.subscriptionCritProfile = this.backend
+          .getAllowedReferencedCriteria(refValSet, this.queryCriteriaHashes)
+          .subscribe((allowedCriteriaList) => {
+            console.log(allowedCriteriaList);
+            if (allowedCriteriaList.length > 0) {
+              attrFilter.attributeDefinition.selectableConcepts = [];
+              attrFilter.type = OperatorOptions.REFERENCE;
+              allowedCriteriaList.forEach((critHash) => {
+                attrFilter.attributeDefinition.selectableConcepts.push(
+                  this.findCriterionByHash(critHash).termCodes[0]
+                );
+                console.log(attrFilter);
+              });
+            }
+          });
+      }
+    });
+  }
+
+  findCriterionByHash(hash: string): Criterion {
+    let tempCrit: Criterion;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.criterionHash === hash) {
+            tempCrit = conj;
+          }
+        });
+      });
+    }
+    return tempCrit;
   }
 
   doSave(): void {
@@ -182,7 +210,6 @@ export class EditCriterionComponent implements OnInit, AfterViewChecked {
     }
 
     this.moveBetweenGroups();
-
     this.save.emit({ groupId: this.selectedGroupId });
   }
 

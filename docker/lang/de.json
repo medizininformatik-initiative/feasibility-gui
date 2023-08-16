@@ -120,6 +120,7 @@
         "TO": "vor {{ to }}",
         "NONE": "keine zeitliche Einschränkung"
       },
+      "REFERENCED_CRITERIA": "referenzierte Kriterien:",
       "GROUPS": {
         "LINKEDGROUPS": "Gruppen sind verbunden",
         "SHOW_CONNECTION": "Beziehung anzeigen",
@@ -217,7 +218,8 @@
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",
-    "DATAPROTECTION": "Datenschutz"
+    "DATAPROTECTION": "Datenschutz",
+    "CONTACT": "Kontakt"
   },
   "BUTTON": {
     "SAVE": "Speichern",

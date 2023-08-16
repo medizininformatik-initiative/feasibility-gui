@@ -120,33 +120,67 @@ export class ApiTranslator {
     inclusionCriteria.forEach((criterionArray) => {
       const innerArrayV2: CriterionOnlyV2[] = [];
       criterionArray.forEach((criterion) => {
-        const criterionV2 = new CriterionOnlyV2();
-        criterionV2.termCodes = criterion.termCodes;
-        if (this.featureService.getSendSQContextToBackend()) {
-          criterionV2.context = criterion.context;
-        }
-        criterionV2.timeRestriction = criterion.timeRestriction;
-        if (criterion.valueFilters.length > 0) {
-          criterionV2.valueFilter = criterion.valueFilters[0];
-          criterionV2.valueFilter.valueDefinition = undefined;
-        }
-        if (criterion.attributeFilters?.length > 0) {
-          criterion.attributeFilters.forEach((attribute) => {
-            if (attribute.type === OperatorOptions.CONCEPT) {
-              if (attribute.selectedConcepts.length > 0) {
-                criterionV2.attributeFilters.push(attribute);
+        console.log('übersetzung');
+        console.log(criterion);
+        if (criterion.isLinked === undefined || criterion.isLinked === false) {
+          const criterionV2 = new CriterionOnlyV2();
+          criterionV2.termCodes = criterion.termCodes;
+          if (this.featureService.getSendSQContextToBackend()) {
+            criterionV2.context = criterion.context;
+          }
+          criterionV2.timeRestriction = criterion.timeRestriction;
+          if (criterion.valueFilters.length > 0) {
+            criterionV2.valueFilter = criterion.valueFilters[0];
+            criterionV2.valueFilter.valueDefinition = undefined;
+          }
+          if (criterion.attributeFilters?.length > 0) {
+            criterion.attributeFilters.forEach((attribute) => {
+              if (attribute.type === OperatorOptions.CONCEPT) {
+                if (attribute.selectedConcepts.length > 0) {
+                  criterionV2.attributeFilters.push(attribute);
+                }
+              } else {
+                console.log('übersetzung2');
+                console.log(attribute);
+                if (attribute.type === OperatorOptions.REFERENCE) {
+                  if (criterion.linkedCriteria.length > 0) {
+                    const refAttribute = attribute;
+                    delete refAttribute.selectedConcepts;
+                    refAttribute.criteria = [];
+                    criterion.linkedCriteria.forEach((linkedCrit) => {
+                      const newLinkedCrit = new Criterion();
+                      newLinkedCrit.termCodes = linkedCrit.termCodes;
+                      if (linkedCrit.attributeFilters.length > 0) {
+                        newLinkedCrit.attributeFilters = linkedCrit.attributeFilters;
+                      } else {
+                        delete newLinkedCrit.attributeFilters;
+                      }
+                      if (linkedCrit.valueFilters.length > 0) {
+                        newLinkedCrit.valueFilters = linkedCrit.valueFilters;
+                      } else {
+                        delete newLinkedCrit.valueFilters;
+                      }
+                      delete newLinkedCrit.children;
+                      delete newLinkedCrit.linkedCriteria;
+                      refAttribute.criteria.push(newLinkedCrit);
+                    });
+                    criterionV2.attributeFilters.push(refAttribute);
+                  }
+                } else {
+                  criterionV2.attributeFilters.push(attribute);
+                }
               }
-            } else {
-              criterionV2.attributeFilters.push(attribute);
-            }
-            attribute.attributeCode = attribute.attributeDefinition?.attributeCode;
-          });
+              attribute.attributeCode = attribute.attributeDefinition?.attributeCode;
+            });
+          }
+          this.editTimeRestrictionsV2(criterionV2);
+          this.removeNonApiFieldsV2(criterionV2);
+          innerArrayV2.push(criterionV2);
         }
-        this.editTimeRestrictionsV2(criterionV2);
-        this.removeNonApiFieldsV2(criterionV2);
-        innerArrayV2.push(criterionV2);
       });
-      result.push(innerArrayV2);
+      if (innerArrayV2.length > 0) {
+        result.push(innerArrayV2);
+      }
     });
 
     return result;

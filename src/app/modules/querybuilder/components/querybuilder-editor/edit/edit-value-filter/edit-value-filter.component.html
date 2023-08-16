@@ -92,10 +92,10 @@
             [max]="filter?.max"
           />
           <mat-hint *ngIf="valueTooSmall(filter.minValue)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
           }}</mat-hint>
           <mat-hint *ngIf="valueTooLarge(filter.minValue)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
         <span *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE">{{
@@ -117,10 +117,10 @@
             [precision]="filter.precision"
           />
           <mat-hint *ngIf="valueTooSmall(filter.maxValue)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
           }}</mat-hint>
           <mat-hint *ngIf="valueTooLarge(filter.maxValue)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
         <mat-form-field
@@ -139,10 +139,10 @@
             [precision]="filter.precision"
           />
           <mat-hint *ngIf="valueTooSmall(filter.value)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate: { min: filter.min }
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
           }}</mat-hint>
           <mat-hint *ngIf="valueTooLarge(filter.value)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate: { max: filter.max }
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
@@ -175,7 +175,9 @@
       }}</mat-hint>
 
       <!-- CONCEPT -->
-      <div *ngIf="filter.type === OperatorOptions.CONCEPT">
+      <div
+        *ngIf="filter.type === OperatorOptions.CONCEPT || filter.type === OperatorOptions.REFERENCE"
+      >
         <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
         <span *ngIf="filterType === 'value' && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}

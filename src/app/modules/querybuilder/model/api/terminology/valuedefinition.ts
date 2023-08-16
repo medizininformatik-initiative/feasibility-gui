@@ -32,4 +32,5 @@ export abstract class AttributeDefinition {
 export enum ValueType {
   QUANTITY = 'quantity',
   CONCEPT = 'concept',
+  REFERENCE = 'reference',
 }

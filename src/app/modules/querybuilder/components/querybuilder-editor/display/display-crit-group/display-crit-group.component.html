@@ -12,6 +12,7 @@
       (cdkDropListDropped)="doDrop($event)"
     >
       <num-display-criterion
+        *ngIf="!criterion.isLinked"
         [criterion]="criterion"
         [query]="query"
         [position]="{ groupId: groupId, critType: critType, row: i, column: j }"
@@ -25,14 +26,14 @@
         [position]="'inner'"
         [label]="getInnerLabelKey()"
         (switched)="splitInnerArray(i, j)"
-        *ngIf="!lastInner"
+        *ngIf="!lastInner && !criterion.isLinked"
       ></num-bool-logic-switch>
     </div>
     <num-bool-logic-switch
       [position]="'outer'"
       [label]="getOuterLabelKey()"
       (switched)="joinInnerArrays(i)"
-      *ngIf="!lastOuter"
+      *ngIf="!lastOuter && !criterionInnerArray[0].isLinked"
     ></num-bool-logic-switch>
   </div>
   <div
