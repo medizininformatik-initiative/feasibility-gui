@@ -51,7 +51,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
 
-    if (this.filter.attributeDefinition.type === ValueType.REFERENCE) {
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
       this.criterion.linkedCriteria.forEach((linkedCrit) => {
         // bring the object into the right order for stringify
         const temp2 = {
@@ -153,7 +153,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     console.log(this.selectedConceptsAsJson);
     console.log(criterionForLinking);
 
-    if (this.filter.attributeDefinition.type === ValueType.CONCEPT) {
+    if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
       if (this.selectedConceptsAsJson.has(conceptAsJson)) {
         this.selectedConceptsAsJson.delete(conceptAsJson);
         console.log('delete');
@@ -167,7 +167,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         this.filter.selectedConcepts.push(JSON.parse(conceptAsJsonTemp));
       });
     }
-    if (this.filter.attributeDefinition.type === ValueType.REFERENCE) {
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
       if (this.selectedConceptsAsJson2.has(conceptAsJson)) {
         this.selectedConceptsAsJson2.delete(conceptAsJson);
         if (criterionForLinking) {
@@ -210,10 +210,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   isSelected(concept: TerminologyCode): boolean {
     // bring the object into the right order for stringify
     const temp = { code: concept.code, display: concept.display, system: concept.system };
-    if (this.filter.attributeDefinition.type === ValueType.CONCEPT) {
+    if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
       return this.selectedConceptsAsJson.has(JSON.stringify(temp));
     }
-    if (this.filter.attributeDefinition.type === ValueType.REFERENCE) {
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
       return this.selectedConceptsAsJson2.has(JSON.stringify(temp));
     }
   }
