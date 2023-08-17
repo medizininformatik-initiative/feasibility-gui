@@ -9,6 +9,7 @@ import { QueryProviderService } from '../../../../service/query-provider.service
 import { FeatureService } from '../../../../../../service/feature.service';
 import { Subscription } from 'rxjs';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
 
 export class EnterCriterionListComponentData {
   groupIndex: number;
@@ -88,7 +89,9 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     } else {
       this.query.groups[index].exclusionCriteria.push([criterion]);
     }
-
+    console.log('doSave (enter-criterion-list-criterion)');
+    this.moveReferenceCriteria();
+    console.log(this.query);
     this.provider.store(this.query);
     this.doDiscard(criterion);
   }
@@ -131,5 +134,26 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
 
   doDiscardAll(): void {
     this.dialogRef.close();
+  }
+
+  moveReferenceCriteria(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.isLinked && conj.position.column > 0) {
+            this.query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
+              this.query.groups,
+              conj.position,
+              {
+                groupId: conj.position.groupId,
+                critType: conj.position.critType,
+                column: -1,
+                row: -1,
+              }
+            );
+          }
+        });
+      });
+    }
   }
 }

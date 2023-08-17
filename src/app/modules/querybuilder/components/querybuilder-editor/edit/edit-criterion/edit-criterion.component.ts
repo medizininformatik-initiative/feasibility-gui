@@ -208,8 +208,10 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     if (this.isActionDisabled()) {
       return;
     }
-
+    console.log('doSave (edit-criterion)');
     this.moveBetweenGroups();
+    this.moveReferenceCriteria();
+    console.log(this.query);
     this.save.emit({ groupId: this.selectedGroupId });
   }
 
@@ -269,5 +271,26 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
         row: -1,
       }
     );
+  }
+
+  moveReferenceCriteria(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.isLinked && conj.position.column > 0) {
+            this.query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
+              this.query.groups,
+              conj.position,
+              {
+                groupId: conj.position.groupId,
+                critType: conj.position.critType,
+                column: -1,
+                row: -1,
+              }
+            );
+          }
+        });
+      });
+    }
   }
 }
