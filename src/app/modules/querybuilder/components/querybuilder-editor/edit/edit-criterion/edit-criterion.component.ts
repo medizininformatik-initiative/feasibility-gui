@@ -168,7 +168,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   loadAllowedCriteria(): void {
     this.criterion.attributeFilters.forEach((attrFilter) => {
-      const refValSet = attrFilter.attributeDefinition.referenceValueSet;
+      const refValSet = attrFilter.attributeDefinition.referenceCriteriaSet;
       if (refValSet) {
         this.subscriptionCritProfile = this.backend
           .getAllowedReferencedCriteria(refValSet, this.queryCriteriaHashes)

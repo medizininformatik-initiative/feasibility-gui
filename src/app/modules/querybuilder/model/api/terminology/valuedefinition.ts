@@ -19,7 +19,7 @@ export abstract class AttributeDefinition {
   attributeCode: TerminologyCode;
   display?: string;
   optional?: boolean;
-  referenceValueSet: string;
+  referenceCriteriaSet: string;
 
   precision = 1;
   max?: number;
