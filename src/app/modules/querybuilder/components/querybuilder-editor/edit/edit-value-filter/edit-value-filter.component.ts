@@ -34,7 +34,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   selectedUnit: QuantityUnit;
   // Use string representation of concept because equivalent objects do not match in TypeScript (e.g. { a: 1 } !== { a: 1 })
   selectedConceptsAsJson: Set<string> = new Set();
-  selectedConceptsAsJson2: Set<string> = new Set();
+  selectedReferenceAsJson: Set<string> = new Set();
   quantityFilterOption: string;
   // TODO: Try using enum
   quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
@@ -59,9 +59,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
           display: linkedCrit.termCodes[0].display,
           system: linkedCrit.termCodes[0].system,
         };
-        this.selectedConceptsAsJson2.add(JSON.stringify(temp2));
+        this.selectedReferenceAsJson.add(JSON.stringify(temp2));
       });
-      console.log(this.selectedConceptsAsJson2);
+      console.log(this.selectedReferenceAsJson);
     }
 
     this.filter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
@@ -153,7 +153,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     console.log(this.selectedConceptsAsJson);
     console.log(criterionForLinking);
 
-    if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
+    if (
+      this.filter.attributeDefinition?.type === ValueType.CONCEPT ||
+      this.filter.valueDefinition?.type === ValueType.CONCEPT
+    ) {
       if (this.selectedConceptsAsJson.has(conceptAsJson)) {
         this.selectedConceptsAsJson.delete(conceptAsJson);
         console.log('delete');
@@ -168,14 +171,14 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       });
     }
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
-      if (this.selectedConceptsAsJson2.has(conceptAsJson)) {
-        this.selectedConceptsAsJson2.delete(conceptAsJson);
+      if (this.selectedReferenceAsJson.has(conceptAsJson)) {
+        this.selectedReferenceAsJson.delete(conceptAsJson);
         if (criterionForLinking) {
           criterionForLinking.isLinked = false;
         }
         console.log('delete');
       } else {
-        this.selectedConceptsAsJson2.add(conceptAsJson);
+        this.selectedReferenceAsJson.add(conceptAsJson);
         if (criterionForLinking) {
           criterionForLinking.isLinked = true;
         }
@@ -183,7 +186,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       }
 
       this.criterion.linkedCriteria = [];
-      this.selectedConceptsAsJson2.forEach((conceptAsJsonTemp) => {
+      this.selectedReferenceAsJson.forEach((conceptAsJsonTemp) => {
         this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJsonTemp)));
       });
     }
@@ -214,7 +217,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       return this.selectedConceptsAsJson.has(JSON.stringify(temp));
     }
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
-      return this.selectedConceptsAsJson2.has(JSON.stringify(temp));
+      return this.selectedReferenceAsJson.has(JSON.stringify(temp));
     }
   }
 

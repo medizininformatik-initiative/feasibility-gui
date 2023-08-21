@@ -150,6 +150,7 @@ export class ApiTranslator {
                     criterion.linkedCriteria.forEach((linkedCrit) => {
                       const newLinkedCrit = new Criterion();
                       newLinkedCrit.termCodes = linkedCrit.termCodes;
+                      newLinkedCrit.context = linkedCrit.context;
                       if (linkedCrit.attributeFilters.length > 0) {
                         newLinkedCrit.attributeFilters = linkedCrit.attributeFilters;
                       } else {
