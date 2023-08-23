@@ -33,7 +33,7 @@
       [position]="'outer'"
       [label]="getOuterLabelKey()"
       (switched)="joinInnerArrays(i)"
-      *ngIf="!lastOuter && !criterionInnerArray[0].isLinked"
+      *ngIf="!lastOuter && !criterionInnerArray[0].isLinked && isLastSwitch(i)"
     ></num-bool-logic-switch>
   </div>
   <div

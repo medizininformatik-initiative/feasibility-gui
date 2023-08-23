@@ -43,8 +43,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log('ngoninit');
-    console.log(this.filter);
     this.filter?.selectedConcepts.forEach((concept) => {
       // bring the object into the right order for stringify
       const temp = { code: concept.code, display: concept.display, system: concept.system };
@@ -61,7 +59,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         };
         this.selectedReferenceAsJson.add(JSON.stringify(temp2));
       });
-      console.log(this.selectedReferenceAsJson);
     }
 
     this.filter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
@@ -148,10 +145,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     const temp = { code: concept.code, display: concept.display, system: concept.system };
     const conceptAsJson = JSON.stringify(temp);
     const criterionForLinking = this.getSelectedCriterion(temp);
-    console.log('doSelect');
-    console.log(conceptAsJson);
-    console.log(this.selectedConceptsAsJson);
-    console.log(criterionForLinking);
 
     if (
       this.filter.attributeDefinition?.type === ValueType.CONCEPT ||
@@ -159,10 +152,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     ) {
       if (this.selectedConceptsAsJson.has(conceptAsJson)) {
         this.selectedConceptsAsJson.delete(conceptAsJson);
-        console.log('delete');
       } else {
         this.selectedConceptsAsJson.add(conceptAsJson);
-        console.log('add');
       }
 
       this.filter.selectedConcepts = [];
@@ -176,13 +167,11 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         if (criterionForLinking) {
           criterionForLinking.isLinked = false;
         }
-        console.log('delete');
       } else {
         this.selectedReferenceAsJson.add(conceptAsJson);
         if (criterionForLinking) {
           criterionForLinking.isLinked = true;
         }
-        console.log('add');
       }
 
       this.criterion.linkedCriteria = [];

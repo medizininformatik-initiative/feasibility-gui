@@ -120,8 +120,6 @@ export class ApiTranslator {
     inclusionCriteria.forEach((criterionArray) => {
       const innerArrayV2: CriterionOnlyV2[] = [];
       criterionArray.forEach((criterion) => {
-        console.log('übersetzung');
-        console.log(criterion);
         if (criterion.isLinked === undefined || criterion.isLinked === false) {
           const criterionV2 = new CriterionOnlyV2();
           criterionV2.termCodes = criterion.termCodes;
@@ -140,8 +138,6 @@ export class ApiTranslator {
                   criterionV2.attributeFilters.push(attribute);
                 }
               } else {
-                console.log('übersetzung2');
-                console.log(attribute);
                 if (attribute.type === OperatorOptions.REFERENCE) {
                   if (criterion.linkedCriteria.length > 0) {
                     const refAttribute = attribute;
@@ -325,7 +321,7 @@ export class ApiTranslator {
         or.attributeFilters.forEach((attribute) => {
           attribute.attributeDefinition = {};
           attribute.attributeDefinition.attributeCode = ObjectHelper.clone(attribute.attributeCode);
-          attribute.attributeCode = undefined;
+          delete attribute.attributeCode;
           if (attribute.type === 'quantity-range') {
             attribute.value = 0;
             attribute.precision = 1;

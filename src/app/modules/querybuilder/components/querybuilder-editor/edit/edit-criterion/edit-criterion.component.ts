@@ -173,7 +173,6 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
         this.subscriptionCritProfile = this.backend
           .getAllowedReferencedCriteria(refValSet, this.queryCriteriaHashes)
           .subscribe((allowedCriteriaList) => {
-            console.log(allowedCriteriaList);
             if (allowedCriteriaList.length > 0) {
               attrFilter.attributeDefinition.selectableConcepts = [];
               attrFilter.type = OperatorOptions.REFERENCE;
@@ -181,7 +180,6 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
                 attrFilter.attributeDefinition.selectableConcepts.push(
                   this.findCriterionByHash(critHash).termCodes[0]
                 );
-                console.log(attrFilter);
               });
             }
           });
@@ -208,10 +206,8 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     if (this.isActionDisabled()) {
       return;
     }
-    console.log('doSave (edit-criterion)');
     this.moveBetweenGroups();
     this.moveReferenceCriteria();
-    console.log(this.query);
     this.save.emit({ groupId: this.selectedGroupId });
   }
 
@@ -277,7 +273,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     for (const inex of ['inclusion', 'exclusion']) {
       this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
         disj.forEach((conj) => {
-          if (conj.isLinked && conj.position.column > 0) {
+          if (conj.isLinked && disj.length > 1) {
             this.query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
               this.query.groups,
               conj.position,

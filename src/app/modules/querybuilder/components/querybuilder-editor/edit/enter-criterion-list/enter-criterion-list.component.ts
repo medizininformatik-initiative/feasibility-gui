@@ -89,9 +89,7 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     } else {
       this.query.groups[index].exclusionCriteria.push([criterion]);
     }
-    console.log('doSave (enter-criterion-list-criterion)');
     this.moveReferenceCriteria();
-    console.log(this.query);
     this.provider.store(this.query);
     this.doDiscard(criterion);
   }

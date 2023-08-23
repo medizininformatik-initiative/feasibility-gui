@@ -40,7 +40,6 @@ export class EditSingleCriterionComponent implements OnInit {
     if (index < 0) {
       return;
     }
-    console.log('doSave (edit-single-criterion)');
     this.dialogRef.close(this.queryModified);
   }
 
