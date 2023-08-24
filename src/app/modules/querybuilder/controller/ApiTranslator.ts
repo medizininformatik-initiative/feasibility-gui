@@ -187,6 +187,7 @@ export class ApiTranslator {
   // noinspection JSMethodCanBeStatic
   private removeNonApiFieldsV2(criterion: CriterionOnlyV2): void {
     if (criterion.valueFilter) {
+      criterion.valueFilter.valueDefinition = undefined;
       criterion.valueFilter.precision = undefined;
       if (criterion.valueFilter.type === OperatorOptions.QUANTITY_COMPARATOR) {
         criterion.valueFilter.minValue = undefined;
