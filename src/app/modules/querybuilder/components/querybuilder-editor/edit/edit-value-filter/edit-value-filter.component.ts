@@ -43,7 +43,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.filter?.selectedConcepts.forEach((concept) => {
+    this.filter?.selectedConcepts?.forEach((concept) => {
       // bring the object into the right order for stringify
       const temp = { code: concept.code, display: concept.display, system: concept.system };
       this.selectedConceptsAsJson.add(JSON.stringify(temp));

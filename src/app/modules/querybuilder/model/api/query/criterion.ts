@@ -40,5 +40,7 @@ export class CriterionOnlyV2 {
   valueFilter?: ValueFilter;
   attributeFilters?: Array<AttributeFilter> = [];
   timeRestriction?: TimeRestriction;
+  children?: Array<TerminologyEntry> = [];
+  linkedCriteria?: Criterion[] = [];
   isinvalid?: boolean;
 }

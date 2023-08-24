@@ -144,7 +144,7 @@ export class ApiTranslator {
                     delete refAttribute.selectedConcepts;
                     refAttribute.criteria = [];
                     criterion.linkedCriteria.forEach((linkedCrit) => {
-                      const newLinkedCrit = new Criterion();
+                      const newLinkedCrit = new CriterionOnlyV2();
                       newLinkedCrit.termCodes = linkedCrit.termCodes;
                       newLinkedCrit.context = linkedCrit.context;
                       if (linkedCrit.attributeFilters.length > 0) {
@@ -153,12 +153,13 @@ export class ApiTranslator {
                         delete newLinkedCrit.attributeFilters;
                       }
                       if (linkedCrit.valueFilters.length > 0) {
-                        newLinkedCrit.valueFilters = linkedCrit.valueFilters;
+                        newLinkedCrit.valueFilter = linkedCrit.valueFilters[0];
                       } else {
-                        delete newLinkedCrit.valueFilters;
+                        delete newLinkedCrit.valueFilter;
                       }
                       delete newLinkedCrit.children;
                       delete newLinkedCrit.linkedCriteria;
+                      this.removeNonApiFieldsV2(newLinkedCrit);
                       refAttribute.criteria.push(newLinkedCrit);
                     });
                     criterionV2.attributeFilters.push(refAttribute);
@@ -206,6 +207,12 @@ export class ApiTranslator {
       });
     } else {
       criterion.attributeFilters = undefined;
+    }
+    if (criterion.children) {
+      delete criterion.children;
+    }
+    if (criterion.linkedCriteria) {
+      delete criterion.linkedCriteria;
     }
   }
 
@@ -301,8 +308,9 @@ export class ApiTranslator {
       invalidCriteriaSet.add(JSON.stringify(invalids));
     });
 
-    inexclusion.forEach((and) => {
-      and.forEach((or) => {
+    // eslint-disable-next-line  @typescript-eslint/prefer-for-of
+    for (let i = 0; i < inexclusion.length; i++) {
+      inexclusion[i].forEach((or) => {
         or.valueFilters = [];
         if (or.valueFilter) {
           or.valueFilters.push(or.valueFilter);
@@ -318,6 +326,9 @@ export class ApiTranslator {
         if (!or.attributeFilters) {
           or.attributeFilters = [];
         }
+        if (!or.linkedCriteria) {
+          or.linkedCriteria = [];
+        }
         or.attributeFilters.forEach((attribute) => {
           attribute.attributeDefinition = {};
           attribute.attributeDefinition.attributeCode = ObjectHelper.clone(attribute.attributeCode);
@@ -328,6 +339,14 @@ export class ApiTranslator {
           }
           if (attribute.type === 'quantity-comparator') {
             attribute.precision = 1;
+          }
+          if (attribute.type === 'reference') {
+            attribute.criteria.forEach((refCrit) => {
+              refCrit.isLinked = true;
+              or.linkedCriteria.push(refCrit);
+              inexclusion.push([refCrit]);
+            });
+            delete attribute.criteria;
           }
         });
         or.display = or.termCodes[0].display;
@@ -360,7 +379,7 @@ export class ApiTranslator {
         }
         or.isinvalid = invalidCriteriaSet.has(JSON.stringify(or.termCodes[0]));
       });
-    });
+    }
     return inexclusion;
   }
 
