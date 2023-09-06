@@ -125,15 +125,30 @@ export class CritGroupArranger {
   }
 
   public static removeFromGroup(group: Group, position: CritGroupPosition): Group {
-    const groupTemp: Group = JSON.parse(JSON.stringify(group));
+    let groupTemp: Group = JSON.parse(JSON.stringify(group));
+    const hashes: string[] = [];
 
     if (position.critType === 'inclusion') {
+      if (groupTemp.inclusionCriteria[position.row][position.column].linkedCriteria.length > 0) {
+        groupTemp.inclusionCriteria[position.row][position.column].linkedCriteria.forEach(
+          (linkedCriterion) => {
+            hashes.push(linkedCriterion.criterionHash);
+          }
+        );
+      }
       if (groupTemp.inclusionCriteria[position.row].length === 1) {
         groupTemp.inclusionCriteria.splice(position.row, 1);
       } else {
         groupTemp.inclusionCriteria[position.row].splice(position.column, 1);
       }
     } else if (position.critType === 'exclusion') {
+      if (groupTemp.exclusionCriteria[position.row][position.column].linkedCriteria.length > 0) {
+        groupTemp.exclusionCriteria[position.row][position.column].linkedCriteria.forEach(
+          (linkedCriterion) => {
+            hashes.push(linkedCriterion.criterionHash);
+          }
+        );
+      }
       if (groupTemp.exclusionCriteria[position.row].length === 1) {
         groupTemp.exclusionCriteria.splice(position.row, 1);
       } else {
@@ -141,7 +156,29 @@ export class CritGroupArranger {
       }
     }
 
+    hashes.forEach((hash) => {
+      groupTemp = this.removeFromGroup(
+        groupTemp,
+        this.findCriterionByHash(groupTemp, hash).position
+      );
+    });
     return groupTemp;
+  }
+
+  public static findCriterionByHash(group: Group, hash: string): Criterion {
+    const groupTemp: Group = JSON.parse(JSON.stringify(group));
+    let tempCrit: Criterion;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      groupTemp[inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.criterionHash === hash) {
+            tempCrit = conj;
+          }
+        });
+      });
+    }
+    return tempCrit;
   }
 
   public static moveCriterion(

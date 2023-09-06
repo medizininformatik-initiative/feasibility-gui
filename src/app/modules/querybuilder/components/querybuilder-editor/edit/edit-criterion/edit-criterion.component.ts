@@ -95,12 +95,14 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   createListOfQueryCriteriaAndHashes(): void {
-    this.query.groups[0].inclusionCriteria.forEach((andGroup) => {
-      andGroup.forEach((criterion) => {
-        this.queryCriterionList.push(criterion);
-        this.queryCriteriaHashes.push(criterion.criterionHash);
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((andGroup) => {
+        andGroup.forEach((criterion) => {
+          this.queryCriterionList.push(criterion);
+          this.queryCriteriaHashes.push(criterion.criterionHash);
+        });
       });
-    });
+    }
   }
 
   initCriterion(profile): void {
@@ -208,6 +210,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     }
     this.moveBetweenGroups();
     this.moveReferenceCriteria();
+    console.log(this.query);
     this.save.emit({ groupId: this.selectedGroupId });
   }
 
