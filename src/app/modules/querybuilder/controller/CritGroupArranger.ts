@@ -117,14 +117,14 @@ export class CritGroupArranger {
       if (group.id !== position.groupId) {
         groupsTemp.push(group);
       } else {
-        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position));
+        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position, 'move'));
       }
     });
 
     return groupsTemp;
   }
 
-  public static removeFromGroup(group: Group, position: CritGroupPosition): Group {
+  public static removeFromGroup(group: Group, position: CritGroupPosition, modus: string): Group {
     let groupTemp: Group = JSON.parse(JSON.stringify(group));
     const hashes: string[] = [];
 
@@ -157,10 +157,13 @@ export class CritGroupArranger {
     }
 
     hashes.forEach((hash) => {
-      groupTemp = this.removeFromGroup(
-        groupTemp,
-        this.findCriterionByHash(groupTemp, hash).position
-      );
+      if (modus === 'delete' && !this.isCriterionLinked(groupTemp, hash)) {
+        groupTemp = this.removeFromGroup(
+          groupTemp,
+          this.findCriterionByHash(groupTemp, hash).position,
+          'delete'
+        );
+      }
     });
     return groupTemp;
   }
@@ -181,6 +184,26 @@ export class CritGroupArranger {
     return tempCrit;
   }
 
+  public static isCriterionLinked(group: Group, hash: string): boolean {
+    const groupTemp: Group = JSON.parse(JSON.stringify(group));
+    let isLinked = false;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      groupTemp[inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria.length > 0) {
+            conj.linkedCriteria.forEach((criterion) => {
+              if (criterion.criterionHash === hash) {
+                isLinked = true;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    return isLinked;
+  }
   public static moveCriterion(
     groups: Group[],
     positionFrom: CritGroupPosition,

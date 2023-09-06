@@ -8,9 +8,16 @@
     [expanded]="false"
   >
     <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ filter.attributeDefinition.attributeCode.display }} (optional) :
-      </mat-panel-title>
+      <ng-container *ngIf="filter.attributeDefinition.type === 'reference'">
+        <mat-panel-title>
+          {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_REFERENCE' | translate }} (optional) :
+        </mat-panel-title>
+      </ng-container>
+      <ng-container *ngIf="filter.attributeDefinition.type != 'reference'">
+        <mat-panel-title>
+          {{ filter.attributeDefinition.attributeCode.display }} (optional) :
+        </mat-panel-title>
+      </ng-container>
     </mat-expansion-panel-header>
     <ng-container *ngTemplateOutlet="valueFilterContent"></ng-container>
   </mat-expansion-panel>

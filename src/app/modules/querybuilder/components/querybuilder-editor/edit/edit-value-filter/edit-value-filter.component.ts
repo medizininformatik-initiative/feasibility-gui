@@ -165,7 +165,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       if (this.selectedReferenceAsJson.has(conceptAsJson)) {
         this.selectedReferenceAsJson.delete(conceptAsJson);
         if (criterionForLinking) {
-          criterionForLinking.isLinked = false;
+          if (!this.isCriterionLinked(criterionForLinking.criterionHash)) {
+            criterionForLinking.isLinked = false;
+          }
         }
       } else {
         this.selectedReferenceAsJson.add(conceptAsJson);
@@ -210,6 +212,28 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     }
   }
 
+  isCriterionLinked(hash: string): boolean {
+    let isLinked = false;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria.length > 0) {
+            conj.linkedCriteria.forEach((criterion) => {
+              if (
+                criterion.criterionHash === hash &&
+                conj.criterionHash !== this.criterion.criterionHash
+              ) {
+                isLinked = true;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    return isLinked;
+  }
   public isActionDisabled(): boolean {
     if (this.filter?.attributeDefinition) {
       if (this.filter?.attributeDefinition?.optional) {
