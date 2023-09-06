@@ -175,8 +175,8 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
         this.subscriptionCritProfile = this.backend
           .getAllowedReferencedCriteria(refValSet, this.queryCriteriaHashes)
           .subscribe((allowedCriteriaList) => {
+            attrFilter.attributeDefinition.selectableConcepts = [];
             if (allowedCriteriaList.length > 0) {
-              attrFilter.attributeDefinition.selectableConcepts = [];
               attrFilter.type = OperatorOptions.REFERENCE;
               allowedCriteriaList.forEach((critHash) => {
                 attrFilter.attributeDefinition.selectableConcepts.push(
