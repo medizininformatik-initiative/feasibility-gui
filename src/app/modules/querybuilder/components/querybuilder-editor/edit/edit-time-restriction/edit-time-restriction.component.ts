@@ -41,7 +41,8 @@ export class EditTimeRestrictionComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
     setTimeout(() => (this.disableAnimation = false));
-    if ((this.timeRestriction.minDate || this.timeRestriction.maxDate) !== undefined) {
+    console.log(this.timeRestriction);
+    if ((this.timeRestriction?.minDate || this.timeRestriction?.maxDate) !== undefined) {
       this.disableReset = false;
     }
   }
