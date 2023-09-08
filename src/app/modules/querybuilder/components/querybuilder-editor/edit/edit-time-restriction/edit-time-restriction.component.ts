@@ -48,11 +48,10 @@ export class EditTimeRestrictionComponent implements OnInit, AfterViewInit {
 
   resetDate() {
     if ((this.timeRestriction.minDate || this.timeRestriction.maxDate) !== undefined) {
-      this.disableReset = true;
+      this.disableReset = false;
       this.timeRestriction = new TimeRestriction();
       this.doResetTimeRestriction.emit();
-    } else {
-      this.disableReset = false;
     }
+    this.disableReset = true;
   }
 }

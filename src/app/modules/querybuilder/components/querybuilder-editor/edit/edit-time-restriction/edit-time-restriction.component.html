@@ -16,6 +16,14 @@
       <mat-panel-title>
         {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.TITLE' | translate }}
       </mat-panel-title>
+      <num-button
+        [type]="'primary'"
+        (click)="resetDate() && !disableReset; $event.stopPropagation()"
+        fxLayoutAlign="end"
+        [isDisabled]="disableReset"
+      >
+        {{ 'BUTTON.RESET' | translate }}
+      </num-button>
     </mat-expansion-panel-header>
     <div>
       <mat-form-field appearance="outline" class="operator-part">
@@ -58,13 +66,5 @@
         <mat-datepicker #dateEndPicker></mat-datepicker>
       </mat-form-field>
     </div>
-    <num-button
-      [type]="'primary'"
-      (click)="resetDate()"
-      fxLayoutAlign="end"
-      [isDisabled]="disableReset"
-    >
-      {{ 'BUTTON.RESET' | translate }}
-    </num-button>
   </mat-expansion-panel>
 </div>
