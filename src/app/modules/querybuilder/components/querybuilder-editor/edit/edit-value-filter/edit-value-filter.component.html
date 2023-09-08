@@ -11,6 +11,13 @@
       <mat-panel-title>
         {{ filter.attributeDefinition.attributeCode.display }} (optional) :
       </mat-panel-title>
+      <num-button
+        type="primary"
+        (click)="deselectAllCheckboxes(); $event.stopPropagation()"
+        fxLayoutAlign="end"
+        [isDisabled]="resetButtonDisabled()"
+        >{{ 'BUTTON.RESET' | translate }}</num-button
+      >
     </mat-expansion-panel-header>
     <ng-container *ngTemplateOutlet="valueFilterContent"></ng-container>
   </mat-expansion-panel>
@@ -249,13 +256,6 @@
           >{{ 'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate }}</mat-hint
         >
       </div>
-      <num-button
-        type="primary"
-        (click)="deselectAllCheckboxes()"
-        fxLayoutAlign="end"
-        [isDisabled]="resetButtonDisabled()"
-        >{{ 'BUTTON.RESET' | translate }}</num-button
-      >
     </div>
   </ng-template>
 </div>
