@@ -20,6 +20,7 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Subscription } from 'rxjs';
 import { BackendService } from '../../../../service/backend.service';
 import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/query/timerestriction';
+import { TermEntry2CriterionTranslator } from 'src/app/modules/querybuilder/controller/TermEntry2CriterionTranslator';
 
 @Component({
   selector: 'num-edit-criterion',
@@ -58,11 +59,18 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   private subscriptionCritProfile: Subscription;
 
+  private readonly translator;
+
   constructor(
     public featureService: FeatureService,
     private changeDetector: ChangeDetectorRef,
     private backend: BackendService
-  ) {}
+  ) {
+    this.translator = new TermEntry2CriterionTranslator(
+      this.featureService.useFeatureTimeRestriction(),
+      this.featureService.getQueryVersion()
+    );
+  }
 
   ngOnInit(): void {
     if (this.position) {
@@ -87,20 +95,47 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     this.changeDetector.detectChanges();
   }
 
+  getTermcodeParameters(): string {
+    const termCode = this.criterion.termCodes[0];
+    const termCodeVersion = termCode.version ? '&version=' + termCode.version : '';
+    return 'code=' + termCode.code + '&system=' + termCode.system + termCodeVersion;
+  }
+
+  getContextParameters(): string {
+    const context = this.criterion.context;
+    const contextVersion = context.version ? '&context_version=' + context.version : '';
+    return '&context_system=' + context.system + '&context_code=' + context.code + contextVersion;
+  }
+
+  getRequestParameters(): string {
+    return this.getTermcodeParameters() + this.getContextParameters();
+  }
+
+  initCriterion(profile): void {
+    let attrDefs = [];
+    if (profile.attributeDefinitions) {
+      attrDefs = profile.attributeDefinitions;
+    }
+
+    this.criterion = this.translator.translateCrit(
+      this.criterion,
+      profile.valueDefinition,
+      attrDefs
+    );
+  }
+
   loadUIProfile(): void {
+    if (this.criterion.valueFilters.length > 0 || this.criterion.attributeFilters.length > 0) {
+      return;
+    }
+
     this.subscriptionCritProfile?.unsubscribe();
-    const version = this.criterion.termCodes[0].version
-      ? '&version=' + this.criterion.termCodes[0].version
-      : '';
-    const param =
-      'code=' +
-      this.criterion.termCodes[0].code +
-      '&system=' +
-      this.criterion.termCodes[0].system +
-      version;
+    const param = this.getRequestParameters();
     this.subscriptionCritProfile = this.backend
-      .getTerminologyProfile(param)
+      .getTerminologyProfile(this.criterion)
       .subscribe((profile) => {
+        this.initCriterion(profile);
+
         if (profile.timeRestrictionAllowed && !this.criterion.timeRestriction) {
           this.criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
         }

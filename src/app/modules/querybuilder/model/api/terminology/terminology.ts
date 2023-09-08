@@ -48,6 +48,7 @@ import { AttributeDefinition, ValueDefinition } from './valuedefinition';
 export class TerminologyEntry {
   id: string;
   termCode?: TerminologyCode;
+  context?: TerminologyCode;
   termCodes?: Array<TerminologyCode> = [];
   display: string;
 

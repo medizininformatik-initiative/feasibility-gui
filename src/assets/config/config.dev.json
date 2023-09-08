@@ -6,7 +6,7 @@
     "baseUrl": "/api"
   },
   "uiBackendApi": {
-    "baseUrl": "http://localhost:8090/api/v2"
+    "baseUrl": "http://localhost:8090/api/v3"
   },
   "auth": {
     "baseUrl": "http://localhost:8080",
@@ -20,7 +20,7 @@
     "copyrightOwner": "MII Team"
   },
   "features": {
-    "v2": {
+    "v3": {
       "multiplevaluedefinitions": true,
       "multiplegroups": false,
       "dependentgroups": true,
@@ -34,6 +34,7 @@
     }
   },
   "options": {
+    "sendsqcontexttobackend": true,
     "pollingtimeinseconds": 10,
     "pollingintervallinseconds": 10,
     "lowerboundarypatientresult": 10,

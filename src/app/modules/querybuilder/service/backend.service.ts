@@ -12,6 +12,8 @@ import { ApiTranslator } from '../controller/ApiTranslator';
 import { QueryProviderService } from './query-provider.service';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { QueryResultRateLimit } from '../model/api/result/QueryResultRateLimit';
+import { v3 as uuidv3 } from 'uuid';
+import { Criterion } from '../model/api/query/criterion';
 
 @Injectable({
   providedIn: 'root',
@@ -22,12 +24,16 @@ export class BackendService {
     private feature: FeatureService,
     private queryProviderService: QueryProviderService,
     private http: HttpClient,
-    private authStorage: OAuthStorage
+    private authStorage: OAuthStorage,
+    private apiTranslator: ApiTranslator
   ) {}
-  private static PATH_ROOT_ENTRIES = 'terminology/root-entries';
+
+  private static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
+  private static PATH_ROOT_ENTRIES = 'terminology/categories';
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
-  private static PATH_TERMINOLOGY_PROFILE = 'terminology/ui_profile';
-  private static PATH_SEARCH = 'terminology/selectable-entries';
+  private static PATH_TERMINOLOGY = 'terminology/';
+  private static PATH_SEARCH = 'terminology/entries';
+
   private static PATH_RUN_QUERY = 'query';
   private static PATH_STORED_QUERY = 'query/template';
   private static PATH_QUERY_RESULT_LIMIT = 'query/detailed-obfuscated-result-rate-limit';
@@ -47,7 +53,6 @@ export class BackendService {
     if (this.feature.mockTerminology()) {
       return of(this.mockBackendDataProvider.getCategoryEntries());
     }
-
     return this.http.get<Array<CategoryEntry>>(this.createUrl(BackendService.PATH_ROOT_ENTRIES));
   }
 
@@ -61,8 +66,35 @@ export class BackendService {
     );
   }
 
-  public getTerminologyProfile(termcode: string): Observable<any> {
-    return this.http.get<any>(this.createUrl(BackendService.PATH_TERMINOLOGY_PROFILE, termcode));
+  public getTerminologyProfile(criterion: Criterion): Observable<any> {
+    const context = criterion.context;
+    const termcode = criterion.termCodes[0];
+    let contextVersion = '';
+    let termcodeVersion = '';
+
+    if (context.version) {
+      contextVersion = criterion.context.version;
+    }
+
+    if (termcode.version) {
+      termcodeVersion = termcode.version;
+    }
+
+    const contextTermcodeHashInput =
+      context.system +
+      context.code +
+      contextVersion +
+      termcode.system +
+      termcode.code +
+      termcodeVersion;
+    const contextTermcodeHash = uuidv3(
+      contextTermcodeHashInput,
+      BackendService.BACKEND_UUID_NAMESPACE
+    );
+
+    return this.http.get<any>(
+      this.createUrl(BackendService.PATH_TERMINOLOGY + contextTermcodeHash + '/ui_profile')
+    );
   }
 
   public getTerminolgyEntrySearchResult(
@@ -85,11 +117,11 @@ export class BackendService {
     }
 
     if (this.feature.getQueryVersion() === 'v1') {
-      const queryV1 = new ApiTranslator().translateToV1(query);
+      const queryV1 = this.apiTranslator.translateToV1(query);
       return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV1);
     }
     if (this.feature.getQueryVersion() === 'v2') {
-      const queryV2 = new ApiTranslator().translateToV2(query);
+      const queryV2 = this.apiTranslator.translateToV2(query);
       return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV2, {
         observe: 'response',
       });
@@ -194,7 +226,7 @@ export class BackendService {
         const savedQuery = {
           label: title,
           comment,
-          content: new ApiTranslator().translateToV1(query),
+          content: this.apiTranslator.translateToV1(query),
         };
         return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
           headers,
@@ -205,7 +237,7 @@ export class BackendService {
           const savedQuery = {
             label: title,
             comment,
-            content: new ApiTranslator().translateToV2(query),
+            content: this.apiTranslator.translateToV2(query),
           };
           return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
             headers,

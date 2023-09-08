@@ -46,6 +46,7 @@ export class EnterCriterionListComponent implements OnInit {
     );
 
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
+    this.addContextToCriterionList(data);
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
     this.query = data.query;
@@ -57,6 +58,14 @@ export class EnterCriterionListComponent implements OnInit {
         criterion: thisCriterium,
         groupID: undefined,
         isAddible: undefined,
+      });
+    });
+  }
+
+  addContextToCriterionList(data: EnterCriterionListComponentData) {
+    data.termEntryList.forEach((termEntryListContext) => {
+      this.criterionList.forEach((contextElement) => {
+        contextElement.context = termEntryListContext.context;
       });
     });
   }

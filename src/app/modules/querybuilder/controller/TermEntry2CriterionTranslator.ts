@@ -49,6 +49,29 @@ export class TermEntry2CriterionTranslator {
     return criterion;
   }
 
+  public translateCrit(
+    crit: Criterion,
+    valueDefinition: ValueDefinition,
+    attributeDefinitions: AttributeDefinition[]
+  ): Criterion {
+    if (valueDefinition) {
+      crit.valueFilters.push(this.createValueFilter(valueDefinition));
+    }
+
+    attributeDefinitions?.forEach((attributeDefinition) => {
+      crit.attributeFilters.push(this.createAttributeFilter(attributeDefinition));
+    });
+
+    /*termEntry.attributeDefinitions?.forEach((attributeDefinition) => {
+        criterion.attributeFilters.push(this.createAttributeFilter(attributeDefinition));
+      });*/
+
+    // criterion.timeRestriction = this.createTimeRestriction(termEntry);
+    //criterion.optional = termEntry.optional;
+
+    return crit;
+  }
+
   // noinspection JSMethodCanBeStatic
   private createValueFilter(valueDefinition: ValueDefinition): ValueFilter {
     const valueFilter = new ValueFilter();
