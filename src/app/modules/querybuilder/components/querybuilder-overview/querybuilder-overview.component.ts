@@ -28,7 +28,8 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     private backend: BackendService,
     private feature: FeatureService,
     public featureProviderService: FeatureProviderService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private apiTranslator: ApiTranslator
   ) {}
 
   private savedQueriesSubscription: Subscription;
@@ -100,7 +101,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     this.importQuery = JSON.parse(event.target.result);
   }
   doImport(): void {
-    this.query = new ApiTranslator().translateImportedSQtoUIQuery(
+    this.query = this.apiTranslator.translateImportedSQtoUIQuery(
       QueryProviderService.createDefaultQuery(),
       this.importQuery
     );
@@ -114,7 +115,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
       this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
     } else {
       this.singleTemplateSubscription = this.backend.loadTemplate(id).subscribe((query) => {
-        this.query = new ApiTranslator().translateSQtoUIQuery(
+        this.query = this.apiTranslator.translateSQtoUIQuery(
           QueryProviderService.createDefaultQuery(),
           query
         );
@@ -126,7 +127,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
 
   loadQuery(id: number): void {
     this.singleQuerySubscription = this.backend.loadQuery(id).subscribe((query) => {
-      this.query = new ApiTranslator().translateSQtoUIQuery(
+      this.query = this.apiTranslator.translateSQtoUIQuery(
         QueryProviderService.createDefaultQuery(),
         query
       );

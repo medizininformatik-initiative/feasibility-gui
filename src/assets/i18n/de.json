@@ -103,6 +103,7 @@
     "DISPLAYVALUEFILTERICON": "nutze Icons für Vergleichsoperatoren",
     "POLLINGTIME": "Polling Time",
     "POLLINGINTERVALL": "Polling Intervall",
+    "CONTEXT_IN_SQ": "Kontext in die SQ einbinden",
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {

@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service';
 import { IAppConfig } from '../../../config/app-config.model';
 import { FeatureService } from '../../../service/feature.service';
+import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -20,7 +21,7 @@ describe('HeaderComponent', () => {
   @Component({ selector: 'num-stub', template: '' })
   class StubComponent {}
 
-  const profile = { sub: 'codex' } as UserInfo;
+  const profile = { info: {} } as IUserProfile;
   const authService = {
     logOut: () => {},
     loadUserProfile: () => Promise.resolve(profile),
