@@ -1,4 +1,11 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Injectable,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiTranslator } from 'src/app/modules/querybuilder/controller/ApiTranslator';
 import { Query } from 'src/app/modules/querybuilder/model/api/query/query';
@@ -21,7 +28,8 @@ export class UploadDataselectionComponent implements AfterViewChecked {
   constructor(
     public queryProviderService: QueryProviderService,
     private router: Router,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private apiTranslator: ApiTranslator
   ) {}
 
   ngAfterViewChecked(): void {
@@ -33,7 +41,7 @@ export class UploadDataselectionComponent implements AfterViewChecked {
     this.changeDetector.detectChanges();
   }
   doImport(): void {
-    this.query = new ApiTranslator().translateImportedDsToUIQuery(
+    this.query = this.apiTranslator.translateImportedDsToUIQuery(
       QueryProviderService.createDefaultQuery(),
       this.importQuery
     );
