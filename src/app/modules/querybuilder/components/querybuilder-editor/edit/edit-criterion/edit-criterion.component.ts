@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component';
-import { ValueFilter } from '../../../../model/api/query/valueFilter';
+import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter';
 import { FeatureService } from '../../../../../../service/feature.service';
 import { Query } from '../../../../model/api/query/query';
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger';
@@ -59,6 +59,8 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   private subscriptionCritProfile: Subscription;
 
+  queryCriterionList: Array<Criterion> = [];
+  queryCriteriaHashes: Array<string> = [];
   private readonly translator;
 
   constructor(
@@ -80,12 +82,9 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     }
 
     this.showGroups = this.query.groups.length > 1;
-
-    if (!this.featureService.mockLoadnSave()) {
-      this.loadUIProfile();
-    }
+    this.createListOfQueryCriteriaAndHashes();
+    this.loadUIProfile();
   }
-
   ngOnDestroy(): void {
     this.subscriptionCritProfile?.unsubscribe();
   }
@@ -95,20 +94,15 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     this.changeDetector.detectChanges();
   }
 
-  getTermcodeParameters(): string {
-    const termCode = this.criterion.termCodes[0];
-    const termCodeVersion = termCode.version ? '&version=' + termCode.version : '';
-    return 'code=' + termCode.code + '&system=' + termCode.system + termCodeVersion;
-  }
-
-  getContextParameters(): string {
-    const context = this.criterion.context;
-    const contextVersion = context.version ? '&context_version=' + context.version : '';
-    return '&context_system=' + context.system + '&context_code=' + context.code + contextVersion;
-  }
-
-  getRequestParameters(): string {
-    return this.getTermcodeParameters() + this.getContextParameters();
+  createListOfQueryCriteriaAndHashes(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((andGroup) => {
+        andGroup.forEach((criterion) => {
+          this.queryCriterionList.push(criterion);
+          this.queryCriteriaHashes.push(criterion.criterionHash);
+        });
+      });
+    }
   }
 
   initCriterion(profile): void {
@@ -117,7 +111,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
       attrDefs = profile.attributeDefinitions;
     }
 
-    this.criterion = this.translator.translateCrit(
+    this.criterion = this.translator.addAttributeAndValueFilterToCrit(
       this.criterion,
       profile.valueDefinition,
       attrDefs
@@ -125,16 +119,15 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   loadUIProfile(): void {
-    if (this.criterion.valueFilters.length > 0 || this.criterion.attributeFilters.length > 0) {
-      return;
-    }
-
-    this.subscriptionCritProfile?.unsubscribe();
-    const param = this.getRequestParameters();
     this.subscriptionCritProfile = this.backend
       .getTerminologyProfile(this.criterion)
       .subscribe((profile) => {
-        this.initCriterion(profile);
+        if (
+          this.criterion.valueFilters.length === 0 &&
+          this.criterion.attributeFilters.length === 0
+        ) {
+          this.initCriterion(profile);
+        }
 
         if (profile.timeRestrictionAllowed && !this.criterion.timeRestriction) {
           this.criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
@@ -170,16 +163,54 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
             }
           }
         });
+
+        this.loadAllowedCriteria();
       });
+  }
+
+  loadAllowedCriteria(): void {
+    this.criterion.attributeFilters.forEach((attrFilter) => {
+      const refValSet = attrFilter.attributeDefinition.referenceCriteriaSet;
+      if (refValSet) {
+        this.subscriptionCritProfile = this.backend
+          .getAllowedReferencedCriteria(refValSet, this.queryCriteriaHashes)
+          .subscribe((allowedCriteriaList) => {
+            attrFilter.attributeDefinition.selectableConcepts = [];
+            if (allowedCriteriaList.length > 0) {
+              attrFilter.type = OperatorOptions.REFERENCE;
+              allowedCriteriaList.forEach((critHash) => {
+                attrFilter.attributeDefinition.selectableConcepts.push(
+                  this.findCriterionByHash(critHash).termCodes[0]
+                );
+              });
+            }
+          });
+      }
+    });
+  }
+
+  findCriterionByHash(hash: string): Criterion {
+    let tempCrit: Criterion;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.criterionHash === hash) {
+            tempCrit = conj;
+          }
+        });
+      });
+    }
+    return tempCrit;
   }
 
   doSave(): void {
     if (this.isActionDisabled()) {
       return;
     }
-
     this.moveBetweenGroups();
-
+    this.moveReferenceCriteria();
+    console.log(this.query);
     this.save.emit({ groupId: this.selectedGroupId });
   }
 
@@ -243,5 +274,26 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
         row: -1,
       }
     );
+  }
+
+  moveReferenceCriteria(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.isLinked && disj.length > 1) {
+            this.query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
+              this.query.groups,
+              conj.position,
+              {
+                groupId: conj.position.groupId,
+                critType: conj.position.critType,
+                column: -1,
+                row: -1,
+              }
+            );
+          }
+        });
+      });
+    }
   }
 }
