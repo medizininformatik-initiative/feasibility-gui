@@ -120,7 +120,6 @@
         "TO": "vor {{ to }}",
         "NONE": "keine zeitliche Einschränkung"
       },
-      "REFERENCED_CRITERIA": "referenzierte Kriterien:",
       "GROUPS": {
         "LINKEDGROUPS": "Gruppen sind verbunden",
         "SHOW_CONNECTION": "Beziehung anzeigen",
@@ -149,7 +148,6 @@
       "HEADER_FILTER_CONCEPT_OPTIONAL": "Wählen Sie einen oder mehrere zulässige Werte:",
       "HEADER_FILTER_CONCEPT_MANDATORY": "Geben Sie einen oder mehrere zulässige Werte an:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
-      "HEADER_FILTER_REFERENCE": "Festgestellte Diagnose",
       "CHOOSE_GROUP":"Gruppe auswählen",
       "MANDATORY_HINT": "Pflichtfeld",
       "UNIT": "Einheit",
@@ -219,8 +217,7 @@
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",
-    "DATAPROTECTION": "Datenschutz",
-    "CONTACT": "Kontakt"
+    "DATAPROTECTION": "Datenschutz"
   },
   "BUTTON": {
     "SAVE": "Speichern",

@@ -28,11 +28,10 @@ export class BackendService {
     private apiTranslator: ApiTranslator
   ) {}
 
-  public static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
+  private static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
   private static PATH_ROOT_ENTRIES = 'terminology/categories';
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
   private static PATH_TERMINOLOGY = 'terminology/';
-  private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
   private static PATH_SEARCH = 'terminology/entries';
 
   private static PATH_RUN_QUERY = 'query';
@@ -64,18 +63,6 @@ export class BackendService {
 
     return this.http.get<TerminologyEntry>(
       this.createUrl(BackendService.PATH_TERMINOLOGY_SUBTREE + '/' + id)
-    );
-  }
-
-  public getAllowedReferencedCriteria(
-    criteriaSetUrl: string,
-    contextTermCodeHashes: Array<string>
-  ): Observable<any> {
-    const criteriaSetUrlParam = 'criteriaSetUrl=' + encodeURI(criteriaSetUrl);
-
-    return this.http.post<any>(
-      this.createUrl(BackendService.PATH_CRITERIA_SET_INTERSECT, criteriaSetUrlParam),
-      contextTermCodeHashes
     );
   }
 

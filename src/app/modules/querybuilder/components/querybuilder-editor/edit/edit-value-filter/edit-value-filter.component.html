@@ -8,16 +8,16 @@
     [expanded]="false"
   >
     <mat-expansion-panel-header>
-      <ng-container *ngIf="filter.attributeDefinition.type === 'reference'">
-        <mat-panel-title>
-          {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_REFERENCE' | translate }} (optional) :
-        </mat-panel-title>
-      </ng-container>
-      <ng-container *ngIf="filter.attributeDefinition.type != 'reference'">
-        <mat-panel-title>
-          {{ filter.attributeDefinition.attributeCode.display }} (optional) :
-        </mat-panel-title>
-      </ng-container>
+      <mat-panel-title>
+        {{ filter.attributeDefinition.attributeCode.display }} (optional) :
+      </mat-panel-title>
+      <num-button
+        type="primary"
+        (click)="deselectAllCheckboxes(); $event.stopPropagation()"
+        fxLayoutAlign="end"
+        [isDisabled]="resetButtonDisabled()"
+        >{{ 'BUTTON.RESET' | translate }}</num-button
+      >
     </mat-expansion-panel-header>
     <ng-container *ngTemplateOutlet="valueFilterContent"></ng-container>
   </mat-expansion-panel>
@@ -194,9 +194,7 @@
       }}</mat-hint>
 
       <!-- CONCEPT -->
-      <div
-        *ngIf="filter.type === OperatorOptions.CONCEPT || filter.type === OperatorOptions.REFERENCE"
-      >
+      <div *ngIf="filter.type === OperatorOptions.CONCEPT">
         <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
         <span *ngIf="filterType === 'value' && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
