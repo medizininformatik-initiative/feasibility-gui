@@ -117,7 +117,7 @@ export class CritGroupArranger {
       if (group.id !== position.groupId) {
         groupsTemp.push(group);
       } else {
-        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position, 'move'));
+        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position));
       }
     });
 

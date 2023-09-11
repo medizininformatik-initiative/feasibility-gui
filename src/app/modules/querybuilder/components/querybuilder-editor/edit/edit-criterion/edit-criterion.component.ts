@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component';
-import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter';
+import { ValueFilter } from '../../../../model/api/query/valueFilter';
 import { FeatureService } from '../../../../../../service/feature.service';
 import { Query } from '../../../../model/api/query/query';
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger';
@@ -63,8 +63,6 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   private subscriptionCritProfile: Subscription;
 
-  queryCriterionList: Array<Criterion> = [];
-  queryCriteriaHashes: Array<string> = [];
   private readonly translator;
 
   constructor(
@@ -86,8 +84,10 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     }
 
     this.showGroups = this.query.groups.length > 1;
-    this.createListOfQueryCriteriaAndHashes();
-    this.loadUIProfile();
+
+    if (!this.featureService.mockLoadnSave()) {
+      this.loadUIProfile();
+    }
   }
 
   ngOnDestroy(): void {
@@ -99,15 +99,20 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     this.changeDetector.detectChanges();
   }
 
-  createListOfQueryCriteriaAndHashes(): void {
-    for (const inex of ['inclusion', 'exclusion']) {
-      this.query.groups[0][inex + 'Criteria'].forEach((andGroup) => {
-        andGroup.forEach((criterion) => {
-          this.queryCriterionList.push(criterion);
-          this.queryCriteriaHashes.push(criterion.criterionHash);
-        });
-      });
-    }
+  getTermcodeParameters(): string {
+    const termCode = this.criterion.termCodes[0];
+    const termCodeVersion = termCode.version ? '&version=' + termCode.version : '';
+    return 'code=' + termCode.code + '&system=' + termCode.system + termCodeVersion;
+  }
+
+  getContextParameters(): string {
+    const context = this.criterion.context;
+    const contextVersion = context.version ? '&context_version=' + context.version : '';
+    return '&context_system=' + context.system + '&context_code=' + context.code + contextVersion;
+  }
+
+  getRequestParameters(): string {
+    return this.getTermcodeParameters() + this.getContextParameters();
   }
   getTermcodeParameters(): string {
     const termCode = this.criterion.termCodes[0];
@@ -131,7 +136,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
       attrDefs = profile.attributeDefinitions;
     }
 
-    this.criterion = this.translator.addAttributeAndValueFilterToCrit(
+    this.criterion = this.translator.translateCrit(
       this.criterion,
       profile.valueDefinition,
       attrDefs
@@ -139,15 +144,16 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   loadUIProfile(): void {
+    if (this.criterion.valueFilters.length > 0 || this.criterion.attributeFilters.length > 0) {
+      return;
+    }
+
+    this.subscriptionCritProfile?.unsubscribe();
+    const param = this.getRequestParameters();
     this.subscriptionCritProfile = this.backend
       .getTerminologyProfile(this.criterion)
       .subscribe((profile) => {
-        if (
-          this.criterion.valueFilters.length === 0 &&
-          this.criterion.attributeFilters.length === 0
-        ) {
-          this.initCriterion(profile);
-        }
+        this.initCriterion(profile);
 
         if (profile.timeRestrictionAllowed && !this.criterion.timeRestriction) {
           this.criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
@@ -183,8 +189,6 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
             }
           }
         });
-
-        this.loadAllowedCriteria();
       });
   }
 

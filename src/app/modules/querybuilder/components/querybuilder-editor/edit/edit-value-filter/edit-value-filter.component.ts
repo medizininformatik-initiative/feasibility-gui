@@ -40,7 +40,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   selectedUnit: QuantityUnit;
   // Use string representation of concept because equivalent objects do not match in TypeScript (e.g. { a: 1 } !== { a: 1 })
   selectedConceptsAsJson: Set<string> = new Set();
-  selectedReferenceAsJson: Set<string> = new Set();
   quantityFilterOption: string;
   // TODO: Try using enum
   quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
@@ -49,7 +48,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.filter?.selectedConcepts?.forEach((concept) => {
+    this.filter?.selectedConcepts.forEach((concept) => {
       // bring the object into the right order for stringify
       const temp = {
         code: concept.code,
@@ -196,12 +195,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         }
       }
 
-      this.criterion.linkedCriteria = [];
-      this.selectedReferenceAsJson.forEach((conceptAsJsonTemp) => {
-        this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJsonTemp)));
-      });
-    }
-  }
+    const selectedConcepts: Array<TerminologyCode> = [];
+    this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) =>
+      selectedConcepts.push(JSON.parse(conceptAsJsonTemp))
+    );
 
   getSelectedCriterion(termcode: TerminologyCode): Criterion {
     let crit: Criterion;
@@ -254,8 +251,26 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         });
       });
     }
+  }
+  deselectAllCheckboxes() {
+    this.checkboxes.forEach((checkbox) => {
+      if (checkbox.checked) {
+        checkbox.checked = false;
+        checkbox.checkedControlForm.patchValue(['checkedControl', false]);
+        this.selectedConceptsAsJson = new Set();
+        this.filter.selectedConcepts = [];
+      }
+    });
+  }
 
-    return isLinked;
+  resetQuantity() {
+    if (this.filter.maxValue || this.filter.minValue || this.filter.value) {
+      this.resetQuantityDisabled = false;
+      this.filter.maxValue = 0;
+      this.filter.minValue = 0;
+      this.filter.value = 0;
+    }
+    this.resetQuantityDisabled = true;
   }
   resetButtonDisabled() {
     if (this.filter.selectedConcepts?.length > 0) {

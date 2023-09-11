@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Criterion } from '../../../../model/api/query/criterion';
@@ -7,9 +7,6 @@ import { CritType } from '../../../../model/api/query/group';
 import { Query } from '../../../../model/api/query/query';
 import { QueryProviderService } from '../../../../service/query-provider.service';
 import { FeatureService } from '../../../../../../service/feature.service';
-import { Subscription } from 'rxjs';
-import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
-import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
 
 export class EnterCriterionListComponentData {
   groupIndex: number;
@@ -24,7 +21,9 @@ export class EnterCriterionListComponentData {
   templateUrl: './enter-criterion-list.component.html',
   styleUrls: ['./enter-criterion-list.component.scss'],
 })
-export class EnterCriterionListComponent implements OnInit, OnDestroy {
+export class EnterCriterionListComponent implements OnInit {
+  private readonly translator;
+
   criterionList: Array<Criterion> = [];
   groupIndex: number;
   critType: CritType;
@@ -36,7 +35,6 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     groupID: number
     isAddible: boolean
   }> = [];
-  private readonly translator;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
@@ -49,6 +47,7 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
       this.featureService.getQueryVersion()
     );
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
+    this.addContextToCriterionList(data);
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
     this.query = data.query;
@@ -56,9 +55,9 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.criterionList.forEach((curCriterion) => {
+    this.criterionList.forEach((thisCriterium) => {
       this.criterionAddibleList.push({
-        criterion: curCriterion,
+        criterion: thisCriterium,
         groupID: undefined,
         isAddible: undefined,
       });

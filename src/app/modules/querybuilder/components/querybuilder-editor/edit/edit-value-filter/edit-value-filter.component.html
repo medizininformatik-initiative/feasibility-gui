@@ -204,9 +204,7 @@
       }}</mat-hint>
 
       <!-- CONCEPT -->
-      <div
-        *ngIf="filter.type === OperatorOptions.CONCEPT || filter.type === OperatorOptions.REFERENCE"
-      >
+      <div *ngIf="filter.type === OperatorOptions.CONCEPT">
         <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
         <span *ngIf="filterType === 'value' && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}

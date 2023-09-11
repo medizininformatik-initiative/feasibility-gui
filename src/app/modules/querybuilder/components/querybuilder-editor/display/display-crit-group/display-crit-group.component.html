@@ -13,7 +13,6 @@
       (cdkDropListDropped)="doDrop($event)"
     >
       <num-display-criterion
-        *ngIf="!criterion.isLinked"
         [criterion]="criterion"
         [query]="query"
         [position]="{ groupId: groupId, critType: critType, row: i, column: j }"
