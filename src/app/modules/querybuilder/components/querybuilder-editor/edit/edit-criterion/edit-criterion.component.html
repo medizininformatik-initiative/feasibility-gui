@@ -11,12 +11,16 @@
         *ngFor="let valueFilter of getValueFilters()"
         [filter]="valueFilter"
         [filterType]="'value'"
+        [query]="query"
+        [criterion]="criterion"
       >
       </num-edit-value-definition>
       <num-edit-value-definition
         *ngFor="let attributeFilter of getAttributeFilters()"
         [filter]="attributeFilter"
         [filterType]="'attribute'"
+        [query]="query"
+        [criterion]="criterion"
       >
       </num-edit-value-definition>
       <num-display-entities
@@ -24,12 +28,12 @@
         [criterionEntity]="criterion"
         [query]="query"
       ></num-display-entities>
+      <num-edit-time-restriction
+        *ngIf="featureService.useFeatureTimeRestriction()"
+        [timeRestriction]="criterion.timeRestriction"
+      >
+      </num-edit-time-restriction>
     </div>
-    <num-edit-time-restriction
-      *ngIf="featureService.useFeatureTimeRestriction()"
-      [timeRestriction]="criterion.timeRestriction"
-    >
-    </num-edit-time-restriction>
   </mat-card-content>
   <mat-card-footer>
     <div fxLayout="row" fxLayoutAlign="center center">

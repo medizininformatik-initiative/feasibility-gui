@@ -13,6 +13,7 @@
     >
       <num-display-criterion
         [searchType]="searchType"
+        *ngIf="!criterion.isLinked"
         [criterion]="criterion"
         [query]="query"
         [position]="{ groupId: groupId, critType: critType, row: i, column: j }"
@@ -33,7 +34,7 @@
           [position]="'outer'"
           [label]="getOuterLabelKey()"
           (switched)="joinInnerArrays(i)"
-          *ngIf="!lastOuter"
+          *ngIf="!lastOuter && !criterionInnerArray[0].isLinked && isLastSwitch(i)"
         ></num-bool-logic-switch>
       </div>
     </div>

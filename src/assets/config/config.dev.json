@@ -20,7 +20,7 @@
     "copyrightOwner": "MII Team"
   },
   "features": {
-    "v3": {
+    "v2": {
       "multiplevaluedefinitions": true,
       "multiplegroups": false,
       "dependentgroups": true,

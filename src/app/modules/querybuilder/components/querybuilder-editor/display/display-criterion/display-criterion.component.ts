@@ -41,6 +41,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog, public featureService: FeatureService) {}
 
   ngOnInit(): void {
+    this.criterion.position = this.position;
     this.isinvalid = this.criterion.isinvalid === true;
   }
 

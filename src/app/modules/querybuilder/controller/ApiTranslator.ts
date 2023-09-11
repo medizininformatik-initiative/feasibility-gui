@@ -132,33 +132,65 @@ export class ApiTranslator {
     inclusionCriteria.forEach((criterionArray) => {
       const innerArrayV2: CriterionOnlyV2[] = [];
       criterionArray.forEach((criterion) => {
-        const criterionV2 = new CriterionOnlyV2();
-        criterionV2.termCodes = criterion.termCodes;
-        if (this.featureService.getSendSQContextToBackend()) {
-          criterionV2.context = criterion.context;
-        }
-        criterionV2.timeRestriction = criterion.timeRestriction;
-        if (criterion.valueFilters.length > 0) {
-          criterionV2.valueFilter = criterion.valueFilters[0];
-          criterionV2.valueFilter.valueDefinition = undefined;
-        }
-        if (criterion.attributeFilters?.length > 0) {
-          criterion.attributeFilters.forEach((attribute) => {
-            if (attribute.type === OperatorOptions.CONCEPT) {
-              if (attribute.selectedConcepts.length > 0) {
-                criterionV2.attributeFilters.push(attribute);
+        if (criterion.isLinked === undefined || criterion.isLinked === false) {
+          const criterionV2 = new CriterionOnlyV2();
+          criterionV2.termCodes = criterion.termCodes;
+          if (this.featureService.getSendSQContextToBackend()) {
+            criterionV2.context = criterion.context;
+          }
+          criterionV2.timeRestriction = criterion.timeRestriction;
+          if (criterion.valueFilters.length > 0) {
+            criterionV2.valueFilter = criterion.valueFilters[0];
+            criterionV2.valueFilter.valueDefinition = undefined;
+          }
+          if (criterion.attributeFilters?.length > 0) {
+            criterion.attributeFilters.forEach((attribute) => {
+              if (attribute.type === OperatorOptions.CONCEPT) {
+                if (attribute.selectedConcepts.length > 0) {
+                  criterionV2.attributeFilters.push(attribute);
+                }
+              } else {
+                if (attribute.type === OperatorOptions.REFERENCE) {
+                  if (criterion.linkedCriteria.length > 0) {
+                    const refAttribute = attribute;
+                    delete refAttribute.selectedConcepts;
+                    refAttribute.criteria = [];
+                    criterion.linkedCriteria.forEach((linkedCrit) => {
+                      const newLinkedCrit = new CriterionOnlyV2();
+                      newLinkedCrit.termCodes = linkedCrit.termCodes;
+                      newLinkedCrit.context = linkedCrit.context;
+                      if (linkedCrit.attributeFilters.length > 0) {
+                        newLinkedCrit.attributeFilters = linkedCrit.attributeFilters;
+                      } else {
+                        delete newLinkedCrit.attributeFilters;
+                      }
+                      if (linkedCrit.valueFilters.length > 0) {
+                        newLinkedCrit.valueFilter = linkedCrit.valueFilters[0];
+                      } else {
+                        delete newLinkedCrit.valueFilter;
+                      }
+                      delete newLinkedCrit.children;
+                      delete newLinkedCrit.linkedCriteria;
+                      this.removeNonApiFieldsV2(newLinkedCrit);
+                      refAttribute.criteria.push(newLinkedCrit);
+                    });
+                    criterionV2.attributeFilters.push(refAttribute);
+                  }
+                } else {
+                  criterionV2.attributeFilters.push(attribute);
+                }
               }
-            } else {
-              criterionV2.attributeFilters.push(attribute);
-            }
-            attribute.attributeCode = attribute.attributeDefinition?.attributeCode;
-          });
+              attribute.attributeCode = attribute.attributeDefinition?.attributeCode;
+            });
+          }
+          this.editTimeRestrictionsV2(criterionV2);
+          this.removeNonApiFieldsV2(criterionV2);
+          innerArrayV2.push(criterionV2);
         }
-        this.editTimeRestrictionsV2(criterionV2);
-        this.removeNonApiFieldsV2(criterionV2);
-        innerArrayV2.push(criterionV2);
       });
-      result.push(innerArrayV2);
+      if (innerArrayV2.length > 0) {
+        result.push(innerArrayV2);
+      }
     });
 
     return result;
@@ -167,6 +199,7 @@ export class ApiTranslator {
   // noinspection JSMethodCanBeStatic
   private removeNonApiFieldsV2(criterion: CriterionOnlyV2): void {
     if (criterion.valueFilter) {
+      criterion.valueFilter.valueDefinition = undefined;
       criterion.valueFilter.precision = undefined;
       if (criterion.valueFilter.type === OperatorOptions.QUANTITY_COMPARATOR) {
         criterion.valueFilter.minValue = undefined;
@@ -187,6 +220,12 @@ export class ApiTranslator {
       });
     } else {
       criterion.attributeFilters = undefined;
+    }
+    if (criterion.children) {
+      delete criterion.children;
+    }
+    if (criterion.linkedCriteria) {
+      delete criterion.linkedCriteria;
     }
   }
 
@@ -293,8 +332,9 @@ export class ApiTranslator {
       invalidCriteriaSet.add(JSON.stringify(invalids));
     });
 
-    inexclusion.forEach((and) => {
-      and.forEach((or) => {
+    // eslint-disable-next-line  @typescript-eslint/prefer-for-of
+    for (let i = 0; i < inexclusion.length; i++) {
+      inexclusion[i].forEach((or) => {
         or.valueFilters = [];
         if (or.valueFilter) {
           or.valueFilters.push(or.valueFilter);
@@ -310,16 +350,27 @@ export class ApiTranslator {
         if (!or.attributeFilters) {
           or.attributeFilters = [];
         }
+        if (!or.linkedCriteria) {
+          or.linkedCriteria = [];
+        }
         or.attributeFilters.forEach((attribute) => {
           attribute.attributeDefinition = {};
           attribute.attributeDefinition.attributeCode = ObjectHelper.clone(attribute.attributeCode);
-          attribute.attributeCode = undefined;
+          delete attribute.attributeCode;
           if (attribute.type === 'quantity-range') {
             attribute.value = 0;
             attribute.precision = 1;
           }
           if (attribute.type === 'quantity-comparator') {
             attribute.precision = 1;
+          }
+          if (attribute.type === 'reference') {
+            attribute.criteria.forEach((refCrit) => {
+              refCrit.isLinked = true;
+              or.linkedCriteria.push(refCrit);
+              inexclusion.push([refCrit]);
+            });
+            delete attribute.criteria;
           }
         });
         or.display = or.termCodes[0].display;
@@ -352,7 +403,7 @@ export class ApiTranslator {
         }
         or.isinvalid = invalidCriteriaSet.has(JSON.stringify(or.termCodes[0]));
       });
-    });
+    }
     return inexclusion;
   }
 

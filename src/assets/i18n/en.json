@@ -137,6 +137,7 @@
         "TO": "before {{ to }}",
         "NONE": "no time restriction"
       },
+      "REFERENCED_CRITERIA": "referenced criteria:",
       "GROUPS": {
         "LINKEDGROUPS": "groups are linked",
         "SHOW_CONNECTION": "show connection",
@@ -165,6 +166,7 @@
       "HEADER_FILTER_CONCEPT_OPTIONAL": "Choose one or more valid values:",
       "HEADER_FILTER_CONCEPT_MANDATORY": "Choose one or more valid values:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Choose one or more valid values ({{ label }}):",
+      "HEADER_FILTER_REFERENCE": "observed diagnosis",
       "CHOOSE_GROUP":"Choose a group",
       "MANDATORY_HINT": "Mandatory field",
       "UNIT": "Unit",
@@ -235,7 +237,8 @@
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",
-    "DATAPROTECTION": "Data Protection"
+    "DATAPROTECTION": "Data Protection",
+    "CONTACT": "Contact"
   },
   "BUTTON": {
     "SAVE": "Save",

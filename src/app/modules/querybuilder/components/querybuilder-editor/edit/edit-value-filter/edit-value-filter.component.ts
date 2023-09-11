@@ -7,6 +7,9 @@ import {
 } from '../../../../model/api/query/valueFilter';
 import { TerminologyCode } from '../../../../model/api/terminology/terminology';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
+import { Query } from '../../../../model/api/query/query';
+import { Criterion } from '../../../../model/api/query/criterion';
+import { ValueType } from '../../../../model/api/terminology/valuedefinition';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -20,11 +23,18 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   filterType: string;
 
+  @Input()
+  query: Query;
+
+  @Input()
+  criterion: Criterion;
+
   OperatorOptions: typeof OperatorOptions = OperatorOptions;
 
   selectedUnit: QuantityUnit;
   // Use string representation of concept because equivalent objects do not match in TypeScript (e.g. { a: 1 } !== { a: 1 })
   selectedConceptsAsJson: Set<string> = new Set();
+  selectedReferenceAsJson: Set<string> = new Set();
   quantityFilterOption: string;
   // TODO: Try using enum
   quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
@@ -33,11 +43,23 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.filter?.selectedConcepts.forEach((concept) => {
+    this.filter?.selectedConcepts?.forEach((concept) => {
       // bring the object into the right order for stringify
       const temp = { code: concept.code, display: concept.display, system: concept.system };
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
+
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+      this.criterion.linkedCriteria.forEach((linkedCrit) => {
+        // bring the object into the right order for stringify
+        const temp2 = {
+          code: linkedCrit.termCodes[0].code,
+          display: linkedCrit.termCodes[0].display,
+          system: linkedCrit.termCodes[0].system,
+        };
+        this.selectedReferenceAsJson.add(JSON.stringify(temp2));
+      });
+    }
 
     this.filter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
       if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
@@ -119,27 +141,99 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   }
 
   doSelectConcept(concept: TerminologyCode): void {
-    const conceptAsJson = JSON.stringify(concept);
-    if (this.selectedConceptsAsJson.has(conceptAsJson)) {
-      this.selectedConceptsAsJson.delete(conceptAsJson);
-    } else {
-      this.selectedConceptsAsJson.add(conceptAsJson);
+    // bring the object into the right order for stringify
+    const temp = { code: concept.code, display: concept.display, system: concept.system };
+    const conceptAsJson = JSON.stringify(temp);
+    const criterionForLinking = this.getSelectedCriterion(temp);
+
+    if (
+      this.filter.attributeDefinition?.type === ValueType.CONCEPT ||
+      this.filter.valueDefinition?.type === ValueType.CONCEPT
+    ) {
+      if (this.selectedConceptsAsJson.has(conceptAsJson)) {
+        this.selectedConceptsAsJson.delete(conceptAsJson);
+      } else {
+        this.selectedConceptsAsJson.add(conceptAsJson);
+      }
+
+      this.filter.selectedConcepts = [];
+      this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) => {
+        this.filter.selectedConcepts.push(JSON.parse(conceptAsJsonTemp));
+      });
     }
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+      if (this.selectedReferenceAsJson.has(conceptAsJson)) {
+        this.selectedReferenceAsJson.delete(conceptAsJson);
+        if (criterionForLinking) {
+          if (!this.isCriterionLinked(criterionForLinking.criterionHash)) {
+            criterionForLinking.isLinked = false;
+          }
+        }
+      } else {
+        this.selectedReferenceAsJson.add(conceptAsJson);
+        if (criterionForLinking) {
+          criterionForLinking.isLinked = true;
+        }
+      }
 
-    const selectedConcepts: Array<TerminologyCode> = [];
-    this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) =>
-      selectedConcepts.push(JSON.parse(conceptAsJsonTemp))
-    );
+      this.criterion.linkedCriteria = [];
+      this.selectedReferenceAsJson.forEach((conceptAsJsonTemp) => {
+        this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJsonTemp)));
+      });
+    }
+  }
 
-    this.filter.selectedConcepts = selectedConcepts;
+  getSelectedCriterion(termcode: TerminologyCode): Criterion {
+    let crit: Criterion;
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (
+            conj.termCodes[0].code === termcode.code &&
+            conj.termCodes[0].display === termcode.display &&
+            conj.termCodes[0].system === termcode.system
+          ) {
+            crit = conj;
+          }
+        });
+      });
+    }
+    return crit;
   }
 
   isSelected(concept: TerminologyCode): boolean {
     // bring the object into the right order for stringify
     const temp = { code: concept.code, display: concept.display, system: concept.system };
-    return this.selectedConceptsAsJson.has(JSON.stringify(temp));
+    if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
+      return this.selectedConceptsAsJson.has(JSON.stringify(temp));
+    }
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+      return this.selectedReferenceAsJson.has(JSON.stringify(temp));
+    }
   }
 
+  isCriterionLinked(hash: string): boolean {
+    let isLinked = false;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria.length > 0) {
+            conj.linkedCriteria.forEach((criterion) => {
+              if (
+                criterion.criterionHash === hash &&
+                conj.criterionHash !== this.criterion.criterionHash
+              ) {
+                isLinked = true;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    return isLinked;
+  }
   public isActionDisabled(): boolean {
     if (this.filter?.attributeDefinition) {
       if (this.filter?.attributeDefinition?.optional) {

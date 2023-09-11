@@ -117,23 +117,38 @@ export class CritGroupArranger {
       if (group.id !== position.groupId) {
         groupsTemp.push(group);
       } else {
-        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position));
+        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position, 'move'));
       }
     });
 
     return groupsTemp;
   }
 
-  public static removeFromGroup(group: Group, position: CritGroupPosition): Group {
-    const groupTemp: Group = JSON.parse(JSON.stringify(group));
+  public static removeFromGroup(group: Group, position: CritGroupPosition, modus: string): Group {
+    let groupTemp: Group = JSON.parse(JSON.stringify(group));
+    const hashes: string[] = [];
 
     if (position.critType === 'inclusion') {
+      if (groupTemp.inclusionCriteria[position.row][position.column].linkedCriteria.length > 0) {
+        groupTemp.inclusionCriteria[position.row][position.column].linkedCriteria.forEach(
+          (linkedCriterion) => {
+            hashes.push(linkedCriterion.criterionHash);
+          }
+        );
+      }
       if (groupTemp.inclusionCriteria[position.row].length === 1) {
         groupTemp.inclusionCriteria.splice(position.row, 1);
       } else {
         groupTemp.inclusionCriteria[position.row].splice(position.column, 1);
       }
     } else if (position.critType === 'exclusion') {
+      if (groupTemp.exclusionCriteria[position.row][position.column].linkedCriteria.length > 0) {
+        groupTemp.exclusionCriteria[position.row][position.column].linkedCriteria.forEach(
+          (linkedCriterion) => {
+            hashes.push(linkedCriterion.criterionHash);
+          }
+        );
+      }
       if (groupTemp.exclusionCriteria[position.row].length === 1) {
         groupTemp.exclusionCriteria.splice(position.row, 1);
       } else {
@@ -141,9 +156,54 @@ export class CritGroupArranger {
       }
     }
 
+    hashes.forEach((hash) => {
+      if (modus === 'delete' && !this.isCriterionLinked(groupTemp, hash)) {
+        groupTemp = this.removeFromGroup(
+          groupTemp,
+          this.findCriterionByHash(groupTemp, hash).position,
+          'delete'
+        );
+      }
+    });
     return groupTemp;
   }
 
+  public static findCriterionByHash(group: Group, hash: string): Criterion {
+    const groupTemp: Group = JSON.parse(JSON.stringify(group));
+    let tempCrit: Criterion;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      groupTemp[inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.criterionHash === hash) {
+            tempCrit = conj;
+          }
+        });
+      });
+    }
+    return tempCrit;
+  }
+
+  public static isCriterionLinked(group: Group, hash: string): boolean {
+    const groupTemp: Group = JSON.parse(JSON.stringify(group));
+    let isLinked = false;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      groupTemp[inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria.length > 0) {
+            conj.linkedCriteria.forEach((criterion) => {
+              if (criterion.criterionHash === hash) {
+                isLinked = true;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    return isLinked;
+  }
   public static moveCriterion(
     groups: Group[],
     positionFrom: CritGroupPosition,
