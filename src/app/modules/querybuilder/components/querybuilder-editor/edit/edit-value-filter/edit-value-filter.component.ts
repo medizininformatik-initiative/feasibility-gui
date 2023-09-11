@@ -25,6 +25,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   filterType: string;
 
+  resetQuantityDisabled = true;
+
   OperatorOptions: typeof OperatorOptions = OperatorOptions;
 
   selectedUnit: QuantityUnit;
@@ -62,6 +64,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
     setTimeout(() => (this.disableAnimation = false));
+    if (this.filter.maxValue || this.filter.minValue || this.filter.value) {
+      this.resetQuantityDisabled = false;
+    }
   }
 
   getQuantityFilterOption(): string {
@@ -161,6 +166,16 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         this.filter.selectedConcepts = [];
       }
     });
+  }
+
+  resetQuantity() {
+    if (this.filter.maxValue || this.filter.minValue || this.filter.value) {
+      this.resetQuantityDisabled = false;
+      this.filter.maxValue = 0;
+      this.filter.minValue = 0;
+      this.filter.value = 0;
+    }
+    this.resetQuantityDisabled = true;
   }
 
   public isActionDisabled(): boolean {
