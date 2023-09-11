@@ -47,6 +47,14 @@
           filter.type === OperatorOptions.QUANTITY_COMPARATOR
         "
       >
+        <num-button
+          [type]="'primary'"
+          fxLayoutAlign="end"
+          (click)="resetQuantity()"
+          [isDisabled]="resetQuantityDisabled"
+        >
+          {{ 'BUTTON.RESET' | translate }}
+        </num-button>
         <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
         <span *ngIf="filterType === 'value' && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
@@ -76,6 +84,7 @@
           *ngIf="filterType === 'attribute' && !filter.attributeDefinition.attributeCode.display"
         >
           <span>{{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}</span>
+
           <br />
         </ng-container>
 
@@ -101,6 +110,7 @@
           <input
             matInput
             type="number"
+            (change)="resetQuantityDisabled = false"
             [(ngModel)]="filter.minValue"
             (blur)="roundMinValue()"
             numMatInputNumber
@@ -128,6 +138,7 @@
           <input
             matInput
             type="number"
+            (change)="resetQuantityDisabled = false"
             [(ngModel)]="filter.maxValue"
             (blur)="roundMaxValue()"
             numMatInputNumber
@@ -149,6 +160,7 @@
           <!--suppress HtmlFormInputWithoutLabel -->
           <input
             matInput
+            (change)="resetQuantityDisabled = false"
             type="number"
             [(ngModel)]="filter.value"
             (blur)="roundValue()"
