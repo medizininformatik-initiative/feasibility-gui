@@ -22,6 +22,7 @@
     <num-edit-criterion
       *ngFor="let criterion of criterionList"
       [criterion]="criterion"
+      [searchType]="searchType"
       [query]="query"
       [position]="{
         groupId: query.groups[0].id,
