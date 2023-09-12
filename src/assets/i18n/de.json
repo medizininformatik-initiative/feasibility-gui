@@ -81,6 +81,7 @@
     "DASHBOARD": "Startseite",
     "QUERYBUILDER_EDITOR": "Neue Abfrage",
     "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
+    "DATASELECTION_EDITOR": "Datenselektion",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
   },
