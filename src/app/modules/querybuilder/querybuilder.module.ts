@@ -101,6 +101,17 @@ export const FORMATS_GERMAN = {
     MatTooltipModule,
     FileSaverModule,
   ],
+  exports: [
+    SearchInputComponent,
+    SearchTreeOverlayContentComponent,
+    SearchTreeHeaderComponent,
+    SearchTreeTermEntryComponent,
+    SearchTreeFooterComponent,
+    EnterCriterionListComponent,
+    SearchTextOverlayContentComponent,
+    SearchTextHeaderComponent,
+    SearchTextTermEntryComponent,
+  ],
   providers: [
     {
       provide: DateAdapter,
