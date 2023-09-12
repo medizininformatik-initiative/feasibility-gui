@@ -90,6 +90,7 @@
     "DASHBOARD": "Home",
     "QUERYBUILDER_EDITOR": "New query",
     "QUERYBUILDER_OVERVIEW": "My queries",
+    "DATASELECTION_EDITOR": "Dataselection",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
   },
