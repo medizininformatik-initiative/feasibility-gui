@@ -45,16 +45,14 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
     private dialogRef: MatDialogRef<EnterCriterionListComponent, void>,
     public provider: QueryProviderService,
-    public featureService: FeatureService,
-    private backend: BackendService
+    public featureService: FeatureService
   ) {
     this.translator = new TermEntry2CriterionTranslator(
       this.featureService.useFeatureTimeRestriction(),
       this.featureService.getQueryVersion()
     );
-
-    this.query = data.query;
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
+    this.criterionList[0].context = data.termEntryList[0].context;
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
     this.query = data.query;
