@@ -68,6 +68,9 @@
     "DATASELECTION": "Datenselektion",
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben"
+    },
+    "DISPLAY": {
+      "LABEL": "Ausgewählte Merkmale"
     }
   },
   "LANGUAGE": {

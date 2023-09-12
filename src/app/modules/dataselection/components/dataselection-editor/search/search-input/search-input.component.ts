@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SearchMode } from 'src/app/modules/querybuilder/components/querybuilder-editor/search/search-input/search-input.component';
-import { MatFormField } from '@angular/material/form-field';
+import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'num-search-input',
@@ -9,6 +9,8 @@ import { MatFormField } from '@angular/material/form-field';
 })
 export class SearchInputComponent {
   searchMode: SearchMode = 'text';
+
+  positions: ConnectedPosition[] = [];
 
   search = '';
 
