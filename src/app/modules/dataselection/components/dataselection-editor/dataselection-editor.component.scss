@@ -13,3 +13,17 @@
   margin: 0.5em 0;
   padding-bottom: 0.5em;
 }
+
+.button-reset,
+.button-save {
+  margin-right: 1em;
+}
+
+num-button {
+  white-space: nowrap;
+}
+
+.button-add-group {
+  background-color: var(--num-color--accent-300);
+  margin: 1em;
+}
