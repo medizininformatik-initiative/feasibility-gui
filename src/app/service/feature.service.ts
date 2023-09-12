@@ -18,33 +18,33 @@ export class FeatureService {
 
   public useFeatureMultipleValueDefinitions(): boolean {
     if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().features.v3.multiplevaluedefinitions;
+      return this.featureProviderService.getFeatures().features.v2.multiplevaluedefinitions;
     } else {
-      return this.appConfig.getConfig().features.v3.multiplevaluedefinitions;
+      return this.appConfig.getConfig().features.v2.multiplevaluedefinitions;
     }
   }
 
   public useFeatureMultipleGroups(): boolean {
     if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().features.v3.multiplegroups;
+      return this.featureProviderService.getFeatures().features.v2.multiplegroups;
     } else {
-      return this.appConfig.getConfig().features.v3.multiplegroups;
+      return this.appConfig.getConfig().features.v2.multiplegroups;
     }
   }
 
   public useFeatureDependentGroups(): boolean {
     if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().features.v3.dependentgroups;
+      return this.featureProviderService.getFeatures().features.v2.dependentgroups;
     } else {
-      return this.appConfig.getConfig().features.v3.dependentgroups;
+      return this.appConfig.getConfig().features.v2.dependentgroups;
     }
   }
 
   public useFeatureTimeRestriction(): boolean {
     if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().features.v3.timerestriction;
+      return this.featureProviderService.getFeatures().features.v2.timerestriction;
     } else {
-      return this.appConfig.getConfig().features.v3.timerestriction;
+      return this.appConfig.getConfig().features.v2.timerestriction;
     }
   }
 
