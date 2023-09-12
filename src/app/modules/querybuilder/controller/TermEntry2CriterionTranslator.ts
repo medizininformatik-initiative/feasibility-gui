@@ -9,6 +9,8 @@ import {
 import { TimeRestriction } from '../model/api/query/timerestriction';
 import { V2 } from '../model/api/annotations';
 import { AttributeFilter } from '../model/api/query/attributeFilter';
+import { v3 as uuidv3 } from 'uuid';
+import { BackendService } from '../service/backend.service';
 
 export class TermEntry2CriterionTranslator {
   private useFeatureTimeRestrictions = false;
@@ -47,6 +49,31 @@ export class TermEntry2CriterionTranslator {
     criterion.optional = termEntry.optional;
 
     return criterion;
+  }
+
+  getCriterionHash(criterion): string {
+    const termcode = criterion.termCodes[0];
+    const context = criterion.context;
+    let contextVersion = '';
+    let termcodeVersion = '';
+
+    if (context.version) {
+      contextVersion = criterion.context.version;
+    }
+
+    if (termcode.version) {
+      termcodeVersion = termcode.version;
+    }
+
+    const contextTermcodeHashInput =
+      context.system +
+      context.code +
+      contextVersion +
+      termcode.system +
+      termcode.code +
+      termcodeVersion;
+
+    return uuidv3(contextTermcodeHashInput, BackendService.BACKEND_UUID_NAMESPACE);
   }
 
   public translateCrit(
