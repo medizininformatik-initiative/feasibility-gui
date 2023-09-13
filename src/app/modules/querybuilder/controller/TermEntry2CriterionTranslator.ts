@@ -10,6 +10,7 @@ import { TimeRestriction } from '../model/api/query/timerestriction';
 import { V2 } from '../model/api/annotations';
 import { AttributeFilter } from '../model/api/query/attributeFilter';
 import { v3 as uuidv3 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { BackendService } from '../service/backend.service';
 
 export class TermEntry2CriterionTranslator {
@@ -34,6 +35,9 @@ export class TermEntry2CriterionTranslator {
     criterion.timeRestriction = this.createTimeRestriction(termEntry);
     criterion.optional = termEntry.optional;
     criterion.criterionHash = this.getCriterionHash(criterion);
+    if (!criterion.uniqueID) {
+      criterion.uniqueID = uuidv4();
+    }
     return criterion;
   }
 

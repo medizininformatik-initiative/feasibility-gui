@@ -73,6 +73,7 @@ export class TerminologyCode {
   display: string;
   system: string;
   version?: string;
+  uid?: string;
 }
 
 export class CategoryEntry {

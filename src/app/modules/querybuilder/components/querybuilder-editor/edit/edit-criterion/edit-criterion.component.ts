@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { TimeRestrictionType } from '../../../../model/api/query/timerestriction';
 import { TermEntry2CriterionTranslator } from 'src/app/modules/querybuilder/controller/TermEntry2CriterionTranslator';
+import { TerminologyCode } from '../../../../model/api/terminology/terminology';
 
 @Component({
   selector: 'num-edit-criterion',
@@ -179,9 +180,13 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
             if (allowedCriteriaList.length > 0) {
               attrFilter.type = OperatorOptions.REFERENCE;
               allowedCriteriaList.forEach((critHash) => {
-                attrFilter.attributeDefinition.selectableConcepts.push(
-                  this.findCriterionByHash(critHash).termCodes[0]
-                );
+                this.findCriterionByHash(critHash).forEach((crit) => {
+                  if (!this.isCriterionLinked(crit.uniqueID)) {
+                    const termCodeUid: TerminologyCode = crit.termCodes[0];
+                    termCodeUid.uid = crit.uniqueID;
+                    attrFilter.attributeDefinition.selectableConcepts.push(termCodeUid);
+                  }
+                });
               });
             }
           });
@@ -189,14 +194,14 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     });
   }
 
-  findCriterionByHash(hash: string): Criterion {
-    let tempCrit: Criterion;
+  findCriterionByHash(hash: string): Criterion[] {
+    const tempCrit: Criterion[] = [];
 
     for (const inex of ['inclusion', 'exclusion']) {
       this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
         disj.forEach((conj) => {
           if (conj.criterionHash === hash) {
-            tempCrit = conj;
+            tempCrit.push(conj);
           }
         });
       });
@@ -210,7 +215,6 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     }
     this.moveBetweenGroups();
     this.moveReferenceCriteria();
-    console.log(this.query);
     this.save.emit({ groupId: this.selectedGroupId });
   }
 
@@ -274,12 +278,19 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   moveReferenceCriteria(): void {
     for (const inex of ['inclusion', 'exclusion']) {
+      let x = 0;
       this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        let y = 0;
         disj.forEach((conj) => {
-          if (conj.isLinked && disj.length > 1) {
+          if (conj.isLinked) {
             this.query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
               this.query.groups,
-              conj.position,
+              {
+                groupId: conj.position.groupId,
+                critType: conj.position.critType,
+                column: conj.position.column - y,
+                row: conj.position.row - x,
+              },
               {
                 groupId: conj.position.groupId,
                 critType: conj.position.critType,
@@ -287,9 +298,45 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
                 row: -1,
               }
             );
+            if (disj.length === 1) {
+              x++;
+            }
+            if (disj.length > 1) {
+              y++;
+            }
+            this.rePosition();
           }
         });
       });
     }
+  }
+  rePosition(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj, i) => {
+        disj.forEach((conj, j) => {
+          conj.position.row = i;
+          conj.position.column = j;
+        });
+      });
+    }
+  }
+  isCriterionLinked(uid: string): boolean {
+    let isLinked = false;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria.length > 0) {
+            conj.linkedCriteria.forEach((criterion) => {
+              if (criterion.uniqueID === uid && conj.uniqueID !== this.criterion.uniqueID) {
+                isLinked = true;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    return isLinked;
   }
 }

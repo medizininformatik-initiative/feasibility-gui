@@ -45,7 +45,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.filter?.selectedConcepts?.forEach((concept) => {
       // bring the object into the right order for stringify
-      const temp = { code: concept.code, display: concept.display, system: concept.system };
+      const temp = {
+        code: concept.code,
+        display: concept.display,
+        system: concept.system,
+        uid: concept.uid,
+      };
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
 
@@ -56,6 +61,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
           code: linkedCrit.termCodes[0].code,
           display: linkedCrit.termCodes[0].display,
           system: linkedCrit.termCodes[0].system,
+          uid: linkedCrit.termCodes[0].uid,
         };
         this.selectedReferenceAsJson.add(JSON.stringify(temp2));
       });
@@ -142,7 +148,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
   doSelectConcept(concept: TerminologyCode): void {
     // bring the object into the right order for stringify
-    const temp = { code: concept.code, display: concept.display, system: concept.system };
+    const temp = {
+      code: concept.code,
+      display: concept.display,
+      system: concept.system,
+      uid: concept.uid,
+    };
     const conceptAsJson = JSON.stringify(temp);
     const criterionForLinking = this.getSelectedCriterion(temp);
 
@@ -165,7 +176,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       if (this.selectedReferenceAsJson.has(conceptAsJson)) {
         this.selectedReferenceAsJson.delete(conceptAsJson);
         if (criterionForLinking) {
-          if (!this.isCriterionLinked(criterionForLinking.criterionHash)) {
+          if (!this.isCriterionLinked(criterionForLinking.uniqueID)) {
             criterionForLinking.isLinked = false;
           }
         }
@@ -191,7 +202,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
           if (
             conj.termCodes[0].code === termcode.code &&
             conj.termCodes[0].display === termcode.display &&
-            conj.termCodes[0].system === termcode.system
+            conj.termCodes[0].system === termcode.system &&
+            conj.termCodes[0].uid === termcode.uid
           ) {
             crit = conj;
           }
@@ -203,7 +215,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
   isSelected(concept: TerminologyCode): boolean {
     // bring the object into the right order for stringify
-    const temp = { code: concept.code, display: concept.display, system: concept.system };
+    const temp = {
+      code: concept.code,
+      display: concept.display,
+      system: concept.system,
+      uid: concept.uid,
+    };
     if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
       return this.selectedConceptsAsJson.has(JSON.stringify(temp));
     }
@@ -220,10 +237,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         disj.forEach((conj) => {
           if (conj.linkedCriteria.length > 0) {
             conj.linkedCriteria.forEach((criterion) => {
-              if (
-                criterion.criterionHash === hash &&
-                conj.criterionHash !== this.criterion.criterionHash
-              ) {
+              if (criterion.uniqueID === hash && conj.uniqueID !== this.criterion.uniqueID) {
                 isLinked = true;
               }
             });

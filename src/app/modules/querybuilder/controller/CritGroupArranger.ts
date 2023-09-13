@@ -126,13 +126,13 @@ export class CritGroupArranger {
 
   public static removeFromGroup(group: Group, position: CritGroupPosition, modus: string): Group {
     let groupTemp: Group = JSON.parse(JSON.stringify(group));
-    const hashes: string[] = [];
+    const uids: string[] = [];
 
     if (position.critType === 'inclusion') {
       if (groupTemp.inclusionCriteria[position.row][position.column].linkedCriteria.length > 0) {
         groupTemp.inclusionCriteria[position.row][position.column].linkedCriteria.forEach(
           (linkedCriterion) => {
-            hashes.push(linkedCriterion.criterionHash);
+            uids.push(linkedCriterion.uniqueID);
           }
         );
       }
@@ -145,7 +145,7 @@ export class CritGroupArranger {
       if (groupTemp.exclusionCriteria[position.row][position.column].linkedCriteria.length > 0) {
         groupTemp.exclusionCriteria[position.row][position.column].linkedCriteria.forEach(
           (linkedCriterion) => {
-            hashes.push(linkedCriterion.criterionHash);
+            uids.push(linkedCriterion.uniqueID);
           }
         );
       }
@@ -156,11 +156,11 @@ export class CritGroupArranger {
       }
     }
 
-    hashes.forEach((hash) => {
-      if (modus === 'delete' && !this.isCriterionLinked(groupTemp, hash)) {
+    uids.forEach((uid) => {
+      if (modus === 'delete' && !this.isCriterionLinked(groupTemp, uid)) {
         groupTemp = this.removeFromGroup(
           groupTemp,
-          this.findCriterionByHash(groupTemp, hash).position,
+          this.findCriterionByUID(groupTemp, uid).position,
           'delete'
         );
       }
@@ -168,14 +168,14 @@ export class CritGroupArranger {
     return groupTemp;
   }
 
-  public static findCriterionByHash(group: Group, hash: string): Criterion {
+  public static findCriterionByUID(group: Group, uid: string): Criterion {
     const groupTemp: Group = JSON.parse(JSON.stringify(group));
     let tempCrit: Criterion;
 
     for (const inex of ['inclusion', 'exclusion']) {
       groupTemp[inex + 'Criteria'].forEach((disj) => {
         disj.forEach((conj) => {
-          if (conj.criterionHash === hash) {
+          if (conj.uniqueID === uid) {
             tempCrit = conj;
           }
         });
@@ -184,7 +184,7 @@ export class CritGroupArranger {
     return tempCrit;
   }
 
-  public static isCriterionLinked(group: Group, hash: string): boolean {
+  public static isCriterionLinked(group: Group, uid: string): boolean {
     const groupTemp: Group = JSON.parse(JSON.stringify(group));
     let isLinked = false;
 
@@ -193,7 +193,7 @@ export class CritGroupArranger {
         disj.forEach((conj) => {
           if (conj.linkedCriteria.length > 0) {
             conj.linkedCriteria.forEach((criterion) => {
-              if (criterion.criterionHash === hash) {
+              if (criterion.uniqueID === uid) {
                 isLinked = true;
               }
             });
