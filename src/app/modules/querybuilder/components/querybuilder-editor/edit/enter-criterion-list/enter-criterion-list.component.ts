@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Criterion } from '../../../../model/api/query/criterion';
@@ -24,7 +24,7 @@ export class EnterCriterionListComponentData {
   templateUrl: './enter-criterion-list.component.html',
   styleUrls: ['./enter-criterion-list.component.scss'],
 })
-export class EnterCriterionListComponent implements OnInit {
+export class EnterCriterionListComponent implements OnInit, OnDestroy {
   private subscriptionCritProfile: Subscription;
   criterionList: Array<Criterion> = [];
   groupIndex: number;
@@ -50,7 +50,7 @@ export class EnterCriterionListComponent implements OnInit {
       this.featureService.getQueryVersion()
     );
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
-    this.criterionList[0].context = data.termEntryList[0].context;
+    this.addContextToCriterionList(data);
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
     this.query = data.query;
@@ -71,8 +71,8 @@ export class EnterCriterionListComponent implements OnInit {
 
   addContextToCriterionList(data: EnterCriterionListComponentData): void {
     data.termEntryList.forEach((termEntryListContext) => {
-      this.criterionList.forEach((criterion) => {
-        criterion.context = termEntryListContext.context;
+      this.criterionList.forEach((contextElement) => {
+        contextElement.context = termEntryListContext.context;
       });
     });
   }
