@@ -19,7 +19,7 @@
     "copyrightOwner": "#{legal_copyrightOwner}"
   },
   "features": {
-    "v3": {
+    "v2": {
       "multiplevaluedefinitions": "#{features_v2_multiplevaluedefinitions}",
       "multiplegroups": "#{features_v2_multiplegroups}",
       "dependentgroups": "#{features_v2_dependentgroups}",

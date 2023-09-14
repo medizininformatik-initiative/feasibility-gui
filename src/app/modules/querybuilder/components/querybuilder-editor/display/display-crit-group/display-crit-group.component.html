@@ -22,21 +22,24 @@
         cdkDrag
       >
       </num-display-criterion>
-      <div *ngIf="searchType === 'querybuilder'">
-        <num-bool-logic-switch
-          [position]="'inner'"
-          [label]="getInnerLabelKey()"
-          (switched)="splitInnerArray(i, j)"
-          *ngIf="!lastInner"
-        ></num-bool-logic-switch>
-        <num-bool-logic-switch
-          [position]="'outer'"
-          [label]="getOuterLabelKey()"
-          (switched)="joinInnerArrays(i)"
-          *ngIf="!lastOuter"
-        ></num-bool-logic-switch>
-      </div>
+      <num-bool-logic-switch
+        [position]="'inner'"
+        [label]="getInnerLabelKey()"
+        (switched)="splitInnerArray(i, j)"
+        *ngIf="!lastInner && !criterion.isLinked && searchType === 'querybuilder'"
+      ></num-bool-logic-switch>
     </div>
+    <num-bool-logic-switch
+      [position]="'outer'"
+      [label]="getOuterLabelKey()"
+      (switched)="joinInnerArrays(i)"
+      *ngIf="
+        !lastOuter &&
+        !criterionInnerArray[0].isLinked &&
+        isLastSwitch(i) &&
+        searchType === 'querybuilder'
+      "
+    ></num-bool-logic-switch>
   </div>
   <div
     fxFlex="grow"
