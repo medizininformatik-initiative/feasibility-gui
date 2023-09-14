@@ -25,18 +25,22 @@
       *ngIf="featureService.useFeatureTimeRestriction()"
       [timeRestriction]="criterion.timeRestriction"
     ></num-display-time-restriction>
-    <div *ngIf="criterion.linkedCriteria.length > 0" class="linked-criteria">
-      <div class="linked-header">{{ 'QUERYBUILDER.DISPLAY.REFERENCED_CRITERIA' | translate }}</div>
-      <num-display-linked-criterion
-        *ngFor="let linkedCrit of criterion.linkedCriteria"
-        [criterion]="linkedCrit"
-        [query]="query"
-      ></num-display-linked-criterion>
+    <div *ngIf="searchType == 'querybuilder'">
+      <div *ngIf="criterion.linkedCriteria.length > 0" class="linked-criteria">
+        <div class="linked-header">
+          {{ 'QUERYBUILDER.DISPLAY.REFERENCED_CRITERIA' | translate }}
+        </div>
+        <num-display-linked-criterion
+          *ngFor="let linkedCrit of criterion.linkedCriteria"
+          [criterion]="linkedCrit"
+          [query]="query"
+        ></num-display-linked-criterion>
+      </div>
+      <div *ngIf="showCancelButton" class="cancel-button-wrapper">
+        <button class="cancel-button" type="button" mat-icon-button (click)="doDelete()">
+          <fa-icon size="lg" icon="times"></fa-icon>
+        </button>
+      </div>
     </div>
-  </div>
-  <div *ngIf="showCancelButton" class="cancel-button-wrapper">
-    <button class="cancel-button" type="button" mat-icon-button (click)="doDelete()">
-      <fa-icon size="lg" icon="times"></fa-icon>
-    </button>
   </div>
 </div>

@@ -126,6 +126,7 @@ export const FORMATS_GERMAN = {
     DisplayCritGroupComponent,
     DisplayCriterionComponent,
     DisplayQueryComponent,
+    DisplayLinkedCriterionComponent,
   ],
   providers: [
     {
