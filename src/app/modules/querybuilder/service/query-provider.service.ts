@@ -60,6 +60,7 @@ export class QueryProviderService {
                   },
                 ],
                 display: 'Geschlecht',
+                isLinked: false,
                 valueFilters: [
                   {
                     type: OperatorOptions.CONCEPT,
@@ -93,6 +94,7 @@ export class QueryProviderService {
                   },
                 ],
                 display: 'Alter',
+                isLinked: false,
                 valueFilters: [
                   {
                     type: OperatorOptions.QUANTITY_COMPARATOR,
@@ -116,6 +118,7 @@ export class QueryProviderService {
                   },
                 ],
                 display: 'F00',
+                isLinked: false,
                 valueFilters: [],
               },
               {
@@ -127,6 +130,7 @@ export class QueryProviderService {
                   },
                 ],
                 display: 'F09',
+                isLinked: false,
                 valueFilters: [],
               },
             ],
@@ -142,6 +146,7 @@ export class QueryProviderService {
                   },
                 ],
                 display: 'Geschlecht',
+                isLinked: false,
                 valueFilters: [
                   {
                     type: OperatorOptions.CONCEPT,
@@ -167,6 +172,7 @@ export class QueryProviderService {
                   },
                 ],
                 display: 'Alter',
+                isLinked: false,
                 valueFilters: [
                   {
                     type: OperatorOptions.QUANTITY_COMPARATOR,
@@ -190,6 +196,7 @@ export class QueryProviderService {
                   },
                 ],
                 display: 'F00.9',
+                isLinked: false,
                 valueFilters: [],
               },
               {
@@ -201,6 +208,7 @@ export class QueryProviderService {
                   },
                 ],
                 display: 'Körpertemperatur',
+                isLinked: false,
                 valueFilters: [
                   {
                     type: OperatorOptions.QUANTITY_RANGE,

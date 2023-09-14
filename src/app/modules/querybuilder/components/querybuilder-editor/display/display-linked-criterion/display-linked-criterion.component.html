@@ -1,11 +1,11 @@
 <div class="crit-box" fxLayout="row">
-  <div fxFlex="15" class="code-part">
+  <div fxFlex="5" class="code-part">
     <!--<div *ngFor="let termcode of criterion.termCodes">{{ termcode?.code }}</div>-->
     <div *ngIf="isinvalid" class="invalid-Criterion">
       <img src="assets/img/alert.png" alt="Validation Alert" />
     </div>
   </div>
-  <div fxFlex="85" class="display-part" (click)="openDetailsPopUp()">
+  <div fxFlex="95" class="display-part">
     <div class="header-display">{{ criterion.display }}</div>
     <num-display-value-filter
       *ngFor="let filter of getValueFilters()"
@@ -19,18 +19,6 @@
       *ngIf="featureService.useFeatureTimeRestriction()"
       [timeRestriction]="criterion.timeRestriction"
     ></num-display-time-restriction>
-    <div *ngIf="criterion.linkedCriteria.length > 0" class="linked-criteria">
-      <div class="linked-header">{{ 'QUERYBUILDER.DISPLAY.REFERENCED_CRITERIA' | translate }}</div>
-      <num-display-linked-criterion
-        *ngFor="let linkedCrit of criterion.linkedCriteria"
-        [criterion]="linkedCrit"
-        [query]="query"
-      ></num-display-linked-criterion>
-    </div>
   </div>
-  <div *ngIf="showCancelButton" class="cancel-button-wrapper">
-    <button class="cancel-button" type="button" mat-icon-button (click)="doDelete()">
-      <fa-icon size="lg" icon="times"></fa-icon>
-    </button>
-  </div>
+  <div class="cancel-button-wrapper"></div>
 </div>

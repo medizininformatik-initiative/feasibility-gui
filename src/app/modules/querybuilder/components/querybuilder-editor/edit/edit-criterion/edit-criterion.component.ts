@@ -12,14 +12,16 @@ import {
 } from '@angular/core';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component';
-import { ValueFilter } from '../../../../model/api/query/valueFilter';
+import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter';
 import { FeatureService } from '../../../../../../service/feature.service';
 import { Query } from '../../../../model/api/query/query';
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Subscription } from 'rxjs';
-import { BackendService } from '../../../../service/backend.service';
+import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { TimeRestrictionType } from '../../../../model/api/query/timerestriction';
+import { TermEntry2CriterionTranslator } from 'src/app/modules/querybuilder/controller/TermEntry2CriterionTranslator';
+import { TerminologyCode } from '../../../../model/api/terminology/terminology';
 
 @Component({
   selector: 'num-edit-criterion',
@@ -58,11 +60,20 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   private subscriptionCritProfile: Subscription;
 
+  queryCriterionList: Array<Criterion> = [];
+  queryCriteriaHashes: Array<string> = [];
+  private readonly translator;
+
   constructor(
     public featureService: FeatureService,
     private changeDetector: ChangeDetectorRef,
     private backend: BackendService
-  ) {}
+  ) {
+    this.translator = new TermEntry2CriterionTranslator(
+      this.featureService.useFeatureTimeRestriction(),
+      this.featureService.getQueryVersion()
+    );
+  }
 
   ngOnInit(): void {
     if (this.position) {
@@ -72,12 +83,9 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     }
 
     this.showGroups = this.query.groups.length > 1;
-
-    if (!this.featureService.mockLoadnSave()) {
-      this.loadUIProfile();
-    }
+    this.createListOfQueryCriteriaAndHashes();
+    this.loadUIProfile();
   }
-
   ngOnDestroy(): void {
     this.subscriptionCritProfile?.unsubscribe();
   }
@@ -87,20 +95,41 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     this.changeDetector.detectChanges();
   }
 
+  createListOfQueryCriteriaAndHashes(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((andGroup) => {
+        andGroup.forEach((criterion) => {
+          this.queryCriterionList.push(criterion);
+          this.queryCriteriaHashes.push(criterion.criterionHash);
+        });
+      });
+    }
+  }
+
+  initCriterion(profile): void {
+    let attrDefs = [];
+    if (profile.attributeDefinitions) {
+      attrDefs = profile.attributeDefinitions;
+    }
+
+    this.criterion = this.translator.addAttributeAndValueFilterToCrit(
+      this.criterion,
+      profile.valueDefinition,
+      attrDefs
+    );
+  }
+
   loadUIProfile(): void {
-    this.subscriptionCritProfile?.unsubscribe();
-    const version = this.criterion.termCodes[0].version
-      ? '&version=' + this.criterion.termCodes[0].version
-      : '';
-    const param =
-      'code=' +
-      this.criterion.termCodes[0].code +
-      '&system=' +
-      this.criterion.termCodes[0].system +
-      version;
     this.subscriptionCritProfile = this.backend
-      .getTerminologyProfile(param)
+      .getTerminologyProfile(this.criterion)
       .subscribe((profile) => {
+        if (
+          this.criterion.valueFilters.length === 0 &&
+          this.criterion.attributeFilters.length === 0
+        ) {
+          this.initCriterion(profile);
+        }
+
         if (profile.timeRestrictionAllowed && !this.criterion.timeRestriction) {
           this.criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
         }
@@ -135,16 +164,57 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
             }
           }
         });
+
+        this.loadAllowedCriteria();
       });
+  }
+
+  loadAllowedCriteria(): void {
+    this.criterion.attributeFilters.forEach((attrFilter) => {
+      const refValSet = attrFilter.attributeDefinition.referenceCriteriaSet;
+      if (refValSet) {
+        this.subscriptionCritProfile = this.backend
+          .getAllowedReferencedCriteria(refValSet, this.queryCriteriaHashes)
+          .subscribe((allowedCriteriaList) => {
+            attrFilter.attributeDefinition.selectableConcepts = [];
+            if (allowedCriteriaList.length > 0) {
+              attrFilter.type = OperatorOptions.REFERENCE;
+              allowedCriteriaList.forEach((critHash) => {
+                this.findCriterionByHash(critHash).forEach((crit) => {
+                  if (!this.isCriterionLinked(crit.uniqueID)) {
+                    const termCodeUid: TerminologyCode = crit.termCodes[0];
+                    termCodeUid.uid = crit.uniqueID;
+                    attrFilter.attributeDefinition.selectableConcepts.push(termCodeUid);
+                  }
+                });
+              });
+            }
+          });
+      }
+    });
+  }
+
+  findCriterionByHash(hash: string): Criterion[] {
+    const tempCrit: Criterion[] = [];
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.criterionHash === hash) {
+            tempCrit.push(conj);
+          }
+        });
+      });
+    }
+    return tempCrit;
   }
 
   doSave(): void {
     if (this.isActionDisabled()) {
       return;
     }
-
     this.moveBetweenGroups();
-
+    this.moveReferenceCriteria();
     this.save.emit({ groupId: this.selectedGroupId });
   }
 
@@ -204,5 +274,69 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
         row: -1,
       }
     );
+  }
+
+  moveReferenceCriteria(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      let x = 0;
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        let y = 0;
+        disj.forEach((conj) => {
+          if (conj.isLinked) {
+            this.query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
+              this.query.groups,
+              {
+                groupId: conj.position.groupId,
+                critType: conj.position.critType,
+                column: conj.position.column - y,
+                row: conj.position.row - x,
+              },
+              {
+                groupId: conj.position.groupId,
+                critType: conj.position.critType,
+                column: -1,
+                row: -1,
+              }
+            );
+            if (disj.length === 1) {
+              x++;
+            }
+            if (disj.length > 1) {
+              y++;
+            }
+            this.rePosition();
+          }
+        });
+      });
+    }
+  }
+  rePosition(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj, i) => {
+        disj.forEach((conj, j) => {
+          conj.position.row = i;
+          conj.position.column = j;
+        });
+      });
+    }
+  }
+  isCriterionLinked(uid: string): boolean {
+    let isLinked = false;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria.length > 0) {
+            conj.linkedCriteria.forEach((criterion) => {
+              if (criterion.uniqueID === uid && conj.uniqueID !== this.criterion.uniqueID) {
+                isLinked = true;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    return isLinked;
   }
 }
