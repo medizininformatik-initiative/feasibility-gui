@@ -13,7 +13,7 @@
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_REFERENCE' | translate }} (optional) :
         </mat-panel-title>
       </ng-container>
-      <ng-container *ngIf="filter.attributeDefinition.type != 'reference'">
+      <ng-container *ngIf="filter.attributeDefinition.type !== 'reference'">
         <mat-panel-title>
           {{ filter.attributeDefinition.attributeCode.display }} (optional) :
         </mat-panel-title>

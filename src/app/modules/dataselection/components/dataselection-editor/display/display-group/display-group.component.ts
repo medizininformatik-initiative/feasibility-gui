@@ -23,7 +23,7 @@ export class DisplayGroupComponent implements OnInit {
 
   @Input()
   searchType: string;
-  
+
   @Input()
   parentGroup: Group;
 
@@ -79,12 +79,16 @@ export class DisplayGroupComponent implements OnInit {
   }
 
   doDelete({ row, column }: { row: number; column: number }, critType: CritType): void {
-    this.group = CritGroupArranger.removeFromGroup(this.group, {
-      groupId: this.group.id,
-      critType,
-      row,
-      column,
-    }, 'delete');
+    this.group = CritGroupArranger.removeFromGroup(
+      this.group,
+      {
+        groupId: this.group.id,
+        critType,
+        row,
+        column,
+      },
+      'delete'
+    );
 
     this.saveGroup.emit(this.group);
   }

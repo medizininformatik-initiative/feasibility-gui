@@ -103,9 +103,9 @@
         (delete)="doDelete($event, 'inclusion')"
         [fxFlex]="searchType === 'dataselection' ? 100 : 49.5"
       ></num-display-crit-group>
-      <div *ngIf="searchType == 'querybuilder'" fxFlex="1" class="crit-group-spacer"></div>
+      <div *ngIf="searchType === 'querybuilder'" fxFlex="1" class="crit-group-spacer"></div>
       <num-display-crit-group
-        *ngIf="searchType == 'querybuilder'"
+        *ngIf="searchType === 'querybuilder'"
         [critGroup]="group.exclusionCriteria"
         [query]="query"
         [groupId]="group.id"
