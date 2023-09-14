@@ -22,6 +22,7 @@ export class Criterion {
   isLinked?: boolean;
   context?: TerminologyCode;
   criterionHash?: string;
+  uniqueID?: string;
 
   @V2()
   timeRestriction?: TimeRestriction;

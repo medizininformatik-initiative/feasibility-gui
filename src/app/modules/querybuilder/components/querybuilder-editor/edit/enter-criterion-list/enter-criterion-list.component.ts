@@ -89,7 +89,7 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     } else {
       this.query.groups[index].exclusionCriteria.push([criterion]);
     }
-    this.moveReferenceCriteria();
+    //this.moveReferenceCriteria();
     this.provider.store(this.query);
     this.doDiscard(criterion);
   }
@@ -132,26 +132,5 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
 
   doDiscardAll(): void {
     this.dialogRef.close();
-  }
-
-  moveReferenceCriteria(): void {
-    for (const inex of ['inclusion', 'exclusion']) {
-      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
-        disj.forEach((conj) => {
-          if (conj.isLinked && conj.position.column > 0) {
-            this.query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
-              this.query.groups,
-              conj.position,
-              {
-                groupId: conj.position.groupId,
-                critType: conj.position.critType,
-                column: -1,
-                row: -1,
-              }
-            );
-          }
-        });
-      });
-    }
   }
 }

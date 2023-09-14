@@ -227,6 +227,9 @@ export class ApiTranslator {
     if (criterion.linkedCriteria) {
       delete criterion.linkedCriteria;
     }
+    if (criterion.termCodes[0].uid) {
+      delete criterion.termCodes[0].uid;
+    }
   }
 
   // noinspection JSMethodCanBeStatic
