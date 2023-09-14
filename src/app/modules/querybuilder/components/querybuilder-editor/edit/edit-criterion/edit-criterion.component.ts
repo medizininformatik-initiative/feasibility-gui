@@ -282,6 +282,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
         row: -1,
       }
     );
+  }
 
   moveReferenceCriteria(): void {
     for (const inex of ['inclusion', 'exclusion']) {
