@@ -25,12 +25,26 @@ export class TermEntry2CriterionTranslator {
   public translate(termEntry: TerminologyEntry): Criterion {
     const criterion = new Criterion();
 
-    criterion.context = termEntry.context;
-    termEntry.termCodes?.forEach((termCode) => {
-      criterion.termCodes.push(termCode);
-    });
     criterion.display = termEntry.display;
     criterion.entity = termEntry.entity;
+    if (this.queryVersion === 'v1') {
+      termEntry.valueDefinitions.forEach((valueDefinition) => {
+        criterion.valueFilters.push(this.createValueFilter(valueDefinition));
+      });
+      criterion.termCodes.push(termEntry.termCode);
+      criterion.attributeFilters = undefined;
+    }
+    if (this.queryVersion === 'v2') {
+      if (termEntry.valueDefinition) {
+        criterion.valueFilters.push(this.createValueFilter(termEntry.valueDefinition));
+      }
+      termEntry.attributeDefinitions?.forEach((attributeDefinition) => {
+        criterion.attributeFilters.push(this.createAttributeFilter(attributeDefinition));
+      });
+      termEntry.termCodes?.forEach((termCode) => {
+        criterion.termCodes.push(termCode);
+      });
+    }
     criterion.children = termEntry.children;
     criterion.timeRestriction = this.createTimeRestriction(termEntry);
     criterion.optional = termEntry.optional;
@@ -49,12 +63,7 @@ export class TermEntry2CriterionTranslator {
     if (valueDefinition) {
       crit.valueFilters.push(this.createValueFilter(valueDefinition));
     }
-
-    attributeDefinitions?.forEach((attributeDefinition) => {
-      crit.attributeFilters.push(this.createAttributeFilter(attributeDefinition));
-    });
-
-    return crit;
+    return criterion;
   }
 
   getCriterionHash(criterion): string {
@@ -80,6 +89,29 @@ export class TermEntry2CriterionTranslator {
       termcodeVersion;
 
     return uuidv3(contextTermcodeHashInput, BackendService.BACKEND_UUID_NAMESPACE);
+  }
+
+  public translateCrit(
+    crit: Criterion,
+    valueDefinition: ValueDefinition,
+    attributeDefinitions: AttributeDefinition[]
+  ): Criterion {
+    if (valueDefinition) {
+      crit.valueFilters.push(this.createValueFilter(valueDefinition));
+    }
+
+    attributeDefinitions?.forEach((attributeDefinition) => {
+      crit.attributeFilters.push(this.createAttributeFilter(attributeDefinition));
+    });
+
+    /*termEntry.attributeDefinitions?.forEach((attributeDefinition) => {
+        criterion.attributeFilters.push(this.createAttributeFilter(attributeDefinition));
+      });*/
+
+    // criterion.timeRestriction = this.createTimeRestriction(termEntry);
+    //criterion.optional = termEntry.optional;
+
+    return crit;
   }
 
   // noinspection JSMethodCanBeStatic

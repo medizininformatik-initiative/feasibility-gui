@@ -91,6 +91,8 @@
   <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="space-between stretch">
       <num-display-crit-group
+        [ngClass]="{ dataselectionClass: searchType === 'dataselection' }"
+        [searchType]="searchType"
         [query]="query"
         [critGroup]="group.inclusionCriteria"
         [groupId]="group.id"
@@ -99,10 +101,11 @@
         (storeQuery)="doStoreQuery($event)"
         (dropped)="doDrop($event)"
         (delete)="doDelete($event, 'inclusion')"
-        fxFlex="49.5"
+        [fxFlex]="searchType === 'dataselection' ? 100 : 49.5"
       ></num-display-crit-group>
-      <div fxFlex="1" class="crit-group-spacer"></div>
+      <div *ngIf="searchType === 'querybuilder'" fxFlex="1" class="crit-group-spacer"></div>
       <num-display-crit-group
+        *ngIf="searchType === 'querybuilder'"
         [critGroup]="group.exclusionCriteria"
         [query]="query"
         [groupId]="group.id"

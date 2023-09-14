@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Criterion } from '../../../../model/api/query/criterion';
@@ -16,6 +16,7 @@ export class EnterCriterionListComponentData {
   critType: CritType;
   termEntryList: Array<TerminologyEntry>;
   query: Query;
+  searchType: string;
 }
 
 @Component({
@@ -29,6 +30,7 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
   groupIndex: number;
   critType: CritType;
   query: Query;
+  searchType: string;
   actionDisabled = true;
   criterionAddibleList: Array<{
     criterion: Criterion
@@ -41,18 +43,18 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
     private dialogRef: MatDialogRef<EnterCriterionListComponent, void>,
     public provider: QueryProviderService,
-    public featureService: FeatureService,
-    private backend: BackendService
+    public featureService: FeatureService
   ) {
     this.translator = new TermEntry2CriterionTranslator(
       this.featureService.useFeatureTimeRestriction(),
       this.featureService.getQueryVersion()
     );
-
-    this.query = data.query;
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
+    this.addContextToCriterionList(data);
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
+    this.query = data.query;
+    this.searchType = data.searchType;
   }
 
   ngOnInit(): void {
@@ -69,8 +71,8 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
 
   addContextToCriterionList(data: EnterCriterionListComponentData): void {
     data.termEntryList.forEach((termEntryListContext) => {
-      this.criterionList.forEach((criterion) => {
-        criterion.context = termEntryListContext.context;
+      this.criterionList.forEach((contextElement) => {
+        contextElement.context = termEntryListContext.context;
       });
     });
   }

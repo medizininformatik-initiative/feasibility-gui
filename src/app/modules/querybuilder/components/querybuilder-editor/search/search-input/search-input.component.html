@@ -4,7 +4,12 @@
   #trigger="cdkOverlayOrigin"
   [ngClass]="{ 'show-above-overlay': isOverlayOpen }"
 >
-  <div class="header-label">{{ 'QUERYBUILDER.SEARCH.' + getHeaderLabelKey() | translate }}</div>
+  <div *ngIf="searchType === 'querybuilder'" class="header-label">
+    {{ 'QUERYBUILDER.SEARCH.' + getHeaderLabelKey() | translate }}
+  </div>
+  <div *ngIf="searchType === 'dataselection'" class="header-label-dataselection">
+    {{ 'DATASELECTION.SEARCH.CRITERIA' | translate }}
+  </div>
   <div fxLayout="row" fxLayoutAlign="space-evenly start">
     <div fxLayoutAlign="center">
       <button class="button-tree-view" type="button" mat-icon-button (click)="switchSearchMode()">
@@ -42,6 +47,7 @@
     *ngIf="searchMode === 'tree'"
     [critType]="critType"
     [query]="query"
+    [searchType]="searchType"
     (closeOverlay)="closeOverlay($event)"
   >
   </num-search-tree-overlay-content>
@@ -50,6 +56,7 @@
     [text]="search"
     [critType]="critType"
     [query]="query"
+    [searchType]="searchType"
     (switchSearchMode)="switchSearchMode()"
     (closeOverlay)="closeOverlay($event)"
   >

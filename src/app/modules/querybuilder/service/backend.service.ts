@@ -32,8 +32,8 @@ export class BackendService {
   private static PATH_ROOT_ENTRIES = 'terminology/categories';
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
   private static PATH_TERMINOLOGY = 'terminology/';
-  private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
   private static PATH_SEARCH = 'terminology/entries';
+  private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
 
   private static PATH_RUN_QUERY = 'query';
   private static PATH_STORED_QUERY = 'query/template';

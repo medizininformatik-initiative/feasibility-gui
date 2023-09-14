@@ -13,7 +13,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OAuthInterceptor } from './core/interceptors/oauth.interceptor';
 import { DataProtectionComponent } from './site/data-protection/data-protection.component';
-
 export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   new TranslateHttpLoader(http);
 

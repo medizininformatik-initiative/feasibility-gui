@@ -77,10 +77,21 @@
       "LABEL": "Toggle sidenav"
     }
   },
+  "DATASELECTION": {
+    "DATASELECTION": "Dataselection",
+    "SEARCH":{
+      "LABEL": "enter code or display",
+      "CRITERIA": "Search criteria"
+    },
+    "DISPLAY": {
+      "LABEL": "Selected criteria"
+    }
+  },
   "NAVIGATION": {
     "DASHBOARD": "Home",
     "QUERYBUILDER_EDITOR": "New query",
     "QUERYBUILDER_OVERVIEW": "My queries",
+    "DATASELECTION_EDITOR": "Dataselection",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
   },
@@ -236,6 +247,8 @@
     "ADD": "Add",
     "ADD_TOOLTIP": "restrict criteria",
     "ADDALL": "Add all",
+    "DOWNLOAD": "Download",
+    "IMPORT_DATASELECTION": "Import dataselection",
     "SEND": "Send",
     "RESET": "Reset",
     "RESULTDETAILS": "Details",

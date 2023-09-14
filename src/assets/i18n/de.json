@@ -64,6 +64,16 @@
       "TEXT": "Stellen Sie einen Antrag zur Datennutzung im Antragsportal"
     }
   },
+  "DATASELECTION": {
+    "DATASELECTION": "Datenselektion",
+    "SEARCH": {
+      "LABEL": "Code oder Suchbegriff eingeben",
+      "CRITERIA": "Suchkriterien"
+    },
+    "DISPLAY": {
+      "LABEL": "Ausgewählte Merkmale"
+    }
+  },
   "LANGUAGE": {
     "GERMAN": "Deutsch",
     "ENGLISH": "Englisch",
@@ -81,6 +91,7 @@
     "DASHBOARD": "Startseite",
     "QUERYBUILDER_EDITOR": "Neue Abfrage",
     "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
+    "DATASELECTION_EDITOR": "Datenselektion",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
   },
@@ -233,6 +244,7 @@
     "SAVE": "Speichern",
     "CANCEL": "Abbrechen",
     "CLOSE": "Schließen",
+    "DOWNLOAD": "Herunterladen",
     "ADD": "Auswählen",
     "ADD_TOOLTIP": "Merkmal einschränken",
     "ADDALL": "Alle hinzufügen",
@@ -242,6 +254,7 @@
     "SAVEQUERY": "Abfrage speichern",
     "VALIDATE": "Validieren",
     "IMPORT": "Query laden",
-    "IMPORT_FROM_FILE": "Datei auswählen"
+    "IMPORT_FROM_FILE": "Datei auswählen",
+    "IMPORT_DATASELECTION": "Datenselektion laden"
   }
 }
