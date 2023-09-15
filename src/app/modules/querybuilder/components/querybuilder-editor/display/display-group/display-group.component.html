@@ -106,6 +106,7 @@
       <div *ngIf="searchType === 'querybuilder'" fxFlex="1" class="crit-group-spacer"></div>
       <num-display-crit-group
         *ngIf="searchType === 'querybuilder'"
+        [searchType]="searchType"
         [critGroup]="group.exclusionCriteria"
         [query]="query"
         [groupId]="group.id"
