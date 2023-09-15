@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Criterion } from '../../../../model/api/query/criterion';
@@ -25,7 +25,6 @@ export class EnterCriterionListComponentData {
   styleUrls: ['./enter-criterion-list.component.scss'],
 })
 export class EnterCriterionListComponent implements OnInit, OnDestroy {
-  private subscriptionCritProfile: Subscription;
   criterionList: Array<Criterion> = [];
   groupIndex: number;
   critType: CritType;
@@ -50,7 +49,6 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
       this.featureService.getQueryVersion()
     );
     this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
-    this.addContextToCriterionList(data);
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
     this.query = data.query;
@@ -69,14 +67,6 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  addContextToCriterionList(data: EnterCriterionListComponentData): void {
-    data.termEntryList.forEach((termEntryListContext) => {
-      this.criterionList.forEach((contextElement) => {
-        contextElement.context = termEntryListContext.context;
-      });
-    });
-  }
-
   doSave(event: { groupId: number }, criterion: Criterion): void {
     const index = this.query.groups.findIndex((group) => group.id === event.groupId);
 
@@ -89,7 +79,7 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     } else {
       this.query.groups[index].exclusionCriteria.push([criterion]);
     }
-    //this.moveReferenceCriteria();
+
     this.provider.store(this.query);
     this.doDiscard(criterion);
   }

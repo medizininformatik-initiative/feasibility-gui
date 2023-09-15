@@ -11,12 +11,12 @@
     (click)="openDetailsPopUp()"
   >
     <div class="header-display">{{ criterion.display }}</div>
-    <div *ngIf="searchType === 'querybuilder'">
+    <ng-container *ngIf="searchType === 'querybuilder'">
       <num-display-value-filter
         *ngFor="let filter of getValueFilters()"
         [filter]="filter"
       ></num-display-value-filter>
-    </div>
+    </ng-container>
     <num-display-value-filter
       *ngFor="let filter of getAttributeFilters()"
       [filter]="filter"
@@ -25,7 +25,7 @@
       *ngIf="featureService.useFeatureTimeRestriction()"
       [timeRestriction]="criterion.timeRestriction"
     ></num-display-time-restriction>
-    <div *ngIf="searchType === 'querybuilder'">
+    <ng-container *ngIf="searchType === 'querybuilder'">
       <div *ngIf="criterion.linkedCriteria.length > 0" class="linked-criteria">
         <div class="linked-header">
           {{ 'QUERYBUILDER.DISPLAY.REFERENCED_CRITERIA' | translate }}
@@ -36,7 +36,7 @@
           [query]="query"
         ></num-display-linked-criterion>
       </div>
-    </div>
+    </ng-container>
   </div>
   <div *ngIf="showCancelButton" class="cancel-button-wrapper">
     <button class="cancel-button" type="button" mat-icon-button (click)="doDelete()">

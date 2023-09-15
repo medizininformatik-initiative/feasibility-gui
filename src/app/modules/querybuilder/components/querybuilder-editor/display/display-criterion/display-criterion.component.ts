@@ -14,7 +14,6 @@ import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
   styleUrls: ['./display-criterion.component.scss'],
 })
 export class DisplayCriterionComponent implements OnInit, OnDestroy {
-
   @Input()
   searchType: string;
 
@@ -59,6 +58,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
       criterion: this.criterion,
       query: this.query,
       position: this.position,
+      searchType: this.searchType,
     };
     const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig);
     this.subscriptionDialog?.unsubscribe();

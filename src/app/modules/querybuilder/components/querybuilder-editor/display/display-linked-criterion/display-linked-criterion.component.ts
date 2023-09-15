@@ -21,7 +21,6 @@ export class DisplayLinkedCriterionComponent implements OnInit {
   constructor(public featureService: FeatureService) {}
 
   ngOnInit(): void {
-    console.log('Hello');
     this.isinvalid = this.criterion.isinvalid === true;
   }
 
