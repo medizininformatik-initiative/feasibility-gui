@@ -43,6 +43,7 @@ import { SaveDialogComponent } from './components/querybuilder-editor/save/save-
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileSaverModule } from 'ngx-filesaver';
+import { DisplayLinkedCriterionComponent } from './components/querybuilder-editor/display/display-linked-criterion/display-linked-criterion.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -88,6 +89,7 @@ export const FORMATS_GERMAN = {
     DisplayEntitiesComponent,
     SingleQueryComponent,
     SaveDialogComponent,
+    DisplayLinkedCriterionComponent,
   ],
   imports: [
     CommonModule,

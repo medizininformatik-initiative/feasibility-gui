@@ -78,6 +78,31 @@ export class TermEntry2CriterionTranslator {
     return crit;
   }
 
+  getCriterionHash(criterion): string {
+    const termcode = criterion.termCodes[0];
+    const context = criterion.context;
+    let contextVersion = '';
+    let termcodeVersion = '';
+
+    if (context.version) {
+      contextVersion = criterion.context.version;
+    }
+
+    if (termcode.version) {
+      termcodeVersion = termcode.version;
+    }
+
+    const contextTermcodeHashInput =
+      context.system +
+      context.code +
+      contextVersion +
+      termcode.system +
+      termcode.code +
+      termcodeVersion;
+
+    return uuidv3(contextTermcodeHashInput, BackendService.BACKEND_UUID_NAMESPACE);
+  }
+
   // noinspection JSMethodCanBeStatic
   private createValueFilter(valueDefinition: ValueDefinition): ValueFilter {
     const valueFilter = new ValueFilter();

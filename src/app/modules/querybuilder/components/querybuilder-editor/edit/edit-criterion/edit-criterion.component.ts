@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component';
-import { ValueFilter } from '../../../../model/api/query/valueFilter';
+import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter';
 import { FeatureService } from '../../../../../../service/feature.service';
 import { Query } from '../../../../model/api/query/query';
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger';
@@ -63,6 +63,8 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   private subscriptionCritProfile: Subscription;
 
+  queryCriterionList: Array<Criterion> = [];
+  queryCriteriaHashes: Array<string> = [];
   private readonly translator;
 
   constructor(
@@ -99,21 +101,6 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     this.changeDetector.detectChanges();
   }
 
-  getTermcodeParameters(): string {
-    const termCode = this.criterion.termCodes[0];
-    const termCodeVersion = termCode.version ? '&version=' + termCode.version : '';
-    return 'code=' + termCode.code + '&system=' + termCode.system + termCodeVersion;
-  }
-
-  getContextParameters(): string {
-    const context = this.criterion.context;
-    const contextVersion = context.version ? '&context_version=' + context.version : '';
-    return '&context_system=' + context.system + '&context_code=' + context.code + contextVersion;
-  }
-
-  getRequestParameters(): string {
-    return this.getTermcodeParameters() + this.getContextParameters();
-  }
   getTermcodeParameters(): string {
     const termCode = this.criterion.termCodes[0];
     const termCodeVersion = termCode.version ? '&version=' + termCode.version : '';

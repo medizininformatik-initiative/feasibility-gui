@@ -40,6 +40,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   selectedUnit: QuantityUnit;
   // Use string representation of concept because equivalent objects do not match in TypeScript (e.g. { a: 1 } !== { a: 1 })
   selectedConceptsAsJson: Set<string> = new Set();
+  selectedReferenceAsJson: Set<string> = new Set();
   quantityFilterOption: string;
   // TODO: Try using enum
   quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
@@ -195,10 +196,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         }
       }
 
-    const selectedConcepts: Array<TerminologyCode> = [];
-    this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) =>
-      selectedConcepts.push(JSON.parse(conceptAsJsonTemp))
-    );
+      const selectedConcepts: Array<TerminologyCode> = [];
+      this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) =>
+        selectedConcepts.push(JSON.parse(conceptAsJsonTemp))
+      );
+    }
+  }
 
   getSelectedCriterion(termcode: TerminologyCode): Criterion {
     let crit: Criterion;
@@ -251,7 +254,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         });
       });
     }
+    return isLinked;
   }
+
   deselectAllCheckboxes() {
     this.checkboxes.forEach((checkbox) => {
       if (checkbox.checked) {
@@ -278,26 +283,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     } else {
       return true;
     }
-  }
-  deselectAllCheckboxes() {
-    this.checkboxes.forEach((checkbox) => {
-      if (checkbox.checked) {
-        checkbox.checked = false;
-        checkbox.checkedControlForm.patchValue(['checkedControl', false]);
-        this.selectedConceptsAsJson = new Set();
-        this.filter.selectedConcepts = [];
-      }
-    });
-  }
-
-  resetQuantity() {
-    if (this.filter.maxValue || this.filter.minValue || this.filter.value) {
-      this.resetQuantityDisabled = false;
-      this.filter.maxValue = 0;
-      this.filter.minValue = 0;
-      this.filter.value = 0;
-    }
-    this.resetQuantityDisabled = true;
   }
 
   public isActionDisabled(): boolean {
