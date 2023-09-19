@@ -28,6 +28,8 @@ export class EditTimeRestrictionComponent implements OnInit, AfterViewInit {
   timeRestrictionType: typeof TimeRestrictionType = TimeRestrictionType;
   disableAnimation = true;
 
+  disableReset = true;
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -36,5 +38,12 @@ export class EditTimeRestrictionComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
     setTimeout(() => (this.disableAnimation = false));
+  }
+
+  resetDate() {
+    if ((this.timeRestriction.minDate || this.timeRestriction.maxDate) !== undefined) {
+      this.disableReset = true;
+      this.timeRestriction = new TimeRestriction();
+    }
   }
 }
