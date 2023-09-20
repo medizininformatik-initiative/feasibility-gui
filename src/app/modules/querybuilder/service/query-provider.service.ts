@@ -60,6 +60,7 @@ export class QueryProviderService {
                   },
                 ],
                 display: 'Geschlecht',
+                isLinked: false,
                 valueFilters: [
                   {
                     type: OperatorOptions.CONCEPT,

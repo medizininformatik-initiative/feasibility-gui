@@ -6,28 +6,29 @@
     </h4>
   </mat-card-header>
   <mat-card-content>
-    <num-edit-value-definition
-      *ngFor="let valueFilter of getValueFilters()"
-      [filter]="valueFilter"
-      [filterType]="'value'"
-    >
-    </num-edit-value-definition>
-    <num-edit-value-definition
-      *ngFor="let attributeFilter of getAttributeFilters()"
-      [filter]="attributeFilter"
-      [filterType]="'attribute'"
-    >
-    </num-edit-value-definition>
-    <num-display-entities
-      *ngIf="criterion.entity"
-      [criterionEntity]="criterion"
-      [query]="query"
-    ></num-display-entities>
-    <num-edit-time-restriction
-      *ngIf="featureService.useFeatureTimeRestriction()"
-      [timeRestriction]="criterion.timeRestriction"
-      (doResetTimeRestriction)="resetTimeRestriction()"
-    ></num-edit-time-restriction>
+    <ng-container *ngIf="searchType === 'querybuilder'">
+      <num-edit-value-definition
+        *ngFor="let valueFilter of getValueFilters()"
+        [filter]="valueFilter"
+        [filterType]="'value'"
+        [query]="query"
+        [criterion]="criterion"
+      >
+      </num-edit-value-definition>
+      <num-edit-value-definition
+        *ngFor="let attributeFilter of getAttributeFilters()"
+        [filter]="attributeFilter"
+        [filterType]="'attribute'"
+        [query]="query"
+        [criterion]="criterion"
+      >
+      </num-edit-value-definition>
+      <num-display-entities
+        *ngIf="criterion.entity"
+        [criterionEntity]="criterion"
+        [query]="query"
+      ></num-display-entities>
+    </ng-container>
   </mat-card-content>
   <mat-card-footer>
     <div fxLayout="row" fxLayoutAlign="center center">

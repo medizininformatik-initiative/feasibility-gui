@@ -82,4 +82,12 @@ export class DisplayCritGroupComponent implements OnInit {
       to: $event.container.data,
     });
   }
+
+  isLastSwitch(i: number): boolean {
+    let bool = true;
+    for (let x = i + 1; x < this.critGroup.length; x++) {
+      bool = bool && this.critGroup[x][0]?.isLinked;
+    }
+    return !bool;
+  }
 }

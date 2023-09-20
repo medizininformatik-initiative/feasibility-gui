@@ -196,10 +196,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         }
       }
 
-      const selectedConcepts: Array<TerminologyCode> = [];
-      this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) =>
-        selectedConcepts.push(JSON.parse(conceptAsJsonTemp))
-      );
+      this.criterion.linkedCriteria = [];
+      this.selectedReferenceAsJson.forEach((conceptAsJsonTemp) => {
+        this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJsonTemp)));
+      });
     }
   }
 
