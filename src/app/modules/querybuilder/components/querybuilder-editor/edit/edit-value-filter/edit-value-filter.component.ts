@@ -263,6 +263,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         checkbox.checkedControlForm.patchValue(['checkedControl', false]);
         if (this.filter.attributeDefinition.type === ValueType.CONCEPT) {
           this.selectedConceptsAsJson = new Set();
+          this.filter.selectedConcepts = [];
         } else {
           this.doSelectConcept(checkbox.concept);
         }
