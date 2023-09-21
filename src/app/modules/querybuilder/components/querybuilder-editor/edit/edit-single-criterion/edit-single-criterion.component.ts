@@ -37,7 +37,11 @@ export class EditSingleCriterionComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  doSave(): void {
+  doSave(event: { groupId: number }): void {
+    const index = this.queryModified.groups.findIndex((group) => group.id === event.groupId);
+    if (index < 0) {
+      return;
+    }
     this.dialogRef.close(this.queryModified);
   }
 

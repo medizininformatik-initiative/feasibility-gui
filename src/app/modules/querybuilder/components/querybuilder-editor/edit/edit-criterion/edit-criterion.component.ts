@@ -86,10 +86,8 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     }
 
     this.showGroups = this.query.groups.length > 1;
-
-    if (!this.featureService.mockLoadnSave()) {
-      this.loadUIProfile();
-    }
+    this.createListOfQueryCriteriaAndHashes();
+    this.loadUIProfile();
   }
 
   ngOnDestroy(): void {
@@ -99,6 +97,17 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
   ngAfterViewChecked(): void {
     this.actionDisabled = this.isActionDisabled();
     this.changeDetector.detectChanges();
+  }
+
+  createListOfQueryCriteriaAndHashes(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((andGroup) => {
+        andGroup.forEach((criterion) => {
+          this.queryCriterionList.push(criterion);
+          this.queryCriteriaHashes.push(criterion.criterionHash);
+        });
+      });
+    }
   }
 
   getTermcodeParameters(): string {
@@ -131,17 +140,15 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   loadUIProfile(): void {
-    if (this.criterion.valueFilters.length > 0 || this.criterion.attributeFilters.length > 0) {
-      return;
-    }
-
-    this.subscriptionCritProfile?.unsubscribe();
-    const param = this.getRequestParameters();
     this.subscriptionCritProfile = this.backend
       .getTerminologyProfile(this.criterion)
       .subscribe((profile) => {
-        this.initCriterion(profile);
-
+        if (
+          this.criterion.valueFilters.length === 0 &&
+          this.criterion.attributeFilters.length === 0
+        ) {
+          this.initCriterion(profile);
+        }
         if (profile.timeRestrictionAllowed && !this.criterion.timeRestriction) {
           this.criterion.timeRestriction = { tvpe: TimeRestrictionType.BETWEEN };
         }
@@ -176,6 +183,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
             }
           }
         });
+        this.loadAllowedCriteria();
       });
   }
 
