@@ -11,7 +11,6 @@ import { Query } from '../../../../model/api/query/query';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { ValueType } from '../../../../model/api/terminology/valuedefinition';
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -203,7 +202,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getSelectedCriterion(termcode: TerminologyCode): Criterion {
+  getSelectedCriterion(termcode?: TerminologyCode): Criterion {
     let crit: Criterion;
     for (const inex of ['inclusion', 'exclusion']) {
       this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
@@ -258,12 +257,15 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   }
 
   deselectAllCheckboxes() {
-    this.checkboxes.forEach((checkbox) => {
+    this.checkboxes.forEach((checkbox, index) => {
       if (checkbox.checked) {
         checkbox.checked = false;
         checkbox.checkedControlForm.patchValue(['checkedControl', false]);
-        this.selectedConceptsAsJson = new Set();
-        this.filter.selectedConcepts = [];
+        if (this.filter.attributeDefinition.type === ValueType.CONCEPT) {
+          this.selectedConceptsAsJson = new Set();
+        } else {
+          this.doSelectConcept(checkbox.concept);
+        }
       }
     });
   }
@@ -278,7 +280,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     this.resetQuantityDisabled = true;
   }
   resetButtonDisabled() {
-    if (this.filter.selectedConcepts?.length > 0) {
+    if (this.filter.selectedConcepts?.length > 0 || this.criterion.linkedCriteria.length > 0) {
       return false;
     } else {
       return true;
