@@ -23,7 +23,7 @@
       </mat-panel-title>
       <num-button
         type="primary"
-        (click)="deselectAllCheckboxes(); $event.stopPropagation()"
+        (click)="doSelectAllCheckboxes(); $event.stopPropagation()"
         fxLayoutAlign="end"
         [isDisabled]="resetButtonDisabled()"
         >{{ 'BUTTON.RESET' | translate }}</num-button
