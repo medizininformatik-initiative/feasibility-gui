@@ -256,7 +256,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     return isLinked;
   }
 
-  deselectAllCheckboxes() {
+  doSelectAllCheckboxes() {
     this.checkboxes.forEach((checkbox, index) => {
       if (checkbox.checked) {
         checkbox.checked = false;
@@ -280,11 +280,22 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     }
     this.resetQuantityDisabled = true;
   }
+
   resetButtonDisabled() {
-    if (this.filter.selectedConcepts?.length > 0 || this.criterion.linkedCriteria.length > 0) {
-      return false;
-    } else {
-      return true;
+    console.log(this.criterion);
+    if (this.filter.attributeDefinition.type === ValueType.CONCEPT) {
+      if (this.filter.selectedConcepts?.length > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    if (this.filter.attributeDefinition.type === ValueType.REFERENCE) {
+      if (this.criterion.linkedCriteria.length > 0) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 
