@@ -156,6 +156,15 @@ export class CritGroupArranger {
       }
     }
 
+    for (const inex of ['inclusion', 'exclusion']) {
+      groupTemp[inex + 'Criteria'].forEach((disj, i) => {
+        disj.forEach((conj, j) => {
+          conj.position.row = i;
+          conj.position.column = j;
+        });
+      });
+    }
+
     uids.forEach((uid) => {
       if (modus === 'delete' && !this.isCriterionLinked(groupTemp, uid)) {
         groupTemp = this.removeFromGroup(
