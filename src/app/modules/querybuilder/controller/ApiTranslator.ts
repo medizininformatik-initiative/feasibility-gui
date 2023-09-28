@@ -202,20 +202,42 @@ export class ApiTranslator {
       criterion.valueFilter.valueDefinition = undefined;
       criterion.valueFilter.precision = undefined;
       if (criterion.valueFilter.type === OperatorOptions.QUANTITY_COMPARATOR) {
+        criterion.valueFilter.min = undefined;
+        criterion.valueFilter.max = undefined;
         criterion.valueFilter.minValue = undefined;
         criterion.valueFilter.maxValue = undefined;
+        criterion.valueFilter.unit = {
+          code: criterion.valueFilter.unit.code,
+          display: criterion.valueFilter.unit.display,
+        };
       }
       if (criterion.valueFilter.type === OperatorOptions.QUANTITY_RANGE) {
         criterion.valueFilter.comparator = undefined;
         criterion.valueFilter.value = undefined;
+        criterion.valueFilter.min = undefined;
+        criterion.valueFilter.max = undefined;
+        criterion.valueFilter.unit = {
+          code: criterion.valueFilter.unit.code,
+          display: criterion.valueFilter.unit.display,
+        };
       }
     }
     if (criterion.attributeFilters?.length > 0) {
       criterion.attributeFilters.forEach((attribute) => {
+        attribute.min = undefined;
+        attribute.max = undefined;
         attribute.attributeDefinition = undefined;
         attribute.precision = undefined;
+
+        if (attribute.type === OperatorOptions.QUANTITY_COMPARATOR) {
+          attribute.minValue = undefined;
+          attribute.maxValue = undefined;
+          attribute.unit = { code: attribute.unit.code, display: attribute.unit.display };
+        }
         if (attribute.type === OperatorOptions.QUANTITY_RANGE) {
+          attribute.comparator = undefined;
           attribute.value = undefined;
+          attribute.unit = { code: attribute.unit.code, display: attribute.unit.display };
         }
       });
     } else {
