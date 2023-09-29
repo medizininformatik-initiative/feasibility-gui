@@ -200,25 +200,26 @@ The main configuraton is declared in *IAppConfig* and specified in the file
 	src/assets/config/config.dev.json
 ```
 
-| Name | Description | Value |
-|---|---|---|
-| env | Name of config profile | dev |
-| uiBackendApi.baseUrl | URL of Backend | http://localhost:8090/api/v1 |
-| auth.baseUrl | URL of Keycloak | http://localhost:8080 |
-| auth.realm | Realm of Keycloak | codex-develop |
-| auth.clientId | Client ID for Keycloak | feasibility-gui |
-| features.v2.multiplevaluedefinitions | Allow more than one value restriction per concept (unused for structured queries with version 1) | true |
-| features.v2.multiplegroups | Allow more than one group of criteria (unused for structured queries with version 1) | true |
-| features.v2.dependentgroups | Allow linking groups (unused for structured queries with version 1) | true |
-| features.v2.timerestriction | Allow defining time restrictions for a concept (unused for structured queries with version 1) | true |
-| features.extra.displayvaluefiltericon | Show icons instead of UTF8 characters for comparators | false |
-| features.extra.showoptionspage | Show additional page for live changing the config variables | false |
-| features.options.pollingtimeinseconds | Period of time (in seconds) for polling the ui backend  | 10 |
-| features.options.pollingintervallinseconds | Intervall (in seconds) for polling the ui backend  | 1 |
-| features.options.lowerboundarypatientresult | Patient results will be obfuscated if they are lower than this boundary  | 10 |
-| features.stylesheet | Defines the branding of the UI  | codexTheme / abideTheme |
-| features.fhirport |   | 8082 |
-| features.queryVersion | Defines the version of the Structured Query (v1: used in Codex, v2: used in Abide)  | v1 / v2 |
+| Name | Description                                                                                      | Value                        |
+|---|--------------------------------------------------------------------------------------------------|------------------------------|
+| env | Name of config profile                                                                           | dev                          |
+| uiBackendApi.baseUrl | URL of Backend                                                                                   | http://localhost:8090/api/v1 |
+| auth.baseUrl | URL of Keycloak                                                                                  | http://localhost:8080        |
+| auth.realm | Realm of Keycloak                                                                                | codex-develop                |
+| auth.clientId | Client ID for Keycloak                                                                           | feasibility-gui              |
+| features.v2.multiplevaluedefinitions | Allow more than one value restriction per concept (unused for structured queries with version 1) | true                         |
+| features.v2.multiplegroups | Allow more than one group of criteria (unused for structured queries with version 1)             | true                         |
+| features.v2.dependentgroups | Allow linking groups (unused for structured queries with version 1)                              | true                         |
+| features.v2.timerestriction | Allow defining time restrictions for a concept (unused for structured queries with version 1)    | true                         |
+| features.extra.displayvaluefiltericon | Show icons instead of UTF8 characters for comparators                                            | false                        |
+| features.extra.showoptionspage | Show additional page for live changing the config variables                                      | false                        |
+| features.extra.sendsqcontexttobackend  | add context information to each criteria in Structured Query                                     | true                         |
+| features.options.pollingtimeinseconds | Period of time (in seconds) for polling the ui backend                                           | 10                           |
+| features.options.pollingintervallinseconds | Intervall (in seconds) for polling the ui backend                                                | 1                            |
+| features.options.lowerboundarypatientresult | Patient results will be obfuscated if they are lower than this boundary                          | 10                           |
+| features.stylesheet | Defines the branding of the UI                                                                   | codexTheme / abideTheme      |
+| features.fhirport |                                                                                                  | 8082                         |
+| features.queryVersion | Defines the version of the Structured Query (v1: used in Codex, v2: used in Abide)               | v1 / v2                      |
 
 
 For development purposes we supply additional config properties
