@@ -240,9 +240,16 @@ export class ApiTranslator {
           attribute.unit = { code: attribute.unit.code, display: attribute.unit.display };
         }
       });
-    } else {
+
+      criterion.attributeFilters = criterion.attributeFilters.filter(
+        (attrFilter, i) => attrFilter.type !== undefined
+      );
+    }
+
+    if (criterion.attributeFilters?.length === 0) {
       criterion.attributeFilters = undefined;
     }
+
     if (criterion.children) {
       delete criterion.children;
     }
