@@ -25,6 +25,7 @@ describe('OptionsComponent', () => {
       dataset: null,
       queryVersion: 'v2',
       options: {
+        sendsqcontexttobackend: true,
         pollingintervallinseconds: 0,
         pollingtimeinseconds: 0,
         lowerboundarypatientresult: 0,
