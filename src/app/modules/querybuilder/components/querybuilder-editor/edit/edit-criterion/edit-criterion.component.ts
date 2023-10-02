@@ -22,6 +22,7 @@ import { BackendService } from '../../../../service/backend.service';
 import { TimeRestrictionType } from '../../../../model/api/query/timerestriction';
 import { TermEntry2CriterionTranslator } from 'src/app/modules/querybuilder/controller/TermEntry2CriterionTranslator';
 import { TerminologyCode } from '../../../../model/api/terminology/terminology';
+import { QueryProviderService } from '../../../../service/query-provider.service';
 
 @Component({
   selector: 'num-edit-criterion',
@@ -70,6 +71,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
   constructor(
     public featureService: FeatureService,
     private changeDetector: ChangeDetectorRef,
+    public provider: QueryProviderService,
     private backend: BackendService
   ) {
     this.translator = new TermEntry2CriterionTranslator(
@@ -235,6 +237,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
     this.moveBetweenGroups();
     this.moveReferenceCriteria();
+    this.provider.store(this.query);
     this.save.emit({ groupId: this.selectedGroupId });
   }
 
