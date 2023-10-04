@@ -104,6 +104,9 @@ export class TermEntry2CriterionTranslator {
       valueFilter.max = valueDefinition.max;
       valueFilter.precision = valueDefinition.precision;
       valueFilter.comparator = Comparator.NONE;
+      if (!valueDefinition.optional) {
+        valueFilter.comparator = Comparator.EQUAL;
+      }
     }
 
     return valueFilter;

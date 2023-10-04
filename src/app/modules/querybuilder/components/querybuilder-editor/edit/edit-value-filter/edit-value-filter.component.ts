@@ -39,7 +39,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   selectedReferenceAsJson: Set<string> = new Set();
   quantityFilterOption: string;
   // TODO: Try using enum
-  quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN', 'NONE'];
+  quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
   disableAnimation = true;
 
   constructor() {}
@@ -60,6 +60,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       this.optional = this.filter.attributeDefinition.optional;
     } else {
       this.optional = this.filter.valueDefinition.optional;
+
+      if (this.optional) {
+        this.quantityFilterOptions = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN', 'NONE'];
+      }
     }
 
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
