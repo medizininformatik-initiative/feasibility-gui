@@ -269,6 +269,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       }
     }
 
+    if (this.filter?.valueDefinition) {
+      if (this.filter?.valueDefinition?.optional) {
+        return false;
+      }
+    }
+
     if (this.filter?.type === OperatorOptions.CONCEPT) {
       return this.noSelectedConcept();
     }

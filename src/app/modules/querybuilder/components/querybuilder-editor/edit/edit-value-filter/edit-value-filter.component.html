@@ -4,13 +4,13 @@
       <ng-container *ngIf="filterType === 'attribute'">
         <mat-panel-title>
           {{ filter.attributeDefinition.attributeCode.display }}
-          <span *ngIf="filter.attributeDefinition.optional">(optional)</span>:
+          <span *ngIf="filter.attributeDefinition.optional">&nbsp;(optional)</span>:
         </mat-panel-title>
       </ng-container>
       <ng-container *ngIf="filterType !== 'attribute'">
         <mat-panel-title>
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_VALUE' | translate }}
-          <span *ngIf="filter.valueDefinition.optional">(optional)</span> :
+          <span *ngIf="filter.valueDefinition.optional">&nbsp;(optional)</span> :
         </mat-panel-title>
       </ng-container>
     </mat-expansion-panel-header>
@@ -187,8 +187,13 @@
       <div
         *ngIf="filter.type === OperatorOptions.CONCEPT || filter.type === OperatorOptions.REFERENCE"
       >
-        <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
-        <span *ngIf="filterType === 'value' && !filter.display">
+        <span
+          *ngIf="filterType === 'value' && !filter.valueDefinition.optional"
+          class="required-flag"
+        >
+          *
+        </span>
+        <span *ngIf="filterType === 'value' && !filter.valueDefinition.optional && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
           <br /><br
         /></span>
@@ -248,9 +253,10 @@
           >
           </num-edit-value-filter-concept-line>
         </div>
-        <mat-hint *ngIf="filterType === 'value' && noSelectedConcept()">{{
-          'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate
-        }}</mat-hint>
+        <mat-hint
+          *ngIf="filterType === 'value' && !filter.valueDefinition.optional && noSelectedConcept()"
+          >{{ 'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate }}</mat-hint
+        >
         <mat-hint
           *ngIf="
             filterType === 'attribut' && !filter.attributeDefinition.optional && noSelectedConcept()
