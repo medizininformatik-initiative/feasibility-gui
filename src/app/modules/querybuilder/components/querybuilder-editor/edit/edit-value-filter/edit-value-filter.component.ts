@@ -282,7 +282,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   }
 
   resetButtonDisabled() {
-    console.log(this.criterion);
     if (this.filter.attributeDefinition.type === ValueType.CONCEPT) {
       if (this.filter.selectedConcepts?.length > 0) {
         return false;
