@@ -129,7 +129,7 @@
         <mat-form-field
           appearance="outline"
           *ngIf="
-            filter.type === OperatorOptions.QUANTITY_COMPARATOR && filter?.comparator != 'none'
+            filter.type === OperatorOptions.QUANTITY_COMPARATOR && filter?.comparator !== 'none'
           "
           class="value-part"
         >
@@ -152,7 +152,7 @@
         </mat-form-field>
         <mat-form-field
           appearance="outline"
-          *ngIf="filter?.unit && filter?.comparator != 'none'"
+          *ngIf="filter?.unit && filter?.comparator !== 'none'"
           class="unit-part"
         >
           <mat-label>{{ 'QUERYBUILDER.EDIT.UNIT' | translate }}</mat-label>
