@@ -29,6 +29,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   criterion: Criterion;
 
+  optional: boolean;
+
   OperatorOptions: typeof OperatorOptions = OperatorOptions;
 
   selectedUnit: QuantityUnit;
@@ -37,7 +39,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   selectedReferenceAsJson: Set<string> = new Set();
   quantityFilterOption: string;
   // TODO: Try using enum
-  quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
+  quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN', 'NONE'];
   disableAnimation = true;
 
   constructor() {}
@@ -53,6 +55,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       };
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
+
+    if (this.filterType === 'attribute') {
+      this.optional = this.filter.attributeDefinition.optional;
+    } else {
+      this.optional = this.filter.valueDefinition.optional;
+    }
 
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
       this.criterion.linkedCriteria.forEach((linkedCrit) => {
@@ -72,6 +80,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         this.selectedUnit = allowedUnit;
       }
     });
+
     this.filter?.attributeDefinition?.allowedUnits?.forEach((allowedUnit) => {
       if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
         this.selectedUnit = allowedUnit;
@@ -105,6 +114,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       case Comparator.LESS_OR_EQUAL:
       case Comparator.LESS_THAN:
         return 'LESS_THAN';
+      case Comparator.NONE:
+        return 'NONE';
       default:
         return null;
     }
@@ -141,6 +152,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
           break;
         case 'GREATER_THAN':
           this.filter.comparator = Comparator.GREATER_THAN;
+          break;
+        case 'NONE':
+          this.filter.comparator = Comparator.NONE;
           break;
       }
     }
