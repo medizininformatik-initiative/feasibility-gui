@@ -172,7 +172,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
           break;
       }
     }
-    if (this.filter.comparator !== Comparator.NONE) {
+    if (
+      this.filter.comparator !== Comparator.NONE ||
+      this.filter.type === (OperatorOptions.QUANTITY_RANGE || OperatorOptions.QUANTITY_COMPARATOR)
+    ) {
       this.resetQuantityDisabled = false;
     } else {
       this.resetQuantityDisabled = true;
