@@ -42,6 +42,7 @@ export class QuantityUnit {
 }
 
 export enum Comparator {
+  NONE = 'none',
   EQUAL = 'eq',
   NOT_EQUAL = 'ne',
   LESS_OR_EQUAL = 'le',

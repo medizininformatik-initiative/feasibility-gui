@@ -1,7 +1,7 @@
 import { DataSelectionOnly, Query, QueryOnlyV1, QueryOnlyV2 } from '../model/api/query/query';
 import { Criterion, CriterionOnlyV1, CriterionOnlyV2 } from '../model/api/query/criterion';
 import { ObjectHelper } from './ObjectHelper';
-import { OperatorOptions } from '../model/api/query/valueFilter';
+import { Comparator, OperatorOptions } from '../model/api/query/valueFilter';
 import { TimeRestrictionType } from '../model/api/query/timerestriction';
 import { FeatureService } from 'src/app/service/feature.service';
 import { Injectable } from '@angular/core';
@@ -142,6 +142,10 @@ export class ApiTranslator {
           if (criterion.valueFilters.length > 0) {
             criterionV2.valueFilter = criterion.valueFilters[0];
             criterionV2.valueFilter.valueDefinition = undefined;
+
+            if (criterion.valueFilters[0].comparator === Comparator.NONE) {
+              criterionV2.valueFilter = undefined;
+            }
           }
           if (criterion.attributeFilters?.length > 0) {
             criterion.attributeFilters.forEach((attribute) => {

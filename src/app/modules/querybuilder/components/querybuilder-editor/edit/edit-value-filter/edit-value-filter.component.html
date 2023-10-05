@@ -1,21 +1,16 @@
 <div *ngIf="filter" [@.disabled]="disableAnimation">
-  <mat-expansion-panel
-    *ngIf="
-      filterType === 'attribute' && filter.attributeDefinition.optional;
-      else valueFilterContent
-    "
-    togglePosition="before"
-    [expanded]="false"
-  >
+  <mat-expansion-panel togglePosition="before" [expanded]="!optional">
     <mat-expansion-panel-header>
-      <ng-container *ngIf="filter.attributeDefinition.type === 'reference'">
+      <ng-container *ngIf="filterType === 'attribute'">
         <mat-panel-title>
-          {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_REFERENCE' | translate }} (optional) :
+          {{ filter.attributeDefinition.attributeCode.display }}
+          <span *ngIf="filter.attributeDefinition.optional">&nbsp;(optional)</span>:
         </mat-panel-title>
       </ng-container>
-      <ng-container *ngIf="filter.attributeDefinition.type !== 'reference'">
+      <ng-container *ngIf="filterType !== 'attribute'">
         <mat-panel-title>
-          {{ filter.attributeDefinition.attributeCode.display }} (optional) :
+          {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_VALUE' | translate }}
+          <span *ngIf="filter.valueDefinition.optional">&nbsp;(optional)</span> :
         </mat-panel-title>
       </ng-container>
     </mat-expansion-panel-header>
@@ -33,6 +28,7 @@
       <!-- QUANTITY -->
       <div
         *ngIf="
+          filter.type === OperatorOptions.QUANTITY_NOT_SET ||
           filter.type === OperatorOptions.QUANTITY_RANGE ||
           filter.type === OperatorOptions.QUANTITY_COMPARATOR
         "
@@ -132,7 +128,9 @@
         </mat-form-field>
         <mat-form-field
           appearance="outline"
-          *ngIf="filter.type === OperatorOptions.QUANTITY_COMPARATOR"
+          *ngIf="
+            filter.type === OperatorOptions.QUANTITY_COMPARATOR && filter?.comparator !== 'none'
+          "
           class="value-part"
         >
           <mat-label>{{ 'QUERYBUILDER.EDIT.VALUE' | translate }}</mat-label>
@@ -152,7 +150,11 @@
             'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
           }}</mat-hint>
         </mat-form-field>
-        <mat-form-field appearance="outline" *ngIf="filter?.unit" class="unit-part">
+        <mat-form-field
+          appearance="outline"
+          *ngIf="filter?.unit && filter?.comparator !== 'none'"
+          class="unit-part"
+        >
           <mat-label>{{ 'QUERYBUILDER.EDIT.UNIT' | translate }}</mat-label>
           <mat-select
             *ngIf="filterType === 'value'"
@@ -185,8 +187,13 @@
       <div
         *ngIf="filter.type === OperatorOptions.CONCEPT || filter.type === OperatorOptions.REFERENCE"
       >
-        <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
-        <span *ngIf="filterType === 'value' && !filter.display">
+        <span
+          *ngIf="filterType === 'value' && !filter.valueDefinition.optional"
+          class="required-flag"
+        >
+          *
+        </span>
+        <span *ngIf="filterType === 'value' && !filter.valueDefinition.optional && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
           <br /><br
         /></span>
@@ -246,9 +253,10 @@
           >
           </num-edit-value-filter-concept-line>
         </div>
-        <mat-hint *ngIf="filterType === 'value' && noSelectedConcept()">{{
-          'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate
-        }}</mat-hint>
+        <mat-hint
+          *ngIf="filterType === 'value' && !filter.valueDefinition.optional && noSelectedConcept()"
+          >{{ 'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate }}</mat-hint
+        >
         <mat-hint
           *ngIf="
             filterType === 'attribut' && !filter.attributeDefinition.optional && noSelectedConcept()

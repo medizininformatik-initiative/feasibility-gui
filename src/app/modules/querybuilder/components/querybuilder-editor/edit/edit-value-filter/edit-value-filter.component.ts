@@ -29,6 +29,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   criterion: Criterion;
 
+  optional: boolean;
+
   OperatorOptions: typeof OperatorOptions = OperatorOptions;
 
   selectedUnit: QuantityUnit;
@@ -54,6 +56,16 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
 
+    if (this.filterType === 'attribute') {
+      this.optional = this.filter.attributeDefinition.optional;
+    } else {
+      this.optional = this.filter.valueDefinition.optional;
+
+      if (this.optional) {
+        this.quantityFilterOptions = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN', 'NONE'];
+      }
+    }
+
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
       this.criterion.linkedCriteria.forEach((linkedCrit) => {
         // bring the object into the right order for stringify
@@ -72,6 +84,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         this.selectedUnit = allowedUnit;
       }
     });
+
     this.filter?.attributeDefinition?.allowedUnits?.forEach((allowedUnit) => {
       if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
         this.selectedUnit = allowedUnit;
@@ -105,6 +118,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       case Comparator.LESS_OR_EQUAL:
       case Comparator.LESS_THAN:
         return 'LESS_THAN';
+      case Comparator.NONE:
+        return 'NONE';
       default:
         return null;
     }
@@ -141,6 +156,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
           break;
         case 'GREATER_THAN':
           this.filter.comparator = Comparator.GREATER_THAN;
+          break;
+        case 'NONE':
+          this.filter.comparator = Comparator.NONE;
           break;
       }
     }
@@ -251,6 +269,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   public isActionDisabled(): boolean {
     if (this.filter?.attributeDefinition) {
       if (this.filter?.attributeDefinition?.optional) {
+        return false;
+      }
+    }
+
+    if (this.filter?.valueDefinition) {
+      if (this.filter?.valueDefinition?.optional) {
         return false;
       }
     }

@@ -10,7 +10,7 @@ export abstract class ValueDefinition {
   max?: number;
   min?: number;
   allowedUnits?: QuantityUnit[] = [];
-
+  optional?: boolean;
   selectableConcepts?: TerminologyCode[];
 }
 
