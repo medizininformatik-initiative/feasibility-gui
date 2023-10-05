@@ -6,12 +6,27 @@
           {{ filter.attributeDefinition.attributeCode.display }}
           <span *ngIf="filter.attributeDefinition.optional">&nbsp;(optional)</span>:
         </mat-panel-title>
+        <num-button
+          type="primary"
+          (click)="doSelectAllCheckboxes(); $event.stopPropagation()"
+          fxLayoutAlign="end"
+          [isDisabled]="resetButtonDisabled()"
+          >{{ 'BUTTON.RESET' | translate }}
+        </num-button>
       </ng-container>
       <ng-container *ngIf="filterType !== 'attribute'">
         <mat-panel-title>
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_VALUE' | translate }}
           <span *ngIf="filter.valueDefinition.optional">&nbsp;(optional)</span> :
         </mat-panel-title>
+        <num-button
+          [type]="'primary'"
+          fxLayoutAlign="end"
+          (click)="resetQuantity(); $event.stopPropagation()"
+          [isDisabled]="resetQuantityDisabled"
+        >
+          {{ 'BUTTON.RESET' | translate }}
+        </num-button>
       </ng-container>
     </mat-expansion-panel-header>
     <ng-container *ngTemplateOutlet="valueFilterContent"></ng-container>
@@ -92,6 +107,7 @@
           <input
             matInput
             type="number"
+            (change)="resetQuantityDisabled = false"
             [(ngModel)]="filter.minValue"
             (blur)="roundMinValue()"
             numMatInputNumber
@@ -119,6 +135,7 @@
           <input
             matInput
             type="number"
+            (change)="resetQuantityDisabled = false"
             [(ngModel)]="filter.maxValue"
             (blur)="roundMaxValue()"
             numMatInputNumber
@@ -143,6 +160,7 @@
           <input
             matInput
             type="number"
+            (change)="resetQuantityDisabled = false"
             [(ngModel)]="filter.value"
             (blur)="roundValue()"
             numMatInputNumber
@@ -242,6 +260,7 @@
 
         <div *ngIf="filterType === 'value'" class="concept-list">
           <num-edit-value-filter-concept-line
+            #checkboxes
             *ngFor="let concept of filter.valueDefinition?.selectableConcepts"
             [checked]="isSelected(concept)"
             [concept]="concept"

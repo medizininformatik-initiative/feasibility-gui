@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import {
   Comparator,
   OperatorOptions,
@@ -10,6 +10,7 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Query } from '../../../../model/api/query/query';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { ValueType } from '../../../../model/api/terminology/valuedefinition';
+import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -20,6 +21,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   filter: ValueFilter;
 
+  @ViewChildren(EditValueFilterConceptLineComponent)
+  private checkboxes: QueryList<EditValueFilterConceptLineComponent>;
+
   @Input()
   filterType: string;
 
@@ -28,6 +32,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
   @Input()
   criterion: Criterion;
+
+  resetQuantityDisabled = true;
 
   optional: boolean;
 
@@ -98,6 +104,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
     setTimeout(() => (this.disableAnimation = false));
+    this.getQuantityFilterOption();
+    if (this.filter.comparator !== Comparator.NONE || this.filter.comparator === null) {
+      this.resetQuantityDisabled = false;
+    }
   }
 
   getQuantityFilterOption(): string {
@@ -161,6 +171,11 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
           this.filter.comparator = Comparator.NONE;
           break;
       }
+    }
+    if (this.filter.comparator !== Comparator.NONE) {
+      this.resetQuantityDisabled = false;
+    } else {
+      this.resetQuantityDisabled = true;
     }
   }
 
@@ -266,9 +281,52 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         });
       });
     }
-
     return isLinked;
   }
+
+  doSelectAllCheckboxes() {
+    this.checkboxes.forEach((checkbox, index) => {
+      if (checkbox.checked) {
+        checkbox.checked = false;
+        checkbox.checkedControlForm.patchValue(['checkedControl', false]);
+        if (this.filter.attributeDefinition.type === ValueType.CONCEPT) {
+          this.selectedConceptsAsJson = new Set();
+          this.filter.selectedConcepts = [];
+        } else {
+          this.doSelectConcept(checkbox.concept);
+        }
+      }
+    });
+  }
+
+  resetQuantity() {
+    if (this.filter.comparator !== Comparator.NONE) {
+      this.resetQuantityDisabled = false;
+      this.filter.maxValue = 0;
+      this.filter.minValue = 0;
+
+      this.filter.comparator = Comparator.NONE;
+    }
+    this.resetQuantityDisabled = true;
+  }
+
+  resetButtonDisabled() {
+    if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
+      if (this.filter.selectedConcepts?.length > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+      if (this.criterion.linkedCriteria.length > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
   public isActionDisabled(): boolean {
     if (
       this.filter?.type === OperatorOptions.QUANTITY_COMPARATOR &&
