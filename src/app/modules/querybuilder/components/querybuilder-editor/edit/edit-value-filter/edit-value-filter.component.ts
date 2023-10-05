@@ -239,6 +239,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       system: concept.system,
       uid: concept.uid,
     };
+    if (this.filter.valueDefinition?.type === ValueType.CONCEPT) {
+      return this.selectedConceptsAsJson.has(JSON.stringify(temp));
+    }
     if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
       return this.selectedConceptsAsJson.has(JSON.stringify(temp));
     }
