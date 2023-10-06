@@ -23,7 +23,7 @@
           [type]="'primary'"
           fxLayoutAlign="end"
           (click)="resetQuantity(); $event.stopPropagation()"
-          [isDisabled]="resetQuantityDisabled"
+          [isDisabled]="resetQuantityButtonDisabled()"
         >
           {{ 'BUTTON.RESET' | translate }}
         </num-button>
@@ -259,6 +259,7 @@
         </ng-container>
 
         <div *ngIf="filterType === 'value'" class="concept-list">
+          Hey
           <num-edit-value-filter-concept-line
             #checkboxes
             *ngFor="let concept of filter.valueDefinition?.selectableConcepts"
@@ -270,6 +271,7 @@
         </div>
         <div *ngIf="filterType === 'attribute'" class="concept-list">
           <num-edit-value-filter-concept-line
+            #checkboxes
             *ngFor="let concept of filter.attributeDefinition?.selectableConcepts"
             [checked]="isSelected(concept)"
             [concept]="concept"

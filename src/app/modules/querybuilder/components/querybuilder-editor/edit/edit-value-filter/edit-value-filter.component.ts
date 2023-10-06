@@ -105,9 +105,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
     setTimeout(() => (this.disableAnimation = false));
     this.getQuantityFilterOption();
-    if (this.filter.comparator !== Comparator.NONE || this.filter.comparator === null) {
-      this.resetQuantityDisabled = false;
-    }
   }
 
   getQuantityFilterOption(): string {
@@ -174,7 +171,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     }
     if (
       this.filter.comparator !== Comparator.NONE ||
-      this.filter.type === (OperatorOptions.QUANTITY_RANGE || OperatorOptions.QUANTITY_COMPARATOR)
+      (this.filter.type ===
+        (OperatorOptions.QUANTITY_RANGE || OperatorOptions.QUANTITY_COMPARATOR) &&
+        this.filter.valueDefinition.type === ValueType.QUANTITY)
     ) {
       this.resetQuantityDisabled = false;
     } else {
@@ -292,7 +291,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       if (checkbox.checked) {
         checkbox.checked = false;
         checkbox.checkedControlForm.patchValue(['checkedControl', false]);
-        if (this.filter.attributeDefinition.type === ValueType.CONCEPT) {
+        if (
+          (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
+          ValueType.CONCEPT
+        ) {
           this.selectedConceptsAsJson = new Set();
           this.filter.selectedConcepts = [];
         } else {
@@ -303,19 +305,44 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   }
 
   resetQuantity() {
-    if (this.filter.comparator !== Comparator.NONE) {
-      this.resetQuantityDisabled = false;
+    if (
+      this.filter.comparator !== Comparator.NONE &&
+      this.filter.valueDefinition.type === ValueType.QUANTITY
+    ) {
       this.filter.maxValue = 0;
       this.filter.minValue = 0;
-
       this.filter.comparator = Comparator.NONE;
     }
-    this.resetQuantityDisabled = true;
+    if (
+      this.selectedConceptsAsJson.size > 0 &&
+      this.filter.valueDefinition.type === ValueType.CONCEPT
+    ) {
+      this.doSelectAllCheckboxes();
+    }
+  }
+
+  resetQuantityButtonDisabled() {
+    if (
+      this.selectedConceptsAsJson.size > 0 &&
+      this.filter.valueDefinition.type === ValueType.CONCEPT
+    ) {
+      return false;
+    }
+    if (
+      this.filter.comparator !== Comparator.NONE &&
+      this.filter.valueDefinition.type === ValueType.QUANTITY
+    ) {
+      return false;
+    }
+    return true;
   }
 
   resetButtonDisabled() {
-    if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
-      if (this.filter.selectedConcepts?.length > 0) {
+    if (
+      (this.filter.attributeDefinition?.type || this.filter.valueDefinition.type) ===
+      ValueType.CONCEPT
+    ) {
+      if (this.selectedConceptsAsJson.size > 0) {
         return false;
       } else {
         return true;
