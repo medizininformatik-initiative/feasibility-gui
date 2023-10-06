@@ -11,6 +11,8 @@ import { Query } from '../../../../model/api/query/query';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { ValueType } from '../../../../model/api/terminology/valuedefinition';
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
+import { MatOption } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -23,6 +25,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
   @ViewChildren(EditValueFilterConceptLineComponent)
   private checkboxes: QueryList<EditValueFilterConceptLineComponent>;
+
+  @ViewChildren(MatSelectModule)
+  private matOption: QueryList<MatSelectModule>;
 
   @Input()
   filterType: string;
@@ -306,12 +311,15 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
   resetQuantity() {
     if (
-      this.filter.comparator !== Comparator.NONE &&
+      (this.filter.comparator !== Comparator.NONE ||
+        this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
       this.filter.valueDefinition.type === ValueType.QUANTITY
     ) {
       this.filter.maxValue = 0;
       this.filter.minValue = 0;
       this.filter.comparator = Comparator.NONE;
+      this.filter.type = OperatorOptions.QUANTITY_COMPARATOR;
+      this.quantityFilterOption = 'NONE';
     }
     if (
       this.selectedConceptsAsJson.size > 0 &&
@@ -322,6 +330,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   }
 
   resetQuantityButtonDisabled() {
+    console.log(this.quantityFilterOption);
     if (
       this.selectedConceptsAsJson.size > 0 &&
       this.filter.valueDefinition.type === ValueType.CONCEPT
@@ -329,7 +338,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       return false;
     }
     if (
-      this.filter.comparator !== Comparator.NONE &&
+      (this.filter.comparator !== Comparator.NONE ||
+        this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
       this.filter.valueDefinition.type === ValueType.QUANTITY
     ) {
       return false;
