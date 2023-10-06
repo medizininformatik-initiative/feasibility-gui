@@ -270,6 +270,23 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     return isLinked;
   }
   public isActionDisabled(): boolean {
+    if (
+      this.filter?.type === OperatorOptions.QUANTITY_COMPARATOR &&
+      this.filter?.comparator !== Comparator.NONE
+    ) {
+      return this.valueTooSmall(this.filter.value) || this.valueTooLarge(this.filter.value);
+    }
+
+    if (this.filter?.type === OperatorOptions.QUANTITY_RANGE) {
+      return (
+        this.minimumSmallerMaximum() ||
+        this.valueTooSmall(this.filter.minValue) ||
+        this.valueTooLarge(this.filter.minValue) ||
+        this.valueTooSmall(this.filter.maxValue) ||
+        this.valueTooLarge(this.filter.maxValue)
+      );
+    }
+
     if (this.filter?.attributeDefinition) {
       if (this.filter?.attributeDefinition?.optional) {
         return false;
@@ -284,20 +301,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
     if (this.filter?.type === OperatorOptions.CONCEPT) {
       return this.noSelectedConcept();
-    }
-
-    if (this.filter?.type === OperatorOptions.QUANTITY_COMPARATOR) {
-      return this.valueTooSmall(this.filter.value) || this.valueTooLarge(this.filter.value);
-    }
-
-    if (this.filter?.type === OperatorOptions.QUANTITY_RANGE) {
-      return (
-        this.minimumSmallerMaximum() ||
-        this.valueTooSmall(this.filter.minValue) ||
-        this.valueTooLarge(this.filter.minValue) ||
-        this.valueTooSmall(this.filter.maxValue) ||
-        this.valueTooLarge(this.filter.maxValue)
-      );
     }
 
     return false;

@@ -33,8 +33,13 @@
           filter.type === OperatorOptions.QUANTITY_COMPARATOR
         "
       >
-        <span *ngIf="filterType === 'value'" class="required-flag"> * </span>
-        <span *ngIf="filterType === 'value' && !filter.display">
+        <span
+          *ngIf="filterType === 'value' && !filter.valueDefinition.optional"
+          class="required-flag"
+        >
+          *
+        </span>
+        <span *ngIf="filterType === 'value' && !filter.valueDefinition.optional && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
           <br /><br
         /></span>
