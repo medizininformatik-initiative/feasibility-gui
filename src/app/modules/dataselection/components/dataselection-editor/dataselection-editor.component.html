@@ -1,0 +1,40 @@
+<div class="header-line">
+  <div fxLayoutAlign="space-between center">
+    <div fxLayout="column" class="query-buttons-box">
+      <div fxLayout="row" fxLayoutAlign="end right">
+        <num-upload-dataselection (parentComponent)="loadQuery($event)"></num-upload-dataselection>
+        <num-button
+          [type]="'primary'"
+          class="button-reset"
+          [isDisabled]="actionDisabledReset"
+          (click)="!actionDisabledReset && doReset()"
+        >
+          {{ 'BUTTON.RESET' | translate }}
+        </num-button>
+        <num-button
+          [type]="'primary'"
+          [isDisabled]="actionDisabledSend"
+          (click)="!actionDisabledSend && doShowStoredQuery()"
+          class="button-send"
+        >
+          {{ 'BUTTON.DOWNLOAD' | translate }}
+        </num-button>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <num-search-input
+      [critType]="'inclusion'"
+      [query]="query"
+      [searchType]="'dataselection'"
+    ></num-search-input>
+  </div>
+  <div class="dialog-frame">
+    <num-display-query
+      [searchType]="'dataselection'"
+      [query]="query"
+      (storeQuery)="storeQuery($event)"
+    >
+    </num-display-query>
+  </div>
+</div>

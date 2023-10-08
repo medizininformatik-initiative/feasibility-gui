@@ -42,6 +42,7 @@ export class QuantityUnit {
 }
 
 export enum Comparator {
+  NONE = 'none',
   EQUAL = 'eq',
   NOT_EQUAL = 'ne',
   LESS_OR_EQUAL = 'le',
@@ -54,4 +55,5 @@ export enum OperatorOptions {
   QUANTITY_COMPARATOR = 'quantity-comparator', // e.g. "< 27.10.2020"
   QUANTITY_RANGE = 'quantity-range', // e.g. ">= 27 and <= 30"
   CONCEPT = 'concept', // e.g. "weiblich, männlich"
+  REFERENCE = 'reference',
 }

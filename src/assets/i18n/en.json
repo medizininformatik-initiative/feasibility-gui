@@ -48,6 +48,9 @@
       "PARAGRAPH5_2": "Submit Application",
       "PARAGRAPH5_3": "."
     },
+    "INFO":{
+      "TEXT": " We are currently working on the feasibility portal. This can lead to slow responses and deviating results for some queries."
+    },
     "NEWQUERY": {
       "HEADLINE": "New Query",
       "TEXT": "Perform a request based on your inclusion and exclusion criteria"
@@ -59,6 +62,16 @@
     "FEASPORTAL": {
       "HEADLINE": "Submit Application",
       "TEXT": "Make a request for data use in the proposal portal"
+    }
+  },
+  "DATASELECTION": {
+    "DATASELECTION": "Dataselection",
+    "SEARCH": {
+      "LABEL": "Insert code or serach text",
+      "CRITERIA": "Search Criteria"
+    },
+    "DISPLAY": {
+      "LABEL": "Selected Criteria"
     }
   },
   "LANGUAGE": {
@@ -76,8 +89,9 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Home",
-    "QUERYBUILDER_EDITOR": "New query",
-    "QUERYBUILDER_OVERVIEW": "My queries",
+    "QUERYBUILDER_EDITOR": "Feasibility Query",
+    "QUERYBUILDER_OVERVIEW": "My Queries",
+    "DATASELECTION_EDITOR": "Dataselection",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
   },
@@ -88,6 +102,7 @@
     "TIMERESTRICTION": "Time restricted criteria",
     "DISPLAYVALUEFILTERICON": "Use icons for comparator symbols",
     "POLLINGTIME": "Polling Time",
+    "CONTEXT_IN_SQ": "Include Context in SQ",
     "POLLINGINTERVALL": "Polling Intervall",
     "FHIRPORT": "FHIR Port"
   },
@@ -122,6 +137,7 @@
         "TO": "before {{ to }}",
         "NONE": "no time restriction"
       },
+      "REFERENCED_CRITERIA": "referenced criteria:",
       "GROUPS": {
         "LINKEDGROUPS": "groups are linked",
         "SHOW_CONNECTION": "show connection",
@@ -150,6 +166,8 @@
       "HEADER_FILTER_CONCEPT_OPTIONAL": "Choose one or more valid values:",
       "HEADER_FILTER_CONCEPT_MANDATORY": "Choose one or more valid values:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Choose one or more valid values ({{ label }}):",
+      "HEADER_FILTER_REFERENCE": "observed diagnosis",
+      "HEADER_FILTER_VALUE": "Value restriction",
       "CHOOSE_GROUP":"Choose a group",
       "MANDATORY_HINT": "Mandatory field",
       "UNIT": "Unit",
@@ -158,6 +176,7 @@
       "VALUE": "Value",
       "OPERATOR": "Operator",
       "AND": "and",
+      "NONE": "none",
       "EQUAL": "equals",
       "LESS_THAN": "less than",
       "GREATER_THAN": "more than",
@@ -203,7 +222,7 @@
     },
     "HINT": {
       "NO_VALUE_SELECTED": "Choose at least one value",
-      "MINIMUM_GREATER_MAXIMUM": "Minimal value must be greater than maximal value",
+      "MINIMUM_GREATER_MAXIMUM": "Minimal value must be less than maximal value",
       "MINIMUM_EXCEEDED": "Value must be at least {{ min }}",
       "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}",
       "SEARCH_TEXT_NO_INPUT": "Enter a search criteria or open the category tree view",
@@ -220,12 +239,14 @@
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",
-    "DATAPROTECTION": "Data Protection"
+    "DATAPROTECTION": "Data Protection",
+    "CONTACT": "Contact"
   },
   "BUTTON": {
     "SAVE": "Save",
     "CANCEL": "Cancel",
     "CLOSE": "Close",
+    "DOWNLOAD": "Download",
     "ADD": "Add",
     "ADD_TOOLTIP": "restrict criteria",
     "ADDALL": "Add all",
@@ -235,6 +256,7 @@
     "SAVEQUERY": "Save query",
     "VALIDATE": "Validate",
     "IMPORT": "Load query",
-    "IMPORT_FROM_FILE": "choose file"
+    "IMPORT_FROM_FILE": "choose file",
+    "IMPORT_DATASELECTION": "Load Dataselection"
   }
 }

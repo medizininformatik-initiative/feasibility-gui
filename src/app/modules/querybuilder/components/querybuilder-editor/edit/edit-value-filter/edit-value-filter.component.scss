@@ -17,6 +17,10 @@ mat-form-field {
   padding: 1em;
 }
 
+.optional-info {
+  white-space: pre;
+}
+
 .operator-part {
   width: 11em;
   padding: 0.5em 2.5em 0.5em 0;
@@ -67,5 +71,5 @@ mat-expansion-panel {
   transform: none !important;
 }
 ::ng-deep num-edit-value-filter-concept-line label {
-  font-weight: 400!important;
+  font-weight: 400 !important;
 }

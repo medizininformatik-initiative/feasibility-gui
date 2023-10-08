@@ -48,6 +48,9 @@
       "PARAGRAPH5_2": "Antrag stellen",
       "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen."
     },
+    "INFO":{
+      "TEXT": " Wir arbeiten gerade am Machbarkeitsportal, sodass es bei manchen Anfragen zu Verzögerungen und abweichenden Ergebnissen kommen kann."
+    },
     "NEWQUERY": {
       "HEADLINE": "Neue Abfrage",
       "TEXT": "Führen Sie eine Suche anhand Ihrer Ein- und Ausschlusskriterien durch"
@@ -59,6 +62,16 @@
     "FEASPORTAL": {
       "HEADLINE": "Antrag stellen",
       "TEXT": "Stellen Sie einen Antrag zur Datennutzung im Antragsportal"
+    }
+  },
+  "DATASELECTION": {
+    "DATASELECTION": "Datenselektion",
+    "SEARCH": {
+      "LABEL": "Code oder Suchbegriff eingeben",
+      "CRITERIA": "Suchkriterien"
+    },
+    "DISPLAY": {
+      "LABEL": "Ausgewählte Merkmale"
     }
   },
   "LANGUAGE": {
@@ -76,8 +89,9 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Startseite",
-    "QUERYBUILDER_EDITOR": "Neue Abfrage",
+    "QUERYBUILDER_EDITOR": "Machbarkeitsabfrage",
     "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
+    "DATASELECTION_EDITOR": "Datenselektion",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
   },
@@ -89,6 +103,7 @@
     "DISPLAYVALUEFILTERICON": "nutze Icons für Vergleichsoperatoren",
     "POLLINGTIME": "Polling Time",
     "POLLINGINTERVALL": "Polling Intervall",
+    "CONTEXT_IN_SQ": "Kontext in die SQ einbinden",
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
@@ -110,6 +125,7 @@
       "LABEL_OR": "ODER"
     },
     "DISPLAY": {
+      "REFERENCED_CRITERIA": "Referenzierte Kriterien",
       "LABEL": "Ausgewählte Merkmale",
       "ONE_OF": "",
       "MORE": "weitere",
@@ -150,7 +166,9 @@
       "HEADER_FILTER_CONCEPT_OPTIONAL": "Wählen Sie einen oder mehrere zulässige Werte:",
       "HEADER_FILTER_CONCEPT_MANDATORY": "Geben Sie einen oder mehrere zulässige Werte an:",
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
-      "CHOOSE_GROUP":"Gruppe auswählen",
+      "HEADER_FILTER_REFERENCE": "Festgestellte Diagnose",
+      "HEADER_FILTER_VALUE": "Wertebereich",
+      "CHOOSE_GROUP": "Gruppe auswählen",
       "MANDATORY_HINT": "Pflichtfeld",
       "UNIT": "Einheit",
       "MIN": "Min",
@@ -158,6 +176,7 @@
       "VALUE": "Wert",
       "OPERATOR": "Operator",
       "AND": "und",
+      "NONE": "kein Filter",
       "EQUAL": "gleich",
       "LESS_THAN": "kleiner",
       "GREATER_THAN": "größer",
@@ -220,12 +239,14 @@
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",
-    "DATAPROTECTION": "Datenschutz"
+    "DATAPROTECTION": "Datenschutz",
+    "CONTACT": "Kontakt"
   },
   "BUTTON": {
     "SAVE": "Speichern",
     "CANCEL": "Abbrechen",
     "CLOSE": "Schließen",
+    "DOWNLOAD": "Herunterladen",
     "ADD": "Auswählen",
     "ADD_TOOLTIP": "Merkmal einschränken",
     "ADDALL": "Alle hinzufügen",
@@ -235,6 +256,7 @@
     "SAVEQUERY": "Abfrage speichern",
     "VALIDATE": "Validieren",
     "IMPORT": "Query laden",
-    "IMPORT_FROM_FILE": "Datei auswählen"
+    "IMPORT_FROM_FILE": "Datei auswählen",
+    "IMPORT_DATASELECTION": "Datenselektion laden"
   }
 }

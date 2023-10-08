@@ -97,6 +97,15 @@ export class FeatureService {
       return this.appConfig.getConfig().stylesheet;
     }
   }
+
+  public getSendSQContextToBackend(): boolean {
+    if (this.showOptionsPage) {
+      return this.featureProviderService.getFeatures().options.sendsqcontexttobackend;
+    } else {
+      return this.appConfig.getConfig().options.sendsqcontexttobackend;
+    }
+  }
+
   public getDataset(): string {
     return this.appConfig.getConfig().dataset;
   }
@@ -115,6 +124,11 @@ export class FeatureService {
   public isDevelopMode(): boolean {
     //return isDevMode();
     return !environment.production;
+  }
+
+  public showInfoPage(): boolean {
+    //return isDevMode();
+    return this.appConfig.getConfig().features.extra.displayInfoMessage;
   }
 
   public mockTerminology(): boolean {

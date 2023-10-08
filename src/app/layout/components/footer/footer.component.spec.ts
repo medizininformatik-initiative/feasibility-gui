@@ -66,6 +66,7 @@ describe('FooterComponent', () => {
     appConfig.config.legal = {
       copyrightOwner: 'Test',
       version: '1.0.0',
+      copyrightYear: '2023',
     };
     fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;

@@ -6,7 +6,7 @@
     "baseUrl": "/api"
   },
   "uiBackendApi": {
-    "baseUrl": "http://localhost:8090/api/v2"
+    "baseUrl": "http://localhost:8090/api/v3"
   },
   "auth": {
     "baseUrl": "http://localhost:8080",
@@ -15,7 +15,7 @@
     "roles": ["FeasibilityUser"]
   },
   "legal": {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "copyrightYear": "2023",
     "copyrightOwner": "MII Team"
   },
@@ -29,10 +29,12 @@
     "extra": {
       "displayvaluefiltericon": false,
       "showoptionspage": true,
-      "optionpageroles": ["FeasibilityUser"]
+      "optionpageroles": ["FeasibilityUser"],
+      "displayInfoMessage": true
     }
   },
   "options": {
+    "sendsqcontexttobackend": true,
     "pollingtimeinseconds": 10,
     "pollingintervallinseconds": 10,
     "lowerboundarypatientresult": 10,

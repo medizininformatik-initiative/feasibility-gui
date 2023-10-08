@@ -14,13 +14,16 @@ export class DisplayCritGroupComponent implements OnInit {
   critGroup: Criterion[][];
 
   @Input()
+  searchType: string;
+
+  @Input()
+  critType: CritType;
+
+  @Input()
   query: Query;
 
   @Input()
   groupId: number;
-
-  @Input()
-  critType: CritType;
 
   @Output()
   dropped = new EventEmitter();
@@ -78,5 +81,12 @@ export class DisplayCritGroupComponent implements OnInit {
       from: $event.previousContainer.data,
       to: $event.container.data,
     });
+  }
+  isLastSwitch(i: number): boolean {
+    let bool = true;
+    for (let x = i + 1; x < this.critGroup.length; x++) {
+      bool = bool && this.critGroup[x][0]?.isLinked;
+    }
+    return !bool;
   }
 }

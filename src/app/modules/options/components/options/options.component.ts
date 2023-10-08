@@ -27,8 +27,10 @@ export class SafePipe implements PipeTransform {
 })
 export class OptionsComponent implements OnInit {
   public features: IAppConfig;
-  stylesheet: string;
+  doQueryCopy = true;
+  includeContext: boolean;
   query: Query;
+  stylesheet: string;
   translatedQueryv1: QueryOnlyV1;
   translatedQueryv2: QueryOnlyV2;
   pollingTime: number;
@@ -43,7 +45,8 @@ export class OptionsComponent implements OnInit {
     public featureService: FeatureService,
     public featureProviderService: FeatureProviderService,
     public queryProviderService: QueryProviderService,
-    private http: HttpClient
+    private http: HttpClient,
+    private apiTranslator: ApiTranslator
   ) {}
 
   ngOnInit(): void {
@@ -54,12 +57,12 @@ export class OptionsComponent implements OnInit {
     this.pollingIntervall = this.features.options.pollingintervallinseconds;
     this.fhirport = this.features.fhirport;
     this.queryVersion = this.features.queryVersion;
-
+    this.includeContext = this.features.options.sendsqcontexttobackend;
     if (this.queryVersion === 'v1') {
-      this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query);
+      this.translatedQueryv1 = this.apiTranslator.translateToV1(this.query);
     }
     if (this.queryVersion === 'v2') {
-      this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query);
+      this.translatedQueryv2 = this.apiTranslator.translateToV2(this.query);
     }
 
     this.postQuery('translate').subscribe(
@@ -132,17 +135,30 @@ export class OptionsComponent implements OnInit {
     this.featureProviderService.storeFeatures(this.features);
   }
 
+  setSqContextBackend() {
+    this.features.options.sendsqcontexttobackend = this.includeContext;
+    this.featureProviderService.storeFeatures(this.features);
+  }
+
+  updateContextInSQ() {
+    this.setSqContextBackend();
+    this.translateQueryVersion();
+  }
+
   setQueryVersion(version: MatRadioChange): void {
     this.features.queryVersion = version.value;
     this.featureProviderService.storeFeatures(this.features);
-    if (this.queryVersion === 'v1') {
-      this.translatedQueryv1 = new ApiTranslator().translateToV1(this.query);
-    }
-    if (this.queryVersion === 'v2') {
-      this.translatedQueryv2 = new ApiTranslator().translateToV2(this.query);
-    }
+    this.translateQueryVersion();
   }
 
+  translateQueryVersion() {
+    if (this.queryVersion === 'v1') {
+      this.translatedQueryv1 = this.apiTranslator.translateToV1(this.query);
+    }
+    if (this.queryVersion === 'v2') {
+      this.translatedQueryv2 = this.apiTranslator.translateToV2(this.query);
+    }
+  }
   postQuery(modus: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({

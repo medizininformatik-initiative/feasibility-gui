@@ -7,33 +7,40 @@
     <div
       *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index"
       class="inner"
+      [ngClass]="{ 'inner-padding': searchType === 'dataselection' }"
       cdkDropList
       [cdkDropListData]="{ groupId: groupId, critType: critType, row: i, column: j }"
       (cdkDropListDropped)="doDrop($event)"
     >
       <num-display-criterion
+        *ngIf="!criterion.isLinked"
         [criterion]="criterion"
         [query]="query"
         [position]="{ groupId: groupId, critType: critType, row: i, column: j }"
+        [searchType]="searchType"
         [showCancelButton]="true"
         (storeQuery)="doStoreQuery($event)"
         (delete)="doDelete({ row: i, column: j })"
         cdkDrag
       >
       </num-display-criterion>
-      <num-bool-logic-switch
-        [position]="'inner'"
-        [label]="getInnerLabelKey()"
-        (switched)="splitInnerArray(i, j)"
-        *ngIf="!lastInner"
-      ></num-bool-logic-switch>
+      <ng-container *ngIf="searchType === 'querybuilder'">
+        <num-bool-logic-switch
+          [position]="'inner'"
+          [label]="getInnerLabelKey()"
+          (switched)="splitInnerArray(i, j)"
+          *ngIf="!lastInner && !criterion.isLinked"
+        ></num-bool-logic-switch>
+      </ng-container>
     </div>
-    <num-bool-logic-switch
-      [position]="'outer'"
-      [label]="getOuterLabelKey()"
-      (switched)="joinInnerArrays(i)"
-      *ngIf="!lastOuter"
-    ></num-bool-logic-switch>
+    <ng-container *ngIf="searchType === 'querybuilder'">
+      <num-bool-logic-switch
+        [position]="'outer'"
+        [label]="getOuterLabelKey()"
+        (switched)="joinInnerArrays(i)"
+        *ngIf="!lastOuter && !criterionInnerArray[0].isLinked && isLastSwitch(i)"
+      ></num-bool-logic-switch>
+    </ng-container>
   </div>
   <div
     fxFlex="grow"

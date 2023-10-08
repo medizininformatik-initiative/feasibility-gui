@@ -10,7 +10,6 @@ import { GroupFactory } from '../../controller/GroupFactory';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
 import { MatRadioChange } from '@angular/material/radio';
-import { QueryResultRateLimit } from '../../model/api/result/QueryResultRateLimit';
 
 @Component({
   selector: 'num-querybuilder',

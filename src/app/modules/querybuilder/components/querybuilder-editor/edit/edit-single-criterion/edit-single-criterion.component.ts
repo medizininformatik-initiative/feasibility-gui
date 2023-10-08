@@ -9,6 +9,7 @@ export class EditSingleCriterionComponentData {
   criterion: Criterion;
   query: Query;
   position: CritGroupPosition;
+  searchType: string;
 }
 
 @Component({
@@ -17,6 +18,7 @@ export class EditSingleCriterionComponentData {
   styleUrls: ['./edit-single-criterion.component.scss'],
 })
 export class EditSingleCriterionComponent implements OnInit {
+  searchType: string;
   queryModified: Query;
   querySnapshot: Query;
   criterion: Criterion;
@@ -30,11 +32,17 @@ export class EditSingleCriterionComponent implements OnInit {
     this.queryModified = data.query;
     this.position = data.position;
     this.querySnapshot = ObjectHelper.clone(data.query);
+    this.searchType = data.searchType;
   }
 
   ngOnInit(): void {}
 
-  doSave(): void {
+  doSave(event: { groupId: number }): void {
+    const index = this.queryModified.groups.findIndex((group) => group.id === event.groupId);
+
+    if (index < 0) {
+      return;
+    }
     this.dialogRef.close(this.queryModified);
   }
 

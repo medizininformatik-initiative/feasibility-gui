@@ -13,11 +13,11 @@ export class SearchTextTermEntryComponent implements OnInit {
   @Output()
   choose = new EventEmitter<TerminologyEntry>();
 
-  fireChoose(): void {
-    this.choose.emit(this.node);
-  }
-
   constructor() {}
 
   ngOnInit(): void {}
+
+  fireChoose(): void {
+    this.choose.emit(this.node);
+  }
 }

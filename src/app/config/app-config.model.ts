@@ -30,9 +30,11 @@ export interface IAppConfig {
       displayvaluefiltericon: boolean
       showoptionspage: boolean
       optionpageroles: string[]
+      displayInfoMessage: boolean
     }
   }
   options: {
+    sendsqcontexttobackend: boolean
     pollingtimeinseconds: number
     pollingintervallinseconds: number
     lowerboundarypatientresult: number
