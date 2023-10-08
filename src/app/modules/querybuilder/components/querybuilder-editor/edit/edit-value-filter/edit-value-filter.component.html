@@ -4,7 +4,7 @@
       <ng-container *ngIf="filterType === 'attribute'">
         <mat-panel-title>
           {{ filter.attributeDefinition.attributeCode.display }}
-          <span *ngIf="filter.attributeDefinition.optional">&nbsp;(optional)</span>:
+          <span *ngIf="optional">&nbsp;(optional)</span>:
         </mat-panel-title>
         <num-button
           type="primary"
@@ -17,7 +17,7 @@
       <ng-container *ngIf="filterType !== 'attribute'">
         <mat-panel-title>
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_VALUE' | translate }}
-          <span *ngIf="filter.optional">&nbsp;(optional)</span> :
+          <span *ngIf="optional">&nbsp;(optional)</span> :
         </mat-panel-title>
         <num-button
           [type]="'primary'"
@@ -35,7 +35,7 @@
   <ng-template #valueFilterContent>
     <div
       [ngClass]="
-        filterType === 'attribute' && filter.attributeDefinition.optional
+        filterType === 'attribute' && optional
           ? 'value-filter-content'
           : 'value-filter-content-with-border'
       "
@@ -48,13 +48,8 @@
           filter.type === OperatorOptions.QUANTITY_COMPARATOR
         "
       >
-        <span
-          *ngIf="filterType === 'value' && !filter.valueDefinition.optional"
-          class="required-flag"
-        >
-          *
-        </span>
-        <span *ngIf="filterType === 'value' && !filter.valueDefinition.optional && !filter.display">
+        <span *ngIf="filterType === 'value' && !optional" class="required-flag"> * </span>
+        <span *ngIf="filterType === 'value' && !optional && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
           <br /><br
         /></span>
@@ -62,17 +57,12 @@
           {{ filter.display }}: <br /><br
         /></span>
 
-        <span
-          *ngIf="filterType === 'attribute' && !filter.attributeDefinition.optional"
-          class="required-flag"
-        >
-          *
-        </span>
+        <span *ngIf="filterType === 'attribute' && !optional" class="required-flag"> * </span>
         <ng-container
           *ngIf="
             filterType === 'attribute' &&
             filter.attributeDefinition.attributeCode.display &&
-            !filter.attributeDefinition.optional
+            !optional
           "
         >
           <span>{{ filter.attributeDefinition.attributeCode.display }}:</span>
@@ -210,25 +200,20 @@
       <div
         *ngIf="filter.type === OperatorOptions.CONCEPT || filter.type === OperatorOptions.REFERENCE"
       >
-        <span *ngIf="filterType === 'value' && !filter.optional" class="required-flag"> * </span>
-        <span *ngIf="filterType === 'value' && !filter.optional && !filter.display">
+        <span *ngIf="filterType === 'value' && !optional" class="required-flag"> * </span>
+        <span *ngIf="filterType === 'value' && !optional && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
           <br /><br
         /></span>
         <span *ngIf="filterType === 'value' && filter.display">
           {{ filter.display }}: <br /><br
         /></span>
-        <span
-          *ngIf="filterType === 'attribute' && !filter.attributeDefinition.optional"
-          class="required-flag"
-        >
-          *
-        </span>
+        <span *ngIf="filterType === 'attribute' && !optional" class="required-flag"> * </span>
         <span
           *ngIf="
             filterType === 'attribute' &&
             !filter.attributeDefinition.attributeCode.display &&
-            filter.attributeDefinition.optional
+            optional
           "
         >
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_OPTIONAL' | translate }}
@@ -246,7 +231,7 @@
           *ngIf="
             filterType === 'attribute' &&
             filter.attributeDefinition.attributeCode.display &&
-            !filter.attributeDefinition.optional
+            !optional
           "
         >
           <span>{{ filter.attributeDefinition.attributeCode.display }}:</span>
@@ -273,10 +258,10 @@
           >
           </num-edit-value-filter-concept-line>
         </div>
-        <mat-hint *ngIf="filterType === 'value' && !filter.optional && noSelectedConcept()">{{
+        <mat-hint *ngIf="filterType === 'value' && !optional && noSelectedConcept()">{{
           'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate
         }}</mat-hint>
-        <mat-hint *ngIf="filterType === 'attribut' && !filter.optional && noSelectedConcept()">{{
+        <mat-hint *ngIf="filterType === 'attribut' && !optional && noSelectedConcept()">{{
           'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate
         }}</mat-hint>
       </div>
