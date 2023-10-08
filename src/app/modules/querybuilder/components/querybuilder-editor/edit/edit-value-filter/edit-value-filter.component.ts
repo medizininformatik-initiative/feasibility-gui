@@ -402,7 +402,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       return this.noSelectedConcept();
     }
 
-    return false;
+    return true;
   }
 
   noSelectedConcept(): boolean {
