@@ -1,5 +1,17 @@
 # Changelog
 
+## v2.0.0 (2023-10-08)
+
+### Feature
+* Update to Ontology Version 2.0.0
+* Add Context and dynamic ui profile loading
+* Add Referenced Criteria
+* Add reset filter option
+* Make values optional according to ui_profile information
+* Dataselection
+* Upload Feasibility Query
+* Make UI user configurable via config
+
 ## v1.0.0 (2023-03-29)
 
 ### Feature
