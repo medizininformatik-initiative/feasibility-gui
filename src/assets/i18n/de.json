@@ -89,7 +89,7 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Startseite",
-    "QUERYBUILDER_EDITOR": "Neue Abfrage",
+    "QUERYBUILDER_EDITOR": "Machbarkeitsabfrage",
     "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
     "DATASELECTION_EDITOR": "Datenselektion",
     "OPTIONS": "Einstellungen",
@@ -125,6 +125,7 @@
       "LABEL_OR": "ODER"
     },
     "DISPLAY": {
+      "REFERENCED_CRITERIA": "Referenzierte Kriterien",
       "LABEL": "Ausgewählte Merkmale",
       "ONE_OF": "",
       "MORE": "weitere",
@@ -137,7 +138,6 @@
         "TO": "vor {{ to }}",
         "NONE": "keine zeitliche Einschränkung"
       },
-      "REFERENCED_CRITERIA": "referenzierte Kriterien:",
       "GROUPS": {
         "LINKEDGROUPS": "Gruppen sind verbunden",
         "SHOW_CONNECTION": "Beziehung anzeigen",
@@ -168,7 +168,7 @@
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
       "HEADER_FILTER_REFERENCE": "Festgestellte Diagnose",
       "HEADER_FILTER_VALUE": "Wertebereich",
-      "CHOOSE_GROUP":"Gruppe auswählen",
+      "CHOOSE_GROUP": "Gruppe auswählen",
       "MANDATORY_HINT": "Pflichtfeld",
       "UNIT": "Einheit",
       "MIN": "Min",

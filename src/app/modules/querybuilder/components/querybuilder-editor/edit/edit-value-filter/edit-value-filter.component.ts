@@ -40,7 +40,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
   resetQuantityDisabled = true;
 
-  optional: boolean;
+  optional = false;
 
   OperatorOptions: typeof OperatorOptions = OperatorOptions;
 
@@ -50,7 +50,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   selectedReferenceAsJson: Set<string> = new Set();
   quantityFilterOption: string;
   // TODO: Try using enum
-  quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
+  quantityFilterOptions: Array<string> = ['NONE', 'EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
   disableAnimation = true;
 
   constructor() {}
@@ -67,14 +67,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
 
-    if (this.filterType === 'attribute') {
-      this.optional = this.filter.attributeDefinition.optional;
-    } else {
-      this.optional = this.filter.valueDefinition.optional;
+    if (this.filter?.attributeDefinition?.optional) {
+      this.optional = this.optional = true;
+    }
 
-      if (this.optional) {
-        this.quantityFilterOptions = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN', 'NONE'];
-      }
+    if (this.filter?.valueDefinition?.optional) {
+      this.optional = this.optional = true;
     }
 
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
@@ -261,15 +259,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       system: concept.system,
       uid: concept.uid,
     };
-    if (this.filter.valueDefinition?.type === ValueType.CONCEPT) {
-      return this.selectedConceptsAsJson.has(JSON.stringify(temp));
-    }
-    if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
-      return this.selectedConceptsAsJson.has(JSON.stringify(temp));
-    }
-    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+
+    if (this.filter.type === OperatorOptions.REFERENCE) {
       return this.selectedReferenceAsJson.has(JSON.stringify(temp));
     }
+
+    return this.selectedConceptsAsJson.has(JSON.stringify(temp));
   }
 
   isCriterionLinked(hash: string): boolean {
@@ -317,6 +312,13 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     ) {
       this.filter.maxValue = 0;
       this.filter.minValue = 0;
+      this.filter.value = 0;
+      if (this.filter?.valueDefinition?.allowedUnits.length > 0) {
+        this.filter.unit = this.filter.valueDefinition.allowedUnits[0];
+      }
+      if (this.filter?.attributeDefinition?.allowedUnits.length > 0) {
+        this.filter.unit = this.filter.attributeDefinition.allowedUnits[0];
+      }
       this.filter.comparator = Comparator.NONE;
       this.filter.type = OperatorOptions.QUANTITY_COMPARATOR;
       this.quantityFilterOption = 'NONE';
@@ -330,17 +332,16 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   }
 
   resetQuantityButtonDisabled() {
-    console.log(this.quantityFilterOption);
     if (
       this.selectedConceptsAsJson.size > 0 &&
-      this.filter.valueDefinition.type === ValueType.CONCEPT
+      this.filter.valueDefinition?.type === ValueType.CONCEPT
     ) {
       return false;
     }
     if (
       (this.filter.comparator !== Comparator.NONE ||
         this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
-      this.filter.valueDefinition.type === ValueType.QUANTITY
+      this.filter.valueDefinition?.type === ValueType.QUANTITY
     ) {
       return false;
     }
@@ -349,7 +350,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
   resetButtonDisabled() {
     if (
-      (this.filter.attributeDefinition?.type || this.filter.valueDefinition.type) ===
+      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
       ValueType.CONCEPT
     ) {
       if (this.selectedConceptsAsJson.size > 0) {

@@ -64,6 +64,16 @@
       "TEXT": "Make a request for data use in the proposal portal"
     }
   },
+  "DATASELECTION": {
+    "DATASELECTION": "Dataselection",
+    "SEARCH": {
+      "LABEL": "Insert code or serach text",
+      "CRITERIA": "Search Criteria"
+    },
+    "DISPLAY": {
+      "LABEL": "Selected Criteria"
+    }
+  },
   "LANGUAGE": {
     "GERMAN": "German",
     "ENGLISH": "English",
@@ -77,20 +87,10 @@
       "LABEL": "Toggle sidenav"
     }
   },
-  "DATASELECTION": {
-    "DATASELECTION": "Dataselection",
-    "SEARCH":{
-      "LABEL": "enter code or display",
-      "CRITERIA": "Search criteria"
-    },
-    "DISPLAY": {
-      "LABEL": "Selected criteria"
-    }
-  },
   "NAVIGATION": {
     "DASHBOARD": "Home",
-    "QUERYBUILDER_EDITOR": "New query",
-    "QUERYBUILDER_OVERVIEW": "My queries",
+    "QUERYBUILDER_EDITOR": "Feasibility Query",
+    "QUERYBUILDER_OVERVIEW": "My Queries",
     "DATASELECTION_EDITOR": "Dataselection",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
@@ -222,7 +222,7 @@
     },
     "HINT": {
       "NO_VALUE_SELECTED": "Choose at least one value",
-      "MINIMUM_GREATER_MAXIMUM": "Minimal value must be greater than maximal value",
+      "MINIMUM_GREATER_MAXIMUM": "Minimal value must be less than maximal value",
       "MINIMUM_EXCEEDED": "Value must be at least {{ min }}",
       "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}",
       "SEARCH_TEXT_NO_INPUT": "Enter a search criteria or open the category tree view",
@@ -246,17 +246,17 @@
     "SAVE": "Save",
     "CANCEL": "Cancel",
     "CLOSE": "Close",
+    "DOWNLOAD": "Download",
     "ADD": "Add",
     "ADD_TOOLTIP": "restrict criteria",
     "ADDALL": "Add all",
-    "DOWNLOAD": "Download",
-    "IMPORT_DATASELECTION": "Import dataselection",
     "SEND": "Send",
     "RESET": "Reset",
     "RESULTDETAILS": "Details",
     "SAVEQUERY": "Save query",
     "VALIDATE": "Validate",
     "IMPORT": "Load query",
-    "IMPORT_FROM_FILE": "choose file"
+    "IMPORT_FROM_FILE": "choose file",
+    "IMPORT_DATASELECTION": "Load Dataselection"
   }
 }

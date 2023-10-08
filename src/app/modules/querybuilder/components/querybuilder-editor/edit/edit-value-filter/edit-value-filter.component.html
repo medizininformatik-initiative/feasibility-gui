@@ -17,7 +17,7 @@
       <ng-container *ngIf="filterType !== 'attribute'">
         <mat-panel-title>
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_VALUE' | translate }}
-          <span *ngIf="filter.valueDefinition.optional">&nbsp;(optional)</span> :
+          <span *ngIf="filter.optional">&nbsp;(optional)</span> :
         </mat-panel-title>
         <num-button
           [type]="'primary'"
@@ -210,13 +210,8 @@
       <div
         *ngIf="filter.type === OperatorOptions.CONCEPT || filter.type === OperatorOptions.REFERENCE"
       >
-        <span
-          *ngIf="filterType === 'value' && !filter.valueDefinition.optional"
-          class="required-flag"
-        >
-          *
-        </span>
-        <span *ngIf="filterType === 'value' && !filter.valueDefinition.optional && !filter.display">
+        <span *ngIf="filterType === 'value' && !filter.optional" class="required-flag"> * </span>
+        <span *ngIf="filterType === 'value' && !filter.optional && !filter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
           <br /><br
         /></span>
@@ -259,7 +254,6 @@
         </ng-container>
 
         <div *ngIf="filterType === 'value'" class="concept-list">
-          Hey
           <num-edit-value-filter-concept-line
             #checkboxes
             *ngFor="let concept of filter.valueDefinition?.selectableConcepts"
@@ -279,16 +273,12 @@
           >
           </num-edit-value-filter-concept-line>
         </div>
-        <mat-hint
-          *ngIf="filterType === 'value' && !filter.valueDefinition.optional && noSelectedConcept()"
-          >{{ 'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate }}</mat-hint
-        >
-        <mat-hint
-          *ngIf="
-            filterType === 'attribut' && !filter.attributeDefinition.optional && noSelectedConcept()
-          "
-          >{{ 'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate }}</mat-hint
-        >
+        <mat-hint *ngIf="filterType === 'value' && !filter.optional && noSelectedConcept()">{{
+          'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate
+        }}</mat-hint>
+        <mat-hint *ngIf="filterType === 'attribut' && !filter.optional && noSelectedConcept()">{{
+          'QUERYBUILDER.HINT.NO_VALUE_SELECTED' | translate
+        }}</mat-hint>
       </div>
     </div>
   </ng-template>
