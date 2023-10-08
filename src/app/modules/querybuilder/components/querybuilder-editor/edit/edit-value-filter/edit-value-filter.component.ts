@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import {
   Comparator,
   OperatorOptions,
@@ -10,6 +10,9 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Query } from '../../../../model/api/query/query';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { ValueType } from '../../../../model/api/terminology/valuedefinition';
+import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
+import { MatOption } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -20,6 +23,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   filter: ValueFilter;
 
+  @ViewChildren(EditValueFilterConceptLineComponent)
+  private checkboxes: QueryList<EditValueFilterConceptLineComponent>;
+
+  @ViewChildren(MatSelectModule)
+  private matOption: QueryList<MatSelectModule>;
+
   @Input()
   filterType: string;
 
@@ -29,7 +38,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   criterion: Criterion;
 
-  optional: boolean;
+  resetQuantityDisabled = true;
+
+  optional = false;
 
   OperatorOptions: typeof OperatorOptions = OperatorOptions;
 
@@ -39,7 +50,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   selectedReferenceAsJson: Set<string> = new Set();
   quantityFilterOption: string;
   // TODO: Try using enum
-  quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
+  quantityFilterOptions: Array<string> = ['NONE', 'EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
   disableAnimation = true;
 
   constructor() {}
@@ -56,14 +67,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
 
-    if (this.filterType === 'attribute') {
-      this.optional = this.filter.attributeDefinition.optional;
-    } else {
-      this.optional = this.filter.valueDefinition.optional;
+    if (this.filter?.attributeDefinition?.optional) {
+      this.optional = this.optional = true;
+    }
 
-      if (this.optional) {
-        this.quantityFilterOptions = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN', 'NONE'];
-      }
+    if (this.filter?.valueDefinition?.optional) {
+      this.optional = this.optional = true;
     }
 
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
@@ -98,6 +107,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
     setTimeout(() => (this.disableAnimation = false));
+    this.getQuantityFilterOption();
   }
 
   getQuantityFilterOption(): string {
@@ -161,6 +171,16 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
           this.filter.comparator = Comparator.NONE;
           break;
       }
+    }
+    if (
+      this.filter.comparator !== Comparator.NONE ||
+      (this.filter.type ===
+        (OperatorOptions.QUANTITY_RANGE || OperatorOptions.QUANTITY_COMPARATOR) &&
+        this.filter.valueDefinition.type === ValueType.QUANTITY)
+    ) {
+      this.resetQuantityDisabled = false;
+    } else {
+      this.resetQuantityDisabled = true;
     }
   }
 
@@ -239,15 +259,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       system: concept.system,
       uid: concept.uid,
     };
-    if (this.filter.valueDefinition?.type === ValueType.CONCEPT) {
-      return this.selectedConceptsAsJson.has(JSON.stringify(temp));
-    }
-    if (this.filter.attributeDefinition?.type === ValueType.CONCEPT) {
-      return this.selectedConceptsAsJson.has(JSON.stringify(temp));
-    }
-    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+
+    if (this.filter.type === OperatorOptions.REFERENCE) {
       return this.selectedReferenceAsJson.has(JSON.stringify(temp));
     }
+
+    return this.selectedConceptsAsJson.has(JSON.stringify(temp));
   }
 
   isCriterionLinked(hash: string): boolean {
@@ -266,9 +283,91 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         });
       });
     }
-
     return isLinked;
   }
+
+  doSelectAllCheckboxes() {
+    this.checkboxes.forEach((checkbox, index) => {
+      if (checkbox.checked) {
+        checkbox.checked = false;
+        checkbox.checkedControlForm.patchValue(['checkedControl', false]);
+        if (
+          (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
+          ValueType.CONCEPT
+        ) {
+          this.selectedConceptsAsJson = new Set();
+          this.filter.selectedConcepts = [];
+        } else {
+          this.doSelectConcept(checkbox.concept);
+        }
+      }
+    });
+  }
+
+  resetQuantity() {
+    if (
+      (this.filter.comparator !== Comparator.NONE ||
+        this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
+      this.filter.valueDefinition.type === ValueType.QUANTITY
+    ) {
+      this.filter.maxValue = 0;
+      this.filter.minValue = 0;
+      this.filter.value = 0;
+      if (this.filter?.valueDefinition?.allowedUnits.length > 0) {
+        this.filter.unit = this.filter.valueDefinition.allowedUnits[0];
+      }
+      if (this.filter?.attributeDefinition?.allowedUnits.length > 0) {
+        this.filter.unit = this.filter.attributeDefinition.allowedUnits[0];
+      }
+      this.filter.comparator = Comparator.NONE;
+      this.filter.type = OperatorOptions.QUANTITY_COMPARATOR;
+      this.quantityFilterOption = 'NONE';
+    }
+    if (
+      this.selectedConceptsAsJson.size > 0 &&
+      this.filter.valueDefinition.type === ValueType.CONCEPT
+    ) {
+      this.doSelectAllCheckboxes();
+    }
+  }
+
+  resetQuantityButtonDisabled() {
+    if (
+      this.selectedConceptsAsJson.size > 0 &&
+      this.filter.valueDefinition?.type === ValueType.CONCEPT
+    ) {
+      return false;
+    }
+    if (
+      (this.filter.comparator !== Comparator.NONE ||
+        this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
+      this.filter.valueDefinition?.type === ValueType.QUANTITY
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  resetButtonDisabled() {
+    if (
+      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
+      ValueType.CONCEPT
+    ) {
+      if (this.selectedConceptsAsJson.size > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+      if (this.criterion.linkedCriteria.length > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
   public isActionDisabled(): boolean {
     if (
       this.filter?.type === OperatorOptions.QUANTITY_COMPARATOR &&
@@ -303,7 +402,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       return this.noSelectedConcept();
     }
 
-    return false;
+    return true;
   }
 
   noSelectedConcept(): boolean {
