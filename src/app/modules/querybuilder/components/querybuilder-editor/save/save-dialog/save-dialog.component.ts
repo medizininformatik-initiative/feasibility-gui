@@ -52,9 +52,7 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
   }
   doSave(): void {
     if (this.downloadQuery) {
-      const queryString = JSON.stringify(this.apiTranslator.translateToV2(this.query))
-      const fileData = new Blob([queryString], { type: 'text/plain;charset=utf-8' })
-      this.fileSaverService.save(fileData, this.filename + '.json')
+      this.doDownloadQuery()
     } else {
       this.subscriptionResult?.unsubscribe()
       this.subscriptionResult = this.backend
@@ -64,10 +62,13 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
         })
     }
     this.dialogRef.close()
-    // this.router.navigate(['/querybuilder/overview'])
   }
 
-  doSaveForDataselection() {}
+  doDownloadQuery() {
+    const queryString = JSON.stringify(this.apiTranslator.translateToV2(this.query))
+    const fileData = new Blob([queryString], { type: 'text/plain;charset=utf-8' })
+    this.fileSaverService.save(fileData, this.filename + '.json')
+  }
 
   doDiscard(): void {
     this.dialogRef.close()
