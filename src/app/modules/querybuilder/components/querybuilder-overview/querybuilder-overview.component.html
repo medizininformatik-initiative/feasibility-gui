@@ -31,7 +31,7 @@
       [id]="singleQuery.id"
       [singleLabel]="singleQuery.label"
       [singleDate]="singleQuery.createdAt"
-      (click)="loadQuery(singleQuery.id)"
+      (reloadSavedQueries)="loadSavedQueries()"
     >
     </num-single-query>
   </div>
