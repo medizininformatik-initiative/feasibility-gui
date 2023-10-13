@@ -1,13 +1,18 @@
-<div class="query-box">
-  <div fxLayout="row" fxLayoutAlign="start start">
+<div class="query-box" fxLayout="row">
+  <div fxLayout="row" fxLayoutAlign="center" class="text-part" (click)="loadQuery()">
     <img
       *ngIf="isInvalid"
       src="assets/img/alert.png"
       alt="Validation Alert"
       class="invalid-Criterion"
     />
-    <div class="query-box-title">{{ singleLabel }}</div>
-    <div class="query-box-date">{{ singleDate | date : 'dd.MM.yyyy' }}</div>
+    <div fxFlexAlign="center" class="query-box-title">{{ singleLabel }}</div>
+    <div fxFlexAlign="center" class="query-box-comment">{{ singleComment }}</div>
+    <div fxFlexAlign="center" class="query-box-date">{{ singleDate | date : 'dd.MM.yyyy' }}</div>
   </div>
-  <div class="query-box-comment">{{ singleComment }}</div>
+  <div class="cancel-part" fxLayoutAlign="end">
+    <button (click)="deleteQuery()" type="button" mat-icon-button>
+      <fa-icon class="button" size="lg" icon="times"></fa-icon>
+    </button>
+  </div>
 </div>
