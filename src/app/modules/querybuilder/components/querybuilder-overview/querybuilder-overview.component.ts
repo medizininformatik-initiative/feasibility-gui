@@ -65,9 +65,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     this.savedTemplatesSubscription?.unsubscribe();
     this.singleQuerySubscription?.unsubscribe();
     this.singleTemplateSubscription?.unsubscribe();
-    this.savedQueriesSubscription = this.backend.loadSavedQueries().subscribe((queries) => {
-      this.savedQueries = queries;
-    });
+    this.loadSavedQueries();
     this.savedTemplatesSubscription = this.backend.loadSavedTemplates().subscribe((templates) => {
       this.savedTemplates = templates;
     });
@@ -90,6 +88,14 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     }
     this.changeDetector.detectChanges();
   }
+
+  loadSavedQueries(): void {
+    this.changeDetector.detectChanges();
+    this.savedQueriesSubscription = this.backend.loadSavedQueries().subscribe((queries) => {
+      this.savedQueries = queries;
+    });
+  }
+
   doImportFromFile(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];
     const reader = new FileReader();
