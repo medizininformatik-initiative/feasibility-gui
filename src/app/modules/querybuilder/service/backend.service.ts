@@ -25,7 +25,8 @@ export class BackendService {
     private queryProviderService: QueryProviderService,
     private http: HttpClient,
     private authStorage: OAuthStorage,
-    private apiTranslator: ApiTranslator
+    private apiTranslator: ApiTranslator,
+    private latestQueryResult: QueryProviderService
   ) {}
 
   public static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
@@ -34,6 +35,7 @@ export class BackendService {
   private static PATH_TERMINOLOGY = 'terminology/';
   private static PATH_SEARCH = 'terminology/entries';
   private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
+  private static PATH_SAVED = 'saved';
 
   private static PATH_RUN_QUERY = 'query';
   private static PATH_STORED_QUERY = 'query/template';
@@ -260,9 +262,14 @@ export class BackendService {
           const savedQuery = {
             label: title,
             comment,
+            totalNumberOfPatients: this.latestQueryResult.getQueryResult().totalNumberOfPatients,
           };
           return this.http.post<any>(
-            this.createUrl(BackendService.PATH_RUN_QUERY) + '/' + saveWithQuery + '/saved',
+            this.createUrl(BackendService.PATH_RUN_QUERY) +
+              '/' +
+              this.latestQueryResult.getQueryResult().queryId +
+              '/' +
+              BackendService.PATH_SAVED,
             savedQuery,
             {
               headers,
@@ -298,7 +305,18 @@ export class BackendService {
 
   public loadQuery(id: number): Observable<any> {
     const headers = this.headers;
-    return this.http.get<any>(this.createUrl(BackendService.PATH_RUN_QUERY + '/' + id.toString()), {
+    const url = this.createUrl(BackendService.PATH_RUN_QUERY + '/' + id.toString());
+    return this.http.get<any>(url, {
+      headers,
+    });
+  }
+
+  deleteQuery(id: number): Observable<any> {
+    const headers = this.headers;
+    const url = this.createUrl(
+      BackendService.PATH_RUN_QUERY + '/' + id + '/' + BackendService.PATH_SAVED
+    );
+    return this.http.delete<any>(url, {
       headers,
     });
   }
