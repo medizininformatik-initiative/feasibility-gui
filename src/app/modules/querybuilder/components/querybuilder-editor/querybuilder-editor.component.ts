@@ -100,6 +100,10 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.queryProviderService.store(query);
   }
 
+  storeQueryResult(queryResult): void {
+    this.queryProviderService.storeQueryResult(queryResult);
+  }
+
   startRequestingResult(): void {
     const summaryResultUrl = this.resultUrl + '/summary-result';
     this.loadedResult = false;
@@ -113,6 +117,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.subscriptionPolling = this.resultObservable$.subscribe(
       (result) => {
         this.result = result;
+        this.storeQueryResult(this.result);
         if (result.queryId !== undefined) {
           this.hasQuerySend = result.queryId;
         } else {
@@ -120,7 +125,6 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         }
       },
       (error) => {
-        console.log(error);
         this.showSpinningIcon = false;
         this.hasQuerySend = false;
         if (error.status === 404) {
