@@ -57,9 +57,7 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
       this.subscriptionResult?.unsubscribe()
       this.subscriptionResult = this.backend
         .saveQuery(this.query, this.title, this.comment, this.saveWithQuery)
-        .subscribe((response) => {
-          console.log(response)
-        })
+        .subscribe((response) => {})
     }
     this.dialogRef.close()
   }

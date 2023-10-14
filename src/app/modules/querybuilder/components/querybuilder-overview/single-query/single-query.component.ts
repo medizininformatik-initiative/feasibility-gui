@@ -51,20 +51,12 @@ export class SingleQueryComponent implements OnInit {
 
   query: Query;
   constructor(
-    private changeDetection: ChangeDetectorRef,
-
     public queryProviderService: QueryProviderService,
     private router: Router,
     private backend: BackendService,
-    private feature: FeatureService,
     public featureProviderService: FeatureProviderService,
     private apiTranslator: ApiTranslator
   ) {}
-
-  private savedQueriesSubscription: Subscription;
-  private savedTemplatesSubscription: Subscription;
-  private singleQuerySubscription: Subscription;
-  private singleTemplateSubscription: Subscription;
 
   ngOnInit(): void {
     if (this.isValid === false) {
@@ -73,7 +65,7 @@ export class SingleQueryComponent implements OnInit {
   }
 
   loadQuery(): void {
-    this.singleQuerySubscription = this.backend.loadQuery(this.id).subscribe((query) => {
+    this.backend.loadQuery(this.id).subscribe((query) => {
       this.query = this.apiTranslator.translateSQtoUIQuery(
         QueryProviderService.createDefaultQuery(),
         query
