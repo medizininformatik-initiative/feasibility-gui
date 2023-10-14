@@ -311,7 +311,7 @@ export class BackendService {
     });
   }
 
-  deleteQuery(id: number): Observable<any> {
+  public deleteSavedQuery(id: number): Observable<any> {
     const headers = this.headers;
     const url = this.createUrl(
       BackendService.PATH_RUN_QUERY + '/' + id + '/' + BackendService.PATH_SAVED

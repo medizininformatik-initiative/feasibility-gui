@@ -86,9 +86,8 @@ export class SingleQueryComponent implements OnInit {
   }
 
   deleteQuery(): void {
-    const response = this.backend.deleteQuery(this.id).subscribe();
-    this.reloadSavedQueries.emit();
-    this.changeDetection.detectChanges();
-    console.log(response);
+    this.backend.deleteSavedQuery(this.id).subscribe(() => {
+      this.reloadSavedQueries.emit();
+    });
   }
 }
