@@ -90,7 +90,6 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
   }
 
   loadSavedQueries(): void {
-    this.changeDetector.detectChanges();
     this.savedQueriesSubscription = this.backend.loadSavedQueries().subscribe((queries) => {
       this.savedQueries = queries;
     });
