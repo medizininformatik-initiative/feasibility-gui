@@ -38,6 +38,7 @@ export class BackendService {
   private static PATH_SAVED = 'saved';
 
   private static PATH_RUN_QUERY = 'query';
+  private static PATH_SAVED_QUERY_SLOTS = 'saved-query-slots';
   private static PATH_STORED_QUERY = 'query/template';
   private static PATH_QUERY_RESULT_LIMIT = 'query/detailed-obfuscated-result-rate-limit';
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345';
@@ -317,6 +318,16 @@ export class BackendService {
       BackendService.PATH_RUN_QUERY + '/' + id + '/' + BackendService.PATH_SAVED
     );
     return this.http.delete<any>(url, {
+      headers,
+    });
+  }
+
+  getSavedQuerySlotCount(): Observable<any> {
+    const headers = this.headers;
+    const url = this.createUrl(
+      BackendService.PATH_RUN_QUERY + '/' + BackendService.PATH_SAVED_QUERY_SLOTS
+    );
+    return this.http.get(url, {
       headers,
     });
   }
