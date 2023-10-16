@@ -93,4 +93,10 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
       (!this.downloadQuery && this.title !== '')
     )
   }
+
+  isQuerySlotAvailable(): any {
+    this.backend.getSavedQuerySlotCount().subscribe((querySlotCount) => {
+      return querySlotCount.total > querySlotCount.used ? true : false
+    })
+  }
 }
