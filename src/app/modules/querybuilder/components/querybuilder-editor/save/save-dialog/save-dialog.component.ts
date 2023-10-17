@@ -20,7 +20,9 @@ export class SaveDialogComponentData {
 })
 export class SaveDialogComponent implements OnInit, OnDestroy {
   private subscriptionResult: Subscription
+  private querySlotCountSubscription: Subscription
   hasQuerySend: boolean | string
+  querySlotAvailable: boolean = false
 
   constructor(
     public queryProviderService: QueryProviderService,
@@ -43,12 +45,14 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
   downloadQuery: boolean = false
 
   ngOnInit(): void {
+    this.isQuerySlotAvailable()
     this.query = this.queryProviderService.query()
     this.hasQuerySend === false ? (this.letQuerySave = true) : (this.letQuerySave = false)
     this.saveWithQuery = this.hasQuerySend
   }
   ngOnDestroy(): void {
     this.subscriptionResult?.unsubscribe()
+    this.querySlotCountSubscription.unsubscribe()
   }
   doSave(): void {
     if (this.downloadQuery) {
@@ -94,9 +98,11 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
     )
   }
 
-  isQuerySlotAvailable(): any {
-    this.backend.getSavedQuerySlotCount().subscribe((querySlotCount) => {
-      return querySlotCount.total > querySlotCount.used ? true : false
-    })
+  isQuerySlotAvailable(): void {
+    this.querySlotCountSubscription = this.backend
+      .getSavedQuerySlotCount()
+      .subscribe((querySlotCount) => {
+        this.querySlotAvailable = querySlotCount.total > querySlotCount.used ? true : false
+      })
   }
 }
