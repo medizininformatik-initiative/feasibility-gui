@@ -157,7 +157,8 @@
       "DOWNLOAD_SQ": "Save as file",
       "FILENAME": "File name",
       "SAVED_QUERIES": "Saved Queries (with result)",
-      "SAVED_TEMPLATES": "Saved Templates"
+      "SAVED_TEMPLATES": "Saved Templates",
+      "MAXIMUM_QUERY_SLOT": "You have reached the maximum limit of available free slots for saving queries"
     },
     "EDIT": {
       "HEADER": "Restrictions of selected concepts",

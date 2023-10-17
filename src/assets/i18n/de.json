@@ -157,7 +157,8 @@
       "DOWNLOAD_SQ": "als Datei speichern",
       "FILENAME": "Dateiname",
       "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
-      "SAVED_TEMPLATES": "Gespeicherte Vorlagen"
+      "SAVED_TEMPLATES": "Gespeicherte Vorlagen",
+      "MAXIMUM_QUERY_SLOT": "Sie haben das maximale Limit an verfügbaren freien Speicherplätzen für Abfragen erreicht"
     },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",
