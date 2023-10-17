@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewChecked, Component, Inject, OnDestroy, OnInit } from '@angular/core'
 import { Query } from '../../../../model/api/query/query'
 import { QueryProviderService } from '../../../../service/query-provider.service'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
@@ -18,7 +18,7 @@ export class SaveDialogComponentData {
   templateUrl: './save-dialog.component.html',
   styleUrls: ['./save-dialog.component.scss'],
 })
-export class SaveDialogComponent implements OnInit, OnDestroy {
+export class SaveDialogComponent implements OnInit, OnDestroy, AfterViewChecked {
   private subscriptionResult: Subscription
   private querySlotCountSubscription: Subscription
   hasQuerySend: boolean | string
@@ -40,20 +40,39 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
   comment = ''
   filename = ''
   saveWithQuery: boolean | string = false
-  letQuerySave: boolean
+  letQuerySave: boolean = false
   saveButtonDisabled: boolean = true
   downloadQuery: boolean = false
 
   ngOnInit(): void {
-    this.isQuerySlotAvailable()
     this.query = this.queryProviderService.query()
-    this.hasQuerySend === false ? (this.letQuerySave = true) : (this.letQuerySave = false)
     this.saveWithQuery = this.hasQuerySend
   }
+
+  ngAfterViewChecked() {
+    this.isQuerySlotAvailable()
+    this.querySaveComparison()
+  }
+
   ngOnDestroy(): void {
     this.subscriptionResult?.unsubscribe()
     this.querySlotCountSubscription.unsubscribe()
   }
+
+  querySentStatus(): void {
+    if (typeof this.data.hasQuerySend === 'number') {
+      this.hasQuerySend = true
+    } else {
+      this.hasQuerySend = false
+    }
+  }
+  querySaveComparison() {
+    this.querySentStatus()
+    if (this.hasQuerySend && this.querySlotAvailable) {
+      this.letQuerySave = true
+    }
+  }
+
   doSave(): void {
     if (this.downloadQuery) {
       this.doDownloadQuery()
