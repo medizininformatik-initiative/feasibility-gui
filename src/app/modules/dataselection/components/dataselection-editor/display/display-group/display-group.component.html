@@ -1,0 +1,17 @@
+<mat-card appearance="outlined" class="query-group">
+  <mat-card-header>
+    <div class="header-wrapper">
+      {{ 'DATASELECTION.DISPLAY.LABEL' | translate }}
+    </div>
+  </mat-card-header>
+</mat-card>
+<num-display-crit-group
+  [query]="query"
+  [critGroup]="group.inclusionCriteria"
+  [groupId]="group.id"
+  [critType]="'inclusion'"
+  (storeQuery)="doStoreQuery($event)"
+  (dropped)="doDrop($event)"
+  (delete)="doDelete($event, 'inclusion')"
+  fxFlex="49.5"
+></num-display-crit-group>

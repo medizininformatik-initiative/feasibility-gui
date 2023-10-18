@@ -10,7 +10,7 @@ export abstract class ValueDefinition {
   max?: number;
   min?: number;
   allowedUnits?: QuantityUnit[] = [];
-
+  optional?: boolean;
   selectableConcepts?: TerminologyCode[];
 }
 
@@ -19,6 +19,7 @@ export abstract class AttributeDefinition {
   attributeCode: TerminologyCode;
   display?: string;
   optional?: boolean;
+  referenceCriteriaSet: string;
 
   precision = 1;
   max?: number;
@@ -31,4 +32,5 @@ export abstract class AttributeDefinition {
 export enum ValueType {
   QUANTITY = 'quantity',
   CONCEPT = 'concept',
+  REFERENCE = 'reference',
 }

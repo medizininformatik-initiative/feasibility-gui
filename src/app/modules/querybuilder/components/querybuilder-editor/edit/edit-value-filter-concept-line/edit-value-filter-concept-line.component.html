@@ -1,6 +1,6 @@
 <div [formGroup]="checkedControlForm" class="checkbox-line">
-  <mat-checkbox (click)="doSelectConcept()" formControlName="checkedControl">
-  <!--{{ concept.code }} - -->
+  <mat-checkbox [(ngModel)]="checked" (click)="doSelectConcept()" formControlName="checkedControl">
+    <!--{{ concept.code }} - -->
     {{ concept.display }}
   </mat-checkbox>
 </div>

@@ -16,6 +16,14 @@
       <mat-panel-title>
         {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.TITLE' | translate }}
       </mat-panel-title>
+      <num-button
+        [type]="'primary'"
+        (click)="resetDate() && !disableReset; $event.stopPropagation()"
+        fxLayoutAlign="end"
+        [isDisabled]="disableReset"
+      >
+        {{ 'BUTTON.RESET' | translate }}
+      </num-button>
     </mat-expansion-panel-header>
     <div>
       <mat-form-field appearance="outline" class="operator-part">
@@ -33,7 +41,12 @@
         <mat-label *ngIf="timeRestriction.tvpe !== timeRestrictionType.BETWEEN">{{
           'QUERYBUILDER.EDIT.TIMERESTRICTION.' + timeRestriction.tvpe | translate
         }}</mat-label>
-        <input matInput [matDatepicker]="dateStartPicker" [(ngModel)]="timeRestriction.minDate" />
+        <input
+          matInput
+          [matDatepicker]="dateStartPicker"
+          [(ngModel)]="timeRestriction.minDate"
+          (dateChange)="disableReset = false"
+        />
         <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
         <mat-datepicker #dateStartPicker></mat-datepicker>
       </mat-form-field>
@@ -43,7 +56,12 @@
         appearance="outline"
       >
         <mat-label>{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.TO' | translate }}</mat-label>
-        <input matInput [matDatepicker]="dateEndPicker" [(ngModel)]="timeRestriction.maxDate" />
+        <input
+          matInput
+          [matDatepicker]="dateEndPicker"
+          [(ngModel)]="timeRestriction.maxDate"
+          (dateChange)="disableReset = false"
+        />
         <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
         <mat-datepicker #dateEndPicker></mat-datepicker>
       </mat-form-field>

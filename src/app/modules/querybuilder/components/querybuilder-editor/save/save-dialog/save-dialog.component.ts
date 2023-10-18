@@ -27,7 +27,8 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
     public backend: BackendService,
     private fileSaverService: FileSaverService,
     @Inject(MAT_DIALOG_DATA) public data: SaveDialogComponentData,
-    private dialogRef: MatDialogRef<SaveDialogComponent, void>
+    private dialogRef: MatDialogRef<SaveDialogComponent, void>,
+    private apiTranslator: ApiTranslator
   ) {
     this.hasQuerySend = data.hasQuerySend
   }
@@ -51,7 +52,7 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
   }
   doSave(): void {
     if (this.downloadQuery) {
-      const queryString = JSON.stringify(new ApiTranslator().translateToV2(this.query))
+      const queryString = JSON.stringify(this.apiTranslator.translateToV2(this.query))
       const fileData = new Blob([queryString], { type: 'text/plain;charset=utf-8' })
       this.fileSaverService.save(fileData, this.filename + '.json')
     } else {
@@ -65,6 +66,8 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
     this.dialogRef.close()
     // this.router.navigate(['/querybuilder/overview'])
   }
+
+  doSaveForDataselection() {}
 
   doDiscard(): void {
     this.dialogRef.close()

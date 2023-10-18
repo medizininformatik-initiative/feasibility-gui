@@ -1,0 +1,38 @@
+<div class="dialog-container">
+  <h3>{{ 'Rate your experience' }}</h3>
+  <div fxLayout="column" fxLayoutAlign="space-between">
+    <div class="padding-16-px" fxLayoutAlign="center">
+      <ul class="list-inline rating-list ul-style" *ngFor="let star of stars">
+        <li
+          (click)="countStar(star)"
+          (mouseenter)="mouseEnter(star)"
+          [ngClass]="{ selected: star <= selectedValue }"
+        >
+          <fa-icon size="2x" icon="star"></fa-icon>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <mat-form-field class="input-field">
+        <mat-label>{{ 'Schilder deine Eindrücke von dieser Website ' }}</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="ratingComment"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="4"
+          cdkAutosizeMaxRows="10"
+        >
+        </textarea>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end right space-between">
+      <num-button class="padding-16-px" [type]="'primary'" (click)="closeDialog()"
+        >{{ 'close' | translate }}
+      </num-button>
+      <num-button class="padding-16-px" [type]="'primary'" (click)="closeDialog()"
+        >{{ 'bewerten' | translate }}
+      </num-button>
+    </div>
+  </div>
+</div>

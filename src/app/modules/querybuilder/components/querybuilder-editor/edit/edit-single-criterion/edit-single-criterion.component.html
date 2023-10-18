@@ -7,8 +7,9 @@
     [criterion]="criterion"
     [query]="queryModified"
     [position]="position"
+    [searchType]="searchType"
     actionButtonKey="SAVE"
-    (save)="doSave()"
+    (save)="doSave($event)"
     (discard)="doCancel()"
   >
   </num-edit-criterion>

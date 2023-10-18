@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import {
   Comparator,
   OperatorOptions,
@@ -7,6 +7,11 @@ import {
 } from '../../../../model/api/query/valueFilter';
 import { TerminologyCode } from '../../../../model/api/terminology/terminology';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
+import { Query } from '../../../../model/api/query/query';
+import { Criterion } from '../../../../model/api/query/criterion';
+import { ValueType } from '../../../../model/api/terminology/valuedefinition';
+import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -17,33 +22,70 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   filter: ValueFilter;
 
+  @ViewChildren(EditValueFilterConceptLineComponent)
+  private checkboxes: QueryList<EditValueFilterConceptLineComponent>;
+
+  @ViewChildren(MatSelectModule)
+  private matOption: QueryList<MatSelectModule>;
+
   @Input()
   filterType: string;
+
+  @Input()
+  query: Query;
+
+  @Input()
+  criterion: Criterion;
+
+  @Input()
+  optional: boolean;
+
+  resetQuantityDisabled = true;
 
   OperatorOptions: typeof OperatorOptions = OperatorOptions;
 
   selectedUnit: QuantityUnit;
   // Use string representation of concept because equivalent objects do not match in TypeScript (e.g. { a: 1 } !== { a: 1 })
   selectedConceptsAsJson: Set<string> = new Set();
+  selectedReferenceAsJson: Set<string> = new Set();
   quantityFilterOption: string;
   // TODO: Try using enum
-  quantityFilterOptions: Array<string> = ['EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
+  quantityFilterOptions: Array<string> = ['NONE', 'EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
   disableAnimation = true;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.filter?.selectedConcepts.forEach((concept) => {
+    this.filter?.selectedConcepts?.forEach((concept) => {
       // bring the object into the right order for stringify
-      const temp = { code: concept.code, display: concept.display, system: concept.system };
+      const temp = {
+        code: concept.code,
+        display: concept.display,
+        system: concept.system,
+        uid: concept.uid,
+      };
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
+
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+      this.criterion.linkedCriteria.forEach((linkedCrit) => {
+        // bring the object into the right order for stringify
+        const temp2 = {
+          code: linkedCrit.termCodes[0].code,
+          display: linkedCrit.termCodes[0].display,
+          system: linkedCrit.termCodes[0].system,
+          uid: linkedCrit.termCodes[0].uid,
+        };
+        this.selectedReferenceAsJson.add(JSON.stringify(temp2));
+      });
+    }
 
     this.filter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
       if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
         this.selectedUnit = allowedUnit;
       }
     });
+
     this.filter?.attributeDefinition?.allowedUnits?.forEach((allowedUnit) => {
       if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
         this.selectedUnit = allowedUnit;
@@ -57,8 +99,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // timeout required to avoid the dreaded 'ExpressionChangedAfterItHasBeenCheckedError'
     setTimeout(() => (this.disableAnimation = false));
+    this.getQuantityFilterOption();
   }
-
   getQuantityFilterOption(): string {
     if (!this.filter || this.filter.type === OperatorOptions.CONCEPT) {
       return null;
@@ -77,6 +119,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       case Comparator.LESS_OR_EQUAL:
       case Comparator.LESS_THAN:
         return 'LESS_THAN';
+      case Comparator.NONE:
+        return 'NONE';
       default:
         return null;
     }
@@ -114,44 +158,212 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         case 'GREATER_THAN':
           this.filter.comparator = Comparator.GREATER_THAN;
           break;
+        case 'NONE':
+          this.filter.comparator = Comparator.NONE;
+          break;
       }
+    }
+    if (
+      this.filter.comparator !== Comparator.NONE ||
+      (this.filter.type ===
+        (OperatorOptions.QUANTITY_RANGE || OperatorOptions.QUANTITY_COMPARATOR) &&
+        this.filter.valueDefinition.type === ValueType.QUANTITY)
+    ) {
+      this.resetQuantityDisabled = false;
+    } else {
+      this.resetQuantityDisabled = true;
     }
   }
 
   doSelectConcept(concept: TerminologyCode): void {
-    const conceptAsJson = JSON.stringify(concept);
-    if (this.selectedConceptsAsJson.has(conceptAsJson)) {
-      this.selectedConceptsAsJson.delete(conceptAsJson);
-    } else {
-      this.selectedConceptsAsJson.add(conceptAsJson);
+    // bring the object into the right order for stringify
+    const temp = {
+      code: concept.code,
+      display: concept.display,
+      system: concept.system,
+      uid: concept.uid,
+    };
+    const conceptAsJson = JSON.stringify(temp);
+    const criterionForLinking = this.getSelectedCriterion(temp);
+
+    if (
+      this.filter.attributeDefinition?.type === ValueType.CONCEPT ||
+      this.filter.valueDefinition?.type === ValueType.CONCEPT
+    ) {
+      if (this.selectedConceptsAsJson.has(conceptAsJson)) {
+        this.selectedConceptsAsJson.delete(conceptAsJson);
+      } else {
+        this.selectedConceptsAsJson.add(conceptAsJson);
+      }
+
+      this.filter.selectedConcepts = [];
+      this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) => {
+        this.filter.selectedConcepts.push(JSON.parse(conceptAsJsonTemp));
+      });
     }
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+      if (this.selectedReferenceAsJson.has(conceptAsJson)) {
+        this.selectedReferenceAsJson.delete(conceptAsJson);
+        if (criterionForLinking) {
+          if (!this.isCriterionLinked(criterionForLinking.uniqueID)) {
+            criterionForLinking.isLinked = false;
+          }
+        }
+      } else {
+        this.selectedReferenceAsJson.add(conceptAsJson);
+        if (criterionForLinking) {
+          criterionForLinking.isLinked = true;
+        }
+      }
 
-    const selectedConcepts: Array<TerminologyCode> = [];
-    this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) =>
-      selectedConcepts.push(JSON.parse(conceptAsJsonTemp))
-    );
+      this.criterion.linkedCriteria = [];
+      this.selectedReferenceAsJson.forEach((conceptAsJsonTemp) => {
+        this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJsonTemp)));
+      });
+    }
+  }
 
-    this.filter.selectedConcepts = selectedConcepts;
+  getSelectedCriterion(termcode: TerminologyCode): Criterion {
+    let crit: Criterion;
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (
+            conj.termCodes[0].code === termcode.code &&
+            conj.termCodes[0].display === termcode.display &&
+            conj.termCodes[0].system === termcode.system &&
+            conj.termCodes[0].uid === termcode.uid
+          ) {
+            crit = conj;
+          }
+        });
+      });
+    }
+    return crit;
   }
 
   isSelected(concept: TerminologyCode): boolean {
     // bring the object into the right order for stringify
-    const temp = { code: concept.code, display: concept.display, system: concept.system };
+    const temp = {
+      code: concept.code,
+      display: concept.display,
+      system: concept.system,
+      uid: concept.uid,
+    };
+
+    if (this.filter.type === OperatorOptions.REFERENCE) {
+      return this.selectedReferenceAsJson.has(JSON.stringify(temp));
+    }
+
     return this.selectedConceptsAsJson.has(JSON.stringify(temp));
   }
 
-  public isActionDisabled(): boolean {
-    if (this.filter?.attributeDefinition) {
-      if (this.filter?.attributeDefinition?.optional) {
+  isCriterionLinked(hash: string): boolean {
+    let isLinked = false;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria.length > 0) {
+            conj.linkedCriteria.forEach((criterion) => {
+              if (criterion.uniqueID === hash && conj.uniqueID !== this.criterion.uniqueID) {
+                isLinked = true;
+              }
+            });
+          }
+        });
+      });
+    }
+    return isLinked;
+  }
+
+  doSelectAllCheckboxes() {
+    this.checkboxes.forEach((checkbox, index) => {
+      if (checkbox.checked) {
+        checkbox.checked = false;
+        checkbox.checkedControlForm.patchValue(['checkedControl', false]);
+        if (
+          (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
+          ValueType.CONCEPT
+        ) {
+          this.selectedConceptsAsJson = new Set();
+          this.filter.selectedConcepts = [];
+        } else {
+          this.doSelectConcept(checkbox.concept);
+        }
+      }
+    });
+  }
+
+  resetQuantity() {
+    if (
+      (this.filter.comparator !== Comparator.NONE ||
+        this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
+      this.filter.valueDefinition.type === ValueType.QUANTITY
+    ) {
+      this.filter.maxValue = 0;
+      this.filter.minValue = 0;
+      this.filter.value = 0;
+      if (this.filter?.valueDefinition?.allowedUnits.length > 0) {
+        this.filter.unit = this.filter.valueDefinition.allowedUnits[0];
+      }
+      if (this.filter?.attributeDefinition?.allowedUnits.length > 0) {
+        this.filter.unit = this.filter.attributeDefinition.allowedUnits[0];
+      }
+      this.filter.comparator = Comparator.NONE;
+      this.filter.type = OperatorOptions.QUANTITY_COMPARATOR;
+      this.quantityFilterOption = 'NONE';
+    }
+    if (
+      this.selectedConceptsAsJson.size > 0 &&
+      this.filter.valueDefinition.type === ValueType.CONCEPT
+    ) {
+      this.doSelectAllCheckboxes();
+    }
+  }
+
+  resetQuantityButtonDisabled() {
+    if (
+      this.selectedConceptsAsJson.size > 0 &&
+      this.filter.valueDefinition?.type === ValueType.CONCEPT
+    ) {
+      return false;
+    }
+    if (
+      (this.filter.comparator !== Comparator.NONE ||
+        this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
+      this.filter.valueDefinition?.type === ValueType.QUANTITY
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  resetButtonDisabled() {
+    if (
+      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
+      ValueType.CONCEPT
+    ) {
+      if (this.selectedConceptsAsJson.size > 0) {
         return false;
+      } else {
+        return true;
       }
     }
-
-    if (this.filter?.type === OperatorOptions.CONCEPT) {
-      return this.noSelectedConcept();
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+      if (this.criterion.linkedCriteria.length > 0) {
+        return false;
+      } else {
+        return true;
+      }
     }
+  }
 
-    if (this.filter?.type === OperatorOptions.QUANTITY_COMPARATOR) {
+  public isActionDisabled(): boolean {
+    if (
+      this.filter?.type === OperatorOptions.QUANTITY_COMPARATOR &&
+      this.filter?.comparator !== Comparator.NONE
+    ) {
       return this.valueTooSmall(this.filter.value) || this.valueTooLarge(this.filter.value);
     }
 
@@ -165,7 +377,23 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       );
     }
 
-    return false;
+    if (this.filter?.attributeDefinition) {
+      if (this.filter?.attributeDefinition?.optional) {
+        return false;
+      }
+    }
+
+    if (this.filter?.valueDefinition) {
+      if (this.filter?.valueDefinition?.optional) {
+        return false;
+      }
+    }
+
+    if (this.filter?.type === OperatorOptions.CONCEPT) {
+      return this.noSelectedConcept();
+    }
+
+    return true;
   }
 
   noSelectedConcept(): boolean {

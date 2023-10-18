@@ -117,23 +117,38 @@ export class CritGroupArranger {
       if (group.id !== position.groupId) {
         groupsTemp.push(group);
       } else {
-        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position));
+        groupsTemp.push(CritGroupArranger.removeFromGroup(group, position, 'move'));
       }
     });
 
     return groupsTemp;
   }
 
-  public static removeFromGroup(group: Group, position: CritGroupPosition): Group {
-    const groupTemp: Group = JSON.parse(JSON.stringify(group));
+  public static removeFromGroup(group: Group, position: CritGroupPosition, modus: string): Group {
+    let groupTemp: Group = JSON.parse(JSON.stringify(group));
+    const uids: string[] = [];
 
     if (position.critType === 'inclusion') {
+      if (groupTemp.inclusionCriteria[position.row][position.column].linkedCriteria.length > 0) {
+        groupTemp.inclusionCriteria[position.row][position.column].linkedCriteria.forEach(
+          (linkedCriterion) => {
+            uids.push(linkedCriterion.uniqueID);
+          }
+        );
+      }
       if (groupTemp.inclusionCriteria[position.row].length === 1) {
         groupTemp.inclusionCriteria.splice(position.row, 1);
       } else {
         groupTemp.inclusionCriteria[position.row].splice(position.column, 1);
       }
     } else if (position.critType === 'exclusion') {
+      if (groupTemp.exclusionCriteria[position.row][position.column].linkedCriteria.length > 0) {
+        groupTemp.exclusionCriteria[position.row][position.column].linkedCriteria.forEach(
+          (linkedCriterion) => {
+            uids.push(linkedCriterion.uniqueID);
+          }
+        );
+      }
       if (groupTemp.exclusionCriteria[position.row].length === 1) {
         groupTemp.exclusionCriteria.splice(position.row, 1);
       } else {
@@ -141,9 +156,63 @@ export class CritGroupArranger {
       }
     }
 
+    for (const inex of ['inclusion', 'exclusion']) {
+      groupTemp[inex + 'Criteria'].forEach((disj, i) => {
+        disj.forEach((conj, j) => {
+          conj.position.row = i;
+          conj.position.column = j;
+        });
+      });
+    }
+
+    uids.forEach((uid) => {
+      if (modus === 'delete' && !this.isCriterionLinked(groupTemp, uid)) {
+        groupTemp = this.removeFromGroup(
+          groupTemp,
+          this.findCriterionByUID(groupTemp, uid).position,
+          'delete'
+        );
+      }
+    });
     return groupTemp;
   }
 
+  public static findCriterionByUID(group: Group, uid: string): Criterion {
+    const groupTemp: Group = JSON.parse(JSON.stringify(group));
+    let tempCrit: Criterion;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      groupTemp[inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.uniqueID === uid) {
+            tempCrit = conj;
+          }
+        });
+      });
+    }
+    return tempCrit;
+  }
+
+  public static isCriterionLinked(group: Group, uid: string): boolean {
+    const groupTemp: Group = JSON.parse(JSON.stringify(group));
+    let isLinked = false;
+
+    for (const inex of ['inclusion', 'exclusion']) {
+      groupTemp[inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria.length > 0) {
+            conj.linkedCriteria.forEach((criterion) => {
+              if (criterion.uniqueID === uid) {
+                isLinked = true;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    return isLinked;
+  }
   public static moveCriterion(
     groups: Group[],
     positionFrom: CritGroupPosition,

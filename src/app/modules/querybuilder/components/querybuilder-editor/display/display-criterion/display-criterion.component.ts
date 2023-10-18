@@ -15,6 +15,9 @@ import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
 })
 export class DisplayCriterionComponent implements OnInit, OnDestroy {
   @Input()
+  searchType: string;
+
+  @Input()
   criterion: Criterion;
 
   @Input()
@@ -38,6 +41,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog, public featureService: FeatureService) {}
 
   ngOnInit(): void {
+    this.criterion.position = this.position;
     this.isinvalid = this.criterion.isinvalid === true;
   }
 
@@ -54,6 +58,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
       criterion: this.criterion,
       query: this.query,
       position: this.position,
+      searchType: this.searchType,
     };
     const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig);
     this.subscriptionDialog?.unsubscribe();

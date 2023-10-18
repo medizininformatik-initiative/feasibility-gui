@@ -9,6 +9,9 @@ import {
 import { TimeRestriction } from '../model/api/query/timerestriction';
 import { V2 } from '../model/api/annotations';
 import { AttributeFilter } from '../model/api/query/attributeFilter';
+import { v3 as uuidv3 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
+import { BackendService } from '../service/backend.service';
 
 export class TermEntry2CriterionTranslator {
   private useFeatureTimeRestrictions = false;
@@ -22,31 +25,61 @@ export class TermEntry2CriterionTranslator {
   public translate(termEntry: TerminologyEntry): Criterion {
     const criterion = new Criterion();
 
+    criterion.context = termEntry.context;
+    termEntry.termCodes?.forEach((termCode) => {
+      criterion.termCodes.push(termCode);
+    });
     criterion.display = termEntry.display;
     criterion.entity = termEntry.entity;
-    if (this.queryVersion === 'v1') {
-      termEntry.valueDefinitions.forEach((valueDefinition) => {
-        criterion.valueFilters.push(this.createValueFilter(valueDefinition));
-      });
-      criterion.termCodes.push(termEntry.termCode);
-      criterion.attributeFilters = undefined;
-    }
-    if (this.queryVersion === 'v2') {
-      if (termEntry.valueDefinition) {
-        criterion.valueFilters.push(this.createValueFilter(termEntry.valueDefinition));
-      }
-      termEntry.attributeDefinitions?.forEach((attributeDefinition) => {
-        criterion.attributeFilters.push(this.createAttributeFilter(attributeDefinition));
-      });
-      termEntry.termCodes?.forEach((termCode) => {
-        criterion.termCodes.push(termCode);
-      });
-    }
     criterion.children = termEntry.children;
     criterion.timeRestriction = this.createTimeRestriction(termEntry);
     criterion.optional = termEntry.optional;
-
+    criterion.criterionHash = this.getCriterionHash(criterion);
+    if (!criterion.uniqueID) {
+      criterion.uniqueID = uuidv4();
+    }
     return criterion;
+  }
+
+  public addAttributeAndValueFilterToCrit(
+    crit: Criterion,
+    valueDefinition: ValueDefinition,
+    attributeDefinitions: AttributeDefinition[]
+  ): Criterion {
+    if (valueDefinition) {
+      crit.valueFilters.push(this.createValueFilter(valueDefinition));
+    }
+
+    attributeDefinitions?.forEach((attributeDefinition) => {
+      crit.attributeFilters.push(this.createAttributeFilter(attributeDefinition));
+    });
+
+    return crit;
+  }
+
+  public getCriterionHash(criterion): string {
+    const termcode = criterion.termCodes[0];
+    const context = criterion.context;
+    let contextVersion = '';
+    let termcodeVersion = '';
+
+    if (context.version) {
+      contextVersion = criterion.context.version;
+    }
+
+    if (termcode.version) {
+      termcodeVersion = termcode.version;
+    }
+
+    const contextTermcodeHashInput =
+      context.system +
+      context.code +
+      contextVersion +
+      termcode.system +
+      termcode.code +
+      termcodeVersion;
+
+    return uuidv3(contextTermcodeHashInput, BackendService.BACKEND_UUID_NAMESPACE);
   }
 
   // noinspection JSMethodCanBeStatic
@@ -59,7 +92,7 @@ export class TermEntry2CriterionTranslator {
       valueFilter.type = OperatorOptions.CONCEPT;
       valueFilter.selectedConcepts = [];
     } else if (valueDefinition.type === ValueType.QUANTITY) {
-      valueFilter.type = OperatorOptions.QUANTITY_RANGE;
+      valueFilter.type = OperatorOptions.QUANTITY_COMPARATOR;
       valueFilter.unit =
         valueDefinition.allowedUnits.length > 0
           ? valueDefinition.allowedUnits[0]
@@ -70,7 +103,7 @@ export class TermEntry2CriterionTranslator {
       valueFilter.min = valueDefinition.min;
       valueFilter.max = valueDefinition.max;
       valueFilter.precision = valueDefinition.precision;
-      valueFilter.comparator = Comparator.GREATER_OR_EQUAL;
+      valueFilter.comparator = Comparator.NONE;
     }
 
     return valueFilter;

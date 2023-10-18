@@ -1,15 +1,31 @@
-import { Query, QueryOnlyV1, QueryOnlyV2 } from '../model/api/query/query';
+import { DataSelectionOnly, Query, QueryOnlyV1, QueryOnlyV2 } from '../model/api/query/query';
 import { Criterion, CriterionOnlyV1, CriterionOnlyV2 } from '../model/api/query/criterion';
 import { ObjectHelper } from './ObjectHelper';
-import { OperatorOptions } from '../model/api/query/valueFilter';
+import { Comparator, OperatorOptions } from '../model/api/query/valueFilter';
 import { TimeRestrictionType } from '../model/api/query/timerestriction';
+import { FeatureService } from 'src/app/service/feature.service';
+import { Injectable } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
+import { TermEntry2CriterionTranslator } from './TermEntry2CriterionTranslator';
 
 // translates a query with groups to the agreed format of queries in version 1 (without groups)
+@Injectable({
+  providedIn: 'root',
+})
 export class ApiTranslator {
+  private readonly translator;
+  constructor(public featureService: FeatureService) {
+    this.translator = new TermEntry2CriterionTranslator(
+      this.featureService.useFeatureTimeRestriction(),
+      this.featureService.getQueryVersion()
+    );
+  }
   translateToV1(query: Query): QueryOnlyV1 {
     const result = new QueryOnlyV1();
 
-    result.display = query.display;
+    if (query.display) {
+      result.display = query.display;
+    }
     const exclusionCriteria = ObjectHelper.clone(query.groups[0].exclusionCriteria);
     const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria);
 
@@ -31,6 +47,9 @@ export class ApiTranslator {
       criterionArray.forEach((criterion) => {
         const criterionV1 = new CriterionOnlyV1();
         criterionV1.termCode = criterion.termCodes[0];
+        if (this.featureService.getSendSQContextToBackend()) {
+          criterionV1.context = criterion.context;
+        }
         criterionV1.timeRestriction = criterion.timeRestriction;
         if (criterion.valueFilters.length > 0) {
           criterionV1.valueFilter = criterion.valueFilters[0];
@@ -81,7 +100,9 @@ export class ApiTranslator {
   translateToV2(query: Query): QueryOnlyV2 {
     const result = new QueryOnlyV2();
 
-    result.display = query.display;
+    if (query.display) {
+      result.display = query.display;
+    }
     const exclusionCriteria = ObjectHelper.clone(query.groups[0].exclusionCriteria);
     const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria);
 
@@ -103,35 +124,86 @@ export class ApiTranslator {
     return result;
   }
 
+  translateForDataselection(query: Query) {
+    const result = new DataSelectionOnly();
+    const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria);
+    result.selectedCriteria = this.translateCritGroupV2(inclusionCriteria);
+    result.selectedCriteria.forEach((criteria) => {
+      criteria.forEach((criterion) => {
+        delete criterion.valueFilter;
+      });
+    });
+    return result;
+  }
+
   private translateCritGroupV2(inclusionCriteria: Criterion[][]): CriterionOnlyV2[][] {
     const result: CriterionOnlyV2[][] = [];
     inclusionCriteria.forEach((criterionArray) => {
       const innerArrayV2: CriterionOnlyV2[] = [];
       criterionArray.forEach((criterion) => {
-        const criterionV2 = new CriterionOnlyV2();
-        criterionV2.termCodes = criterion.termCodes;
-        criterionV2.timeRestriction = criterion.timeRestriction;
-        if (criterion.valueFilters.length > 0) {
-          criterionV2.valueFilter = criterion.valueFilters[0];
-          criterionV2.valueFilter.valueDefinition = undefined;
-        }
-        if (criterion.attributeFilters?.length > 0) {
-          criterion.attributeFilters.forEach((attribute) => {
-            if (attribute.type === OperatorOptions.CONCEPT) {
-              if (attribute.selectedConcepts.length > 0) {
-                criterionV2.attributeFilters.push(attribute);
-              }
-            } else {
-              criterionV2.attributeFilters.push(attribute);
+        if (criterion.isLinked === undefined || criterion.isLinked === false) {
+          const criterionV2 = new CriterionOnlyV2();
+          criterionV2.termCodes = criterion.termCodes;
+          if (this.featureService.getSendSQContextToBackend()) {
+            criterionV2.context = criterion.context;
+          }
+          criterionV2.timeRestriction = criterion.timeRestriction;
+          if (criterion.valueFilters.length > 0) {
+            criterionV2.valueFilter = criterion.valueFilters[0];
+            criterionV2.valueFilter.valueDefinition = undefined;
+
+            if (criterion.valueFilters[0].comparator === Comparator.NONE) {
+              criterionV2.valueFilter = undefined;
             }
-            attribute.attributeCode = attribute.attributeDefinition?.attributeCode;
-          });
+          }
+          if (criterion.attributeFilters?.length > 0) {
+            criterion.attributeFilters.forEach((attribute) => {
+              if (attribute.type === OperatorOptions.CONCEPT) {
+                if (attribute.selectedConcepts.length > 0) {
+                  criterionV2.attributeFilters.push(attribute);
+                }
+              } else {
+                if (attribute.type === OperatorOptions.REFERENCE) {
+                  if (criterion.linkedCriteria.length > 0) {
+                    const refAttribute = attribute;
+                    delete refAttribute.selectedConcepts;
+                    refAttribute.criteria = [];
+                    criterion.linkedCriteria.forEach((linkedCrit) => {
+                      const newLinkedCrit = new CriterionOnlyV2();
+                      newLinkedCrit.termCodes = linkedCrit.termCodes;
+                      newLinkedCrit.context = linkedCrit.context;
+                      if (linkedCrit.attributeFilters.length > 0) {
+                        newLinkedCrit.attributeFilters = linkedCrit.attributeFilters;
+                      } else {
+                        delete newLinkedCrit.attributeFilters;
+                      }
+                      if (linkedCrit.valueFilters.length > 0) {
+                        newLinkedCrit.valueFilter = linkedCrit.valueFilters[0];
+                      } else {
+                        delete newLinkedCrit.valueFilter;
+                      }
+                      delete newLinkedCrit.children;
+                      delete newLinkedCrit.linkedCriteria;
+                      this.removeNonApiFieldsV2(newLinkedCrit);
+                      refAttribute.criteria.push(newLinkedCrit);
+                    });
+                    criterionV2.attributeFilters.push(refAttribute);
+                  }
+                } else {
+                  criterionV2.attributeFilters.push(attribute);
+                }
+              }
+              attribute.attributeCode = attribute.attributeDefinition?.attributeCode;
+            });
+          }
+          this.editTimeRestrictionsV2(criterionV2);
+          this.removeNonApiFieldsV2(criterionV2);
+          innerArrayV2.push(criterionV2);
         }
-        this.editTimeRestrictionsV2(criterionV2);
-        this.removeNonApiFieldsV2(criterionV2);
-        innerArrayV2.push(criterionV2);
       });
-      result.push(innerArrayV2);
+      if (innerArrayV2.length > 0) {
+        result.push(innerArrayV2);
+      }
     });
 
     return result;
@@ -140,26 +212,65 @@ export class ApiTranslator {
   // noinspection JSMethodCanBeStatic
   private removeNonApiFieldsV2(criterion: CriterionOnlyV2): void {
     if (criterion.valueFilter) {
+      criterion.valueFilter.valueDefinition = undefined;
       criterion.valueFilter.precision = undefined;
       if (criterion.valueFilter.type === OperatorOptions.QUANTITY_COMPARATOR) {
+        criterion.valueFilter.min = undefined;
+        criterion.valueFilter.max = undefined;
         criterion.valueFilter.minValue = undefined;
         criterion.valueFilter.maxValue = undefined;
+        criterion.valueFilter.unit = {
+          code: criterion.valueFilter.unit.code,
+          display: criterion.valueFilter.unit.display,
+        };
       }
       if (criterion.valueFilter.type === OperatorOptions.QUANTITY_RANGE) {
         criterion.valueFilter.comparator = undefined;
         criterion.valueFilter.value = undefined;
+        criterion.valueFilter.min = undefined;
+        criterion.valueFilter.max = undefined;
+        criterion.valueFilter.unit = {
+          code: criterion.valueFilter.unit.code,
+          display: criterion.valueFilter.unit.display,
+        };
       }
     }
     if (criterion.attributeFilters?.length > 0) {
       criterion.attributeFilters.forEach((attribute) => {
+        attribute.min = undefined;
+        attribute.max = undefined;
         attribute.attributeDefinition = undefined;
         attribute.precision = undefined;
+
+        if (attribute.type === OperatorOptions.QUANTITY_COMPARATOR) {
+          attribute.minValue = undefined;
+          attribute.maxValue = undefined;
+          attribute.unit = { code: attribute.unit.code, display: attribute.unit.display };
+        }
         if (attribute.type === OperatorOptions.QUANTITY_RANGE) {
+          attribute.comparator = undefined;
           attribute.value = undefined;
+          attribute.unit = { code: attribute.unit.code, display: attribute.unit.display };
         }
       });
-    } else {
+
+      criterion.attributeFilters = criterion.attributeFilters.filter(
+        (attrFilter, i) => attrFilter.type !== undefined
+      );
+    }
+
+    if (criterion.attributeFilters?.length === 0) {
       criterion.attributeFilters = undefined;
+    }
+
+    if (criterion.children) {
+      delete criterion.children;
+    }
+    if (criterion.linkedCriteria) {
+      delete criterion.linkedCriteria;
+    }
+    if (criterion.termCodes[0].uid) {
+      delete criterion.termCodes[0].uid;
     }
   }
 
@@ -229,6 +340,17 @@ export class ApiTranslator {
     }
   }
 
+  translateImportedDsToUIQuery(uiquery: Query, sqquery: any): Query {
+    const invalidCriteria = [];
+    const selectedCriteria = sqquery.selectedCriteria ? sqquery.selectedCriteria : [];
+    uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(
+      selectedCriteria,
+      invalidCriteria
+    );
+    delete uiquery.groups[0].selectedCriteria;
+    return uiquery;
+  }
+
   translateImportedSQtoUIQuery(uiquery: Query, sqquery: any): Query {
     const invalidCriteria = [];
     const inclusion = sqquery.inclusionCriteria ? sqquery.inclusionCriteria : [];
@@ -236,6 +358,7 @@ export class ApiTranslator {
     const exclusion = sqquery.exclusionCriteria ? sqquery.exclusionCriteria : [];
     uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria);
     uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery);
+    uiquery = this.rePosition(uiquery);
     return uiquery;
   }
 
@@ -246,6 +369,7 @@ export class ApiTranslator {
     const exclusion = sqquery.content.exclusionCriteria ? sqquery.content.exclusionCriteria : [];
     uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria);
     uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery.content);
+    uiquery = this.rePosition(uiquery);
     return uiquery;
   }
 
@@ -255,8 +379,9 @@ export class ApiTranslator {
       invalidCriteriaSet.add(JSON.stringify(invalids));
     });
 
-    inexclusion.forEach((and) => {
-      and.forEach((or) => {
+    // eslint-disable-next-line  @typescript-eslint/prefer-for-of
+    for (let i = 0; i < inexclusion.length; i++) {
+      inexclusion[i].forEach((or, j) => {
         or.valueFilters = [];
         if (or.valueFilter) {
           or.valueFilters.push(or.valueFilter);
@@ -272,16 +397,34 @@ export class ApiTranslator {
         if (!or.attributeFilters) {
           or.attributeFilters = [];
         }
+        if (!or.linkedCriteria) {
+          or.linkedCriteria = [];
+        }
         or.attributeFilters.forEach((attribute) => {
           attribute.attributeDefinition = {};
           attribute.attributeDefinition.attributeCode = ObjectHelper.clone(attribute.attributeCode);
-          attribute.attributeCode = undefined;
+          delete attribute.attributeCode;
           if (attribute.type === 'quantity-range') {
             attribute.value = 0;
             attribute.precision = 1;
           }
           if (attribute.type === 'quantity-comparator') {
             attribute.precision = 1;
+          }
+          if (attribute.type === 'reference') {
+            attribute.attributeDefinition.type = 'reference';
+            attribute.attributeDefinition.selectableConcepts = [];
+            attribute.criteria.forEach((refCrit) => {
+              refCrit.isLinked = true;
+              refCrit.uniqueID = uuidv4();
+              refCrit.criterionHash = this.translator.getCriterionHash(refCrit);
+              refCrit.termCodes[0].uid = refCrit.uniqueID;
+              attribute.attributeDefinition.selectableConcepts.push(refCrit.termCodes[0]);
+              attribute.attributeDefinition.optional = true;
+              or.linkedCriteria.push(refCrit);
+              inexclusion.push([refCrit]);
+            });
+            delete attribute.criteria;
           }
         });
         or.display = or.termCodes[0].display;
@@ -313,8 +456,10 @@ export class ApiTranslator {
           };
         }
         or.isinvalid = invalidCriteriaSet.has(JSON.stringify(or.termCodes[0]));
+        or.position = { groupId: 1, critType: '', row: i, column: j };
+        or.criterionHash = this.translator.getCriterionHash(or);
       });
-    });
+    }
     return inexclusion;
   }
 
@@ -356,5 +501,46 @@ export class ApiTranslator {
       }
     }
     return consent;
+  }
+
+  rePosition(query: Query): Query {
+    for (const inex of ['inclusion', 'exclusion']) {
+      query.groups[0][inex + 'Criteria'].forEach((disj, i) => {
+        disj.forEach((conj, j) => {
+          conj.position.row = i;
+          conj.position.column = j;
+          conj.position.critType = inex;
+          if (conj.isLinked) {
+            this.setPositionForRefCrit(query, conj.uniqueID, i, j, inex);
+          }
+        });
+      });
+    }
+    return query;
+  }
+
+  setPositionForRefCrit(
+    query: Query,
+    uid: string,
+    row: number,
+    column: number,
+    critType: string
+  ): Query {
+    for (const inex of ['inclusion', 'exclusion']) {
+      query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria?.length > 0) {
+            conj.linkedCriteria.forEach((linkedCrit) => {
+              if (linkedCrit.uniqueID === uid) {
+                linkedCrit.position.row = row;
+                linkedCrit.position.column = column;
+                linkedCrit.position.critType = critType;
+              }
+            });
+          }
+        });
+      });
+    }
+    return query;
   }
 }

@@ -44,6 +44,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileSaverModule } from 'ngx-filesaver';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
+import { DisplayLinkedCriterionComponent } from './components/querybuilder-editor/display/display-linked-criterion/display-linked-criterion.component';
+
 export const FORMATS_GERMAN = {
   parse: {
     dateInput: 'LL',
@@ -88,6 +90,7 @@ export const FORMATS_GERMAN = {
     DisplayEntitiesComponent,
     SingleQueryComponent,
     SaveDialogComponent,
+    DisplayLinkedCriterionComponent,
   ],
   imports: [
     CommonModule,
@@ -99,6 +102,33 @@ export const FORMATS_GERMAN = {
     MatTooltipModule,
     FileSaverModule,
     SnackBarComponent,
+  ],
+  exports: [
+    SearchInputComponent,
+    SearchTreeOverlayContentComponent,
+    SearchTreeHeaderComponent,
+    SearchTreeTermEntryComponent,
+    SearchTreeFooterComponent,
+    EnterCriterionListComponent,
+    SearchTextOverlayContentComponent,
+    SearchTextHeaderComponent,
+    SearchTextTermEntryComponent,
+    DisplayGroupComponent,
+    DisplayCritGroupComponent,
+    DisplayCriterionComponent,
+    DisplayQueryComponent,
+    EditCriterionComponent,
+    EditValueFilterComponent,
+    EditSingleCriterionComponent,
+    EditValueFilterConceptLineComponent,
+    DisplayTimeRestrictionComponent,
+    ResultSimpleComponent,
+    ResultDetailsDialogComponent,
+    DisplayGroupComponent,
+    DisplayCritGroupComponent,
+    DisplayCriterionComponent,
+    DisplayQueryComponent,
+    DisplayLinkedCriterionComponent,
   ],
   providers: [
     {
