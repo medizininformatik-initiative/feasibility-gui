@@ -43,6 +43,7 @@ import { SaveDialogComponent } from './components/querybuilder-editor/save/save-
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileSaverModule } from 'ngx-filesaver';
+import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { DisplayLinkedCriterionComponent } from './components/querybuilder-editor/display/display-linked-criterion/display-linked-criterion.component';
 
 export const FORMATS_GERMAN = {
@@ -100,6 +101,7 @@ export const FORMATS_GERMAN = {
     MatProgressSpinnerModule,
     MatTooltipModule,
     FileSaverModule,
+    SnackBarComponent,
   ],
   exports: [
     SearchInputComponent,

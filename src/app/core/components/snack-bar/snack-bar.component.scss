@@ -1,0 +1,48 @@
+::ng-deep .snackbar-container {
+  background-color: white;
+  border-radius: 2px;
+}
+
+.snackbarAlignment {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+::ng-deep .mat-snack-bar-container {
+  max-width: 800px;
+}
+
+.textAlignment {
+  padding: 25px 20px;
+}
+
+.buttonColor {
+  color: white;
+  font-size: small;
+  background-color: #f44336;
+}
+
+.buttonColor:hover {
+  background: #da190b;
+}
+
+.padding-right-snackbar {
+  padding-right: 0px;
+}
+
+::ng-deep .mat-mdc-snack-bar-container {
+  margin: 5px;
+}
+
+::ng-deep .mdc-snackbar__label {
+  padding: 0px;
+}
+
+.buttoAlignment {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  padding: 10px;
+}
