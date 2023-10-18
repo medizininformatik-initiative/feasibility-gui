@@ -119,7 +119,7 @@ export class TermEntry2CriterionTranslator {
       attributeFilter.type = OperatorOptions.CONCEPT;
       attributeFilter.selectedConcepts = [];
     } else if (attributeDefinition.type === ValueType.QUANTITY) {
-      attributeFilter.type = OperatorOptions.QUANTITY_RANGE;
+      attributeFilter.type = OperatorOptions.QUANTITY_COMPARATOR;
       attributeFilter.unit =
         attributeDefinition.allowedUnits.length > 0
           ? attributeDefinition.allowedUnits[0]
@@ -130,7 +130,7 @@ export class TermEntry2CriterionTranslator {
       attributeFilter.min = attributeDefinition.min;
       attributeFilter.max = attributeDefinition.max;
       attributeFilter.precision = attributeDefinition.precision;
-      attributeFilter.comparator = Comparator.GREATER_OR_EQUAL;
+      attributeFilter.comparator = Comparator.NONE;
     }
 
     return attributeFilter;

@@ -56,5 +56,4 @@ export enum OperatorOptions {
   QUANTITY_RANGE = 'quantity-range', // e.g. ">= 27 and <= 30"
   CONCEPT = 'concept', // e.g. "weiblich, männlich"
   REFERENCE = 'reference',
-  QUANTITY_NOT_SET = '',
 }
