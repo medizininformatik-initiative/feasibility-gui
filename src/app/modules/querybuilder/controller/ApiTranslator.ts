@@ -5,12 +5,21 @@ import { Comparator, OperatorOptions } from '../model/api/query/valueFilter';
 import { TimeRestrictionType } from '../model/api/query/timerestriction';
 import { FeatureService } from 'src/app/service/feature.service';
 import { Injectable } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
+import { TermEntry2CriterionTranslator } from './TermEntry2CriterionTranslator';
+
 // translates a query with groups to the agreed format of queries in version 1 (without groups)
 @Injectable({
   providedIn: 'root',
 })
 export class ApiTranslator {
-  constructor(public featureService: FeatureService) {}
+  private readonly translator;
+  constructor(public featureService: FeatureService) {
+    this.translator = new TermEntry2CriterionTranslator(
+      this.featureService.useFeatureTimeRestriction(),
+      this.featureService.getQueryVersion()
+    );
+  }
   translateToV1(query: Query): QueryOnlyV1 {
     const result = new QueryOnlyV1();
 
@@ -349,6 +358,7 @@ export class ApiTranslator {
     const exclusion = sqquery.exclusionCriteria ? sqquery.exclusionCriteria : [];
     uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria);
     uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery);
+    uiquery = this.rePosition(uiquery);
     return uiquery;
   }
 
@@ -359,6 +369,7 @@ export class ApiTranslator {
     const exclusion = sqquery.content.exclusionCriteria ? sqquery.content.exclusionCriteria : [];
     uiquery.groups[0].exclusionCriteria = this.translateSQtoUICriteria(exclusion, invalidCriteria);
     uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery.content);
+    uiquery = this.rePosition(uiquery);
     return uiquery;
   }
 
@@ -370,7 +381,7 @@ export class ApiTranslator {
 
     // eslint-disable-next-line  @typescript-eslint/prefer-for-of
     for (let i = 0; i < inexclusion.length; i++) {
-      inexclusion[i].forEach((or) => {
+      inexclusion[i].forEach((or, j) => {
         or.valueFilters = [];
         if (or.valueFilter) {
           or.valueFilters.push(or.valueFilter);
@@ -401,8 +412,15 @@ export class ApiTranslator {
             attribute.precision = 1;
           }
           if (attribute.type === 'reference') {
+            attribute.attributeDefinition.type = 'reference';
+            attribute.attributeDefinition.selectableConcepts = [];
             attribute.criteria.forEach((refCrit) => {
               refCrit.isLinked = true;
+              refCrit.uniqueID = uuidv4();
+              refCrit.criterionHash = this.translator.getCriterionHash(refCrit);
+              refCrit.termCodes[0].uid = refCrit.uniqueID;
+              attribute.attributeDefinition.selectableConcepts.push(refCrit.termCodes[0]);
+              attribute.attributeDefinition.optional = true;
               or.linkedCriteria.push(refCrit);
               inexclusion.push([refCrit]);
             });
@@ -438,6 +456,8 @@ export class ApiTranslator {
           };
         }
         or.isinvalid = invalidCriteriaSet.has(JSON.stringify(or.termCodes[0]));
+        or.position = { groupId: 1, critType: '', row: i, column: j };
+        or.criterionHash = this.translator.getCriterionHash(or);
       });
     }
     return inexclusion;
@@ -481,5 +501,46 @@ export class ApiTranslator {
       }
     }
     return consent;
+  }
+
+  rePosition(query: Query): Query {
+    for (const inex of ['inclusion', 'exclusion']) {
+      query.groups[0][inex + 'Criteria'].forEach((disj, i) => {
+        disj.forEach((conj, j) => {
+          conj.position.row = i;
+          conj.position.column = j;
+          conj.position.critType = inex;
+          if (conj.isLinked) {
+            this.setPositionForRefCrit(query, conj.uniqueID, i, j, inex);
+          }
+        });
+      });
+    }
+    return query;
+  }
+
+  setPositionForRefCrit(
+    query: Query,
+    uid: string,
+    row: number,
+    column: number,
+    critType: string
+  ): Query {
+    for (const inex of ['inclusion', 'exclusion']) {
+      query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.linkedCriteria?.length > 0) {
+            conj.linkedCriteria.forEach((linkedCrit) => {
+              if (linkedCrit.uniqueID === uid) {
+                linkedCrit.position.row = row;
+                linkedCrit.position.column = column;
+                linkedCrit.position.critType = critType;
+              }
+            });
+          }
+        });
+      });
+    }
+    return query;
   }
 }
