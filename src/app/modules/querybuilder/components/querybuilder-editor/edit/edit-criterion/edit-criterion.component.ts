@@ -171,6 +171,10 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
             const find = profile.attributeDefinitions.find(
               (attr) => attr.attributeCode.code === attribute.attributeDefinition.attributeCode.code
             );
+            attribute.attributeDefinition.optional = find.optional;
+            if (find.type === 'reference') {
+              attribute.attributeDefinition.referenceCriteriaSet = find.referenceCriteriaSet;
+            }
             if (find.type === 'concept') {
               if (find.selectableConcepts) {
                 attribute.attributeDefinition.selectableConcepts = find.selectableConcepts;

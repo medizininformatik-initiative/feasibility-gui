@@ -57,7 +57,7 @@ export class TermEntry2CriterionTranslator {
     return crit;
   }
 
-  getCriterionHash(criterion): string {
+  public getCriterionHash(criterion): string {
     const termcode = criterion.termCodes[0];
     const context = criterion.context;
     let contextVersion = '';

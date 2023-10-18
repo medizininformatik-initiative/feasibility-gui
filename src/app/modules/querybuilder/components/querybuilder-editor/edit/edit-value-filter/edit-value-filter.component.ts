@@ -11,7 +11,6 @@ import { Query } from '../../../../model/api/query/query';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { ValueType } from '../../../../model/api/terminology/valuedefinition';
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
-import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
@@ -38,9 +37,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   criterion: Criterion;
 
-  resetQuantityDisabled = true;
+  @Input()
+  optional: boolean;
 
-  optional = false;
+  resetQuantityDisabled = true;
 
   OperatorOptions: typeof OperatorOptions = OperatorOptions;
 
@@ -66,14 +66,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       };
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
-
-    if (this.filter?.attributeDefinition?.optional) {
-      this.optional = this.optional = true;
-    }
-
-    if (this.filter?.valueDefinition?.optional) {
-      this.optional = this.optional = true;
-    }
 
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
       this.criterion.linkedCriteria.forEach((linkedCrit) => {
@@ -109,7 +101,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     setTimeout(() => (this.disableAnimation = false));
     this.getQuantityFilterOption();
   }
-
   getQuantityFilterOption(): string {
     if (!this.filter || this.filter.type === OperatorOptions.CONCEPT) {
       return null;
