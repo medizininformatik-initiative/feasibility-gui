@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { QueryResult } from '../../../../model/api/result/QueryResult';
-import { interval, Observable, Subscription, timer } from 'rxjs';
-import { map, share, switchAll, takeUntil, startWith } from 'rxjs/operators';
 import { BackendService } from '../../../../service/backend.service';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { FeatureService } from 'src/app/service/Feature.service';
+import { Observable, Subscription } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { QueryResult } from 'src/app/model/result/QueryResult';
 import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 
 export class ResultDetailsDialogComponentData {

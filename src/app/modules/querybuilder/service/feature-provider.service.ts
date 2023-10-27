@@ -1,6 +1,6 @@
+import { IAppConfig } from '../../../config/app-config.model';
 import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { IAppConfig } from '../../../config/app-config.model';
 
 @Injectable({
   providedIn: 'root',

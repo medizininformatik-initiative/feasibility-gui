@@ -1,15 +1,14 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
-import { QueryProviderService } from '../../service/query-provider.service';
-import { Query } from '../../model/api/query/query';
-import { Router } from '@angular/router';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BackendService } from '../../service/backend.service';
-import { Subscription } from 'rxjs';
-import { FeatureService } from '../../../../service/feature.service';
-import { ApiTranslator } from '../../controller/ApiTranslator';
 import { FeatureProviderService } from '../../service/feature-provider.service';
 import { IAppConfig } from '../../../../config/app-config.model';
-import { TerminologyCode } from '../../model/api/terminology/terminology';
-
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { QueryProviderService } from '../../service/query-provider.service';
+import { Router } from '@angular/router';
+import { StructuredQuery } from '../../../../model/StructuredQuery/StructuredQuery';
+import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/StructuredQuery2UIQueryTranslator.service';
+import { Subscription } from 'rxjs';
+import { TerminologyCode} from 'src/app/model/terminology/Terminology.ts';
 @Component({
   selector: 'num-querybuilder-overview',
   templateUrl: './querybuilder-overview.component.html',
@@ -18,7 +17,7 @@ import { TerminologyCode } from '../../model/api/terminology/terminology';
 export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterViewChecked {
   private features: IAppConfig;
   queryVersion: string;
-  importQuery: Query;
+  importQuery: StructuredQuery;
   actionDisabled: boolean;
 
   constructor(
@@ -27,7 +26,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     private backend: BackendService,
     public featureProviderService: FeatureProviderService,
     private changeDetector: ChangeDetectorRef,
-    private apiTranslator: ApiTranslator
+    private apiTranslator: StructuredQuery2UIQueryTranslatorService
   ) {}
 
   private savedQueriesSubscription: Subscription;
@@ -102,10 +101,12 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
   }
 
   createDefaultQuery(query) {
-    this.query = this.apiTranslator.translateImportedSQtoUIQuery(
+    this.apiTranslator.translateImportedSQtoUIQuery(
       QueryProviderService.createDefaultQuery(),
       query
-    );
+    ).subscribe((translatedQuery) => {
+      this.query = translatedQuery;
+    })
   }
 
   storeQueryAndNavigate() {
@@ -113,6 +114,9 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
   }
 
+  /**
+   * @todo set isInvalid attribute of criterion based on request response
+   */
   doValidate(): void {
     this.savedTemplatesSubscription = this.backend.loadSavedTemplates(true).subscribe((queries) => {
       queries.forEach((template) => {

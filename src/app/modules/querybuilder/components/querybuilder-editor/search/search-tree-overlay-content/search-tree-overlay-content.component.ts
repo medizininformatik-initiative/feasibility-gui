@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminology/terminology';
-import { Observable, of, Subscription } from 'rxjs';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { BackendService } from '../../../../service/backend.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component';
-import { SearchMode } from '../search-input/search-input.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { CritType } from '../../../../model/api/query/group';
-import { Query } from '../../../../model/api/query/query';
+import { Observable, of, Subscription } from 'rxjs';
+import { SearchMode } from '../search-input/search-input.component';
+import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
+import { CritType } from 'src/app/model/FeasibilityQuery/Group';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
 
 @Component({
   selector: 'num-search-tree-overlay-content',

@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Criterion } from '../../../../model/api/query/criterion';
+import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
-import { CritType } from '../../../../model/api/query/group';
-import { Query } from '../../../../model/api/query/query';
+import { CritType } from '../../../../../../model/FeasibilityQuery/Group';
+import { Query } from '../../../../../../model/FeasibilityQuery/Query';
+//import { Criterion } from '../../../../model/api/query/criterion';
+//import { CritType } from '../../../../model/api/query/group';
+//import { Query } from '../../../../model/api/query/query';
 
 @Component({
   selector: 'num-display-crit-group',

@@ -1,12 +1,12 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
-import { CritType } from '../../../../model/api/query/group';
 import { merge, Observable, Subscription } from 'rxjs';
 import { MatInput } from '@angular/material/input';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { filter, mapTo } from 'rxjs/operators';
 import { MatFormField } from '@angular/material/form-field';
-import { Query } from '../../../../model/api/query/query';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { CritType } from 'src/app/model/FeasibilityQuery/Group';
 
 @Component({
   selector: 'num-search-input',

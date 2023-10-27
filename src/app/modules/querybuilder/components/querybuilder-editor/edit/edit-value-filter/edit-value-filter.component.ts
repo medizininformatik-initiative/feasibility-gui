@@ -1,17 +1,18 @@
-import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import {
+  AbstractAttributeFilters,
   Comparator,
-  OperatorOptions,
   QuantityUnit,
-  ValueFilter,
-} from '../../../../model/api/query/valueFilter';
-import { TerminologyCode } from '../../../../model/api/terminology/terminology';
-import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { Query } from '../../../../model/api/query/query';
-import { Criterion } from '../../../../model/api/query/criterion';
-import { ValueType } from '../../../../model/api/terminology/valuedefinition';
+} from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
+import { FilterTypes } from 'src/app/model/FilterTypes';
 import { MatSelectModule } from '@angular/material/select';
+import { ObjectHelper } from '../../../../controller/ObjectHelper';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { TerminologyCode } from 'src/app/model/terminology/Terminology';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -20,7 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
-  filter: ValueFilter;
+  abstractAttributeFilter: AbstractAttributeFilters;
 
   @ViewChildren(EditValueFilterConceptLineComponent)
   private checkboxes: QueryList<EditValueFilterConceptLineComponent>;
@@ -42,7 +43,11 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
   resetQuantityDisabled = true;
 
-  OperatorOptions: typeof OperatorOptions = OperatorOptions;
+  FilterTypes: typeof FilterTypes = FilterTypes;
+
+  attributeFilter: AttributeFilter;
+
+  valueFilter: ValueFilter;
 
   selectedUnit: QuantityUnit;
   // Use string representation of concept because equivalent objects do not match in TypeScript (e.g. { a: 1 } !== { a: 1 })
@@ -56,7 +61,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.filter?.selectedConcepts?.forEach((concept) => {
+    if (this.filterType === 'attribute') {
+      this.attributeFilter = this.abstractAttributeFilter as AttributeFilter;
+    } else {
+      this.valueFilter = this.abstractAttributeFilter as ValueFilter;
+    }
+    this.abstractAttributeFilter?.selectedConcepts?.forEach((concept) => {
       // bring the object into the right order for stringify
       const temp = {
         code: concept.code,
@@ -67,7 +77,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
 
-    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+    if (this.attributeFilter?.attributeDefinition?.type === FilterTypes.REFERENCE) {
       this.criterion.linkedCriteria.forEach((linkedCrit) => {
         // bring the object into the right order for stringify
         const temp2 = {
@@ -80,14 +90,14 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       });
     }
 
-    this.filter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
-      if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
+    this.valueFilter?.valueDefinition?.allowedUnits?.forEach((allowedUnit) => {
+      if (JSON.stringify(allowedUnit) === JSON.stringify(this.abstractAttributeFilter?.unit)) {
         this.selectedUnit = allowedUnit;
       }
     });
 
-    this.filter?.attributeDefinition?.allowedUnits?.forEach((allowedUnit) => {
-      if (JSON.stringify(allowedUnit) === JSON.stringify(this.filter?.unit)) {
+    this.attributeFilter?.attributeDefinition?.allowedUnits?.forEach((allowedUnit) => {
+      if (JSON.stringify(allowedUnit) === JSON.stringify(this.abstractAttributeFilter?.unit)) {
         this.selectedUnit = allowedUnit;
       }
     });
@@ -102,15 +112,18 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     this.getQuantityFilterOption();
   }
   getQuantityFilterOption(): string {
-    if (!this.filter || this.filter.type === OperatorOptions.CONCEPT) {
+    if (
+      !this.abstractAttributeFilter ||
+      this.abstractAttributeFilter.type === FilterTypes.CONCEPT
+    ) {
       return null;
     }
 
-    if (this.filter.type === OperatorOptions.QUANTITY_RANGE) {
+    if (this.abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE) {
       return 'BETWEEN';
     }
 
-    switch (this.filter.comparator) {
+    switch (this.abstractAttributeFilter.comparator) {
       case Comparator.EQUAL:
         return 'EQUAL';
       case Comparator.GREATER_OR_EQUAL:
@@ -127,48 +140,48 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   }
 
   roundMinValue(): void {
-    this.filter.minValue = this.round(this.filter.minValue);
+    this.abstractAttributeFilter.minValue = this.round(this.abstractAttributeFilter.minValue);
   }
 
   roundMaxValue(): void {
-    this.filter.maxValue = this.round(this.filter.maxValue);
+    this.abstractAttributeFilter.maxValue = this.round(this.abstractAttributeFilter.maxValue);
   }
 
   roundValue(): void {
-    this.filter.value = this.round(this.filter.value);
+    this.abstractAttributeFilter.value = this.round(this.abstractAttributeFilter.value);
   }
 
   round(value: number): number {
-    const divisor = Math.pow(10, this.filter.precision);
+    const divisor = Math.pow(10, this.abstractAttributeFilter.precision);
     return Math.round(value * divisor) / divisor;
   }
 
   selectQuantityFilterOption(option: string): void {
     if (option === 'BETWEEN') {
-      this.filter.type = OperatorOptions.QUANTITY_RANGE;
-      this.filter.comparator = Comparator.BETWEEN;
+      this.abstractAttributeFilter.type = FilterTypes.QUANTITY_RANGE;
+      this.abstractAttributeFilter.comparator = Comparator.BETWEEN;
     } else {
-      this.filter.type = OperatorOptions.QUANTITY_COMPARATOR;
+      this.abstractAttributeFilter.type = FilterTypes.QUANTITY_COMPARATOR;
       switch (option) {
         case 'EQUAL':
-          this.filter.comparator = Comparator.EQUAL;
+          this.abstractAttributeFilter.comparator = Comparator.EQUAL;
           break;
         case 'LESS_THAN':
-          this.filter.comparator = Comparator.LESS_THAN;
+          this.abstractAttributeFilter.comparator = Comparator.LESS_THAN;
           break;
         case 'GREATER_THAN':
-          this.filter.comparator = Comparator.GREATER_THAN;
+          this.abstractAttributeFilter.comparator = Comparator.GREATER_THAN;
           break;
         case 'NONE':
-          this.filter.comparator = Comparator.NONE;
+          this.abstractAttributeFilter.comparator = Comparator.NONE;
           break;
       }
     }
     if (
-      this.filter.comparator !== Comparator.NONE ||
-      (this.filter.type ===
-        (OperatorOptions.QUANTITY_RANGE || OperatorOptions.QUANTITY_COMPARATOR) &&
-        this.filter.valueDefinition.type === ValueType.QUANTITY)
+      this.abstractAttributeFilter.comparator !== Comparator.NONE ||
+      (this.abstractAttributeFilter.type ===
+        (FilterTypes.QUANTITY_RANGE || FilterTypes.QUANTITY_COMPARATOR) &&
+        this.valueFilter.valueDefinition.type === FilterTypes.QUANTITY)
     ) {
       this.resetQuantityDisabled = false;
     } else {
@@ -188,8 +201,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     const criterionForLinking = this.getSelectedCriterion(temp);
 
     if (
-      this.filter.attributeDefinition?.type === ValueType.CONCEPT ||
-      this.filter.valueDefinition?.type === ValueType.CONCEPT
+      this.attributeFilter?.attributeDefinition?.type === FilterTypes.CONCEPT ||
+      this.valueFilter?.valueDefinition?.type === FilterTypes.CONCEPT
     ) {
       if (this.selectedConceptsAsJson.has(conceptAsJson)) {
         this.selectedConceptsAsJson.delete(conceptAsJson);
@@ -197,12 +210,12 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         this.selectedConceptsAsJson.add(conceptAsJson);
       }
 
-      this.filter.selectedConcepts = [];
+      this.abstractAttributeFilter.selectedConcepts = [];
       this.selectedConceptsAsJson.forEach((conceptAsJsonTemp) => {
-        this.filter.selectedConcepts.push(JSON.parse(conceptAsJsonTemp));
+        this.abstractAttributeFilter.selectedConcepts.push(JSON.parse(conceptAsJsonTemp));
       });
     }
-    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+    if (this.attributeFilter?.attributeDefinition?.type === FilterTypes.REFERENCE) {
       if (this.selectedReferenceAsJson.has(conceptAsJson)) {
         this.selectedReferenceAsJson.delete(conceptAsJson);
         if (criterionForLinking) {
@@ -252,7 +265,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       uid: concept.uid,
     };
 
-    if (this.filter.type === OperatorOptions.REFERENCE) {
+    if (this.abstractAttributeFilter.type === FilterTypes.REFERENCE) {
       return this.selectedReferenceAsJson.has(JSON.stringify(temp));
     }
 
@@ -278,17 +291,17 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     return isLinked;
   }
 
-  deSelectAllCheckboxes() {
+  doSelectAllCheckboxes() {
     this.checkboxes.forEach((checkbox, index) => {
       if (checkbox.checked) {
         checkbox.checked = false;
         checkbox.checkedControlForm.patchValue(['checkedControl', false]);
         if (
-          (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
-          ValueType.CONCEPT
+          (this.attributeFilter.attributeDefinition?.type ||
+            this.valueFilter.valueDefinition?.type) === FilterTypes.CONCEPT
         ) {
           this.selectedConceptsAsJson = new Set();
-          this.filter.selectedConcepts = [];
+          this.abstractAttributeFilter.selectedConcepts = [];
         } else {
           this.doSelectConcept(checkbox.concept);
         }
@@ -297,56 +310,62 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   }
 
   resetFilter() {
-    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
-      return this.deSelectAllCheckboxes();
+    if (this.attributeFilter?.attributeDefinition?.type === FilterTypes.REFERENCE) {
+      return this.doSelectAllCheckboxes();
     }
 
     if (
-      (this.filter.comparator !== Comparator.NONE ||
-        this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
-      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
-        ValueType.QUANTITY
+      ((this.abstractAttributeFilter.comparator !== Comparator.NONE)
+        ||
+        (this.abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE)
+      )
+      &&
+      (
+        (this.attributeFilter?.attributeDefinition?.type === FilterTypes.QUANTITY)
+        ||
+        (this.valueFilter?.valueDefinition?.type === FilterTypes.QUANTITY)
+      )
     ) {
-      this.filter.maxValue = 0;
-      this.filter.minValue = 0;
-      this.filter.value = 0;
-      if (this.filter?.valueDefinition?.allowedUnits.length > 0) {
-        this.filter.unit = this.filter.valueDefinition.allowedUnits[0];
+      this.abstractAttributeFilter.maxValue = 0;
+      this.abstractAttributeFilter.minValue = 0;
+      this.abstractAttributeFilter.value = 0;
+      if (this.valueFilter?.valueDefinition?.allowedUnits.length > 0) {
+        this.abstractAttributeFilter.unit = this.valueFilter?.valueDefinition?.allowedUnits[0];
       }
-      if (this.filter?.attributeDefinition?.allowedUnits.length > 0) {
-        this.filter.unit = this.filter.attributeDefinition.allowedUnits[0];
+      if (this.attributeFilter?.attributeDefinition?.allowedUnits.length > 0) {
+        this.abstractAttributeFilter.unit = this.attributeFilter?.attributeDefinition?.allowedUnits[0];
       }
-      this.filter.comparator = Comparator.NONE;
-      this.filter.type = OperatorOptions.QUANTITY_COMPARATOR;
+      this.abstractAttributeFilter.comparator = Comparator.NONE;
+      this.abstractAttributeFilter.type = FilterTypes.QUANTITY_COMPARATOR;
       this.quantityFilterOption = 'NONE';
     }
     if (
       this.selectedConceptsAsJson.size > 0 &&
-      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
-        ValueType.CONCEPT
+      ((this.valueFilter.valueDefinition.type === FilterTypes.CONCEPT) ||
+      (this.attributeFilter?.attributeDefinition?.type === FilterTypes.CONCEPT))
     ) {
-      this.deSelectAllCheckboxes();
+      this.doSelectAllCheckboxes();
     }
   }
 
   resetButtonDisabled() {
     if (
       this.selectedConceptsAsJson.size > 0 &&
-      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
-        ValueType.CONCEPT
+      ((this.valueFilter.valueDefinition.type === FilterTypes.CONCEPT) ||
+        (this.attributeFilter?.attributeDefinition?.type === FilterTypes.CONCEPT))
     ) {
       return false;
     }
     if (
-      (this.filter.comparator !== Comparator.NONE ||
-        this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
-      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
-        ValueType.QUANTITY
+      (this.abstractAttributeFilter.comparator !== Comparator.NONE ||
+        this.abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE) &&
+      ((this.valueFilter.valueDefinition.type === FilterTypes.QUANTITY) ||
+        (this.attributeFilter?.attributeDefinition?.type === FilterTypes.QUANTITY))
     ) {
       return false;
     }
 
-    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+    if (this.attributeFilter?.attributeDefinition?.type === FilterTypes.REFERENCE) {
       if (this.criterion.linkedCriteria.length > 0) {
         return false;
       } else {
@@ -357,37 +376,41 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     return true;
   }
 
+
   public isActionDisabled(): boolean {
     if (
-      this.filter?.type === OperatorOptions.QUANTITY_COMPARATOR &&
-      this.filter?.comparator !== Comparator.NONE
+      this.abstractAttributeFilter?.type === FilterTypes.QUANTITY_COMPARATOR &&
+      this.abstractAttributeFilter?.comparator !== Comparator.NONE
     ) {
-      return this.valueTooSmall(this.filter.value) || this.valueTooLarge(this.filter.value);
-    }
-
-    if (this.filter?.type === OperatorOptions.QUANTITY_RANGE) {
       return (
-        this.minimumSmallerMaximum() ||
-        this.valueTooSmall(this.filter.minValue) ||
-        this.valueTooLarge(this.filter.minValue) ||
-        this.valueTooSmall(this.filter.maxValue) ||
-        this.valueTooLarge(this.filter.maxValue)
+        this.valueTooSmall(this.abstractAttributeFilter.value) ||
+        this.valueTooLarge(this.abstractAttributeFilter.value)
       );
     }
 
-    if (this.filter?.attributeDefinition) {
-      if (this.filter?.attributeDefinition?.optional) {
+    if (this.abstractAttributeFilter?.type === FilterTypes.QUANTITY_RANGE) {
+      return (
+        this.minimumSmallerMaximum() ||
+        this.valueTooSmall(this.abstractAttributeFilter.minValue) ||
+        this.valueTooLarge(this.abstractAttributeFilter.minValue) ||
+        this.valueTooSmall(this.abstractAttributeFilter.maxValue) ||
+        this.valueTooLarge(this.abstractAttributeFilter.maxValue)
+      );
+    }
+
+    if (this.attributeFilter?.attributeDefinition) {
+      if (this.attributeFilter?.attributeDefinition?.optional) {
         return false;
       }
     }
 
-    if (this.filter?.valueDefinition) {
-      if (this.filter?.valueDefinition?.optional) {
+    if (this.valueFilter?.valueDefinition) {
+      if (this.valueFilter?.valueDefinition?.optional) {
         return false;
       }
     }
 
-    if (this.filter?.type === OperatorOptions.CONCEPT) {
+    if (this.abstractAttributeFilter?.type === FilterTypes.CONCEPT) {
       return this.noSelectedConcept();
     }
 
@@ -399,23 +422,23 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   }
 
   valueTooSmall(value: number): boolean {
-    if (!ObjectHelper.isNumber(this.filter.min)) {
+    if (!ObjectHelper.isNumber(this.abstractAttributeFilter.min)) {
       return false;
     }
-    return value < this.filter.min;
+    return value < this.abstractAttributeFilter.min;
   }
 
   valueTooLarge(value: number): boolean {
-    if (!ObjectHelper.isNumber(this.filter.max)) {
+    if (!ObjectHelper.isNumber(this.abstractAttributeFilter.max)) {
       return false;
     }
-    return value > this.filter.max;
+    return value > this.abstractAttributeFilter.max;
   }
 
   minimumSmallerMaximum(): boolean {
     return (
-      this.filter.type === OperatorOptions.QUANTITY_RANGE &&
-      this.filter.minValue >= this.filter.maxValue
+      this.abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE &&
+      this.abstractAttributeFilter.minValue >= this.abstractAttributeFilter.maxValue
     );
   }
 

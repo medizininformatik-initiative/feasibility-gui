@@ -1,9 +1,9 @@
-<div *ngIf="filter" [@.disabled]="disableAnimation">
+<div *ngIf="abstractAttributeFilter" [@.disabled]="disableAnimation">
   <mat-expansion-panel togglePosition="before" [expanded]="!optional">
     <mat-expansion-panel-header>
       <ng-container>
         <mat-panel-title *ngIf="filterType === 'attribute'">
-          {{ filter.attributeDefinition.attributeCode.display }}
+          {{ attributeFilter.attributeDefinition.attributeCode.display }}
           <span *ngIf="optional">&nbsp;(optional)</span>:
         </mat-panel-title>
         <mat-panel-title *ngIf="filterType !== 'attribute'">
@@ -34,38 +34,45 @@
       <!-- QUANTITY -->
       <div
         *ngIf="
-          filter.type === OperatorOptions.QUANTITY_RANGE ||
-          filter.type === OperatorOptions.QUANTITY_COMPARATOR
+          abstractAttributeFilter.type === FilterTypes.QUANTITY_NOT_SET ||
+          abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE ||
+          abstractAttributeFilter.type === FilterTypes.QUANTITY_COMPARATOR
         "
       >
         <span *ngIf="filterType === 'value' && !optional" class="required-flag"> * </span>
-        <span *ngIf="filterType === 'value' && !optional && !filter.display">
+        <span *ngIf="filterType === 'value' && !optional && !abstractAttributeFilter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}
           <br /><br
         /></span>
-        <span *ngIf="filterType === 'value' && filter.display">
-          {{ filter.display }}: <br /><br
+        <span *ngIf="filterType === 'value' && abstractAttributeFilter.display">
+          {{ abstractAttributeFilter.display }}: <br /><br
         /></span>
 
         <span *ngIf="filterType === 'attribute' && !optional" class="required-flag"> * </span>
         <ng-container
           *ngIf="
             filterType === 'attribute' &&
-            filter.attributeDefinition.attributeCode.display &&
+            attributeFilter.attributeDefinition.attributeCode.display &&
             !optional
           "
         >
-          <span>{{ filter.attributeDefinition.attributeCode.display }}:</span>
+          <span>{{ attributeFilter.attributeDefinition.attributeCode.display }}:</span>
           <br />
         </ng-container>
         <ng-container
-          *ngIf="filterType === 'attribute' && !filter.attributeDefinition.attributeCode.display"
+          *ngIf="
+            filterType === 'attribute' && !attributeFilter.attributeDefinition.attributeCode.display
+          "
         >
           <span>{{ 'QUERYBUILDER.EDIT.HEADER_FILTER_QUANTITY' | translate }}</span>
           <br />
         </ng-container>
 
-        <mat-form-field appearance="outline" *ngIf="filter?.unit" class="operator-part">
+        <mat-form-field
+          appearance="outline"
+          *ngIf="abstractAttributeFilter?.unit"
+          class="operator-part"
+        >
           <!--<mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>-->
           <mat-select #matOption [(value)]="quantityFilterOption">
             <mat-option
@@ -79,7 +86,7 @@
         </mat-form-field>
         <mat-form-field
           appearance="outline"
-          *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE"
+          *ngIf="abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE"
           class="min-part"
         >
           <mat-label>{{ 'QUERYBUILDER.EDIT.MIN' | translate }}</mat-label>
@@ -88,26 +95,26 @@
             matInput
             type="number"
             (change)="resetQuantityDisabled = false"
-            [(ngModel)]="filter.minValue"
+            [(ngModel)]="abstractAttributeFilter.minValue"
             (blur)="roundMinValue()"
             numMatInputNumber
-            [precision]="filter.precision"
-            [min]="filter?.min"
-            [max]="filter?.max"
+            [precision]="abstractAttributeFilter.precision"
+            [min]="abstractAttributeFilter?.min"
+            [max]="abstractAttributeFilter?.max"
           />
-          <mat-hint *ngIf="valueTooSmall(filter.minValue)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
+          <mat-hint *ngIf="valueTooSmall(abstractAttributeFilter.minValue)">{{
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: abstractAttributeFilter.min }
           }}</mat-hint>
-          <mat-hint *ngIf="valueTooLarge(filter.minValue)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
+          <mat-hint *ngIf="valueTooLarge(abstractAttributeFilter.minValue)">{{
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: abstractAttributeFilter.max }
           }}</mat-hint>
         </mat-form-field>
-        <span *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE">{{
+        <span *ngIf="abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE">{{
           'QUERYBUILDER.EDIT.AND' | translate
         }}</span>
         <mat-form-field
           appearance="outline"
-          *ngIf="filter.type === OperatorOptions.QUANTITY_RANGE"
+          *ngIf="abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE"
           class="max-part"
         >
           <mat-label>{{ 'QUERYBUILDER.EDIT.MAX' | translate }}</mat-label>
@@ -116,22 +123,23 @@
             matInput
             type="number"
             (change)="resetQuantityDisabled = false"
-            [(ngModel)]="filter.maxValue"
+            [(ngModel)]="abstractAttributeFilter.maxValue"
             (blur)="roundMaxValue()"
             numMatInputNumber
-            [precision]="filter.precision"
+            [precision]="abstractAttributeFilter.precision"
           />
-          <mat-hint *ngIf="valueTooSmall(filter.maxValue)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
+          <mat-hint *ngIf="valueTooSmall(abstractAttributeFilter.maxValue)">{{
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: abstractAttributeFilter.min }
           }}</mat-hint>
-          <mat-hint *ngIf="valueTooLarge(filter.maxValue)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
+          <mat-hint *ngIf="valueTooLarge(abstractAttributeFilter.maxValue)">{{
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: abstractAttributeFilter.max }
           }}</mat-hint>
         </mat-form-field>
         <mat-form-field
           appearance="outline"
           *ngIf="
-            filter.type === OperatorOptions.QUANTITY_COMPARATOR && filter?.comparator !== 'none'
+            abstractAttributeFilter.type === FilterTypes.QUANTITY_COMPARATOR &&
+            abstractAttributeFilter?.comparator !== 'none'
           "
           class="value-part"
         >
@@ -141,42 +149,45 @@
             matInput
             type="number"
             (change)="resetQuantityDisabled = false"
-            [(ngModel)]="filter.value"
+            [(ngModel)]="abstractAttributeFilter.value"
             (blur)="roundValue()"
             numMatInputNumber
-            [precision]="filter.precision"
+            [precision]="abstractAttributeFilter.precision"
           />
-          <mat-hint *ngIf="valueTooSmall(filter.value)">{{
-            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: filter.min }
+          <mat-hint *ngIf="valueTooSmall(abstractAttributeFilter.value)">{{
+            'QUERYBUILDER.HINT.MINIMUM_EXCEEDED' | translate : { min: abstractAttributeFilter.min }
           }}</mat-hint>
-          <mat-hint *ngIf="valueTooLarge(filter.value)">{{
-            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: filter.max }
+          <mat-hint *ngIf="valueTooLarge(abstractAttributeFilter.value)">{{
+            'QUERYBUILDER.HINT.MAXIMUM_EXCEEDED' | translate : { max: abstractAttributeFilter.max }
           }}</mat-hint>
         </mat-form-field>
         <mat-form-field
           appearance="outline"
           *ngIf="
-            filter?.unit && (filter?.comparator !== 'none' || filter?.type === 'quantity-range')
+            abstractAttributeFilter?.unit && (abstractAttributeFilter?.comparator !== 'none' || abstractAttributeFilter?.type === 'quantity-range')
           "
           class="unit-part"
         >
           <mat-label>{{ 'QUERYBUILDER.EDIT.UNIT' | translate }}</mat-label>
           <mat-select
             *ngIf="filterType === 'value'"
-            [(value)]="filter.unit"
+            [(value)]="abstractAttributeFilter.unit"
             [compareWith]="compareFunction"
           >
-            <mat-option *ngFor="let unit of filter.valueDefinition?.allowedUnits" [value]="unit">
+            <mat-option
+              *ngFor="let unit of valueFilter.valueDefinition?.allowedUnits"
+              [value]="unit"
+            >
               {{ unit.display }}
             </mat-option>
           </mat-select>
           <mat-select
             *ngIf="filterType === 'attribute'"
-            [(value)]="filter.unit"
+            [(value)]="abstractAttributeFilter.unit"
             [compareWith]="compareFunction"
           >
             <mat-option
-              *ngFor="let unit of filter.attributeDefinition?.allowedUnits"
+              *ngFor="let unit of attributeFilter.attributeDefinition?.allowedUnits"
               [value]="unit"
             >
               {{ unit.display }}
@@ -190,21 +201,24 @@
 
       <!-- CONCEPT -->
       <div
-        *ngIf="filter.type === OperatorOptions.CONCEPT || filter.type === OperatorOptions.REFERENCE"
+        *ngIf="
+          abstractAttributeFilter.type === FilterTypes.CONCEPT ||
+          abstractAttributeFilter.type === FilterTypes.REFERENCE
+        "
       >
         <span *ngIf="filterType === 'value' && !optional" class="required-flag"> * </span>
-        <span *ngIf="filterType === 'value' && !optional && !filter.display">
+        <span *ngIf="filterType === 'value' && !optional && !abstractAttributeFilter.display">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
           <br /><br
         /></span>
-        <span *ngIf="filterType === 'value' && filter.display">
-          {{ filter.display }}: <br /><br
+        <span *ngIf="filterType === 'value' && abstractAttributeFilter.display">
+          {{ abstractAttributeFilter.display }}: <br /><br
         /></span>
         <span *ngIf="filterType === 'attribute' && !optional" class="required-flag"> * </span>
         <span
           *ngIf="
             filterType === 'attribute' &&
-            !filter.attributeDefinition.attributeCode.display &&
+            !attributeFilter.attributeDefinition.attributeCode.display &&
             optional
           "
         >
@@ -213,8 +227,8 @@
         <span
           *ngIf="
             filterType === 'attribute' &&
-            !filter.attributeDefinition.attributeCode.display &&
-            !filter.attributeDefinition.optional
+            !attributeFilter.attributeDefinition.attributeCode.display &&
+            !attributeFilter.attributeDefinition.optional
           "
         >
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_CONCEPT_MANDATORY' | translate }}
@@ -222,18 +236,18 @@
         <ng-container
           *ngIf="
             filterType === 'attribute' &&
-            filter.attributeDefinition.attributeCode.display &&
+            attributeFilter.attributeDefinition.attributeCode.display &&
             !optional
           "
         >
-          <span>{{ filter.attributeDefinition.attributeCode.display }}:</span>
+          <span>{{ attributeFilter.attributeDefinition.attributeCode.display }}:</span>
           <br />
         </ng-container>
 
         <div *ngIf="filterType === 'value'" class="concept-list">
           <num-edit-value-filter-concept-line
             #checkboxes
-            *ngFor="let concept of filter.valueDefinition?.selectableConcepts"
+            *ngFor="let concept of valueFilter.valueDefinition?.selectableConcepts"
             [checked]="isSelected(concept)"
             [concept]="concept"
             (selectConcept)="doSelectConcept(concept)"
@@ -243,7 +257,7 @@
         <div *ngIf="filterType === 'attribute'" class="concept-list">
           <num-edit-value-filter-concept-line
             #checkboxes
-            *ngFor="let concept of filter.attributeDefinition?.selectableConcepts"
+            *ngFor="let concept of attributeFilter.attributeDefinition?.selectableConcepts"
             [checked]="isSelected(concept)"
             [concept]="concept"
             (selectConcept)="doSelectConcept(concept)"

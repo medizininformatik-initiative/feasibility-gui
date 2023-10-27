@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CategoryEntry } from '../../../../model/api/terminology/terminology';
+import { CategoryEntry } from 'src/app/model/terminology/Terminology';
 
 @Component({
   selector: 'num-search-text-header',

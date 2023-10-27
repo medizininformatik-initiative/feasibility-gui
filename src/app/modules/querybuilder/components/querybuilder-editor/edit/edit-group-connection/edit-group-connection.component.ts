@@ -1,14 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Query } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import {
   Group,
   GroupDependencyInfo,
   InstanceRestrictionType,
   PeriodUnit,
   TimeRelation,
-} from '../../../../model/api/query/group';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { Query } from '../../../../model/api/query/query';
+} from 'src/app/model/FeasibilityQuery/Group';
 
 export class EditGroupConnectionComponentData {
   query: Query;

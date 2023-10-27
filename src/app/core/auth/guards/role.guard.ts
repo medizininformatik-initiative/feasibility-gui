@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  CanLoad,
-  Route,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { CanActivate, CanLoad, Route, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
-import { FeatureService } from '../../../service/feature.service';
+import { FeatureService } from '../../../service/Feature.service';
 
 @Injectable({
   providedIn: 'root',
@@ -39,16 +33,13 @@ export class RoleGuard implements CanActivate, CanLoad {
       if (role === 'main') {
         expandedAllowedRoles = expandedAllowedRoles.concat(this.featureService.getRoles('main'));
       } else if (role === 'option') {
-        expandedAllowedRoles = expandedAllowedRoles.concat(
-          this.featureService.getRoles('optionpage')
-        );
+        expandedAllowedRoles = expandedAllowedRoles.concat(this.featureService.getRoles('optionpage'));
       } else {
         expandedAllowedRoles.push(role);
       }
     });
 
-    const isLoggedIn =
-      this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
+    const isLoggedIn = this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
 
     if (!isLoggedIn) {
       await this.oauthService.loadDiscoveryDocumentAndLogin({ customRedirectUri: redirectUri });

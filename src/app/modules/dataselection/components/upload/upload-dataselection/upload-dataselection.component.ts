@@ -3,14 +3,14 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Injectable,
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiTranslator } from 'src/app/modules/querybuilder/controller/ApiTranslator';
-import { Query } from 'src/app/modules/querybuilder/model/api/query/query';
 import { QueryProviderService } from 'src/app/modules/querybuilder/service/query-provider.service';
-
+import { Query as QueryOld } from 'src/app/modules/querybuilder/model/api/query/query';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { UIQuery2StructuredQueryTranslatorService } from '../../../../../../service/UIQuery2StructuredQueryTranslator.service';
 @Component({
   selector: 'num-upload-dataselection',
   templateUrl: './upload-dataselection.component.html',
@@ -29,7 +29,8 @@ export class UploadDataselectionComponent implements AfterViewChecked {
     public queryProviderService: QueryProviderService,
     private router: Router,
     private changeDetector: ChangeDetectorRef,
-    private apiTranslator: ApiTranslator
+    private apiTranslator: ApiTranslator,
+    private newTranslator: UIQuery2StructuredQueryTranslatorService
   ) {}
 
   ngAfterViewChecked(): void {
@@ -44,9 +45,9 @@ export class UploadDataselectionComponent implements AfterViewChecked {
     const importQueryCopy = JSON.parse(JSON.stringify(this.importQuery));
 
     this.query = this.apiTranslator.translateImportedDsToUIQuery(
-      QueryProviderService.createDefaultQuery(),
-      importQueryCopy
-    );
+      QueryProviderService.createDefaultQuery() as unknown as QueryOld,
+      importQueryCopy as unknown as QueryOld
+    ) as unknown as Query;
 
     this.queryProviderService.store(this.query);
     this.parentComponent.emit(this.query);

@@ -14,8 +14,8 @@ import { BackendService } from '../../../../service/backend.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SearchMode } from '../search-input/search-input.component';
 import { CritType } from '../../../../model/api/query/group';
-import { Query } from '../../../../model/api/query/query';
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
 
 @Component({
   selector: 'num-search-text-overlay-content',
