@@ -29,6 +29,8 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   @Input()
   showCancelButton: boolean;
 
+  checkboxValue = false;
+
   @Output()
   delete = new EventEmitter<Criterion>();
 
@@ -41,6 +43,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog, public featureService: FeatureService) {}
 
   ngOnInit(): void {
+    this.checkboxValue = this.criterion.optional ? this.criterion.optional : false;
     this.criterion.position = this.position;
     this.isinvalid = this.criterion.isinvalid === true;
   }
@@ -51,7 +54,6 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
 
   openDetailsPopUp(): void {
     const dialogConfig = new MatDialogConfig();
-
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
@@ -96,7 +98,8 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkboxCheckedDataselection(event): void {
-    this.criterion.optional = event.checked;
+  storeCheckboxValue(): void {
+    this.criterion.optional = this.checkboxValue;
+    this.storeQuery.emit(this.query);
   }
 }
