@@ -39,10 +39,14 @@
     </ng-container>
   </div>
   <div *ngIf="searchType !== 'querybuilder'">
-    <section class="example-section">
-      <mat-checkbox (change)="checkboxCheckedDataselection($event)" class="checkbox-optional">{{
-        'DATASELECTION.OPTIONAL' | translate
-      }}</mat-checkbox>
+    <section>
+      <mat-checkbox
+        [(ngModel)]="checkboxValue"
+        (change)="storeCheckboxValue()"
+        class="checkbox-optional"
+      >
+        {{ 'DATASELECTION.OPTIONAL' | translate }}
+      </mat-checkbox>
     </section>
   </div>
   <div *ngIf="showCancelButton" class="cancel-button-wrapper">
