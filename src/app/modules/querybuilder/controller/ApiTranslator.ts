@@ -141,9 +141,13 @@ export class ApiTranslator {
     inclusionCriteria.forEach((criterionArray) => {
       const innerArrayV2: CriterionOnlyV2[] = [];
       criterionArray.forEach((criterion) => {
+        console.log(criterion);
         if (criterion.isLinked === undefined || criterion.isLinked === false) {
           const criterionV2 = new CriterionOnlyV2();
           criterionV2.termCodes = criterion.termCodes;
+          if (typeof criterion.optional === 'boolean') {
+            criterionV2.optional = criterion.optional;
+          }
           if (this.featureService.getSendSQContextToBackend()) {
             criterionV2.context = criterion.context;
           }
