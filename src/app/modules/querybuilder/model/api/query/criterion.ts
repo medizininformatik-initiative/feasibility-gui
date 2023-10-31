@@ -12,7 +12,7 @@ export class Criterion {
   termCodes?: Array<TerminologyCode> = [];
   display?: string;
   entity?: boolean;
-  optional?: boolean;
+  optional?: boolean = false;
   valueFilters?: Array<ValueFilter> = [];
   attributeFilters?: Array<AttributeFilter> = [];
   children?: Array<TerminologyEntry> = [];
@@ -44,4 +44,5 @@ export class CriterionOnlyV2 {
   children?: Array<TerminologyEntry> = [];
   linkedCriteria?: Criterion[] = [];
   isinvalid?: boolean;
+  optional?: boolean;
 }
