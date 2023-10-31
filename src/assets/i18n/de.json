@@ -72,7 +72,8 @@
     },
     "DISPLAY": {
       "LABEL": "Ausgewählte Merkmale"
-    }
+    },
+    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an Philip.Kleinert@tmf-ev.de schicken."
   },
   "LANGUAGE": {
     "GERMAN": "Deutsch",
@@ -243,27 +244,28 @@
     "CONTACT": "Kontakt"
   },
   "BUTTON": {
-    "SAVE": "Speichern",
-    "CANCEL": "Abbrechen",
-    "CLOSE": "Schließen",
-    "DOWNLOAD": "Herunterladen",
     "ADD": "Auswählen",
     "ADD_TOOLTIP": "Merkmal einschränken",
     "ADDALL": "Alle hinzufügen",
-    "SEND": "Abfrage starten",
+    "CANCEL": "Abbrechen",
+    "CLOSE": "Schließen",
+    "DOWNLOAD": "Herunterladen",
+    "IMPORT": "Query laden",
+    "IMPORT_DATASELECTION":"Dataselektion hochladen",
+    "IMPORT_FROM_FILE": "Datei auswählen",
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
+    "SAVE": "Speichern",
+    "SEND": "Abfrage starten",
     "SAVEQUERY": "Abfrage speichern",
-    "VALIDATE": "Validieren",
-    "IMPORT": "Query laden",
-    "IMPORT_FROM_FILE": "Datei auswählen"
+    "VALIDATE": "Validieren"
   },
   "ERROR": {
     "FEAS-10001": "Ihr Benutzer wurde wegen zu vielen Anfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
     "FEAS-10005"  :"Die Anzahl der Standorte die geantwortet haben ist zu klein -> Detailergebnis wird nicht angezeigt",
     "FEAS-10004"  :"Die Ergebnismenge ist zu klein -> Ergebnis wird nicht angezeigt",
     "FEAS-10002"  :"Sie haben zu viele Anfragen gestellt, bitte warten Sie {{ RETRY_AFTER }} Sekunden und probieren Sie es erneut",
-    "404"         :"Standort wurde nicht gefunden"
+    "404"         :"Standort wurde nicht gefunden",
     "IMPORT_FROM_FILE": "Datei auswählen",
     "IMPORT_DATASELECTION": "Datenselektion laden"
   }

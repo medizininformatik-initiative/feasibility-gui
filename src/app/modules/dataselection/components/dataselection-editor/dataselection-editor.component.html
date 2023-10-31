@@ -1,27 +1,38 @@
 <div class="header-line">
-  <div fxLayoutAlign="space-between center">
-    <div fxLayout="column" class="query-buttons-box">
-      <div fxLayout="row" fxLayoutAlign="end right">
-        <num-upload-dataselection (parentComponent)="loadQuery($event)"></num-upload-dataselection>
-        <num-button
-          [type]="'primary'"
-          class="button-reset"
-          [isDisabled]="actionDisabledReset"
-          (click)="!actionDisabledReset && doReset()"
-        >
-          {{ 'BUTTON.RESET' | translate }}
-        </num-button>
-        <num-button
-          [type]="'primary'"
-          [isDisabled]="actionDisabledSend"
-          (click)="!actionDisabledSend && doShowStoredQuery()"
-          class="button-send"
-        >
-          {{ 'BUTTON.DOWNLOAD' | translate }}
-        </num-button>
-      </div>
-    </div>
-  </div>
+  <mat-card class="mat-elevation-z2">
+    <mat-card-header>
+      <mat-card-title fyLayout="row" class="card-title-font">
+        <mat-divider class="divider"></mat-divider>
+        <div fxFlex="3">
+          <fa-icon size="1x" icon="exclamation-circle"></fa-icon>
+        </div>
+        {{ 'DATASELECTION.INFOTEXT' | translate }}
+      </mat-card-title>
+      <mat-card-subtitle class="padding-bottom-1">
+        <div fxLayout="row" fxLayoutAlign="end right">
+          <num-upload-dataselection
+            (parentComponent)="loadQuery($event)"
+          ></num-upload-dataselection>
+          <num-button
+            [type]="'primary'"
+            class="button-reset"
+            [isDisabled]="actionDisabledReset"
+            (click)="!actionDisabledReset && doReset()"
+          >
+            {{ 'BUTTON.RESET' | translate }}
+          </num-button>
+          <num-button
+            [type]="'primary'"
+            [isDisabled]="actionDisabledSend"
+            (click)="!actionDisabledSend && doShowStoredQuery()"
+            class="button-send"
+          >
+            {{ 'BUTTON.DOWNLOAD' | translate }}
+          </num-button>
+        </div>
+      </mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
   <div class="container">
     <num-search-input
       [critType]="'inclusion'"
