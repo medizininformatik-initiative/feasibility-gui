@@ -1,5 +1,4 @@
-import { Criterion } from './criterion';
-import { V2 } from '../annotations';
+import { Criterion } from './Criterion/criterion';
 
 // Example
 //     {
@@ -15,7 +14,6 @@ import { V2 } from '../annotations';
 //     * at most 10 days earlier than the first occurring instance of the related  group
 //     * at most 2 months later than the first occurring instance of the related  group end note
 //
-@V2()
 export class GroupDependencyInfo {
   linked = false;
 

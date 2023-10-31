@@ -1,5 +1,5 @@
 import { TerminologyCode } from './terminology';
-import { QuantityUnit } from '../query/attributeFilters';
+import { QuantityUnit } from '../query/Criterion/attributeFilters';
 
 export abstract class ValueDefinition {
   type: ValueType;
