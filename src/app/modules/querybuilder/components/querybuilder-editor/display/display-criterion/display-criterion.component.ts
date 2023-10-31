@@ -95,4 +95,8 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
       return [];
     }
   }
+
+  checkboxCheckedDataselection(event): void {
+    this.criterion.optional = event.checked;
+  }
 }
