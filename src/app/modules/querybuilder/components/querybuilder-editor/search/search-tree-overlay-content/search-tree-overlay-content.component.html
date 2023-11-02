@@ -23,6 +23,7 @@
             <fa-icon icon="chevron-down" *ngIf="treeControl.isExpanded(node)"></fa-icon>
           </button>
           <num-search-tree-term-entry
+            [searchtype]="searchType"
             [node]="node"
             (toggleEvent)="onToggleLoad($event)"
           ></num-search-tree-term-entry>
