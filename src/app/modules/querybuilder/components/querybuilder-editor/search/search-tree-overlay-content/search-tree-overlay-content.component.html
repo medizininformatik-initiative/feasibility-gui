@@ -23,10 +23,17 @@
             <fa-icon icon="chevron-down" *ngIf="treeControl.isExpanded(node)"></fa-icon>
           </button>
           <num-search-tree-term-entry
+            *ngIf="searchType === 'querybuilder'"
             [searchtype]="searchType"
             [node]="node"
             (toggleEvent)="onToggleLoad($event)"
           ></num-search-tree-term-entry>
+          <num-search-tree-term-entry-dataselection
+            *ngIf="searchType === 'dataselection'"
+            [searchtype]="searchType"
+            [node]="node"
+            (toggleEvent)="onToggleLoad($event)"
+          ></num-search-tree-term-entry-dataselection>
         </div>
         <ul [class.ontology-tree-invisible]="!treeControl.isExpanded(node)">
           <ng-container matTreeNodeOutlet></ng-container>

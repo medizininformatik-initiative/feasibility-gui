@@ -11,8 +11,6 @@ import { SaveDialogComponent } from './components/save/save-dialog/save-dialog.c
 import { UploadDataselectionComponent } from './components/upload/upload-dataselection/upload-dataselection.component';
 import { RatingDialogComponent } from './components/rating/rating-dialog/rating-dialog.component';
 import { RatingOverviewComponent } from './components/rating/rating-overview/rating-overview.component';
-import { SearchTreeComponent } from './components/search-tree/search-tree.component';
-import { DynamicDataSource, Ontology } from './services/DynamicOntologyData';
 @NgModule({
   declarations: [
     DataselectionEditorComponent,
@@ -22,8 +20,6 @@ import { DynamicDataSource, Ontology } from './services/DynamicOntologyData';
     UploadDataselectionComponent,
     RatingDialogComponent,
     RatingOverviewComponent,
-    SearchTreeComponent,
-    SearchTreeComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +28,5 @@ import { DynamicDataSource, Ontology } from './services/DynamicOntologyData';
     LayoutModule,
     QuerybuilderModule,
   ],
-  providers: [Ontology],
 })
 export class DataselectionModule {}
