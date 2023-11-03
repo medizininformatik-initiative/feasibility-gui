@@ -1,6 +1,5 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { QueryProviderService } from '../../service/query-provider.service';
-import { HttpClient } from '@angular/common/http';
 import { Query } from '../../model/api/query/query';
 import { Router } from '@angular/router';
 import { BackendService } from '../../service/backend.service';
@@ -23,7 +22,6 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
 
   constructor(
     public queryProviderService: QueryProviderService,
-    private httpClient: HttpClient,
     private router: Router,
     private backend: BackendService,
     private feature: FeatureService,
@@ -89,9 +87,16 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     this.changeDetector.detectChanges();
   }
 
+  loadSavedTemplates(): void {
+    this.savedTemplatesSubscription = this.backend.loadSavedTemplates().subscribe((templates) => {
+      this.savedTemplates = templates;
+    });
+  }
+
   loadSavedQueries(): void {
     this.savedQueriesSubscription = this.backend.loadSavedQueries().subscribe((queries) => {
       this.savedQueries = queries;
+      console.log(this.savedQueries);
     });
   }
 
@@ -102,9 +107,11 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     reader.readAsText(file);
     this.fileName = file.name;
   }
+
   onReaderLoad(event): void {
     this.importQuery = JSON.parse(event.target.result);
   }
+
   doImport(): void {
     this.query = this.apiTranslator.translateImportedSQtoUIQuery(
       QueryProviderService.createDefaultQuery(),
@@ -113,6 +120,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     this.queryProviderService.store(this.query);
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
   }
+
   loadTemplate(id: number, singleQuery: Query): void {
     if (this.feature.mockLoadnSave()) {
       this.query = singleQuery;
@@ -128,19 +136,6 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
         this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
       });
     }
-  }
-
-  loadQuery(id: number): void {
-    this.singleQuerySubscription = this.backend.loadQuery(id).subscribe((query) => {
-      this.query = this.apiTranslator.translateSQtoUIQuery(
-        QueryProviderService.createDefaultQuery(),
-        query
-      );
-      this.queryProviderService.store(this.query);
-      this.router.navigate(['/querybuilder/editor'], {
-        state: { preventReset: true, loadedResult: query.results },
-      });
-    });
   }
 
   doValidate(): void {
