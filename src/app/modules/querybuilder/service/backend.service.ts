@@ -304,6 +304,14 @@ export class BackendService {
     }
   }
 
+  public deleteSavedTemplates(id: number) {
+    const headers = this.headers;
+    const url = this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id);
+    return this.http.delete<any>(url, {
+      headers,
+    });
+  }
+
   public loadQuery(id: number): Observable<any> {
     const headers = this.headers;
     const url = this.createUrl(BackendService.PATH_RUN_QUERY + '/' + id.toString());
@@ -339,6 +347,16 @@ export class BackendService {
       { headers }
     );
   }
+
+  public updateTemplate(id: number, template): Observable<any> {
+    const headers = this.headers;
+    const requestBody = template;
+    return this.http.put<any>(this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id), {
+      headers,
+      requestBody,
+    });
+  }
+
   createUrl(pathToResource: string, paramString?: string): string {
     let url = this.config.getConfig().uiBackendApi.baseUrl;
 
