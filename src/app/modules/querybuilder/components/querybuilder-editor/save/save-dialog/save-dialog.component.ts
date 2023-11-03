@@ -20,7 +20,6 @@ export class SaveDialogComponentData {
 })
 export class SaveDialogComponent implements OnInit, OnDestroy, AfterViewChecked {
   private subscriptionResult: Subscription
-  private querySlotCountSubscription: Subscription
   hasQuerySend: boolean | string
   querySlotAvailable: boolean = false
 
@@ -49,14 +48,16 @@ export class SaveDialogComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.saveWithQuery = this.hasQuerySend
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewInit() {
     this.isQuerySlotAvailable()
+  }
+
+  ngAfterViewChecked() {
     this.querySaveComparison()
   }
 
   ngOnDestroy(): void {
     this.subscriptionResult?.unsubscribe()
-    this.querySlotCountSubscription.unsubscribe()
   }
 
   querySentStatus(): void {
@@ -118,10 +119,8 @@ export class SaveDialogComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   isQuerySlotAvailable(): void {
-    this.querySlotCountSubscription = this.backend
-      .getSavedQuerySlotCount()
-      .subscribe((querySlotCount) => {
-        this.querySlotAvailable = querySlotCount.total > querySlotCount.used ? true : false
-      })
+    this.backend.getSavedQuerySlotCount().subscribe((querySlotCount) => {
+      this.querySlotAvailable = querySlotCount.total > querySlotCount.used ? true : false
+    })
   }
 }
