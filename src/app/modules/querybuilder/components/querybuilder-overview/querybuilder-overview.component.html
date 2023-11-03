@@ -28,10 +28,7 @@
   <div *ngFor="let singleQuery of savedQueries; index as i" class="query-box">
     <num-single-query
       [index]="i"
-      [id]="singleQuery.id"
-      [singleLabel]="singleQuery.label"
-      [singleDate]="singleQuery.createdAt"
-      [singleComment]="singleQuery.comment"
+      [singleQuery]="singleQuery"
       (reloadSavedQueries)="loadSavedQueries()"
     >
     </num-single-query>
@@ -39,16 +36,12 @@
   <div class="trenner"></div>
   <h3>{{ 'QUERYBUILDER.OVERVIEW.SAVED_TEMPLATES' | translate }}</h3>
   <div *ngFor="let singleTemplate of savedTemplates; index as i" class="template-box">
-    <num-single-query
+    <num-single-template
       [index]="i"
-      [id]="singleTemplate.id"
+      [singleTemplate]="singleTemplate"
       [isValid]="singleTemplate.isValid"
-      [singleLabel]="singleTemplate.label"
-      [singleComment]="singleTemplate.comment"
-      [singleDate]="singleTemplate.lastModified"
-      [createdBy]="singleTemplate.createdBy"
-      (click)="loadTemplate(singleTemplate.id, singleTemplate.content)"
+      (reloadSavedTemplates)="loadSavedTemplates()"
     >
-    </num-single-query>
+    </num-single-template>
   </div>
 </div>
