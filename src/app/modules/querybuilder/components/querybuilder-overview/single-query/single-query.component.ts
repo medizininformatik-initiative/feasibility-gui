@@ -1,14 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
 import { Query } from '../../../model/api/query/query';
 import { QueryProviderService } from '../../../service/query-provider.service';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BackendService } from '../../../service/backend.service';
-import { FeatureService } from 'src/app/service/feature.service';
 import { FeatureProviderService } from '../../../service/feature-provider.service';
 import { ApiTranslator } from '../../../controller/ApiTranslator';
-import { IAppConfig } from 'src/app/config/app-config.model';
-import { Subscription } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 @Component({
   selector: 'num-single-query',
@@ -23,22 +19,10 @@ export class SingleQueryComponent implements OnInit {
   content: Query;
 
   @Input()
-  id: number;
-
-  @Input()
   isValid: boolean;
 
   @Input()
-  singleLabel: string;
-
-  @Input()
-  singleComment: string;
-
-  @Input()
-  singleDate: Date;
-
-  @Input()
-  createdBy: string;
+  singleQuery;
 
   @Output()
   reloadSavedQueries = new EventEmitter<boolean>();
@@ -65,20 +49,20 @@ export class SingleQueryComponent implements OnInit {
   }
 
   loadQuery(): void {
-    this.backend.loadQuery(this.id).subscribe((query) => {
+    this.backend.loadQuery(this.singleQuery.id).subscribe((query) => {
       this.query = this.apiTranslator.translateSQtoUIQuery(
         QueryProviderService.createDefaultQuery(),
         query
       );
       this.queryProviderService.store(this.query);
       this.router.navigate(['/querybuilder/editor'], {
-        state: { preventReset: true, loadedResult: query.results },
+        state: { preventReset: true, loadedResult: this.singleQuery },
       });
     });
   }
 
   deleteQuery(): void {
-    this.backend.deleteSavedQuery(this.id).subscribe(() => {
+    this.backend.deleteSavedQuery(this.singleQuery.id).subscribe(() => {
       this.reloadSavedQueries.emit();
     });
   }

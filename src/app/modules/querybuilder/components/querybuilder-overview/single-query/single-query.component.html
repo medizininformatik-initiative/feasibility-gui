@@ -6,9 +6,11 @@
       alt="Validation Alert"
       class="invalid-Criterion"
     />
-    <div fxFlexAlign="center" class="query-box-title">{{ singleLabel }}</div>
-    <div fxFlexAlign="center" class="query-box-comment">{{ singleComment }}</div>
-    <div fxFlexAlign="center" class="query-box-date">{{ singleDate | date : 'dd.MM.yyyy' }}</div>
+    <div fxFlexAlign="center" class="query-box-title">{{ singleQuery.label }}</div>
+    <div fxFlexAlign="center" class="query-box-comment">{{ singleQuery.comment }}</div>
+    <div fxFlexAlign="center" class="query-box-date">
+      {{ singleQuery.createdAt | date : 'dd.MM.yyyy' }}
+    </div>
   </div>
   <div class="cancel-part" fxLayoutAlign="end">
     <button (click)="deleteQuery()" type="button" mat-icon-button>
