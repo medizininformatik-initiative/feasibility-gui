@@ -38,14 +38,16 @@ import { EditGroupConnectionComponent } from './components/querybuilder-editor/e
 import { ResultSimpleComponent } from './components/querybuilder-editor/result/result-simple/result-simple.component';
 import { ResultDetailsDialogComponent } from './components/querybuilder-editor/result/result-details-dialog/result-details-dialog.component';
 import { DisplayEntitiesComponent } from './components/querybuilder-editor/display/display-entities/display-entities.component';
-import { SingleQueryComponent } from './components/querybuilder-overview/single-query/single-query.component';
 import { SaveDialogComponent } from './components/querybuilder-editor/save/save-dialog/save-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileSaverModule } from 'ngx-filesaver';
 import { DisplayLinkedCriterionComponent } from './components/querybuilder-editor/display/display-linked-criterion/display-linked-criterion.component';
-import { SingleTemplateComponent } from './components/querybuilder-overview/single-template/single-template/single-template.component';
-
+import { SingleQueryComponent } from './components/querybuilder-overview/saved-queries/single-query/single-query.component';
+import { SingleTemplateComponent } from './components/querybuilder-overview/saved-queries/single-template/single-template.component';
+import { QueryBoxFrontComponent } from './components/querybuilder-overview/saved-queries/query-box-front/query-box-front.component';
+import { SavedQueriesComponent } from './components/querybuilder-overview/saved-queries/saved-queries.component';
+import { QueryBoxEndComponent } from './components/querybuilder-overview/saved-queries/query-box-end/query-box-end.component';
 export const FORMATS_GERMAN = {
   parse: {
     dateInput: 'LL',
@@ -92,6 +94,9 @@ export const FORMATS_GERMAN = {
     SaveDialogComponent,
     DisplayLinkedCriterionComponent,
     SingleTemplateComponent,
+    QueryBoxFrontComponent,
+    SavedQueriesComponent,
+    QueryBoxEndComponent,
   ],
   imports: [
     CommonModule,
