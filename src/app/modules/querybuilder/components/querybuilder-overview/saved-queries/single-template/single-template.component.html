@@ -1,0 +1,11 @@
+<div fxFill fxLayout="row" fxLayoutAlign="center" class="text-part">
+  <div fxLayoutAlign="center center" (click)="$event.stopPropagation()">
+    <mat-form-field class="input-field" fxLayoutAlign="center center" fxFill>
+      <input #inputLabel matInput type="text" value="{{ singleTemplate.label }}" />
+    </mat-form-field>
+  </div>
+  <div fxFlexAlign="center" class="query-box-comment">{{ singleTemplate.comment }}</div>
+  <div fxFlexAlign="center" class="query-box-date">
+    {{ singleTemplate.lastModified | date : 'dd.MM.yyyy' }}
+  </div>
+</div>
