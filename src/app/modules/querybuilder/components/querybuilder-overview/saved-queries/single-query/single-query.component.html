@@ -1,0 +1,7 @@
+<div fxFill fxLayout="row" class="text-part">
+  <div fxFlexAlign="center" class="query-box-title">{{ singleQuery.label }}</div>
+  <div fxFlexAlign="center" class="query-box-comment">{{ singleQuery.comment }}</div>
+  <div fxFlexAlign="center" class="query-box-date">
+    {{ singleQuery.createdAt | date : 'dd.MM.yyyy' }}
+  </div>
+</div>
