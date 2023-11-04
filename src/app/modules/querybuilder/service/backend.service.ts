@@ -304,7 +304,7 @@ export class BackendService {
     }
   }
 
-  public deleteSavedTemplates(id: number) {
+  public deleteSavedTemplate(id: number) {
     const headers = this.headers;
     const url = this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id);
     return this.http.delete<any>(url, {
