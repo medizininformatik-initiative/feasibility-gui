@@ -351,10 +351,13 @@ export class BackendService {
   public updateTemplate(id: number, template): Observable<any> {
     const headers = this.headers;
     const requestBody = template;
-    return this.http.put<any>(this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id), {
-      headers,
-      requestBody,
-    });
+    return this.http.put<any>(
+      this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
+      {
+        headers,
+        requestBody,
+      }
+    );
   }
 
   createUrl(pathToResource: string, paramString?: string): string {
