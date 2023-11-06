@@ -48,5 +48,5 @@
   "fhirport": "8082",
   "dataset": "codex",
   "queryVersion": "v2",
-  "proposalPortalLink": "https://antrag.prelive.forschen-fuer-gesundheit.de"
+  "proposalPortalLink": "https://antrag.dev.forschen-fuer-gesundheit.de"
 }
