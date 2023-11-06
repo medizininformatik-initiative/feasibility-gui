@@ -109,6 +109,9 @@ export class FeatureService {
   public getDataset(): string {
     return this.appConfig.getConfig().dataset;
   }
+  public getproposalPortalLink(): string {
+    return this.appConfig.getConfig().proposalPortalLink;
+  }
   public getRoles(site: string): string[] {
     if (site === 'main') {
       return this.appConfig.getConfig().auth.roles;

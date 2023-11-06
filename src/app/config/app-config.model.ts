@@ -50,4 +50,5 @@ export interface IAppConfig {
   fhirport: string
   dataset: string
   queryVersion: string
+  proposalPortalLink: string
 }
