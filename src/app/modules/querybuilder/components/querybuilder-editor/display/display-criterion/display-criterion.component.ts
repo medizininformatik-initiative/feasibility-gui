@@ -43,7 +43,9 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog, public featureService: FeatureService) {}
 
   ngOnInit(): void {
-    this.checkboxValue = this.criterion.optional ? this.criterion.optional : false;
+    this.checkboxValue = this.criterion.requiredDataSelection
+      ? this.criterion.requiredDataSelection
+      : false;
     this.criterion.position = this.position;
     this.isinvalid = this.criterion.isinvalid === true;
   }
@@ -99,7 +101,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   }
 
   storeCheckboxValue(): void {
-    this.criterion.optional = this.checkboxValue;
+    this.criterion.requiredDataSelection = this.checkboxValue;
     this.storeQuery.emit(this.query);
   }
 }

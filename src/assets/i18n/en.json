@@ -73,7 +73,7 @@
     "DISPLAY": {
       "LABEL": "Selected Criteria"
     },
-    "OPTIONAL":"optional"
+    "REQUIRED":"required from all sites"
   },
   "LANGUAGE": {
     "GERMAN": "German",
@@ -257,7 +257,8 @@
     "SAVEQUERY": "Save query",
     "VALIDATE": "Validate",
     "IMPORT": "Load query",
-    "IMPORT_FROM_FILE": "choose file"
+    "IMPORT_FROM_FILE": "choose file",
+    "IMPORT_DATASELECTION": "upload file"
   },
   "ERROR": {
     "FEAS-10001": "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",

@@ -69,7 +69,7 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
 
   doSave(event: { groupId: number }, criterion: Criterion): void {
     if (this.searchType === 'dataselection') {
-      criterion.optional = false;
+      criterion.requiredDataSelection = false;
     }
 
     const index = this.query.groups.findIndex((group) => group.id === event.groupId);

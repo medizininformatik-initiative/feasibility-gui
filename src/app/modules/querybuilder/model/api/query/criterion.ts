@@ -13,6 +13,7 @@ export class Criterion {
   display?: string;
   entity?: boolean;
   optional?: boolean = false;
+  requiredDataSelection?: boolean = false;
   valueFilters?: Array<ValueFilter> = [];
   attributeFilters?: Array<AttributeFilter> = [];
   children?: Array<TerminologyEntry> = [];
@@ -45,4 +46,5 @@ export class CriterionOnlyV2 {
   linkedCriteria?: Criterion[] = [];
   isinvalid?: boolean;
   optional?: boolean;
+  requiredDataSelection?: boolean;
 }

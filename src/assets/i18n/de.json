@@ -73,7 +73,7 @@
     "DISPLAY": {
       "LABEL": "Ausgewählte Merkmale"
     },
-    "OPTIONAL":"Optional"
+    "REQUIRED":"Variable muss an allen Standorten vorliegen"
 
   },
   "LANGUAGE": {
@@ -258,15 +258,14 @@
     "SAVEQUERY": "Abfrage speichern",
     "VALIDATE": "Validieren",
     "IMPORT": "Query laden",
-    "IMPORT_FROM_FILE": "Datei auswählen"
+    "IMPORT_FROM_FILE": "Datei auswählen",
+    "IMPORT_DATASELECTION": "Datenselektion laden"
   },
   "ERROR": {
     "FEAS-10001": "Ihr Benutzer wurde wegen zu vielen Anfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
     "FEAS-10005"  :"Die Anzahl der Standorte die geantwortet haben ist zu klein -> Detailergebnis wird nicht angezeigt",
     "FEAS-10004"  :"Die Ergebnismenge ist zu klein -> Ergebnis wird nicht angezeigt",
     "FEAS-10002"  :"Sie haben zu viele Anfragen gestellt, bitte warten Sie {{ RETRY_AFTER }} Sekunden und probieren Sie es erneut",
-    "404"         :"Standort wurde nicht gefunden",
-    "IMPORT_FROM_FILE": "Datei auswählen",
-    "IMPORT_DATASELECTION": "Datenselektion laden"
+    "404"         :"Standort wurde nicht gefunden"
   }
 }
