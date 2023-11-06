@@ -1,38 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Criterion } from '../model/query/Criterion/Criterion';
 import { BackendService } from '../modules/querybuilder/service/backend.service';
-import { Observable, Subscription, from, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UIProfile } from '../model/terminology/UIProfile';
 import {
   AttributeDefinition,
   ValueDefinition,
 } from '../model/terminology/AttributeDefinitions/AttributeDefinition';
-import { AttributeFilter } from '../model/query/Criterion/AttributeFilter/AttributeFilter';
 import {
   AbstractAttributeDefinitions,
   ValueType,
 } from '../model/terminology/AttributeDefinitions/AbstractAttributeDefinitions';
-import { OperatorOptions } from '../model/query/Criterion/AttributeFilter/AbstractAttributeFilters';
+import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { OperatorOptions } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoadUIProfileService {
-  private criterion: Criterion;
   private backend: BackendService;
   constructor() {}
 
-  public getUIProfile(criterion: Criterion): Observable<UIProfile> {
-    this.criterion = criterion;
-    const profilesObservable = this.requestUIProfile();
+  public getUIProfile(criterionHash: string): Observable<UIProfile> {
+    const profilesObservable = this.requestUIProfile(criterionHash);
     return profilesObservable;
   }
 
-  private requestUIProfile(): Observable<UIProfile> {
-    return this.backend.getTerminologyProfile(this.criterion);
+  private requestUIProfile(criterionHash: string): Observable<UIProfile> {
+    return this.backend.getTerminologyProfile(criterionHash);
   }
 
-  public getAttributeFilters(attributeDefinitions: AttributeDefinition[]): AttributeFilter[] {
+  public extractAttributeFilters(attributeDefinitions: AttributeDefinition[]): AttributeFilter[] {
     const attributeFilters = new Array<AttributeFilter>();
     if (attributeDefinitions.length > 0) {
       attributeDefinitions.forEach((attributeDefinition) => {
@@ -52,19 +49,20 @@ export class LoadUIProfileService {
     attributeFilter.minValue = attributeDefinition.min;
     attributeFilter.maxValue = attributeDefinition.max;
     attributeFilter.precision = attributeDefinition.precision;
-    attributeFilter.type = this.setAttributeDefinitionType(attributeDefinition.type);
+    attributeFilter.optional = attributeDefinition.optional;
+    attributeFilter.type = this.setDefinitionType(attributeDefinition.type);
     return attributeFilter;
   }
 
-  public getValueDefinition(valueDefinition: ValueDefinition): ValueDefinition | undefined {
-    if (this.isDefinitionFilterSet(valueDefinition)) {
+  public extractValueDefinition(valueDefinition: ValueDefinition): ValueDefinition | undefined {
+    if (this.definitionIsSet(valueDefinition)) {
       return valueDefinition;
     } else {
       return undefined;
     }
   }
 
-  private isDefinitionFilterSet(abstractDefinition: AbstractAttributeDefinitions): boolean {
+  private definitionIsSet(abstractDefinition: AbstractAttributeDefinitions): boolean {
     if (abstractDefinition !== null && abstractDefinition !== undefined) {
       return true;
     } else {
@@ -72,11 +70,13 @@ export class LoadUIProfileService {
     }
   }
 
-  private setAttributeDefinitionType(type: ValueType): OperatorOptions {
+  public setDefinitionType(type: ValueType): OperatorOptions {
     if (this.isConcept(type)) {
       return OperatorOptions.CONCEPT;
     } else if (this.isRefrence(type)) {
       return OperatorOptions.REFERENCE;
+    } else {
+      return OperatorOptions.QUANTITY_NOT_SET;
     }
   }
 
