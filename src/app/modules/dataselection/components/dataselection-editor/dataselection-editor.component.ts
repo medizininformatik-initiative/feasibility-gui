@@ -70,7 +70,6 @@ export class DataselectionEditorComponent implements OnInit, AfterViewChecked {
     this.gottenDetailedResult = false;
     this.loadedResult = false;
     this.getDetailedResultRateLimit();
-    console.log(this.query);
   }
 
   getDetailedResultRateLimit(): void {
