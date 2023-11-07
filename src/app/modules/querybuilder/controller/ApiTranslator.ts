@@ -127,7 +127,7 @@ export class ApiTranslator {
   translateForDataselection(query: Query) {
     const result = new DataSelectionOnly();
     const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria);
-    result.selectedCriteria = this.translateCritGroupV2Ds(inclusionCriteria);
+    result.selectedCriteria = this.translateCritGroupV2(inclusionCriteria);
     result.selectedCriteria.forEach((criteria) => {
       criteria.forEach((criterion) => {
         delete criterion.valueFilter;
@@ -137,84 +137,6 @@ export class ApiTranslator {
   }
 
   private translateCritGroupV2(inclusionCriteria: Criterion[][]): CriterionOnlyV2[][] {
-    const result: CriterionOnlyV2[][] = [];
-    inclusionCriteria.forEach((criterionArray) => {
-      const innerArrayV2: CriterionOnlyV2[] = [];
-      criterionArray.forEach((criterion) => {
-        criterion.requiredDataSelection = undefined;
-
-        if (criterion.isLinked === undefined || criterion.isLinked === false) {
-          const criterionV2 = new CriterionOnlyV2();
-          criterionV2.termCodes = criterion.termCodes;
-          if (typeof criterion.requiredDataSelection === 'boolean') {
-            criterionV2.requiredDataSelection = criterion.requiredDataSelection;
-          }
-          if (this.featureService.getSendSQContextToBackend()) {
-            criterionV2.context = criterion.context;
-          }
-          criterionV2.timeRestriction = criterion.timeRestriction;
-          if (criterion.valueFilters.length > 0) {
-            criterionV2.valueFilter = criterion.valueFilters[0];
-            criterionV2.valueFilter.valueDefinition = undefined;
-
-            if (criterion.valueFilters[0].comparator === Comparator.NONE) {
-              criterionV2.valueFilter = undefined;
-            }
-          }
-          if (criterion.attributeFilters?.length > 0) {
-            criterion.attributeFilters.forEach((attribute) => {
-              if (attribute.type === OperatorOptions.CONCEPT) {
-                if (attribute.selectedConcepts.length > 0) {
-                  criterionV2.attributeFilters.push(attribute);
-                }
-              } else {
-                if (attribute.type === OperatorOptions.REFERENCE) {
-                  if (criterion.linkedCriteria.length > 0) {
-                    const refAttribute = attribute;
-                    delete refAttribute.selectedConcepts;
-                    refAttribute.criteria = [];
-                    criterion.linkedCriteria.forEach((linkedCrit) => {
-                      const newLinkedCrit = new CriterionOnlyV2();
-                      newLinkedCrit.termCodes = linkedCrit.termCodes;
-                      newLinkedCrit.context = linkedCrit.context;
-                      if (linkedCrit.attributeFilters.length > 0) {
-                        newLinkedCrit.attributeFilters = linkedCrit.attributeFilters;
-                      } else {
-                        delete newLinkedCrit.attributeFilters;
-                      }
-                      if (linkedCrit.valueFilters.length > 0) {
-                        newLinkedCrit.valueFilter = linkedCrit.valueFilters[0];
-                      } else {
-                        delete newLinkedCrit.valueFilter;
-                      }
-                      delete newLinkedCrit.children;
-                      delete newLinkedCrit.linkedCriteria;
-                      this.removeNonApiFieldsV2(newLinkedCrit);
-                      refAttribute.criteria.push(newLinkedCrit);
-                    });
-                    criterionV2.attributeFilters.push(refAttribute);
-                  }
-                } else {
-                  criterionV2.attributeFilters.push(attribute);
-                }
-              }
-              attribute.attributeCode = attribute.attributeDefinition?.attributeCode;
-            });
-          }
-          this.editTimeRestrictionsV2(criterionV2);
-          this.removeNonApiFieldsV2(criterionV2);
-          innerArrayV2.push(criterionV2);
-        }
-      });
-      if (innerArrayV2.length > 0) {
-        result.push(innerArrayV2);
-      }
-    });
-
-    return result;
-  }
-
-  private translateCritGroupV2Ds(inclusionCriteria: Criterion[][]): CriterionOnlyV2[][] {
     const result: CriterionOnlyV2[][] = [];
     inclusionCriteria.forEach((criterionArray) => {
       const innerArrayV2: CriterionOnlyV2[] = [];
