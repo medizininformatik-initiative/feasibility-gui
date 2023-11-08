@@ -72,7 +72,8 @@
     },
     "DISPLAY": {
       "LABEL": "Selected Criteria"
-    }
+    },
+    "INFOTEXT": "Please select the criteria you would like to export below and DOWNLOAD the dataselection. You can then either upload the the file as part of your research proposal in the research proposal portal of the FDPG or send an email to Philip.Kleinert@tmf-ev.de"
   },
   "LANGUAGE": {
     "GERMAN": "German",
@@ -243,27 +244,28 @@
     "CONTACT": "Contact"
   },
   "BUTTON": {
-    "SAVE": "Save",
+    "ADD": "Add",
+    "ADDALL": "Add all",
+    "ADD_TOOLTIP": "restrict criteria",
     "CANCEL": "Cancel",
     "CLOSE": "Close",
     "DOWNLOAD": "Download",
-    "ADD": "Add",
-    "ADD_TOOLTIP": "restrict criteria",
-    "ADDALL": "Add all",
-    "SEND": "Send",
+    "IMPORT": "Load query",
+    "IMPORT_FROM_FILE": "choose file",
+    "IMPORT_DATASELECTION":"Import Dataselection",
     "RESET": "Reset",
     "RESULTDETAILS": "Details",
+    "SAVE": "Save",
     "SAVEQUERY": "Save query",
-    "VALIDATE": "Validate",
-    "IMPORT": "Load query",
-    "IMPORT_FROM_FILE": "choose file"
+    "SEND": "Send",
+    "VALIDATE": "Validate"
   },
   "ERROR": {
     "FEAS-10001": "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
     "FEAS-10002": "You sent too many queries, please wait {{RETRY_AFTER}} seconds and try again",
     "FEAS-10004": "The number of sites which answered is too small -> detailed results are not shown",
     "FEAS-10005": "The result size is too small -> result will not be shown",
-    "404":        "Site not found"
+    "404":        "Site not found",
     "IMPORT_FROM_FILE": "choose file",
     "IMPORT_DATASELECTION": "Load Dataselection"
   }
