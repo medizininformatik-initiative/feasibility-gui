@@ -33,7 +33,7 @@ export class TermEntry2CriterionTranslator {
     criterion.entity = termEntry.entity;
     criterion.children = termEntry.children;
     criterion.timeRestriction = this.createTimeRestriction(termEntry);
-    criterion.optional = termEntry.optional;
+    criterion.requiredDataSelection = undefined;
     criterion.criterionHash = this.getCriterionHash(criterion);
     if (!criterion.uniqueID) {
       criterion.uniqueID = uuidv4();

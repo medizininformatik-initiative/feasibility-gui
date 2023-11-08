@@ -144,6 +144,9 @@ export class ApiTranslator {
         if (criterion.isLinked === undefined || criterion.isLinked === false) {
           const criterionV2 = new CriterionOnlyV2();
           criterionV2.termCodes = criterion.termCodes;
+          if (typeof criterion.requiredDataSelection === 'boolean') {
+            criterionV2.requiredDataSelection = criterion.requiredDataSelection;
+          }
           if (this.featureService.getSendSQContextToBackend()) {
             criterionV2.context = criterion.context;
           }

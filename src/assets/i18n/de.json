@@ -73,7 +73,9 @@
     "DISPLAY": {
       "LABEL": "Ausgewählte Merkmale"
     },
-    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an Philip.Kleinert@tmf-ev.de schicken."
+    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an Philip.Kleinert@tmf-ev.de schicken.",
+    "REQUIRED":"Variable muss an allen Standorten vorliegen"
+
   },
   "LANGUAGE": {
     "GERMAN": "Deutsch",
@@ -265,8 +267,6 @@
     "FEAS-10005"  :"Die Anzahl der Standorte die geantwortet haben ist zu klein -> Detailergebnis wird nicht angezeigt",
     "FEAS-10004"  :"Die Ergebnismenge ist zu klein -> Ergebnis wird nicht angezeigt",
     "FEAS-10002"  :"Sie haben zu viele Anfragen gestellt, bitte warten Sie {{ RETRY_AFTER }} Sekunden und probieren Sie es erneut",
-    "404"         :"Standort wurde nicht gefunden",
-    "IMPORT_FROM_FILE": "Datei auswählen",
-    "IMPORT_DATASELECTION": "Datenselektion laden"
+    "404"         :"Standort wurde nicht gefunden"
   }
 }
