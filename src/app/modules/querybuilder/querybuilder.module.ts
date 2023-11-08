@@ -45,7 +45,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileSaverModule } from 'ngx-filesaver';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { DisplayLinkedCriterionComponent } from './components/querybuilder-editor/display/display-linked-criterion/display-linked-criterion.component';
-
+import { SearchTreeTermEntryDataselectionComponent } from './components/querybuilder-editor/search/dataselection/search-tree-term-entry-dataselection/search-tree-term-entry-dataselection.component';
 export const FORMATS_GERMAN = {
   parse: {
     dateInput: 'LL',
@@ -91,6 +91,7 @@ export const FORMATS_GERMAN = {
     SingleQueryComponent,
     SaveDialogComponent,
     DisplayLinkedCriterionComponent,
+    SearchTreeTermEntryDataselectionComponent,
   ],
   imports: [
     CommonModule,

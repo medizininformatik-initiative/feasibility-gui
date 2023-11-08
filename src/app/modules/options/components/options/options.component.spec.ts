@@ -34,6 +34,7 @@ describe('OptionsComponent', () => {
       fhirport: null,
       legal: null,
       mock: null,
+      proposalPortalLink: null,
     }),
   } as FeatureProviderService;
 

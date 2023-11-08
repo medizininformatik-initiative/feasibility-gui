@@ -27,9 +27,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const MATERIAL_MODULES = [
   MatSidenavModule,
+  MatAutocompleteModule,
   MatIconModule,
   MatListModule,
   MatToolbarModule,
