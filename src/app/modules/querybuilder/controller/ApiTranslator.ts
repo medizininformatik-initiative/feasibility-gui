@@ -155,9 +155,14 @@ export class ApiTranslator {
             criterionV2.valueFilter = criterion.valueFilters[0];
             criterionV2.valueFilter.valueDefinition = undefined;
 
+            if (criterionV2.valueFilter.selectedConcepts.length === 0) {
+              criterionV2.valueFilter.selectedConcepts = undefined;
+            }
+
             if (
-              criterion.valueFilters[0].comparator === Comparator.NONE ||
-              criterion.valueFilters[0].selectedConcepts.length === 0
+              (criterionV2.valueFilter.comparator === Comparator.NONE ||
+                criterionV2.valueFilter.comparator === undefined) &&
+              criterionV2.valueFilter.selectedConcepts === undefined
             ) {
               criterionV2.valueFilter = undefined;
             }
@@ -200,6 +205,10 @@ export class ApiTranslator {
                 }
               }
               attribute.attributeCode = attribute.attributeDefinition?.attributeCode;
+
+              if (attribute.attributeCode.version === null) {
+                attribute.attributeCode.version = undefined;
+              }
             });
           }
           this.editTimeRestrictionsV2(criterionV2);

@@ -29,6 +29,7 @@ export interface IAppConfig {
     extra: {
       displayvaluefiltericon: boolean
       showoptionspage: boolean
+      showdataselectionpage: boolean
       optionpageroles: string[]
       displayInfoMessage: boolean
     }

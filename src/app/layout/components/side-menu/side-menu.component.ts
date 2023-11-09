@@ -50,10 +50,17 @@ export class SideMenuComponent implements OnInit {
   }
 
   showPage(itemRoute): boolean {
-    let showIt = true;
     if (itemRoute === 'options' && !this.featureService.useFeatureOptionsPage()) {
-      showIt = false;
+      return false;
     }
-    return showIt;
+
+    if (
+      itemRoute === 'dataselection/editor' &&
+      !this.featureService.useFeatureDataselectionPage()
+    ) {
+      return false;
+    }
+
+    return true;
   }
 }
