@@ -130,13 +130,15 @@ export class FeatureService {
   }
 
   public isDevelopMode(): boolean {
-    //return isDevMode();
     return !environment.production;
   }
 
   public showInfoPage(): boolean {
-    //return isDevMode();
     return this.appConfig.getConfig().features.extra.displayInfoMessage;
+  }
+
+  public showUpdateInfo(): boolean {
+    return this.appConfig.getConfig().features.extra.displayUpdateInfo;
   }
 
   public mockTerminology(): boolean {

@@ -32,6 +32,7 @@ export interface IAppConfig {
       showdataselectionpage: boolean
       optionpageroles: string[]
       displayInfoMessage: boolean
+      displayUpdateInfo: boolean
     }
   }
   options: {

@@ -31,7 +31,8 @@
       "showoptionspage": true,
       "showdataselectionpage": false,
       "optionpageroles": ["FeasibilityUser"],
-      "displayInfoMessage": true
+      "displayInfoMessage": true,
+      "displayUpdateInfo": true
     }
   },
   "options": {
