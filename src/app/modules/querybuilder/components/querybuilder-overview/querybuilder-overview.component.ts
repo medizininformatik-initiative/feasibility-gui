@@ -100,7 +100,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
   }
 
   createDefaultQuery(query) {
-    this.query = this.apiTranslator.translateSQtoUIQuery(
+    this.query = this.apiTranslator.translateImportedSQtoUIQuery(
       QueryProviderService.createDefaultQuery(),
       query
     );
