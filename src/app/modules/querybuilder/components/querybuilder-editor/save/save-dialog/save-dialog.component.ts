@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewChecked, Component, Inject, OnDestroy, OnInit } from '@angular/core'
 import { Query } from '../../../../model/api/query/query'
 import { QueryProviderService } from '../../../../service/query-provider.service'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
@@ -18,9 +18,10 @@ export class SaveDialogComponentData {
   templateUrl: './save-dialog.component.html',
   styleUrls: ['./save-dialog.component.scss'],
 })
-export class SaveDialogComponent implements OnInit, OnDestroy {
+export class SaveDialogComponent implements OnInit, OnDestroy, AfterViewChecked {
   private subscriptionResult: Subscription
   hasQuerySend: boolean | string
+  querySlotAvailable: boolean = false
 
   constructor(
     public queryProviderService: QueryProviderService,
@@ -38,36 +39,58 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
   comment = ''
   filename = ''
   saveWithQuery: boolean | string = false
-  letQuerySave: boolean
+  letQuerySave: boolean = false
   saveButtonDisabled: boolean = true
   downloadQuery: boolean = false
 
   ngOnInit(): void {
     this.query = this.queryProviderService.query()
-    this.hasQuerySend === false ? (this.letQuerySave = true) : (this.letQuerySave = false)
     this.saveWithQuery = this.hasQuerySend
   }
+
+  ngAfterViewInit() {
+    this.isQuerySlotAvailable()
+  }
+
+  ngAfterViewChecked() {
+    this.querySaveComparison()
+  }
+
   ngOnDestroy(): void {
     this.subscriptionResult?.unsubscribe()
   }
+
+  querySentStatus(): void {
+    if (typeof this.data.hasQuerySend === 'number') {
+      this.hasQuerySend = true
+    } else {
+      this.hasQuerySend = false
+    }
+  }
+  querySaveComparison() {
+    this.querySentStatus()
+    if (this.hasQuerySend && this.querySlotAvailable) {
+      this.letQuerySave = true
+    }
+  }
+
   doSave(): void {
     if (this.downloadQuery) {
-      const queryString = JSON.stringify(this.apiTranslator.translateToV2(this.query))
-      const fileData = new Blob([queryString], { type: 'text/plain;charset=utf-8' })
-      this.fileSaverService.save(fileData, this.filename + '.json')
+      this.doDownloadQuery()
     } else {
       this.subscriptionResult?.unsubscribe()
       this.subscriptionResult = this.backend
         .saveQuery(this.query, this.title, this.comment, this.saveWithQuery)
-        .subscribe((response) => {
-          console.log(response)
-        })
+        .subscribe((response) => {})
     }
     this.dialogRef.close()
-    // this.router.navigate(['/querybuilder/overview'])
   }
 
-  doSaveForDataselection() {}
+  doDownloadQuery() {
+    const queryString = JSON.stringify(this.apiTranslator.translateToV2(this.query))
+    const fileData = new Blob([queryString], { type: 'text/plain;charset=utf-8' })
+    this.fileSaverService.save(fileData, this.filename + '.json')
+  }
 
   doDiscard(): void {
     this.dialogRef.close()
@@ -93,5 +116,11 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
       (this.downloadQuery && this.filename !== '') ||
       (!this.downloadQuery && this.title !== '')
     )
+  }
+
+  isQuerySlotAvailable(): void {
+    this.backend.getSavedQuerySlotCount().subscribe((querySlotCount) => {
+      this.querySlotAvailable = querySlotCount.total > querySlotCount.used ? true : false
+    })
   }
 }

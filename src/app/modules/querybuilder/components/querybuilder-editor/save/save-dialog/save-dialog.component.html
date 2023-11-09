@@ -29,9 +29,12 @@
         <mat-radio-button
           class="save-query-radio-button"
           value="saveQuery"
-          [disabled]="letQuerySave"
-          [checked]="!letQuerySave"
+          [disabled]="!letQuerySave"
+          [checked]="letQuerySave"
           >{{ 'QUERYBUILDER.OVERVIEW.SAVE_WITH_QUERY' | translate }}
+          <div *ngIf="!querySlotAvailable">
+            {{ 'QUERYBUILDER.OVERVIEW.MAXIMUM_QUERY_SLOT' | translate }}
+          </div>
         </mat-radio-button>
         <mat-radio-button class="save-query-radio-button" value="download"
           >{{ 'QUERYBUILDER.OVERVIEW.DOWNLOAD_SQ' | translate }}

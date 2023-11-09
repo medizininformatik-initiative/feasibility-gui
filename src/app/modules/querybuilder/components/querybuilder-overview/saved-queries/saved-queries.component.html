@@ -1,0 +1,34 @@
+<div *ngFor="let singleQuery of savedQueries; index as i" class="query-box" fxLayout="row">
+  <num-single-query
+    (click)="loadQueryIntoFeasibilityPage(singleQuery)"
+    [singleQuery]="singleQuery"
+    class="width-100"
+    (reloadQueries)="reloadQueries($event)"
+  >
+    >
+  </num-single-query>
+  <num-query-box-end
+    [query]="singleQuery"
+    [queryType]="'query'"
+    (reloadQueries)="reloadQueries($event)"
+  >
+  </num-query-box-end>
+</div>
+<div class="trenner"></div>
+<h3>{{ 'QUERYBUILDER.OVERVIEW.SAVED_TEMPLATES' | translate }}</h3>
+<div *ngFor="let singleTemplate of savedTemplates; index as i" class="query-box" fxLayout="row">
+  <num-single-template
+    (click)="loadTemplateIntoFeasibilityPage(singleTemplate)"
+    [singleTemplate]="singleTemplate"
+    (reloadQueries)="reloadQueries($event)"
+    class="width-100"
+  >
+    >
+  </num-single-template>
+  <num-query-box-end
+    [query]="singleTemplate"
+    [queryType]="'template'"
+    (reloadQueries)="reloadQueries($event)"
+  >
+  </num-query-box-end>
+</div>

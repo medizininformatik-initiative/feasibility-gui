@@ -5,6 +5,7 @@ import { Comparator, OperatorOptions } from '../model/api/query/valueFilter';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { environment } from '../../../../environments/environment';
 import { GroupFactory } from '../controller/GroupFactory';
+import { QueryResult } from '../model/api/result/QueryResult';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ import { GroupFactory } from '../controller/GroupFactory';
 export class QueryProviderService {
   STORAGE_QUERY_KEY = 'QUERY';
   SAVE_QUERY_KEY = 'SAVEDQUERIES';
+  latestQueryId: string;
 
   constructor(@Inject(LOCAL_STORAGE) public storage: StorageService) {}
 
@@ -22,6 +24,15 @@ export class QueryProviderService {
 
   public store(query: Query): void {
     this.storage.set(this.STORAGE_QUERY_KEY, query);
+  }
+
+  public storeQueryResult(queryResult: QueryResult): void {
+    this.latestQueryId = queryResult.queryId;
+    this.storage.set(queryResult.queryId, queryResult);
+  }
+
+  public getQueryResult(): QueryResult {
+    return this.storage.get(this.latestQueryId);
   }
 
   public saveQueries(queries: Array<any>): void {

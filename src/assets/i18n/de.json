@@ -156,11 +156,12 @@
       "LOAD_HEADER": "Bisherige Suchanfragen",
       "IMPORT_HEADER": "Suchanfragen importieren",
       "SAVE_WITH_QUERY": "für Datennutzungsantrag speichern (muss vorher ausgeführt worden sein)",
-      "SAVE_TEMPLATE": "als Vorlage speichern",
-      "DOWNLOAD_SQ": "als Datei speichern",
+      "SAVE_TEMPLATE": "Als Vorlage speichern",
+      "DOWNLOAD_SQ": "Als Datei speichern",
       "FILENAME": "Dateiname",
       "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
-      "SAVED_TEMPLATES": "Gespeicherte Vorlagen"
+      "SAVED_TEMPLATES": "Gespeicherte Vorlagen",
+      "MAXIMUM_QUERY_SLOT": "Sie haben das maximale Limit an verfügbaren freien Speicherplätzen für Abfragen erreicht"
     },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",
