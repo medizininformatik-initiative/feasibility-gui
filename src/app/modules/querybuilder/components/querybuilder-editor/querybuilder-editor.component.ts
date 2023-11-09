@@ -66,7 +66,9 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.gottenDetailedResult = false;
     this.getDetailedResultRateLimit();
 
-    this.snackbar.displayInfoMessage('UPDATE_NOTE');
+    if (this.featureService.showUpdateInfo()) {
+      this.snackbar.displayInfoMessage('UPDATE_NOTE');
+    }
   }
 
   updateResultGotten(resultGotten: boolean) {

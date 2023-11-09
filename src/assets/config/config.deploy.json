@@ -30,7 +30,8 @@
       "showoptionspage": false,
       "showdataselectionpage": false,
       "optionpageroles": "#{auth_roles}",
-      "displayInfoMessage": true
+      "displayInfoMessage": true,
+      "displayUpdateInfo": true
     }
   },
   "options": {

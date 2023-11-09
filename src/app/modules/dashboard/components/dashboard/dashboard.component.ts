@@ -34,7 +34,10 @@ export class DashboardComponent implements OnInit {
     this.stylesheet = this.featureService.getStylesheet();
     this.displayInfoMessage = this.featureService.showInfoPage();
     this.proposalPortalLink = this.featureService.getproposalPortalLink();
-    this.snackbar.displayInfoMessage('UPDATE_NOTE');
+
+    if (this.featureService.showUpdateInfo()) {
+      this.snackbar.displayInfoMessage('UPDATE_NOTE');
+    }
   }
 
   newQuery(): void {}
