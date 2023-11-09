@@ -252,13 +252,13 @@
     "CLOSE": "Close",
     "DOWNLOAD": "Download",
     "IMPORT_FROM_FILE": "choose file",
-    "IMPORT_DATASELECTION":"Import Dataselection",
+    "IMPORT_DATASELECTION": "Import Dataselection",
     "RESET": "Reset",
     "RESULTDETAILS": "Details",
     "SAVE": "Save",
     "SAVEQUERY": "Save query",
     "VALIDATE": "Validate",
-    "IMPORT": "Load query",
+    "IMPORT": "Load query"
   },
   "ERROR": {
     "FEAS-10001": "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
