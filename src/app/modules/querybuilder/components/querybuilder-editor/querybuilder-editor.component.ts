@@ -124,7 +124,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         if (result.queryId !== undefined) {
           this.hasQuerySend = result.queryId;
         }
-        
+
         if (result.issues !== undefined) {
           if (result.issues[0].code !== undefined) {
             this.resultsLargeEnough = false;
@@ -151,7 +151,6 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         }
       },
       () => {
-        console.log('done');
         if (this.resultsLargeEnough === false) {
           this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10004']);
         } else {

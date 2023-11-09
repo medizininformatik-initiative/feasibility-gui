@@ -155,7 +155,10 @@ export class ApiTranslator {
             criterionV2.valueFilter = criterion.valueFilters[0];
             criterionV2.valueFilter.valueDefinition = undefined;
 
-            if (criterionV2.valueFilter.selectedConcepts.length === 0) {
+            if (
+              criterionV2.valueFilter.selectedConcepts !== undefined &&
+              criterionV2.valueFilter.selectedConcepts.length === 0
+            ) {
               criterionV2.valueFilter.selectedConcepts = undefined;
             }
 
