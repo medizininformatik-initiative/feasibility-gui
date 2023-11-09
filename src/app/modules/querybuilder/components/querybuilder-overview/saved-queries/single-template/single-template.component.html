@@ -1,26 +1,60 @@
-<div fxFill fxLayout="row" class="text-part">
-  <div fxLayoutAlign="start center" fxFlex="40">
-    <mat-form-field
-      (click)="$event.stopPropagation()"
-      class="input-field width-100"
-      fxLayoutAlign="center start"
+<num-query-box-front *ngIf="singleTemplate.isValid" fxFlex="5" [isInvalid]="singleTemplate.isValid">
+</num-query-box-front>
+<div fxFill fxFlex="85" fxLayout="row" class="text-part">
+  <form
+    fxFlex="40"
+    fxLayoutAlign="center start"
+    appearance="outline"
+    (click)="$event.stopPropagation()"
+    class="width-100"
+    fxLayoutAlign="center center"
+  >
+    <input
+      matInput
+      class="input-design"
+      type="text"
+      value="{{ singleTemplate.label }}"
+      [(ngModel)]="updatedLabel"
+      (ngModelChange)="updateLabel()"
+    />
+  </form>
+  <mat-divider vertical></mat-divider>
+  <form
+    fxFlex="40"
+    fxLayoutAlign="center start"
+    appearance="outline"
+    (click)="$event.stopPropagation()"
+    class="width-100"
+    fxLayoutAlign="center center"
+  >
+    <input
+      matInput
+      class="input-design"
+      type="text"
+      value="{{ singleTemplate.comment }}"
+      [(ngModel)]="updatedComment"
+      (ngModelChange)="updateLabel()"
+    />
+  </form>
+  <div fxLayoutAlign="end center" fxFlex="5">
+    <button
+      (click)="updateTemplate(); $event.stopPropagation()"
+      mat-button
+      matIconPrefix
+      type="button"
     >
-      <input
-        #inputLabel
-        matInput
-        class="width-100"
-        type="text"
-        value="{{ singleTemplate.label }}"
-      />
-    </mat-form-field>
+      <fa-icon
+        *ngIf="disabledInput"
+        matTooltip="{{ 'QUERYBUILDER.OVERVIEW.SAVE_TEMPLATE' | translate }}"
+        [matTooltipClass]="'tooltip-design'"
+        [matTooltipPosition]="'above'"
+        size="sm"
+        icon="save"
+      >
+      </fa-icon>
+    </button>
   </div>
-  <button type="button" class="no-border">
-    <fa-icon size="sm" icon="times"></fa-icon>
-  </button>
-  <div fxFlexAlign="center" fxFlex="40" class="query-box-comment">
-    {{ singleTemplate.comment }}
-  </div>
-  <div fxFlexAlign="center" fxFlex="20" class="query-box-date">
+  <div fxFlexAlign="center" class="query-box-date">
     {{ singleTemplate.lastModified | date : 'dd.MM.yyyy' }}
   </div>
 </div>
