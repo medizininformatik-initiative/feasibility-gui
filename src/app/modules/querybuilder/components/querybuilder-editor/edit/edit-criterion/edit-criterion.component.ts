@@ -176,10 +176,12 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
             if (!find) {
               const newFilter = new AttributeFilter();
               newFilter.attributeDefinition = attribute;
+              newFilter.attributeDefinition.type = attribute.type;
               newFilter.type = attribute.type;
               this.criterion.attributeFilters?.push(newFilter);
             } else {
               find.attributeDefinition.optional = attribute.optional;
+              find.attributeDefinition.type = attribute.type;
               if (attribute.type === 'reference') {
                 find.attributeDefinition.referenceCriteriaSet = attribute.referenceCriteriaSet;
               }
