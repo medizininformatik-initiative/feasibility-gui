@@ -73,7 +73,7 @@
     "DISPLAY": {
       "LABEL": "Ausgewählte Merkmale"
     },
-    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an Philip.Kleinert@tmf-ev.de schicken.",
+    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an info@forschen-fuer-gesundheit.de schicken.",
     "REQUIRED":"Variable muss an allen Standorten vorliegen"
 
   },

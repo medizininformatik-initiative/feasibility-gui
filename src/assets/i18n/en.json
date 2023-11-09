@@ -73,6 +73,7 @@
     "DISPLAY": {
       "LABEL": "Selected Criteria"
     },
+    "INFOTEXT": "Please select the criteria you would like to export and download your dataselection. You can then either upload the dataselection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
     "REQUIRED":"required from all sites"
   },
   "LANGUAGE": {
