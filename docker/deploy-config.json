@@ -15,8 +15,8 @@
     "roles": ["FEASIBILITY_USER"]
   },
   "legal": {
-    "version": "0.9.0",
-    "copyrightOwner": "ABIDE Team"
+    "version": "2.1.0",
+    "copyrightOwner": "MII Team"
   },
   "features": {
     "v2": {
