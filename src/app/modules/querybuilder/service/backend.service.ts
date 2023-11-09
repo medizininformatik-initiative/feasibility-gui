@@ -348,14 +348,28 @@ export class BackendService {
     );
   }
 
-  public updateTemplate(id: number, template): Observable<any> {
+  public updateTemplate(id: number, updatedObject: object): Observable<any> {
     const headers = this.headers;
-    const requestBody = template;
+    const requestBody = updatedObject;
     return this.http.put<any>(
       this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
+      requestBody,
       {
         headers,
-        requestBody,
+      }
+    );
+  }
+
+  public updateQuery(id: number, updatedObject: object): Observable<any> {
+    const headers = this.headers;
+    const requestBody = updatedObject;
+    return this.http.put<any>(
+      this.createUrl(
+        BackendService.PATH_RUN_QUERY + '/' + id.toString() + '/' + BackendService.PATH_SAVED
+      ),
+      requestBody,
+      {
+        headers,
       }
     );
   }
