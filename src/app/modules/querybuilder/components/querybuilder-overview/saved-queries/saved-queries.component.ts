@@ -85,38 +85,45 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
     }
     this.changeDetector.detectChanges();
   }
+  reloadQueries(queryType) {
+    if (queryType === 'template') {
+      this.loadSavedTemplates();
+    } else {
+      this.loadSavedQueries();
+    }
+  }
 
   loadSavedTemplates(): void {
     this.savedTemplatesSubscription = this.backend.loadSavedTemplates().subscribe((templates) => {
-      this.savedTemplates = templates;
+      this.savedTemplates = templates.sort((a, b) => a.id - b.id);
     });
   }
 
   loadSavedQueries(): void {
     this.savedQueriesSubscription = this.backend.loadSavedQueries().subscribe((queries) => {
-      this.savedQueries = queries;
+      this.savedQueries = queries.sort((a, b) => a.id - b.id);
     });
   }
 
   loadQueryIntoFeasibilityPage(singleQuery): void {
     if (this.feature.mockLoadnSave()) {
       this.query = singleQuery;
-      this.storeQueryAndNavigate();
+      this.storeQueryAndNavigate(singleQuery);
     }
     this.backend.loadQuery(singleQuery.id).subscribe((query) => {
       this.createDefaultQuery(query);
-      this.storeQueryAndNavigate();
+      this.storeQueryAndNavigate(singleQuery);
     });
   }
 
   loadTemplateIntoFeasibilityPage(singleTemplate): void {
     if (this.feature.mockLoadnSave()) {
       this.query = singleTemplate;
-      this.storeQueryAndNavigate();
+      this.storeTemplateAndNavigate();
     } else {
       this.backend.loadTemplate(singleTemplate.id).subscribe((query) => {
         this.createDefaultQuery(query);
-        this.storeQueryAndNavigate();
+        this.storeTemplateAndNavigate();
       });
     }
   }
@@ -127,10 +134,16 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
       query
     );
   }
-
-  storeQueryAndNavigate() {
+  storeTemplateAndNavigate() {
     this.queryProviderService.store(this.query);
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
+  }
+
+  storeQueryAndNavigate(singleQueryloadedResult) {
+    this.queryProviderService.store(this.query);
+    this.router.navigate(['/querybuilder/editor'], {
+      state: { preventReset: true, loadedResult: singleQueryloadedResult },
+    });
   }
 
   doValidate(): void {
