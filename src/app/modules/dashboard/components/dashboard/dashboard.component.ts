@@ -5,6 +5,7 @@ import { AppConfigService } from '../../../../config/app-config.service';
 import { FeatureService } from '../../../../service/feature.service';
 import { TranslateService } from '@ngx-translate/core';
 import { IUserProfile } from '../../../../shared/models/user/user-profile.interface';
+import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'num-dashboard',
@@ -16,7 +17,8 @@ export class DashboardComponent implements OnInit {
     private appConfig: AppConfigService,
     private oauthService: OAuthService,
     private featureService: FeatureService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private snackbar: SnackbarService
   ) {}
 
   config = this.appConfig.config;
@@ -32,6 +34,7 @@ export class DashboardComponent implements OnInit {
     this.stylesheet = this.featureService.getStylesheet();
     this.displayInfoMessage = this.featureService.showInfoPage();
     this.proposalPortalLink = this.featureService.getproposalPortalLink();
+    this.snackbar.displayInfoMessage('UPDATE_NOTE');
   }
 
   newQuery(): void {}

@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,24 +27,31 @@ export class SnackbarService {
     404: 'SITE_NOT_FOUND',
   };
 
-  public errorMessage: string;
+  public messagePrefix: string;
+  public message: string;
 
   public retryAfter: 0;
 
   constructor(private snackBar: MatSnackBar) {}
 
   public displayErrorMessage(errorMessage: string, retryAfter?) {
-    this.errorMessage = errorMessage;
+    this.message = 'ERROR.' + errorMessage;
     this.retryAfter = retryAfter;
-    this.openSnackbar();
+    this.openSnackbar(10000);
   }
 
-  private openSnackbar() {
+  public displayInfoMessage(infoMessage: string, retryAfter?) {
+    this.message = 'INFO.' + infoMessage;
+    this.retryAfter = retryAfter;
+    this.openSnackbar(0);
+  }
+
+  private openSnackbar(duration) {
     this.snackBar.openFromComponent(SnackBarComponent, {
-      data: this.errorMessage,
+      data: this.message,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: 10000,
+      duration,
       panelClass: ['snackbar-container'],
     });
   }
