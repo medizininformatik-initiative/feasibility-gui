@@ -1,9 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-between" class="snackbarAlignment" matSnackBarLabel>
   <div class="textAlignment">
-    {{
-      'ERROR.' + snackbarService.errorMessage
-        | translate : { RETRY_AFTER: this.snackbarService.retryAfter }
-    }}
+    {{ snackbarService.message | translate : { RETRY_AFTER: this.snackbarService.retryAfter } }}
   </div>
   <div class="buttoAlignment">
     <button mat-button class="buttonColor" (click)="snackbarService.closeSnackbar()">

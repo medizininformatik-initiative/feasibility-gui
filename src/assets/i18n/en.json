@@ -268,5 +268,8 @@
     "404":        "Site not found",
     "IMPORT_FROM_FILE": "choose file",
     "IMPORT_DATASELECTION": "Load Dataselection"
+  },
+  "INFO":{
+    "UPDATE_NOTE": " Due to updates centrally and at the sites, the portal will presumably be of limited use between 10.11 and 13.11. Feasibility requests for the application of the NUM-MII funding can also be submitted without site results or until 17.11. We thank you for your understanding."
   }
 }
