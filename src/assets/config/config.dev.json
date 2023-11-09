@@ -29,6 +29,7 @@
     "extra": {
       "displayvaluefiltericon": false,
       "showoptionspage": true,
+      "showdataselectionpage": false,
       "optionpageroles": ["FeasibilityUser"],
       "displayInfoMessage": true
     }

@@ -15,6 +15,7 @@ export class FeatureService {
 
   private subject = new Subject<any>();
   private showOptionsPage = this.appConfig.getConfig().features.extra.showoptionspage;
+  private showDataselectionPage = this.appConfig.getConfig().features.extra.showdataselectionpage;
 
   public useFeatureMultipleValueDefinitions(): boolean {
     if (this.showOptionsPage) {
@@ -122,6 +123,10 @@ export class FeatureService {
   }
   public useFeatureOptionsPage(): boolean {
     return this.showOptionsPage;
+  }
+
+  public useFeatureDataselectionPage(): boolean {
+    return this.showDataselectionPage;
   }
 
   public isDevelopMode(): boolean {
