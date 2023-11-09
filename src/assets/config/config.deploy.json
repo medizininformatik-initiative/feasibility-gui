@@ -28,7 +28,9 @@
     "extra": {
       "displayvaluefiltericon": false,
       "showoptionspage": false,
-      "optionpageroles": "#{auth_roles}"
+      "showdataselectionpage": false,
+      "optionpageroles": "#{auth_roles}",
+      "displayInfoMessage": true
     }
   },
   "options": {
