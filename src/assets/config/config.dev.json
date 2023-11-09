@@ -32,7 +32,7 @@
       "showdataselectionpage": false,
       "optionpageroles": ["FeasibilityUser"],
       "displayInfoMessage": true,
-      "displayUpdateInfo": true
+      "displayUpdateInfo": false
     }
   },
   "options": {
