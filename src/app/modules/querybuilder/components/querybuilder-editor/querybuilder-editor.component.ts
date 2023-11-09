@@ -140,6 +140,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         }
       },
       (error) => {
+        console.log(error);
         this.showSpinningIcon = false;
         this.hasQuerySend = false;
         if (error.status === 404) {
