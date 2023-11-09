@@ -15,6 +15,7 @@ export class FeatureService {
 
   private subject = new Subject<any>();
   private showOptionsPage = this.appConfig.getConfig().features.extra.showoptionspage;
+  private showDataselectionPage = this.appConfig.getConfig().features.extra.showdataselectionpage;
 
   public useFeatureMultipleValueDefinitions(): boolean {
     if (this.showOptionsPage) {
@@ -109,6 +110,9 @@ export class FeatureService {
   public getDataset(): string {
     return this.appConfig.getConfig().dataset;
   }
+  public getproposalPortalLink(): string {
+    return this.appConfig.getConfig().proposalPortalLink;
+  }
   public getRoles(site: string): string[] {
     if (site === 'main') {
       return this.appConfig.getConfig().auth.roles;
@@ -121,14 +125,20 @@ export class FeatureService {
     return this.showOptionsPage;
   }
 
+  public useFeatureDataselectionPage(): boolean {
+    return this.showDataselectionPage;
+  }
+
   public isDevelopMode(): boolean {
-    //return isDevMode();
     return !environment.production;
   }
 
   public showInfoPage(): boolean {
-    //return isDevMode();
     return this.appConfig.getConfig().features.extra.displayInfoMessage;
+  }
+
+  public showUpdateInfo(): boolean {
+    return this.appConfig.getConfig().features.extra.displayUpdateInfo;
   }
 
   public mockTerminology(): boolean {

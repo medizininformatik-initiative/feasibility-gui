@@ -10,7 +10,7 @@ import { GroupFactory } from '../../controller/GroupFactory';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
 import { MatRadioChange } from '@angular/material/radio';
-
+import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 @Component({
   selector: 'num-querybuilder',
   templateUrl: './querybuilder-editor.component.html',
@@ -23,6 +23,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   query: Query;
 
   result: QueryResult;
+
+  resultsLargeEnough: boolean;
 
   resultUrl: string;
 
@@ -44,7 +46,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     public backend: BackendService,
     public featureService: FeatureService,
     private changeDetector: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackbar: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +65,10 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
 
     this.gottenDetailedResult = false;
     this.getDetailedResultRateLimit();
+
+    if (this.featureService.showUpdateInfo()) {
+      this.snackbar.displayInfoMessage('UPDATE_NOTE');
+    }
   }
 
   updateResultGotten(resultGotten: boolean) {
@@ -100,10 +107,13 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.queryProviderService.store(query);
   }
 
+  storeQueryResult(queryResult): void {
+    this.queryProviderService.storeQueryResult(queryResult);
+  }
+
   startRequestingResult(): void {
     const summaryResultUrl = this.resultUrl + '/summary-result';
     this.loadedResult = false;
-
     this.resultObservable$ = interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 100)),
       map(() => this.backend.getSummaryResult(summaryResultUrl)),
@@ -113,10 +123,23 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.subscriptionPolling = this.resultObservable$.subscribe(
       (result) => {
         this.result = result;
+        this.storeQueryResult(this.result);
         if (result.queryId !== undefined) {
           this.hasQuerySend = result.queryId;
+        }
+
+        if (result.issues !== undefined) {
+          if (result.issues[0].code !== undefined) {
+            this.resultsLargeEnough = false;
+          }
         } else {
-          this.hasQuerySend = false;
+          this.resultsLargeEnough = true;
+          this.result = result;
+          if (result.queryId !== undefined) {
+            this.hasQuerySend = result.queryId;
+          } else {
+            this.hasQuerySend = false;
+          }
         }
       },
       (error) => {
@@ -124,14 +147,19 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         this.showSpinningIcon = false;
         this.hasQuerySend = false;
         if (error.status === 404) {
-          window.alert('Site not found');
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['404']);
+        }
+        if (error.status === 429) {
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
         }
       },
       () => {
-        console.log('done');
-        //  this.resultUrl = ''
+        if (this.resultsLargeEnough === false) {
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10004']);
+        } else {
+          this.loadedResult = true;
+        }
         this.showSpinningIcon = false;
-        this.loadedResult = true;
       }
     );
   }
@@ -188,7 +216,11 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         this.callsRemaining = result.remaining;
       },
       (error) => {
-        console.log(error);
+        if (error.error.issues !== undefined) {
+          if (error.error.issues[0].code !== undefined) {
+            this.snackbar.displayErrorMessage(error.error.issues[0].code);
+          }
+        }
       }
     );
   }

@@ -41,10 +41,13 @@ export class UploadDataselectionComponent implements AfterViewChecked {
     this.changeDetector.detectChanges();
   }
   doImport(): void {
+    const importQueryCopy = JSON.parse(JSON.stringify(this.importQuery));
+
     this.query = this.apiTranslator.translateImportedDsToUIQuery(
       QueryProviderService.createDefaultQuery(),
-      this.importQuery
+      importQueryCopy
     );
+
     this.queryProviderService.store(this.query);
     this.parentComponent.emit(this.query);
   }

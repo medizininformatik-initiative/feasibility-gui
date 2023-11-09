@@ -15,7 +15,7 @@
     "roles": ["FeasibilityUser"]
   },
   "legal": {
-    "version": "2.0.0",
+    "version": "2.1.0",
     "copyrightYear": "2023",
     "copyrightOwner": "MII Team"
   },
@@ -29,8 +29,10 @@
     "extra": {
       "displayvaluefiltericon": false,
       "showoptionspage": true,
+      "showdataselectionpage": false,
       "optionpageroles": ["FeasibilityUser"],
-      "displayInfoMessage": true
+      "displayInfoMessage": true,
+      "displayUpdateInfo": false
     }
   },
   "options": {
@@ -49,5 +51,6 @@
   "stylesheet": "FDPGTheme",
   "fhirport": "8082",
   "dataset": "codex",
-  "queryVersion": "v2"
+  "queryVersion": "v2",
+  "proposalPortalLink": "https://antrag.dev.forschen-fuer-gesundheit.de"
 }

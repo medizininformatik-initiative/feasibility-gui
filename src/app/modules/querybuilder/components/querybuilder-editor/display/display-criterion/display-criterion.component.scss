@@ -71,3 +71,16 @@
   margin-top: 15px;
   margin-bottom: 3px;
 }
+
+.checkbox-optional {
+  padding-right: 1em;
+  background-color: white;
+}
+
+::ng-deep
+  .mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
+  background-color: var(--num-color--accent-600);
+}

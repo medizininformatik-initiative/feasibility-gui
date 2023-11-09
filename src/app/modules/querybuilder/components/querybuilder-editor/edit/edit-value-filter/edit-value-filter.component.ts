@@ -11,7 +11,6 @@ import { Query } from '../../../../model/api/query/query';
 import { Criterion } from '../../../../model/api/query/criterion';
 import { ValueType } from '../../../../model/api/terminology/valuedefinition';
 import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concept-line/edit-value-filter-concept-line.component';
-import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
@@ -38,9 +37,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   criterion: Criterion;
 
-  resetQuantityDisabled = true;
+  @Input()
+  optional: boolean;
 
-  optional = false;
+  resetQuantityDisabled = true;
 
   OperatorOptions: typeof OperatorOptions = OperatorOptions;
 
@@ -66,14 +66,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       };
       this.selectedConceptsAsJson.add(JSON.stringify(temp));
     });
-
-    if (this.filter?.attributeDefinition?.optional) {
-      this.optional = this.optional = true;
-    }
-
-    if (this.filter?.valueDefinition?.optional) {
-      this.optional = this.optional = true;
-    }
 
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
       this.criterion.linkedCriteria.forEach((linkedCrit) => {
@@ -109,7 +101,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     setTimeout(() => (this.disableAnimation = false));
     this.getQuantityFilterOption();
   }
-
   getQuantityFilterOption(): string {
     if (!this.filter || this.filter.type === OperatorOptions.CONCEPT) {
       return null;
@@ -286,7 +277,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     return isLinked;
   }
 
-  doSelectAllCheckboxes() {
+  deSelectAllCheckboxes() {
     this.checkboxes.forEach((checkbox, index) => {
       if (checkbox.checked) {
         checkbox.checked = false;
@@ -304,11 +295,16 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     });
   }
 
-  resetQuantity() {
+  resetFilter() {
+    if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
+      return this.deSelectAllCheckboxes();
+    }
+
     if (
       (this.filter.comparator !== Comparator.NONE ||
         this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
-      this.filter.valueDefinition.type === ValueType.QUANTITY
+      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
+        ValueType.QUANTITY
     ) {
       this.filter.maxValue = 0;
       this.filter.minValue = 0;
@@ -325,40 +321,30 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     }
     if (
       this.selectedConceptsAsJson.size > 0 &&
-      this.filter.valueDefinition.type === ValueType.CONCEPT
+      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
+        ValueType.CONCEPT
     ) {
-      this.doSelectAllCheckboxes();
+      this.deSelectAllCheckboxes();
     }
   }
 
-  resetQuantityButtonDisabled() {
+  resetButtonDisabled() {
     if (
       this.selectedConceptsAsJson.size > 0 &&
-      this.filter.valueDefinition?.type === ValueType.CONCEPT
+      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
+        ValueType.CONCEPT
     ) {
       return false;
     }
     if (
       (this.filter.comparator !== Comparator.NONE ||
         this.filter.type === OperatorOptions.QUANTITY_RANGE) &&
-      this.filter.valueDefinition?.type === ValueType.QUANTITY
+      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
+        ValueType.QUANTITY
     ) {
       return false;
     }
-    return true;
-  }
 
-  resetButtonDisabled() {
-    if (
-      (this.filter.attributeDefinition?.type || this.filter.valueDefinition?.type) ===
-      ValueType.CONCEPT
-    ) {
-      if (this.selectedConceptsAsJson.size > 0) {
-        return false;
-      } else {
-        return true;
-      }
-    }
     if (this.filter.attributeDefinition?.type === ValueType.REFERENCE) {
       if (this.criterion.linkedCriteria.length > 0) {
         return false;
@@ -366,6 +352,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         return true;
       }
     }
+
+    return true;
   }
 
   public isActionDisabled(): boolean {

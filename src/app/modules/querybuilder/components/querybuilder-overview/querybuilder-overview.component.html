@@ -25,29 +25,5 @@
     </num-button>
   </div>
   <h3>{{ 'QUERYBUILDER.OVERVIEW.SAVED_QUERIES' | translate }}</h3>
-  <div *ngFor="let singleQuery of savedQueries; index as i" class="query-box">
-    <num-single-query
-      [index]="i"
-      [id]="singleQuery.id"
-      [singleLabel]="singleQuery.label"
-      [singleDate]="singleQuery.createdAt"
-      (click)="loadQuery(singleQuery.id)"
-    >
-    </num-single-query>
-  </div>
-  <div class="trenner"></div>
-  <h3>{{ 'QUERYBUILDER.OVERVIEW.SAVED_TEMPLATES' | translate }}</h3>
-  <div *ngFor="let singleTemplate of savedTemplates; index as i" class="template-box">
-    <num-single-query
-      [index]="i"
-      [id]="singleTemplate.id"
-      [isValid]="singleTemplate.isValid"
-      [singleLabel]="singleTemplate.label"
-      [singleComment]="singleTemplate.comment"
-      [singleDate]="singleTemplate.lastModified"
-      [createdBy]="singleTemplate.createdBy"
-      (click)="loadTemplate(singleTemplate.id, singleTemplate.content)"
-    >
-    </num-single-query>
-  </div>
+  <num-saved-queries></num-saved-queries>
 </div>

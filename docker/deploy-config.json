@@ -15,7 +15,7 @@
     "roles": ["FEASIBILITY_USER"]
   },
   "legal": {
-    "version": "2.0.0",
+    "version": "2.1.0",
     "copyrightOwner": "FDPG+ Team"
   },
   "features": {
@@ -28,7 +28,10 @@
     "extra": {
       "displayvaluefiltericon": false,
       "showoptionspage": true,
-      "optionpageroles": ["FEASIBILITY_USER"]
+      "showdataselectionpage": false,
+      "optionpageroles": ["FEASIBILITY_USER"],
+      "displayInfoMessage": true,
+      "displayUpdateInfo": true
     }
   },
   "options": {
@@ -47,5 +50,6 @@
   "stylesheet": "FDPGTheme",
   "fhirport": "8082",
   "dataset": "codex",
-  "queryVersion": "v2"
+  "queryVersion": "v2",
+  "proposalPortalLink": "https://antrag.dev.forschen-fuer-gesundheit.de/"
 }

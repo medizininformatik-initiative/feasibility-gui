@@ -68,6 +68,10 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   doSave(event: { groupId: number }, criterion: Criterion): void {
+    if (this.searchType === 'dataselection') {
+      criterion.requiredDataSelection = false;
+    }
+
     const index = this.query.groups.findIndex((group) => group.id === event.groupId);
 
     if (index < 0) {

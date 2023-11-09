@@ -1,0 +1,60 @@
+<num-query-box-front *ngIf="singleTemplate.isValid" fxFlex="5" [isInvalid]="singleTemplate.isValid">
+</num-query-box-front>
+<div fxFill fxFlex="85" fxLayout="row" class="text-part">
+  <form
+    fxFlex="40"
+    fxLayoutAlign="center start"
+    appearance="outline"
+    (click)="$event.stopPropagation()"
+    class="width-100"
+    fxLayoutAlign="center center"
+  >
+    <input
+      matInput
+      class="input-design"
+      type="text"
+      value="{{ singleTemplate.label }}"
+      [(ngModel)]="updatedLabel"
+      (ngModelChange)="updateLabel()"
+    />
+  </form>
+  <mat-divider vertical></mat-divider>
+  <form
+    fxFlex="40"
+    fxLayoutAlign="center start"
+    appearance="outline"
+    (click)="$event.stopPropagation()"
+    class="width-100"
+    fxLayoutAlign="center center"
+  >
+    <input
+      matInput
+      class="input-design"
+      type="text"
+      value="{{ singleTemplate.comment }}"
+      [(ngModel)]="updatedComment"
+      (ngModelChange)="updateLabel()"
+    />
+  </form>
+  <div fxLayoutAlign="end center" fxFlex="5">
+    <button
+      (click)="updateTemplate(); $event.stopPropagation()"
+      mat-button
+      matIconPrefix
+      type="button"
+    >
+      <fa-icon
+        *ngIf="disabledInput"
+        matTooltip="{{ 'QUERYBUILDER.OVERVIEW.SAVE_TEMPLATE' | translate }}"
+        [matTooltipClass]="'tooltip-design'"
+        [matTooltipPosition]="'above'"
+        size="sm"
+        icon="save"
+      >
+      </fa-icon>
+    </button>
+  </div>
+  <div fxFlexAlign="center" class="query-box-date">
+    {{ singleTemplate.lastModified | date : 'dd.MM.yyyy' }}
+  </div>
+</div>

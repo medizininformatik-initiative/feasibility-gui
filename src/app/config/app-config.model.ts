@@ -29,8 +29,10 @@ export interface IAppConfig {
     extra: {
       displayvaluefiltericon: boolean
       showoptionspage: boolean
+      showdataselectionpage: boolean
       optionpageroles: string[]
       displayInfoMessage: boolean
+      displayUpdateInfo: boolean
     }
   }
   options: {
@@ -50,4 +52,5 @@ export interface IAppConfig {
   fhirport: string
   dataset: string
   queryVersion: string
+  proposalPortalLink: string
 }

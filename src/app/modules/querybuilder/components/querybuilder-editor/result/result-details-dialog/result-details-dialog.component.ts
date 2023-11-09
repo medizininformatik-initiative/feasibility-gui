@@ -5,6 +5,7 @@ import { interval, Observable, Subscription, timer } from 'rxjs';
 import { map, share, switchAll, takeUntil, startWith } from 'rxjs/operators';
 import { BackendService } from '../../../../service/backend.service';
 import { FeatureService } from '../../../../../../service/feature.service';
+import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 
 export class ResultDetailsDialogComponentData {
   resultObservable$: Observable<QueryResult>;
@@ -30,6 +31,7 @@ export class ResultDetailsDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsDialogComponentData,
     public dialogRef: MatDialogRef<ResultDetailsDialogComponent>,
+    public snackbar: SnackbarService,
     public backend: BackendService,
     public featureService: FeatureService
   ) {
@@ -57,20 +59,22 @@ export class ResultDetailsDialogComponent implements OnInit {
       .subscribe(
         (result) => {
           this.resultStatus = '200';
-          console.log(this.result);
-          this.sortResult(result);
+          if (result.issues !== undefined) {
+            this.resultStatus = result.issues[0].code;
+            this.snackbar.displayErrorMessage(this.snackbar.errorCodes[this.resultStatus]);
+          } else {
+            this.sortResult(result);
+          }
           this.resultGotten.emit(true);
         },
         (error) => {
-          console.log(error);
-          //this.showSpinningIcon = false;
           if (error.status === 404) {
             this.resultStatus = '404';
-            //window.alert('Site not found');
+            this.snackbar.displayErrorMessage(this.snackbar.errorCodes['404']);
           }
           if (error.status === 429) {
             this.resultStatus = '429';
-            //window.alert('to many request');
+            this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
           }
         },
         () => {
@@ -80,6 +84,6 @@ export class ResultDetailsDialogComponent implements OnInit {
   }
   sortResult(resultTemp): void {
     this.result = resultTemp;
-    this.result.resultLines.sort((a, b) => b.numberOfPatients - a.numberOfPatients);
+    this.result?.resultLines?.sort((a, b) => b.numberOfPatients - a.numberOfPatients);
   }
 }

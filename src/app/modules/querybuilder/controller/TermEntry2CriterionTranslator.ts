@@ -33,7 +33,7 @@ export class TermEntry2CriterionTranslator {
     criterion.entity = termEntry.entity;
     criterion.children = termEntry.children;
     criterion.timeRestriction = this.createTimeRestriction(termEntry);
-    criterion.optional = termEntry.optional;
+    criterion.requiredDataSelection = undefined;
     criterion.criterionHash = this.getCriterionHash(criterion);
     if (!criterion.uniqueID) {
       criterion.uniqueID = uuidv4();
@@ -57,7 +57,7 @@ export class TermEntry2CriterionTranslator {
     return crit;
   }
 
-  getCriterionHash(criterion): string {
+  public getCriterionHash(criterion): string {
     const termcode = criterion.termCodes[0];
     const context = criterion.context;
     let contextVersion = '';
@@ -119,7 +119,7 @@ export class TermEntry2CriterionTranslator {
       attributeFilter.type = OperatorOptions.CONCEPT;
       attributeFilter.selectedConcepts = [];
     } else if (attributeDefinition.type === ValueType.QUANTITY) {
-      attributeFilter.type = OperatorOptions.QUANTITY_RANGE;
+      attributeFilter.type = OperatorOptions.QUANTITY_COMPARATOR;
       attributeFilter.unit =
         attributeDefinition.allowedUnits.length > 0
           ? attributeDefinition.allowedUnits[0]
@@ -130,7 +130,7 @@ export class TermEntry2CriterionTranslator {
       attributeFilter.min = attributeDefinition.min;
       attributeFilter.max = attributeDefinition.max;
       attributeFilter.precision = attributeDefinition.precision;
-      attributeFilter.comparator = Comparator.GREATER_OR_EQUAL;
+      attributeFilter.comparator = Comparator.NONE;
     }
 
     return attributeFilter;

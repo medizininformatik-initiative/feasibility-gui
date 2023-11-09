@@ -23,6 +23,7 @@ import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/quer
 import { TermEntry2CriterionTranslator } from 'src/app/modules/querybuilder/controller/TermEntry2CriterionTranslator';
 import { TerminologyCode } from '../../../../model/api/terminology/terminology';
 import { QueryProviderService } from '../../../../service/query-provider.service';
+import { AttributeFilter } from '../../../../model/api/query/attributeFilter';
 
 @Component({
   selector: 'num-edit-criterion',
@@ -166,25 +167,39 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
             this.criterion.valueFilters[0].valueDefinition = profile.valueDefinition;
           }
         }
-        this.criterion.attributeFilters?.forEach((attribute) => {
-          if (profile.attributeDefinitions) {
-            const find = profile.attributeDefinitions.find(
-              (attr) => attr.attributeCode.code === attribute.attributeDefinition.attributeCode.code
+
+        if (profile.attributeDefinitions) {
+          profile.attributeDefinitions.forEach((attribute) => {
+            const find = this.criterion.attributeFilters?.find(
+              (attr) => attr.attributeDefinition.attributeCode.code === attribute.attributeCode.code
             );
-            if (find.type === 'concept') {
-              if (find.selectableConcepts) {
-                attribute.attributeDefinition.selectableConcepts = find.selectableConcepts;
+            if (!find) {
+              const newFilter = new AttributeFilter();
+              newFilter.attributeDefinition = attribute;
+              newFilter.attributeDefinition.type = attribute.type;
+              newFilter.type = attribute.type;
+              this.criterion.attributeFilters?.push(newFilter);
+            } else {
+              find.attributeDefinition.optional = attribute.optional;
+              find.attributeDefinition.type = attribute.type;
+              if (attribute.type === 'reference') {
+                find.attributeDefinition.referenceCriteriaSet = attribute.referenceCriteriaSet;
+              }
+              if (attribute.type === 'concept') {
+                if (attribute.selectableConcepts) {
+                  find.attributeDefinition.selectableConcepts = attribute.selectableConcepts;
+                }
+              }
+              if (attribute.type === 'quantity') {
+                find.attributeDefinition.precision = attribute.precision;
+                find.attributeDefinition.allowedUnits = attribute.allowedUnits;
+                if (attribute.selectableConcepts) {
+                  find.attributeDefinition.selectableConcepts = attribute.selectableConcepts;
+                }
               }
             }
-            if (find.type === 'quantity') {
-              attribute.precision = find.precision;
-              attribute.attributeDefinition.allowedUnits = find.allowedUnits;
-              if (find.selectableConcepts) {
-                attribute.attributeDefinition.selectableConcepts = find.selectableConcepts;
-              }
-            }
-          }
-        });
+          });
+        }
 
         this.loadAllowedCriteria();
       });
