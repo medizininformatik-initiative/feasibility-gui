@@ -1,29 +1,20 @@
 <div *ngIf="filter" [@.disabled]="disableAnimation">
   <mat-expansion-panel togglePosition="before" [expanded]="!optional">
     <mat-expansion-panel-header>
-      <ng-container *ngIf="filterType === 'attribute'">
-        <mat-panel-title>
+      <ng-container>
+        <mat-panel-title *ngIf="filterType === 'attribute'">
           {{ filter.attributeDefinition.attributeCode.display }}
           <span *ngIf="optional">&nbsp;(optional)</span>:
         </mat-panel-title>
-        <num-button
-          type="primary"
-          (click)="doSelectAllCheckboxes(); $event.stopPropagation()"
-          fxLayoutAlign="end"
-          [isDisabled]="resetButtonDisabled()"
-          >{{ 'BUTTON.RESET' | translate }}
-        </num-button>
-      </ng-container>
-      <ng-container *ngIf="filterType !== 'attribute'">
-        <mat-panel-title>
+        <mat-panel-title *ngIf="filterType !== 'attribute'">
           {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_VALUE' | translate }}
           <span *ngIf="optional">&nbsp;(optional)</span> :
         </mat-panel-title>
         <num-button
           [type]="'primary'"
           fxLayoutAlign="end"
-          (click)="resetQuantity(); $event.stopPropagation()"
-          [isDisabled]="resetQuantityButtonDisabled()"
+          (click)="resetFilter(); $event.stopPropagation()"
+          [isDisabled]="resetButtonDisabled()"
         >
           {{ 'BUTTON.RESET' | translate }}
         </num-button>
@@ -43,7 +34,6 @@
       <!-- QUANTITY -->
       <div
         *ngIf="
-          filter.type === OperatorOptions.QUANTITY_NOT_SET ||
           filter.type === OperatorOptions.QUANTITY_RANGE ||
           filter.type === OperatorOptions.QUANTITY_COMPARATOR
         "

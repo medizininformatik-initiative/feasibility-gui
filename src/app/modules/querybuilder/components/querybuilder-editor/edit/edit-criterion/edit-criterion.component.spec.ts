@@ -111,6 +111,7 @@ describe('EditCriterionComponent', () => {
 
   const query: Query = {
     display: '',
+    consent: false,
     groups: [
       {
         id: 1,

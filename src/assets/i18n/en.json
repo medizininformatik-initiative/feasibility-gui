@@ -59,7 +59,7 @@
       "HEADLINE": "My Queries",
       "TEXT": "Get an overview of the requests you have already performed"
     },
-    "FEASPORTAL": {
+    "PREPOSALPORTAL": {
       "HEADLINE": "Submit Application",
       "TEXT": "Make a request for data use in the proposal portal"
     }
@@ -72,7 +72,8 @@
     },
     "DISPLAY": {
       "LABEL": "Selected Criteria"
-    }
+    },
+    "REQUIRED":"required from all sites"
   },
   "LANGUAGE": {
     "GERMAN": "German",
@@ -244,19 +245,27 @@
     "CONTACT": "Contact"
   },
   "BUTTON": {
-    "SAVE": "Save",
+    "ADD": "Add",
+    "ADDALL": "Add all",
+    "ADD_TOOLTIP": "restrict criteria",
     "CANCEL": "Cancel",
     "CLOSE": "Close",
     "DOWNLOAD": "Download",
-    "ADD": "Add",
-    "ADD_TOOLTIP": "restrict criteria",
-    "ADDALL": "Add all",
-    "SEND": "Send",
+    "IMPORT_FROM_FILE": "choose file",
+    "IMPORT_DATASELECTION":"Import Dataselection",
     "RESET": "Reset",
     "RESULTDETAILS": "Details",
+    "SAVE": "Save",
     "SAVEQUERY": "Save query",
     "VALIDATE": "Validate",
     "IMPORT": "Load query",
+  },
+  "ERROR": {
+    "FEAS-10001": "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
+    "FEAS-10002": "You sent too many queries, please wait {{RETRY_AFTER}} seconds and try again",
+    "FEAS-10004": "The number of sites which answered is too small -> detailed results are not shown",
+    "FEAS-10005": "The result size is too small -> result will not be shown",
+    "404":        "Site not found",
     "IMPORT_FROM_FILE": "choose file",
     "IMPORT_DATASELECTION": "Load Dataselection"
   }

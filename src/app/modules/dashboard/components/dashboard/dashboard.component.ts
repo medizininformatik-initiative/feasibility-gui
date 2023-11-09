@@ -24,12 +24,14 @@ export class DashboardComponent implements OnInit {
   stylesheet: string;
   roles: string[];
   displayInfoMessage: boolean;
+  proposalPortalLink: string;
 
   ngOnInit(): void {
     this.roles = this.featureService.getRoles('main');
     this.init();
     this.stylesheet = this.featureService.getStylesheet();
     this.displayInfoMessage = this.featureService.showInfoPage();
+    this.proposalPortalLink = this.featureService.getproposalPortalLink();
   }
 
   newQuery(): void {}

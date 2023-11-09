@@ -42,12 +42,15 @@ import { SaveDialogComponent } from './components/querybuilder-editor/save/save-
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileSaverModule } from 'ngx-filesaver';
+import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { DisplayLinkedCriterionComponent } from './components/querybuilder-editor/display/display-linked-criterion/display-linked-criterion.component';
 import { SingleQueryComponent } from './components/querybuilder-overview/saved-queries/single-query/single-query.component';
 import { SingleTemplateComponent } from './components/querybuilder-overview/saved-queries/single-template/single-template.component';
 import { QueryBoxFrontComponent } from './components/querybuilder-overview/saved-queries/query-box-front/query-box-front.component';
 import { SavedQueriesComponent } from './components/querybuilder-overview/saved-queries/saved-queries.component';
 import { QueryBoxEndComponent } from './components/querybuilder-overview/saved-queries/query-box-end/query-box-end.component';
+import { SearchTreeTermEntryDataselectionComponent } from './components/querybuilder-editor/search/dataselection/search-tree-term-entry-dataselection/search-tree-term-entry-dataselection.component';
+
 export const FORMATS_GERMAN = {
   parse: {
     dateInput: 'LL',
@@ -97,6 +100,7 @@ export const FORMATS_GERMAN = {
     QueryBoxFrontComponent,
     SavedQueriesComponent,
     QueryBoxEndComponent,
+    SearchTreeTermEntryDataselectionComponent,
   ],
   imports: [
     CommonModule,
@@ -107,6 +111,7 @@ export const FORMATS_GERMAN = {
     MatProgressSpinnerModule,
     MatTooltipModule,
     FileSaverModule,
+    SnackBarComponent,
   ],
   exports: [
     SearchInputComponent,

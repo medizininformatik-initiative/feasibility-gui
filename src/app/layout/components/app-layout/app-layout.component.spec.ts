@@ -59,6 +59,7 @@ describe('AppLayoutComponent', () => {
         fhirport: null,
         legal: null,
         mock: null,
+        proposalPortalLink: null,
       }),
       setTheme: (oldTheme: string, newTheme: string): void => {},
     } as FeatureProviderService;
