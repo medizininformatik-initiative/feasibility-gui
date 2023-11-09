@@ -19,7 +19,6 @@
 * Quantity for Attributes does not work ([119](https://github.com/medizininformatik-initiative/feasibility-gui/issues/119))
 * Loading of linking criterion does not work ([#115](https://github.com/medizininformatik-initiative/feasibility-gui/issues/115))
 
-
 ## v2.0.0 (2023-10-08)
 
 ### Feature
