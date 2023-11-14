@@ -484,11 +484,17 @@ export class ApiTranslator {
   private getConsent(): CriterionOnlyV2[] {
     return [
       {
+        context: {
+          code: 'Einwilligung',
+          display: 'Einwilligung',
+          system: 'fdpg.mii.cds',
+          version: '1.0.0',
+        },
         termCodes: [
           {
-            code: 'central-consent',
-            system: 'mii.abide',
-            display: 'MDAT wissenschaftlich nutzen - EU DSGVO Niveau',
+            code: '2.16.840.1.113883.3.1937.777.24.5.3.8',
+            display: 'MDAT wissenschaftlich nutzen EU DSGVO NIVEAU',
+            system: 'urn:oid:2.16.840.1.113883.3.1937.777.24.5.3',
           },
         ],
       },
@@ -502,8 +508,8 @@ export class ApiTranslator {
       sqquery.inclusionCriteria.forEach((and, indexAnd) => {
         and.forEach((or, indexOr) => {
           if (
-            or.termCodes[0].code === 'central-consent' &&
-            or.termCodes[0].system === 'mii.abide'
+            or.termCodes[0].code === '2.16.840.1.113883.3.1937.777.24.5.3.8' &&
+            or.termCodes[0].system === 'urn:oid:2.16.840.1.113883.3.1937.777.24.5.3'
           ) {
             consent = true;
             index = [indexAnd, indexOr];
@@ -512,12 +518,14 @@ export class ApiTranslator {
       });
     }
 
+    /* HOTFIX fix: Do not delete and instead display choice explicitedly
+     * Should be reviewed
     if (index[0] !== undefined && index[1] !== undefined) {
       sqquery.inclusionCriteria[index[0]].splice(index[1], 1);
       if (sqquery.inclusionCriteria[index[0]].length === 0) {
         sqquery.inclusionCriteria.splice(index[0], 1);
       }
-    }
+    }*/
     return consent;
   }
 
