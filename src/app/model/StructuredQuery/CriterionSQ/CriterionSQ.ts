@@ -1,14 +1,11 @@
-import { Criterion } from '../../FeasibilityQuery/Criterion/Criterion';
+import { AbstractStructuredQueryFilters } from './AbstractStructuredQueryFilters';
+import { TerminologyCode } from '../../terminology/Terminology';
 import { TimeRestriction } from '../../FeasibilityQuery/TimeRestriction';
-import { TerminologyCode, TerminologyEntry } from '../../terminology/Terminology';
-import { AbstractStructuredQueryFilter } from './AbstractStructuredQueryFilter';
 
 export class CriterionSQ {
-  attributeFilters?: Array<AbstractStructuredQueryFilter>;
+  attributeFilters?: Array<AbstractStructuredQueryFilters>;
   context?: TerminologyCode;
-  children?: Array<TerminologyEntry>;
-  linkedCriteria?: Criterion[];
   timeRestriction?: TimeRestriction;
   termCodes: Array<TerminologyCode> = [];
-  valueFilter?: AbstractStructuredQueryFilter;
+  valueFilter?: AbstractStructuredQueryFilters;
 }
