@@ -12,10 +12,12 @@ import {
 } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { QuantityComparatorFilter } from '../model/StructuredQuery/CriterionSQ/QuantityComparatorFilter';
 import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { AbstractStructuredQueryFilter } from '../model/StructuredQuery/CriterionSQ/AbstractStructuredQueryFilter';
+import { AbstractStructuredQueryFilters } from '../model/StructuredQuery/CriterionSQ/AbstractStructuredQueryFilters';
 import { QuantityRangeFilter } from '../model/StructuredQuery/CriterionSQ/QuantityRangeFilter';
-import { ValueType } from '../model/terminology/AttributeDefinitions/AbstractAttributeDefinitions';
 import { Query } from '../model/FeasibilityQuery/Query';
+import { ReferenceFilter } from '../model/StructuredQuery/CriterionSQ/ReferenceFilter';
+import { ConceptAttributeFilter } from '../model/StructuredQuery/CriterionSQ/ConceptAttributeFilter';
+import { ConceptValueFilter } from '../model/StructuredQuery/CriterionSQ/ConceptValueFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -33,35 +35,38 @@ export class UIQuery2SQTranslator {
     const inclusionCriteria = ObjectHelper.clone(query.groups[0].inclusionCriteria);
 
     if (inclusionCriteria.length > 0) {
-      result.inclusionCriteria = this.translateCriteriontGroup(inclusionCriteria);
+      result.inclusionCriteria = this.translateCriterionGroup(inclusionCriteria);
     } else {
       result.inclusionCriteria = [];
     }
-
     if (exclusionCriteria.length > 0) {
-      //result.exclusionCriteria = this.translateCritGroupV2(exclusionCriteria);
+      result.exclusionCriteria = this.translateCriterionGroup(exclusionCriteria);
     } else {
       result.exclusionCriteria = undefined;
     }
-
     if (query.consent) {
       //result.inclusionCriteria.push(this.getConsent());
     }
     return result;
   }
 
-  private translateCriteriontGroup(inclusionCriteria: Criterion[][]): CriterionSQ[][] {
+  private translateCriterionGroup(inclusionCriteria: Criterion[][]): CriterionSQ[][] {
     const criterionSQ: CriterionSQ[][] = [];
     inclusionCriteria.forEach((criterionArray) => {
       const innerArraySQ: CriterionSQ[] = [];
       criterionArray.forEach((criterion) => {
-        this.assignCriterionElements(criterion);
+        innerArraySQ.push(this.assignCriterionElements(criterion));
       });
+      criterionSQ.push(innerArraySQ);
     });
     return criterionSQ;
   }
 
-  private assignCriterionElements(criterion: Criterion) {
+  /**
+   *
+   * @todo timeRestriction braucht ne Logik also ne Funktion
+   */
+  private assignCriterionElements(criterion: Criterion): CriterionSQ {
     const criterionSQ = new CriterionSQ();
     criterionSQ.attributeFilters = this.addAttributeFiltersToSQ(criterion);
     criterionSQ.context = this.addContextToSQ(criterion);
@@ -80,57 +85,131 @@ export class UIQuery2SQTranslator {
   }
 
   //switch einbauen
-  private addValueFiltersToSQ(criterion: Criterion): AbstractStructuredQueryFilter | undefined {
+  private addValueFiltersToSQ(criterion: Criterion): AbstractStructuredQueryFilters | undefined {
+    const abstractValueFilter: AbstractStructuredQueryFilters[] = [];
+    const valueFilterType = criterion.valueFilters[0].type;
     if (criterion.valueFilters?.length > 0) {
-      if (this.isNoneComparator(criterion.valueFilters[0].comparator)) {
-        return undefined;
-      } else {
-        const valueFilterType = criterion.valueFilters[0].type;
-        if (this.isQunatityComparator(valueFilterType)) {
-          return this.setQuantityComparatorAttributes(criterion.valueFilters[0]);
-        }
-        if (this.isQunatityRange(valueFilterType)) {
-          return this.setQuantityRangeAttributes(criterion.valueFilters[0]);
-        }
-        return criterion.valueFilters[0];
+      if (this.isConcept(valueFilterType)) {
+        abstractValueFilter.push(this.setConceptValueFilter(criterion.valueFilters[0]));
       }
+      if (this.isQuantity(valueFilterType)) {
+        if (this.isNoneComparator(criterion.valueFilters[0].comparator)) {
+          return undefined;
+        } else {
+          abstractValueFilter.push(this.setQuantity(criterion.valueFilters[0]));
+        }
+      }
+      return abstractValueFilter[0];
     }
   }
 
-  private setQuantityComparatorAttributes(valueFilter: ValueFilter): QuantityComparatorFilter {
+  /**
+   * @todo wie valueFilter aufbauen
+   */
+  private addAttributeFiltersToSQ(
+    criterion: Criterion
+  ): AbstractStructuredQueryFilters[] | undefined {
+    const abstractAttributeFilter: AbstractStructuredQueryFilters[] = [];
+    criterion.attributeFilters?.forEach((attributeFilter) => {
+      if (this.isConcept(attributeFilter.type)) {
+        abstractAttributeFilter.push(this.setConceptAttributeFilter(attributeFilter));
+      }
+      if (this.isQuantity(attributeFilter.type)) {
+        if (!this.isNoneComparator(attributeFilter.comparator)) {
+          abstractAttributeFilter.push(this.setQuantity(attributeFilter));
+        }
+      }
+      if (this.isReference(attributeFilter.type)) {
+        abstractAttributeFilter.push(this.setReferences(criterion.linkedCriteria, attributeFilter));
+      }
+    });
+    return abstractAttributeFilter;
+  }
+
+  /**
+   *
+   * @todo check if "quantityFilter as QuantityComparatorFilter" is working
+   * @returns
+   */
+  private setQuantity(
+    quantityFilter: AbstractStructuredQueryFilters
+  ): AbstractStructuredQueryFilters {
+    if (this.isQuantityComparator(quantityFilter.type)) {
+      return this.setQuantityComparatorAttributes(quantityFilter as QuantityComparatorFilter);
+    }
+    if (this.isQuantityRange(quantityFilter.type)) {
+      return this.setQuantityRangeAttributes(quantityFilter as QuantityRangeFilter);
+    }
+  }
+
+  private setConceptAttributeFilter(attributeFilter: AttributeFilter): ConceptAttributeFilter {
+    const conceptAttributeFilter = new ConceptAttributeFilter();
+    conceptAttributeFilter.attributeCode = attributeFilter.attributeCode;
+    conceptAttributeFilter.selectedConcepts = attributeFilter.selectedConcepts;
+    conceptAttributeFilter.type = attributeFilter.type;
+    return conceptAttributeFilter;
+  }
+
+  private setConceptValueFilter(valueFilter: ValueFilter): ConceptValueFilter {
+    const conceptValueFilter = new ConceptValueFilter();
+    conceptValueFilter.selectedConcepts = valueFilter.selectedConcepts;
+    conceptValueFilter.type = valueFilter.type;
+    return conceptValueFilter;
+  }
+
+  private setReferences(linkedCriteria: Criterion[], attributeFilter: AttributeFilter) {
+    const referenceFilter = new ReferenceFilter();
+    referenceFilter.attributeCode = attributeFilter.attributeCode;
+    referenceFilter.criteria = this.setEachLinkedCriteria(linkedCriteria);
+    referenceFilter.type = attributeFilter.type;
+    return referenceFilter;
+  }
+
+  private setEachLinkedCriteria(linkedCriteria: Criterion[]): CriterionSQ[] {
+    const linkedCriteriaArray = new Array<CriterionSQ>();
+    linkedCriteria.forEach((linkedCriterion) => {
+      linkedCriteriaArray.push(this.assignCriterionElements(linkedCriterion));
+    });
+    return linkedCriteriaArray;
+  }
+
+  private setQuantityComparatorAttributes(
+    quantityFilter: QuantityComparatorFilter
+  ): QuantityComparatorFilter {
     const quantityComparatorFilter = new QuantityComparatorFilter();
-    quantityComparatorFilter.comparator = valueFilter.comparator;
-    quantityComparatorFilter.max = valueFilter.max;
-    quantityComparatorFilter.min = valueFilter.min;
+    quantityComparatorFilter.comparator = quantityFilter.comparator;
+    quantityComparatorFilter.type = quantityFilter.type;
+    quantityComparatorFilter.unit = quantityFilter.unit;
+    quantityComparatorFilter.value = quantityFilter.value;
     return quantityComparatorFilter;
   }
 
-  private setQuantityRangeAttributes(valueFilter: ValueFilter): QuantityRangeFilter {
-    const quantityComparatorFilter = new QuantityRangeFilter();
-    quantityComparatorFilter.maxValue = valueFilter.maxValue;
-    quantityComparatorFilter.minValue = valueFilter.minValue;
-    return quantityComparatorFilter;
+  private setQuantityRangeAttributes(quantityFilter: QuantityRangeFilter): QuantityRangeFilter {
+    const quantityRangeFilter = new QuantityRangeFilter();
+    quantityRangeFilter.maxValue = quantityFilter.maxValue;
+    quantityRangeFilter.minValue = quantityFilter.minValue;
+    quantityRangeFilter.type = quantityFilter.type;
+    quantityRangeFilter.unit = quantityFilter.unit;
+    return quantityRangeFilter;
   }
 
-  private addAttributeFiltersToSQ(criterion: Criterion): AttributeFilter[] | undefined {
-    if (criterion.attributeFilters?.length > 0) {
-      return criterion.attributeFilters;
-    }
+  private isQuantity(type: OperatorOptions) {
+    return this.isQuantityComparator(type) || this.isQuantityRange(type) ? true : false;
   }
 
-  private isConcept(type: ValueType): boolean {
-    return type === ValueType.CONCEPT ? true : false;
+  private isConcept(type: OperatorOptions): boolean {
+    return type === OperatorOptions.CONCEPT ? true : false;
   }
 
-  private isRefrence(type: ValueType): boolean {
-    return type === ValueType.REFERENCE ? true : false;
+  private isReference(type: OperatorOptions): boolean {
+    return type === OperatorOptions.REFERENCE ? true : false;
   }
 
-  private isQunatityRange(type: OperatorOptions): boolean {
+  private isQuantityRange(type: OperatorOptions): boolean {
     return type === OperatorOptions.QUANTITY_RANGE ? true : false;
   }
 
-  private isQunatityComparator(type: OperatorOptions): boolean {
+  private isQuantityComparator(type: OperatorOptions): boolean {
     return type === OperatorOptions.QUANTITY_COMPARATOR ? true : false;
   }
 
