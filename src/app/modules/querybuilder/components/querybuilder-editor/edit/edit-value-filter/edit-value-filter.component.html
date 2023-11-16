@@ -155,7 +155,9 @@
         </mat-form-field>
         <mat-form-field
           appearance="outline"
-          *ngIf="filter?.unit && filter?.comparator !== 'none'"
+          *ngIf="
+            filter?.unit && (filter?.comparator !== 'none' || filter?.type === 'quantity-range')
+          "
           class="unit-part"
         >
           <mat-label>{{ 'QUERYBUILDER.EDIT.UNIT' | translate }}</mat-label>
