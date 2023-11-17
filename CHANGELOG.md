@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.2.0 (2023-11-17)
+
+### Bugfix
+* Fix: Update central consent to set conset criterion directly ([#139](https://github.com/medizininformatik-initiative/feasibility-gui/pull/138))
+* fix: display unit when selecting value range ([#139](https://github.com/medizininformatik-initiative/feasibility-gui/pull/139))
+
 
 ## v2.1.0 (2023-11-09)
 
