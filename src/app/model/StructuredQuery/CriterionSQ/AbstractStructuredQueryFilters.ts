@@ -1,5 +1,5 @@
-import { OperatorOptions } from '../../FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
+import { FilterTypes } from '../../FilterTypes';
 
 export abstract class AbstractStructuredQueryFilters {
-  abstract type: OperatorOptions;
+  abstract type: FilterTypes;
 }

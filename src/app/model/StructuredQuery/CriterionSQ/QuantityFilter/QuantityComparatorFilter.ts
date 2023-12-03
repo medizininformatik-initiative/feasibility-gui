@@ -1,3 +1,4 @@
+import { FilterTypes } from 'src/app/model/FilterTypes';
 import {
   Comparator,
   OperatorOptions,
@@ -6,6 +7,6 @@ import { AbstractQuantityFilter } from './AbstractQuantityFilter';
 
 export class QuantityComparatorFilter extends AbstractQuantityFilter {
   comparator: Comparator = Comparator.NONE;
-  type: OperatorOptions = OperatorOptions.QUANTITY_COMPARATOR;
+  type: FilterTypes = FilterTypes.QUANTITY_COMPARATOR;
   value: number = null;
 }
