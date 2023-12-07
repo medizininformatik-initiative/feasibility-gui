@@ -8,6 +8,7 @@ import { FeatureService } from '../../../../service/feature.service';
 import { ApiTranslator } from '../../controller/ApiTranslator';
 import { FeatureProviderService } from '../../service/feature-provider.service';
 import { IAppConfig } from '../../../../config/app-config.model';
+import { TerminologyCode } from '../../model/api/terminology/terminology';
 
 @Component({
   selector: 'num-querybuilder-overview',
@@ -52,6 +53,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     lastModified: Date
     createdBy?: string
     isValid?: boolean
+    invalidTerms?: Array<TerminologyCode>
   }> = [];
 
   fileName: string;
@@ -113,7 +115,14 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
 
   doValidate(): void {
     this.savedTemplatesSubscription = this.backend.loadSavedTemplates(true).subscribe((queries) => {
-      this.savedTemplates = queries;
+      queries.forEach((template) => {
+        if (template.invalidTerms.length > 0) {
+          template.isValid = false;
+        } else {
+          template.isValid = true;
+        }
+        this.savedTemplates.push(template);
+      });
     });
   }
 }

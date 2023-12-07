@@ -83,13 +83,18 @@ export class BackendService {
   }
 
   public getTerminologyProfile(criterion: Criterion): Observable<any> {
-    const context = criterion.context;
     const termcode = criterion.termCodes[0];
     let contextVersion = '';
+    let contextSystem = '';
+    let contextCode = '';
     let termcodeVersion = '';
 
-    if (context.version) {
-      contextVersion = criterion.context.version;
+    if (criterion.context) {
+      contextSystem = criterion.context.system;
+      contextCode = criterion.context.code;
+      if (criterion.context.version) {
+        contextVersion = criterion.context.version;
+      }
     }
 
     if (termcode.version) {
@@ -97,8 +102,8 @@ export class BackendService {
     }
 
     const contextTermcodeHashInput =
-      context.system +
-      context.code +
+      contextSystem +
+      contextCode +
       contextVersion +
       termcode.system +
       termcode.code +

@@ -64,11 +64,13 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
       position: this.position,
       searchType: this.searchType,
     };
-    const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig);
-    this.subscriptionDialog?.unsubscribe();
-    this.subscriptionDialog = dialogRef
-      .afterClosed()
-      .subscribe((query) => this.storeQuery.emit(query));
+    if (!this.isinvalid) {
+      const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig);
+      this.subscriptionDialog?.unsubscribe();
+      this.subscriptionDialog = dialogRef
+        .afterClosed()
+        .subscribe((query) => this.storeQuery.emit(query));
+    }
   }
 
   doDelete(): void {
