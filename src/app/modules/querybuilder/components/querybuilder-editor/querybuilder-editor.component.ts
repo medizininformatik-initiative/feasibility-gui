@@ -40,6 +40,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   gottenDetailedResult: boolean;
   callsLimit: number;
   callsRemaining: number;
+  hasInvalidCriteria = false;
 
   constructor(
     public queryProviderService: QueryProviderService,
@@ -90,7 +91,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
 
   isActionDisabled(button: string): boolean {
     if (button === 'Send') {
-      return !(this.query.groups[0].inclusionCriteria.length > 0);
+      return !(this.query.groups[0].inclusionCriteria.length > 0) || this.hasInvalidCriteria;
     }
 
     if (button === 'Reset') {
@@ -106,6 +107,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   storeQuery(query: Query): void {
     this.query = query;
     this.queryProviderService.store(query);
+    this.checkForInvalidCriteria();
   }
 
   storeQueryResult(queryResult): void {
@@ -202,6 +204,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     this.result = null;
     this.gottenDetailedResult = false;
     this.loadedResult = false;
+    this.hasInvalidCriteria = false;
     this.getDetailedResultRateLimit();
   }
 
@@ -227,14 +230,18 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   }
 
   checkForInvalidCriteria(): void {
+    this.hasInvalidCriteria = false;
     for (const inex of ['inclusion', 'exclusion']) {
       this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
         disj.forEach((conj) => {
           if (conj.isinvalid) {
-            this.snackbar.displayInvalidQueryMessage();
+            this.hasInvalidCriteria = true;
           }
         });
       });
+    }
+    if (this.hasInvalidCriteria) {
+      this.snackbar.displayInvalidQueryMessage();
     }
   }
 }
