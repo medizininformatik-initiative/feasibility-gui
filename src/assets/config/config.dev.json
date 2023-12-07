@@ -39,7 +39,7 @@
     "sendsqcontexttobackend": true,
     "pollingtimeinseconds": 10,
     "pollingintervallinseconds": 10,
-    "lowerboundarypatientresult": 10,
+    "lowerboundarypatientresult": 20,
     "lowerboundarylocationresult": 1
   },
   "mock": {

@@ -21,7 +21,7 @@
       >
         <tr *ngFor="let location of result.resultLines; index as i" class="result-lines">
           <td class="left-column">{{ 'RESULT.SITE' | translate }} {{ i + 1 }}</td>
-          <td *ngIf="location?.numberOfPatients" class="right-column">
+          <td class="right-column">
             {{ backend.obfuscateResult(location.numberOfPatients) }}
           </td>
         </tr>
