@@ -146,6 +146,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   selectQuantityFilterOption(option: string): void {
     if (option === 'BETWEEN') {
       this.filter.type = OperatorOptions.QUANTITY_RANGE;
+      this.filter.comparator = Comparator.BETWEEN;
     } else {
       this.filter.type = OperatorOptions.QUANTITY_COMPARATOR;
       switch (option) {
