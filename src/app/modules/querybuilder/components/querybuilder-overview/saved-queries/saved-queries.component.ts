@@ -114,7 +114,11 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
 
   loadSavedQueries(): void {
     this.savedQueriesSubscription = this.backend.loadSavedQueries().subscribe((queries) => {
-      this.savedQueries = queries.sort((a, b) => a.id - b.id);
+      const temp = queries.sort((a, b) => a.id - b.id);
+      temp.forEach((query) => {
+        query.isValid = true;
+        this.savedQueries.push(query);
+      });
     });
   }
 
