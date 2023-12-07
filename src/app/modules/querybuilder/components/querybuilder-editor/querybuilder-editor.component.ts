@@ -53,6 +53,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   ngOnInit(): void {
     if (window.history.state.preventReset) {
       this.query = this.queryProviderService.query();
+      this.checkForInvalidCriteria();
     } else {
       this.doReset();
     }
@@ -223,5 +224,17 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         }
       }
     );
+  }
+
+  checkForInvalidCriteria(): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        disj.forEach((conj) => {
+          if (conj.isinvalid) {
+            this.snackbar.displayInvalidQueryMessage();
+          }
+        });
+      });
+    }
   }
 }

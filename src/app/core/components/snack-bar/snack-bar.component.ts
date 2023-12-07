@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { CommonModule } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,7 @@ export class SnackbarService {
     'FEAS-10005': 'FEAS-10005',
     404: 'SITE_NOT_FOUND',
   };
-
+  public invalidQuery = false;
   public messagePrefix: string;
   public message: string;
 
@@ -46,7 +47,12 @@ export class SnackbarService {
     this.openSnackbar(0);
   }
 
-  private openSnackbar(duration) {
+  public displayInvalidQueryMessage() {
+    this.invalidQuery = true;
+    this.openSnackbar(15000);
+  }
+
+  public openSnackbar(duration) {
     this.snackBar.openFromComponent(SnackBarComponent, {
       data: this.message,
       horizontalPosition: this.horizontalPosition,
@@ -74,6 +80,7 @@ export class SnackbarService {
     MatSnackBarModule,
     SharedComponentsModule,
     TranslateModule,
+    CommonModule,
   ],
 })
 export class SnackBarComponent {

@@ -59,12 +59,19 @@ export class TermEntry2CriterionTranslator {
 
   public getCriterionHash(criterion): string {
     const termcode = criterion.termCodes[0];
-    const context = criterion.context;
     let contextVersion = '';
+    let contextSystem = '';
+    let contextCode = '';
     let termcodeVersion = '';
 
-    if (context.version) {
-      contextVersion = criterion.context.version;
+    if (criterion.context) {
+      contextSystem = criterion.context.system;
+      contextCode = criterion.context.code;
+      if (criterion.context.version) {
+        contextVersion = criterion.context.version;
+      }
+    } else {
+      criterion.isinvalid = true;
     }
 
     if (termcode.version) {
@@ -72,8 +79,8 @@ export class TermEntry2CriterionTranslator {
     }
 
     const contextTermcodeHashInput =
-      context.system +
-      context.code +
+      contextSystem +
+      contextCode +
       contextVersion +
       termcode.system +
       termcode.code +

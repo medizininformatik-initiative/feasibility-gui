@@ -20,6 +20,8 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
   queryVersion: string;
   importQuery: Query;
   actionDisabled: boolean;
+  invalidQueries = false;
+  invalidTemplates = false;
 
   constructor(
     public queryProviderService: QueryProviderService,
@@ -53,7 +55,7 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
     comment: string
     lastModified: Date
     createdBy?: string
-    isValid?: boolean
+    isValid: boolean
   }> = [];
 
   fileName: string;
@@ -94,9 +96,20 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   loadSavedTemplates(): void {
-    this.savedTemplatesSubscription = this.backend.loadSavedTemplates().subscribe((templates) => {
-      this.savedTemplates = templates.sort((a, b) => a.id - b.id);
-    });
+    this.savedTemplatesSubscription = this.backend
+      .loadSavedTemplates(true)
+      .subscribe((templates) => {
+        const temp = templates.sort((a, b) => a.id - b.id);
+        temp.forEach((template) => {
+          if (template.invalidTerms.length > 0) {
+            template.isValid = false;
+            this.invalidTemplates = true;
+          } else {
+            template.isValid = true;
+          }
+          this.savedTemplates.push(template);
+        });
+      });
   }
 
   loadSavedQueries(): void {
