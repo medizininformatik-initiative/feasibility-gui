@@ -49,6 +49,7 @@ export enum Comparator {
   LESS_THAN = 'lt',
   GREATER_OR_EQUAL = 'ge',
   GREATER_THAN = 'gt',
+  BETWEEN = 'bw',
 }
 
 export enum OperatorOptions {

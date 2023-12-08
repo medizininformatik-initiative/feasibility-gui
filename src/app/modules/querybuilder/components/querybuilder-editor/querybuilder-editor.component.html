@@ -41,7 +41,10 @@
           {{ 'BUTTON.SEND' | translate }}
         </num-button>
       </div>
-      <div *ngIf="actionDisabledSend && !actionDisabledReset" class="send-button-alert-text">
+      <div
+        *ngIf="actionDisabledSend && !actionDisabledReset && !hasInvalidCriteria"
+        class="send-button-alert-text"
+      >
         {{ 'QUERYBUILDER.HINT.NO_CRITERIA_SELECTED' | translate }}
       </div>
     </div>

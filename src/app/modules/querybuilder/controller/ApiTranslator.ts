@@ -407,6 +407,7 @@ export class ApiTranslator {
           if (or.valueFilters[0].type === 'quantity-range') {
             or.valueFilters[0].value = 0;
             or.valueFilters[0].precision = 1;
+            or.valueFilters[0].comparator = 'bw';
           }
           if (or.valueFilters[0].type === 'quantity-comparator') {
             or.valueFilters[0].precision = 1;
@@ -425,6 +426,7 @@ export class ApiTranslator {
           if (attribute.type === 'quantity-range') {
             attribute.value = 0;
             attribute.precision = 1;
+            attribute.comparator = 'bw';
           }
           if (attribute.type === 'quantity-comparator') {
             attribute.precision = 1;

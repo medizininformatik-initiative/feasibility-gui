@@ -159,7 +159,9 @@
       "FILENAME": "File name",
       "SAVED_QUERIES": "Saved Queries (with result)",
       "SAVED_TEMPLATES": "Saved Templates",
-      "MAXIMUM_QUERY_SLOT": "You have reached the maximum limit of available free slots for saving queries"
+      "MAXIMUM_QUERY_SLOT": "You have reached the maximum limit of available free slots for saving queries",
+      "INVALID_WARNING1": "Query could not be loaded fully: At least one of the criteria in your query is invalid, please replace all criteria marked with ",
+      "INVALID_WARNING2": " or contact "
     },
     "EDIT": {
       "HEADER": "Restrictions of selected concepts",
@@ -257,6 +259,7 @@
     "RESULTDETAILS": "Details",
     "SAVE": "Save",
     "SAVEQUERY": "Save query",
+    "SEND": "Send query",
     "VALIDATE": "Validate",
     "IMPORT": "Load query"
   },

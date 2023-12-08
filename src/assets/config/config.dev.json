@@ -15,7 +15,7 @@
     "roles": ["FeasibilityUser"]
   },
   "legal": {
-    "version": "2.1.0",
+    "version": "2.3.0",
     "copyrightYear": "2023",
     "copyrightOwner": "MII Team"
   },
@@ -39,7 +39,7 @@
     "sendsqcontexttobackend": true,
     "pollingtimeinseconds": 10,
     "pollingintervallinseconds": 10,
-    "lowerboundarypatientresult": 10,
+    "lowerboundarypatientresult": 20,
     "lowerboundarylocationresult": 1
   },
   "mock": {
