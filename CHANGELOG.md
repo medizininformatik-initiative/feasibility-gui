@@ -1,5 +1,22 @@
 # Changelog
 
+## v2.3.1 (2023-12-08)
+
+### Bugfix
+* Fix: reset Snackbar after incompatible query message ([#151](https://github.com/medizininformatik-initiative/feasibility-gui/pull/151))
+
+
+## v2.3.0 (2023-12-08)
+
+### Bugfix
+* Fix: set correct english display for Send Button ([#149](https://github.com/medizininformatik-initiative/feasibility-gui/pull/149))
+* Fix: fix translation to Structured Query for quantity-range filter ([#148](https://github.com/medizininformatik-initiative/feasibility-gui/pull/148))
+* Fix: fix location result display when result is 0 ([#146](https://github.com/medizininformatik-initiative/feasibility-gui/pull/146))
+
+### Feature
+* Support loading of non-compatible queries and templates; shows warning for every incorrect criterion ([#147](https://github.com/medizininformatik-initiative/feasibility-gui/pull/147))
+
+
 ## v2.2.0 (2023-11-17)
 
 ### Bugfix
@@ -10,7 +27,7 @@
 ## v2.1.0 (2023-11-09)
 
 ### Feature
-* Link to proposal configurable([#126](https://github.com/medizininformatik-initiative/feasibility-gui/issues/126)) 
+* Link to proposal configurable([#126](https://github.com/medizininformatik-initiative/feasibility-gui/issues/126))
 * Allow setting criterion as required for dataselection ([#125](https://github.com/medizininformatik-initiative/feasibility-gui/issues/125))
 * Make all termtree nodes selectable for dataselection ([#124](https://github.com/medizininformatik-initiative/feasibility-gui/issues/124))
 * Add info text to dataselection ([#123](https://github.com/medizininformatik-initiative/feasibility-gui/issues/123))
@@ -20,7 +37,7 @@
 * Improve error handling ([#88](https://github.com/medizininformatik-initiative/feasibility-gui/issues/88))
 
 ### Bugfix
-* Error loading linked criteria ([#131](https://github.com/medizininformatik-initiative/feasibility-gui/issues/131)) 
+* Error loading linked criteria ([#131](https://github.com/medizininformatik-initiative/feasibility-gui/issues/131))
 * Remove value filter if no concept selected ([#121](https://github.com/medizininformatik-initiative/feasibility-gui/issues/121))
 * Quantity for Attributes does not work ([119](https://github.com/medizininformatik-initiative/feasibility-gui/issues/119))
 * Loading of linking criterion does not work ([#115](https://github.com/medizininformatik-initiative/feasibility-gui/issues/115))
