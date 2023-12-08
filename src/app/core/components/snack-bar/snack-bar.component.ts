@@ -36,12 +36,14 @@ export class SnackbarService {
   constructor(private snackBar: MatSnackBar) {}
 
   public displayErrorMessage(errorMessage: string, retryAfter?) {
+    this.invalidQuery = false;
     this.message = 'ERROR.' + errorMessage;
     this.retryAfter = retryAfter;
     this.openSnackbar(10000);
   }
 
   public displayInfoMessage(infoMessage: string, retryAfter?) {
+    this.invalidQuery = false;
     this.message = 'INFO.' + infoMessage;
     this.retryAfter = retryAfter;
     this.openSnackbar(0);
