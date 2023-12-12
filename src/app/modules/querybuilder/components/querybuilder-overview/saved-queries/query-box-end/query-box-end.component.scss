@@ -2,16 +2,6 @@
   border: 0px;
   background-color: #f1f3f4;
 }
-.invisible {
-  display: none;
-}
-
-.save-text {
-  color: var(--num-color--accent-400);
-  cursor: pointer;
-  width: 65px;
-  text-align: center;
-}
-.save-text:hover {
-  color: var(--num-color--accent-500);
+fa-icon {
+  font-size: 18px;
 }

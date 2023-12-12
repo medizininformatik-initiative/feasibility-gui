@@ -1,16 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
-import { SavedQueriesService } from '../saved-queries.service';
-import { editModeData } from '../saved-queries.component';
 
 @Component({
   selector: 'num-single-template',
@@ -22,13 +11,13 @@ export class SingleTemplateComponent implements OnInit {
   singleTemplate;
 
   @Input()
-  editMode: editModeData;
-
-  @Input()
   index: number;
 
   @Output()
   reloadQueries = new EventEmitter<string>();
+
+  @Output()
+  editMode = new EventEmitter<boolean>();
 
   updatedLabel = '';
 
@@ -36,11 +25,9 @@ export class SingleTemplateComponent implements OnInit {
 
   disabledInput = false;
 
-  constructor(private backend: BackendService, private savedQueryService: SavedQueriesService) {
-    this.savedQueryService.callSaveUpdate.subscribe((index) => {
-      this.triggerUpdate(index);
-    });
-  }
+  editModeTemplate = { label: false, comment: false };
+
+  constructor(private backend: BackendService) {}
 
   ngOnInit() {
     this.updatedLabel = this.singleTemplate.label;
@@ -85,11 +72,34 @@ export class SingleTemplateComponent implements OnInit {
   deleteNewInputonFocusOut() {
     this.updatedLabel = this.singleTemplate.label;
     this.updatedComment = this.singleTemplate.comment;
+    this.editModeTemplate.label = false;
+    this.editModeTemplate.comment = false;
+    this.editMode.emit(false);
     this.updateLabel();
   }
-  triggerUpdate(index: number) {
-    if (index === this.index) {
-      this.updateTemplate();
-    }
+
+  editLabel(): void {
+    this.editModeTemplate.label = true;
+    this.editMode.emit(true);
+    setTimeout(() => {
+      document.getElementById('template_label_' + this.index).focus();
+    }, 50);
+  }
+  editComment(): void {
+    this.editModeTemplate.comment = true;
+    this.editMode.emit(true);
+    setTimeout(() => {
+      document.getElementById('template_comment_' + this.index).focus();
+    }, 50);
+  }
+  saveLabel(): void {
+    this.editModeTemplate.label = false;
+    this.editMode.emit(false);
+    this.updateTemplate();
+  }
+  saveComment(): void {
+    this.editModeTemplate.comment = false;
+    this.editMode.emit(false);
+    this.updateTemplate();
   }
 }

@@ -8,15 +8,39 @@
     fxLayoutAlign="center center"
   >
     <input
+      id="template_label_{{ index }}"
       matInput
       class="input-design"
       type="text"
       value="{{ singleTemplate.label }}"
       [(ngModel)]="updatedLabel"
+      (keyup.enter)="saveLabel()"
+      (keyup.escape)="deleteNewInputonFocusOut()"
+      (focusout)="deleteNewInputonFocusOut()"
       (ngModelChange)="updateLabel()"
-      [disabled]="!editMode?.editMode || editMode?.type !== 'template'"
+      [disabled]="!editModeTemplate.label"
     />
   </form>
+  <div fxLayoutAlign="end center">
+    <button
+      class="editButton"
+      (click)="editLabel()"
+      mat-button
+      type="button"
+      [ngClass]="{ invisible: editModeTemplate.label }"
+    >
+      <fa-icon size="sm" icon="pencil-alt"></fa-icon>
+    </button>
+    <button
+      class="saveButton"
+      (click)="editModeTemplate.label && saveLabel()"
+      mat-button
+      type="button"
+      [ngClass]="{ invisible: !editModeTemplate.label }"
+    >
+      <fa-icon size="sm" icon="save"></fa-icon>
+    </button>
+  </div>
   <mat-divider vertical></mat-divider>
   <form
     fxFlex="40"
@@ -26,15 +50,40 @@
     fxLayoutAlign="center center"
   >
     <input
+      id="template_comment_{{ index }}"
       matInput
       class="input-design"
       type="text"
       value="{{ singleTemplate.comment }}"
       [(ngModel)]="updatedComment"
+      (keyup.enter)="saveComment()"
+      (focusout)="deleteNewInputonFocusOut()"
+      (keyup.escape)="deleteNewInputonFocusOut()"
       (ngModelChange)="updateLabel()"
-      [disabled]="!editMode?.editMode || editMode?.type !== 'template'"
+      [disabled]="!editModeTemplate.comment"
     />
   </form>
+  <div fxLayoutAlign="end center">
+    <button
+      class="editButton"
+      (click)="editComment()"
+      mat-button
+      type="button"
+      [ngClass]="{ invisible: editModeTemplate.comment }"
+    >
+      <fa-icon size="sm" icon="pencil-alt"></fa-icon>
+    </button>
+    <button
+      class="saveButton"
+      (click)="editModeTemplate.comment && saveComment()"
+      mat-button
+      type="button"
+      [ngClass]="{ invisible: !editModeTemplate.comment }"
+    >
+      <fa-icon size="sm" icon="save"></fa-icon>
+    </button>
+  </div>
+  <mat-divider vertical></mat-divider>
   <div fxFlexAlign="center" class="query-box-date">
     {{ singleTemplate.lastModified | date : 'dd.MM.yyyy' }}
   </div>

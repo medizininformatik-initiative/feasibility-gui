@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
-import { SavedQueriesService } from '../saved-queries.service';
-import { editModeData } from '../saved-queries.component';
 @Component({
   selector: 'num-single-query',
   templateUrl: './single-query.component.html',
@@ -12,33 +10,27 @@ export class SingleQueryComponent implements OnInit {
   singleQuery;
 
   @Input()
-  editMode: editModeData;
-
-  @Input()
   index: number;
 
   @Output()
   reloadQueries = new EventEmitter<string>();
+
+  @Output()
+  editMode = new EventEmitter<boolean>();
+
   updatedLabel = '';
 
   updatedComment = '';
 
   disabledInput = false;
 
-  constructor(private backend: BackendService, private savedQueryService: SavedQueriesService) {
-    this.savedQueryService.callSaveUpdate.subscribe((index) => {
-      this.triggerUpdate(index);
-    });
-  }
+  editModeQuery = { label: false, comment: false };
+
+  constructor(private backend: BackendService) {}
+
   ngOnInit() {
     this.updatedLabel = this.singleQuery.label;
     this.updatedComment = this.singleQuery.comment;
-  }
-
-  deleteNewInputonFocusOut() {
-    this.updatedLabel = this.singleQuery.label;
-    this.updatedComment = this.singleQuery.comment;
-    this.updateLabel();
   }
 
   updateLabel() {
@@ -75,10 +67,37 @@ export class SingleQueryComponent implements OnInit {
   emitUpdateQueries(queryType: string): void {
     this.reloadQueries.emit(queryType);
   }
+  deleteNewInputonFocusOut() {
+    this.updatedLabel = this.singleQuery.label;
+    this.updatedComment = this.singleQuery.comment;
+    this.editModeQuery.label = false;
+    this.editModeQuery.comment = false;
+    this.editMode.emit(false);
+    this.updateLabel();
+  }
 
-  triggerUpdate(index: number) {
-    if (index === this.index) {
-      this.updateQuery();
-    }
+  editLabel(): void {
+    this.editModeQuery.label = true;
+    this.editMode.emit(true);
+    setTimeout(() => {
+      document.getElementById('query_label_' + this.index).focus();
+    }, 50);
+  }
+  editComment(): void {
+    this.editModeQuery.comment = true;
+    this.editMode.emit(true);
+    setTimeout(() => {
+      document.getElementById('query_comment_' + this.index).focus();
+    }, 50);
+  }
+  saveLabel(): void {
+    this.editModeQuery.label = false;
+    this.editMode.emit(false);
+    this.updateQuery();
+  }
+  saveComment(): void {
+    this.editModeQuery.comment = false;
+    this.editMode.emit(false);
+    this.updateQuery();
   }
 }

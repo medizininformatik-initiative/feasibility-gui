@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
-import { SavedQueriesService } from '../saved-queries.service';
-import { editModeData } from '../saved-queries.component';
+import { QueryProviderService } from '../../../../service/query-provider.service';
+import { ApiTranslator } from '../../../../controller/ApiTranslator';
+import { Router } from '@angular/router';
+import { FeatureService } from '../../../../../../service/feature.service';
+
 @Component({
   selector: 'num-query-box-end',
   templateUrl: './query-box-end.component.html',
@@ -12,20 +15,26 @@ export class QueryBoxEndComponent implements OnInit {
   queryType: string;
 
   @Input()
-  query;
+  query: any;
 
   @Input()
   index: number;
 
+  @Input()
+  editMode: Array<boolean>;
+
   @Output()
   reloadQueries = new EventEmitter<string>();
 
-  @Output()
-  editModus = new EventEmitter<editModeData>();
+  queryObject: any;
 
-  editMode = false;
-
-  constructor(private backend: BackendService, private savedQueryService: SavedQueriesService) {}
+  constructor(
+    private backend: BackendService,
+    private queryProviderService: QueryProviderService,
+    private apiTranslator: ApiTranslator,
+    private router: Router,
+    private feature: FeatureService
+  ) {}
 
   ngOnInit() {}
 
@@ -36,10 +45,7 @@ export class QueryBoxEndComponent implements OnInit {
       this.deleteQuery();
     }
   }
-  editQueryObject() {
-    this.editMode = true;
-    this.editModus.emit({ type: this.queryType, editMode: this.editMode });
-  }
+
   deleteQuery(): void {
     this.backend.deleteSavedQuery(this.query.id).subscribe(() => {
       this.emitUpdateQueries('query');
@@ -56,9 +62,48 @@ export class QueryBoxEndComponent implements OnInit {
     this.reloadQueries.emit(queryType);
   }
 
-  saveUpdate(): void {
-    this.editMode = false;
-    this.editModus.emit({ type: this.queryType, editMode: this.editMode });
-    this.savedQueryService.callSaveUpdate.next(this.index);
+  loadQueryObject(): void {
+    if (this.queryType === 'template') {
+      this.loadTemplateIntoFeasibilityPage(this.query);
+    } else {
+      this.loadQueryIntoFeasibilityPage(this.query);
+    }
+  }
+
+  loadQueryIntoFeasibilityPage(singleQuery): void {
+    this.backend.loadQuery(singleQuery.id).subscribe((query) => {
+      this.createDefaultQuery(query);
+      this.storeQueryAndNavigate(query.results);
+    });
+  }
+
+  loadTemplateIntoFeasibilityPage(singleTemplate): void {
+    if (this.feature.mockLoadnSave()) {
+      this.queryObject = singleTemplate;
+      this.storeTemplateAndNavigate();
+    } else {
+      this.backend.loadTemplate(singleTemplate.id).subscribe((query) => {
+        this.createDefaultQuery(query);
+        this.storeTemplateAndNavigate();
+      });
+    }
+  }
+
+  createDefaultQuery(query) {
+    this.queryObject = this.apiTranslator.translateSQtoUIQuery(
+      QueryProviderService.createDefaultQuery(),
+      query
+    );
+  }
+  storeTemplateAndNavigate() {
+    this.queryProviderService.store(this.queryObject);
+    this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
+  }
+
+  storeQueryAndNavigate(singleQueryloadedResult) {
+    this.queryProviderService.store(this.queryObject);
+    this.router.navigate(['/querybuilder/editor'], {
+      state: { preventReset: true, loadedResult: singleQueryloadedResult },
+    });
   }
 }
