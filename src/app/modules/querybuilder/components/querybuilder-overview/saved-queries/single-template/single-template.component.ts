@@ -9,6 +9,8 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { SavedQueriesService } from '../saved-queries.service';
+import { editModeData } from '../saved-queries.component';
 
 @Component({
   selector: 'num-single-template',
@@ -19,6 +21,12 @@ export class SingleTemplateComponent implements OnInit {
   @Input()
   singleTemplate;
 
+  @Input()
+  editMode: editModeData;
+
+  @Input()
+  index: number;
+
   @Output()
   reloadQueries = new EventEmitter<string>();
 
@@ -28,7 +36,11 @@ export class SingleTemplateComponent implements OnInit {
 
   disabledInput = false;
 
-  constructor(private backend: BackendService) {}
+  constructor(private backend: BackendService, private savedQueryService: SavedQueriesService) {
+    this.savedQueryService.callSaveUpdate.subscribe((index) => {
+      this.triggerUpdate(index);
+    });
+  }
 
   ngOnInit() {
     this.updatedLabel = this.singleTemplate.label;
@@ -47,11 +59,13 @@ export class SingleTemplateComponent implements OnInit {
   }
 
   updateTemplate() {
-    const updateQueryObject = this.setNewTemplateProperties();
-    this.backend.updateTemplate(this.singleTemplate.id, updateQueryObject).subscribe(() => {
-      this.disabledInput = false;
-      this.emitUpdateQueries(this.singleTemplate);
-    });
+    if (this.disabledInput) {
+      const updateQueryObject = this.setNewTemplateProperties();
+      this.backend.updateTemplate(this.singleTemplate.id, updateQueryObject).subscribe(() => {
+        this.disabledInput = false;
+        this.emitUpdateQueries(this.singleTemplate);
+      });
+    }
   }
 
   setNewTemplateProperties() {
@@ -72,5 +86,10 @@ export class SingleTemplateComponent implements OnInit {
     this.updatedLabel = this.singleTemplate.label;
     this.updatedComment = this.singleTemplate.comment;
     this.updateLabel();
+  }
+  triggerUpdate(index: number) {
+    if (index === this.index) {
+      this.updateTemplate();
+    }
   }
 }

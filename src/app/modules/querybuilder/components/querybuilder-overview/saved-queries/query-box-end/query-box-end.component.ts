@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { SavedQueriesService } from '../saved-queries.service';
+import { editModeData } from '../saved-queries.component';
 @Component({
   selector: 'num-query-box-end',
   templateUrl: './query-box-end.component.html',
@@ -12,10 +14,18 @@ export class QueryBoxEndComponent implements OnInit {
   @Input()
   query;
 
+  @Input()
+  index: number;
+
   @Output()
   reloadQueries = new EventEmitter<string>();
 
-  constructor(private backend: BackendService) {}
+  @Output()
+  editModus = new EventEmitter<editModeData>();
+
+  editMode = false;
+
+  constructor(private backend: BackendService, private savedQueryService: SavedQueriesService) {}
 
   ngOnInit() {}
 
@@ -26,7 +36,10 @@ export class QueryBoxEndComponent implements OnInit {
       this.deleteQuery();
     }
   }
-
+  editQueryObject() {
+    this.editMode = true;
+    this.editModus.emit({ type: this.queryType, editMode: this.editMode });
+  }
   deleteQuery(): void {
     this.backend.deleteSavedQuery(this.query.id).subscribe(() => {
       this.emitUpdateQueries('query');
@@ -41,5 +54,11 @@ export class QueryBoxEndComponent implements OnInit {
 
   emitUpdateQueries(queryType: string): void {
     this.reloadQueries.emit(queryType);
+  }
+
+  saveUpdate(): void {
+    this.editMode = false;
+    this.editModus.emit({ type: this.queryType, editMode: this.editMode });
+    this.savedQueryService.callSaveUpdate.next(this.index);
   }
 }

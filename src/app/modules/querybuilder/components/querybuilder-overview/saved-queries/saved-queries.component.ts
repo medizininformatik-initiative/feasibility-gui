@@ -9,6 +9,10 @@ import { Subscription } from 'rxjs';
 import { Query } from '../../../model/api/query/query';
 import { IAppConfig } from 'src/app/config/app-config.model';
 
+export interface editModeData {
+  type: string
+  editMode: boolean
+}
 @Component({
   selector: 'num-saved-queries',
   templateUrl: './saved-queries.component.html',
@@ -58,6 +62,9 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
     isValid: boolean
   }> = [];
 
+  editModeQuery: Array<editModeData> = [];
+  editModeTemplate: Array<editModeData> = [];
+
   fileName: string;
 
   ngOnInit(): void {
@@ -94,11 +101,20 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
       this.loadSavedQueries();
     }
   }
-
+  editFunction(event, index): void {
+    if (event.type === 'query') {
+      this.editModeQuery[index] = { type: event.type, editMode: event.editMode };
+    }
+    if (event.type === 'template') {
+      this.editModeTemplate[index] = { type: event.type, editMode: event.editMode };
+    }
+  }
   loadSavedTemplates(): void {
     this.savedTemplatesSubscription = this.backend
       .loadSavedTemplates(true)
       .subscribe((templates) => {
+        this.savedTemplates = [];
+        this.editModeTemplate = [];
         const temp = templates.sort((a, b) => a.id - b.id);
         temp.forEach((template) => {
           if (template.invalidTerms.length > 0) {
@@ -108,16 +124,20 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
             template.isValid = true;
           }
           this.savedTemplates.push(template);
+          this.editModeTemplate.push({ type: 'template', editMode: false });
         });
       });
   }
 
   loadSavedQueries(): void {
     this.savedQueriesSubscription = this.backend.loadSavedQueries().subscribe((queries) => {
+      this.savedQueries = [];
+      this.editModeQuery = [];
       const temp = queries.sort((a, b) => a.id - b.id);
       temp.forEach((query) => {
         query.isValid = true;
         this.savedQueries.push(query);
+        this.editModeQuery.push({ type: 'query', editMode: false });
       });
     });
   }

@@ -1,15 +1,19 @@
 <div *ngFor="let singleQuery of savedQueries; index as i" class="query-box" fxLayout="row">
   <num-single-query
-    (click)="loadQueryIntoFeasibilityPage(singleQuery)"
+    (click)="!editModeQuery[i].editMode && loadQueryIntoFeasibilityPage(singleQuery)"
     [singleQuery]="singleQuery"
+    [index]="i"
     class="width-100"
     (reloadQueries)="reloadQueries($event)"
+    [editMode]="editModeQuery[i]"
   >
   </num-single-query>
   <num-query-box-end
     [query]="singleQuery"
     [queryType]="'query'"
+    [index]="i"
     (reloadQueries)="reloadQueries($event)"
+    (editModus)="editFunction($event, i)"
   >
   </num-query-box-end>
 </div>
@@ -17,16 +21,20 @@
 <h3>{{ 'QUERYBUILDER.OVERVIEW.SAVED_TEMPLATES' | translate }}</h3>
 <div *ngFor="let singleTemplate of savedTemplates; index as i" class="query-box" fxLayout="row">
   <num-single-template
-    (click)="loadTemplateIntoFeasibilityPage(singleTemplate)"
+    (click)="!editModeTemplate[i].editMode && loadTemplateIntoFeasibilityPage(singleTemplate)"
     [singleTemplate]="singleTemplate"
+    [index]="i"
     (reloadQueries)="reloadQueries($event)"
+    [editMode]="editModeTemplate[i]"
     class="width-100"
   >
   </num-single-template>
   <num-query-box-end
     [query]="singleTemplate"
     [queryType]="'template'"
+    [index]="i"
     (reloadQueries)="reloadQueries($event)"
+    (editModus)="editFunction($event, i)"
   >
   </num-query-box-end>
 </div>

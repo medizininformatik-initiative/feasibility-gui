@@ -1,6 +1,18 @@
 <div fxFill fxLayoutAlign="column">
   <div fxLayoutAlign="end center">
-    <button (click)="deleteQueryObject()" mat-button matIconPrefix type="button">
+    <button
+      class="editButton"
+      (click)="editQueryObject()"
+      mat-button
+      type="button"
+      [ngClass]="{ invisible: editMode }"
+    >
+      <fa-icon size="sm" icon="pencil-alt"></fa-icon>
+    </button>
+    <div class="save-text" (click)="editMode && saveUpdate()" [ngClass]="{ invisible: !editMode }">
+      {{ 'QUERYBUILDER.OVERVIEW.SAVE_BUTTON' | translate }}
+    </div>
+    <button (click)="!editMode && deleteQueryObject()" mat-button matIconPrefix type="button">
       <fa-icon size="sm" icon="times"></fa-icon>
     </button>
   </div>

@@ -4,7 +4,6 @@
     fxFlex="40"
     fxLayoutAlign="center start"
     appearance="outline"
-    (click)="$event.stopPropagation()"
     class="width-100"
     fxLayoutAlign="center center"
   >
@@ -12,9 +11,10 @@
       matInput
       class="input-design"
       type="text"
-      value="{singleQuery.label}"
+      value="{{ singleQuery.label }}"
       [(ngModel)]="updatedLabel"
       (ngModelChange)="updateLabel()"
+      [disabled]="!editMode?.editMode || editMode?.type !== 'query'"
     />
   </form>
   <mat-divider vertical></mat-divider>
@@ -22,7 +22,6 @@
     fxFlex="40"
     fxLayoutAlign="center start"
     appearance="outline"
-    (click)="$event.stopPropagation()"
     class="width-100"
     fxLayoutAlign="center center"
   >
@@ -33,26 +32,9 @@
       value="{{ singleQuery.comment }}"
       [(ngModel)]="updatedComment"
       (ngModelChange)="updateLabel()"
+      [disabled]="!editMode?.editMode || editMode?.type !== 'query'"
     />
   </form>
-  <div fxLayoutAlign="end center" fxFlex="5">
-    <button
-      (click)="updateQuery(); $event.stopPropagation()"
-      mat-button
-      matIconPrefix
-      type="button"
-    >
-      <fa-icon
-        *ngIf="disabledInput"
-        matTooltip="{{ 'QUERYBUILDER.OVERVIEW.SAVE_TEMPLATE' | translate }}"
-        [matTooltipClass]="'tooltip-design'"
-        [matTooltipPosition]="'above'"
-        size="sm"
-        icon="save"
-      >
-      </fa-icon>
-    </button>
-  </div>
   <div fxFlexAlign="center" class="query-box-date">
     {{ singleQuery.createdAt | date : 'dd.MM.yyyy' }}
   </div>

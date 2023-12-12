@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { SavedQueriesService } from '../saved-queries.service';
+import { editModeData } from '../saved-queries.component';
 @Component({
   selector: 'num-single-query',
   templateUrl: './single-query.component.html',
@@ -9,6 +11,12 @@ export class SingleQueryComponent implements OnInit {
   @Input()
   singleQuery;
 
+  @Input()
+  editMode: editModeData;
+
+  @Input()
+  index: number;
+
   @Output()
   reloadQueries = new EventEmitter<string>();
   updatedLabel = '';
@@ -17,7 +25,11 @@ export class SingleQueryComponent implements OnInit {
 
   disabledInput = false;
 
-  constructor(private backend: BackendService) {}
+  constructor(private backend: BackendService, private savedQueryService: SavedQueriesService) {
+    this.savedQueryService.callSaveUpdate.subscribe((index) => {
+      this.triggerUpdate(index);
+    });
+  }
   ngOnInit() {
     this.updatedLabel = this.singleQuery.label;
     this.updatedComment = this.singleQuery.comment;
@@ -41,11 +53,13 @@ export class SingleQueryComponent implements OnInit {
   }
 
   updateQuery() {
-    const updateQueryObject = this.setNewQueryProperties();
-    this.backend.updateQuery(this.singleQuery.id, updateQueryObject).subscribe(() => {
-      this.disabledInput = false;
-      this.emitUpdateQueries(this.singleQuery);
-    });
+    if (this.disabledInput) {
+      const updateQueryObject = this.setNewQueryProperties();
+      this.backend.updateQuery(this.singleQuery.id, updateQueryObject).subscribe(() => {
+        this.disabledInput = false;
+        this.emitUpdateQueries(this.singleQuery);
+      });
+    }
   }
 
   setNewQueryProperties() {
@@ -60,5 +74,11 @@ export class SingleQueryComponent implements OnInit {
 
   emitUpdateQueries(queryType: string): void {
     this.reloadQueries.emit(queryType);
+  }
+
+  triggerUpdate(index: number) {
+    if (index === this.index) {
+      this.updateQuery();
+    }
   }
 }
