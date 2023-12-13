@@ -16,7 +16,6 @@
       [(ngModel)]="updatedLabel"
       (keyup.enter)="saveLabel()"
       (keyup.escape)="deleteNewInputonFocusOut()"
-      (focusout)="deleteNewInputonFocusOut()"
       (ngModelChange)="updateLabel()"
       [disabled]="!editModeTemplate.label"
     />
@@ -57,7 +56,6 @@
       value="{{ singleTemplate.comment }}"
       [(ngModel)]="updatedComment"
       (keyup.enter)="saveComment()"
-      (focusout)="deleteNewInputonFocusOut()"
       (keyup.escape)="deleteNewInputonFocusOut()"
       (ngModelChange)="updateLabel()"
       [disabled]="!editModeTemplate.comment"
