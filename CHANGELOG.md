@@ -27,7 +27,7 @@
 ## v2.1.0 (2023-11-09)
 
 ### Feature
-* Link to proposal configurable([#126](https://github.com/medizininformatik-initiative/feasibility-gui/issues/126)) 
+* Link to proposal configurable([#126](https://github.com/medizininformatik-initiative/feasibility-gui/issues/126))
 * Allow setting criterion as required for dataselection ([#125](https://github.com/medizininformatik-initiative/feasibility-gui/issues/125))
 * Make all termtree nodes selectable for dataselection ([#124](https://github.com/medizininformatik-initiative/feasibility-gui/issues/124))
 * Add info text to dataselection ([#123](https://github.com/medizininformatik-initiative/feasibility-gui/issues/123))
@@ -37,7 +37,7 @@
 * Improve error handling ([#88](https://github.com/medizininformatik-initiative/feasibility-gui/issues/88))
 
 ### Bugfix
-* Error loading linked criteria ([#131](https://github.com/medizininformatik-initiative/feasibility-gui/issues/131)) 
+* Error loading linked criteria ([#131](https://github.com/medizininformatik-initiative/feasibility-gui/issues/131))
 * Remove value filter if no concept selected ([#121](https://github.com/medizininformatik-initiative/feasibility-gui/issues/121))
 * Quantity for Attributes does not work ([119](https://github.com/medizininformatik-initiative/feasibility-gui/issues/119))
 * Loading of linking criterion does not work ([#115](https://github.com/medizininformatik-initiative/feasibility-gui/issues/115))
