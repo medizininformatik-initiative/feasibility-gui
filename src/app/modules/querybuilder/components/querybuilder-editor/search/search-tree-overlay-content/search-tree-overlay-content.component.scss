@@ -10,6 +10,7 @@
 .ontology-tree {
   max-height: 50vh;
   overflow-y: auto;
+  height: 35vh;
 }
 
 .ontology-tree ul,
@@ -30,6 +31,7 @@
 .mat-mdc-icon-button.mat-button-disabled {
   width: 11px;
 }
-.mat-tree-node, .mat-nested-tree-node {
+.mat-tree-node,
+.mat-nested-tree-node {
   font-weight: 400;
 }

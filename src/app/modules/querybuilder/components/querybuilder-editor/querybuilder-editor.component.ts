@@ -36,7 +36,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   subscriptionPolling: Subscription;
   private subscriptionResult: Subscription;
   public resultObservable$: Observable<QueryResult>;
-  loadedResult: boolean;
+  loadedResult = false;
+  resultFromSavedQuery: boolean;
   gottenDetailedResult: boolean;
   callsLimit: number;
   callsRemaining: number;
@@ -58,11 +59,12 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     } else {
       this.doReset();
     }
-    if (window.history.state.loadedResult) {
-      this.result = window.history.state.loadedResult;
-      this.loadedResult = true;
+    if (window.history.state.resultFromSavedQuery) {
+      this.result = new QueryResult();
+      this.result.totalNumberOfPatients = window.history.state.resultFromSavedQuery;
+      //this.resultFromSavedQuery = true;
     } else {
-      this.loadedResult = false;
+      //this.resultFromSavedQuery = false;
     }
 
     this.gottenDetailedResult = false;
@@ -117,6 +119,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   startRequestingResult(): void {
     const summaryResultUrl = this.resultUrl + '/summary-result';
     this.loadedResult = false;
+    //this.resultFromSavedQuery = false;
     this.resultObservable$ = interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 100)),
       map(() => this.backend.getSummaryResult(summaryResultUrl)),
