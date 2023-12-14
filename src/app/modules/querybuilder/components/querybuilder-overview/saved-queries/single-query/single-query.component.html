@@ -4,55 +4,86 @@
     fxFlex="40"
     fxLayoutAlign="center start"
     appearance="outline"
-    (click)="$event.stopPropagation()"
     class="width-100"
     fxLayoutAlign="center center"
   >
     <input
+      id="query_label_{{ index }}"
       matInput
       class="input-design"
       type="text"
-      value="{singleQuery.label}"
+      value="{{ singleQuery.label }}"
       [(ngModel)]="updatedLabel"
+      (keyup.enter)="saveLabel()"
+      (keyup.escape)="deleteNewInputonFocusOut()"
+      (focusout)="deleteNewInputonFocusOut()"
       (ngModelChange)="updateLabel()"
+      [disabled]="!editModeQuery.label"
     />
   </form>
+  <div fxLayoutAlign="end center">
+    <button
+      class="editButton"
+      (click)="editLabel()"
+      mat-button
+      type="button"
+      [ngClass]="{ invisible: editModeQuery.label }"
+    >
+      <fa-icon size="sm" icon="pencil-alt"></fa-icon>
+    </button>
+    <button
+      class="saveButton"
+      (click)="editModeQuery.label && saveLabel()"
+      mat-button
+      type="button"
+      [ngClass]="{ invisible: !editModeQuery.label }"
+    >
+      <fa-icon size="sm" icon="save"></fa-icon>
+    </button>
+  </div>
   <mat-divider vertical></mat-divider>
   <form
     fxFlex="40"
     fxLayoutAlign="center start"
     appearance="outline"
-    (click)="$event.stopPropagation()"
     class="width-100"
     fxLayoutAlign="center center"
   >
     <input
+      id="query_comment_{{ index }}"
       matInput
       class="input-design"
       type="text"
       value="{{ singleQuery.comment }}"
       [(ngModel)]="updatedComment"
+      (keyup.enter)="saveComment()"
+      (focusout)="deleteNewInputonFocusOut()"
+      (keyup.escape)="deleteNewInputonFocusOut()"
       (ngModelChange)="updateLabel()"
+      [disabled]="!editModeQuery.comment"
     />
   </form>
-  <div fxLayoutAlign="end center" fxFlex="5">
+  <div fxLayoutAlign="end center">
     <button
-      (click)="updateQuery(); $event.stopPropagation()"
+      class="editButton"
+      (click)="editComment()"
       mat-button
-      matIconPrefix
       type="button"
+      [ngClass]="{ invisible: editModeQuery.comment }"
     >
-      <fa-icon
-        *ngIf="disabledInput"
-        matTooltip="{{ 'QUERYBUILDER.OVERVIEW.SAVE_TEMPLATE' | translate }}"
-        [matTooltipClass]="'tooltip-design'"
-        [matTooltipPosition]="'above'"
-        size="sm"
-        icon="save"
-      >
-      </fa-icon>
+      <fa-icon size="sm" icon="pencil-alt"></fa-icon>
+    </button>
+    <button
+      class="saveButton"
+      (click)="editModeQuery.comment && saveComment()"
+      mat-button
+      type="button"
+      [ngClass]="{ invisible: !editModeQuery.comment }"
+    >
+      <fa-icon size="sm" icon="save"></fa-icon>
     </button>
   </div>
+  <mat-divider vertical></mat-divider>
   <div fxFlexAlign="center" class="query-box-date">
     {{ singleQuery.createdAt | date : 'dd.MM.yyyy' }}
   </div>

@@ -5,6 +5,7 @@
 .query-box-date {
   width: 10%;
   text-align: center;
+  font-size: 14px;
 }
 .query-box-comment {
   width: 40%;
@@ -26,7 +27,8 @@
   width: 100%;
   background-color: #f9f9f9;
   border: 0px solid;
-  height: 1.5em;
+  height: 2.3em;
+  font-size: 14px;
 }
 
 .input-design:focus {
@@ -47,4 +49,13 @@
 
 .width-100 {
   width: 100%;
+}
+.invisible {
+  display: none;
+}
+fa-icon {
+  font-size: 18px;
+}
+.trenner {
+  height: 40px;
 }
