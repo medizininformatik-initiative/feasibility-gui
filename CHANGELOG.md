@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.3.2 (2023-12-14)
+
+### Feature
+* Improved design and handling of loading queries and templates ([#154](https://github.com/medizininformatik-initiative/feasibility-gui/pull/154))
+
+
 ## v2.3.1 (2023-12-08)
 
 ### Bugfix

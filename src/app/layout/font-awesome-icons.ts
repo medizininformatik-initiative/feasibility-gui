@@ -44,6 +44,8 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 export const FONT_AWESOME_ICONS = [
   faQuestionCircle,
   faExclamationCircle,
@@ -91,4 +93,6 @@ export const FONT_AWESOME_ICONS = [
   faStar,
   faPencilAlt,
   faSave,
+  faPenSquare,
+  faEye,
 ];

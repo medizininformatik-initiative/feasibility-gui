@@ -1,13 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 
 @Component({
@@ -19,14 +10,22 @@ export class SingleTemplateComponent implements OnInit {
   @Input()
   singleTemplate;
 
+  @Input()
+  index: number;
+
   @Output()
   reloadQueries = new EventEmitter<string>();
+
+  @Output()
+  editMode = new EventEmitter<boolean>();
 
   updatedLabel = '';
 
   updatedComment = '';
 
   disabledInput = false;
+
+  editModeTemplate = { label: false, comment: false };
 
   constructor(private backend: BackendService) {}
 
@@ -47,11 +46,13 @@ export class SingleTemplateComponent implements OnInit {
   }
 
   updateTemplate() {
-    const updateQueryObject = this.setNewTemplateProperties();
-    this.backend.updateTemplate(this.singleTemplate.id, updateQueryObject).subscribe(() => {
-      this.disabledInput = false;
-      this.emitUpdateQueries(this.singleTemplate);
-    });
+    if (this.disabledInput) {
+      const updateQueryObject = this.setNewTemplateProperties();
+      this.backend.updateTemplate(this.singleTemplate.id, updateQueryObject).subscribe(() => {
+        this.disabledInput = false;
+        this.emitUpdateQueries(this.singleTemplate);
+      });
+    }
   }
 
   setNewTemplateProperties() {
@@ -71,6 +72,34 @@ export class SingleTemplateComponent implements OnInit {
   deleteNewInputonFocusOut() {
     this.updatedLabel = this.singleTemplate.label;
     this.updatedComment = this.singleTemplate.comment;
+    this.editModeTemplate.label = false;
+    this.editModeTemplate.comment = false;
+    this.editMode.emit(false);
     this.updateLabel();
+  }
+
+  editLabel(): void {
+    this.editModeTemplate.label = true;
+    this.editMode.emit(true);
+    setTimeout(() => {
+      document.getElementById('template_label_' + this.index).focus();
+    }, 50);
+  }
+  editComment(): void {
+    this.editModeTemplate.comment = true;
+    this.editMode.emit(true);
+    setTimeout(() => {
+      document.getElementById('template_comment_' + this.index).focus();
+    }, 50);
+  }
+  saveLabel(): void {
+    this.editModeTemplate.label = false;
+    this.editMode.emit(false);
+    this.updateTemplate();
+  }
+  saveComment(): void {
+    this.editModeTemplate.comment = false;
+    this.editMode.emit(false);
+    this.updateTemplate();
   }
 }

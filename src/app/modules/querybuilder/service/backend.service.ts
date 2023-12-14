@@ -396,10 +396,12 @@ export class BackendService {
   }
 
   obfuscateResult(result: number): string {
-    if (result <= this.lowerBoundaryPatient) {
-      return '< ' + this.lowerBoundaryPatient.toString();
-    } else {
-      return result.toString();
+    if (result) {
+      if (result <= this.lowerBoundaryPatient) {
+        return '< ' + this.lowerBoundaryPatient.toString();
+      } else {
+        return result.toString();
+      }
     }
   }
 }

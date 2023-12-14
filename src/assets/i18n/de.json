@@ -163,7 +163,8 @@
       "SAVED_TEMPLATES": "Gespeicherte Vorlagen",
       "MAXIMUM_QUERY_SLOT": "Sie haben das maximale Limit an verfügbaren freien Speicherplätzen für Abfragen erreicht",
       "INVALID_WARNING1": "Anfrage konnte nicht vollständig geladen werden: Ein oder mehrere Kriterien Ihrer Anfrage sind nicht mehr gültig. Bitte ersetzen Sie alle durch folgendes Symbol ",
-      "INVALID_WARNING2": " gekennzeichneten Kriterien oder kontaktieren Sie "
+      "INVALID_WARNING2": " gekennzeichneten Kriterien oder kontaktieren Sie ",
+      "SAVE_BUTTON": "speichern"
     },
     "EDIT": {
       "HEADER": "Einschränkungen der ausgewählten Merkmale",
