@@ -1,10 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
-import { QueryProviderService } from '../../../../service/query-provider.service';
-import { ApiTranslator } from '../../../../controller/ApiTranslator';
-import { Router } from '@angular/router';
-import { FeatureService } from '../../../../../../service/feature.service';
-
 @Component({
   selector: 'num-query-box-end',
   templateUrl: './query-box-end.component.html',
@@ -15,26 +10,12 @@ export class QueryBoxEndComponent implements OnInit {
   queryType: string;
 
   @Input()
-  query: any;
-
-  @Input()
-  index: number;
-
-  @Input()
-  editMode: Array<boolean>;
+  query;
 
   @Output()
   reloadQueries = new EventEmitter<string>();
 
-  queryObject: any;
-
-  constructor(
-    private backend: BackendService,
-    private queryProviderService: QueryProviderService,
-    private apiTranslator: ApiTranslator,
-    private router: Router,
-    private feature: FeatureService
-  ) {}
+  constructor(private backend: BackendService) {}
 
   ngOnInit() {}
 
@@ -60,50 +41,5 @@ export class QueryBoxEndComponent implements OnInit {
 
   emitUpdateQueries(queryType: string): void {
     this.reloadQueries.emit(queryType);
-  }
-
-  loadQueryObject(): void {
-    if (this.queryType === 'template') {
-      this.loadTemplateIntoFeasibilityPage(this.query);
-    } else {
-      this.loadQueryIntoFeasibilityPage(this.query);
-    }
-  }
-
-  loadQueryIntoFeasibilityPage(singleQuery): void {
-    this.backend.loadQuery(singleQuery.id).subscribe((query) => {
-      this.createDefaultQuery(query);
-      this.storeQueryAndNavigate(query.results);
-    });
-  }
-
-  loadTemplateIntoFeasibilityPage(singleTemplate): void {
-    if (this.feature.mockLoadnSave()) {
-      this.queryObject = singleTemplate;
-      this.storeTemplateAndNavigate();
-    } else {
-      this.backend.loadTemplate(singleTemplate.id).subscribe((query) => {
-        this.createDefaultQuery(query);
-        this.storeTemplateAndNavigate();
-      });
-    }
-  }
-
-  createDefaultQuery(query) {
-    this.queryObject = this.apiTranslator.translateSQtoUIQuery(
-      QueryProviderService.createDefaultQuery(),
-      query
-    );
-  }
-  storeTemplateAndNavigate() {
-    this.queryProviderService.store(this.queryObject);
-    this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
-  }
-
-  storeQueryAndNavigate(singleQueryloadedResult) {
-    this.queryProviderService.store(this.queryObject);
-    this.router.navigate(['/querybuilder/editor'], {
-      state: { preventReset: true, loadedResult: singleQueryloadedResult },
-    });
   }
 }

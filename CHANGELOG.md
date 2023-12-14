@@ -1,22 +1,5 @@
 # Changelog
 
-## v2.3.1 (2023-12-08)
-
-### Bugfix
-* Fix: reset Snackbar after incompatible query message ([#151](https://github.com/medizininformatik-initiative/feasibility-gui/pull/151))
-
-
-## v2.3.0 (2023-12-08)
-
-### Bugfix
-* Fix: set correct english display for Send Button ([#149](https://github.com/medizininformatik-initiative/feasibility-gui/pull/149))
-* Fix: fix translation to Structured Query for quantity-range filter ([#148](https://github.com/medizininformatik-initiative/feasibility-gui/pull/148))
-* Fix: fix location result display when result is 0 ([#146](https://github.com/medizininformatik-initiative/feasibility-gui/pull/146))
-
-### Feature
-* Support loading of non-compatible queries and templates; shows warning for every incorrect criterion ([#147](https://github.com/medizininformatik-initiative/feasibility-gui/pull/147))
-
-
 ## v2.2.0 (2023-11-17)
 
 ### Bugfix

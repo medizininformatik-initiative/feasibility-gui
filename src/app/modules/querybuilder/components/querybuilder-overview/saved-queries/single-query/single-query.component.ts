@@ -9,28 +9,24 @@ export class SingleQueryComponent implements OnInit {
   @Input()
   singleQuery;
 
-  @Input()
-  index: number;
-
   @Output()
   reloadQueries = new EventEmitter<string>();
-
-  @Output()
-  editMode = new EventEmitter<boolean>();
-
   updatedLabel = '';
 
   updatedComment = '';
 
   disabledInput = false;
 
-  editModeQuery = { label: false, comment: false };
-
   constructor(private backend: BackendService) {}
-
   ngOnInit() {
     this.updatedLabel = this.singleQuery.label;
     this.updatedComment = this.singleQuery.comment;
+  }
+
+  deleteNewInputonFocusOut() {
+    this.updatedLabel = this.singleQuery.label;
+    this.updatedComment = this.singleQuery.comment;
+    this.updateLabel();
   }
 
   updateLabel() {
@@ -45,13 +41,11 @@ export class SingleQueryComponent implements OnInit {
   }
 
   updateQuery() {
-    if (this.disabledInput) {
-      const updateQueryObject = this.setNewQueryProperties();
-      this.backend.updateQuery(this.singleQuery.id, updateQueryObject).subscribe(() => {
-        this.disabledInput = false;
-        this.emitUpdateQueries(this.singleQuery);
-      });
-    }
+    const updateQueryObject = this.setNewQueryProperties();
+    this.backend.updateQuery(this.singleQuery.id, updateQueryObject).subscribe(() => {
+      this.disabledInput = false;
+      this.emitUpdateQueries(this.singleQuery);
+    });
   }
 
   setNewQueryProperties() {
@@ -66,38 +60,5 @@ export class SingleQueryComponent implements OnInit {
 
   emitUpdateQueries(queryType: string): void {
     this.reloadQueries.emit(queryType);
-  }
-  deleteNewInputonFocusOut() {
-    this.updatedLabel = this.singleQuery.label;
-    this.updatedComment = this.singleQuery.comment;
-    this.editModeQuery.label = false;
-    this.editModeQuery.comment = false;
-    this.editMode.emit(false);
-    this.updateLabel();
-  }
-
-  editLabel(): void {
-    this.editModeQuery.label = true;
-    this.editMode.emit(true);
-    setTimeout(() => {
-      document.getElementById('query_label_' + this.index).focus();
-    }, 50);
-  }
-  editComment(): void {
-    this.editModeQuery.comment = true;
-    this.editMode.emit(true);
-    setTimeout(() => {
-      document.getElementById('query_comment_' + this.index).focus();
-    }, 50);
-  }
-  saveLabel(): void {
-    this.editModeQuery.label = false;
-    this.editMode.emit(false);
-    this.updateQuery();
-  }
-  saveComment(): void {
-    this.editModeQuery.comment = false;
-    this.editMode.emit(false);
-    this.updateQuery();
   }
 }

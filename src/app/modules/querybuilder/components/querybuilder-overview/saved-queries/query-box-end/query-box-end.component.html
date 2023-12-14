@@ -1,21 +1,6 @@
 <div fxFill fxLayoutAlign="column">
   <div fxLayoutAlign="end center">
-    <button
-      (click)="loadQueryObject()"
-      mat-button
-      matIconPrefix
-      type="button"
-      [disabled]="editMode[index]"
-    >
-      <fa-icon size="sm" icon="eye"></fa-icon>
-    </button>
-    <button
-      (click)="deleteQueryObject()"
-      mat-button
-      matIconPrefix
-      type="button"
-      [disabled]="editMode[index]"
-    >
+    <button (click)="deleteQueryObject()" mat-button matIconPrefix type="button">
       <fa-icon size="sm" icon="times"></fa-icon>
     </button>
   </div>
