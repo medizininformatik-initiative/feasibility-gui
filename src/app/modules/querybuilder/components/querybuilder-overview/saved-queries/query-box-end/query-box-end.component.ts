@@ -103,7 +103,7 @@ export class QueryBoxEndComponent implements OnInit {
   storeQueryAndNavigate(singleQueryloadedResult) {
     this.queryProviderService.store(this.queryObject);
     this.router.navigate(['/querybuilder/editor'], {
-      state: { preventReset: true, resultFromSavedQuery: singleQueryloadedResult.toString() },
+      state: { preventReset: true, resultFromSavedQuery: singleQueryloadedResult?.toString() },
     });
   }
 }
