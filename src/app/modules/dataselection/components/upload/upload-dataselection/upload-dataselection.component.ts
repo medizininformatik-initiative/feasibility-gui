@@ -1,16 +1,11 @@
-import {
-  AfterViewChecked,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiTranslator } from 'src/app/modules/querybuilder/controller/ApiTranslator';
 import { QueryProviderService } from 'src/app/modules/querybuilder/service/query-provider.service';
 import { Query as QueryOld } from 'src/app/modules/querybuilder/model/api/query/query';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
-import { UIQuery2StructuredQueryTranslatorService } from '../../../../../../service/UIQuery2StructuredQueryTranslator.service';
+import { UIQuery2StructuredQueryTranslatorService } from '../../../../../service/UIQuery2StructuredQueryTranslator.service';
+
 @Component({
   selector: 'num-upload-dataselection',
   templateUrl: './upload-dataselection.component.html',

@@ -1,4 +1,5 @@
-import { Criterion } from './Criterion/criterion';
+import { Criterion } from './criterion';
+import { V2 } from '../annotations';
 
 // Example
 //     {

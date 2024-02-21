@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { QueryProviderService } from '../../../../service/query-provider.service';
-import { ApiTranslator } from '../../../../controller/ApiTranslator';
 import { Router } from '@angular/router';
 import { FeatureService } from '../../../../../../service/feature.service';
+import { StructuredQuery2UIQueryTranslatorService } from '../../../../../../service/StructuredQuery2UIQueryTranslator.service';
 
 @Component({
   selector: 'num-query-box-end',
@@ -31,7 +31,7 @@ export class QueryBoxEndComponent implements OnInit {
   constructor(
     private backend: BackendService,
     private queryProviderService: QueryProviderService,
-    private apiTranslator: ApiTranslator,
+    private apiTranslator: StructuredQuery2UIQueryTranslatorService,
     private router: Router,
     private feature: FeatureService
   ) {}
@@ -90,10 +90,11 @@ export class QueryBoxEndComponent implements OnInit {
   }
 
   createDefaultQuery(query) {
-    this.queryObject = this.apiTranslator.translateSQtoUIQuery(
-      QueryProviderService.createDefaultQuery(),
-      query
-    );
+    this.apiTranslator
+      .translateSQtoUIQuery(QueryProviderService.createDefaultQuery(), query)
+      .subscribe((translatedQuery) => {
+        this.query = translatedQuery;
+      });
   }
   storeTemplateAndNavigate() {
     this.queryProviderService.store(this.queryObject);

@@ -7,13 +7,10 @@ import { EditGroupConnectionComponent } from 'src/app/modules/querybuilder/compo
 import { CritGroupArranger } from 'src/app/modules/querybuilder/controller/CritGroupArranger';
 import { GroupFactory } from 'src/app/modules/querybuilder/controller/GroupFactory';
 import { ObjectHelper } from 'src/app/modules/querybuilder/controller/ObjectHelper';
-//import { Criterion } from 'src/app/modules/querybuilder/model/api/query/criterion';
-//import { CritType, Group } from 'src/app/modules/querybuilder/model/api/query/group';
-import { Query as QueryOld } from 'src/app/modules/querybuilder/model/api/query/query';
 import { FeatureService } from 'src/app/service/Feature.service';
-import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
-import { CritType, Group } from '../../../../../../model/FeasibilityQuery/Group';
-import { Query } from '../../../../../../model/FeasibilityQuery/Query';
+import { CritType, Group } from '../../../../model/FeasibilityQuery/Group';
+import { Query } from '../../../../model/FeasibilityQuery/Query';
+import { Criterion } from '../../../../model/FeasibilityQuery/Criterion/Criterion';
 
 @Component({
   selector: 'num-display-group',

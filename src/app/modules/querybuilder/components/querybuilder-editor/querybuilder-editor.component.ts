@@ -36,12 +36,12 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   subscriptionPolling: Subscription;
   private subscriptionResult: Subscription;
   public resultObservable$: Observable<QueryResult>;
-  loadedResult: boolean = false;
+  loadedResult = false;
   resultFromSavedQuery: boolean;
   gottenDetailedResult: boolean;
   callsLimit: number;
   callsRemaining: number;
-  hasInvalidCriteria: boolean = false;
+  hasInvalidCriteria = false;
 
   constructor(
     public queryProviderService: QueryProviderService,
@@ -55,7 +55,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   ngOnInit(): void {
     if (window.history.state.preventReset) {
       this.query = this.queryProviderService.query();
-      this.checkForInvalidCriteria();
+      //this.checkForInvalidCriteria();
     } else {
       this.doReset();
     }

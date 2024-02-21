@@ -22,4 +22,5 @@ export class Criterion {
   termCodes?: Array<TerminologyCode> = [];
   timeRestriction?: TimeRestriction;
   valueFilters?: Array<ValueFilter> = [];
+  requiredDataSelection?: boolean;
 }

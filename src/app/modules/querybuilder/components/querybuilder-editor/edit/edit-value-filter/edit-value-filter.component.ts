@@ -315,16 +315,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     }
 
     if (
-      ((this.abstractAttributeFilter.comparator !== Comparator.NONE)
-        ||
-        (this.abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE)
-      )
-      &&
-      (
-        (this.attributeFilter?.attributeDefinition?.type === FilterTypes.QUANTITY)
-        ||
-        (this.valueFilter?.valueDefinition?.type === FilterTypes.QUANTITY)
-      )
+      (this.abstractAttributeFilter.comparator !== Comparator.NONE ||
+        this.abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE) &&
+      (this.attributeFilter?.attributeDefinition?.type === FilterTypes.QUANTITY ||
+        this.valueFilter?.valueDefinition?.type === FilterTypes.QUANTITY)
     ) {
       this.abstractAttributeFilter.maxValue = 0;
       this.abstractAttributeFilter.minValue = 0;
@@ -333,7 +327,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         this.abstractAttributeFilter.unit = this.valueFilter?.valueDefinition?.allowedUnits[0];
       }
       if (this.attributeFilter?.attributeDefinition?.allowedUnits.length > 0) {
-        this.abstractAttributeFilter.unit = this.attributeFilter?.attributeDefinition?.allowedUnits[0];
+        this.abstractAttributeFilter.unit =
+          this.attributeFilter?.attributeDefinition?.allowedUnits[0];
       }
       this.abstractAttributeFilter.comparator = Comparator.NONE;
       this.abstractAttributeFilter.type = FilterTypes.QUANTITY_COMPARATOR;
@@ -341,8 +336,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     }
     if (
       this.selectedConceptsAsJson.size > 0 &&
-      ((this.valueFilter.valueDefinition.type === FilterTypes.CONCEPT) ||
-      (this.attributeFilter?.attributeDefinition?.type === FilterTypes.CONCEPT))
+      (this.valueFilter.valueDefinition.type === FilterTypes.CONCEPT ||
+        this.attributeFilter?.attributeDefinition?.type === FilterTypes.CONCEPT)
     ) {
       this.doSelectAllCheckboxes();
     }
@@ -351,16 +346,16 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   resetButtonDisabled() {
     if (
       this.selectedConceptsAsJson.size > 0 &&
-      ((this.valueFilter.valueDefinition.type === FilterTypes.CONCEPT) ||
-        (this.attributeFilter?.attributeDefinition?.type === FilterTypes.CONCEPT))
+      (this.valueFilter?.valueDefinition?.type === FilterTypes.CONCEPT ||
+        this.attributeFilter?.attributeDefinition?.type === FilterTypes.CONCEPT)
     ) {
       return false;
     }
     if (
       (this.abstractAttributeFilter.comparator !== Comparator.NONE ||
         this.abstractAttributeFilter.type === FilterTypes.QUANTITY_RANGE) &&
-      ((this.valueFilter.valueDefinition.type === FilterTypes.QUANTITY) ||
-        (this.attributeFilter?.attributeDefinition?.type === FilterTypes.QUANTITY))
+      (this.valueFilter?.valueDefinition?.type === FilterTypes.QUANTITY ||
+        this.attributeFilter?.attributeDefinition?.type === FilterTypes.QUANTITY)
     ) {
       return false;
     }
@@ -375,7 +370,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
     return true;
   }
-
 
   public isActionDisabled(): boolean {
     if (

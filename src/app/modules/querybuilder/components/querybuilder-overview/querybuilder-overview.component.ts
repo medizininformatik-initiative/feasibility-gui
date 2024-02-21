@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 import { StructuredQuery } from '../../../../model/StructuredQuery/StructuredQuery';
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/StructuredQuery2UIQueryTranslator.service';
 import { Subscription } from 'rxjs';
-import { TerminologyCode} from 'src/app/model/terminology/Terminology.ts';
+import { TerminologyCode } from '../../../../model/terminology/Terminology';
+
 @Component({
   selector: 'num-querybuilder-overview',
   templateUrl: './querybuilder-overview.component.html',
@@ -101,12 +102,11 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
   }
 
   createDefaultQuery(query) {
-    this.apiTranslator.translateImportedSQtoUIQuery(
-      QueryProviderService.createDefaultQuery(),
-      query
-    ).subscribe((translatedQuery) => {
-      this.query = translatedQuery;
-    })
+    this.apiTranslator
+      .translateImportedSQtoUIQuery(QueryProviderService.createDefaultQuery(), query)
+      .subscribe((translatedQuery) => {
+        this.query = translatedQuery;
+      });
   }
 
   storeQueryAndNavigate() {

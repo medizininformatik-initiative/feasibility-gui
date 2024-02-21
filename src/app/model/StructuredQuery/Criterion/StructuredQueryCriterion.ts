@@ -11,5 +11,5 @@ export class StructuredQueryCriterion {
   context?: TerminologyCode;
   timeRestriction?: AbstractTimeRestriction;
   termCodes: Array<TerminologyCode> = [];
-  valueFilters?: Array<AbstractStructuredQueryFilters>;
+  valueFilter?: AbstractStructuredQueryFilters;
 }
