@@ -1,5 +1,25 @@
 # Changelog
 
+## v2.3.4 (2023-12-15)
+
+### Bugfix
+* Fix loading queries with empty or undefined results ([#161](https://github.com/medizininformatik-initiative/feasibility-gui/pull/161))
+
+
+## v2.3.3 (2023-12-14)
+
+### Bugfix
+* Fix save-button on loading queries ([#159](https://github.com/medizininformatik-initiative/feasibility-gui/pull/159))
+* Show patient results for saved queries 
+* Fix height for search popup
+
+
+## v2.3.2 (2023-12-14)
+
+### Feature
+* Improved design and handling of loading queries and templates ([#154](https://github.com/medizininformatik-initiative/feasibility-gui/pull/154))
+
+
 ## v2.3.1 (2023-12-08)
 
 ### Bugfix

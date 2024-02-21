@@ -27,6 +27,9 @@ export class ResultSimpleComponent implements OnInit, OnDestroy {
   isResultLoaded: boolean;
 
   @Input()
+  resultFromSavedQuery: boolean;
+
+  @Input()
   showSpinner: boolean;
 
   @Input()

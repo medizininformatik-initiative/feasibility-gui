@@ -73,7 +73,7 @@ export class QueryBoxEndComponent implements OnInit {
   loadQueryIntoFeasibilityPage(singleQuery): void {
     this.backend.loadQuery(singleQuery.id).subscribe((query) => {
       this.createDefaultQuery(query);
-      this.storeQueryAndNavigate(query.results);
+      this.storeQueryAndNavigate(singleQuery.totalNumberOfPatients);
     });
   }
 
@@ -103,7 +103,7 @@ export class QueryBoxEndComponent implements OnInit {
   storeQueryAndNavigate(singleQueryloadedResult) {
     this.queryProviderService.store(this.queryObject);
     this.router.navigate(['/querybuilder/editor'], {
-      state: { preventReset: true, loadedResult: singleQueryloadedResult },
+      state: { preventReset: true, resultFromSavedQuery: singleQueryloadedResult?.toString() },
     });
   }
 }
