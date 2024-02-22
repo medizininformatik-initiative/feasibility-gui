@@ -1,5 +1,3 @@
-import { transient } from '../annotations';
-import { AttributeDefinition, ValueDefinition } from './valuedefinition';
 
 // 1.) Example of terminology tree
 //
@@ -52,20 +50,16 @@ export class TerminologyEntry {
   termCodes?: Array<TerminologyCode> = [];
   display: string;
 
-  selectable: boolean;
-  @transient()
+  selectable = true;
   selected = false;
 
   timeRestrictionAllowed: boolean;
 
-  leaf: boolean;
-  entity: boolean;
+  leaf?: boolean = false;
+  entity?: boolean = false;
   children: TerminologyEntry[] = [];
-  optional?: boolean;
+  optional?: boolean = false;
 
-  valueDefinition?: ValueDefinition;
-  valueDefinitions?: Array<ValueDefinition> = [];
-  attributeDefinitions?: Array<AttributeDefinition> = [];
 }
 
 export class TerminologyCode {

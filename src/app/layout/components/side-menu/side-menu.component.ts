@@ -3,7 +3,7 @@ import { routes } from '../../../app-routing.module';
 import INavItem from '../../models/nav-item.interface';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { mainNavItems, secondaryNavItems } from '../../../core/constants/navigation';
-import { FeatureService } from '../../../service/feature.service';
+import { FeatureService } from '../../../service/Feature.service';
 
 @Component({
   selector: 'num-side-menu',

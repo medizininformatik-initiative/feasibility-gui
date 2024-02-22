@@ -1,16 +1,16 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { Query } from '../../model/api/query/query';
-import { QueryProviderService } from '../../service/query-provider.service';
-import { QueryResult } from '../../model/api/result/QueryResult';
-import { interval, Observable, Subscription, timer } from 'rxjs';
 import { BackendService } from '../../service/backend.service';
-import { map, share, switchAll, takeUntil } from 'rxjs/operators';
-import { FeatureService } from '../../../../service/feature.service';
+import { FeatureService } from '../../../../service/Feature.service';
 import { GroupFactory } from '../../controller/GroupFactory';
+import { interval, Observable, Subscription, timer } from 'rxjs';
+import { map, share, switchAll, takeUntil } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
 import { MatRadioChange } from '@angular/material/radio';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { QueryProviderService } from '../../service/query-provider.service';
+import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
 import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
+import { QueryResult } from 'src/app/model/result/QueryResult';
 @Component({
   selector: 'num-querybuilder',
   templateUrl: './querybuilder-editor.component.html',
@@ -55,7 +55,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   ngOnInit(): void {
     if (window.history.state.preventReset) {
       this.query = this.queryProviderService.query();
-      this.checkForInvalidCriteria();
+      //this.checkForInvalidCriteria();
     } else {
       this.doReset();
     }
@@ -160,6 +160,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
         }
       },
       () => {
+        console.log('done');
         if (this.resultsLargeEnough === false) {
           this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10004']);
         } else {

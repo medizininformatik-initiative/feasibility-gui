@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Criterion } from '../../../../model/api/query/criterion';
-import { Query } from '../../../../model/api/query/query';
-import { CritType } from '../../../../model/api/query/group';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
+import { CritType } from 'src/app/model/FeasibilityQuery/Group';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
 
 @Component({
   selector: 'num-display-entities',

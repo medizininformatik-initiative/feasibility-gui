@@ -5,7 +5,7 @@ import { MaterialModule } from '../../../../layout/material/material.module';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FeatureService } from '../../../../service/feature.service';
+import { FeatureService } from '../../../../service/Feature.service';
 import { IAppConfig } from '../../../../config/app-config.model';
 import { FeatureProviderService } from '../../../querybuilder/service/feature-provider.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

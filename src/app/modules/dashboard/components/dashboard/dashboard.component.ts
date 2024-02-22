@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/member-ordering */
-import { Component, OnInit } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { AppConfigService } from '../../../../config/app-config.service';
-import { FeatureService } from '../../../../service/feature.service';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core';
+import { FeatureService } from '../../../../service/Feature.service';
 import { IUserProfile } from '../../../../shared/models/user/user-profile.interface';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 
 @Component({
@@ -39,8 +38,6 @@ export class DashboardComponent implements OnInit {
       this.snackbar.displayInfoMessage('UPDATE_NOTE');
     }
   }
-
-  newQuery(): void {}
 
   async init(): Promise<void> {
     const isLoggedIn = this.oauthService.hasValidAccessToken();

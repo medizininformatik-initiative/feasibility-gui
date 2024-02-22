@@ -12,7 +12,7 @@ import { Criterion } from '../../../../model/api/query/criterion';
 import { ComponentType } from '@angular/cdk/overlay';
 import { TemplateRef } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
 import { OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component';

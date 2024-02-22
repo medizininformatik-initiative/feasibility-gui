@@ -1,14 +1,13 @@
+import { BackendService } from '../../../../service/backend.service';
+import { AfterViewChecked, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FileSaverService } from 'ngx-filesaver';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatRadioChange } from '@angular/material/radio';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { QueryProviderService } from '../../../../service/query-provider.service';
+import { Subscription } from 'rxjs';
+import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 /* eslint-disable */
-import { AfterViewChecked, Component, Inject, OnDestroy, OnInit } from '@angular/core'
-import { Query } from '../../../../model/api/query/query'
-import { QueryProviderService } from '../../../../service/query-provider.service'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { Router } from '@angular/router'
-import { BackendService } from '../../../../service/backend.service'
-import { Subscription } from 'rxjs'
-import { MatRadioChange } from '@angular/material/radio'
-import { FileSaverService } from 'ngx-filesaver'
-import { ApiTranslator } from '../../../../controller/ApiTranslator'
 
 export class SaveDialogComponentData {
   hasQuerySend: boolean | string
@@ -24,12 +23,12 @@ export class SaveDialogComponent implements OnInit, OnDestroy, AfterViewChecked 
   querySlotAvailable: boolean = false
 
   constructor(
+    private UITranslator: UIQuery2StructuredQueryTranslatorService,
     public queryProviderService: QueryProviderService,
     public backend: BackendService,
     private fileSaverService: FileSaverService,
     @Inject(MAT_DIALOG_DATA) public data: SaveDialogComponentData,
-    private dialogRef: MatDialogRef<SaveDialogComponent, void>,
-    private apiTranslator: ApiTranslator
+    private dialogRef: MatDialogRef<SaveDialogComponent, void>
   ) {
     this.hasQuerySend = data.hasQuerySend
   }
@@ -87,7 +86,7 @@ export class SaveDialogComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   doDownloadQuery() {
-    const queryString = JSON.stringify(this.apiTranslator.translateToV2(this.query))
+    const queryString = JSON.stringify(this.UITranslator.translateToStructuredQuery(this.query))
     const fileData = new Blob([queryString], { type: 'text/plain;charset=utf-8' })
     this.fileSaverService.save(fileData, this.filename + '.json')
   }

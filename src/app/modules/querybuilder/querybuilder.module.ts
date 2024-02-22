@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { QuerybuilderRoutingModule } from './querybuilder-routing.module';
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor/querybuilder-editor.component';
 import { QuerybuilderOverviewComponent } from './components/querybuilder-overview/querybuilder-overview.component';

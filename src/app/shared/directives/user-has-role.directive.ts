@@ -1,6 +1,6 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { IUserProfile } from '../models/user/user-profile.interface';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Directive({
   selector: '[numUserHasRole]',

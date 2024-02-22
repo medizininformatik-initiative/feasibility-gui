@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Criterion } from '../../../../model/api/query/criterion';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Query } from '../../../../model/api/query/query';
-import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ObjectHelper } from '../../../../controller/ObjectHelper';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
 
 export class EditSingleCriterionComponentData {
   criterion: Criterion;

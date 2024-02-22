@@ -3,8 +3,8 @@ import { QueryProviderService } from '../../../service/query-provider.service';
 import { BackendService } from '../../../service/backend.service';
 import { FeatureProviderService } from '../../../service/feature-provider.service';
 import { Subscription } from 'rxjs';
-import { Query } from '../../../model/api/query/query';
 import { IAppConfig } from 'src/app/config/app-config.model';
+import { Query } from '../../../../../model/FeasibilityQuery/Query';
 
 @Component({
   selector: 'num-saved-queries',

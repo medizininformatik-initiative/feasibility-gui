@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { DirectivesModule } from 'src/app/shared/directives/directives.module';
 import { RoleGuard } from '../../../core/auth/guards/role.guard';
-import { FeatureService } from '../../../service/feature.service';
+import { FeatureService } from '../../../service/Feature.service';
 
 describe('SideMenuComponent', () => {
   let component: SideMenuComponent;

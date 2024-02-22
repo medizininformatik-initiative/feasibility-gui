@@ -1,16 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CritType, Group } from '../../../../model/api/query/group';
-import { Criterion } from '../../../../model/api/query/criterion';
+import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
-import { Query } from '../../../../model/api/query/query';
-import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { CritType, Group } from '../../../../../../model/FeasibilityQuery/Group';
 import { EditGroupConnectionComponent } from '../../edit/edit-group-connection/edit-group-connection.component';
+import { FeatureService } from '../../../../../../service/Feature.service';
 import { GroupFactory } from '../../../../controller/GroupFactory';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ObjectHelper } from '../../../../controller/ObjectHelper';
+import { Query } from '../../../../../../model/FeasibilityQuery/Query';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { FeatureService } from '../../../../../../service/feature.service';
+//import { CritType, Group } from '../../../../model/api/query/group';
+//import { Criterion } from '../../../../model/api/query/criterion';
+//import { Query } from '../../../../model/api/query/query';
 
 @Component({
   selector: 'num-display-group',

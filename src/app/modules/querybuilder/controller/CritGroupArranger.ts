@@ -1,5 +1,7 @@
-import { Criterion } from '../model/api/query/criterion';
-import { CritType, Group } from '../model/api/query/group';
+//import { Criterion } from '../model/api/query/criterion';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { CritType, Group } from '../../../model/FeasibilityQuery/Group';
+//import { CritType, Group } from '../model/api/query/group';
 
 export class CritGroupArranger {
   public static splitInnerArray(critGroup: Criterion[][], i: number, j: number): Criterion[][] {
