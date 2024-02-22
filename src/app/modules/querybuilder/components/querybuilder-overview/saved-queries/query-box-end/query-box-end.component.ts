@@ -72,8 +72,12 @@ export class QueryBoxEndComponent implements OnInit {
 
   loadQueryIntoFeasibilityPage(singleQuery): void {
     this.backend.loadQuery(singleQuery.id).subscribe((query) => {
-      this.createDefaultQuery(query);
-      this.storeQueryAndNavigate(singleQuery.totalNumberOfPatients);
+      this.apiTranslator
+        .translateSQtoUIQuery(QueryProviderService.createDefaultQuery(), query)
+        .subscribe((translatedQuery) => {
+          this.query = translatedQuery;
+          this.storeQueryAndNavigate(singleQuery.totalNumberOfPatients);
+        });
     });
   }
 
@@ -83,26 +87,23 @@ export class QueryBoxEndComponent implements OnInit {
       this.storeTemplateAndNavigate();
     } else {
       this.backend.loadTemplate(singleTemplate.id).subscribe((query) => {
-        this.createDefaultQuery(query);
-        this.storeTemplateAndNavigate();
+        this.apiTranslator
+          .translateSQtoUIQuery(QueryProviderService.createDefaultQuery(), query)
+          .subscribe((translatedQuery) => {
+            this.query = translatedQuery;
+            this.storeTemplateAndNavigate();
+          });
       });
     }
   }
 
-  createDefaultQuery(query) {
-    this.apiTranslator
-      .translateSQtoUIQuery(QueryProviderService.createDefaultQuery(), query)
-      .subscribe((translatedQuery) => {
-        this.query = translatedQuery;
-      });
-  }
   storeTemplateAndNavigate() {
-    this.queryProviderService.store(this.queryObject);
+    this.queryProviderService.store(this.query);
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
   }
 
   storeQueryAndNavigate(singleQueryloadedResult) {
-    this.queryProviderService.store(this.queryObject);
+    this.queryProviderService.store(this.query);
     this.router.navigate(['/querybuilder/editor'], {
       state: { preventReset: true, resultFromSavedQuery: singleQueryloadedResult?.toString() },
     });

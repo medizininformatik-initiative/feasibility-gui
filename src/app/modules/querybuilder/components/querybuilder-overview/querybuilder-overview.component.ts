@@ -98,7 +98,6 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
 
   doImport(): void {
     this.createDefaultQuery(this.importQuery);
-    this.storeQueryAndNavigate();
   }
 
   createDefaultQuery(query) {
@@ -106,6 +105,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
       .translateImportedSQtoUIQuery(QueryProviderService.createDefaultQuery(), query)
       .subscribe((translatedQuery) => {
         this.query = translatedQuery;
+        this.storeQueryAndNavigate();
       });
   }
 
