@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Comparator, ValueFilter } from '../../../../model/api/query/valueFilter';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
 
 describe('DisplayValueFilterComponent', () => {
   let component: DisplayValueFilterComponent;

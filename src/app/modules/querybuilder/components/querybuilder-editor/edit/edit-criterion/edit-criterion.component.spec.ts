@@ -14,7 +14,7 @@ import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concep
 import { OperatorOptions } from '../../../../model/api/query/valueFilter';
 import { ValueType } from '../../../../model/api/terminology/valuedefinition';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
 import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component';
 import { Query } from '../../../../model/api/query/query';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';

@@ -11,7 +11,7 @@ import { MatDialogConfig, MatDialogRef } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import any = jasmine.any
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { FeatureService } from '../../../../../../service/feature.service'
+import { FeatureService } from '../../../../../../service/Feature.service'
 import { OAuthStorage } from 'angular-oauth2-oidc'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'

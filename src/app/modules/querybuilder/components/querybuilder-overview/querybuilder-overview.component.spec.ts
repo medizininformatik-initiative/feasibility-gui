@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { OAuthStorage } from 'angular-oauth2-oidc';
-import { FeatureService } from '../../../../service/feature.service';
+import { FeatureService } from '../../../../service/Feature.service';
 import { BackendService } from '../../service/backend.service';
 import { Observable, of } from 'rxjs';
 import { MatTooltipModule } from '@angular/material/tooltip';

@@ -4,13 +4,12 @@ import { BackendService } from './backend.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AppConfigService } from '../../../config/app-config.service';
 import { IAppConfig } from '../../../config/app-config.model';
-import { FeatureService } from '../../../service/feature.service';
+import { FeatureService } from '../../../service/Feature.service';
 import { QueryResult } from '../model/api/result/QueryResult';
 import { CategoryEntry, TerminologyEntry } from '../model/api/terminology/terminology';
 import { QueryResponse } from '../model/api/result/QueryResponse';
 import { Query } from '../model/api/query/query';
 import DoneCallback = jest.DoneCallback;
-import { MockBackendDataProvider } from './MockBackendDataProvider';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
 describe('BackendService', () => {

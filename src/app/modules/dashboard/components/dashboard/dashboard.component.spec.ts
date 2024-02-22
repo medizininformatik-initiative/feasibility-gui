@@ -5,7 +5,7 @@ import { DashboardComponent } from './dashboard.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { IAppConfig } from 'src/app/config/app-config.model';
 import { DirectivesModule } from 'src/app/shared/directives/directives.module';
-import { FeatureService } from '../../../../service/feature.service';
+import { FeatureService } from '../../../../service/Feature.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;

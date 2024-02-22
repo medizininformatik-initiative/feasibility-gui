@@ -235,7 +235,6 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
 
   findCriterionByHash(hash: string): Criterion[] {
     const tempCrit: Criterion[] = [];
-
     for (const inex of ['inclusion', 'exclusion']) {
       this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
         disj.forEach((conj) => {

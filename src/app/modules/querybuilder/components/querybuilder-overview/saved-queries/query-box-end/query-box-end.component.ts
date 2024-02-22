@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { QueryProviderService } from '../../../../service/query-provider.service';
 import { Router } from '@angular/router';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../../../service/StructuredQuery2UIQueryTranslator.service';
 
 @Component({
