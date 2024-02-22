@@ -5,8 +5,7 @@ import { CritGroupPosition } from '../../modules/querybuilder/controller/CritGro
 import { FeatureService } from '../Feature.service';
 import { Injectable } from '@angular/core';
 import { LoadUIProfileService } from '../LoadUIProfile.service';
-import { ObjectHelper } from '../../modules/querybuilder/controller/ObjectHelper';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { TerminologyCode, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { TimeRestriction } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { UIProfile } from 'src/app/model/terminology/UIProfile';
@@ -33,20 +32,30 @@ export class CreateCriterionService {
   ): Observable<Criterion> {
     const criterion: Criterion = new Criterion();
     const hash = this.criterionHashService.createHash(context, termCodes[0]);
+    criterion.criterionHash = hash;
+    criterion.display = termCodes[0].display;
+    criterion.termCodes = this.copyTermCodes(termCodes);
+    criterion.uniqueID = uuidv4();
+    criterion.position = new CritGroupPosition();
     const subject = new Subject<Criterion>();
-    this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
-      Object.assign(criterion, critFromProfile);
+
+    if (context) {
+      criterion.isInvalid = false;
       criterion.context = context;
-      criterion.criterionHash = hash;
-      criterion.display = termCodes[0].display;
-      criterion.termCodes = this.copyTermCodes(termCodes);
-      criterion.uniqueID = uuidv4();
-      criterion.position = new CritGroupPosition();
-      subject.next(criterion);
-    });
-    //return of(criterion);
+      this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
+        Object.assign(criterion, critFromProfile);
+        subject.next(criterion);
+      });
+    } else {
+      criterion.isInvalid = true;
+      setTimeout(() => {
+        subject.next(criterion);
+      }, 10);
+    }
+
     return subject.asObservable();
   }
+
   public createReferenceCriterionFromTermCode(
     termCodes: TerminologyCode[],
     context: TerminologyCode

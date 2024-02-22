@@ -10,15 +10,31 @@ export class CriterionHashService {
   constructor() {}
 
   public createHash(context: TerminologyCode, termCode: TerminologyCode): string {
-    const contextVersion = context.version ? context.version : '';
-    const termcodeVersion = termCode.version ? termCode.version : '';
+    let contextVersion = '';
+    let contextSystem = '';
+    let contextCode = '';
+    let termcodeVersion = '';
+
+    if (context) {
+      contextSystem = context.system;
+      contextCode = context.code;
+      if (context.version) {
+        contextVersion = context.version;
+      }
+    }
+
+    if (termCode.version) {
+      termcodeVersion = termCode.version;
+    }
+
     const hashCode =
-      context.system +
-      context.code +
+      contextSystem +
+      contextCode +
       contextVersion +
       termCode.system +
       termCode.code +
       termcodeVersion;
+
     return uuidv3(hashCode, BackendService.BACKEND_UUID_NAMESPACE);
   }
 }

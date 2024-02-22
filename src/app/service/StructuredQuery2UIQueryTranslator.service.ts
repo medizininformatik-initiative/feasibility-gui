@@ -149,17 +149,17 @@ export class StructuredQuery2UIQueryTranslatorService {
           const find = criterion.attributeFilters.find(
             (attr) => attribute.attributeCode.code === attr.attributeDefinition.attributeCode.code
           );
-          if (find.type === 'reference') {
+          if (find?.type === 'reference') {
             find.attributeDefinition.selectableConcepts =
               attribute.attributeDefinition.selectableConcepts;
             find.attributeDefinition.optional = attribute.attributeDefinition.optional;
           }
-          if (find.type === 'concept') {
+          if (find?.type === 'concept') {
             if (attribute.selectedConcepts) {
               find.selectedConcepts = attribute.selectedConcepts;
             }
           }
-          if (find.type === 'quantity-comparator' || find.type === 'quantity-range') {
+          if (find?.type === 'quantity-comparator' || find?.type === 'quantity-range') {
             find.precision = attribute.precision;
             find.unit = attribute.unit;
             find.maxValue = attribute.maxValue;
