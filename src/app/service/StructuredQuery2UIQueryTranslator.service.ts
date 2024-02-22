@@ -3,7 +3,6 @@ import { AbstractStructuredQueryFilters } from '../model/StructuredQuery/Criteri
 import { AbstractTimeRestriction } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/TimeRestriction/AbstractTimeRestriction';
 import { AttributeDefinition } from '../model/terminology/AttributeDefinitions/AttributeDefinition';
 import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { BeforeFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/TimeRestriction/BeforeFilter';
 import { ConceptAttributeFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ConceptFilter/ConceptAttributeFilter';
 import { ConceptValueFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ConceptFilter/ConceptValueFilter';
 import { CreateCriterionService } from './CriterionService/CreateCriterion.service';
@@ -12,7 +11,6 @@ import { FilterTypes } from '../model/FilterTypes';
 import { FilterTypesService } from './FilterTypes.service';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ObjectHelper } from '../modules/querybuilder/controller/ObjectHelper';
 import { Query } from '../model/FeasibilityQuery/Query';
 import { ReferenceFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ReferenceFilter/ReferenceFilter';
 import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
@@ -26,12 +24,14 @@ import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter
   providedIn: 'root',
 })
 export class StructuredQuery2UIQueryTranslatorService {
+  hasConsent = false;
+
   constructor(
     private filter: FilterTypesService,
     private createCriterionService: CreateCriterionService
   ) {}
-
   public translateImportedSQtoUIQuery(uiquery: Query, sqquery: StructuredQuery): Observable<Query> {
+    this.hasConsent = false;
     const invalidCriteria = [];
     const subject = new Subject<Query>();
     const inclusion = sqquery.inclusionCriteria ? sqquery.inclusionCriteria : [];
@@ -42,9 +42,9 @@ export class StructuredQuery2UIQueryTranslatorService {
       //TODO: find a better way for joining in- and exclusion instead of nested subscription
       this.translateSQtoUICriteria(exclusion, invalidCriteria).subscribe((exclusionQuery) => {
         uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
+        uiquery.consent = this.hasConsent;
         subject.next(this.rePosition(uiquery));
         subject.complete();
-        console.log(uiquery);
       });
     });
     //uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery);
@@ -52,6 +52,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   public translateSQtoUIQuery(uiquery: Query, sqquery: StructuredQueryTemplate): Observable<Query> {
+    this.hasConsent = false;
     const invalidCriteria = sqquery.invalidTerms;
     const subject = new Subject<Query>();
     const inclusion = sqquery.content.inclusionCriteria ? sqquery.content.inclusionCriteria : [];
@@ -62,6 +63,7 @@ export class StructuredQuery2UIQueryTranslatorService {
       //TODO: find a better way for joining in- and exclusion instead of nested subscription
       this.translateSQtoUICriteria(exclusion, invalidCriteria).subscribe((exclusionQuery) => {
         uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
+        uiquery.consent = this.hasConsent;
         subject.next(this.rePosition(uiquery));
         subject.complete();
       });
@@ -86,7 +88,9 @@ export class StructuredQuery2UIQueryTranslatorService {
       resultInExclusion.push(criterionArray);
     });
 
-    return observableBatch.length > 0 ? forkJoin(observableBatch) : of([]);
+    return observableBatch.filter(Boolean).length > 0
+      ? forkJoin(observableBatch.filter(Boolean))
+      : of([]);
   }
 
   private innerCriterion(
@@ -100,13 +104,14 @@ export class StructuredQuery2UIQueryTranslatorService {
         );
       }
     });
-    return observableBatch.length > 0 ? forkJoin(observableBatch) : of([]);
+    return observableBatch.length > 0 ? forkJoin(observableBatch) : undefined;
   }
 
   private consentIsNotSet(termCodes: Array<TerminologyCode>): boolean {
     const consentCode = '2.16.840.1.113883.3.1937.777.24.5.3.8';
     const systemConsent = 'urn:oid:2.16.840.1.113883.3.1937.777.24.5.3';
     if (termCodes[0].code === consentCode && termCodes[0].system === systemConsent) {
+      this.hasConsent = true;
       return false;
     } else {
       return true;
