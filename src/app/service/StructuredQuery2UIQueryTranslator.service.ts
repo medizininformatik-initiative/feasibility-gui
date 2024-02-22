@@ -44,11 +44,10 @@ export class StructuredQuery2UIQueryTranslatorService {
         uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
         subject.next(this.rePosition(uiquery));
         subject.complete();
+        console.log(uiquery);
       });
     });
-
     //uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery);
-
     return subject.asObservable();
   }
 
@@ -95,11 +94,23 @@ export class StructuredQuery2UIQueryTranslatorService {
   ): Observable<Criterion[]> {
     const observableBatch = [];
     structuredQueryCriterionInnerArray.forEach((structuredQueryCriterion) => {
-      observableBatch.push(
-        this.createCriterionFromStructuredQueryCriterion(structuredQueryCriterion)
-      );
+      if (this.consentIsNotSet(structuredQueryCriterion.termCodes)) {
+        observableBatch.push(
+          this.createCriterionFromStructuredQueryCriterion(structuredQueryCriterion)
+        );
+      }
     });
     return observableBatch.length > 0 ? forkJoin(observableBatch) : of([]);
+  }
+
+  private consentIsNotSet(termCodes: Array<TerminologyCode>): boolean {
+    const consentCode = '2.16.840.1.113883.3.1937.777.24.5.3.8';
+    const systemConsent = 'urn:oid:2.16.840.1.113883.3.1937.777.24.5.3';
+    if (termCodes[0].code === consentCode && termCodes[0].system === systemConsent) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   /**
