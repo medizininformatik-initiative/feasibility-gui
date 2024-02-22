@@ -47,7 +47,6 @@ export class StructuredQuery2UIQueryTranslatorService {
         subject.complete();
       });
     });
-    //uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery);
     return subject.asObservable();
   }
 
@@ -68,9 +67,6 @@ export class StructuredQuery2UIQueryTranslatorService {
         subject.complete();
       });
     });
-
-    //uiquery.consent = this.hasConsentAndIfSoDeleteIt(sqquery.content);
-
     return subject.asObservable();
   }
 
