@@ -73,22 +73,6 @@ export class StructuredQuery2UIQueryTranslatorService {
     return subject.asObservable();
   }
 
-  /*private translateSQtoUICriteria(inexclusion: StructuredQueryCriterion[][], invalidCriteria: TerminologyCode[]): Criterion[][] {
-    const invalidCriteriaSet = this.getInvalidCriteriaSet(invalidCriteria);
-    const resultInExclusion: Criterion[][] = [];
-    inexclusion.forEach((structuredQueryCriterionArray) => {
-      const criterionArray: Criterion[] = [];
-      structuredQueryCriterionArray.forEach((structuredQueryCriterion) => {
-        const criterion: Criterion = this.createCriterionFromStructuredQueryCriterion(structuredQueryCriterion);
-        criterionArray.push(criterion);
-        if (criterion.linkedCriteria.length > 0) {
-          resultInExclusion.push(criterion.linkedCriteria);
-        }
-      });
-      resultInExclusion.push(criterionArray);
-    });
-    return resultInExclusion;
-  }*/
   private translateSQtoUICriteria(
     inexclusion: StructuredQueryCriterion[][],
     invalidCriteria: TerminologyCode[]
@@ -100,16 +84,6 @@ export class StructuredQuery2UIQueryTranslatorService {
     inexclusion.forEach((structuredQueryCriterionArray) => {
       const criterionArray: Criterion[] = [];
       observableBatch.push(this.innerCriterion(structuredQueryCriterionArray));
-
-      /*
-      structuredQueryCriterionArray.forEach((structuredQueryCriterion) => {
-        observableBatch.push(this.createCriterionFromStructuredQueryCriterion(structuredQueryCriterion));
-        /*criterionArray.push(criterion);
-        if (criterion.linkedCriteria.length > 0) {
-          resultInExclusion.push(criterion.linkedCriteria);
-        }*/
-      //      });
-
       resultInExclusion.push(criterionArray);
     });
 
