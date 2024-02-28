@@ -235,17 +235,11 @@ export class BackendService {
     }
   }
 
-  public validateStructuredQuery(structuredQuery: StructuredQuery) {
+  public validateStructuredQuery(structuredQuery: StructuredQuery): Observable<StructuredQuery> {
     const headers = this.headers;
     const requestBody = structuredQuery;
-    const url = '/validate2';
-    return this.http.post<Array<any>>(
-      this.createUrl(BackendService.PATH_STORED_QUERY + url),
-      requestBody,
-      {
-        headers,
-      }
-    );
+    const url = BackendService.PATH_RUN_QUERY + '/validate2';
+    return this.http.post<any>(this.createUrl(url), requestBody, { headers });
   }
 
   public loadSavedQueries(): Observable<any> {
@@ -296,7 +290,7 @@ export class BackendService {
     });
   }
 
-  getSavedQuerySlotCount(): Observable<any> {
+  public getSavedQuerySlotCount(): Observable<any> {
     const headers = this.headers;
     const url = this.createUrl(
       BackendService.PATH_RUN_QUERY + '/' + BackendService.PATH_SAVED_QUERY_SLOTS
