@@ -28,7 +28,8 @@ export class CreateCriterionService {
 
   public createCriterionFromTermCode(
     termCodes: TerminologyCode[],
-    context: TerminologyCode
+    context: TerminologyCode,
+    invalidCriteriaSet: Set<string>
   ): Observable<Criterion> {
     const criterion: Criterion = new Criterion();
     const subject = new Subject<Criterion>();
@@ -36,19 +37,16 @@ export class CreateCriterionService {
     criterion.criterionHash = hash;
     criterion.display = termCodes[0].display;
     criterion.termCodes = this.copyTermCodes(termCodes);
+    criterion.isInvalid = invalidCriteriaSet.has(JSON.stringify(criterion.termCodes[0]));
     criterion.uniqueID = uuidv4();
     criterion.position = new CritGroupPosition();
-
-    if (context) {
-      criterion.isInvalid = false;
+    if (!criterion.isInvalid) {
       criterion.context = context;
       this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
         Object.assign(criterion, critFromProfile);
         subject.next(criterion);
       });
     } else {
-      criterion.context = context;
-      criterion.isInvalid = true;
       setTimeout(() => {
         subject.next(criterion);
       }, 10);
@@ -63,7 +61,6 @@ export class CreateCriterionService {
   ): Criterion {
     const criterion: Criterion = new Criterion();
     const hash = this.criterionHashService.createHash(context, termCodes[0]);
-
     criterion.context = context;
     criterion.criterionHash = hash;
     criterion.display = termCodes[0].display;
