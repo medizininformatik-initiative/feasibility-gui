@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
 import { Query } from '../model/FeasibilityQuery/Query';
 import { BackendService } from '../modules/querybuilder/service/backend.service';
+import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
+import { TerminologyCode } from '../model/terminology/Terminology';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +20,14 @@ export class ValidationService {
    * 2. set invalidTerms boolean
    * @param Query
    */
-  public validateStructuredQuery(structuredQuery: StructuredQuery) {
+  public validateStructuredQuery(structuredQuery: StructuredQuery): Observable<TerminologyCode[]> {
+    const terminologyCodeArraySubject = new Subject<TerminologyCode[]>();
     this.backendService.validateStructuredQuery(structuredQuery).subscribe((invalidTerms) => {
-      console.log(invalidTerms);
-      return invalidTerms;
+      if (invalidTerms.invalidTerms?.length > 0) {
+        terminologyCodeArraySubject.next(invalidTerms.invalidTerms);
+        terminologyCodeArraySubject.complete();
+      }
     });
+    return terminologyCodeArraySubject.asObservable();
   }
 }
