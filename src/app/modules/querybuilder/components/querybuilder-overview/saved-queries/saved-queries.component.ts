@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
-import { QueryProviderService } from '../../../service/query-provider.service';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BackendService } from '../../../service/backend.service';
+import { FeasibilityQueryTemplate } from 'src/app/model/FeasibilityQuery/FeasibilityQueryTemplate';
 import { FeatureProviderService } from '../../../service/feature-provider.service';
-import { Subscription } from 'rxjs';
 import { IAppConfig } from 'src/app/config/app-config.model';
 import { Query } from '../../../../../model/FeasibilityQuery/Query';
+import { QueryProviderService } from '../../../service/query-provider.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-saved-queries',
@@ -44,15 +45,7 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
     created_at: Date
   }> = [];
 
-  savedTemplates: Array<{
-    id?: number
-    content?: Query
-    label: string
-    comment: string
-    lastModified: Date
-    createdBy?: string
-    isValid: boolean
-  }> = [];
+  savedTemplates: FeasibilityQueryTemplate[];
 
   fileName: string;
 
@@ -98,13 +91,20 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
         this.savedTemplates = [];
         const temp = templates.sort((a, b) => a.id - b.id);
         temp.forEach((template) => {
+          const feasibilityTemplate = new FeasibilityQueryTemplate();
+          feasibilityTemplate.comment = template.comment;
+          feasibilityTemplate.content = template.content;
+          feasibilityTemplate.createdBy = template.createdBy;
+          feasibilityTemplate.id = template.id;
+          feasibilityTemplate.invalidTerms = template.invalidTerms;
+          feasibilityTemplate.label = template.label;
+          feasibilityTemplate.lastModified = template.lastModified;
           if (template.invalidTerms.length > 0) {
-            template.isValid = false;
-            this.invalidTemplates = true;
+            feasibilityTemplate.isValid = false;
           } else {
-            template.isValid = true;
+            feasibilityTemplate.isValid = true;
           }
-          this.savedTemplates.push(template);
+          this.savedTemplates.push(feasibilityTemplate);
         });
       });
   }
@@ -117,12 +117,6 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
         query.isValid = true;
         this.savedQueries.push(query);
       });
-    });
-  }
-
-  doValidate(): void {
-    this.savedTemplatesSubscription = this.backend.loadSavedTemplates(true).subscribe((queries) => {
-      this.savedTemplates = queries;
     });
   }
 
