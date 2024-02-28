@@ -9,6 +9,7 @@ import { StructuredQuery } from '../../../../model/StructuredQuery/StructuredQue
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/StructuredQuery2UIQueryTranslator.service';
 import { Subscription } from 'rxjs';
 import { TerminologyCode } from '../../../../model/terminology/Terminology';
+import { ValidationService } from 'src/app/service/Validation.service';
 
 @Component({
   selector: 'num-querybuilder-overview',
@@ -27,7 +28,8 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     private backend: BackendService,
     public featureProviderService: FeatureProviderService,
     private changeDetector: ChangeDetectorRef,
-    private apiTranslator: StructuredQuery2UIQueryTranslatorService
+    private apiTranslator: StructuredQuery2UIQueryTranslatorService,
+    private validationService: ValidationService
   ) {}
 
   private savedQueriesSubscription: Subscription;
@@ -101,6 +103,7 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
   }
 
   createDefaultQuery(query) {
+    this.validationService.validateStructuredQuery(query);
     this.apiTranslator
       .translateImportedSQtoUIQuery(QueryProviderService.createDefaultQuery(), query)
       .subscribe((translatedQuery) => {

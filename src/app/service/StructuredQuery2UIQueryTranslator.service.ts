@@ -30,6 +30,13 @@ export class StructuredQuery2UIQueryTranslatorService {
     private filter: FilterTypesService,
     private createCriterionService: CreateCriterionService
   ) {}
+
+  /**
+   * @todo we dont need uiquery as a parameter, needs to be create with queryprovdierservice inside this service
+   * @param uiquery
+   * @param sqquery
+   * @returns
+   */
   public translateImportedSQtoUIQuery(uiquery: Query, sqquery: StructuredQuery): Observable<Query> {
     this.hasConsent = false;
     const invalidCriteria = [];

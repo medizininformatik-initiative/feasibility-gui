@@ -31,13 +31,13 @@ export class CreateCriterionService {
     context: TerminologyCode
   ): Observable<Criterion> {
     const criterion: Criterion = new Criterion();
+    const subject = new Subject<Criterion>();
     const hash = this.criterionHashService.createHash(context, termCodes[0]);
     criterion.criterionHash = hash;
     criterion.display = termCodes[0].display;
     criterion.termCodes = this.copyTermCodes(termCodes);
     criterion.uniqueID = uuidv4();
     criterion.position = new CritGroupPosition();
-    const subject = new Subject<Criterion>();
 
     if (context) {
       criterion.isInvalid = false;
@@ -47,6 +47,7 @@ export class CreateCriterionService {
         subject.next(criterion);
       });
     } else {
+      criterion.context = context;
       criterion.isInvalid = true;
       setTimeout(() => {
         subject.next(criterion);
