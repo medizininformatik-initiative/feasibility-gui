@@ -19,15 +19,19 @@ import { StructuredQueryTemplate } from '../model/StructuredQuery/StructuredQuer
 import { TerminologyCode } from '../model/terminology/Terminology';
 import { TimeRestriction, TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { BackendService } from '../modules/querybuilder/service/backend.service';
+import { ValidationService } from './Validation.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2UIQueryTranslatorService {
   hasConsent = false;
+  private invalidCriteriaSet: Set<string> = new Set();
 
   constructor(
     private filter: FilterTypesService,
+    private validationService: ValidationService,
     private createCriterionService: CreateCriterionService
   ) {}
 
@@ -37,37 +41,64 @@ export class StructuredQuery2UIQueryTranslatorService {
    * @param sqquery
    * @returns
    */
-  public translateImportedSQtoUIQuery(uiquery: Query, sqquery: StructuredQuery): Observable<Query> {
+  public translateImportedSQtoUIQuery(
+    uiquery: Query,
+    structuredQuery: StructuredQuery
+  ): Observable<Query> {
     this.hasConsent = false;
-    const invalidCriteria = [];
     const subject = new Subject<Query>();
-    const inclusion = sqquery.inclusionCriteria ? sqquery.inclusionCriteria : [];
-    const exclusion = sqquery.exclusionCriteria ? sqquery.exclusionCriteria : [];
-    this.translateSQtoUICriteria(inclusion, invalidCriteria).subscribe((inclusionQuery) => {
-      uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
+    const inclusion = structuredQuery.inclusionCriteria ? structuredQuery.inclusionCriteria : [];
+    const exclusion = structuredQuery.exclusionCriteria ? structuredQuery.exclusionCriteria : [];
+    this.getInvalidCriteriaSet(structuredQuery).subscribe(() => {
+      console.log(this.invalidCriteriaSet);
+      this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
+        uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
 
-      //TODO: find a better way for joining in- and exclusion instead of nested subscription
-      this.translateSQtoUICriteria(exclusion, invalidCriteria).subscribe((exclusionQuery) => {
-        uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
-        uiquery.consent = this.hasConsent;
-        subject.next(this.rePosition(uiquery));
-        subject.complete();
+        //TODO: find a better way for joining in- and exclusion instead of nested subscription
+        this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
+          uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
+          uiquery.consent = this.hasConsent;
+          subject.next(this.rePosition(uiquery));
+          subject.complete();
+        });
       });
     });
     return subject.asObservable();
   }
 
+  /**
+   * WIP
+   *
+   * @param structuredQuery
+   * @returns
+   */
+  private getInvalidCriteriaSet(structuredQuery: StructuredQuery): Observable<Set<string>> {
+    const invalidCriteriaSetSubject = new Subject<Set<string>>();
+    this.validationService
+      .validateStructuredQuery(structuredQuery)
+      .subscribe((invalidTerminologyCodes) => {
+        if (invalidTerminologyCodes?.length > 0) {
+          invalidTerminologyCodes.forEach((invalidTermCode) => {
+            this.invalidCriteriaSet.add(JSON.stringify(invalidTermCode));
+            invalidCriteriaSetSubject.next(this.invalidCriteriaSet);
+          });
+        } else {
+          console.log('Keine Invaliden Termcodes');
+        }
+      });
+    return invalidCriteriaSetSubject.asObservable();
+  }
+
   public translateSQtoUIQuery(uiquery: Query, sqquery: StructuredQueryTemplate): Observable<Query> {
     this.hasConsent = false;
-    const invalidCriteria = sqquery.invalidTerms;
     const subject = new Subject<Query>();
     const inclusion = sqquery.content.inclusionCriteria ? sqquery.content.inclusionCriteria : [];
     const exclusion = sqquery.content.exclusionCriteria ? sqquery.content.exclusionCriteria : [];
-    this.translateSQtoUICriteria(inclusion, invalidCriteria).subscribe((inclusionQuery) => {
+    this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
       uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
 
       //TODO: find a better way for joining in- and exclusion instead of nested subscription
-      this.translateSQtoUICriteria(exclusion, invalidCriteria).subscribe((exclusionQuery) => {
+      this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
         uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
         uiquery.consent = this.hasConsent;
         subject.next(this.rePosition(uiquery));
@@ -78,10 +109,8 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private translateSQtoUICriteria(
-    inexclusion: StructuredQueryCriterion[][],
-    invalidCriteria: TerminologyCode[]
+    inexclusion: StructuredQueryCriterion[][]
   ): Observable<Criterion[][]> {
-    const invalidCriteriaSet = this.getInvalidCriteriaSet(invalidCriteria);
     const resultInExclusion: Criterion[][] = [];
     const observableBatch = [];
 
@@ -121,58 +150,54 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
   }
 
-  /**
-   * @todo Work in progress
-   */
-  private getInvalidCriteriaSet(invalidCriteria: TerminologyCode[]): Set<string> {
-    const invalidCriteriaSet: Set<string> = new Set();
-    invalidCriteria.forEach((invalids) => {
-      invalidCriteriaSet.add(JSON.stringify(invalids));
-    });
-    return invalidCriteriaSet;
-  }
-
   private createCriterionFromStructuredQueryCriterion(
     structuredQueryCriterion: StructuredQueryCriterion
   ): Observable<Criterion> {
-    let criterion: Criterion;
+    let criterion: Criterion = new Criterion();
     const subject = new Subject<Criterion>();
     this.createCriterionService
       .createCriterionFromTermCode(
         structuredQueryCriterion.termCodes,
-        structuredQueryCriterion.context
+        structuredQueryCriterion.context,
+        this.invalidCriteriaSet
       )
-      .subscribe((crit) => {
-        criterion = crit;
+      .subscribe((criterionFromTermCode) => {
+        criterion = criterionFromTermCode;
         if (criterion.attributeFilters === undefined) {
           criterion.attributeFilters = [];
         }
-        const structuredQueryAttribute = this.getAttributeFilters(
+        const feasibilityQueryAttribute = this.getAttributeFilters(
           structuredQueryCriterion,
           criterion
         );
         //TODO: outsource this in a separate function:
-        structuredQueryAttribute.forEach((attribute) => {
-          const find = criterion.attributeFilters.find(
-            (attr) => attribute.attributeCode.code === attr.attributeDefinition.attributeCode.code
+        feasibilityQueryAttribute.forEach((attributeFilter) => {
+          const attributeFilterIntersection = criterion.attributeFilters.find(
+            (attributeFilterFinding) =>
+              attributeFilterFinding.attributeCode.code ===
+              attributeFilter.attributeDefinition.attributeCode.code
           );
-          if (find?.type === 'reference') {
-            find.attributeDefinition.selectableConcepts =
-              attribute.attributeDefinition.selectableConcepts;
-            find.attributeDefinition.optional = attribute.attributeDefinition.optional;
+          if (attributeFilterIntersection?.type === 'reference') {
+            attributeFilterIntersection.attributeDefinition.selectableConcepts =
+              attributeFilter.attributeDefinition.selectableConcepts;
+            attributeFilterIntersection.attributeDefinition.optional =
+              attributeFilter.attributeDefinition.optional;
           }
-          if (find?.type === 'concept') {
-            if (attribute.selectedConcepts) {
-              find.selectedConcepts = attribute.selectedConcepts;
+          if (attributeFilterIntersection?.type === 'concept') {
+            if (attributeFilter.selectedConcepts) {
+              attributeFilterIntersection.selectedConcepts = attributeFilter.selectedConcepts;
             }
           }
-          if (find?.type === 'quantity-comparator' || find?.type === 'quantity-range') {
-            find.precision = attribute.precision;
-            find.unit = attribute.unit;
-            find.maxValue = attribute.maxValue;
-            find.minValue = attribute.minValue;
-            find.value = attribute.value;
-            find.comparator = attribute.comparator;
+          if (
+            attributeFilterIntersection?.type === 'quantity-comparator' ||
+            attributeFilterIntersection?.type === 'quantity-range'
+          ) {
+            attributeFilterIntersection.precision = attributeFilter.precision;
+            attributeFilterIntersection.unit = attributeFilter.unit;
+            attributeFilterIntersection.maxValue = attributeFilter.maxValue;
+            attributeFilterIntersection.minValue = attributeFilter.minValue;
+            attributeFilterIntersection.value = attributeFilter.value;
+            attributeFilterIntersection.comparator = attributeFilter.comparator;
           }
         });
 
@@ -224,19 +249,32 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
     if (this.filter.isReference(structuredQueryAttributeFilter.type)) {
       const referenceFilter = structuredQueryAttributeFilter as ReferenceFilter;
-      attributeFilter.attributeCode = referenceFilter.attributeCode;
-      attributeFilter.type = FilterTypes.REFERENCE;
-      referenceFilter.criteria.forEach((refCrit) => {
-        const referenceCriteria = this.createCriterionService.createReferenceCriterionFromTermCode(
-          refCrit.termCodes,
-          refCrit.context
-        );
-        criterion.linkedCriteria.push(referenceCriteria);
-        attributeFilter.attributeDefinition = new AttributeDefinition();
-        attributeFilter.attributeDefinition.selectableConcepts.push(refCrit.termCodes[0]);
-        attributeFilter.attributeDefinition.optional = true;
-      });
+      return this.createReferenceFilter(referenceFilter, criterion);
     }
+    return attributeFilter;
+  }
+
+  /**
+   * todo must be tested again due to anaother refactoring
+   *
+   * @param referenceFilter
+   * @param criterion
+   * @returns
+   */
+  private createReferenceFilter(referenceFilter: ReferenceFilter, criterion: Criterion) {
+    const attributeFilter: AttributeFilter = new AttributeFilter();
+    attributeFilter.attributeCode = referenceFilter.attributeCode;
+    attributeFilter.type = FilterTypes.REFERENCE;
+    referenceFilter.criteria.forEach((referenceCriteria) => {
+      const referenceCriterion = this.createCriterionService.createReferenceCriterionFromTermCode(
+        referenceCriteria.termCodes,
+        referenceCriteria.context
+      );
+      criterion.linkedCriteria.push(referenceCriterion);
+      attributeFilter.attributeDefinition = new AttributeDefinition();
+      attributeFilter.attributeDefinition.selectableConcepts.push(referenceCriteria.termCodes[0]);
+      attributeFilter.attributeDefinition.optional = true;
+    });
     return attributeFilter;
   }
 
