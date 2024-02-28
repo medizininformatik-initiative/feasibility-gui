@@ -12,6 +12,7 @@ import { QueryResultRateLimit } from 'src/app/model/result/QueryResultRateLimit'
 import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
+import { StructuredQueryTemplate } from 'src/app/model/StructuredQuery/StructuredQueryTemplate';
 
 @Injectable({
   providedIn: 'root',
@@ -235,7 +236,7 @@ export class BackendService {
     }
   }
 
-  public validateStructuredQuery(structuredQuery: StructuredQuery): Observable<StructuredQuery> {
+  public validateStructuredQuery(structuredQuery: StructuredQuery): Observable<any> {
     const headers = this.headers;
     const requestBody = structuredQuery;
     const url = BackendService.PATH_RUN_QUERY + '/validate2';
@@ -252,15 +253,18 @@ export class BackendService {
     );
   }
 
-  public loadSavedTemplates(validate?: boolean): Observable<any> {
+  public loadSavedTemplates(validate?: boolean): Observable<StructuredQueryTemplate[]> {
     if (this.feature.mockLoadnSave()) {
       return of(this.queryProviderService.loadQueries());
     } else {
       const headers = this.headers;
       const url = validate ? '/validate' : '';
-      return this.http.get<Array<any>>(this.createUrl(BackendService.PATH_STORED_QUERY + url), {
-        headers,
-      });
+      return this.http.get<Array<StructuredQueryTemplate>>(
+        this.createUrl(BackendService.PATH_STORED_QUERY + url),
+        {
+          headers,
+        }
+      );
     }
   }
 
