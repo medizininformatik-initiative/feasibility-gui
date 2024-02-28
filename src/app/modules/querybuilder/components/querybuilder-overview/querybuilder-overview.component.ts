@@ -1,5 +1,4 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { BackendService } from '../../service/backend.service';
 import { FeatureProviderService } from '../../service/feature-provider.service';
 import { IAppConfig } from '../../../../config/app-config.model';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
@@ -9,7 +8,6 @@ import { StructuredQuery } from '../../../../model/StructuredQuery/StructuredQue
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/StructuredQuery2UIQueryTranslator.service';
 import { Subscription } from 'rxjs';
 import { TerminologyCode } from '../../../../model/terminology/Terminology';
-import { ValidationService } from 'src/app/service/Validation.service';
 
 @Component({
   selector: 'num-querybuilder-overview',
@@ -25,11 +23,9 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
   constructor(
     public queryProviderService: QueryProviderService,
     private router: Router,
-    private backend: BackendService,
     public featureProviderService: FeatureProviderService,
     private changeDetector: ChangeDetectorRef,
-    private apiTranslator: StructuredQuery2UIQueryTranslatorService,
-    private validationService: ValidationService
+    private apiTranslator: StructuredQuery2UIQueryTranslatorService
   ) {}
 
   private savedQueriesSubscription: Subscription;
@@ -103,7 +99,6 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
   }
 
   createDefaultQuery(query) {
-    this.validationService.validateStructuredQuery(query);
     this.apiTranslator
       .translateImportedSQtoUIQuery(QueryProviderService.createDefaultQuery(), query)
       .subscribe((translatedQuery) => {
@@ -115,21 +110,5 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
   storeQueryAndNavigate() {
     this.queryProviderService.store(this.query);
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
-  }
-
-  /**
-   * @todo set isInvalid attribute of criterion based on request response
-   */
-  doValidate(): void {
-    this.savedTemplatesSubscription = this.backend.loadSavedTemplates(true).subscribe((queries) => {
-      queries.forEach((template) => {
-        if (template.invalidTerms.length > 0) {
-          template.isValid = false;
-        } else {
-          template.isValid = true;
-        }
-        this.savedTemplates.push(template);
-      });
-    });
   }
 }
