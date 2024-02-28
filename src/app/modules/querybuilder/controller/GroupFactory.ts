@@ -1,4 +1,3 @@
-//import { Query } from '../model/api/query/query';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import {
   Group,
