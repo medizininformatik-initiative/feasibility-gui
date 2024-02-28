@@ -11,6 +11,7 @@ import { QueryResult } from '../model/api/result/QueryResult';
 import { QueryResultRateLimit } from 'src/app/model/result/QueryResultRateLimit';
 import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
+import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 
 @Injectable({
   providedIn: 'root',
@@ -232,6 +233,19 @@ export class BackendService {
         }
       }
     }
+  }
+
+  public validateStructuredQuery(structuredQuery: StructuredQuery) {
+    const headers = this.headers;
+    const requestBody = structuredQuery;
+    const url = '/validate2';
+    return this.http.post<Array<any>>(
+      this.createUrl(BackendService.PATH_STORED_QUERY + url),
+      requestBody,
+      {
+        headers,
+      }
+    );
   }
 
   public loadSavedQueries(): Observable<any> {
