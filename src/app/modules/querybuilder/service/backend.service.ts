@@ -12,7 +12,7 @@ import { QueryResultRateLimit } from 'src/app/model/result/QueryResultRateLimit'
 import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
-import { StructuredQueryTemplate } from 'src/app/model/StructuredQuery/StructuredQueryTemplate';
+import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
 
 @Injectable({
   providedIn: 'root',
