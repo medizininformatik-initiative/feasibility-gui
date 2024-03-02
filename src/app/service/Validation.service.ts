@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
-import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
-import { Query } from '../model/FeasibilityQuery/Query';
 import { BackendService } from '../modules/querybuilder/service/backend.service';
-import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
-import { TerminologyCode } from '../model/terminology/Terminology';
+import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
+import { TerminologyCode } from '../model/terminology/Terminology';
 
 @Injectable({
   providedIn: 'root',
