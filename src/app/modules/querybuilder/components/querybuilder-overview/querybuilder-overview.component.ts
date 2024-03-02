@@ -1,22 +1,17 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FeatureProviderService } from '../../service/feature-provider.service';
-import { IAppConfig } from '../../../../config/app-config.model';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import { QueryProviderService } from '../../service/query-provider.service';
 import { Router } from '@angular/router';
 import { StructuredQuery } from '../../../../model/StructuredQuery/StructuredQuery';
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/StructuredQuery2UIQueryTranslator.service';
-import { Subscription } from 'rxjs';
-import { TerminologyCode } from '../../../../model/terminology/Terminology';
 
 @Component({
   selector: 'num-querybuilder-overview',
   templateUrl: './querybuilder-overview.component.html',
   styleUrls: ['./querybuilder-overview.component.scss'],
 })
-export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterViewChecked {
-  private features: IAppConfig;
-  queryVersion: string;
+export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
   importQuery: StructuredQuery;
   actionDisabled: boolean;
 
@@ -28,49 +23,12 @@ export class QuerybuilderOverviewComponent implements OnInit, OnDestroy, AfterVi
     private apiTranslator: StructuredQuery2UIQueryTranslatorService
   ) {}
 
-  private savedQueriesSubscription: Subscription;
-  private savedTemplatesSubscription: Subscription;
-  private singleQuerySubscription: Subscription;
-  private singleTemplateSubscription: Subscription;
-
   query: Query;
-  title = '';
-  comment = '';
-
-  savedQueries: Array<{
-    id: number
-    label: string
-    created_at: Date
-  }> = [];
-
-  savedTemplates: Array<{
-    id?: number
-    content?: Query
-    label: string
-    comment: string
-    lastModified: Date
-    createdBy?: string
-    isValid?: boolean
-    invalidTerms?: Array<TerminologyCode>
-  }> = [];
 
   fileName: string;
 
   ngOnInit(): void {
     this.query = this.queryProviderService.query();
-    this.savedQueriesSubscription?.unsubscribe();
-    this.savedTemplatesSubscription?.unsubscribe();
-    this.singleQuerySubscription?.unsubscribe();
-    this.singleTemplateSubscription?.unsubscribe();
-    this.features = this.featureProviderService.getFeatures();
-    this.queryVersion = this.features.queryVersion;
-  }
-
-  ngOnDestroy(): void {
-    this.singleTemplateSubscription?.unsubscribe();
-    this.savedQueriesSubscription?.unsubscribe();
-    this.savedTemplatesSubscription?.unsubscribe();
-    this.singleQuerySubscription?.unsubscribe();
   }
 
   ngAfterViewChecked(): void {
