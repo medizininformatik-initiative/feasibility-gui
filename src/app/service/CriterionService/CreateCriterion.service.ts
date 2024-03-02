@@ -5,7 +5,7 @@ import { CritGroupPosition } from '../../modules/querybuilder/controller/CritGro
 import { FeatureService } from '../Feature.service';
 import { Injectable } from '@angular/core';
 import { LoadUIProfileService } from '../LoadUIProfile.service';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { TerminologyCode, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { TimeRestriction } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { UIProfile } from 'src/app/model/terminology/UIProfile';
@@ -40,6 +40,9 @@ export class CreateCriterionService {
     criterion.isInvalid = invalidCriteriaSet.has(JSON.stringify(criterion.termCodes[0]));
     criterion.uniqueID = uuidv4();
     criterion.position = new CritGroupPosition();
+    console.log('Invlaid Set');
+    console.log(invalidCriteriaSet);
+    console.log(criterion);
     if (!criterion.isInvalid) {
       criterion.context = context;
       this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
