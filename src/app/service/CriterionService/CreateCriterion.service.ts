@@ -40,9 +40,6 @@ export class CreateCriterionService {
     criterion.isInvalid = invalidCriteriaSet.has(JSON.stringify(criterion.termCodes[0]));
     criterion.uniqueID = uuidv4();
     criterion.position = new CritGroupPosition();
-    console.log('Invlaid Set');
-    console.log(invalidCriteriaSet);
-    console.log(criterion);
     if (!criterion.isInvalid) {
       criterion.context = context;
       this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
