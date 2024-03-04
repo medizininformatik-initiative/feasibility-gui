@@ -1,8 +1,15 @@
 import { AbstractInquiry } from '../AbstractInquiry';
-import { StructuredQuery } from '../../StructuredQuery/StructuredQuery';
-import { TerminologyCode } from '../../terminology/Terminology';
 
 export class UISavedQuery extends AbstractInquiry {
   isValid = true;
   totalNumberOfPatients: number;
+
+  constructor(abstractInquiry: AbstractInquiry) {
+    super(abstractInquiry);
+  }
+
+  public setAttributes(isValid: boolean = true, totalNumberOfPatients: number) {
+    this.isValid = isValid;
+    this.totalNumberOfPatients = totalNumberOfPatients;
+  }
 }

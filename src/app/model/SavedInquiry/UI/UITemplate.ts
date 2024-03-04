@@ -1,8 +1,15 @@
 import { AbstractInquiry } from '../AbstractInquiry';
-import { StructuredQuery } from '../../StructuredQuery/StructuredQuery';
-import { TerminologyCode } from '../../terminology/Terminology';
 
 export class UITemplate extends AbstractInquiry {
   createdBy: string;
   isValid = true;
+
+  constructor(abstractInquiry: AbstractInquiry) {
+    super(abstractInquiry);
+  }
+
+  public setAttributes(isValid: boolean = true, createdBy: string) {
+    this.isValid = isValid;
+    this.createdBy = createdBy;
+  }
 }

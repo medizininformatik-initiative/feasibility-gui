@@ -1,6 +1,6 @@
 import { BackendService } from '../modules/querybuilder/service/backend.service';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { StructuredQuerySavedQuery } from '../model/SavedInquiry/StructuredQuery/StructuredQuerySavedQuery';
 import { StructuredQueryTemplate } from '../model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
 import { TerminologyCode } from '../model/terminology/Terminology';
@@ -14,76 +14,75 @@ export class StructuredQueryTemplate2UITemplateTranslatorService {
   constructor(private backend: BackendService) {}
 
   public getStructuredQueryTemplates(): Observable<UITemplate[]> {
-    const uiTemplates: UITemplate[] = new Array<UITemplate>();
-    this.backend.loadSavedTemplates(true).subscribe((structuredQueryTemplates) => {
-      const sortedStructuredQueryTemplates =
-        this.sortStructuredQueryTemplatesByDescendingId(structuredQueryTemplates);
-      sortedStructuredQueryTemplates.forEach((structuredQueryTemplate) => {
-        const translatedUITemplate =
-          this.setFeasibilityQueryTemplateAttributes(structuredQueryTemplate);
-        uiTemplates.push(translatedUITemplate);
-      });
-    });
-    return of(uiTemplates);
+    return this.backend
+      .loadSavedTemplates(true)
+      .pipe(
+        map((structuredQueryTemplates: StructuredQueryTemplate[]) =>
+          this.translateStructuredQueryTemplates(structuredQueryTemplates)
+        )
+      );
+  }
+
+  private translateStructuredQueryTemplates(
+    structuredQueryTemplates: StructuredQueryTemplate[]
+  ): UITemplate[] {
+    const sortedTemplates = this.sortTemplatesByDescendingId(structuredQueryTemplates);
+    return sortedTemplates.map((structuredQueryTemplate) =>
+      this.setFeasibilityQueryTemplateAttributes(structuredQueryTemplate)
+    );
   }
 
   private setFeasibilityQueryTemplateAttributes(
     structuredQueryTemplate: StructuredQueryTemplate
   ): UITemplate {
-    const uiTemplate = new UITemplate();
-    uiTemplate.comment = structuredQueryTemplate.comment;
-    uiTemplate.content = structuredQueryTemplate.content;
-    uiTemplate.createdBy = structuredQueryTemplate.createdBy;
-    uiTemplate.id = structuredQueryTemplate.id;
-    uiTemplate.invalidTerms = structuredQueryTemplate.invalidTerms;
-    uiTemplate.label = structuredQueryTemplate.label;
-    uiTemplate.lastModified = structuredQueryTemplate.lastModified;
-    uiTemplate.isValid = this.setValidAttribute(structuredQueryTemplate.invalidTerms);
+    const uiTemplate: UITemplate = new UITemplate(structuredQueryTemplate);
+    const isValid: boolean = this.setValidAttribute(structuredQueryTemplate.invalidTerms);
+    uiTemplate.setAttributes(isValid, structuredQueryTemplate.createdBy);
     return uiTemplate;
   }
 
-  private sortStructuredQueryTemplatesByDescendingId(
-    structuredQueryTemplates: StructuredQueryTemplate[]
-  ): StructuredQueryTemplate[] {
-    return structuredQueryTemplates.sort((a, b) => a.id - b.id);
-  }
-
-  private setValidAttribute(invalidTerms: Array<TerminologyCode>): boolean {
-    return invalidTerms.length > 0 ? false : true;
-  }
-
-  public getSavedStructuredQuerySavedQueries() {
-    const uiSavedQueries: UISavedQuery[] = new Array<UISavedQuery>();
-    this.backend.loadSavedQueries().subscribe((structuredQuerySavedQueries) => {
-      const sortedStructuredQuerySavedQueries = this.sortStructuredQuerySavedQueriesByDescendingId(
-        structuredQuerySavedQueries
+  public getSavedStructuredQuerySavedQueries(): Observable<UISavedQuery[]> {
+    return this.backend
+      .loadSavedQueries()
+      .pipe(
+        map((structuredQuerySavedQueries: StructuredQuerySavedQuery[]) =>
+          this.translateStructuredQuerySavedQueries(structuredQuerySavedQueries)
+        )
       );
-      sortedStructuredQuerySavedQueries.forEach((structuredQuerySavedQuery) => {
-        const uiSavedQuery = this.setUISavedQueryAttributes(structuredQuerySavedQuery);
-        uiSavedQueries.push(uiSavedQuery);
-      });
-    });
-    return of(uiSavedQueries);
+  }
+
+  private translateStructuredQuerySavedQueries(
+    structuredQuerySavedQueries: StructuredQuerySavedQuery[]
+  ): UISavedQuery[] {
+    const sortedQueries = this.sortSavedQueriesByDescendingId(structuredQuerySavedQueries);
+    return sortedQueries.map((structuredQuerySavedQuery) =>
+      this.setUISavedQueryAttributes(structuredQuerySavedQuery)
+    );
   }
 
   private setUISavedQueryAttributes(
     structuredQuerySavedQuery: StructuredQuerySavedQuery
   ): UISavedQuery {
-    const uiSavedQuery = new UISavedQuery();
-    uiSavedQuery.comment = structuredQuerySavedQuery.comment;
-    uiSavedQuery.content = structuredQuerySavedQuery.content;
-    //uiSavedQuery.createdBy       = structuredQueryTemplate.createdBy;
-    uiSavedQuery.id = structuredQuerySavedQuery.id;
-    uiSavedQuery.invalidTerms = structuredQuerySavedQuery.invalidTerms;
-    uiSavedQuery.label = structuredQuerySavedQuery.label;
-    uiSavedQuery.lastModified = structuredQuerySavedQuery.lastModified;
-    uiSavedQuery.isValid = this.setValidAttribute(structuredQuerySavedQuery.invalidTerms);
+    const uiSavedQuery: UISavedQuery = new UISavedQuery(structuredQuerySavedQuery);
+    const isValid: boolean = this.setValidAttribute(structuredQuerySavedQuery.invalidTerms);
+    const totalNumberOfPatients: number = structuredQuerySavedQuery.totalNumberOfPatients;
+    uiSavedQuery.setAttributes(isValid, totalNumberOfPatients);
     return uiSavedQuery;
   }
 
-  private sortStructuredQuerySavedQueriesByDescendingId(
+  private sortTemplatesByDescendingId(
+    structuredQueryTemplates: StructuredQueryTemplate[]
+  ): StructuredQueryTemplate[] {
+    return structuredQueryTemplates.sort((a, b) => a.id - b.id);
+  }
+
+  private sortSavedQueriesByDescendingId(
     structuredQuerySavedQueries: StructuredQuerySavedQuery[]
   ): StructuredQuerySavedQuery[] {
     return structuredQuerySavedQueries.sort((a, b) => a.id - b.id);
+  }
+
+  private setValidAttribute(invalidTerms: Array<TerminologyCode> = []): boolean {
+    return invalidTerms.length > 0 ? false : true;
   }
 }
