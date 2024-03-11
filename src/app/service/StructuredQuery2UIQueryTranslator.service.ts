@@ -15,11 +15,11 @@ import { Query } from '../model/FeasibilityQuery/Query';
 import { ReferenceFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ReferenceFilter/ReferenceFilter';
 import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
 import { StructuredQueryCriterion } from '../model/StructuredQuery/Criterion/StructuredQueryCriterion';
-import { StructuredQueryTemplate } from '../model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
 import { TerminologyCode } from '../model/terminology/Terminology';
 import { TimeRestriction, TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
 import { ValidationService } from './Validation.service';
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { StructuredQueryTemplate } from '../model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
 
 @Injectable({
   providedIn: 'root',
