@@ -97,16 +97,17 @@ export class StructuredQuery2UIQueryTranslatorService {
     const exclusion = structuredQueryTemplate.content.exclusionCriteria
       ? structuredQueryTemplate.content.exclusionCriteria
       : [];
-    this.getInvalidCriteriaSet(structuredQueryTemplate.content).subscribe(() => {
-      this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
-        uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
-        //TODO: find a better way for joining in- and exclusion instead of nested subscription
-        this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
-          uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
-          uiquery.consent = this.hasConsent;
-          subject.next(this.rePosition(uiquery));
-          subject.complete();
-        });
+    this.invalidCriteriaSet = this.createSetOfInvalidTerminologyCodes(
+      structuredQueryTemplate.invalidTerms
+    );
+    this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
+      uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
+      //TODO: find a better way for joining in- and exclusion instead of nested subscription
+      this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
+        uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
+        uiquery.consent = this.hasConsent;
+        subject.next(this.rePosition(uiquery));
+        subject.complete();
       });
     });
     return subject.asObservable();
