@@ -236,10 +236,10 @@ export class BackendService {
     }
   }
 
-  public validateStructuredQuery(structuredQuery: StructuredQuery): Observable<any> {
+  public validateStructuredQueryBackend(structuredQuery: StructuredQuery): Observable<any> {
     const headers = this.headers;
     const requestBody = structuredQuery;
-    const url = BackendService.PATH_RUN_QUERY + '/validate2';
+    const url = BackendService.PATH_RUN_QUERY + '/validate';
     return this.http.post<any>(this.createUrl(url), requestBody, { headers });
   }
 
@@ -258,7 +258,7 @@ export class BackendService {
       return of(this.queryProviderService.loadQueries());
     } else {
       const headers = this.headers;
-      const url = validate ? '/validate' : '';
+      const url = validate === false ? '?skipValidation=true' : '';
       return this.http.get<Array<StructuredQueryTemplate>>(
         this.createUrl(BackendService.PATH_STORED_QUERY + url),
         {

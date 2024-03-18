@@ -13,9 +13,13 @@ export class ValidationService {
   public validateStructuredQuery(structuredQuery: StructuredQuery): Observable<TerminologyCode[]> {
     const terminologyCodeArraySubject = new Subject<TerminologyCode[]>();
     this.backendService
-      .validateStructuredQuery(structuredQuery)
+      .validateStructuredQueryBackend(structuredQuery)
       .subscribe((validatedResponseWrapper) => {
-        terminologyCodeArraySubject.next(validatedResponseWrapper.invalidTerms);
+        if (validatedResponseWrapper?.invalidTerms) {
+          terminologyCodeArraySubject.next(validatedResponseWrapper.invalidTerms);
+        } else {
+          terminologyCodeArraySubject.next([]);
+        }
         terminologyCodeArraySubject.complete();
       });
     return terminologyCodeArraySubject.asObservable();
