@@ -36,7 +36,6 @@ export class CreateCriterionService {
     const hash = this.criterionHashService.createHash(context, termCodes[0]);
     criterion.criterionHash = hash;
     criterion.display = termCodes[0].display;
-    criterion.termCodes = this.copyTermCodes(termCodes);
     criterion.isInvalid = invalidCriteriaSet.has(JSON.stringify(criterion.termCodes[0]));
     criterion.uniqueID = uuidv4();
     criterion.position = new CritGroupPosition();
@@ -44,6 +43,7 @@ export class CreateCriterionService {
       criterion.context = context;
       this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
         Object.assign(criterion, critFromProfile);
+        criterion.termCodes = this.copyTermCodes(termCodes);
         subject.next(criterion);
       });
     } else {

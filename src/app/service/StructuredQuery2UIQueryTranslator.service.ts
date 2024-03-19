@@ -9,7 +9,7 @@ import { CreateCriterionService } from './CriterionService/CreateCriterion.servi
 import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
 import { FilterTypes } from '../model/FilterTypes';
 import { FilterTypesService } from './FilterTypes.service';
-import { forkJoin, Observable, of, Subject, switchMap } from 'rxjs';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Query } from '../model/FeasibilityQuery/Query';
 import { ReferenceFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ReferenceFilter/ReferenceFilter';
@@ -158,7 +158,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   private createCriterionFromStructuredQueryCriterion(
     structuredQueryCriterion: StructuredQueryCriterion
   ): Observable<Criterion> {
-    let criterionFromTermCode: Criterion = new Criterion();
+    let criterion: Criterion;
     const subject = new Subject<Criterion>();
     this.createCriterionService
       .createCriterionFromTermCode(
@@ -166,95 +166,51 @@ export class StructuredQuery2UIQueryTranslatorService {
         structuredQueryCriterion.context,
         this.invalidCriteriaSet
       )
-      .subscribe((criterionCreatedFromTermCode) => {
-        criterionFromTermCode = criterionCreatedFromTermCode;
-        if (criterionFromTermCode.attributeFilters === undefined) {
-          criterionFromTermCode.attributeFilters = [];
-        } else {
-          const translatedAttributeFilters =
-            this.translateAttributeFiltersFromStructuredQueryCriterion(
-              structuredQueryCriterion,
-              criterionFromTermCode
-            );
-          criterionFromTermCode.attributeFilters = this.setAttributeFilters(
-            translatedAttributeFilters,
-            criterionFromTermCode
-          ).concat();
+      .subscribe((crit) => {
+        criterion = crit;
+        if (criterion.attributeFilters === undefined) {
+          criterion.attributeFilters = [];
         }
-        criterionFromTermCode.timeRestriction = this.addTimeRestriction(
+        const structuredQueryAttribute = this.getAttributeFilters(
+          structuredQueryCriterion,
+          criterion
+        );
+        //TODO: outsource this in a separate function:
+        structuredQueryAttribute.forEach((attribute) => {
+          const find = criterion.attributeFilters.find(
+            (attr) => attribute.attributeCode.code === attr.attributeDefinition.attributeCode.code
+          );
+          if (find?.type === 'reference') {
+            find.attributeDefinition.selectableConcepts =
+              attribute.attributeDefinition.selectableConcepts;
+            find.attributeDefinition.optional = attribute.attributeDefinition.optional;
+          }
+          if (find?.type === 'concept') {
+            if (attribute.selectedConcepts) {
+              find.selectedConcepts = attribute.selectedConcepts;
+            }
+          }
+          if (find?.type === 'quantity-comparator' || find?.type === 'quantity-range') {
+            find.precision = attribute.precision;
+            find.unit = attribute.unit;
+            find.maxValue = attribute.maxValue;
+            find.minValue = attribute.minValue;
+            find.value = attribute.value;
+            find.comparator = attribute.comparator;
+          }
+        });
+
+        criterion.timeRestriction = this.addTimeRestriction(
           structuredQueryCriterion.timeRestriction
         );
-        criterionFromTermCode.valueFilters = this.getValueFilters(structuredQueryCriterion);
-        subject.next(criterionFromTermCode);
+        criterion.valueFilters = this.getValueFilters(structuredQueryCriterion);
+        subject.next(criterion);
         subject.complete();
       });
     return subject.asObservable();
   }
 
-  private setAttributeFilters(
-    translatedAttributeFilters: AttributeFilter[],
-    criterionFromTerCode: Criterion
-  ): AttributeFilter[] {
-    const mergedAtrributeFilters: AttributeFilter[] = new Array<AttributeFilter>();
-    translatedAttributeFilters.forEach((translatedAttributeFilter) => {
-      const matchingAttributeFilter =
-        this.findTranslatedAttributeFilterInAttributeFiltersFromTermCode(
-          criterionFromTerCode.attributeFilters,
-          translatedAttributeFilter
-        );
-      if (matchingAttributeFilter !== undefined) {
-        mergedAtrributeFilters.push(
-          this.mergeAttributeFiltersFromTranslationAndTermCode(
-            translatedAttributeFilter,
-            matchingAttributeFilter
-          )
-        );
-      }
-    });
-    return mergedAtrributeFilters;
-  }
-
-  private findTranslatedAttributeFilterInAttributeFiltersFromTermCode(
-    attributeFiltersFromTermcode: AttributeFilter[],
-    translatedAttributeFilter: AttributeFilter
-  ) {
-    const matchingAttributeFilter: AttributeFilter = attributeFiltersFromTermcode.find(
-      (attributeFilterFromTercode) =>
-        attributeFilterFromTercode.attributeCode?.code ===
-        translatedAttributeFilter.attributeDefinition?.attributeCode.code
-    );
-    return matchingAttributeFilter;
-  }
-
-  private mergeAttributeFiltersFromTranslationAndTermCode(
-    translatedAttributeFilter: AttributeFilter,
-    attributeFilterFromTermCode: AttributeFilter
-  ): AttributeFilter {
-    const mergedAttributeFilters: AttributeFilter = new AttributeFilter();
-    const filterType = attributeFilterFromTermCode.type;
-    if (this.filter.isConcept(filterType)) {
-      if (translatedAttributeFilter.selectedConcepts) {
-        mergedAttributeFilters.selectedConcepts = translatedAttributeFilter.selectedConcepts;
-      }
-    }
-    if (this.filter.isReference(filterType)) {
-      mergedAttributeFilters.attributeDefinition.selectableConcepts =
-        translatedAttributeFilter.attributeDefinition.selectableConcepts;
-      mergedAttributeFilters.attributeDefinition.optional =
-        translatedAttributeFilter.attributeDefinition.optional;
-    }
-    if (this.filter.isQuantityComparator(filterType) || this.filter.isQuantityRange(filterType)) {
-      mergedAttributeFilters.precision = translatedAttributeFilter.precision;
-      mergedAttributeFilters.unit = translatedAttributeFilter.unit;
-      mergedAttributeFilters.maxValue = translatedAttributeFilter.maxValue;
-      mergedAttributeFilters.minValue = translatedAttributeFilter.minValue;
-      mergedAttributeFilters.value = translatedAttributeFilter.value;
-      mergedAttributeFilters.comparator = translatedAttributeFilter.comparator;
-    }
-    return mergedAttributeFilters;
-  }
-
-  private translateAttributeFiltersFromStructuredQueryCriterion(
+  private getAttributeFilters(
     structuredCriterion: StructuredQueryCriterion,
     criterion: Criterion
   ): AttributeFilter[] {
@@ -291,32 +247,19 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
     if (this.filter.isReference(structuredQueryAttributeFilter.type)) {
       const referenceFilter = structuredQueryAttributeFilter as ReferenceFilter;
-      return this.createReferenceFilter(referenceFilter, criterion);
+      attributeFilter.attributeCode = referenceFilter.attributeCode;
+      attributeFilter.type = FilterTypes.REFERENCE;
+      referenceFilter.criteria.forEach((refCrit) => {
+        const referenceCriteria = this.createCriterionService.createReferenceCriterionFromTermCode(
+          refCrit.termCodes,
+          refCrit.context
+        );
+        criterion.linkedCriteria.push(referenceCriteria);
+        attributeFilter.attributeDefinition = new AttributeDefinition();
+        attributeFilter.attributeDefinition.selectableConcepts.push(refCrit.termCodes[0]);
+        attributeFilter.attributeDefinition.optional = true;
+      });
     }
-    return attributeFilter;
-  }
-
-  /**
-   * todo must be tested again due to another refactoring
-   *
-   * @param referenceFilter
-   * @param criterion
-   * @returns
-   */
-  private createReferenceFilter(referenceFilter: ReferenceFilter, criterion: Criterion) {
-    const attributeFilter: AttributeFilter = new AttributeFilter();
-    attributeFilter.attributeCode = referenceFilter.attributeCode;
-    attributeFilter.type = FilterTypes.REFERENCE;
-    referenceFilter.criteria.forEach((referenceCriteria) => {
-      const referenceCriterion = this.createCriterionService.createReferenceCriterionFromTermCode(
-        referenceCriteria.termCodes,
-        referenceCriteria.context
-      );
-      criterion.linkedCriteria.push(referenceCriterion);
-      attributeFilter.attributeDefinition = new AttributeDefinition();
-      attributeFilter.attributeDefinition.selectableConcepts.push(referenceCriteria.termCodes[0]);
-      attributeFilter.attributeDefinition.optional = true;
-    });
     return attributeFilter;
   }
 
