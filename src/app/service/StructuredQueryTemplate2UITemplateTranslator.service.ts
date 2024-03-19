@@ -15,7 +15,7 @@ export class StructuredQueryTemplate2UITemplateTranslatorService {
 
   public getStructuredQueryTemplates(): Observable<UITemplate[]> {
     return this.backend
-      .loadSavedTemplates(true)
+      .loadSavedTemplates()
       .pipe(
         map((structuredQueryTemplates: StructuredQueryTemplate[]) =>
           this.translateStructuredQueryTemplates(structuredQueryTemplates)

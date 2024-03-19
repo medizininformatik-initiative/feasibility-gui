@@ -243,10 +243,11 @@ export class BackendService {
     return this.http.post<any>(this.createUrl(url), requestBody, { headers });
   }
 
-  public loadSavedQueries(): Observable<any> {
+  public loadSavedQueries(validate?: boolean): Observable<any> {
     const headers = this.headers;
+    const url = validate === false ? '&skipValidation=true' : '';
     return this.http.get<Array<any>>(
-      this.createUrl(BackendService.PATH_RUN_QUERY, 'filter=saved'),
+      this.createUrl(BackendService.PATH_RUN_QUERY, 'filter=saved' + url),
       {
         headers,
       }
