@@ -1,3 +1,4 @@
+import { AbstractAttributeFilters } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { AbstractStructuredQueryFilters } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/AbstractStructuredQueryFilters';
 import { AbstractTimeRestriction } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/TimeRestriction/AbstractTimeRestriction';
 import { AfterFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/TimeRestriction/AfterFilter';
@@ -23,7 +24,6 @@ import { StructuredQueryCriterion } from '../model/StructuredQuery/Criterion/Str
 import { TerminologyCode } from '../model/terminology/Terminology';
 import { TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { AbstractAttributeFilters } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 
 @Injectable({
   providedIn: 'root',
@@ -345,14 +345,6 @@ export class UIQuery2StructuredQueryTranslatorService {
       terminologyCodes.push(terminologyCode);
     });
     return terminologyCodes;
-  }
-
-  private isInstanceOfAttributeFilter(feasibilityQuerytAttributeFilter) {
-    if (feasibilityQuerytAttributeFilter instanceof AttributeFilter) {
-      return this.assignAttributeCode(
-        feasibilityQuerytAttributeFilter.attributeDefinition.attributeCode
-      );
-    }
   }
 
   private getConsent(): StructuredQueryCriterion[] {

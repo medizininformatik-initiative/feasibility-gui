@@ -11,6 +11,9 @@ import { QueryResult } from '../model/api/result/QueryResult';
 import { QueryResultRateLimit } from 'src/app/model/result/QueryResultRateLimit';
 import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
+import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
+import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
+import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
 
 @Injectable({
   providedIn: 'root',
@@ -234,25 +237,38 @@ export class BackendService {
     }
   }
 
-  public loadSavedQueries(): Observable<any> {
+  public validateStructuredQueryBackend(
+    structuredQuery: StructuredQuery
+  ): Observable<StructuredQueryInquiry> {
     const headers = this.headers;
+    const requestBody = structuredQuery;
+    const url = BackendService.PATH_RUN_QUERY + '/validate';
+    return this.http.post<StructuredQueryInquiry>(this.createUrl(url), requestBody, { headers });
+  }
+
+  public loadSavedQueries(validate?: boolean): Observable<any> {
+    const headers = this.headers;
+    const url = validate === false ? '&skipValidation=true' : '';
     return this.http.get<Array<any>>(
-      this.createUrl(BackendService.PATH_RUN_QUERY, 'filter=saved'),
+      this.createUrl(BackendService.PATH_RUN_QUERY, 'filter=saved' + url),
       {
         headers,
       }
     );
   }
 
-  public loadSavedTemplates(validate?: boolean): Observable<any> {
+  public loadSavedTemplates(validate?: boolean): Observable<StructuredQueryTemplate[]> {
     if (this.feature.mockLoadnSave()) {
       return of(this.queryProviderService.loadQueries());
     } else {
       const headers = this.headers;
-      const url = validate ? '/validate' : '';
-      return this.http.get<Array<any>>(this.createUrl(BackendService.PATH_STORED_QUERY + url), {
-        headers,
-      });
+      const url = validate === false ? '?skipValidation=true' : '';
+      return this.http.get<Array<StructuredQueryTemplate>>(
+        this.createUrl(BackendService.PATH_STORED_QUERY + url),
+        {
+          headers,
+        }
+      );
     }
   }
 
@@ -264,10 +280,10 @@ export class BackendService {
     });
   }
 
-  public loadQuery(id: number): Observable<any> {
+  public loadStructuredQuery(id: number): Observable<StructuredQueryInquiry> {
     const headers = this.headers;
     const url = this.createUrl(BackendService.PATH_RUN_QUERY + '/' + id.toString());
-    return this.http.get<any>(url, {
+    return this.http.get<StructuredQueryInquiry>(url, {
       headers,
     });
   }
@@ -282,7 +298,7 @@ export class BackendService {
     });
   }
 
-  getSavedQuerySlotCount(): Observable<any> {
+  public getSavedQuerySlotCount(): Observable<any> {
     const headers = this.headers;
     const url = this.createUrl(
       BackendService.PATH_RUN_QUERY + '/' + BackendService.PATH_SAVED_QUERY_SLOTS
@@ -290,14 +306,6 @@ export class BackendService {
     return this.http.get(url, {
       headers,
     });
-  }
-
-  public loadTemplate(id: number): Observable<any> {
-    const headers = this.headers;
-    return this.http.get<any>(
-      this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
-      { headers }
-    );
   }
 
   public updateTemplate(id: number, updatedObject: object): Observable<any> {

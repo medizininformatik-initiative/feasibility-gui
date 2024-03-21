@@ -41,6 +41,9 @@ export class OAuthInterceptor implements HttpInterceptor {
             this.oauthService.logOut();
           }
         }
+        if (error.status === 404) {
+          this.handleErrorCodes(error.status);
+        }
         if (error.error.issues[0]) {
           this.handleErrorCodes(error.error.issues[0].code, error.headers.get('Retry-After'));
         } else {

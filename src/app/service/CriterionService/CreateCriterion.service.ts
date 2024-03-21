@@ -5,7 +5,7 @@ import { CritGroupPosition } from '../../modules/querybuilder/controller/CritGro
 import { FeatureService } from '../Feature.service';
 import { Injectable } from '@angular/core';
 import { LoadUIProfileService } from '../LoadUIProfile.service';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { TerminologyCode, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { TimeRestriction } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { UIProfile } from 'src/app/model/terminology/UIProfile';
@@ -28,18 +28,19 @@ export class CreateCriterionService {
 
   public createCriterionFromTermCode(
     termCodes: TerminologyCode[],
-    context: TerminologyCode
+    context: TerminologyCode,
+    invalidCriteriaSet: Set<string>
   ): Observable<Criterion> {
     const criterion: Criterion = new Criterion();
+    const subject = new Subject<Criterion>();
     const hash = this.criterionHashService.createHash(context, termCodes[0]);
     criterion.criterionHash = hash;
     criterion.display = termCodes[0].display;
+    criterion.termCodes = this.copyTermCodes(termCodes);
+    criterion.isInvalid = invalidCriteriaSet.has(JSON.stringify(criterion.termCodes[0]));
     criterion.uniqueID = uuidv4();
     criterion.position = new CritGroupPosition();
-    const subject = new Subject<Criterion>();
-
-    if (context) {
-      criterion.isInvalid = false;
+    if (!criterion.isInvalid) {
       criterion.context = context;
       this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
         Object.assign(criterion, critFromProfile);
@@ -47,7 +48,6 @@ export class CreateCriterionService {
         subject.next(criterion);
       });
     } else {
-      criterion.isInvalid = true;
       setTimeout(() => {
         subject.next(criterion);
       }, 10);
@@ -62,7 +62,6 @@ export class CreateCriterionService {
   ): Criterion {
     const criterion: Criterion = new Criterion();
     const hash = this.criterionHashService.createHash(context, termCodes[0]);
-
     criterion.context = context;
     criterion.criterionHash = hash;
     criterion.display = termCodes[0].display;

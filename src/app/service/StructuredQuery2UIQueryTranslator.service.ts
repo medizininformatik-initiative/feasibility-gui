@@ -15,52 +15,90 @@ import { Query } from '../model/FeasibilityQuery/Query';
 import { ReferenceFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ReferenceFilter/ReferenceFilter';
 import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
 import { StructuredQueryCriterion } from '../model/StructuredQuery/Criterion/StructuredQueryCriterion';
-import { StructuredQueryTemplate } from '../model/StructuredQuery/StructuredQueryTemplate';
 import { TerminologyCode } from '../model/terminology/Terminology';
 import { TimeRestriction, TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
+import { ValidationService } from './Validation.service';
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { QueryProviderService } from '../modules/querybuilder/service/query-provider.service';
+import { StructuredQueryInquiry } from '../model/SavedInquiry/StructuredQueryInquiry';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2UIQueryTranslatorService {
   hasConsent = false;
+  private invalidCriteriaSet: Set<string> = new Set();
 
   constructor(
     private filter: FilterTypesService,
+    private validationService: ValidationService,
     private createCriterionService: CreateCriterionService
   ) {}
-  public translateImportedSQtoUIQuery(uiquery: Query, sqquery: StructuredQuery): Observable<Query> {
-    this.hasConsent = false;
-    const invalidCriteria = [];
-    const subject = new Subject<Query>();
-    const inclusion = sqquery.inclusionCriteria ? sqquery.inclusionCriteria : [];
-    const exclusion = sqquery.exclusionCriteria ? sqquery.exclusionCriteria : [];
-    this.translateSQtoUICriteria(inclusion, invalidCriteria).subscribe((inclusionQuery) => {
-      uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
 
-      //TODO: find a better way for joining in- and exclusion instead of nested subscription
-      this.translateSQtoUICriteria(exclusion, invalidCriteria).subscribe((exclusionQuery) => {
-        uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
-        uiquery.consent = this.hasConsent;
-        subject.next(this.rePosition(uiquery));
-        subject.complete();
+  /**
+   * @todo we dont need uiquery as a parameter, needs to be create with queryprovdierservice inside this service
+   * @param uiquery
+   * @param sqquery
+   * @returns
+   */
+  public translateImportedSQtoUIQuery(
+    uiquery: Query,
+    structuredQuery: StructuredQuery
+  ): Observable<Query> {
+    this.hasConsent = false;
+    const subject = new Subject<Query>();
+    const inclusion = structuredQuery.inclusionCriteria ? structuredQuery.inclusionCriteria : [];
+    const exclusion = structuredQuery.exclusionCriteria ? structuredQuery.exclusionCriteria : [];
+    this.getInvalidCriteriaSet(structuredQuery).subscribe(() => {
+      this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
+        uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
+        //TODO: find a better way for joining in- and exclusion instead of nested subscription
+        this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
+          uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
+          uiquery.consent = this.hasConsent;
+          subject.next(this.rePosition(uiquery));
+          subject.complete();
+        });
       });
     });
     return subject.asObservable();
   }
 
-  public translateSQtoUIQuery(uiquery: Query, sqquery: StructuredQueryTemplate): Observable<Query> {
-    this.hasConsent = false;
-    const invalidCriteria = sqquery.invalidTerms;
-    const subject = new Subject<Query>();
-    const inclusion = sqquery.content.inclusionCriteria ? sqquery.content.inclusionCriteria : [];
-    const exclusion = sqquery.content.exclusionCriteria ? sqquery.content.exclusionCriteria : [];
-    this.translateSQtoUICriteria(inclusion, invalidCriteria).subscribe((inclusionQuery) => {
-      uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
+  private getInvalidCriteriaSet(structuredQuery: StructuredQuery): Observable<Set<string>> {
+    const invalidCriteriaSetSubject = new Subject<Set<string>>();
+    this.validationService.validateStructuredQuery(structuredQuery).subscribe((invalidCriteria) => {
+      this.invalidCriteriaSet = this.createSetOfInvalidCriteria(invalidCriteria);
+      invalidCriteriaSetSubject.next(this.invalidCriteriaSet);
+      invalidCriteriaSetSubject.complete();
+    });
+    return invalidCriteriaSetSubject.asObservable();
+  }
 
+  private createSetOfInvalidCriteria(invalidCriteria: StructuredQueryCriterion[]): Set<string> {
+    const invalidCriteriaSet = new Set<string>();
+    invalidCriteria.forEach((invalidCriterion) => {
+      invalidCriteriaSet.add(JSON.stringify(invalidCriterion.termCodes[0]));
+    });
+    return invalidCriteriaSet;
+  }
+
+  public translateSQtoUIQuery(structuredQueryInquiry: StructuredQueryInquiry): Observable<Query> {
+    const uiquery: Query = QueryProviderService.createDefaultQuery();
+    this.hasConsent = false;
+    const subject = new Subject<Query>();
+    const inclusion = structuredQueryInquiry.content.inclusionCriteria
+      ? structuredQueryInquiry.content.inclusionCriteria
+      : [];
+    const exclusion = structuredQueryInquiry.content.exclusionCriteria
+      ? structuredQueryInquiry.content.exclusionCriteria
+      : [];
+    this.invalidCriteriaSet = this.createSetOfInvalidCriteria(
+      structuredQueryInquiry.invalidCriteria
+    );
+    this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
+      uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
       //TODO: find a better way for joining in- and exclusion instead of nested subscription
-      this.translateSQtoUICriteria(exclusion, invalidCriteria).subscribe((exclusionQuery) => {
+      this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
         uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
         uiquery.consent = this.hasConsent;
         subject.next(this.rePosition(uiquery));
@@ -71,10 +109,8 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private translateSQtoUICriteria(
-    inexclusion: StructuredQueryCriterion[][],
-    invalidCriteria: TerminologyCode[]
+    inexclusion: StructuredQueryCriterion[][]
   ): Observable<Criterion[][]> {
-    const invalidCriteriaSet = this.getInvalidCriteriaSet(invalidCriteria);
     const resultInExclusion: Criterion[][] = [];
     const observableBatch = [];
 
@@ -114,17 +150,6 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
   }
 
-  /**
-   * @todo Work in progress
-   */
-  private getInvalidCriteriaSet(invalidCriteria: TerminologyCode[]): Set<string> {
-    const invalidCriteriaSet: Set<string> = new Set();
-    invalidCriteria.forEach((invalids) => {
-      invalidCriteriaSet.add(JSON.stringify(invalids));
-    });
-    return invalidCriteriaSet;
-  }
-
   private createCriterionFromStructuredQueryCriterion(
     structuredQueryCriterion: StructuredQueryCriterion
   ): Observable<Criterion> {
@@ -133,7 +158,8 @@ export class StructuredQuery2UIQueryTranslatorService {
     this.createCriterionService
       .createCriterionFromTermCode(
         structuredQueryCriterion.termCodes,
-        structuredQueryCriterion.context
+        structuredQueryCriterion.context,
+        this.invalidCriteriaSet
       )
       .subscribe((crit) => {
         criterion = crit;
@@ -176,7 +202,6 @@ export class StructuredQuery2UIQueryTranslatorService {
         subject.next(criterion);
         subject.complete();
       });
-
     return subject.asObservable();
   }
 

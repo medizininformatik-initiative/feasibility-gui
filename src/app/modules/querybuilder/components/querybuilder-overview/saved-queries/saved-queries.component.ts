@@ -1,78 +1,41 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
-import { QueryProviderService } from '../../../service/query-provider.service';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BackendService } from '../../../service/backend.service';
-import { FeatureProviderService } from '../../../service/feature-provider.service';
-import { Subscription } from 'rxjs';
-import { IAppConfig } from 'src/app/config/app-config.model';
 import { Query } from '../../../../../model/FeasibilityQuery/Query';
+import { QueryProviderService } from '../../../service/query-provider.service';
+import { StructuredQueryTemplate2UITemplateTranslatorService } from 'src/app/service/StructuredQueryTemplate2UITemplateTranslator.service';
+import { UISavedQuery } from 'src/app/model/SavedInquiry/UI/UISavedQuery';
+import { UITemplate } from 'src/app/model/SavedInquiry/UI/UITemplate';
 
 @Component({
   selector: 'num-saved-queries',
   templateUrl: './saved-queries.component.html',
   styleUrls: ['./saved-queries.component.scss'],
 })
-export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecked {
-  private features: IAppConfig;
-
-  queryVersion: string;
+export class SavedQueriesComponent implements OnInit, AfterViewChecked {
   importQuery: Query;
   actionDisabled: boolean;
-  invalidQueries = false;
-  invalidTemplates = false;
   editModusQuery: Array<boolean> = [];
   editModusTemplate: Array<boolean> = [];
 
   constructor(
     public queryProviderService: QueryProviderService,
+    private templateService: StructuredQueryTemplate2UITemplateTranslatorService,
     private backend: BackendService,
-    public featureProviderService: FeatureProviderService,
     private changeDetector: ChangeDetectorRef
   ) {}
 
-  private savedQueriesSubscription: Subscription;
-  private savedTemplatesSubscription: Subscription;
-  private singleQuerySubscription: Subscription;
-  private singleTemplateSubscription: Subscription;
-
   query: Query;
-  title = '';
-  comment = '';
 
-  savedQueries: Array<{
-    id: number
-    label: string
-    created_at: Date
-  }> = [];
+  savedQueries: UISavedQuery[];
 
-  savedTemplates: Array<{
-    id?: number
-    content?: Query
-    label: string
-    comment: string
-    lastModified: Date
-    createdBy?: string
-    isValid: boolean
-  }> = [];
+  savedTemplates: UITemplate[];
 
   fileName: string;
 
   ngOnInit(): void {
     this.query = this.queryProviderService.query();
-    this.savedQueriesSubscription?.unsubscribe();
-    this.savedTemplatesSubscription?.unsubscribe();
-    this.singleQuerySubscription?.unsubscribe();
-    this.singleTemplateSubscription?.unsubscribe();
     this.loadSavedQueries();
     this.loadSavedTemplates();
-    this.features = this.featureProviderService.getFeatures();
-    this.queryVersion = this.features.queryVersion;
-  }
-
-  ngOnDestroy(): void {
-    this.singleTemplateSubscription?.unsubscribe();
-    this.savedQueriesSubscription?.unsubscribe();
-    this.savedTemplatesSubscription?.unsubscribe();
-    this.singleQuerySubscription?.unsubscribe();
   }
 
   ngAfterViewChecked(): void {
@@ -83,6 +46,7 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
     }
     this.changeDetector.detectChanges();
   }
+
   reloadQueries(queryType) {
     if (queryType === 'template') {
       this.loadSavedTemplates();
@@ -92,24 +56,12 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   loadSavedTemplates(): void {
-    this.savedTemplatesSubscription = this.backend
-      .loadSavedTemplates(true)
-      .subscribe((templates) => {
-        this.savedTemplates = [];
-        const temp = templates.sort((a, b) => a.id - b.id);
-        temp.forEach((template) => {
-          if (template.invalidTerms.length > 0) {
-            template.isValid = false;
-            this.invalidTemplates = true;
-          } else {
-            template.isValid = true;
-          }
-          this.savedTemplates.push(template);
-        });
-      });
+    this.templateService.getStructuredQueryTemplates().subscribe((feasibilityTemplates) => {
+      this.savedTemplates = feasibilityTemplates;
+    });
   }
 
-  loadSavedQueries(): void {
+  /*loadSavedQueries(): void {
     this.savedQueriesSubscription = this.backend.loadSavedQueries().subscribe((queries) => {
       this.savedQueries = [];
       const temp = queries.sort((a, b) => a.id - b.id);
@@ -118,11 +70,11 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
         this.savedQueries.push(query);
       });
     });
-  }
+  }*/
 
-  doValidate(): void {
-    this.savedTemplatesSubscription = this.backend.loadSavedTemplates(true).subscribe((queries) => {
-      this.savedTemplates = queries;
+  loadSavedQueries(): void {
+    this.templateService.getSavedStructuredQuerySavedQueries().subscribe((uiSavedQueries) => {
+      this.savedQueries = uiSavedQueries;
     });
   }
 
@@ -137,9 +89,11 @@ export class SavedQueriesComponent implements OnInit, OnDestroy, AfterViewChecke
       this.loadSavedTemplates();
     });
   }
+
   editModeTemplate(mode: boolean, index: number): void {
     this.editModusTemplate[index] = mode;
   }
+
   editModeQuery(mode: boolean, index: number): void {
     this.editModusQuery[index] = mode;
   }
