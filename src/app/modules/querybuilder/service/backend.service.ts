@@ -13,6 +13,7 @@ import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Termi
 import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
+import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
 
 @Injectable({
   providedIn: 'root',
@@ -236,11 +237,13 @@ export class BackendService {
     }
   }
 
-  public validateStructuredQueryBackend(structuredQuery: StructuredQuery): Observable<any> {
+  public validateStructuredQueryBackend(
+    structuredQuery: StructuredQuery
+  ): Observable<StructuredQueryInquiry> {
     const headers = this.headers;
     const requestBody = structuredQuery;
     const url = BackendService.PATH_RUN_QUERY + '/validate';
-    return this.http.post<any>(this.createUrl(url), requestBody, { headers });
+    return this.http.post<StructuredQueryInquiry>(this.createUrl(url), requestBody, { headers });
   }
 
   public loadSavedQueries(validate?: boolean): Observable<any> {
@@ -277,10 +280,10 @@ export class BackendService {
     });
   }
 
-  public loadQuery(id: number): Observable<any> {
+  public loadStructuredQuery(id: number): Observable<StructuredQueryInquiry> {
     const headers = this.headers;
     const url = this.createUrl(BackendService.PATH_RUN_QUERY + '/' + id.toString());
-    return this.http.get<any>(url, {
+    return this.http.get<StructuredQueryInquiry>(url, {
       headers,
     });
   }
@@ -303,14 +306,6 @@ export class BackendService {
     return this.http.get(url, {
       headers,
     });
-  }
-
-  public loadTemplate(id: number): Observable<any> {
-    const headers = this.headers;
-    return this.http.get<any>(
-      this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
-      { headers }
-    );
   }
 
   public updateTemplate(id: number, updatedObject: object): Observable<any> {

@@ -1,4 +1,3 @@
-import { TimeRestriction } from '../../FeasibilityQuery/TimeRestriction';
 import { TerminologyCode } from '../../terminology/Terminology';
 import { AbstractStructuredQueryFilters } from './AttributeFilters/QueryFilters/AbstractStructuredQueryFilters';
 import { AbstractTimeRestriction } from './AttributeFilters/QueryFilters/TimeRestriction/AbstractTimeRestriction';
