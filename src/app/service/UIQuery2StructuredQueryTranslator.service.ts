@@ -262,10 +262,14 @@ export class UIQuery2StructuredQueryTranslatorService {
     }
   }
 
-  private setConceptValueFilter(valueFilter: ValueFilter): ConceptValueFilter {
+  private setConceptValueFilter(valueFilter: ValueFilter): ConceptValueFilter | undefined {
     const conceptFilter = new ConceptValueFilter();
-    conceptFilter.selectedConcepts = valueFilter.selectedConcepts;
-    return conceptFilter;
+    if (valueFilter.selectedConcepts.length > 0) {
+      conceptFilter.selectedConcepts = valueFilter.selectedConcepts;
+      return conceptFilter;
+    } else {
+      return undefined;
+    }
   }
 
   private setReferences(
