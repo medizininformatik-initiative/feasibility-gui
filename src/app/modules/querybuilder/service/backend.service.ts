@@ -309,6 +309,14 @@ export class BackendService {
     });
   }
 
+  public loadTemplate(id: number): Observable<StructuredQueryInquiry> {
+    const headers = this.headers;
+    return this.http.get<StructuredQueryInquiry>(
+      this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
+      { headers }
+    );
+  }
+
   public updateTemplate(id: number, updatedObject: object): Observable<any> {
     const headers = this.headers;
     const requestBody = updatedObject;
