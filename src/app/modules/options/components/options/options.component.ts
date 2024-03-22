@@ -64,7 +64,7 @@ export class OptionsComponent implements OnInit {
     this.translatedQueryv2 = this.newTranslator.translateToStructuredQuery(this.query);
     //this.translatedQueryv2 = this.apiTranslator.translateToV2(this.query);
 
-    this.postQuery('translate').subscribe(
+    /*    this.postQuery('translate').subscribe(
       (response) => {
         this.postmanTranslate = response;
         this.getResponse =
@@ -85,7 +85,7 @@ export class OptionsComponent implements OnInit {
       (error) => {
         console.log(error);
       }
-    );
+    );*/
   }
 
   setFeature(checked: MatCheckboxChange): void {

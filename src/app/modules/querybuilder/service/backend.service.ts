@@ -14,6 +14,7 @@ import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuer
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
 import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
+import { AnnotatedStructuredQuery } from '../../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 
 @Injectable({
   providedIn: 'root',
@@ -239,11 +240,11 @@ export class BackendService {
 
   public validateStructuredQueryBackend(
     structuredQuery: StructuredQuery
-  ): Observable<StructuredQueryInquiry> {
+  ): Observable<AnnotatedStructuredQuery> {
     const headers = this.headers;
     const requestBody = structuredQuery;
     const url = BackendService.PATH_RUN_QUERY + '/validate';
-    return this.http.post<StructuredQueryInquiry>(this.createUrl(url), requestBody, { headers });
+    return this.http.post<AnnotatedStructuredQuery>(this.createUrl(url), requestBody, { headers });
   }
 
   public loadSavedQueries(validate?: boolean): Observable<any> {

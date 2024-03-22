@@ -36,7 +36,7 @@ export class StructuredQueryTemplate2UITemplateTranslatorService {
     structuredQueryTemplate: StructuredQueryTemplate
   ): UITemplate {
     const uiTemplate: UITemplate = new UITemplate(structuredQueryTemplate);
-    const isValid: boolean = this.setValidAttribute(structuredQueryTemplate.invalidCriteria);
+    const isValid: boolean = structuredQueryTemplate.isValid;
     uiTemplate.setAttributes(isValid, structuredQueryTemplate.createdBy);
     return uiTemplate;
   }
@@ -64,7 +64,7 @@ export class StructuredQueryTemplate2UITemplateTranslatorService {
     structuredQuerySavedQuery: StructuredQuerySavedQuery
   ): UISavedQuery {
     const uiSavedQuery: UISavedQuery = new UISavedQuery(structuredQuerySavedQuery);
-    const isValid: boolean = this.setValidAttribute(structuredQuerySavedQuery.invalidCriteria);
+    const isValid: boolean = structuredQuerySavedQuery.isValid;
     const totalNumberOfPatients: number = structuredQuerySavedQuery.totalNumberOfPatients;
     uiSavedQuery.setAttributes(isValid, totalNumberOfPatients);
     return uiSavedQuery;
@@ -80,9 +80,5 @@ export class StructuredQueryTemplate2UITemplateTranslatorService {
     structuredQuerySavedQueries: StructuredQuerySavedQuery[]
   ): StructuredQuerySavedQuery[] {
     return structuredQuerySavedQueries.sort((a, b) => a.id - b.id);
-  }
-
-  private setValidAttribute(invalidCriteria: Array<StructuredQueryCriterion> = []): boolean {
-    return invalidCriteria.length > 0 ? false : true;
   }
 }

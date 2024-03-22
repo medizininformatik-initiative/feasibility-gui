@@ -5,6 +5,8 @@ import { QueryProviderService } from '../../service/query-provider.service';
 import { Router } from '@angular/router';
 import { StructuredQuery } from '../../../../model/StructuredQuery/StructuredQuery';
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/StructuredQuery2UIQueryTranslator.service';
+import { AnnotatedStructuredQuery } from '../../../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { ValidationService } from '../../../../service/Validation.service';
 
 @Component({
   selector: 'num-querybuilder-overview',
@@ -20,7 +22,8 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     private router: Router,
     public featureProviderService: FeatureProviderService,
     private changeDetector: ChangeDetectorRef,
-    private apiTranslator: StructuredQuery2UIQueryTranslatorService
+    private apiTranslator: StructuredQuery2UIQueryTranslatorService,
+    private validationService: ValidationService
   ) {}
 
   query: Query;
@@ -52,13 +55,17 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     this.importQuery = JSON.parse(event.target.result);
   }
 
-  doImport(): void {
-    this.createDefaultQuery(this.importQuery);
+  doImportAndValidate(): void {
+    this.validationService
+      .validateStructuredQuery(this.importQuery)
+      .subscribe((annotatedStructuredQuery) => {
+        this.translateAnnotatedStructuredQuery(annotatedStructuredQuery);
+      });
   }
 
-  createDefaultQuery(query) {
+  translateAnnotatedStructuredQuery(annotatedStructuredQuery: AnnotatedStructuredQuery) {
     this.apiTranslator
-      .translateImportedSQtoUIQuery(QueryProviderService.createDefaultQuery(), query)
+      .translateImportedSQtoUIQuery(annotatedStructuredQuery)
       .subscribe((translatedQuery) => {
         this.query = translatedQuery;
         this.storeQueryAndNavigate();
