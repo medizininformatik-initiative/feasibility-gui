@@ -1,6 +1,9 @@
 <!-- dynamic-form.component.html -->
 <form [formGroup]="dynamicForm" class="form-background">
-  <app-profile-section [formGroup]="dynamicForm" class="app-profile-section"></app-profile-section>
+  <num-app-profile-section
+    [formGroup]="dynamicForm"
+    class="app-profile-section"
+  ></num-app-profile-section>
   <section *ngIf="isProfileSelected">
     <mat-card>
       <mat-card-header *ngIf="whereControls.length > 0">
@@ -31,11 +34,11 @@
               </ng-container>
 
               <ng-container *ngSwitchCase="'coding'">
-                <app-value-set-filter
+                <num-app-value-set-filter
                   [formGroup]="control"
                   [valueSetUrl]="control.get('valueSetUrls').value[0]"
                   [formArrayName]="'value'"
-                ></app-value-set-filter>
+                ></num-app-value-set-filter>
               </ng-container>
             </ng-container>
           </ng-container>
@@ -53,14 +56,14 @@
       <mat-card-content>
         <div class="selectable-container">
           <ng-container *ngFor="let columnGroup of selectionColumnsControls">
-            <app-fhir-path
+            <num-app-fhir-path
               [label]="columnGroup.get('name').value"
               [disabled]="columnGroup.get('disabled').value"
               [infoText]="columnGroup.get('info').value"
               [formControl]="columnGroup.get('selected')"
               [hidden]="columnGroup.get('hidden').value"
             >
-            </app-fhir-path>
+            </num-app-fhir-path>
           </ng-container>
         </div>
       </mat-card-content>
@@ -75,7 +78,7 @@
   <!--        </mat-panel-title>-->
   <!--      </mat-expansion-panel-header>-->
   <!--      <div *ngIf="dynamicForm.get('advanced') as advancedArray">-->
-  <!--        <app-fhir-path-expressions [form]='advancedArray'></app-fhir-path-expressions>-->
+  <!--        <num-app-fhir-path-expressions [form]='advancedArray'></app-fhir-path-expressions>-->
   <!--      </div>-->
   <!--    </mat-expansion-panel>-->
   <!--  </ng-container>-->

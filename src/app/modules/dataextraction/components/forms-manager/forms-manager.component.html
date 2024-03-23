@@ -12,10 +12,10 @@
 <!--</div>-->
 <div class="form-manager">
   <div class="form-container" *ngFor="let formGroup of forms.controls; let i = index">
-    <app-dynamic-form
+    <num-app-dynamic-form
       [setFormGroup]="formGroup"
       (profileSelected)="handleProfileSelection($event)"
-    ></app-dynamic-form>
+    />
     <num-button class="remove-button" (click)="removeFormGroup(i)" *ngIf="forms.length > 1"
       >X</num-button
     >

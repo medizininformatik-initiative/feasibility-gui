@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class FormSubmissionService {
-  private apiUrl = 'http://localhost:5000/run_extraction'; // Update with your actual endpoint URL
+  private apiUrl = 'http://localhost:8000/run_extraction'; // Update with your actual endpoint URL
 
   constructor(private http: HttpClient) {}
 

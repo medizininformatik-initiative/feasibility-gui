@@ -91,6 +91,7 @@ export class FormsManagerComponent {
       this.forms.getRawValue()
     );
     const formDataJson = JSON.stringify(processedData, null, 2); // Serialize with pretty print
+    console.log('Submitting forms:', formDataJson);
     this.formSubmissionService.submitForm(formDataJson).subscribe(
       (response) => {
         console.log('Forms submitted successfully');
