@@ -29,7 +29,7 @@
     "extra": {
       "displayvaluefiltericon": false,
       "showoptionspage": true,
-      "showdataselectionpage": false,
+      "showdataselectionpage": true,
       "optionpageroles": ["FeasibilityUser"],
       "displayInfoMessage": true,
       "displayUpdateInfo": false
@@ -39,7 +39,7 @@
     "sendsqcontexttobackend": true,
     "pollingtimeinseconds": 10,
     "pollingintervallinseconds": 10,
-    "lowerboundarypatientresult": 20,
+    "lowerboundarypatientresult": 1,
     "lowerboundarylocationresult": 1
   },
   "mock": {

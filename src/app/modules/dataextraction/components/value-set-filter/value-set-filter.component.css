@@ -1,0 +1,8 @@
+.example-chip-list {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-autocomplete-panel {
+  background: white;
+  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f;
+}

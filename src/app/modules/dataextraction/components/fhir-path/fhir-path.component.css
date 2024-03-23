@@ -1,0 +1,8 @@
+.flex-row-center {
+  display: flex;
+  align-items: center;
+}
+
+.info-button {
+  margin-left: 8px;
+}

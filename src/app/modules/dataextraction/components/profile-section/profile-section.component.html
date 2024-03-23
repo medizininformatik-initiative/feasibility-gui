@@ -1,0 +1,15 @@
+<div class="form-section" *ngIf="formGroup">
+  <mat-form-field class="operator-part" appearance="outline" [formGroup]="formGroup">
+    <mat-label>Select Health Record Elements</mat-label>
+    <mat-select formControlName="ressource" panelClass="resource-panel">
+      <mat-option value="Patient">Patient Information</mat-option>
+      <mat-option value="AllergyIntolerance">Allergies & Intolerances</mat-option>
+      <mat-option value="Condition">Medical Conditions</mat-option>
+      <mat-option value="Immunization">Immunization Records</mat-option>
+      <mat-option value="Observation">Clinical Observations</mat-option>
+      <mat-option value="MedicationAdministration">Medication Administration</mat-option>
+      <mat-option value="Procedure">Procedures Performed</mat-option>
+      <mat-option value="Specimen">Laboratory Specimens</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

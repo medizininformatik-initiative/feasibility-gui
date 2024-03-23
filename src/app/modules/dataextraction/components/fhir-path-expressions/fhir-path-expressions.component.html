@@ -1,0 +1,24 @@
+<ng-container>
+  <div *ngFor="let control of parent_form.controls; let i = index">
+    <!-- Here, we're assuming that each "control" is already a FormControl -->
+    <mat-form-field appearance="fill">
+      <mat-label>Enter FHIR Path Expression</mat-label>
+      <input matInput [formControl]="control" />
+      <mat-icon
+        matSuffix
+        *ngIf="parent_form.length > 1"
+        class="remove-icon"
+        (click)="removeExpression(i)"
+        >remove_circle_outline</mat-icon
+      >
+    </mat-form-field>
+  </div>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="addExpression()"
+    [disabled]="!canAddExpression()"
+  >
+    +
+  </button>
+</ng-container>

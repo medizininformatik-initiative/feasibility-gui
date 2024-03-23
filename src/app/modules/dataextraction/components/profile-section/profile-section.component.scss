@@ -1,0 +1,32 @@
+::ng-deep num-edit-value-definition .mat-form-field-wrapper {
+  padding-bottom: 0.5em !important;
+}
+::ng-deep .mat-mdc-form-field-infix {
+  padding: 1em 0;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  padding: 0 !important;
+  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f;
+  background: white;
+}
+
+:host {
+  display: block;
+  max-width: 100%;
+}
+
+/* Ensures that the form field within the component takes full width */
+mat-form-field {
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding does not affect the overall width */
+}
+
+/* Adjustments for the select panel within the component */
+mat-select {
+  width: 100%;
+}
+
+.form-section {
+  width: 100%;
+}

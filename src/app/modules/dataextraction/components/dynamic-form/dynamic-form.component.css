@@ -1,0 +1,53 @@
+.form-background {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-width: 100%; /* Adjust to the desired max width, such as 95% */
+    width: 100%;
+}
+
+.app-profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 20em; /* Adjust to the desired max width, such as 95% */
+
+
+}
+
+::ng-deep mat-datepicker-content {
+  box-shadow: 0 2px 4px -1px #0003,0 4px 5px #00000024,0 1px 10px #0000001f;
+  background: white;
+}
+::ng-deep .mat-calendar-body-cell-content {
+  border-color: transparent;
+}
+::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+  border-color: #00000061;
+}
+::ng-deep .mat-calendar-body-selected {
+  background-color: var(--num-color--accent-600) !important;
+  color: white;
+}
+::ng-deep .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+  background-color: var(--num-color--accent-200);
+}
+
+::ng-deep .mat-mdc-card-header {
+  padding: 8px 16px 0;
+}
+
+/* dynamic-form.component.css */
+.selectable-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+
+

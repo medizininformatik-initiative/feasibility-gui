@@ -1,0 +1,5 @@
+<div class="flex-row-left" matTooltip="{{ infoText }}" matTooltipPosition="above">
+  <mat-checkbox [checked]="checked" (change)="onCheckboxChange($event)" [disabled]="disabled">
+    {{ label }} <span *ngIf="disabled">(mandatory)</span>
+  </mat-checkbox>
+</div>

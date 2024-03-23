@@ -14,9 +14,9 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
   },
   {
-    routeTo: 'dataselection/editor',
+    routeTo: 'dataextraction/editor',
     roles: ['main'],
-    icon: 'dna',
+    icon: 'lorenz-data-extraction-icon',
     translationKey: 'NAVIGATION.DATASELECTION_EDITOR',
   },
   {

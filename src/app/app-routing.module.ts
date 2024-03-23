@@ -41,6 +41,18 @@ export const routes: Routes = [
       ).then((m) => m.DataselectionModule),
   },
   {
+    path: 'dataextraction',
+    canLoad: [RoleGuard],
+    data: {
+      navId: 'dataextraction',
+      roles: ['main'],
+    },
+    loadChildren: () =>
+      import(
+        /* webpackChunkName: "Dataextraction.Module" */ './modules/dataextraction/dataextraction.module'
+      ).then((m) => m.DataextractionModule),
+  },
+  {
     path: 'options',
     canLoad: [RoleGuard],
     data: {

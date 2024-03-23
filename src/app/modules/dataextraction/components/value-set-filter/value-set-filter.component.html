@@ -1,0 +1,32 @@
+<mat-form-field class="example-chip-list" appearance="outline" floatLabel="always">
+  <!--  <mat-label>Filter by Code or Description (e.g., {{ firstCode }})</mat-label>-->
+  <mat-chip-grid #chipGrid aria-label="Code selection">
+    <mat-chip-row
+      *ngFor="let code of getCodesControl().value; let i = index"
+      [removable]="true"
+      (removed)="remove(i)"
+    >
+      {{ displayFn(code) }}
+      <button matChipRemove [attr.aria-label]="'remove ' + code">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip-row>
+  </mat-chip-grid>
+  <input
+    #inputField
+    placeholder="Filter by Code or Description (e.g., {{ firstCode }})"
+    [formControl]="control"
+    [matChipInputFor]="chipGrid"
+    [matAutocomplete]="auto"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+  />
+  <mat-autocomplete
+    class="auto-complete"
+    #auto="matAutocomplete"
+    (optionSelected)="optionSelected($event)"
+  >
+    <mat-option *ngFor="let option of values$ | async" [value]="option">
+      {{ displayFn(option) }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

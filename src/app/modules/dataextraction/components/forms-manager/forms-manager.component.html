@@ -1,0 +1,33 @@
+<!--<div fxLayout='row' class='div-import-from-file'>-->
+<!--  <div>-->
+<!--    <input type='file' class='file-input' (change)='importFormData($event)' #fileUpload />-->
+<!--    <button class='file-upload' type='button' mat-icon-button (click)='fileUpload.click()'>-->
+<!--      <fa-icon size='3x' icon='file-upload'></fa-icon>-->
+<!--      <span class='file-upload-text'>{{ 'BUTTON.IMPORT_FROM_FILE' | translate }}</span>-->
+<!--    </button>-->
+<!--  </div>-->
+<!--  <num-button [type]="'primary'" class='button-import'> Import From File</num-button>-->
+<!--  <num-button (click)='exportFormData()'>Export Forms Data</num-button>-->
+
+<!--</div>-->
+<div class="form-manager">
+  <div class="form-container" *ngFor="let formGroup of forms.controls; let i = index">
+    <app-dynamic-form
+      [setFormGroup]="formGroup"
+      (profileSelected)="handleProfileSelection($event)"
+    ></app-dynamic-form>
+    <num-button class="remove-button" (click)="removeFormGroup(i)" *ngIf="forms.length > 1"
+      >X</num-button
+    >
+  </div>
+
+  <div class="add-form-container">
+    <button mat-fab class="add-form-button" (click)="addFormGroup()" [disabled]="!showAddButton">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <div fxLayout="row" class="div-submit">
+    <num-button (click)="submitForms()" class="submit-button">Submit</num-button>
+  </div>
+</div>

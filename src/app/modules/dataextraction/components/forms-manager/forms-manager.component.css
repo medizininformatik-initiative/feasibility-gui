@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.form-manager {
+  display: flex; /* Enable flexbox */
+  flex-direction: column; /* Stack children vertically */
+  max-width: 95%; /* Max width for the container */
+  margin: auto; /* Center the container in the parent */
+}
+
+.form-container {
+  position: relative; /* Needed for absolute positioning of the child */
+  width: 100%
+}
+
+.remove-button {
+  position: absolute;
+  top: 20px; /* Align to the top of the container */
+  right: 0; /* Align to the right of the container */
+  z-index: 10; /* Ensure the button is above other elements */
+}
+
+.button-import {
+  margin: 0 1em 0 2em;
+}
+.div-import-from-file {
+  margin-top: 1em;
+  margin-bottom: 5em;
+  justify-content: right;
+}
+
+.div-submit {
+  display: flex;
+  justify-content: flex-end; /* Align the submit button to the right */
+  width: 100%; /* Take up the full width to align with .form-container */
+  margin-top: 1em; /* Space above the submit button */
+  margin-bottom: 1em;
+}
+
+.file-upload {
+  text-transform: none !important;
+  width: 160px;
+  font-size: 13px;
+  color: var(--num-color--primary-900);
+  display: flex;
+}
+.file-upload-text {
+  margin: 8px 5px;
+}
+.file-upload:hover {
+  font-weight: bold;
+}
+.file-name {
+  color: var(--num-color--accent-300);
+  margin: 5px;
+  height: 20px;
+}
+::ng-deep .file-upload fa-icon svg {
+  width: 30px !important;
+  height: 30px !important;
+  color: var(--num-color--primary-900);
+}
+
+.file-input {
+  display: none;
+}
+
+
+.add-form-container {
+  display: flex;
+  justify-content: center;
+  margin: 1em 0; /* Adjust spacing around the button as needed */
+}
+
+.add-form-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.add-form-button {
+  background-color: #5a78ae; /* Primary palette 500 for active state */
+  color: white; /* Assuming white is a contrasting color for the active state */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Enhanced for clickable indication */
+  cursor: pointer; /* Ensures the cursor indicates a clickable element */
+}
+
+.add-form-button:hover, .add-form-button:focus {
+  background-color: #9ea9b3; /* Accent palette 500 for hover */
+  box-shadow: 0 8px 12px rgba(0,0,0,0.3); /* More pronounced shadow on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.add-form-button:active {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Less pronounced shadow to simulate pressing */
+  transform: translateY(1px); /* Reset slight lift effect to simulate pressing */
+}
+
+.add-form-button:disabled {
+  background-color: #c0c7ce; /* Primary palette 300 for disabled state */
+  color: #6c7b89; /* Primary palette 800, assuming it provides enough contrast */
+  border: 2px dashed #7c8b98; /* Primary palette 700 for dashed border */
+  box-shadow: none; /* No shadow for disabled state */
+  cursor: not-allowed; /* Cursor indicates the button is not clickable */
+}
+
+
+
+
+

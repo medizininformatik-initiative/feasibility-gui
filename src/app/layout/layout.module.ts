@@ -13,6 +13,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectivesModule } from '../shared/directives/directives.module';
 import { SharedComponentsModule } from '../shared/components/shared-components.module';
+import { customIcon } from '../icons/custon-icons';
+import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 
 const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
 
@@ -36,6 +38,8 @@ const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
 })
 export class LayoutModule {
   constructor(library: FaIconLibrary) {
+    // add custom Icons
+    FONT_AWESOME_ICONS.push(customIcon as IconDefinition);
     library.addIcons(...FONT_AWESOME_ICONS);
   }
 }
