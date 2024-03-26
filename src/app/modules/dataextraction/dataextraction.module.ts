@@ -11,6 +11,7 @@ import { FhirPathExpressionsComponent } from './components/fhir-path-expressions
 import { SharedModule } from '../../shared/shared.module';
 import { LayoutModule } from '../../layout/layout.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DataextractionPreviewComponent } from './components/dataextraction-preview/dataextraction-preview.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ValueSetFilterComponent,
     FhirPathComponent,
     FhirPathExpressionsComponent,
+    DataextractionPreviewComponent,
   ],
   imports: [
     CommonModule,
