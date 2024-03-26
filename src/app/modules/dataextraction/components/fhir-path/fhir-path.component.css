@@ -6,3 +6,47 @@
 .info-button {
   margin-left: 8px;
 }
+
+::ng-deep
+  .mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
+  background-color: var(--num-color--accent-600) !important;
+  border-color: black !important;
+}
+::ng-deep mat-checkbox label {
+  font-weight: 400 !important;
+}
+::ng-deep .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__background {
+  top: 6px !important;
+}
+::ng-deep .mat-mdc-checkbox .mdc-checkbox {
+  padding: 6px 10px !important;
+}
+::ng-deep .mat-mdc-checkbox-touch-target {
+  width: 40px !important;
+  height: 40px !important;
+}
+::ng-deep
+  .mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled
+  + .mdc-radio__background
+  .mdc-radio__inner-circle,
+::ng-deep
+  .mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled:checked
+  + .mdc-radio__background
+  .mdc-radio__outer-circle {
+  border-color: var(--num-color--accent-600) !important;
+}
+::ng-deep mat-radio-button label {
+  font-weight: 400 !important;
+  font-size: 14px;
+}
+::ng-deep mat-radio-button label a {
+  color: var(--num-color--accent-600) !important;
+  font-size: 14px !important;
+}
