@@ -128,7 +128,7 @@ export class UIQuery2StructuredQueryTranslatorService {
       if (this.filter.isConcept(type) && attributeFilter.selectedConcepts?.length > 0) {
         translatedFilters.push(this.attributeConceptFilter(attributeFilter));
       }
-      if (this.filter.isReference(type) && criterion.linkedCriteria?.length > 0) {
+      if (this.filter.isReference(type) && attributeFilter.selectedConcepts?.length > 0) {
         translatedFilters.push(this.setReferences(criterion.linkedCriteria, attributeFilter));
       }
       if (this.filter.isQuantity(type)) {

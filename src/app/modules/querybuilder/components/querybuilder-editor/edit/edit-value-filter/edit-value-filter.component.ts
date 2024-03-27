@@ -233,6 +233,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       this.criterion.linkedCriteria = [];
       this.selectedReferenceAsJson.forEach((conceptAsJsonTemp) => {
         this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJsonTemp)));
+        this.attributeFilter.selectedConcepts.push(JSON.parse(conceptAsJsonTemp));
       });
     }
   }
