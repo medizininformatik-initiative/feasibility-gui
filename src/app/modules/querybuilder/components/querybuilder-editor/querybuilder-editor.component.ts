@@ -245,7 +245,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
       });
     }
     if (this.hasInvalidCriteria) {
-      this.snackbar.displayInvalidQueryMessage();
+      //this.snackbar.displayInvalidQueryMessage();
     }
   }
 }

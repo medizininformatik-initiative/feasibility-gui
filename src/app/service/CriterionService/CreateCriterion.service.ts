@@ -15,6 +15,8 @@ import {
   AttributeDefinition,
   ValueDefinition,
 } from 'src/app/model/terminology/AttributeDefinitions/AttributeDefinition';
+import { AnnotatedStructuredQueryIssue } from '../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQueryIssue';
+import { SnackbarService } from '../../core/components/snack-bar/snack-bar.component';
 
 @Injectable({
   providedIn: 'root',
@@ -23,13 +25,14 @@ export class CreateCriterionService {
   constructor(
     private criterionHashService: CriterionHashService,
     private featureService: FeatureService,
-    private UiProfileService: LoadUIProfileService
+    private UiProfileService: LoadUIProfileService,
+    private snackbar: SnackbarService
   ) {}
 
   public createCriterionFromTermCode(
     termCodes: TerminologyCode[],
     context: TerminologyCode,
-    invalidCriteriaSet: Set<string>
+    invalidCriteriaIssues: AnnotatedStructuredQueryIssue[]
   ): Observable<Criterion> {
     const criterion: Criterion = new Criterion();
     const subject = new Subject<Criterion>();
@@ -37,7 +40,7 @@ export class CreateCriterionService {
     criterion.criterionHash = hash;
     criterion.display = termCodes[0].display;
     criterion.termCodes = this.copyTermCodes(termCodes);
-    criterion.isInvalid = invalidCriteriaSet.has(JSON.stringify(criterion.termCodes[0]));
+    criterion.isInvalid = invalidCriteriaIssues.length > 0;
     criterion.uniqueID = uuidv4();
     criterion.position = new CritGroupPosition();
     if (!criterion.isInvalid) {
@@ -49,6 +52,7 @@ export class CreateCriterionService {
       });
     } else {
       setTimeout(() => {
+        this.snackbar.displayErrorMessage(this.snackbar.errorCodes['VAL-20001']);
         subject.next(criterion);
       }, 10);
     }

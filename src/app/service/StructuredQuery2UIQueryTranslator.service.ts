@@ -21,65 +21,45 @@ import { ValidationService } from './Validation.service';
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { QueryProviderService } from '../modules/querybuilder/service/query-provider.service';
 import { StructuredQueryInquiry } from '../model/SavedInquiry/StructuredQueryInquiry';
+import { AnnotatedStructuredQueryCriterion } from '../model/result/AnnotatedStructuredQuery/AnnotatedCriterion/AnnotatedStructuredQueryCriterion';
+import { AnnotatedStructuredQuery } from '../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2UIQueryTranslatorService {
   hasConsent = false;
-  private invalidCriteriaSet: Set<string> = new Set();
 
   constructor(
     private filter: FilterTypesService,
-    private validationService: ValidationService,
     private createCriterionService: CreateCriterionService
   ) {}
 
-  /**
-   * @todo we dont need uiquery as a parameter, needs to be create with queryprovdierservice inside this service
-   * @param uiquery
-   * @param sqquery
-   * @returns
-   */
   public translateImportedSQtoUIQuery(
-    uiquery: Query,
-    structuredQuery: StructuredQuery
+    annotatedStructuredQuery: AnnotatedStructuredQuery
   ): Observable<Query> {
     this.hasConsent = false;
+    const uiquery: Query = QueryProviderService.createDefaultQuery();
     const subject = new Subject<Query>();
-    const inclusion = structuredQuery.inclusionCriteria ? structuredQuery.inclusionCriteria : [];
-    const exclusion = structuredQuery.exclusionCriteria ? structuredQuery.exclusionCriteria : [];
-    this.getInvalidCriteriaSet(structuredQuery).subscribe(() => {
-      this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
-        uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
-        //TODO: find a better way for joining in- and exclusion instead of nested subscription
-        this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
-          uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
-          uiquery.consent = this.hasConsent;
-          subject.next(this.rePosition(uiquery));
-          subject.complete();
-        });
+    const inclusion = annotatedStructuredQuery.inclusionCriteria
+      ? annotatedStructuredQuery.inclusionCriteria
+      : [];
+    const exclusion = annotatedStructuredQuery.exclusionCriteria
+      ? annotatedStructuredQuery.exclusionCriteria
+      : [];
+
+    this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
+      uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
+      //TODO: find a better way for joining in- and exclusion instead of nested subscription
+      this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
+        uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
+        uiquery.consent = this.hasConsent;
+        subject.next(this.rePosition(uiquery));
+        subject.complete();
       });
     });
+
     return subject.asObservable();
-  }
-
-  private getInvalidCriteriaSet(structuredQuery: StructuredQuery): Observable<Set<string>> {
-    const invalidCriteriaSetSubject = new Subject<Set<string>>();
-    this.validationService.validateStructuredQuery(structuredQuery).subscribe((invalidCriteria) => {
-      this.invalidCriteriaSet = this.createSetOfInvalidCriteria(invalidCriteria);
-      invalidCriteriaSetSubject.next(this.invalidCriteriaSet);
-      invalidCriteriaSetSubject.complete();
-    });
-    return invalidCriteriaSetSubject.asObservable();
-  }
-
-  private createSetOfInvalidCriteria(invalidCriteria: StructuredQueryCriterion[]): Set<string> {
-    const invalidCriteriaSet = new Set<string>();
-    invalidCriteria.forEach((invalidCriterion) => {
-      invalidCriteriaSet.add(JSON.stringify(invalidCriterion.termCodes[0]));
-    });
-    return invalidCriteriaSet;
   }
 
   public translateSQtoUIQuery(structuredQueryInquiry: StructuredQueryInquiry): Observable<Query> {
@@ -92,9 +72,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     const exclusion = structuredQueryInquiry.content.exclusionCriteria
       ? structuredQueryInquiry.content.exclusionCriteria
       : [];
-    this.invalidCriteriaSet = this.createSetOfInvalidCriteria(
-      structuredQueryInquiry.invalidCriteria
-    );
+
     this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
       uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
       //TODO: find a better way for joining in- and exclusion instead of nested subscription
@@ -109,7 +87,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private translateSQtoUICriteria(
-    inexclusion: StructuredQueryCriterion[][]
+    inexclusion: AnnotatedStructuredQueryCriterion[][]
   ): Observable<Criterion[][]> {
     const resultInExclusion: Criterion[][] = [];
     const observableBatch = [];
@@ -126,7 +104,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private innerCriterion(
-    structuredQueryCriterionInnerArray: StructuredQueryCriterion[]
+    structuredQueryCriterionInnerArray: AnnotatedStructuredQueryCriterion[]
   ): Observable<Criterion[]> {
     const observableBatch = [];
     structuredQueryCriterionInnerArray.forEach((structuredQueryCriterion) => {
@@ -151,7 +129,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private createCriterionFromStructuredQueryCriterion(
-    structuredQueryCriterion: StructuredQueryCriterion
+    structuredQueryCriterion: AnnotatedStructuredQueryCriterion
   ): Observable<Criterion> {
     let criterion: Criterion;
     const subject = new Subject<Criterion>();
@@ -159,7 +137,7 @@ export class StructuredQuery2UIQueryTranslatorService {
       .createCriterionFromTermCode(
         structuredQueryCriterion.termCodes,
         structuredQueryCriterion.context,
-        this.invalidCriteriaSet
+        structuredQueryCriterion.issues
       )
       .subscribe((crit) => {
         criterion = crit;

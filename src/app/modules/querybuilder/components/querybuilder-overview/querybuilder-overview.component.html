@@ -11,7 +11,7 @@
   <num-button
     [type]="'primary'"
     [isDisabled]="actionDisabled"
-    (click)="!actionDisabled && doImport()"
+    (click)="!actionDisabled && doImportAndValidate()"
     class="button-import"
   >
     {{ 'BUTTON.IMPORT' | translate }}

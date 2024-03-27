@@ -84,7 +84,7 @@ export class QueryBoxEndComponent implements OnInit {
       this.queryObject = singleTemplate;
       this.storeTemplateAndNavigate();
     } else {
-      this.backend.loadStructuredQuery(singleTemplate.id).subscribe((query) => {
+      this.backend.loadTemplate(singleTemplate.id).subscribe((query) => {
         this.apiTranslator.translateSQtoUIQuery(query).subscribe((translatedQuery) => {
           this.query = translatedQuery;
           this.storeTemplateAndNavigate();
