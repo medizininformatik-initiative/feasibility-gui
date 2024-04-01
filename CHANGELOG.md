@@ -1,5 +1,26 @@
 # Changelog
 
+
+## v5.0.0-alpha.1 (2024-04-01)
+
+### Changed
+* Custom Internal Data Format for Structured Queries:
+  -	Developed an internal data format specifically for Structured Queries, a data representation developed by our team.
+* Improved Data Model Structure:
+  -	Restructured the data model for better representation of Structured Queries through class and folder organization.
+* Utilization of Abstract Classes and General Concepts:
+  -	Incorporated abstract classes and general concepts into the data model for improved versatility.
+* Simplified Attribute and Value Filter Types:
+  -	Cleaned up attribute and value filter types for easier use.
+* Type Checking Service Implementation:
+  -	Added a service to perform type validation checks for attribute and value filter types.
+* Structured Query Translation Service
+  -	New translation services for translating UI query model to Structured Query and backwards for loading and import
+* Structured Query validation:
+  -	Uploaded Structured Queries gets validated
+  -	Validation process changed for more precise information, which part of the structured query is corrupt
+
+
 ## v2.3.4 (2023-12-15)
 
 ### Bugfix
