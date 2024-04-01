@@ -218,6 +218,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     if (this.attributeFilter?.attributeDefinition?.type === FilterTypes.REFERENCE) {
       if (this.selectedReferenceAsJson.has(conceptAsJson)) {
         this.selectedReferenceAsJson.delete(conceptAsJson);
+        this.criterion.linkedCriteria.splice(
+          this.criterion.linkedCriteria.findIndex((crit) => crit.termCodes[0].uid === concept.uid),
+          1
+        );
         if (criterionForLinking) {
           if (!this.isCriterionLinked(criterionForLinking.uniqueID)) {
             criterionForLinking.isLinked = false;
@@ -225,14 +229,15 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         }
       } else {
         this.selectedReferenceAsJson.add(conceptAsJson);
+        this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJson)));
         if (criterionForLinking) {
           criterionForLinking.isLinked = true;
         }
       }
 
-      this.criterion.linkedCriteria = [];
+      this.attributeFilter.selectedConcepts = [];
       this.selectedReferenceAsJson.forEach((conceptAsJsonTemp) => {
-        this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJsonTemp)));
+        this.attributeFilter.selectedConcepts.push(JSON.parse(conceptAsJsonTemp));
       });
     }
   }
