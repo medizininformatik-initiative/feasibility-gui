@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { IAppConfig } from 'src/app/config/app-config.model';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service';
-import { FeatureService } from '../../../service/feature.service';
+import { FeatureService } from '../../../service/Feature.service';
 
 @Component({
   selector: 'num-footer',
@@ -15,11 +15,7 @@ export class FooterComponent implements OnInit, AfterViewInit {
   urlSrc: string;
   urlAlt: string;
 
-  constructor(
-    private appConfig: AppConfigService,
-    private featureProviderService: FeatureProviderService,
-    public featureService: FeatureService
-  ) {
+  constructor(private appConfig: AppConfigService, private featureProviderService: FeatureProviderService, public featureService: FeatureService) {
     this.config = appConfig.config;
   }
 

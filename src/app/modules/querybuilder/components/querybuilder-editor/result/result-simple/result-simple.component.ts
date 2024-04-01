@@ -1,15 +1,13 @@
-import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
-import { QueryResult } from '../../../../model/api/result/QueryResult';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {
-  ResultDetailsDialogComponentData,
-  ResultDetailsDialogComponent,
-} from '../result-details-dialog/result-details-dialog.component';
-import { Observable, Subscription } from 'rxjs';
 import { BackendService } from '../../../../service/backend.service';
-import { FeatureService } from '../../../../../../service/feature.service';
-import { BooleanArraySupportOption } from 'prettier';
-import { QueryResultRateLimit } from 'src/app/modules/querybuilder/model/api/result/QueryResultRateLimit';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FeatureService } from '../../../../../../service/Feature.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Observable, Subscription } from 'rxjs';
+import {
+  ResultDetailsDialogComponent,
+  ResultDetailsDialogComponentData,
+} from '../result-details-dialog/result-details-dialog.component';
+import { QueryResult } from 'src/app/model/result/QueryResult';
 
 @Component({
   selector: 'num-result-simple',

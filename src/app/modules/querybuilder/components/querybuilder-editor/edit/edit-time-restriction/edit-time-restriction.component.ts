@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/query/timerestriction';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import {
+  TimeRestriction,
+  TimeRestrictionType,
+} from 'src/app/model/FeasibilityQuery/TimeRestriction';
 
 export const MY_DATE_FORMATS = {
   parse: {

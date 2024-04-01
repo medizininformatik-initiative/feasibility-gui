@@ -1,12 +1,11 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Query } from 'src/app/modules/querybuilder/model/api/query/query';
-import { QueryResult } from 'src/app/modules/querybuilder/model/api/result/QueryResult';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { FeatureService } from 'src/app/service/Feature.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import { QueryProviderService } from 'src/app/modules/querybuilder/service/query-provider.service';
-import { FeatureService } from 'src/app/service/feature.service';
+import { QueryResult } from 'src/app/modules/querybuilder/model/api/result/QueryResult';
 import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
-
 @Component({
   selector: 'num-dataselection-editor',
   templateUrl: './dataselection-editor.component.html',

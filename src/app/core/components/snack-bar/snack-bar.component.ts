@@ -25,6 +25,7 @@ export class SnackbarService {
     'FEAS-10002': 'FEAS-10002',
     'FEAS-10004': 'FEAS-10004',
     'FEAS-10005': 'FEAS-10005',
+    'VAL-20001': 'VAL-20001',
     404: 'SITE_NOT_FOUND',
   };
   public invalidQuery = false;

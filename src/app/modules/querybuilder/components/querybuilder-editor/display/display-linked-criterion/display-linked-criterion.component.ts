@@ -1,8 +1,9 @@
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Component, Input, OnInit } from '@angular/core';
-import { Criterion } from '../../../../model/api/query/criterion';
-import { Query } from '../../../../model/api/query/query';
-import { ValueFilter } from '../../../../model/api/query/valueFilter';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { FeatureService } from 'src/app/service/Feature.service';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Component({
   selector: 'num-display-linked-criterion',
@@ -21,7 +22,7 @@ export class DisplayLinkedCriterionComponent implements OnInit {
   constructor(public featureService: FeatureService) {}
 
   ngOnInit(): void {
-    this.isinvalid = this.criterion.isinvalid === true;
+    this.isinvalid = this.criterion.isInvalid === true;
   }
 
   getValueFilters(): ValueFilter[] {
@@ -35,7 +36,7 @@ export class DisplayLinkedCriterionComponent implements OnInit {
       return [];
     }
   }
-  getAttributeFilters(): ValueFilter[] {
+  getAttributeFilters(): AttributeFilter[] {
     if (this.criterion.attributeFilters) {
       if (!this.featureService.useFeatureMultipleValueDefinitions()) {
         return this.criterion.attributeFilters.length === 0

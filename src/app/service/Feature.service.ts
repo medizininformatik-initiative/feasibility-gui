@@ -1,8 +1,8 @@
-import { Injectable, isDevMode } from '@angular/core';
 import { AppConfigService } from '../config/app-config.service';
-import { FeatureProviderService } from '../modules/querybuilder/service/feature-provider.service';
-import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { FeatureProviderService } from '../modules/querybuilder/service/feature-provider.service';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

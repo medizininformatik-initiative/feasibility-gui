@@ -83,6 +83,7 @@ export class SingleQueryComponent implements OnInit {
       document.getElementById('query_label_' + this.index).focus();
     }, 50);
   }
+
   editComment(): void {
     this.editModeQuery.comment = true;
     this.editMode.emit(true);
@@ -90,11 +91,13 @@ export class SingleQueryComponent implements OnInit {
       document.getElementById('query_comment_' + this.index).focus();
     }, 50);
   }
+
   saveLabel(): void {
     this.editModeQuery.label = false;
     this.editMode.emit(false);
     this.updateQuery();
   }
+
   saveComment(): void {
     this.editModeQuery.comment = false;
     this.editMode.emit(false);

@@ -2,13 +2,13 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { Subscription } from 'rxjs'
-import { Query } from 'src/app/modules/querybuilder/model/api/query/query'
+import { Query as QueryOld } from 'src/app/modules/querybuilder/model/api/query/query'
 import { MatRadioChange } from '@angular/material/radio'
 import { FileSaverService } from 'ngx-filesaver'
 import { QueryProviderService } from 'src/app/modules/querybuilder/service/query-provider.service'
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service'
 import { ApiTranslator } from 'src/app/modules/querybuilder/controller/ApiTranslator'
-
+import { Query } from 'src/app/model/FeasibilityQuery/Query'
 export class SaveDialogComponentData {
   hasQuerySend: boolean | string
 }
@@ -50,7 +50,9 @@ export class SaveDialogComponent implements OnInit, OnDestroy {
     this.subscriptionResult?.unsubscribe()
   }
   doSaveForDataselection(): void {
-    const queryString = JSON.stringify(this.apiTranslator.translateForDataselection(this.query))
+    const queryString = JSON.stringify(
+      this.apiTranslator.translateForDataselection(this.query as unknown as QueryOld)
+    )
     const fileData = new Blob([queryString], { type: 'text/plain;charset=utf-8' })
     this.fileSaverService.save(fileData, this.filename + '.json')
     this.dialogRef.close()

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
+import { TerminologyEntry } from 'src/app/model/terminology/Terminology';
 
 @Component({
   selector: 'num-search-tree-term-entry',

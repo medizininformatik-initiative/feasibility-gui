@@ -16,7 +16,7 @@ import { Criterion } from '../../../../model/api/query/criterion';
 import { OperatorOptions } from '../../../../model/api/query/valueFilter';
 import { ValueType } from '../../../../model/api/terminology/valuedefinition';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
 import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DisplayEntitiesComponent } from '../../display/display-entities/display-entities.component';

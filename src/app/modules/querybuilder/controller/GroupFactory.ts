@@ -1,11 +1,11 @@
-import { Query } from '../model/api/query/query';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import {
   Group,
   GroupDependencyInfo,
   InstanceRestrictionType,
   PeriodUnit,
   TimeRelation,
-} from '../model/api/query/group';
+} from 'src/app/model/FeasibilityQuery/Group';
 
 export class GroupFactory {
   public static createGroup(query: Query): Group {

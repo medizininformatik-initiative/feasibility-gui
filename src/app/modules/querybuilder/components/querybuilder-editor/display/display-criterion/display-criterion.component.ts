@@ -1,12 +1,13 @@
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Criterion } from '../../../../model/api/query/criterion';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { EditSingleCriterionComponent } from '../../edit/edit-single-criterion/edit-single-criterion.component';
-import { Query } from '../../../../model/api/query/query';
-import { Subscription } from 'rxjs';
-import { ValueFilter } from '../../../../model/api/query/valueFilter';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
+import { EditSingleCriterionComponent } from '../../edit/edit-single-criterion/edit-single-criterion.component';
+import { FeatureService } from 'src/app/service/Feature.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { Subscription } from 'rxjs';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Component({
   selector: 'num-display-criterion',
@@ -47,7 +48,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
       ? this.criterion.requiredDataSelection
       : false;
     this.criterion.position = this.position;
-    this.isinvalid = this.criterion.isinvalid === true;
+    this.isinvalid = this.criterion.isInvalid === true;
   }
 
   ngOnDestroy(): void {
@@ -88,7 +89,13 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
       return [];
     }
   }
-  getAttributeFilters(): ValueFilter[] {
+
+  /**
+   * TODO Need to be checked if we should use AbstractAttributeFiltrer
+   *
+   * @returns
+   */
+  getAttributeFilters(): AttributeFilter[] {
     if (this.criterion.attributeFilters) {
       if (!this.featureService.useFeatureMultipleValueDefinitions()) {
         return this.criterion.attributeFilters.length === 0

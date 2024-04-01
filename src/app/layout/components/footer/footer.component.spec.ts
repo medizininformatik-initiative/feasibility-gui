@@ -9,7 +9,7 @@ import { MaterialModule } from '../../material/material.module';
 import { FooterComponent } from './footer.component';
 import { LanguageComponent } from '../language/language.component';
 import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service';
-import { FeatureService } from '../../../service/feature.service';
+import { FeatureService } from '../../../service/Feature.service';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;

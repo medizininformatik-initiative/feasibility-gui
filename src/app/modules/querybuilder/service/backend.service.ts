@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CategoryEntry, TerminologyEntry } from '../model/api/terminology/terminology';
 import { AppConfigService } from '../../../config/app-config.service';
+import { FeatureService } from '../../../service/Feature.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, of } from 'rxjs';
-import { FeatureService } from '../../../service/feature.service';
-import { Query } from '../model/api/query/query';
+import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { QueryProviderService } from './query-provider.service';
 import { QueryResponse } from '../model/api/result/QueryResponse';
 import { QueryResult } from '../model/api/result/QueryResult';
-import { MockBackendDataProvider } from './MockBackendDataProvider';
-import { ApiTranslator } from '../controller/ApiTranslator';
-import { QueryProviderService } from './query-provider.service';
-import { OAuthStorage } from 'angular-oauth2-oidc';
-import { QueryResultRateLimit } from '../model/api/result/QueryResultRateLimit';
-import { v3 as uuidv3 } from 'uuid';
-import { Criterion } from '../model/api/query/criterion';
+import { QueryResultRateLimit } from 'src/app/model/result/QueryResultRateLimit';
+import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
+import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
+import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
+import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
+import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
+import { AnnotatedStructuredQuery } from '../../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class BackendService {
     private queryProviderService: QueryProviderService,
     private http: HttpClient,
     private authStorage: OAuthStorage,
-    private apiTranslator: ApiTranslator,
+    private apiTranslator: UIQuery2StructuredQueryTranslatorService,
     private latestQueryResult: QueryProviderService
   ) {}
 
@@ -42,10 +43,8 @@ export class BackendService {
   private static PATH_STORED_QUERY = 'query/template';
   private static PATH_QUERY_RESULT_LIMIT = 'query/detailed-obfuscated-result-rate-limit';
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345';
-  private storedResult = null;
   private resultObservable = null;
 
-  private readonly mockBackendDataProvider = new MockBackendDataProvider();
   lowerBoundaryPatient: number = this.feature.getPatientResultLowerBoundary();
 
   token = this.authStorage.getItem('access_token');
@@ -55,14 +54,14 @@ export class BackendService {
 
   public getCategories(): Observable<Array<CategoryEntry>> {
     if (this.feature.mockTerminology()) {
-      return of(this.mockBackendDataProvider.getCategoryEntries());
+      return of();
     }
     return this.http.get<Array<CategoryEntry>>(this.createUrl(BackendService.PATH_ROOT_ENTRIES));
   }
 
   public getTerminolgyTree(id: string): Observable<TerminologyEntry> {
     if (this.feature.mockTerminology()) {
-      return of(this.mockBackendDataProvider.getTerminologyEntry(id));
+      return of();
     }
 
     return this.http.get<TerminologyEntry>(
@@ -82,37 +81,7 @@ export class BackendService {
     );
   }
 
-  public getTerminologyProfile(criterion: Criterion): Observable<any> {
-    const termcode = criterion.termCodes[0];
-    let contextVersion = '';
-    let contextSystem = '';
-    let contextCode = '';
-    let termcodeVersion = '';
-
-    if (criterion.context) {
-      contextSystem = criterion.context.system;
-      contextCode = criterion.context.code;
-      if (criterion.context.version) {
-        contextVersion = criterion.context.version;
-      }
-    }
-
-    if (termcode.version) {
-      termcodeVersion = termcode.version;
-    }
-
-    const contextTermcodeHashInput =
-      contextSystem +
-      contextCode +
-      contextVersion +
-      termcode.system +
-      termcode.code +
-      termcodeVersion;
-    const contextTermcodeHash = uuidv3(
-      contextTermcodeHashInput,
-      BackendService.BACKEND_UUID_NAMESPACE
-    );
-
+  public getTerminologyProfile(contextTermcodeHash: string): Observable<any> {
     return this.http.get<any>(
       this.createUrl(BackendService.PATH_TERMINOLOGY + contextTermcodeHash + '/ui_profile')
     );
@@ -123,7 +92,7 @@ export class BackendService {
     search: string
   ): Observable<Array<TerminologyEntry>> {
     if (this.feature.mockTerminology()) {
-      return of(this.mockBackendDataProvider.getTerminolgyEntrySearchResult(catId, search));
+      return of();
     }
 
     const queryParam = 'query=' + search.toUpperCase() + (catId ? '&categoryId=' + catId : '');
@@ -133,16 +102,8 @@ export class BackendService {
   }
 
   public postQuery(query: Query): Observable<any> {
-    if (this.feature.mockQuery()) {
-      return of({ location: BackendService.MOCK_RESULT_URL });
-    }
-
-    if (this.feature.getQueryVersion() === 'v1') {
-      const queryV1 = this.apiTranslator.translateToV1(query);
-      return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV1);
-    }
     if (this.feature.getQueryVersion() === 'v2') {
-      const queryV2 = this.apiTranslator.translateToV2(query);
+      const queryV2 = this.apiTranslator.translateToStructuredQuery(query);
       return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV2, {
         observe: 'response',
       });
@@ -243,22 +204,12 @@ export class BackendService {
       return of({ location: BackendService.MOCK_RESULT_URL });
     } else {
       const headers = this.headers;
-      if (this.feature.getQueryVersion() === 'v1') {
-        const savedQuery = {
-          label: title,
-          comment,
-          content: this.apiTranslator.translateToV1(query),
-        };
-        return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
-          headers,
-        });
-      }
       if (this.feature.getQueryVersion() === 'v2') {
         if (saveWithQuery === false) {
           const savedQuery = {
             label: title,
             comment,
-            content: this.apiTranslator.translateToV2(query),
+            content: this.apiTranslator.translateToStructuredQuery(query),
           };
           return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
             headers,
@@ -287,25 +238,38 @@ export class BackendService {
     }
   }
 
-  public loadSavedQueries(): Observable<any> {
+  public validateStructuredQueryBackend(
+    structuredQuery: StructuredQuery
+  ): Observable<AnnotatedStructuredQuery> {
     const headers = this.headers;
+    const requestBody = structuredQuery;
+    const url = BackendService.PATH_RUN_QUERY + '/validate';
+    return this.http.post<AnnotatedStructuredQuery>(this.createUrl(url), requestBody, { headers });
+  }
+
+  public loadSavedQueries(validate?: boolean): Observable<any> {
+    const headers = this.headers;
+    const url = validate === false ? '&skipValidation=true' : '';
     return this.http.get<Array<any>>(
-      this.createUrl(BackendService.PATH_RUN_QUERY, 'filter=saved'),
+      this.createUrl(BackendService.PATH_RUN_QUERY, 'filter=saved' + url),
       {
         headers,
       }
     );
   }
 
-  public loadSavedTemplates(validate?: boolean): Observable<any> {
+  public loadSavedTemplates(validate?: boolean): Observable<StructuredQueryTemplate[]> {
     if (this.feature.mockLoadnSave()) {
       return of(this.queryProviderService.loadQueries());
     } else {
       const headers = this.headers;
-      const url = validate ? '/validate' : '';
-      return this.http.get<Array<any>>(this.createUrl(BackendService.PATH_STORED_QUERY + url), {
-        headers,
-      });
+      const url = validate === false ? '?skipValidation=true' : '';
+      return this.http.get<Array<StructuredQueryTemplate>>(
+        this.createUrl(BackendService.PATH_STORED_QUERY + url),
+        {
+          headers,
+        }
+      );
     }
   }
 
@@ -317,10 +281,10 @@ export class BackendService {
     });
   }
 
-  public loadQuery(id: number): Observable<any> {
+  public loadStructuredQuery(id: number): Observable<StructuredQueryInquiry> {
     const headers = this.headers;
     const url = this.createUrl(BackendService.PATH_RUN_QUERY + '/' + id.toString());
-    return this.http.get<any>(url, {
+    return this.http.get<StructuredQueryInquiry>(url, {
       headers,
     });
   }
@@ -335,7 +299,7 @@ export class BackendService {
     });
   }
 
-  getSavedQuerySlotCount(): Observable<any> {
+  public getSavedQuerySlotCount(): Observable<any> {
     const headers = this.headers;
     const url = this.createUrl(
       BackendService.PATH_RUN_QUERY + '/' + BackendService.PATH_SAVED_QUERY_SLOTS
@@ -345,9 +309,9 @@ export class BackendService {
     });
   }
 
-  public loadTemplate(id: number): Observable<any> {
+  public loadTemplate(id: number): Observable<StructuredQueryInquiry> {
     const headers = this.headers;
-    return this.http.get<any>(
+    return this.http.get<StructuredQueryInquiry>(
       this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
       { headers }
     );
@@ -396,11 +360,15 @@ export class BackendService {
   }
 
   obfuscateResult(result: number): string {
-    if (result) {
-      if (result <= this.lowerBoundaryPatient) {
-        return '< ' + this.lowerBoundaryPatient.toString();
-      } else {
-        return result.toString();
+    if (result === 0) {
+      return '0';
+    } else {
+      if (result) {
+        if (result <= this.lowerBoundaryPatient) {
+          return '< ' + this.lowerBoundaryPatient.toString();
+        } else {
+          return result.toString();
+        }
       }
     }
   }

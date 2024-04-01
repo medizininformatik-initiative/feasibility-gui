@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { QueryProviderService } from '../../../../service/query-provider.service';
-import { ApiTranslator } from '../../../../controller/ApiTranslator';
 import { Router } from '@angular/router';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
+import { StructuredQuery2UIQueryTranslatorService } from '../../../../../../service/StructuredQuery2UIQueryTranslator.service';
 
 @Component({
   selector: 'num-query-box-end',
@@ -31,7 +31,7 @@ export class QueryBoxEndComponent implements OnInit {
   constructor(
     private backend: BackendService,
     private queryProviderService: QueryProviderService,
-    private apiTranslator: ApiTranslator,
+    private apiTranslator: StructuredQuery2UIQueryTranslatorService,
     private router: Router,
     private feature: FeatureService
   ) {}
@@ -71,9 +71,11 @@ export class QueryBoxEndComponent implements OnInit {
   }
 
   loadQueryIntoFeasibilityPage(singleQuery): void {
-    this.backend.loadQuery(singleQuery.id).subscribe((query) => {
-      this.createDefaultQuery(query);
-      this.storeQueryAndNavigate(singleQuery.totalNumberOfPatients);
+    this.backend.loadStructuredQuery(singleQuery.id).subscribe((query) => {
+      this.apiTranslator.translateSQtoUIQuery(query).subscribe((translatedQuery) => {
+        this.query = translatedQuery;
+        this.storeQueryAndNavigate(singleQuery.totalNumberOfPatients);
+      });
     });
   }
 
@@ -83,25 +85,21 @@ export class QueryBoxEndComponent implements OnInit {
       this.storeTemplateAndNavigate();
     } else {
       this.backend.loadTemplate(singleTemplate.id).subscribe((query) => {
-        this.createDefaultQuery(query);
-        this.storeTemplateAndNavigate();
+        this.apiTranslator.translateSQtoUIQuery(query).subscribe((translatedQuery) => {
+          this.query = translatedQuery;
+          this.storeTemplateAndNavigate();
+        });
       });
     }
   }
 
-  createDefaultQuery(query) {
-    this.queryObject = this.apiTranslator.translateSQtoUIQuery(
-      QueryProviderService.createDefaultQuery(),
-      query
-    );
-  }
   storeTemplateAndNavigate() {
-    this.queryProviderService.store(this.queryObject);
+    this.queryProviderService.store(this.query);
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
   }
 
   storeQueryAndNavigate(singleQueryloadedResult) {
-    this.queryProviderService.store(this.queryObject);
+    this.queryProviderService.store(this.query);
     this.router.navigate(['/querybuilder/editor'], {
       state: { preventReset: true, resultFromSavedQuery: singleQueryloadedResult?.toString() },
     });

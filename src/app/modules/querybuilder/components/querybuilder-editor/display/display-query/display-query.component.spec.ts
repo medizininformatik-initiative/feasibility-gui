@@ -14,7 +14,7 @@ import { DisplayValueFilterComponent } from '../display-value-filter/display-val
 import { Group } from '../../../../model/api/query/group';
 import { Query } from '../../../../model/api/query/query';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component';
 import { ButtonComponent } from '../../../../../../shared/components/button/button.component';
 import { GroupFactory } from '../../../../controller/GroupFactory';

@@ -1,6 +1,8 @@
+import { Comparator } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { Component, Input, OnInit } from '@angular/core';
-import { Comparator, OperatorOptions, ValueFilter } from '../../../../model/api/query/valueFilter';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from 'src/app/service/Feature.service';
+import { FilterTypes } from 'src/app/model/FilterTypes';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 class ComperatorIcon {
   icon: string;
@@ -15,7 +17,7 @@ class ComperatorIcon {
 export class DisplayValueFilterComponent implements OnInit {
   @Input()
   filter: ValueFilter;
-  OperatorOptions: typeof OperatorOptions = OperatorOptions;
+  FilterTypes: typeof FilterTypes = FilterTypes;
 
   constructor(public featureService: FeatureService) {}
 

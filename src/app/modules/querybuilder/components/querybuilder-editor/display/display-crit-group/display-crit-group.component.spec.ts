@@ -13,7 +13,7 @@ import { DisplayValueFilterComponent } from '../display-value-filter/display-val
 import { ReactiveFormsModule } from '@angular/forms';
 import { Query } from '../../../../model/api/query/query';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
 import { DisplayTimeRestrictionComponent } from '../display-time-restriction/display-time-restriction.component';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 

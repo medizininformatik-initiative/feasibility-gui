@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TimeRestriction, TimeRestrictionType } from '../../../../model/api/query/timerestriction';
 // @ts-ignore
 import moment from 'moment';
+import {
+  TimeRestriction,
+  TimeRestrictionType,
+} from 'src/app/model/FeasibilityQuery/TimeRestriction';
 
 @Component({
   selector: 'num-display-time-restriction',

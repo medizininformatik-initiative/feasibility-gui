@@ -17,7 +17,7 @@ import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concep
 import { QueryProviderService } from '../../../../service/query-provider.service';
 import { Query } from '../../../../model/api/query/query';
 import { Criterion } from '../../../../model/api/query/criterion';
-import { FeatureService } from '../../../../../../service/feature.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
 import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component';
 import { DisplayEntitiesComponent } from '../../display/display-entities/display-entities.component';
 import { DisplayCriterionComponent } from '../../display/display-criterion/display-criterion.component';

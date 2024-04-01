@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor/querybuilder-editor.component';
 import { QuerybuilderOverviewComponent } from './components/querybuilder-overview/querybuilder-overview.component';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'editor', pathMatch: 'full' },

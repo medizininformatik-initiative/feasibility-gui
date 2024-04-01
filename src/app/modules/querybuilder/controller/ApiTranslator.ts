@@ -3,7 +3,7 @@ import { Criterion, CriterionOnlyV1, CriterionOnlyV2 } from '../model/api/query/
 import { ObjectHelper } from './ObjectHelper';
 import { Comparator, OperatorOptions } from '../model/api/query/valueFilter';
 import { TimeRestrictionType } from '../model/api/query/timerestriction';
-import { FeatureService } from 'src/app/service/feature.service';
+import { FeatureService } from 'src/app/service/Feature.service';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { TermEntry2CriterionTranslator } from './TermEntry2CriterionTranslator';
@@ -15,10 +15,7 @@ import { TermEntry2CriterionTranslator } from './TermEntry2CriterionTranslator';
 export class ApiTranslator {
   private readonly translator;
   constructor(public featureService: FeatureService) {
-    this.translator = new TermEntry2CriterionTranslator(
-      this.featureService.useFeatureTimeRestriction(),
-      this.featureService.getQueryVersion()
-    );
+    this.translator = new TermEntry2CriterionTranslator(this.featureService.useFeatureTimeRestriction(), this.featureService.getQueryVersion());
   }
   translateToV1(query: Query): QueryOnlyV1 {
     const result = new QueryOnlyV1();
@@ -272,9 +269,7 @@ export class ApiTranslator {
         }
       });
 
-      criterion.attributeFilters = criterion.attributeFilters.filter(
-        (attrFilter, i) => attrFilter.type !== undefined
-      );
+      criterion.attributeFilters = criterion.attributeFilters.filter((attrFilter, i) => attrFilter.type !== undefined);
     }
 
     if (criterion.attributeFilters?.length === 0) {
@@ -361,10 +356,7 @@ export class ApiTranslator {
   translateImportedDsToUIQuery(uiquery: Query, sqquery: any): Query {
     const invalidCriteria = [];
     const selectedCriteria = sqquery.selectedCriteria ? sqquery.selectedCriteria : [];
-    uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(
-      selectedCriteria,
-      invalidCriteria
-    );
+    uiquery.groups[0].inclusionCriteria = this.translateSQtoUICriteria(selectedCriteria, invalidCriteria);
     delete uiquery.groups[0].selectedCriteria;
     return uiquery;
   }
@@ -467,12 +459,8 @@ export class ApiTranslator {
           }
           or.timeRestriction = {
             tvpe: type,
-            minDate: or.timeRestriction.afterDate
-              ? new Date(or.timeRestriction.afterDate)
-              : undefined,
-            maxDate: or.timeRestriction.beforeDate
-              ? new Date(or.timeRestriction.beforeDate)
-              : undefined,
+            minDate: or.timeRestriction.afterDate ? new Date(or.timeRestriction.afterDate) : undefined,
+            maxDate: or.timeRestriction.beforeDate ? new Date(or.timeRestriction.beforeDate) : undefined,
           };
         }
         or.isinvalid = invalidCriteriaSet.has(JSON.stringify(or.termCodes[0]));
@@ -547,13 +535,7 @@ export class ApiTranslator {
     return query;
   }
 
-  setPositionForRefCrit(
-    query: Query,
-    uid: string,
-    row: number,
-    column: number,
-    critType: string
-  ): Query {
+  setPositionForRefCrit(query: Query, uid: string, row: number, column: number, critType: string): Query {
     for (const inex of ['inclusion', 'exclusion']) {
       query.groups[0][inex + 'Criteria'].forEach((disj) => {
         disj.forEach((conj) => {
