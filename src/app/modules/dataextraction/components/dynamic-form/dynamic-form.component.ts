@@ -11,7 +11,7 @@ import { FhirPathField } from '../../models/field-config.model';
 export class DynamicFormComponent implements OnInit {
   dynamicForm!: FormGroup;
   @Output() profileSelected = new EventEmitter<boolean>();
-  isProfileSelected = false;
+  @Input() isProfileSelected = false;
 
   @Input() set setFormGroup(control: AbstractControl) {
     if (control instanceof FormGroup) {
@@ -28,8 +28,7 @@ export class DynamicFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private configService: ProfileFormConfigService) {}
 
   get selectionColumnsControls() {
-    // Ensure 'selection.columns' exists before trying to access its controls
-    const selectionColumnsPath = 'selection.column'; // Verify this is the correct path
+    const selectionColumnsPath = 'selection.column';
     if (this.dynamicForm && this.dynamicForm.get(selectionColumnsPath)) {
       return (this.dynamicForm.get(selectionColumnsPath) as FormArray).controls;
     }
@@ -37,7 +36,6 @@ export class DynamicFormComponent implements OnInit {
   }
 
   get whereControls() {
-    // Ensure 'where' exists before trying to access its controls
     if (this.dynamicForm && this.dynamicForm.get('where')) {
       return (this.dynamicForm.get('where') as FormArray).controls;
     }
@@ -48,7 +46,6 @@ export class DynamicFormComponent implements OnInit {
     this.dynamicForm.addControl('ressource', this.fb.control(''));
 
     this.dynamicForm.get('ressource')?.valueChanges.subscribe((value) => {
-      // Emit true if a profile is selected, false otherwise
       this.isProfileSelected = !!value;
       this.profileSelected.emit(!!value);
     });
@@ -66,14 +63,12 @@ export class DynamicFormComponent implements OnInit {
     const filterFields = profileConfig.filter;
     const fhirPathFields = profileConfig.paths;
 
-    // Reset form to initial state, remove all existing controls except 'profileSelection'
     Object.keys(this.dynamicForm.controls).forEach((controlName) => {
       if (controlName !== 'ressource') {
         this.dynamicForm.removeControl(controlName);
       }
     });
 
-    // Initialize 'selection' and 'where' sections in the form
     this.dynamicForm.addControl(
       'selection',
       this.fb.group({
@@ -82,7 +77,6 @@ export class DynamicFormComponent implements OnInit {
     );
     this.dynamicForm.addControl('where', this.fb.array([]));
 
-    // Handle 'selection' columns based on fhirPathFields
     const selectionColumns = this.dynamicForm.get('selection.column') as FormArray;
     fhirPathFields.forEach((pathField) => {
       selectionColumns.push(
@@ -97,7 +91,6 @@ export class DynamicFormComponent implements OnInit {
       );
     });
 
-    // Handle 'where' based on filterFields
     const whereArray = this.dynamicForm.get('where') as FormArray;
     filterFields.forEach((field) => {
       const control: any = this.fb.group({

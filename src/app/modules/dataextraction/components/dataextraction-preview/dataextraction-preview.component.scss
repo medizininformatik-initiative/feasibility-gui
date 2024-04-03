@@ -1,0 +1,135 @@
+:host {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.form-preview {
+  width: 95%;
+  margin: 10px auto;
+  box-sizing: border-box;
+}
+
+.table-section {
+  width: 100%;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.table {
+  table-layout: fixed; /* Fixed table layout for consistent column widths */
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table thead td {
+  background-color: #5a78ae;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500; /* Medium weight for better readability */
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.table tbody th {
+  width: 30%; /* Set the width for the attribute name column */
+  background-color: #d6e0f5; /* Lighter blue to distinguish from the header */
+  font-weight: 500; /* Slightly heavier font weight to make it stand out */
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.table tbody td {
+  width: 70%; /* Set the width for the details column */
+  line-height: 1.4;
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .table {
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+  }
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+}
+
+.resource-header {
+  background-color: #e8e8e8;
+  color: #333;
+  font-weight: 500;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.div-submit {
+  display: flex;
+  justify-content: flex-end; /* Align the submit button to the right */
+  width: 100%; /* Take up the full width to align with .form-container */
+  margin-top: 1em; /* Space above the submit button */
+  margin-bottom: 1em;
+}
+
+.card-title-container {
+  width: 100%;
+  align-items: center;
+  justify-content: space-between; /* This will space out your title and toggle to opposite ends */
+}
+
+.option-header {
+  display: flex;
+  justify-content: start; /* Align buttons to the start of the flex container */
+  align-items: center; /* Center buttons vertically */
+  margin-bottom: 20px; /* Adds some space between the options and the table */
+}
+
+.option-header .action-button {
+  margin-right: 16px; /* Ensures spacing between the buttons */
+}
+
+.option-header .expert-toggle {
+  margin-left: auto; /* Pushes the toggle to the end of the flex container */
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #49c5b6; /* Your desired active color */
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: #49c5b6; /* Your desired active color */
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-ripple-element {
+  background-color: rgba(73, 197, 182, 0.3); /* A lighter or semi-transparent ripple color */
+}
+
+:host ::ng-deep .mat-slide-toggle:not(.mat-checked) .mat-slide-toggle-thumb {
+  background-color: #b0c4de; /* Your desired inactive color */
+}
+
+:host ::ng-deep .mat-slide-toggle:focus .mat-slide-toggle-thumb,
+:host ::ng-deep .mat-slide-toggle:active .mat-slide-toggle-thumb {
+  background-color: #49c5b6; /* Your desired active/focus color */
+}

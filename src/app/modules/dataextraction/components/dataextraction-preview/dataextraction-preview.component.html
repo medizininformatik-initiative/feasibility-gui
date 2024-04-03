@@ -1,41 +1,80 @@
-<div *ngFor="let formGroup of forms.controls; let i = index" class="table-section">
-  <!-- Health Record Element Name -->
-  <div class="health-record-element">
-    <h2>{{ formGroup.get('ressource').value }}</h2>
-  </div>
-  <!-- Where Conditions -->
-  <div *ngIf="formGroup.get('where') && formGroup.get('where').length > 0">
-    <h3>Filters</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Filter Type</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let filter of formGroup.get('where').controls">
-          <ng-container *ngIf="!filter.get('hidden')?.value">
-            <td>{{ filter.get('label').value }}</td>
-            <td>
-              <ng-container *ngIf="filter.get('type').value === 'coding'">
-                <!-- Assuming 'value' would contain selected codes -->
-                <ng-container *ngFor="let code of filter.get('value').controls; let j = index">
-                  {{ code.value
-                  }}<ng-container *ngIf="j < filter.get('value').controls.length - 1"
-                    >,
+<mat-card class="mat-elevation-z2">
+  <mat-card-subtitle class="padding-bottom-1">
+    <div class="form-preview">
+      <div class="option-header">
+        <num-button class="action-button" (click)="open()">Open</num-button>
+        <num-button class="action-button" (click)="edit()">Edit</num-button>
+        <num-button class="action-button" (click)="download()">Download</num-button>
+        <mat-slide-toggle class="expert-toggle" color="primary" (change)="toggleExpertView($event)">
+          Expert View
+        </mat-slide-toggle>
+      </div>
+      <div *ngFor="let formGroup of forms.controls; let i = index" class="table-section">
+        <table class="table">
+          <thead>
+            <tr>
+              <td [attr.colspan]="displayExpertView ? '3' : '2'">
+                {{ formGroup.get('ressource').value }}
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Separator Row for Applied Filters -->
+            <ng-container *ngIf="applicableFilter(formGroup)">
+              <tr>
+                <th>Applied Filter Attribute</th>
+                <th>Filter Values</th>
+                <th *ngIf="displayExpertView">FHIRPath Expression</th>
+              </tr>
+
+              <!-- Rows for Each Filter -->
+              <tr *ngFor="let filter of formGroup.get('where').controls">
+                <td>{{ filter.get('label').value }}</td>
+                <td>
+                  <ng-container
+                    *ngIf="
+                      filter.get('type').value === 'coding' && isCodingFilterApplicable(filter)
+                    "
+                  >
+                    <span *ngFor="let code of filter.get('value').controls; let j = index">
+                      {{ code.get('code').value }} - {{ code.get('display').value }}
+                      <span *ngIf="j < filter.get('value').controls.length - 1">, </span>
+                    </span>
                   </ng-container>
-                </ng-container>
+                  <ng-container
+                    *ngIf="filter.get('type').value === 'date' && isDateFilterApplicable(filter)"
+                  >
+                    {{ filter.get('afterDate').value | date : 'mediumDate' }} -
+                    {{ filter.get('beforeDate').value | date : 'mediumDate' }}
+                  </ng-container>
+                </td>
+                <td *ngIf="displayExpertView">{{ filter.get('path').value }}</td>
+              </tr>
+            </ng-container>
+
+            <!-- Separator Row for Selected Attributes -->
+            <tr>
+              <th>Selected Attribute Name</th>
+              <th>Details</th>
+              <th *ngIf="displayExpertView">FHIRPath Expression</th>
+            </tr>
+
+            <!-- Rows for Each Selected Attribute -->
+            <tr *ngFor="let attribute of formGroup.get('selection.column').controls">
+              <ng-container
+                *ngIf="attribute.get('selected').value && !attribute.get('hidden').value"
+              >
+                <td>{{ attribute.get('name').value }}</td>
+                <td>{{ attribute.get('info').value }}</td>
+                <td *ngIf="displayExpertView">{{ attribute.get('path').value }}</td>
               </ng-container>
-              <ng-container *ngIf="filter.get('type').value === 'date'">
-                <!-- Display date range if available -->
-                {{ filter.get('afterDate').value | date : 'mediumDate' }} -
-                {{ filter.get('beforeDate').value | date : 'mediumDate' }}
-              </ng-container>
-            </td>
-          </ng-container>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div fxLayout="row" class="div-submit">
+        <num-button (click)="submitForms()" class="action-button">Submit</num-button>
+      </div>
+    </div>
+  </mat-card-subtitle>
+</mat-card>

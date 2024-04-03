@@ -28,7 +28,7 @@
   justify-content: right;
 }
 
-.div-submit {
+.div-preview {
   display: flex;
   justify-content: flex-end; /* Align the submit button to the right */
   width: 100%; /* Take up the full width to align with .form-container */
