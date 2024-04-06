@@ -12,6 +12,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { LayoutModule } from '../../layout/layout.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataextractionPreviewComponent } from './components/dataextraction-preview/dataextraction-preview.component';
+import { StepperComponent } from './components/stepper/stepper.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { DataextractionPreviewComponent } from './components/dataextraction-prev
     FhirPathComponent,
     FhirPathExpressionsComponent,
     DataextractionPreviewComponent,
+    StepperComponent,
   ],
   imports: [
     CommonModule,

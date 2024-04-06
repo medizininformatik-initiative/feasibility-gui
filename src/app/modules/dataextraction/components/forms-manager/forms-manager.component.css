@@ -30,10 +30,10 @@
 
 .div-preview {
   display: flex;
-  justify-content: flex-end; /* Align the submit button to the right */
-  width: 100%; /* Take up the full width to align with .form-container */
-  margin-top: 1em; /* Space above the submit button */
-  margin-bottom: 1em;
+  justify-content: space-between; /* This pushes the child elements to the start and end */
+  width: 100%; /* Take up the full width */
+  margin-top: 1em; /* Space above the buttons */
+  margin-bottom: 1em; /* Space below the buttons */
 }
 
 .file-upload {

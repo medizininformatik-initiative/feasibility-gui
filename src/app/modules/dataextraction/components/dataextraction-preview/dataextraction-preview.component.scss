@@ -86,7 +86,7 @@
 
 .div-submit {
   display: flex;
-  justify-content: flex-end; /* Align the submit button to the right */
+  justify-content: space-between; /* Align the submit button to the right */
   width: 100%; /* Take up the full width to align with .form-container */
   margin-top: 1em; /* Space above the submit button */
   margin-bottom: 1em;
@@ -117,12 +117,10 @@
   .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled)
   .mdc-switch__shadow {
   background-color: #5a78ae;
-  /*replace with your color*/
 }
 
 ::ng-deep
   .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled)
   .mdc-switch__track::after {
   background-color: #d6e0f5 !important;
-  /*replace with your color*/
 }

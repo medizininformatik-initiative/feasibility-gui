@@ -1,9 +1,9 @@
+<num-stepper [currentStep]="3"></num-stepper>
 <mat-card class="mat-elevation-z2">
   <mat-card-subtitle class="padding-bottom-1">
     <div class="form-preview">
       <div class="option-header">
         <num-button class="action-button" (click)="open()">Open</num-button>
-        <num-button class="action-button" (click)="edit()">Edit</num-button>
         <num-button class="action-button" (click)="download()">Download</num-button>
         <mat-slide-toggle class="expert-toggle" color="primary" (change)="toggleExpertView($event)">
           Expert View
@@ -73,6 +73,7 @@
         </table>
       </div>
       <div fxLayout="row" class="div-submit">
+        <num-button class="action-button" (click)="edit()">Back</num-button>
         <num-button (click)="submitForms()" class="action-button">Submit</num-button>
       </div>
     </div>

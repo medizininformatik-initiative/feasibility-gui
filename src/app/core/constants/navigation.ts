@@ -13,12 +13,12 @@ export const mainNavItems: INavItem[] = [
     icon: 'dna',
     translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
   },
-  {
-    routeTo: 'dataextraction/editor',
-    roles: ['main'],
-    icon: 'lorenz-data-extraction-icon',
-    translationKey: 'NAVIGATION.DATASELECTION_EDITOR',
-  },
+  // {
+  //   routeTo: 'dataextraction/editor',
+  //   roles: ['main'],
+  //   icon: 'lorenz-data-extraction-icon',
+  //   translationKey: 'NAVIGATION.DATASELECTION_EDITOR',
+  // },
   {
     routeTo: 'querybuilder/overview',
     roles: ['main'],

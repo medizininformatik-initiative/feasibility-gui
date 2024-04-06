@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./forms-manager.component.css'],
 })
 export class FormsManagerComponent implements OnInit {
+  back() {
+    this.router.navigate(['/querybuilder/editor']);
+  }
   forms: FormArray<FormGroup>;
   showAddButton = false; // New flag to control the button visibility
 

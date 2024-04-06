@@ -1,0 +1,31 @@
+/* stepper.component.css */
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.step {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.step-number {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: #fff;
+  line-height: 30px;
+  margin-bottom: 5px;
+}
+
+.step-title {
+  display: block;
+  font-size: 14px;
+}
+
+.active .step-number {
+  background-color: #5a78ae;
+}

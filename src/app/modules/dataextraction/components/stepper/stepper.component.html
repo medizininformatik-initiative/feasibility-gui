@@ -1,0 +1,15 @@
+<!-- stepper.component.html -->
+<div class="stepper">
+  <div class="step" [class.active]="currentStep === 1">
+    <div class="step-number">1</div>
+    <div class="step-title">Cohort Definition</div>
+  </div>
+  <div class="step" [class.active]="currentStep === 2">
+    <div class="step-number">2</div>
+    <div class="step-title">Date Selection</div>
+  </div>
+  <div class="step" [class.active]="currentStep === 3">
+    <div class="step-number">3</div>
+    <div class="step-title">Final Preview</div>
+  </div>
+</div>
