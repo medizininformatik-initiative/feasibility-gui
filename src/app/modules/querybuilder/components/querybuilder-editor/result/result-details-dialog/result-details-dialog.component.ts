@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { QueryResult } from 'src/app/model/result/QueryResult';
 import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
+import { Router } from '@angular/router';
 
 export class ResultDetailsDialogComponentData {
   resultObservable$: Observable<QueryResult>;
@@ -32,7 +33,8 @@ export class ResultDetailsDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ResultDetailsDialogComponent>,
     public snackbar: SnackbarService,
     public backend: BackendService,
-    public featureService: FeatureService
+    public featureService: FeatureService,
+    public router: Router
   ) {
     if (this.data.isResultLoaded) {
       this.result = this.data.myResult;
@@ -50,6 +52,11 @@ export class ResultDetailsDialogComponent implements OnInit {
   doClose(): void {
     this.resultSubscription?.unsubscribe();
     this.dialogRef.close();
+  }
+
+  openDataExtraction(): void {
+    this.dialogRef.close();
+    this.router.navigate(['/dataextraction/editor']);
   }
 
   getDetailedResult(url: string): void {

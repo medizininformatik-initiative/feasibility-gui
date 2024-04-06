@@ -27,9 +27,17 @@
         </tr>
       </ng-container>
     </table>
-
     <div *ngIf="resultStatus === '429'" class="error-message">
       {{ 'RESULT.MESSAGE429' | translate }}
     </div>
   </div>
+  <ng-container
+    *ngIf="resultStatus === '200' && result?.resultLines?.length >= lowerBoundaryLocation"
+  >
+    <div class="button-data-extraction">
+      <num-button (click)="openDataExtraction()">
+        {{ 'RESULT.CREATE_DATA_EXTRACTION' | translate }}
+      </num-button>
+    </div>
+  </ng-container>
 </div>

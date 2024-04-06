@@ -242,7 +242,8 @@
     "TOTAL": "Gesamt",
     "SITE": "Standort",
     "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
-    "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
+    "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt",
+    "CREATE_DATA_EXTRACTION": "Datenextratkionsanfrage erstellen"
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",

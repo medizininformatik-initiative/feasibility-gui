@@ -529,7 +529,9 @@ export class ProfileFormConfigService {
           field: 'vaccineCode',
           type: 'coding',
           label: 'Vaccine Code',
-          valueSetUrls: ['http://hl7.org/fhir/sid/cvx'],
+          valueSetUrls: [
+            'https://ontoserver.imi.uni-luebeck.de/fhir/ValueSet/synthea_immunization',
+          ],
           path: 'Immunization.vaccineCode.coding',
         },
       ],

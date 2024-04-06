@@ -241,7 +241,8 @@
     "TOTAL": "Total",
     "SITE": "Site",
     "MESSAGE429": "You reached your maximum request limit.",
-    "DETAILS_TOOLTIP": "The number shows how many views of the detailed result view you have already used - will be reset daily"
+    "DETAILS_TOOLTIP": "The number shows how many views of the detailed result view you have already used - will be reset daily",
+    "CREATE_DATA_EXTRACTION": "Create data extraction"
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",
