@@ -1,0 +1,19 @@
+<mat-card class="status-card">
+  <mat-card-header>
+    <mat-card-title>Status Updates</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p aria-live="polite">
+      Current Status:
+      <span class="status-text" *ngIf="currentStatus; else noStatus">
+        {{ currentStatus }}
+      </span>
+      <ng-template #noStatus><i>No status updates yet.</i></ng-template>
+    </p>
+    <mat-progress-bar
+      *ngIf="isLoading"
+      mode="indeterminate"
+      aria-label="Loading status updates"
+    ></mat-progress-bar>
+  </mat-card-content>
+</mat-card>

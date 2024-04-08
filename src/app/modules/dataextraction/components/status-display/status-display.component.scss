@@ -1,0 +1,19 @@
+.status-card {
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.status-text {
+  font-weight: bold;
+  color: #5a78ae; /* Primary color for status text */
+}
+
+/* Optional: Provide additional styles for different statuses */
+.status-text.success {
+  color: #4caf50; /* Green for success */
+}
+
+.status-text.error {
+  color: #f44336; /* Red for error */
+}

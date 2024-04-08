@@ -4,6 +4,11 @@ import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/for
 import { ExtractionFormToViewDefinitionService } from '../../services/extraction-form-to-view-definition.service';
 import { FormSubmissionService } from '../../services/form-submission.service';
 import { Router } from '@angular/router';
+import { QueryProviderService } from 'src/app/modules/querybuilder/service/query-provider.service';
+import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
+import { StructuredQuery2UIQueryTranslatorService } from 'src/app/service/StructuredQuery2UIQueryTranslator.service';
+import { StatusDisplayComponent } from '../status-display/status-display.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'num-dataextraction-preview',
@@ -17,9 +22,13 @@ export class DataextractionPreviewComponent implements OnInit {
   translationComponent: ExtractionFormToViewDefinitionService =
     new ExtractionFormToViewDefinitionService();
   constructor(
+    private apiTranslator: StructuredQuery2UIQueryTranslatorService,
+    private UITranslator: UIQuery2StructuredQueryTranslatorService,
     private formSubmissionService: FormSubmissionService,
     private dataService: DataService,
-    private router: Router
+    private queryProviderService: QueryProviderService,
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -39,11 +48,25 @@ export class DataextractionPreviewComponent implements OnInit {
   }
 
   download() {
-    const formDataJson = JSON.stringify(this.forms.getRawValue(), null, 2);
+    const ccdl = {
+      sq: JSON.parse(
+        JSON.stringify(
+          this.UITranslator.translateToStructuredQuery(this.queryProviderService.query())
+        )
+      ),
+      deq: this.forms.getRawValue(),
+      viewDefinitions: this.translationComponent.transformToViewDefinitions(
+        this.forms.getRawValue()
+      ),
+    };
+
+    const ccdlString = JSON.stringify(ccdl, null, 2);
+
     const now = new Date();
     const timestamp = now.toISOString().replace(/[:\-]|\.\d{3}/g, '');
-    const filename = `forms_${timestamp}.json`;
-    this.downloadForm(formDataJson, filename);
+    const filename = `ccdl_${timestamp}.json`;
+
+    this.downloadForm(ccdlString, filename);
   }
 
   downloadForm(data: string, filename: string) {
@@ -70,11 +93,20 @@ export class DataextractionPreviewComponent implements OnInit {
       const file = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        const formDataJson = e.target.result;
-        const formData = JSON.parse(formDataJson);
-        const formGroups = formData.map((data: any) => this.createFormGroupFromJson(data));
+        const ccdlJson = e.target.result;
+        const ccdl = JSON.parse(ccdlJson);
+
+        this.apiTranslator
+          .translateSQtoUIQuery(QueryProviderService.createDefaultQuery(), ccdl.sq)
+          .subscribe((translatedQuery) => {
+            const query = translatedQuery;
+            this.queryProviderService.store(query);
+          });
+
+        const formGroups = ccdl.deq.map((data: any) => this.createFormGroupFromJson(data));
         this.forms = new FormArray<FormGroup>(formGroups);
-        console.log('Data loaded:', this.forms.getRawValue());
+
+        console.log('Forms data loaded');
       };
       reader.readAsText(file);
     };
@@ -105,22 +137,42 @@ export class DataextractionPreviewComponent implements OnInit {
     return new FormGroup(group);
   }
 
+  openStatusDialog() {
+    this.dialog.open(StatusDisplayComponent, {
+      width: '500px', // or another appropriate width
+      disableClose: true,
+    });
+  }
+
   submitForms(): void {
-    const processedData = this.translationComponent.transformToViewDefinitions(
-      this.forms.getRawValue()
-    );
-    const formDataJson = JSON.stringify(processedData, null, 2); // Serialize with pretty print
-    console.log('Submitting forms:', formDataJson);
-    this.formSubmissionService.submitForm(formDataJson).subscribe(
+    this.openStatusDialog();
+    const ccdl = {
+      sq: JSON.parse(
+        JSON.stringify(
+          this.UITranslator.translateToStructuredQuery(this.queryProviderService.query())
+        )
+      ),
+      viewDefinitions: this.translationComponent.transformToViewDefinitions(
+        this.forms.getRawValue()
+      ),
+    };
+
+    this.formSubmissionService.submitForm(ccdl).subscribe(
       (response) => {
         console.log('Forms submitted successfully');
         // Directly use the response data, assuming it's the CSV content
         this.downloadFile(response, 'extracted_data.csv');
+        this.closeStatusDialog();
       },
       (error) => {
         console.error('Error submitting forms:', error);
+        this.closeStatusDialog();
       }
     );
+  }
+
+  closeStatusDialog() {
+    this.dialog.closeAll();
   }
 
   downloadFile(data: any, filename: string): void {

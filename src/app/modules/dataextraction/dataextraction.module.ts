@@ -13,6 +13,7 @@ import { LayoutModule } from '../../layout/layout.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataextractionPreviewComponent } from './components/dataextraction-preview/dataextraction-preview.component';
 import { StepperComponent } from './components/stepper/stepper.component';
+import { StatusDisplayComponent } from './components/status-display/status-display.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { StepperComponent } from './components/stepper/stepper.component';
     FhirPathExpressionsComponent,
     DataextractionPreviewComponent,
     StepperComponent,
+    StatusDisplayComponent,
   ],
   imports: [
     CommonModule,

@@ -38,13 +38,13 @@
     "sendsqcontexttobackend": true,
     "pollingtimeinseconds": 10,
     "pollingintervallinseconds": 1,
-    "lowerboundarypatientresult": 10,
-    "lowerboundarylocationresult": 3
+    "lowerboundarypatientresult": 1,
+    "lowerboundarylocationresult": 1
   },
   "mock": {
     "terminology": false,
     "query": false,
-    "result": true,
+    "result": false,
     "loadnsave": false
   },
   "stylesheet": "FDPGTheme",

@@ -124,3 +124,7 @@
   .mdc-switch__track::after {
   background-color: #d6e0f5 !important;
 }
+
+.cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}

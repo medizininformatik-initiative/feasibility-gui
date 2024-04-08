@@ -45,7 +45,7 @@
   "mock": {
     "terminology": false,
     "query": false,
-    "result": true,
+    "result": false,
     "loadnsave": false
   },
   "stylesheet": "FDPGTheme",
