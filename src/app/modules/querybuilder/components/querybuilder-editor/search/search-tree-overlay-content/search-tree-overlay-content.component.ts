@@ -104,6 +104,7 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   openDetailsPopUp(shouldAdd: boolean): void {
     if (shouldAdd) {
       const terminologyEntries = this.extractSelectedEntries();
+      console.log(terminologyEntries);
 
       if (terminologyEntries && terminologyEntries.length > 0) {
         const dialogConfig = new MatDialogConfig();
@@ -122,6 +123,15 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
       }
     }
 
+    this.closeOverlay.emit('tree');
+  }
+
+  newOpenDetailsPopUp(shouldAdd: boolean): void {
+    if (shouldAdd) {
+      const terminologyEntries = this.extractSelectedEntries();
+      if (terminologyEntries && terminologyEntries.length > 0) {
+      }
+    }
     this.closeOverlay.emit('tree');
   }
 
