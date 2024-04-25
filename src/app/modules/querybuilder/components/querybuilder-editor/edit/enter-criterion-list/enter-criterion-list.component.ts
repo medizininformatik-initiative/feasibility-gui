@@ -11,11 +11,13 @@ import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Cr
 import { Query } from '../../../../../../model/FeasibilityQuery/Query';
 import { CritType } from '../../../../../../model/FeasibilityQuery/Group';
 import { TerminologyEntry } from '../../../../../../model/terminology/Terminology';
+import { QueryService } from '../../../../../../service/QueryService.service';
 
 export class EnterCriterionListComponentData {
   groupIndex: number;
   critType: CritType;
   termEntryList: Array<TerminologyEntry>;
+  criterionList: Array<Criterion>;
   query: Query;
   searchType: string;
 }
@@ -43,20 +45,26 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
     private dialogRef: MatDialogRef<EnterCriterionListComponent, void>,
     public provider: QueryProviderService,
-    public featureService: FeatureService
+    public featureService: FeatureService,
+    private queryService: QueryService
   ) {
     this.translator = new TermEntry2CriterionTranslator(
       this.featureService.useFeatureTimeRestriction(),
       this.featureService.getQueryVersion()
     );
-    this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
+    //this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
+    this.criterionList = data.criterionList;
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
-    this.query = data.query;
+    //this.query = data.query;
+    this.queryService.getFeasibilityQuery().subscribe((query) => {
+      this.query = query;
+    });
     this.searchType = data.searchType;
   }
 
   ngOnInit(): void {
+    console.log(this.criterionList);
     this.criterionList.forEach((curCriterion) => {
       this.criterionAddibleList.push({
         criterion: curCriterion,

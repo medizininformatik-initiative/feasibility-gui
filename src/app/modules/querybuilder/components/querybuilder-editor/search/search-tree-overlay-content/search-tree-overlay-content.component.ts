@@ -10,6 +10,9 @@ import { SearchMode } from '../search-input/search-input.component';
 import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { CritType } from 'src/app/model/FeasibilityQuery/Group';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { CreateCriterionService } from '../../../../../../service/CriterionService/CreateCriterion.service';
+import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
+import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
 
 @Component({
   selector: 'num-search-tree-overlay-content',
@@ -42,7 +45,12 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   private subscriptionDialog: Subscription;
   private subscriptionTemp: Subscription;
 
-  constructor(private backend: BackendService, public dialog: MatDialog) {}
+  constructor(
+    private backend: BackendService,
+    public dialog: MatDialog,
+    private CriterionService: CreateCriterionService,
+    private EditService: EditCriterionService
+  ) {}
 
   ngOnInit(): void {
     this.treeControl = new NestedTreeControl<TerminologyEntry>(this.getChildren);
@@ -129,7 +137,12 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   newOpenDetailsPopUp(shouldAdd: boolean): void {
     if (shouldAdd) {
       const terminologyEntries = this.extractSelectedEntries();
+      const criterionList: Criterion[] = [];
       if (terminologyEntries && terminologyEntries.length > 0) {
+        terminologyEntries.forEach((termEntry) => {
+          criterionList.push(this.CriterionService.createCriterionFromTermEntry(termEntry));
+        });
+        this.EditService.editCriterion(criterionList, this.critType);
       }
     }
     this.closeOverlay.emit('tree');
