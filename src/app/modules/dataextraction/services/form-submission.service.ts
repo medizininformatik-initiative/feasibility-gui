@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class FormSubmissionService {
-  private apiUrl = 'http://pathling-staging:8000/run_ccdl'; // Update with your actual endpoint URL
+  private apiUrl = 'https://pathling-staging:8000/run_ccdl'; // Update with your actual endpoint URL
 
   constructor(private http: HttpClient) {}
 

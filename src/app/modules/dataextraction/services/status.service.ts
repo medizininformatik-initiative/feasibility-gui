@@ -11,9 +11,7 @@ interface StatusResponse {
   providedIn: 'root',
 })
 export class StatusService {
-  private statusUrl = 'http://localhost:8000/status'; // Update with your actual endpoint URL
-
-  private readonly STATUS_URL = 'http://localhost:8000/status';
+  private readonly STATUS_URL = 'https://pathling-staging:8000/status';
 
   // Polling interval in milliseconds
   private readonly POLLING_INTERVAL = 2000; // Poll every 5 seconds
