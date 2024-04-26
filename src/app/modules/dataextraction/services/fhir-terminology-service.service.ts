@@ -8,7 +8,7 @@ import { catchError, map, shareReplay } from 'rxjs/operators';
 })
 export class FhirTerminologyService {
   private cache = new Map<string, Observable<any[]>>();
-  private fhirServerUrl = 'https://ontoserver.imi.uni-luebeck.de/fhir';
+  private fhirServerUrl = 'http://terminology-service:8083/fhir';
 
   constructor(private http: HttpClient) {}
 

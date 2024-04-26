@@ -8,6 +8,12 @@
   "uiBackendApi": {
     "baseUrl": "#{uiBackendApi_baseUrl}"
   },
+  "terminologyAPI": {
+    "baseUrl": "#{terminologyAPI_baseUrl}"
+  },
+  "dataExtractionAPI": {
+    "baseUrl": "#{dataExtractionAPI_baseUrl}"
+  },
   "auth": {
     "baseUrl": "#{auth_baseUrl}",
     "realm": "#{auth_realm}",
