@@ -9,7 +9,6 @@ import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
 })
 export class QueryService {
   private STORAGE_QUERY_KEY = 'QUERY';
-  private SAVE_QUERY_KEY = 'SAVEDQUERIES';
 
   private feasibilityQuery: BehaviorSubject<Query> = new BehaviorSubject(new Query());
   private criterionHashMapSubject: BehaviorSubject<Map<string, Criterion[]>> = new BehaviorSubject(
