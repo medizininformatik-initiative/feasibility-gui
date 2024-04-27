@@ -38,19 +38,8 @@
       </div>
     </ng-container>
   </div>
-  <div *ngIf="searchType !== 'querybuilder'">
-    <section>
-      <mat-checkbox
-        [(ngModel)]="checkboxValue"
-        (change)="storeCheckboxValue()"
-        class="checkbox-optional"
-      >
-        {{ 'DATASELECTION.REQUIRED' | translate }}
-      </mat-checkbox>
-    </section>
-  </div>
   <div *ngIf="showCancelButton" class="cancel-button-wrapper">
-    <button class="cancel-button" type="button" mat-icon-button (click)="doDelete()">
+    <button class="delete-button" type="button" mat-icon-button (click)="doDelete()">
       <fa-icon size="lg" icon="times"></fa-icon>
     </button>
   </div>
