@@ -35,18 +35,12 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   @Output()
   delete = new EventEmitter<Criterion>();
 
-  @Output()
-  storeQuery = new EventEmitter<Query>();
-
   private subscriptionDialog: Subscription;
   isinvalid: boolean;
 
   constructor(public dialog: MatDialog, public featureService: FeatureService) {}
 
   ngOnInit(): void {
-    this.checkboxValue = this.criterion.requiredDataSelection
-      ? this.criterion.requiredDataSelection
-      : false;
     this.criterion.position = this.position;
     this.isinvalid = this.criterion.isInvalid === true;
   }
@@ -61,16 +55,11 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       criterion: this.criterion,
-      query: this.query,
       position: this.position,
-      searchType: this.searchType,
     };
     if (!this.isinvalid) {
       const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig);
       this.subscriptionDialog?.unsubscribe();
-      this.subscriptionDialog = dialogRef
-        .afterClosed()
-        .subscribe((query) => this.storeQuery.emit(query));
     }
   }
 
@@ -107,10 +96,5 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
     } else {
       return [];
     }
-  }
-
-  storeCheckboxValue(): void {
-    this.criterion.requiredDataSelection = this.checkboxValue;
-    this.storeQuery.emit(this.query);
   }
 }

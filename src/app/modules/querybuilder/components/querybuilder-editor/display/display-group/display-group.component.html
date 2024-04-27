@@ -93,13 +93,11 @@
       <num-display-crit-group
         [ngClass]="{ dataselectionClass: searchType === 'dataselection' }"
         [searchType]="searchType"
-        [query]="query"
         [critGroup]="group.inclusionCriteria"
         [groupId]="group.id"
         [critType]="'inclusion'"
         (switch)="switch('inclusion', $event)"
         (storeQuery)="doStoreQuery($event)"
-        (dropped)="doDrop($event)"
         (delete)="doDelete($event, 'inclusion')"
         [fxFlex]="searchType === 'dataselection' ? 100 : 49.5"
       ></num-display-crit-group>
@@ -108,12 +106,10 @@
         *ngIf="searchType === 'querybuilder'"
         [searchType]="searchType"
         [critGroup]="group.exclusionCriteria"
-        [query]="query"
         [groupId]="group.id"
         [critType]="'exclusion'"
         (switch)="switch('exclusion', $event)"
         (storeQuery)="doStoreQuery($event)"
-        (dropped)="doDrop($event)"
         (delete)="doDelete($event, 'exclusion')"
         fxFlex="49.5"
       ></num-display-crit-group>

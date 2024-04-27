@@ -28,6 +28,7 @@ import {
   TimeRestriction,
   TimeRestrictionType,
 } from 'src/app/model/FeasibilityQuery/TimeRestriction';
+import { QueryService } from 'src/app/service/QueryService.service';
 @Component({
   selector: 'num-edit-criterion',
   templateUrl: './edit-criterion.component.html',
@@ -76,6 +77,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     public featureService: FeatureService,
     private changeDetector: ChangeDetectorRef,
     public provider: QueryProviderService,
+    private queryService: QueryService,
     private backend: BackendService
   ) {
     this.translator = new TermEntry2CriterionTranslator(
@@ -85,13 +87,17 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   ngOnInit(): void {
+    console.log(this.query);
     if (this.position) {
       this.selectedGroupId = this.position.groupId;
     } else {
       this.selectedGroupId = this.query.groups[0].id;
     }
+    this.queryService.getFeasibilityQuery().subscribe((query) => {
+      this.query = query;
+      this.showGroups = this.query.groups.length > 1;
+    });
 
-    this.showGroups = this.query.groups.length > 1;
     this.createListOfQueryCriteriaAndHashes();
     this.loadUIProfile();
   }
