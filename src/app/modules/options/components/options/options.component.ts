@@ -13,6 +13,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { QueryService } from 'src/app/service/QueryService.service';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -47,6 +48,7 @@ export class OptionsComponent implements OnInit {
     public featureService: FeatureService,
     public featureProviderService: FeatureProviderService,
     public queryProviderService: QueryProviderService,
+    private queryService: QueryService,
     private http: HttpClient,
     private apiTranslator: ApiTranslator,
     private newTranslator: UIQuery2StructuredQueryTranslatorService
@@ -55,7 +57,9 @@ export class OptionsComponent implements OnInit {
   ngOnInit(): void {
     this.features = this.featureProviderService.getFeatures();
     this.stylesheet = this.features.stylesheet;
-    this.query = this.queryProviderService.query() as unknown as Query;
+    this.queryService.getFeasibilityQuery().subscribe((query) => {
+      this.query = query;
+    });
     this.pollingTime = this.features.options.pollingtimeinseconds;
     this.pollingIntervall = this.features.options.pollingintervallinseconds;
     this.fhirport = this.features.fhirport;
