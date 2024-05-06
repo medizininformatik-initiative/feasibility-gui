@@ -12,6 +12,7 @@ import { Query } from '../../../../../../model/FeasibilityQuery/Query';
 import { CritType } from '../../../../../../model/FeasibilityQuery/Group';
 import { TerminologyEntry } from '../../../../../../model/terminology/Terminology';
 import { QueryService } from '../../../../../../service/QueryService.service';
+import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
 
 export class EnterCriterionListComponentData {
   groupIndex: number;
@@ -20,6 +21,8 @@ export class EnterCriterionListComponentData {
   criterionList: Array<Criterion>;
   query: Query;
   searchType: string;
+  position: CritGroupPosition;
+  modus: string;
 }
 
 @Component({
@@ -34,6 +37,8 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
   query: Query;
   searchType: string;
   actionDisabled = true;
+  position: CritGroupPosition;
+  modus: string;
   criterionAddibleList: Array<{
     criterion: Criterion
     groupID: number
@@ -44,7 +49,6 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
     private dialogRef: MatDialogRef<EnterCriterionListComponent, void>,
-    public provider: QueryProviderService,
     public featureService: FeatureService,
     private queryService: QueryService
   ) {
@@ -59,11 +63,23 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     //this.query = data.query;
     this.queryService.getFeasibilityQuery().subscribe((query) => {
       this.query = query;
+      if (data.position) {
+        this.position = data.position;
+      } else {
+        this.position = {
+          groupId: this.query.groups[this.groupIndex].id,
+          critType: data.critType,
+          row: undefined,
+          column: undefined,
+        };
+      }
     });
+    this.modus = data.modus;
     this.searchType = data.searchType;
   }
 
   ngOnInit(): void {
+    console.log('enter-critetion-list');
     console.log(this.criterionList);
     this.criterionList.forEach((curCriterion) => {
       this.criterionAddibleList.push({
@@ -87,13 +103,14 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.critType === 'inclusion') {
-      this.query.groups[index].inclusionCriteria.push([criterion]);
-    } else {
-      this.query.groups[index].exclusionCriteria.push([criterion]);
+    if (this.modus === 'create') {
+      if (this.critType === 'inclusion') {
+        this.query.groups[index].inclusionCriteria.push([criterion]);
+      } else {
+        this.query.groups[index].exclusionCriteria.push([criterion]);
+      }
     }
-
-    this.provider.store(this.query);
+    this.queryService.setFeasibilityQuery(this.query);
     this.doDiscard(criterion);
   }
 

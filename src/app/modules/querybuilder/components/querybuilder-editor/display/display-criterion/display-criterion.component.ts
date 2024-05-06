@@ -8,6 +8,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import { Subscription } from 'rxjs';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { TerminologyEntry } from '../../../../../../model/terminology/Terminology';
+import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
 
 @Component({
   selector: 'num-display-criterion',
@@ -41,7 +43,11 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   private subscriptionDialog: Subscription;
   isinvalid: boolean;
 
-  constructor(public dialog: MatDialog, public featureService: FeatureService) {}
+  constructor(
+    public dialog: MatDialog,
+    public featureService: FeatureService,
+    private EditService: EditCriterionService
+  ) {}
 
   ngOnInit(): void {
     this.checkboxValue = this.criterion.requiredDataSelection
@@ -73,7 +79,11 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
         .subscribe((query) => this.storeQuery.emit(query));
     }
   }
-
+  newOpenDetailsPopUp(): void {
+    if (!this.isinvalid) {
+      this.EditService.editCriterion(this.criterion, this.position.critType, this.position);
+    }
+  }
   doDelete(): void {
     this.delete.emit(this.criterion);
   }

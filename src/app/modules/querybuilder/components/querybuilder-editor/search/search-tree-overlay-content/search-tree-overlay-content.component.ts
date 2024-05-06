@@ -48,7 +48,6 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   constructor(
     private backend: BackendService,
     public dialog: MatDialog,
-    private CriterionService: CreateCriterionService,
     private EditService: EditCriterionService
   ) {}
 
@@ -137,12 +136,8 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   newOpenDetailsPopUp(shouldAdd: boolean): void {
     if (shouldAdd) {
       const terminologyEntries = this.extractSelectedEntries();
-      const criterionList: Criterion[] = [];
       if (terminologyEntries && terminologyEntries.length > 0) {
-        terminologyEntries.forEach((termEntry) => {
-          criterionList.push(this.CriterionService.createCriterionFromTermEntry(termEntry));
-        });
-        this.EditService.editCriterion(criterionList, this.critType);
+        this.EditService.editCriterion(terminologyEntries, this.critType);
       }
     }
     this.closeOverlay.emit('tree');

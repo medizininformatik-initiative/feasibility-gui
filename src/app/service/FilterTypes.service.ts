@@ -14,6 +14,9 @@ export class FilterTypesService {
       : false;
   }
 
+  public isQuantityType(type: FilterTypes): boolean {
+    return type === FilterTypes.QUANTITY ? true : false;
+  }
   public isQuantityRange(type: FilterTypes): boolean {
     return type === FilterTypes.QUANTITY_RANGE ? true : false;
   }

@@ -24,12 +24,7 @@
       [criterion]="criterion"
       [searchType]="searchType"
       [query]="query"
-      [position]="{
-        groupId: query.groups[0].id,
-        critType: critType,
-        row: undefined,
-        column: undefined
-      }"
+      [position]="position"
       actionButtonKey="ADD"
       (save)="doSave($event, criterion)"
       (discard)="doDiscard(criterion)"

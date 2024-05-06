@@ -8,7 +8,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { CategoryEntry, TerminologyEntry } from '../../../../model/api/terminology/terminology';
 import { Subscription } from 'rxjs';
 import { BackendService } from '../../../../service/backend.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -16,6 +15,8 @@ import { SearchMode } from '../search-input/search-input.component';
 import { CritType } from '../../../../model/api/query/group';
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
+import { CategoryEntry, TerminologyEntry } from '../../../../../../model/terminology/Terminology';
 
 @Component({
   selector: 'num-search-text-overlay-content',
@@ -49,7 +50,11 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
   private subscription: Subscription;
   private subscriptionCategories: Subscription;
 
-  constructor(private backend: BackendService, public dialog: MatDialog) {}
+  constructor(
+    private backend: BackendService,
+    public dialog: MatDialog,
+    private EditService: EditCriterionService
+  ) {}
 
   ngOnInit(): void {
     this.subscriptionCategories = this.backend.getCategories().subscribe((categories) => {
@@ -93,7 +98,10 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
     this.dialog.open(EnterCriterionListComponent, dialogConfig);
     this.closeOverlay.emit('text');
   }
-
+  newOpenDetailsPopUp(terminologyEntry: TerminologyEntry): void {
+    this.EditService.editCriterion([terminologyEntry], this.critType);
+    this.closeOverlay.emit('text');
+  }
   doSwitchSearchMode(): void {
     this.switchSearchMode.emit();
   }

@@ -61,6 +61,8 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit(): void {
+    console.log('edit-value-filter');
+    console.log(this.criterion);
     if (this.filterType === 'attribute') {
       this.attributeFilter = this.abstractAttributeFilter as AttributeFilter;
     } else {
@@ -229,6 +231,9 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         }
       } else {
         this.selectedReferenceAsJson.add(conceptAsJson);
+        console.log('getselectedCriterion');
+        console.log(conceptAsJson);
+        console.log(this.getSelectedCriterion(JSON.parse(conceptAsJson)));
         this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJson)));
         if (criterionForLinking) {
           criterionForLinking.isLinked = true;
