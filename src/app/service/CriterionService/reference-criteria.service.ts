@@ -6,6 +6,7 @@ import { FilterTypesService } from '../FilterTypes.service';
 import { QueryService } from '../QueryService.service';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { TerminologyCode } from '../../model/terminology/Terminology';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ import { TerminologyCode } from '../../model/terminology/Terminology';
 export class ReferenceCriteriaService {
   private criterionSet: Criterion[] = [];
   private criterion: Criterion = new Criterion();
+  private queryServiceSubscription: Subscription;
   constructor(
     private filter: FilterTypesService,
     private queryService: QueryService,
@@ -26,9 +28,10 @@ export class ReferenceCriteriaService {
   }
 
   private getAllSelectableReferenceCriterias() {
-    this.queryService.getFeasibilityQuery().subscribe((query) => {
+    this.queryServiceSubscription = this.queryService.getFeasibilityQuery().subscribe((query) => {
       this.createListOfCriteriaAndHashes(query);
     });
+    this.queryServiceSubscription.unsubscribe();
   }
 
   private createListOfCriteriaAndHashes(query: Query): void {
