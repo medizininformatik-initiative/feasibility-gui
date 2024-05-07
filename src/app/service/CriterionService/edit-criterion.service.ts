@@ -51,7 +51,6 @@ export class EditCriterionService {
       groupIndex: 0,
       critType,
       position,
-      searchType: 'querybuilder',
       modus,
     };
 

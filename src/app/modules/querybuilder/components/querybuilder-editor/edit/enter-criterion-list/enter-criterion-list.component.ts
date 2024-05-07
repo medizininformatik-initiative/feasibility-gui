@@ -17,10 +17,8 @@ import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
 export class EnterCriterionListComponentData {
   groupIndex: number;
   critType: CritType;
-  termEntryList: Array<TerminologyEntry>;
   criterionList: Array<Criterion>;
   query: Query;
-  searchType: string;
   position: CritGroupPosition;
   modus: string;
 }
@@ -35,7 +33,6 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
   groupIndex: number;
   critType: CritType;
   query: Query;
-  searchType: string;
   actionDisabled = true;
   position: CritGroupPosition;
   modus: string;
@@ -75,12 +72,9 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
       }
     });
     this.modus = data.modus;
-    this.searchType = data.searchType;
   }
 
   ngOnInit(): void {
-    console.log('enter-critetion-list');
-    console.log(this.criterionList);
     this.criterionList.forEach((curCriterion) => {
       this.criterionAddibleList.push({
         criterion: curCriterion,
@@ -93,10 +87,6 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   doSave(event: { groupId: number }, criterion: Criterion): void {
-    if (this.searchType === 'dataselection') {
-      criterion.requiredDataSelection = false;
-    }
-
     const index = this.query.groups.findIndex((group) => group.id === event.groupId);
 
     if (index < 0) {

@@ -7,6 +7,7 @@ import { QueryService } from '../QueryService.service';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { TerminologyCode } from '../../model/terminology/Terminology';
 import { Subscription } from 'rxjs';
+import { CritGroupArranger } from '../../modules/querybuilder/controller/CritGroupArranger';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class ReferenceCriteriaService {
   private criterionSet: Criterion[] = [];
   private criterion: Criterion = new Criterion();
-  private queryServiceSubscription: Subscription;
+  private querySubscription: Subscription;
   constructor(
     private filter: FilterTypesService,
     private queryService: QueryService,
@@ -28,10 +29,10 @@ export class ReferenceCriteriaService {
   }
 
   private getAllSelectableReferenceCriterias() {
-    this.queryServiceSubscription = this.queryService.getFeasibilityQuery().subscribe((query) => {
+    this.querySubscription = this.queryService.getFeasibilityQuery().subscribe((query) => {
       this.createListOfCriteriaAndHashes(query);
     });
-    this.queryServiceSubscription.unsubscribe();
+    this.querySubscription.unsubscribe();
   }
 
   private createListOfCriteriaAndHashes(query: Query): void {
@@ -50,9 +51,9 @@ export class ReferenceCriteriaService {
 
   private getRefrenceForAttributeFilter(criteriaHashes: Array<string>): void {
     const attributeFilters = this.criterion.attributeFilters;
-    attributeFilters.map((attributeFilter) =>
-      this.sendRequestForCriteriaSetUrl(attributeFilter, criteriaHashes)
-    );
+    attributeFilters.map((attributeFilter) => {
+      this.sendRequestForCriteriaSetUrl(attributeFilter, criteriaHashes);
+    });
   }
 
   private sendRequestForCriteriaSetUrl(
@@ -72,10 +73,9 @@ export class ReferenceCriteriaService {
   private compareWithCriterionHashList(hashList: string[], attributeFilter: AttributeFilter): void {
     attributeFilter.attributeDefinition.selectableConcepts = [];
     hashList.forEach((hash) => {
-      console.log('criterionset');
-      console.log(this.criterionSet);
-      console.log(this.criterion);
-      const foundCriterion = this.criterionSet.find((criterion) => criterion.criterionHash === hash);
+      const foundCriterion: Criterion = this.criterionSet.find(
+        (criterion) => criterion.criterionHash === hash
+      );
       if (foundCriterion) {
         if (!this.isCriterionLinked(foundCriterion.uniqueID)) {
           const termCodeUid: TerminologyCode = foundCriterion.termCodes[0];
@@ -103,5 +103,51 @@ export class ReferenceCriteriaService {
       }
     });
     return isLinked;
+  }
+
+  moveReferenceCriteria(query: Query): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      let x = 0;
+      query.groups[0][inex + 'Criteria'].forEach((disj) => {
+        let y = 0;
+        disj.forEach((conj) => {
+          if (conj.isLinked) {
+            query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
+              query.groups,
+              {
+                groupId: conj.position.groupId,
+                critType: conj.position.critType,
+                column: conj.position.column - y,
+                row: conj.position.row - x,
+              },
+              {
+                groupId: conj.position.groupId,
+                critType: conj.position.critType,
+                column: -1,
+                row: -1,
+              }
+            );
+            if (disj.length === 1) {
+              x++;
+            }
+            if (disj.length > 1) {
+              y++;
+            }
+            this.rePosition(query);
+          }
+        });
+      });
+    }
+    this.queryService.setFeasibilityQuery(query);
+  }
+  rePosition(query: Query): void {
+    for (const inex of ['inclusion', 'exclusion']) {
+      query.groups[0][inex + 'Criteria'].forEach((disj, i) => {
+        disj.forEach((conj, j) => {
+          conj.position.row = i;
+          conj.position.column = j;
+        });
+      });
+    }
   }
 }

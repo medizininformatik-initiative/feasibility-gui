@@ -2,7 +2,6 @@ import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/Attrib
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
-import { EditSingleCriterionComponent } from '../../edit/edit-single-criterion/edit-single-criterion.component';
 import { FeatureService } from 'src/app/service/Feature.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
@@ -60,7 +59,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptionDialog?.unsubscribe();
   }
-
+  /*
   openDetailsPopUp(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -78,7 +77,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
         .afterClosed()
         .subscribe((query) => this.storeQuery.emit(query));
     }
-  }
+  }*/
   newOpenDetailsPopUp(): void {
     if (!this.isinvalid) {
       this.EditService.editCriterion(this.criterion, this.position.critType, this.position);

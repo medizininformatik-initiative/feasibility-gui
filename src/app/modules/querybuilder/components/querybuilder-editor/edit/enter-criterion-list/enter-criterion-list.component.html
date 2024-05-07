@@ -1,4 +1,4 @@
-<div class="container" [ngClass]="{ dataselectionClass: searchType === 'dataselection' }">
+<div class="container">
   <div fxLayout="row" fxLayoutAlign="space-between">
     <h3>{{ 'QUERYBUILDER.EDIT.HEADER' | translate }}</h3>
     <div fxLayout="row" fxLayoutAlign="space-between top">
@@ -22,7 +22,6 @@
     <num-edit-criterion
       *ngFor="let criterion of criterionList"
       [criterion]="criterion"
-      [searchType]="searchType"
       [query]="query"
       [position]="position"
       actionButtonKey="ADD"
