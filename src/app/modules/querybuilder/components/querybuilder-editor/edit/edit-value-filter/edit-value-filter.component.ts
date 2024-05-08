@@ -13,6 +13,7 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import { TerminologyCode } from 'src/app/model/terminology/Terminology';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { ReferenceCriteriaService } from '../../../../../../service/CriterionService/reference-criteria.service';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -23,12 +24,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   abstractAttributeFilter: AbstractAttributeFilters;
 
-  @ViewChildren(EditValueFilterConceptLineComponent)
-  private checkboxes: QueryList<EditValueFilterConceptLineComponent>;
-
-  @ViewChildren(MatSelectModule)
-  private matOption: QueryList<MatSelectModule>;
-
   @Input()
   filterType: string;
 
@@ -38,9 +33,13 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   @Input()
   criterion: Criterion;
 
-  @Input()
-  optional: boolean;
+  @ViewChildren(EditValueFilterConceptLineComponent)
+  private checkboxes: QueryList<EditValueFilterConceptLineComponent>;
 
+  @ViewChildren(MatSelectModule)
+  private matOption: QueryList<MatSelectModule>;
+
+  optional: boolean;
   resetQuantityDisabled = true;
 
   FilterTypes: typeof FilterTypes = FilterTypes;
@@ -58,13 +57,15 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   quantityFilterOptions: Array<string> = ['NONE', 'EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
   disableAnimation = true;
 
-  constructor() {}
+  constructor(private referenceCriteriaService: ReferenceCriteriaService) {}
 
   ngOnInit(): void {
     if (this.filterType === 'attribute') {
       this.attributeFilter = this.abstractAttributeFilter as AttributeFilter;
+      this.optional = this.attributeFilter?.attributeDefinition?.optional;
     } else {
       this.valueFilter = this.abstractAttributeFilter as ValueFilter;
+      this.optional = this.valueFilter?.valueDefinition?.optional;
     }
     this.abstractAttributeFilter?.selectedConcepts?.forEach((concept) => {
       // bring the object into the right order for stringify
@@ -223,7 +224,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
           1
         );
         if (criterionForLinking) {
-          if (!this.isCriterionLinked(criterionForLinking.uniqueID)) {
+          if (!this.referenceCriteriaService.isCriterionLinked(criterionForLinking.uniqueID)) {
             criterionForLinking.isLinked = false;
           }
         }
@@ -275,25 +276,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     }
 
     return this.selectedConceptsAsJson.has(JSON.stringify(temp));
-  }
-
-  isCriterionLinked(hash: string): boolean {
-    let isLinked = false;
-
-    for (const inex of ['inclusion', 'exclusion']) {
-      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
-        disj.forEach((conj) => {
-          if (conj.linkedCriteria.length > 0) {
-            conj.linkedCriteria.forEach((criterion) => {
-              if (criterion.uniqueID === hash && conj.uniqueID !== this.criterion.uniqueID) {
-                isLinked = true;
-              }
-            });
-          }
-        });
-      });
-    }
-    return isLinked;
   }
 
   doSelectAllCheckboxes() {

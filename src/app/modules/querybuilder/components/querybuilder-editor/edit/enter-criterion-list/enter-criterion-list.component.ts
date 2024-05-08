@@ -1,19 +1,12 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-//import { TerminologyEntry } from '../../../../model/api/terminology/terminology';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-//import { Criterion } from '../../../../model/api/query/criterion';
 import { TermEntry2CriterionTranslator } from '../../../../controller/TermEntry2CriterionTranslator';
-//import { CritType } from '../../../../model/api/query/group';
-import { Query as QueryOld } from '../../../../model/api/query/query';
-import { QueryProviderService } from '../../../../service/query-provider.service';
 import { FeatureService } from '../../../../../../service/Feature.service';
 import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
 import { Query } from '../../../../../../model/FeasibilityQuery/Query';
 import { CritType } from '../../../../../../model/FeasibilityQuery/Group';
-import { TerminologyEntry } from '../../../../../../model/terminology/Terminology';
 import { QueryService } from '../../../../../../service/QueryService.service';
 import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
-import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { ReferenceCriteriaService } from '../../../../../../service/CriterionService/reference-criteria.service';
 
 export class EnterCriterionListComponentData {
@@ -43,7 +36,6 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     groupID: number
     isAddible: boolean
   }> = [];
-  private readonly translator;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
@@ -52,15 +44,9 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     private queryService: QueryService,
     private referenceService: ReferenceCriteriaService
   ) {
-    this.translator = new TermEntry2CriterionTranslator(
-      this.featureService.useFeatureTimeRestriction(),
-      this.featureService.getQueryVersion()
-    );
-    //this.criterionList = data.termEntryList.map((termEntry) => this.translator.translate(termEntry));
     this.criterionList = data.criterionList;
     this.critType = data.critType;
     this.groupIndex = data.groupIndex;
-    //this.query = data.query;
     this.queryService.getFeasibilityQuery().subscribe((query) => {
       this.query = query;
       if (data.position) {
@@ -96,7 +82,7 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.modus === 'create') {
+    if (this.modus === 'ADD') {
       if (this.critType === 'inclusion') {
         this.query.groups[index].inclusionCriteria.push([criterion]);
       } else {

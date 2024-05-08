@@ -26,13 +26,13 @@ export class EditCriterionService {
           observableBatch.push(this.CriterionService.createCriterionFromTermEntry(termEntry));
         });
         forkJoin(observableBatch).subscribe((critList) => {
-          this.openDetailsPopUp(critList, 'create', critType, position);
+          this.openDetailsPopUp(critList, 'ADD', critType, position);
         });
       } else {
-        this.openDetailsPopUp(data, 'edit', critType, position);
+        this.openDetailsPopUp(data, 'EDIT', critType, position);
       }
     } else {
-      this.openDetailsPopUp([data], 'edit', critType, position);
+      this.openDetailsPopUp([data], 'EDIT', critType, position);
     }
   }
 

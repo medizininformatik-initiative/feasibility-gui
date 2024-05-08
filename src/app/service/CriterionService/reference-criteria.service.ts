@@ -85,8 +85,9 @@ export class ReferenceCriteriaService {
       }
     });
   }
-  isCriterionLinked(uid: string): boolean {
+  public isCriterionLinked(uid: string): boolean {
     let isLinked = false;
+
     this.queryService.getFeasibilityQuery().subscribe((query) => {
       for (const inex of ['inclusion', 'exclusion']) {
         query.groups[0][inex + 'Criteria'].forEach((disj) => {

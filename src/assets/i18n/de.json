@@ -250,12 +250,13 @@
     "CONTACT": "Kontakt"
   },
   "BUTTON": {
-    "ADD": "Auswählen",
+    "ADD": "Hinzufügen",
     "ADD_TOOLTIP": "Merkmal einschränken",
     "ADDALL": "Alle hinzufügen",
     "CANCEL": "Abbrechen",
     "CLOSE": "Schließen",
     "DOWNLOAD": "Herunterladen",
+    "EDIT": "Speichern",
     "IMPORT": "Query laden",
     "IMPORT_DATASELECTION":"Dataselektion hochladen",
     "IMPORT_FROM_FILE": "Datei auswählen",

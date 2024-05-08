@@ -24,7 +24,7 @@
       [criterion]="criterion"
       [query]="query"
       [position]="position"
-      actionButtonKey="ADD"
+      [actionButtonKey]="modus"
       (save)="doSave($event, criterion)"
       (discard)="doDiscard(criterion)"
       (addible)="registerAllAddible($event, criterion)"
