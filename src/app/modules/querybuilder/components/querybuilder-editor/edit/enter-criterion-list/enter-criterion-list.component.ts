@@ -13,6 +13,8 @@ import { CritType } from '../../../../../../model/FeasibilityQuery/Group';
 import { TerminologyEntry } from '../../../../../../model/terminology/Terminology';
 import { QueryService } from '../../../../../../service/QueryService.service';
 import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
+import { ObjectHelper } from '../../../../controller/ObjectHelper';
+import { ReferenceCriteriaService } from '../../../../../../service/CriterionService/reference-criteria.service';
 
 export class EnterCriterionListComponentData {
   groupIndex: number;
@@ -47,7 +49,8 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
     private dialogRef: MatDialogRef<EnterCriterionListComponent, void>,
     public featureService: FeatureService,
-    private queryService: QueryService
+    private queryService: QueryService,
+    private referenceService: ReferenceCriteriaService
   ) {
     this.translator = new TermEntry2CriterionTranslator(
       this.featureService.useFeatureTimeRestriction(),
@@ -100,6 +103,8 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
         this.query.groups[index].exclusionCriteria.push([criterion]);
       }
     }
+
+    this.referenceService.moveReferenceCriteria(this.query);
     this.queryService.setFeasibilityQuery(this.query);
     this.doDiscard(criterion);
   }

@@ -100,8 +100,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
       return;
     }
     this.moveBetweenGroups();
-    this.referenceService.moveReferenceCriteria(this.query);
-    this.provider.setFeasibilityQuery(this.query);
+    //this.provider.setFeasibilityQuery(this.query);
     this.save.emit({ groupId: this.selectedGroupId });
   }
 

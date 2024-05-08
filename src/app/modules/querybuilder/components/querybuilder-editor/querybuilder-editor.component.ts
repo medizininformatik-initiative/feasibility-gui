@@ -110,7 +110,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
 
   storeQuery(query: Query): void {
     this.query = query;
-    this.queryProviderService.store(query);
+    this.queryService.setFeasibilityQuery(query);
+    //this.queryProviderService.store(query);
     this.checkForInvalidCriteria();
   }
 
