@@ -10,8 +10,6 @@ import { SearchMode } from '../search-input/search-input.component';
 import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { CritType } from 'src/app/model/FeasibilityQuery/Group';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
-import { CreateCriterionService } from '../../../../../../service/CriterionService/CreateCriterion.service';
-import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
 import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
 
 @Component({
@@ -106,31 +104,6 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
     this.subscriptionCategories?.unsubscribe();
     this.subscriptionDialog?.unsubscribe();
     this.subscriptionTemp?.unsubscribe();
-  }
-
-  openDetailsPopUp(shouldAdd: boolean): void {
-    if (shouldAdd) {
-      const terminologyEntries = this.extractSelectedEntries();
-      console.log(terminologyEntries);
-
-      if (terminologyEntries && terminologyEntries.length > 0) {
-        const dialogConfig = new MatDialogConfig();
-
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-          termEntryList: terminologyEntries,
-          groupIndex: 0,
-          critType: this.critType,
-          query: this.query,
-          searchType: this.searchType,
-        };
-
-        this.dialog.open(EnterCriterionListComponent, dialogConfig);
-      }
-    }
-
-    this.closeOverlay.emit('tree');
   }
 
   newOpenDetailsPopUp(shouldAdd: boolean): void {

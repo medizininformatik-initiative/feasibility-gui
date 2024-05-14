@@ -14,6 +14,7 @@ import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import { TerminologyCode } from 'src/app/model/terminology/Terminology';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { ReferenceCriteriaService } from '../../../../../../service/CriterionService/reference-criteria.service';
+import { QueryService } from '../../../../../../service/QueryService.service';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -57,7 +58,10 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
   quantityFilterOptions: Array<string> = ['NONE', 'EQUAL', 'LESS_THAN', 'GREATER_THAN', 'BETWEEN'];
   disableAnimation = true;
 
-  constructor(private referenceCriteriaService: ReferenceCriteriaService) {}
+  constructor(
+    private referenceCriteriaService: ReferenceCriteriaService,
+    private queryService: QueryService
+  ) {}
 
   ngOnInit(): void {
     if (this.filterType === 'attribute') {
@@ -199,7 +203,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
       uid: concept.uid,
     };
     const conceptAsJson = JSON.stringify(temp);
-    const criterionForLinking = this.getSelectedCriterion(temp);
+    const criterionForLinking = this.queryService.getCriterionByUID(concept.uid);
 
     if (
       this.attributeFilter?.attributeDefinition?.type === FilterTypes.CONCEPT ||
@@ -230,7 +234,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         }
       } else {
         this.selectedReferenceAsJson.add(conceptAsJson);
-        this.criterion.linkedCriteria.push(this.getSelectedCriterion(JSON.parse(conceptAsJson)));
+        this.criterion.linkedCriteria.push(this.queryService.getCriterionByUID(concept.uid));
         if (criterionForLinking) {
           criterionForLinking.isLinked = true;
         }
@@ -241,25 +245,6 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
         this.attributeFilter.selectedConcepts.push(JSON.parse(conceptAsJsonTemp));
       });
     }
-  }
-
-  getSelectedCriterion(termcode: TerminologyCode): Criterion {
-    let crit: Criterion;
-    for (const inex of ['inclusion', 'exclusion']) {
-      this.query.groups[0][inex + 'Criteria'].forEach((disj) => {
-        disj.forEach((conj) => {
-          if (
-            conj.termCodes[0].code === termcode.code &&
-            conj.termCodes[0].display === termcode.display &&
-            conj.termCodes[0].system === termcode.system &&
-            conj.termCodes[0].uid === termcode.uid
-          ) {
-            crit = conj;
-          }
-        });
-      });
-    }
-    return crit;
   }
 
   isSelected(concept: TerminologyCode): boolean {

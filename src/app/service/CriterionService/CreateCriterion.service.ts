@@ -17,7 +17,6 @@ import {
 } from 'src/app/model/terminology/AttributeDefinitions/AttributeDefinition';
 import { AnnotatedStructuredQueryIssue } from '../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQueryIssue';
 import { SnackbarService } from '../../core/components/snack-bar/snack-bar.component';
-import { Comparator } from '../../modules/querybuilder/model/api/query/valueFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -34,16 +33,17 @@ export class CreateCriterionService {
     termCodes: TerminologyCode[],
     context: TerminologyCode,
     invalidCriteriaIssues: AnnotatedStructuredQueryIssue[],
-    uid?
+    uid?: string
   ): Observable<Criterion> {
     const criterion: Criterion = new Criterion();
     const subject = new Subject<Criterion>();
     const hash = this.criterionHashService.createHash(context, termCodes[0]);
+    const localUID = uid ? uid : uuidv4();
     criterion.criterionHash = hash;
     criterion.display = termCodes[0].display;
-    criterion.termCodes = this.copyTermCodes(termCodes, uid);
+    criterion.termCodes = this.copyTermCodes(termCodes, localUID);
     criterion.isInvalid = invalidCriteriaIssues.length > 0;
-    criterion.uniqueID = uuidv4();
+    criterion.uniqueID = localUID;
     criterion.position = new CritGroupPosition();
     if (!criterion.isInvalid) {
       criterion.context = context;

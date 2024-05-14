@@ -1,7 +1,7 @@
 <div class="container">
   <div fxLayout="row" fxLayoutAlign="space-between">
     <h3>{{ 'QUERYBUILDER.EDIT.HEADER' | translate }}</h3>
-    <div fxLayout="row" fxLayoutAlign="space-between top">
+    <div *ngIf="criterionList.length > 1" fxLayout="row" fxLayoutAlign="space-between top">
       <num-button
         [type]="'primary'"
         (click)="doSaveAll()"

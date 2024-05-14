@@ -7,7 +7,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import { Subscription } from 'rxjs';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { TerminologyEntry } from '../../../../../../model/terminology/Terminology';
 import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
 
 @Component({
@@ -59,25 +58,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptionDialog?.unsubscribe();
   }
-  /*
-  openDetailsPopUp(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      criterion: this.criterion,
-      query: this.query,
-      position: this.position,
-      searchType: this.searchType,
-    };
-    if (!this.isinvalid) {
-      const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig);
-      this.subscriptionDialog?.unsubscribe();
-      this.subscriptionDialog = dialogRef
-        .afterClosed()
-        .subscribe((query) => this.storeQuery.emit(query));
-    }
-  }*/
+
   newOpenDetailsPopUp(): void {
     if (!this.isinvalid) {
       this.EditService.editCriterion(this.criterion, this.position.critType, this.position);

@@ -1,6 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TermEntry2CriterionTranslator } from '../../../../controller/TermEntry2CriterionTranslator';
 import { FeatureService } from '../../../../../../service/Feature.service';
 import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
 import { Query } from '../../../../../../model/FeasibilityQuery/Query';

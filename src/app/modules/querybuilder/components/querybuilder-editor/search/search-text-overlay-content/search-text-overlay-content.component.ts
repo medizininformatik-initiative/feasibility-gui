@@ -83,21 +83,6 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
       });
   }
 
-  openDetailsPopUp(terminologyEntry: TerminologyEntry): void {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      termEntryList: [terminologyEntry],
-      groupIndex: 0,
-      critType: this.critType,
-      query: this.query,
-      searchType: this.searchType,
-    };
-    this.dialog.open(EnterCriterionListComponent, dialogConfig);
-    this.closeOverlay.emit('text');
-  }
   newOpenDetailsPopUp(terminologyEntry: TerminologyEntry): void {
     this.EditService.editCriterion([terminologyEntry], this.critType);
     this.closeOverlay.emit('text');
