@@ -32,22 +32,24 @@ export class CreateCriterionService {
   public createCriterionFromTermCode(
     termCodes: TerminologyCode[],
     context: TerminologyCode,
-    invalidCriteriaIssues: AnnotatedStructuredQueryIssue[]
+    invalidCriteriaIssues: AnnotatedStructuredQueryIssue[],
+    uid?: string
   ): Observable<Criterion> {
     const criterion: Criterion = new Criterion();
     const subject = new Subject<Criterion>();
     const hash = this.criterionHashService.createHash(context, termCodes[0]);
+    const localUID = uid ? uid : uuidv4();
     criterion.criterionHash = hash;
     criterion.display = termCodes[0].display;
-    criterion.termCodes = this.copyTermCodes(termCodes);
+    criterion.termCodes = this.copyTermCodes(termCodes, localUID);
     criterion.isInvalid = invalidCriteriaIssues.length > 0;
-    criterion.uniqueID = uuidv4();
+    criterion.uniqueID = localUID;
     criterion.position = new CritGroupPosition();
     if (!criterion.isInvalid) {
       criterion.context = context;
       this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
         Object.assign(criterion, critFromProfile);
-        criterion.termCodes = this.copyTermCodes(termCodes);
+        criterion.termCodes = this.copyTermCodes(termCodes, uid);
         subject.next(criterion);
       });
     } else {
@@ -75,21 +77,23 @@ export class CreateCriterionService {
     criterion.position = new CritGroupPosition();
     return criterion;
   }
-  public createCriterionFromTermEntry(termEntry: TerminologyEntry): Criterion {
-    const criterion: Criterion = new Criterion();
-    criterion.children = termEntry.children;
-    criterion.context = termEntry.context;
-    criterion.display = termEntry.display;
-    criterion.entity = termEntry.entity;
-    criterion.optional = termEntry.optional;
-    criterion.uniqueID = uuidv4();
-    criterion.termCodes = this.copyTermCodes(termEntry.termCodes, criterion.uniqueID);
-    criterion.position = new CritGroupPosition();
-    criterion.criterionHash = this.criterionHashService.createHash(
-      criterion.context,
-      criterion.termCodes[0]
-    );
-    return criterion;
+  public createCriterionFromTermEntry(termEntry: TerminologyEntry): Observable<Criterion> {
+    let criterion: Criterion;
+    const subject = new Subject<Criterion>();
+    this.createCriterionFromTermCode(
+      termEntry.termCodes,
+      termEntry.context,
+      [],
+      uuidv4()
+    ).subscribe((crit) => {
+      criterion = crit;
+      criterion.children = termEntry.children;
+      criterion.entity = termEntry.entity;
+      criterion.optional = termEntry.optional;
+      subject.next(criterion);
+      subject.complete();
+    });
+    return subject.asObservable();
   }
 
   private copyTermCodes(termCodes: TerminologyCode[], uid?: string): TerminologyCode[] {
@@ -116,22 +120,32 @@ export class CreateCriterionService {
   private addUIProfileElementsToCriterion(profile: UIProfile): Criterion {
     const criterion: Criterion = new Criterion();
     criterion.attributeFilters = this.getAttributeFilters(profile.attributeDefinitions);
-    criterion.valueFilters[0] = this.getValueFilters(profile.valueDefinition);
+    criterion.valueFilters = this.getValueFilters(profile.valueDefinition);
     criterion.timeRestriction = this.addTimeRestriction(profile.timeRestrictionAllowed);
     return criterion;
   }
 
-  private getValueFilters(valueDefinition: ValueDefinition): ValueFilter {
+  private getValueFilters(valueDefinition: ValueDefinition): ValueFilter[] {
     const valueFilter = new ValueFilter();
     if (valueDefinition !== null) {
-      valueFilter.maxValue = valueDefinition.max;
-      valueFilter.minValue = valueDefinition.min;
+      valueFilter.display = valueDefinition.display;
+      valueFilter.value = valueDefinition.min ? valueDefinition.min : 0;
+      valueFilter.minValue = valueDefinition.min ? valueDefinition.min : 0;
+      valueFilter.maxValue = valueDefinition.max ? valueDefinition.max : 0;
+      valueFilter.min = valueDefinition.min;
+      valueFilter.max = valueDefinition.max;
       valueFilter.precision = valueDefinition.precision;
       valueFilter.optional = valueDefinition?.optional;
       valueFilter.type = this.UiProfileService.setDefinitionType(valueDefinition.type);
+      valueFilter.unit =
+        valueDefinition?.allowedUnits.length > 0
+          ? valueDefinition?.allowedUnits[0]
+          : { code: '', display: '' };
       valueFilter.valueDefinition = this.UiProfileService.extractValueDefinition(valueDefinition);
+      return [valueFilter];
+    } else {
+      return [];
     }
-    return valueFilter;
   }
 
   private getAttributeFilters(attributeDefinitions: AttributeDefinition[]): AttributeFilter[] {

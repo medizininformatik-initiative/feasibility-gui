@@ -6,14 +6,13 @@
     </h4>
   </mat-card-header>
   <mat-card-content>
-    <ng-container *ngIf="searchType === 'querybuilder'">
+    <ng-container>
       <num-edit-value-definition
         *ngFor="let valueFilter of getValueFilters()"
         [abstractAttributeFilter]="valueFilter"
         [filterType]="'value'"
         [query]="query"
         [criterion]="criterion"
-        [optional]="valueFilter.valueDefinition?.optional"
       >
       </num-edit-value-definition>
       <num-edit-value-definition
@@ -22,7 +21,6 @@
         [filterType]="'attribute'"
         [query]="query"
         [criterion]="criterion"
-        [optional]="attributeFilter.attributeDefinition.optional"
       >
       </num-edit-value-definition>
       <num-display-entities

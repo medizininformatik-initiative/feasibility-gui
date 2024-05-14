@@ -255,6 +255,7 @@
     "CANCEL": "Cancel",
     "CLOSE": "Close",
     "DOWNLOAD": "Download",
+    "EDIT": "Save",
     "IMPORT_FROM_FILE": "choose file",
     "IMPORT_DATASELECTION": "Import Dataselection",
     "RESET": "Reset",

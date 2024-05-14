@@ -11,6 +11,7 @@ import { QueryProviderService } from '../../service/query-provider.service';
 import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
 import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { QueryResult } from 'src/app/model/result/QueryResult';
+import { QueryService } from 'src/app/service/QueryService.service';
 @Component({
   selector: 'num-querybuilder',
   templateUrl: './querybuilder-editor.component.html',
@@ -45,6 +46,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
 
   constructor(
     public queryProviderService: QueryProviderService,
+    public queryService: QueryService,
     public backend: BackendService,
     public featureService: FeatureService,
     private changeDetector: ChangeDetectorRef,
@@ -53,10 +55,10 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   ) {}
 
   ngOnInit(): void {
-    if (window.history.state.preventReset) {
-      this.query = this.queryProviderService.query();
-      this.checkForInvalidCriteria();
-    } else {
+    this.queryService.getFeasibilityQuery().subscribe((query) => {
+      this.query = query;
+    });
+    if (!window.history.state.preventReset) {
       this.doReset();
     }
     if (window.history.state.resultFromSavedQuery) {
@@ -108,7 +110,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
 
   storeQuery(query: Query): void {
     this.query = query;
-    this.queryProviderService.store(query);
+    this.queryService.setFeasibilityQuery(query);
     this.checkForInvalidCriteria();
   }
 
@@ -203,7 +205,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   }
 
   doReset(): void {
-    this.query = QueryProviderService.createDefaultQuery();
+    this.queryService.resetToDefaultQuery();
+    //this.query = QueryProviderService.createDefaultQuery();
     this.queryProviderService.store(this.query);
     this.result = null;
     this.gottenDetailedResult = false;

@@ -2,12 +2,12 @@ import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/Attrib
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
-import { EditSingleCriterionComponent } from '../../edit/edit-single-criterion/edit-single-criterion.component';
 import { FeatureService } from 'src/app/service/Feature.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import { Subscription } from 'rxjs';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
 
 @Component({
   selector: 'num-display-criterion',
@@ -41,7 +41,11 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   private subscriptionDialog: Subscription;
   isinvalid: boolean;
 
-  constructor(public dialog: MatDialog, public featureService: FeatureService) {}
+  constructor(
+    public dialog: MatDialog,
+    public featureService: FeatureService,
+    private EditService: EditCriterionService
+  ) {}
 
   ngOnInit(): void {
     this.checkboxValue = this.criterion.requiredDataSelection
@@ -55,25 +59,11 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
     this.subscriptionDialog?.unsubscribe();
   }
 
-  openDetailsPopUp(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      criterion: this.criterion,
-      query: this.query,
-      position: this.position,
-      searchType: this.searchType,
-    };
+  newOpenDetailsPopUp(): void {
     if (!this.isinvalid) {
-      const dialogRef = this.dialog.open(EditSingleCriterionComponent, dialogConfig);
-      this.subscriptionDialog?.unsubscribe();
-      this.subscriptionDialog = dialogRef
-        .afterClosed()
-        .subscribe((query) => this.storeQuery.emit(query));
+      this.EditService.editCriterion(this.criterion, this.position.critType, this.position);
     }
   }
-
   doDelete(): void {
     this.delete.emit(this.criterion);
   }

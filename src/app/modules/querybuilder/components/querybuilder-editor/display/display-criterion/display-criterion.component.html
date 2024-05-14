@@ -8,7 +8,7 @@
   <div
     [fxFlex]="searchType === 'querybuilder' ? 85 : 97"
     class="display-part"
-    (click)="openDetailsPopUp()"
+    (click)="newOpenDetailsPopUp()"
   >
     <div class="header-display">{{ criterion.display }}</div>
     <ng-container *ngIf="searchType === 'querybuilder'">

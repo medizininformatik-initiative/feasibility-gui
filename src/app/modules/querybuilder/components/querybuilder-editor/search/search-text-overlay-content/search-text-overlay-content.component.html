@@ -19,7 +19,7 @@
     <div *ngFor="let termEntry of resultList">
       <num-search-text-term-entry
         [node]="termEntry"
-        (choose)="openDetailsPopUp($event)"
+        (choose)="newOpenDetailsPopUp($event)"
       ></num-search-text-term-entry>
     </div>
   </div>

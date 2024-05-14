@@ -10,6 +10,7 @@ import { SearchMode } from '../search-input/search-input.component';
 import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { CritType } from 'src/app/model/FeasibilityQuery/Group';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
 
 @Component({
   selector: 'num-search-tree-overlay-content',
@@ -42,7 +43,11 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   private subscriptionDialog: Subscription;
   private subscriptionTemp: Subscription;
 
-  constructor(private backend: BackendService, public dialog: MatDialog) {}
+  constructor(
+    private backend: BackendService,
+    public dialog: MatDialog,
+    private EditService: EditCriterionService
+  ) {}
 
   ngOnInit(): void {
     this.treeControl = new NestedTreeControl<TerminologyEntry>(this.getChildren);
@@ -101,27 +106,13 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
     this.subscriptionTemp?.unsubscribe();
   }
 
-  openDetailsPopUp(shouldAdd: boolean): void {
+  newOpenDetailsPopUp(shouldAdd: boolean): void {
     if (shouldAdd) {
       const terminologyEntries = this.extractSelectedEntries();
-
       if (terminologyEntries && terminologyEntries.length > 0) {
-        const dialogConfig = new MatDialogConfig();
-
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-          termEntryList: terminologyEntries,
-          groupIndex: 0,
-          critType: this.critType,
-          query: this.query,
-          searchType: this.searchType,
-        };
-
-        this.dialog.open(EnterCriterionListComponent, dialogConfig);
+        this.EditService.editCriterion(terminologyEntries, this.critType);
       }
     }
-
     this.closeOverlay.emit('tree');
   }
 
