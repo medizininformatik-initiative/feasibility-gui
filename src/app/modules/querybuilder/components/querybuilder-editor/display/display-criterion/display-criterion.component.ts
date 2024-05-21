@@ -16,21 +16,13 @@ import { EditCriterionService } from '../../../../../../service/CriterionService
 })
 export class DisplayCriterionComponent implements OnInit, OnDestroy {
   @Input()
-  searchType: string;
-
-  @Input()
   criterion: Criterion;
-
-  @Input()
-  query: Query;
 
   @Input()
   position: CritGroupPosition;
 
   @Input()
   showCancelButton: boolean;
-
-  checkboxValue = false;
 
   @Output()
   delete = new EventEmitter<Criterion>();

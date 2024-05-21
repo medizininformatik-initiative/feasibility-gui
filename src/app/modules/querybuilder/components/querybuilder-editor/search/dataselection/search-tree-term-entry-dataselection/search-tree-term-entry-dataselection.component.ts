@@ -13,9 +13,6 @@ export class SearchTreeTermEntryDataselectionComponent implements OnInit {
   @Output()
   toggleEvent = new EventEmitter();
 
-  @Input()
-  searchtype: string;
-
   constructor() {}
 
   ngOnInit(): void {}

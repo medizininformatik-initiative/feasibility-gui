@@ -18,9 +18,6 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   critType: CritType = 'inclusion';
 
   @Input()
-  searchType: string;
-
-  @Input()
   query: Query;
 
   searchMode: SearchMode = 'text';

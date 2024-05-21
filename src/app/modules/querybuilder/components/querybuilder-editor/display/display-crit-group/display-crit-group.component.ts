@@ -15,9 +15,6 @@ export class DisplayCritGroupComponent implements OnInit {
   critGroup: Criterion[][];
 
   @Input()
-  searchType: string;
-
-  @Input()
   critType: CritType;
 
   query: Query;

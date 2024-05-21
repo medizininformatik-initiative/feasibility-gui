@@ -3,7 +3,9 @@
     *ngIf="filter.type === FilterTypes.CONCEPT && filter.selectedConcepts.length > 0"
     class="container"
   >
-    <span *ngIf="filter.display">{{ filter.display }}{{ ': ' }}</span>
+    <span *ngIf="filter.valueDefinition?.display"
+      >{{ filter.valueDefinition?.display }}{{ ': ' }}</span
+    >
     <span *ngIf="filter.attributeDefinition?.attributeCode?.display"
       >{{ filter.attributeDefinition?.attributeCode?.display }}{{ ': ' }}</span
     >
@@ -21,7 +23,9 @@
     *ngIf="filter.type === FilterTypes.QUANTITY_COMPARATOR && filter.comparator !== 'none'"
     class="container"
   >
-    <span *ngIf="filter.display">{{ filter.display }}{{ ': ' }}</span>
+    <span *ngIf="filter.valueDefinition?.display"
+      >{{ filter.valueDefinition?.display }}{{ ': ' }}</span
+    >
     <span *ngIf="filter.attributeDefinition?.attributeCode?.display"
       >{{ filter.attributeDefinition?.attributeCode?.display }}{{ ': ' }}</span
     >

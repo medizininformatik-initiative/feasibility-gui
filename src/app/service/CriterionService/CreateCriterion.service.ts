@@ -128,7 +128,6 @@ export class CreateCriterionService {
   private getValueFilters(valueDefinition: ValueDefinition): ValueFilter[] {
     const valueFilter = new ValueFilter();
     if (valueDefinition !== null) {
-      valueFilter.display = valueDefinition.display;
       valueFilter.value = valueDefinition.min ? valueDefinition.min : 0;
       valueFilter.minValue = valueDefinition.min ? valueDefinition.min : 0;
       valueFilter.maxValue = valueDefinition.max ? valueDefinition.max : 0;
