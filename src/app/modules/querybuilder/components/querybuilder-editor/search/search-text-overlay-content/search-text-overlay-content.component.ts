@@ -31,9 +31,6 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
   switchSearchMode = new EventEmitter<void>();
 
   @Input()
-  searchType: string;
-
-  @Input()
   text: string;
 
   @Input()

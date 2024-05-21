@@ -1,7 +1,6 @@
 <div cdkDropListGroup>
   <num-display-group
     *ngFor="let group of getGroups(); let i = index"
-    [searchType]="searchType"
     [group]="group"
     [parentGroup]="getParentGroup(i)"
     [query]="query"

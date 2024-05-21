@@ -64,7 +64,7 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
   constructor(
     public featureService: FeatureService,
     private changeDetector: ChangeDetectorRef,
-    public provider: QueryService,
+    public queryService: QueryService,
     private backend: BackendService,
     private referenceService: ReferenceCriteriaService,
     private filter: FilterTypesService
@@ -77,7 +77,10 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
       this.selectedGroupId = this.query.groups[0].id;
     }
 
-    this.showGroups = this.query.groups.length > 1;
+    this.queryService.getFeasibilityQuery().subscribe((query) => {
+      this.query = query;
+      this.showGroups = this.query.groups.length > 1;
+    });
 
     this.criterion.attributeFilters.forEach((attributeFilter) => {
       if (this.filter.isReference(attributeFilter.type)) {

@@ -16,13 +16,7 @@ import { EditCriterionService } from '../../../../../../service/CriterionService
 })
 export class DisplayCriterionComponent implements OnInit, OnDestroy {
   @Input()
-  searchType: string;
-
-  @Input()
   criterion: Criterion;
-
-  @Input()
-  query: Query;
 
   @Input()
   position: CritGroupPosition;
@@ -30,13 +24,8 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   @Input()
   showCancelButton: boolean;
 
-  checkboxValue = false;
-
   @Output()
   delete = new EventEmitter<Criterion>();
-
-  @Output()
-  storeQuery = new EventEmitter<Query>();
 
   private subscriptionDialog: Subscription;
   isinvalid: boolean;
@@ -48,9 +37,6 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.checkboxValue = this.criterion.requiredDataSelection
-      ? this.criterion.requiredDataSelection
-      : false;
     this.criterion.position = this.position;
     this.isinvalid = this.criterion.isInvalid === true;
   }
@@ -64,6 +50,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
       this.EditService.editCriterion(this.criterion, this.position.critType, this.position);
     }
   }
+
   doDelete(): void {
     this.delete.emit(this.criterion);
   }
@@ -97,10 +84,5 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
     } else {
       return [];
     }
-  }
-
-  storeCheckboxValue(): void {
-    this.criterion.requiredDataSelection = this.checkboxValue;
-    this.storeQuery.emit(this.query);
   }
 }

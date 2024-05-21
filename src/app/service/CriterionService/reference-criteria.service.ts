@@ -73,16 +73,16 @@ export class ReferenceCriteriaService {
   private compareWithCriterionHashList(hashList: string[], attributeFilter: AttributeFilter): void {
     attributeFilter.attributeDefinition.selectableConcepts = [];
     hashList.forEach((hash) => {
-      const foundCriterion: Criterion = this.criterionSet.find(
+      const foundCriteria: Criterion[] = this.criterionSet.filter(
         (criterion) => criterion.criterionHash === hash
       );
-      if (foundCriterion) {
+      foundCriteria.forEach((foundCriterion) => {
         if (!this.isCriterionLinked(foundCriterion.uniqueID)) {
           const termCodeUid: TerminologyCode = foundCriterion.termCodes[0];
           termCodeUid.uid = foundCriterion.uniqueID;
           attributeFilter.attributeDefinition.selectableConcepts.push(termCodeUid);
         }
-      }
+      });
     });
   }
   public isCriterionLinked(uid: string): boolean {

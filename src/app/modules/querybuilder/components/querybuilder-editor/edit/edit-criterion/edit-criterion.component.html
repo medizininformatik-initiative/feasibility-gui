@@ -23,11 +23,6 @@
         [criterion]="criterion"
       >
       </num-edit-value-definition>
-      <num-display-entities
-        *ngIf="criterion.entity"
-        [criterionEntity]="criterion"
-        [query]="query"
-      ></num-display-entities>
     </ng-container>
     <num-edit-time-restriction
       *ngIf="featureService.useFeatureTimeRestriction()"

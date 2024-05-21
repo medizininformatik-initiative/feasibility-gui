@@ -1,17 +1,13 @@
 <div class="crit-box" fxLayout="row">
-  <div [fxFlex]="searchType === 'querybuilder' ? 15 : 3" class="code-part">
+  <div fxFlex="15" class="code-part">
     <!--<div *ngFor="let termcode of criterion.termCodes">{{ termcode?.code }}</div>-->
     <div *ngIf="isinvalid" class="invalid-Criterion">
       <img src="assets/img/alert.png" alt="Validation Alert" />
     </div>
   </div>
-  <div
-    [fxFlex]="searchType === 'querybuilder' ? 85 : 97"
-    class="display-part"
-    (click)="newOpenDetailsPopUp()"
-  >
+  <div fxFlex="85" class="display-part" (click)="newOpenDetailsPopUp()">
     <div class="header-display">{{ criterion.display }}</div>
-    <ng-container *ngIf="searchType === 'querybuilder'">
+    <ng-container>
       <num-display-value-filter
         *ngFor="let filter of getValueFilters()"
         [filter]="filter"
@@ -25,7 +21,7 @@
       *ngIf="featureService.useFeatureTimeRestriction()"
       [timeRestriction]="criterion.timeRestriction"
     ></num-display-time-restriction>
-    <ng-container *ngIf="searchType === 'querybuilder'">
+    <ng-container>
       <div *ngIf="criterion.linkedCriteria.length > 0" class="linked-criteria">
         <div class="linked-header">
           {{ 'QUERYBUILDER.DISPLAY.REFERENCED_CRITERIA' | translate }}
@@ -33,24 +29,12 @@
         <num-display-linked-criterion
           *ngFor="let linkedCrit of criterion.linkedCriteria"
           [criterion]="linkedCrit"
-          [query]="query"
         ></num-display-linked-criterion>
       </div>
     </ng-container>
   </div>
-  <div *ngIf="searchType !== 'querybuilder'">
-    <section>
-      <mat-checkbox
-        [(ngModel)]="checkboxValue"
-        (change)="storeCheckboxValue()"
-        class="checkbox-optional"
-      >
-        {{ 'DATASELECTION.REQUIRED' | translate }}
-      </mat-checkbox>
-    </section>
-  </div>
   <div *ngIf="showCancelButton" class="cancel-button-wrapper">
-    <button class="cancel-button" type="button" mat-icon-button (click)="doDelete()">
+    <button class="delete-button" type="button" mat-icon-button (click)="doDelete()">
       <fa-icon size="lg" icon="times"></fa-icon>
     </button>
   </div>

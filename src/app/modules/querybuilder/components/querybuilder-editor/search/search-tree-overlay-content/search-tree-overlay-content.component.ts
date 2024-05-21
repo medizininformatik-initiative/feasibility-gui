@@ -25,9 +25,6 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
   critType: CritType;
 
   @Input()
-  searchType: string;
-
-  @Input()
   query: Query;
 
   catId: string;

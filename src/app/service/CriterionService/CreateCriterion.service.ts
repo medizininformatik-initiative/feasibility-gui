@@ -1,7 +1,6 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionHashService } from './CriterionHash.service';
-import { CritGroupPosition } from '../../modules/querybuilder/controller/CritGroupArranger';
 import { FeatureService } from '../Feature.service';
 import { Injectable } from '@angular/core';
 import { LoadUIProfileService } from '../LoadUIProfile.service';
@@ -17,6 +16,7 @@ import {
 } from 'src/app/model/terminology/AttributeDefinitions/AttributeDefinition';
 import { AnnotatedStructuredQueryIssue } from '../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQueryIssue';
 import { SnackbarService } from '../../core/components/snack-bar/snack-bar.component';
+import { CritGroupPosition } from 'src/app/modules/querybuilder/controller/CritGroupArranger';
 
 @Injectable({
   providedIn: 'root',
@@ -128,7 +128,6 @@ export class CreateCriterionService {
   private getValueFilters(valueDefinition: ValueDefinition): ValueFilter[] {
     const valueFilter = new ValueFilter();
     if (valueDefinition !== null) {
-      valueFilter.display = valueDefinition.display;
       valueFilter.value = valueDefinition.min ? valueDefinition.min : 0;
       valueFilter.minValue = valueDefinition.min ? valueDefinition.min : 0;
       valueFilter.maxValue = valueDefinition.max ? valueDefinition.max : 0;
