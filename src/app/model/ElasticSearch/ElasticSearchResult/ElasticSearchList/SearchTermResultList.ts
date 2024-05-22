@@ -1,4 +1,6 @@
-class SearchTermResultList {
+import { SearchTermListItem } from './SearchTermListItem';
+
+export class SearchTermResultList {
   totalHits: number;
   searchTermListItems: Array<SearchTermListItem>;
 
