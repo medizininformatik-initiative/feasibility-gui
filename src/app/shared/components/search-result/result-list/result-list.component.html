@@ -2,7 +2,11 @@
   <ng-container *ngFor="let column of columnsToDisplay" [matColumnDef]="column">
     <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
     <td mat-cell *matCellDef="let element">
-      <mat-checkbox *ngIf="column === 'name'" (click)="$event.stopPropagation()"></mat-checkbox>
+      <mat-checkbox
+        *ngIf="column === 'name'"
+        (change)="selectCheckbox($event)"
+        (click)="$event.stopPropagation()"
+      ></mat-checkbox>
       {{ element[column] }}
     </td>
   </ng-container>
