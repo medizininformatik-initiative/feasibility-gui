@@ -10,14 +10,14 @@ import { NgModule } from '@angular/core';
 import { SearchComponent } from './search/search.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ResultListComponent } from './search-result/result-list/result-list.component';
-import { ListItemDetails } from './search-result/list-item-details/list-item-details.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { ListItemDetailsComponent } from './search-result/list-item-details/list-item-details.component';
 const SHARED_DECLARATIONS = [
   SearchComponent,
   FilterChipsComponent,
   ButtonComponent,
   ResultListComponent,
-  ListItemDetails,
+  ListItemDetailsComponent,
   SearchResultComponent,
 ];
 
