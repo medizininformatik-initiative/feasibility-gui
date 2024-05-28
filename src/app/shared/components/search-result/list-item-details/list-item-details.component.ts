@@ -18,7 +18,7 @@ export class ListItemDetailsComponent implements OnInit, AfterViewInit {
   constructor(private listItemService: SearchTermListItemService) {}
 
   ngOnInit() {
-    this.listItemService.selectedRow$.subscribe((row) => {
+    this.listItemService.getSelectedRow().subscribe((row) => {
       this.data = row;
     });
   }
