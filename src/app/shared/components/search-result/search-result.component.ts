@@ -8,6 +8,9 @@ import {
 } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SearchTermListItemService } from 'src/app/service/SearchTermListItemService.service';
+import { BackendService } from '../../../modules/querybuilder/service/backend.service';
+import { TerminologyEntry } from '../../../model/terminology/Terminology';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-search-result',
@@ -18,13 +21,17 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer') sidenav: MatDrawer;
   data: any;
   isOpen = false;
-
+  subscription: Subscription;
   @Input()
-  searchTermlistItems: any = [];
+  searchTermlistItems: any[] = [];
 
   private isInitialized = false;
 
-  constructor(private dataService: SearchTermListItemService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private backend: BackendService,
+    private dataService: SearchTermListItemService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.dataService.selectedRow$.subscribe((row) => {
@@ -37,6 +44,18 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
         }
       }
     });
+
+    const test = 'Diabetes';
+
+    this.subscription = this.backend
+
+      .getElasticSearchResults(test)
+
+      .subscribe((termEntryList) => {
+        //this.resultList = [];
+
+        this.searchTermlistItems = termEntryList.results;
+      });
   }
 
   ngAfterViewInit() {

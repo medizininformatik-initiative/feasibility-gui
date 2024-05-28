@@ -111,3 +111,6 @@
   </button>
   {{ 'QUERYBUILDER.DISPLAY.GROUPS.NEW_GROUP' | translate }}
 </div>
+<num-search style="margin-top: 20px" [label]="'Suchbegriff eingeben'"></num-search>
+
+<num-search-result [searchTermlistItems]="listItems" fxFlexFill></num-search-result>

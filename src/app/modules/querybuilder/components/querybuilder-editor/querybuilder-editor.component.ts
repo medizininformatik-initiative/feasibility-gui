@@ -43,7 +43,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   callsLimit: number;
   callsRemaining: number;
   hasInvalidCriteria = false;
-
+  listItems = [];
   constructor(
     public queryProviderService: QueryProviderService,
     public queryService: QueryService,

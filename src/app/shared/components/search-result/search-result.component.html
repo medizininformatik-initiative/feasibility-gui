@@ -8,6 +8,8 @@
     </div>
   </mat-drawer>
   <mat-drawer-content>
-    <num-result-list [searchTermResultList]="searchTermlistItems" fxFlexFill></num-result-list>
+    <ng-container *ngIf="searchTermlistItems.length > 0">
+      <num-result-list [searchTermResultList]="searchTermlistItems" fxFlexFill></num-result-list>
+    </ng-container>
   </mat-drawer-content>
 </mat-drawer-container>
