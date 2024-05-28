@@ -1,16 +1,25 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
-import { MaterialModule } from 'src/app/layout/material/material.module';
+import { CommonModule } from '@angular/common';
 import { FilterChipsComponent } from './filter-chips/filter-chips.component';
-import { SearchComponent } from './search/search.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/app/layout/material/material.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-const SHARED_DECLARATIONS = [SearchComponent, FilterChipsComponent, ButtonComponent];
+import { NgModule } from '@angular/core';
+import { SearchComponent } from './search/search.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { ResultListComponent } from './search-result/result-list/result-list.component';
+import { ListItemDetails } from './search-result/list-item-details/list-item-details.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+const SHARED_DECLARATIONS = [
+  SearchComponent,
+  FilterChipsComponent,
+  ButtonComponent,
+  ResultListComponent,
+  ListItemDetails,
+  SearchResultComponent,
+];
 
 @NgModule({
   declarations: [...SHARED_DECLARATIONS],
