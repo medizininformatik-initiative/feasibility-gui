@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchTermListItemService {
   private selectedRowSource = new BehaviorSubject<any>(null);
-  selectedRow$ = this.selectedRowSource.asObservable();
 
-  setSelectedRow(row: any) {
+  public setSelectedRow(row: any) {
     this.selectedRowSource.next(row);
+  }
+
+  public getSelectedRow(): Observable<any> {
+    return this.selectedRowSource.asObservable();
   }
 }
