@@ -29,12 +29,12 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
 
   constructor(
     private backend: BackendService,
-    private dataService: SearchTermListItemService,
+    private listItemService: SearchTermListItemService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.dataService.selectedRow$.subscribe((row) => {
+    this.listItemService.getSelectedRow().subscribe((row) => {
       this.data = row;
       if (this.isInitialized) {
         if (row) {
@@ -46,16 +46,9 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
     });
 
     const test = 'Diabetes';
-
-    this.subscription = this.backend
-
-      .getElasticSearchResults(test)
-
-      .subscribe((termEntryList) => {
-        //this.resultList = [];
-
-        this.searchTermlistItems = termEntryList.results;
-      });
+    this.subscription = this.backend.getElasticSearchResults(test).subscribe((termEntryList) => {
+      this.searchTermlistItems = termEntryList.results;
+    });
   }
 
   ngAfterViewInit() {

@@ -23,7 +23,7 @@ export class ResultListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.extractKeys(this.searchTermResultList);
-    this.listItemService.selectedRow$.subscribe((row) => {
+    this.listItemService.getSelectedRow().subscribe((row) => {
       this.selectedRow = row;
     });
   }
@@ -47,5 +47,9 @@ export class ResultListComponent implements OnInit, OnChanges {
    */
   onRowSelect(row: any) {
     this.listItemService.setSelectedRow(row);
+  }
+
+  selectCheckbox(event) {
+    this.listItemService.setSelectedRow(event);
   }
 }
