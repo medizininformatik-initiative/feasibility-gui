@@ -17,6 +17,7 @@ import {
 import { AnnotatedStructuredQueryIssue } from '../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQueryIssue';
 import { SnackbarService } from '../../core/components/snack-bar/snack-bar.component';
 import { CritGroupPosition } from 'src/app/modules/querybuilder/controller/CritGroupArranger';
+import { BackendService } from '../../modules/querybuilder/service/backend.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,8 @@ export class CreateCriterionService {
     private criterionHashService: CriterionHashService,
     private featureService: FeatureService,
     private UiProfileService: LoadUIProfileService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private backend: BackendService
   ) {}
 
   public createCriterionFromTermCode(
@@ -62,6 +64,39 @@ export class CreateCriterionService {
     return subject.asObservable();
   }
 
+  public createCriterionFromBackendTermCode(
+    termCodes: TerminologyCode[],
+    context: TerminologyCode,
+    hash2: string,
+    invalidCriteriaIssues: AnnotatedStructuredQueryIssue[],
+    uid?: string
+  ): Observable<Criterion> {
+    const criterion: Criterion = new Criterion();
+    const subject = new Subject<Criterion>();
+    const hash = this.criterionHashService.createHash(context, termCodes[0]);
+    const localUID = uid ? uid : uuidv4();
+    criterion.criterionHash = hash;
+    criterion.display = termCodes[0].display;
+    criterion.termCodes = this.copyTermCodes(termCodes, localUID);
+    criterion.isInvalid = invalidCriteriaIssues.length > 0;
+    criterion.uniqueID = localUID;
+    criterion.position = new CritGroupPosition();
+    if (!criterion.isInvalid) {
+      criterion.context = context;
+      this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
+        Object.assign(criterion, critFromProfile);
+        criterion.termCodes = this.copyTermCodes(termCodes, uid);
+        subject.next(criterion);
+      });
+    } else {
+      setTimeout(() => {
+        this.snackbar.displayErrorMessage(this.snackbar.errorCodes['VAL-20001']);
+        subject.next(criterion);
+      }, 10);
+    }
+
+    return subject.asObservable();
+  }
   public createReferenceCriterionFromTermCode(
     termCodes: TerminologyCode[],
     context: TerminologyCode
@@ -96,6 +131,28 @@ export class CreateCriterionService {
     return subject.asObservable();
   }
 
+  public createCriterionFromHashTermEntry(termEntry: TerminologyEntry): Observable<Criterion> {
+    let criterion: Criterion;
+    const subject = new Subject<Criterion>();
+    this.backend.getTerminolgyTree(termEntry.id).subscribe((termEntryFromBackend) => {
+      this.createCriterionFromBackendTermCode(
+        termEntryFromBackend.termCodes,
+        termEntryFromBackend.context,
+        termEntryFromBackend.id,
+        [],
+        uuidv4()
+      ).subscribe((crit) => {
+        criterion = crit;
+        criterion.children = termEntryFromBackend.children;
+        criterion.entity = termEntryFromBackend.entity;
+        criterion.optional = termEntryFromBackend.optional;
+        subject.next(criterion);
+        subject.complete();
+      });
+    });
+
+    return subject.asObservable();
+  }
   private copyTermCodes(termCodes: TerminologyCode[], uid?: string): TerminologyCode[] {
     const termCodeResult = new Array<TerminologyCode>();
     termCodes.forEach((termCode) => {

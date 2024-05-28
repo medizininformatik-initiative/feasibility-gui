@@ -15,7 +15,9 @@ import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
 import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
 import { AnnotatedStructuredQuery } from '../../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
-
+import { SearchTermFilter } from '../../../model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
+import { SearchTermDetails } from '../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
+import { SearchTermResultList } from '../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermResultList';
 @Injectable({
   providedIn: 'root',
 })
@@ -37,6 +39,8 @@ export class BackendService {
   private static PATH_SEARCH = 'terminology/entries';
   private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
   private static PATH_SAVED = 'saved';
+  private static PATH_TERMINOLOGY_SEARCH = 'terminology/search';
+  private static PATH_TERMINOLOGY_SEARCH_FILTER = 'terminology/search/filter';
 
   private static PATH_RUN_QUERY = 'query';
   private static PATH_SAVED_QUERY_SLOTS = 'saved-query-slots';
@@ -84,6 +88,62 @@ export class BackendService {
   public getTerminologyProfile(contextTermcodeHash: string): Observable<any> {
     return this.http.get<any>(
       this.createUrl(BackendService.PATH_TERMINOLOGY + contextTermcodeHash + '/ui_profile')
+    );
+  }
+
+  public getElasticSearchFilter(): Observable<Array<SearchTermFilter>> {
+    return this.http.get<Array<SearchTermFilter>>(
+      this.createUrl(BackendService.PATH_TERMINOLOGY_SEARCH_FILTER)
+    );
+  }
+
+  /**
+   *
+   * @param searchString
+   * @param context
+   * @param terminology
+   * @param kds
+   * @param availability
+   * @param limit
+   * @param offset
+   * @returns
+   * offset optional?
+   */
+  public getElasticSearchResults(
+    searchString: string,
+    context?: string,
+    terminology?: string,
+    kds?: string,
+    availability?: number,
+    limit?: number,
+    offset?: number
+  ): Observable<SearchTermResultList> {
+    const contextParameter = context ? '&context=' + context : '';
+    const terminologyParameter = terminology ? '&terminology=' + terminology : '';
+    const kdsParameter = kds ? '&kds=' + kds : '';
+    const availabilityParameter = availability ? '&availability=' + availability : '';
+    const limitParameter = limit ? '&limit=' + limit : '';
+    const offsetParameter = offset ? '&offset=' + offset : '';
+    return this.http.get<SearchTermResultList>(
+      this.createUrl(
+        BackendService.PATH_TERMINOLOGY_SEARCH +
+          '?searchterm=' +
+          searchString +
+          contextParameter +
+          terminologyParameter +
+          kdsParameter +
+          availabilityParameter +
+          limitParameter +
+          offsetParameter
+      )
+    );
+  }
+
+  public getElasticSearchResultById(
+    contextualizedTermcodeHash: string
+  ): Observable<SearchTermDetails> {
+    return this.http.get<SearchTermDetails>(
+      this.createUrl(BackendService.PATH_TERMINOLOGY_SEARCH + '/' + contextualizedTermcodeHash)
     );
   }
 
