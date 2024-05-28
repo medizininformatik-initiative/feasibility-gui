@@ -1,6 +1,12 @@
 <form fxLayout="column" fxFlex="100%" [formGroup]="searchForm">
-  <mat-form-field appearance="outline" color="accent" floatLabel="auto">
-    <input formControlName="query" matInput placeholder="" aria-labelledby="title-label" />
+  <mat-form-field appearance="outline" color="accent" floatLabel="auto" class="fdpg-input">
+    <input
+      formControlName="query"
+      matInput
+      placeholder="{{ label | translate }}"
+      aria-labelledby="title-label"
+      class="el-input__inner"
+    />
     <mat-label>{{ label | translate }}</mat-label>
     <fa-icon
       matSuffix
@@ -12,4 +18,5 @@
       (click)="clearInput()"
     ></fa-icon>
   </mat-form-field>
+  <div>{{ currentText }}</div>
 </form>

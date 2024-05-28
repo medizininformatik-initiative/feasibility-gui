@@ -1,0 +1,13 @@
+<mat-drawer-container fxFlexFill>
+  <mat-drawer #drawer position="end" mode="side">
+    <div fxLayout="row">
+      <num-list-item-details fxFlex="75"></num-list-item-details>
+      <button fxLayoutAlign="center end" type="button" mat-button (click)="drawer.toggle()">
+        close
+      </button>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <num-result-list [searchTermResultList]="searchTermlistItems" fxFlexFill></num-result-list>
+  </mat-drawer-content>
+</mat-drawer-container>
