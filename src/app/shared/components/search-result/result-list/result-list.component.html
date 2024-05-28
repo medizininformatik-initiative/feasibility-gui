@@ -1,0 +1,37 @@
+<!--<mat-list>
+    <mat-list-item>
+        <div fxLayout="row" fxFlexFill  style="padding-left:10%" fxLayoutAlign="start center">
+            <div style="font-size: smaller;color: grey;" fxFlex="20"> test</div>
+            <div style="font-size: smaller;color: grey;" fxFlex="20"> test</div>
+            <div style="font-size: smaller;color: grey;" fxFlex="20"> test</div>
+            <div style="font-size: smaller;color: grey;" fxFlex="20"> test</div>
+        </div>
+    </mat-list-item>
+    <mat-list-item *ngFor="let element of elements" class="mat-divider">
+        <div fxLayout="column"  fxLayoutAlign="center" style="width: 100%;">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <mat-checkbox></mat-checkbox>
+                <div fxFlex="20">{{ element }}</div>
+                <div fxLayout="row" fxFlexFill  style="padding-left:25%" fxLayoutAlign="start center">
+                    <div style="font-size: smaller;color: grey;" fxFlex="20"> {{ element }}</div>
+                    <div style="font-size: smaller;color: grey;" fxFlex="20"> {{ element }}</div>
+                    <div style="font-size: smaller;color: grey;" fxFlex="20"> {{ element }}</div>
+                    <div style="font-size: smaller;color: grey;" fxFlex="20"> {{ element }}</div>
+                </div>
+            </div>
+        </div>
+        </mat-list-item>
+  </mat-list>
+
+-->
+<table mat-table [dataSource]="searchTermResultList" class="mat-elevation-z8">
+    <ng-container *ngFor="let column of columnsToDisplay" [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef> {{ column }} </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-checkbox *ngIf="column === 'name'" (click)="$event.stopPropagation()"></mat-checkbox>
+            {{ element[column] }}
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay" (click)="onRowSelect(myRowData)"></tr>
+</table>
