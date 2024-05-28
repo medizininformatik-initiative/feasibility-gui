@@ -1,4 +1,4 @@
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
@@ -27,6 +27,7 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
   private subscriptions = new Subscription();
 
   @Input() label: string;
+  @Input() minLength = 3;
   @Input() searchText: string;
   @Output() searchTextChange = new EventEmitter();
 
@@ -40,7 +41,10 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
     this.subscriptions.add(
       this.searchForm
         .get('query')
-        .valueChanges.pipe(debounceTime(this.debounceTime))
+        .valueChanges.pipe(
+          debounceTime(this.debounceTime),
+          filter((value) => value.length >= this.minLength)
+        )
         .subscribe((value) => {
           this.currentText = value;
           this.searchTextChange.emit(value);
@@ -54,7 +58,11 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
         const change = changes[propName];
         switch (propName) {
           case 'searchText': {
-            if (!change.isFirstChange() && this.currentText !== change.currentValue) {
+            if (
+              !change.isFirstChange() &&
+              this.currentText !== change.currentValue &&
+              change.currentValue.length >= this.minLength
+            ) {
               this.patchInput(change.currentValue);
             }
           }
