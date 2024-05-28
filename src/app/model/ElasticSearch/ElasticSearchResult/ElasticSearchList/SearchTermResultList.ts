@@ -2,11 +2,11 @@ import { SearchTermListItem } from './SearchTermListItem';
 
 export class SearchTermResultList {
   totalHits: number;
-  searchTermListItems: Array<SearchTermListItem>;
+  results: Array<SearchTermListItem>;
 
   constructor(totalHits: number, searchTermListItems: Array<SearchTermListItem>) {
     this.totalHits = totalHits;
-    this.searchTermListItems = searchTermListItems;
+    this.results = searchTermListItems;
   }
 
   getTotalHits() {
@@ -18,10 +18,10 @@ export class SearchTermResultList {
   }
 
   getResults(): Array<SearchTermListItem> {
-    return this.searchTermListItems;
+    return this.results;
   }
 
   setResults(searchTermListItems: Array<SearchTermListItem>): void {
-    this.searchTermListItems = searchTermListItems;
+    this.results = searchTermListItems;
   }
 }

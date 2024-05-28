@@ -23,7 +23,7 @@ export class EditCriterionService {
     if (data instanceof Array) {
       if (data instanceof Array<TerminologyEntry>) {
         data.forEach((termEntry) => {
-          observableBatch.push(this.CriterionService.createCriterionFromTermEntry(termEntry));
+          observableBatch.push(this.CriterionService.createCriterionFromHashTermEntry(termEntry));
         });
         forkJoin(observableBatch).subscribe((critList) => {
           this.openDetailsPopUp(critList, 'ADD', critType, position);

@@ -3,7 +3,7 @@
  */
 export abstract class AbstractTermHashContext {
   name: string;
-  contextualizedTermcodeHash?: string;
+  id?: string;
 
   /**
    * Constructs a new AbstractTermHashContext instance.
@@ -13,7 +13,7 @@ export abstract class AbstractTermHashContext {
    */
   constructor(name: string, contextualizedTermcodeHash?: string) {
     this.name = name;
-    this.contextualizedTermcodeHash = contextualizedTermcodeHash;
+    this.id = contextualizedTermcodeHash;
   }
 
   /**
@@ -40,7 +40,7 @@ export abstract class AbstractTermHashContext {
    * @returns The contextualized term code hash as a string, or undefined if not set.
    */
   getContextualizedTermcodeHash(): string | undefined {
-    return this.contextualizedTermcodeHash;
+    return this.id;
   }
 
   /**
@@ -49,6 +49,6 @@ export abstract class AbstractTermHashContext {
    * @param contextualizedTermcodeHash - The new contextualized term code hash as a string, or undefined if not set.
    */
   setContextualizedTermcodeHash(contextualizedTermcodeHash: string | undefined): void {
-    this.contextualizedTermcodeHash = contextualizedTermcodeHash;
+    this.id = contextualizedTermcodeHash;
   }
 }

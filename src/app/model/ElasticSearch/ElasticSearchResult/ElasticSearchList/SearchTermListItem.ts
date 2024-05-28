@@ -22,8 +22,8 @@ export class SearchTermListItem extends AbstractSearchResult {
     termcode: string,
     kdsModule: string,
     name: string,
-    contextualizedTermcodeHash: string
+    id: string
   ) {
-    super(name, contextualizedTermcodeHash, availability, domain, terminology, termcode, kdsModule);
+    super(name, id, availability, domain, terminology, termcode, kdsModule);
   }
 }

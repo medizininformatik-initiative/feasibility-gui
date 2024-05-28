@@ -71,16 +71,30 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
 
   public readTextData(catId: string): void {
     this.catId = catId;
-
-    this.subscription?.unsubscribe();
-    this.subscription = this.backend
-      .getElasticSearchResults(this.text)
-      .subscribe((termEntryList) => {
-        this.resultList = termEntryList;
-      });
+    if (this.text && this.text?.length > 0) {
+      this.subscription?.unsubscribe();
+      this.subscription = this.backend
+        .getElasticSearchResults(this.text)
+        .subscribe((termEntryList) => {
+          this.resultList = [];
+          termEntryList.results.forEach((searchListItem) => {
+            const item = new TerminologyEntry();
+            item.display = searchListItem.name;
+            item.termCodes = [
+              {
+                code: searchListItem.termcode,
+                system: searchListItem.terminology,
+                version: '',
+                display: searchListItem.name,
+              },
+            ];
+            item.id = searchListItem.id;
+            this.resultList.push(item);
+          });
+        });
+    }
   }
-
-  public readTextData2(catId: string): void {
+  public readTextDataOld(catId: string): void {
     this.catId = catId;
 
     this.subscription?.unsubscribe();

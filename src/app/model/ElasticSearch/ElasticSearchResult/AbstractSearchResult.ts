@@ -19,18 +19,18 @@ export abstract class AbstractSearchResult extends AbstractTermHashContext {
    * @param termcode - The term code.
    * @param kdsModule - The KDS module.
    * @param name
-   * @param contextualizedTermcodeHash
+   * @param id
    */
   constructor(
     name: string,
-    contextualizedTermcodeHash: string,
+    id: string,
     availability: number,
     domain: string,
     terminology: string,
     termcode: string,
     kdsModule: string
   ) {
-    super(name, contextualizedTermcodeHash);
+    super(name, id);
     this.availability = availability;
     this.domain = domain;
     this.terminology = terminology;
