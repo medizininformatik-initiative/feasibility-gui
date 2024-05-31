@@ -139,11 +139,9 @@ export class BackendService {
     );
   }
 
-  public getElasticSearchResultById(
-    contextualizedTermcodeHash: string
-  ): Observable<SearchTermDetails> {
+  public getElasticSearchResultById(id: string): Observable<SearchTermDetails> {
     return this.http.get<SearchTermDetails>(
-      this.createUrl(BackendService.PATH_TERMINOLOGY_SEARCH + '/' + contextualizedTermcodeHash)
+      this.createUrl(BackendService.PATH_TERMINOLOGY_SEARCH + '/' + id)
     );
   }
 
