@@ -5,7 +5,7 @@ import { AbstractSearchResult } from '../AbstractSearchResult';
  *
  * @see AbstractSearchResult
  */
-export class SearchTermListItem extends AbstractSearchResult {
+export class SearchTermListEntry extends AbstractSearchResult {
   selectable = true;
   /**
    *

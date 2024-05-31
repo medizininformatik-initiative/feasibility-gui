@@ -3,7 +3,7 @@
  */
 export abstract class AbstractTermHashContext {
   name: string;
-  id?: string;
+  id: string;
 
   /**
    * Constructs a new AbstractTermHashContext instance.

@@ -2,10 +2,12 @@ import { BackendService } from '../../modules/querybuilder/service/backend.servi
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
-import { SearchTermListItem } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListItem';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermResultList';
 import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
+import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
+import { Entries } from 'src/app/model/ElasticSearch/Entrie';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +27,7 @@ export class ElasticSearchService {
         const totalHits = response.totalHits;
         const searchTermListItems = response.results.map(
           (item) =>
-            new SearchTermListItem(
+            new SearchTermListEntry(
               item.availability,
               item.selectable,
               item.terminology,
@@ -46,7 +48,7 @@ export class ElasticSearchService {
    * @param id The ID of the list item.
    * @returns An Observable emitting the details of the list item.
    */
-  public getDetailsForListItem(id: string): Observable<SearchTermDetails> {
+  public getDetailsForListItem(id: string): Observable<Entries> {
     return this.backendService.getElasticSearchResultById(id).pipe(
       map((response: any) => {
         const translations = this.mapToSearchTermTranslations(response.translations);
@@ -54,17 +56,22 @@ export class ElasticSearchService {
         const children = this.mapToSearchTermRelatives(response.children);
         const relatedTerms = this.mapToSearchTermRelatives(response.relatedTerms);
 
-        return new SearchTermDetails(
+        const searchTermDetails = new SearchTermDetails(
           children,
           parents,
           relatedTerms,
           translations,
           response.name,
-          response.id,
+          response.id
+        );
+
+        const criteriaProfileData = new CriteriaProfileData(
           response.uiProfile,
           response.context,
           response.termcodes
         );
+
+        return new Entries(searchTermDetails, criteriaProfileData, response.id);
       })
     );
   }

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { BackendService } from '../../../modules/querybuilder/service/backend.service';
-import { SearchTermListItem } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListItem';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
@@ -20,14 +20,14 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer') sidenav: MatDrawer;
 
   @Input()
-  searchTermListItems: SearchTermListItem[] = [];
+  searchTermListItems: SearchTermListEntry[] = [];
 
   @Input()
   keysToSkip: string[] = [];
 
   private isInitialized = false;
 
-  data: SearchTermListItem;
+  data: SearchTermListEntry;
 
   isOpen = false;
 

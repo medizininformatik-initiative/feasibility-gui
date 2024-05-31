@@ -1,15 +1,15 @@
-import { SearchTermListItem } from './SearchTermListItem';
+import { SearchTermListEntry } from './SearchTermListEntry';
 
 export class SearchTermResultList {
   totalHits: number;
-  results: Array<SearchTermListItem>;
+  results: Array<SearchTermListEntry>;
 
   /**
    *
    * @param totalHits
    * @param searchTermListItems
    */
-  constructor(totalHits: number, searchTermListItems: Array<SearchTermListItem>) {
+  constructor(totalHits: number, searchTermListItems: Array<SearchTermListEntry>) {
     this.totalHits = totalHits;
     this.results = searchTermListItems;
   }
@@ -37,7 +37,7 @@ export class SearchTermResultList {
    * @see SeachTermListItems
    * @returns
    */
-  getResults(): Array<SearchTermListItem> {
+  getResults(): Array<SearchTermListEntry> {
     return this.results;
   }
 
@@ -45,7 +45,7 @@ export class SearchTermResultList {
    *
    * @param searchTermListItems
    */
-  setResults(searchTermListItems: Array<SearchTermListItem>): void {
+  setResults(searchTermListItems: Array<SearchTermListEntry>): void {
     this.results = searchTermListItems;
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { SearchTermListItem } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListItem';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSea
   styleUrls: ['./result-list.component.scss'],
 })
 export class ResultListComponent implements OnInit, OnChanges {
-  @Input() searchTermResultList: SearchTermListItem[] = [];
+  @Input() searchTermResultList: SearchTermListEntry[] = [];
 
   @Input() keysToSkip: Array<string> = [];
 
@@ -19,7 +19,7 @@ export class ResultListComponent implements OnInit, OnChanges {
    */
   columnsToDisplay: Array<string> = [];
 
-  selectedRow: SearchTermListItem;
+  selectedRow: SearchTermListEntry;
 
   constructor(private listItemService: SearchResultListItemSelectionService) {}
 
@@ -35,7 +35,7 @@ export class ResultListComponent implements OnInit, OnChanges {
    *
    * @param data
    */
-  extractKeys(searchTermResultList: SearchTermListItem[], keysToSkip: string[]) {
+  extractKeys(searchTermResultList: SearchTermListEntry[], keysToSkip: string[]) {
     if (!searchTermResultList || searchTermResultList.length === 0) {
       return;
     }
@@ -55,11 +55,11 @@ export class ResultListComponent implements OnInit, OnChanges {
    *
    * @param row
    */
-  onRowSelect(rowData: SearchTermListItem) {
+  onRowSelect(rowData: SearchTermListEntry) {
     this.listItemService.setSelectedSearchResultListItem(rowData);
   }
 
-  selectCheckbox(event, searchTermListItem: SearchTermListItem) {
+  selectCheckbox(event, searchTermListItem: SearchTermListEntry) {
     if (event.checked) {
       this.listItemService.addSearchResultListItemToSelection(searchTermListItem);
     } else {
