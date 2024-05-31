@@ -1,0 +1,21 @@
+.section-container {
+  display: flex;
+  align-items: flex-start; /* Align items to the start of the flex container */
+}
+
+.section-header {
+  flex: 0 0 auto; /* Prevent the header from growing */
+  margin-right: 20px; /* Add space between the header and the list */
+}
+
+.section-list {
+  flex: 1; /* Allow the list to grow and fill the remaining space */
+}
+
+.mat-divider {
+  border: 0;
+  border-bottom: 1px solid #0000001f;
+  width: 100%;
+  height: 20px;
+  align-content: center;
+}

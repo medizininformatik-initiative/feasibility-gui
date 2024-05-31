@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ResultListComponent } from './search-result/result-list/result-list.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { ListItemDetailsComponent } from './search-result/list-item-details/list-item-details.component';
+import { ListItemDetailsSectionsComponent } from './search-result/list-item-details/list-item-details-sections/list-item-details-sections.component';
 const SHARED_DECLARATIONS = [
   SearchComponent,
   FilterChipsComponent,
@@ -22,7 +23,7 @@ const SHARED_DECLARATIONS = [
 ];
 
 @NgModule({
-  declarations: [...SHARED_DECLARATIONS],
+  declarations: [...SHARED_DECLARATIONS, ListItemDetailsSectionsComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,
