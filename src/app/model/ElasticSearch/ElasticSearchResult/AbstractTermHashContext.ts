@@ -9,11 +9,11 @@ export abstract class AbstractTermHashContext {
    * Constructs a new AbstractTermHashContext instance.
    *
    * @param name - The name of the term.
-   * @param contextualizedTermcodeHash - The contextualized term code hash, optional.
+   * @param id - The contextualized term code hash, optional.
    */
-  constructor(name: string, contextualizedTermcodeHash?: string) {
+  constructor(name: string, id?: string) {
     this.name = name;
-    this.id = contextualizedTermcodeHash;
+    this.id = id;
   }
 
   /**
@@ -35,20 +35,20 @@ export abstract class AbstractTermHashContext {
   }
 
   /**
-   * Gets the contextualized term code hash.
+   * Gets the id.
    *
-   * @returns The contextualized term code hash as a string, or undefined if not set.
+   * @returns The id as a string, or undefined if not set.
    */
-  getContextualizedTermcodeHash(): string | undefined {
+  getId(): string | undefined {
     return this.id;
   }
 
   /**
    * Sets the contextualized term code hash.
    *
-   * @param contextualizedTermcodeHash - The new contextualized term code hash as a string, or undefined if not set.
+   * @param id - The new contextualized term code hash as a string, or undefined if not set.
    */
-  setContextualizedTermcodeHash(contextualizedTermcodeHash: string | undefined): void {
-    this.id = contextualizedTermcodeHash;
+  setId(id: string | undefined): void {
+    this.id = id;
   }
 }

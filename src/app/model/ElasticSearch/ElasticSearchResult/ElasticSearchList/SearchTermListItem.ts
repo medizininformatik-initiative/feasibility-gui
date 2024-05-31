@@ -6,24 +6,43 @@ import { AbstractSearchResult } from '../AbstractSearchResult';
  * @see AbstractSearchResult
  */
 export class SearchTermListItem extends AbstractSearchResult {
+  selectable = true;
   /**
-   * Constructs a new SearchTermListItem instance.
    *
-   * @param availability - The availability of the term.
-   * @param domain - The domain of the term.
-   * @param terminology - The terminology of the term.
-   * @param termcode - The term code.
-   * @param kdsModule - The KDS module.
+   * @param availability
+   * @param selectable
+   * @param terminology
+   * @param termcode
+   * @param kdsModule
+   * @param name
+   * @param id
    */
   constructor(
     availability: number,
-    domain: string,
+    selectable: boolean,
     terminology: string,
     termcode: string,
     kdsModule: string,
     name: string,
     id: string
   ) {
-    super(name, id, availability, domain, terminology, termcode, kdsModule);
+    super(name, id, availability, terminology, termcode, kdsModule);
+    this.selectable = selectable;
+  }
+
+  /**
+   *
+   * @returns if the Item is selectable
+   */
+  getSelectable() {
+    return this.selectable;
+  }
+
+  /**
+   *
+   * @param isSelectable
+   */
+  setSelectable(isSelectable: boolean) {
+    this.selectable = isSelectable;
   }
 }

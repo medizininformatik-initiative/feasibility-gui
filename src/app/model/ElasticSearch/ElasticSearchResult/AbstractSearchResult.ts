@@ -5,7 +5,6 @@ import { AbstractTermHashContext } from './AbstractTermHashContext';
  */
 export abstract class AbstractSearchResult extends AbstractTermHashContext {
   availability: number;
-  domain: string;
   terminology: string;
   termcode: string;
   kdsModule: string;
@@ -14,7 +13,6 @@ export abstract class AbstractSearchResult extends AbstractTermHashContext {
    * Constructs a new AbstractSearchResult instance.
    *
    * @param availability - The availability of the term.
-   * @param domain - The domain of the term.
    * @param terminology - The terminology of the term.
    * @param termcode - The term code.
    * @param kdsModule - The KDS module.
@@ -25,14 +23,12 @@ export abstract class AbstractSearchResult extends AbstractTermHashContext {
     name: string,
     id: string,
     availability: number,
-    domain: string,
     terminology: string,
     termcode: string,
     kdsModule: string
   ) {
     super(name, id);
     this.availability = availability;
-    this.domain = domain;
     this.terminology = terminology;
     this.termcode = termcode;
     this.kdsModule = kdsModule;
@@ -54,24 +50,6 @@ export abstract class AbstractSearchResult extends AbstractTermHashContext {
    */
   setAvailability(availability: number): void {
     this.availability = availability;
-  }
-
-  /**
-   * Gets the domain of the searchterm.
-   *
-   * @returns The domain as a string.
-   */
-  getDomain(): string {
-    return this.domain;
-  }
-
-  /**
-   * Sets the domain of the searchterm.
-   *
-   * @param domain - The new domain as a string.
-   */
-  setDomain(domain: string): void {
-    this.domain = domain;
   }
 
   /**
