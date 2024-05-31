@@ -9,7 +9,7 @@
     </mat-list-item>
 
     <!-- Parents -->
-    <ng-container *ngIf="listItemDetails.parents.length">
+    <ng-container>
       <div class="children-container">
         <div class="children-header">parents</div>
         <num-list-item-details-sections [listItemDetails]="listItemDetails.parents">
@@ -18,7 +18,7 @@
     </ng-container>
 
     <!-- Children -->
-    <ng-container *ngIf="listItemDetails.children?.length">
+    <ng-container>
       <div class="children-container">
         <div class="children-header">Children</div>
         <num-list-item-details-sections [listItemDetails]="listItemDetails.children">
@@ -27,7 +27,7 @@
     </ng-container>
 
     <!-- Siblings (Related Terms) -->
-    <ng-container *ngIf="listItemDetails.relatedTerms?.length">
+    <ng-container>
       <mat-list-item class="mat-divider">
         <div>Siblings</div>
       </mat-list-item>
