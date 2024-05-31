@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  <!-- <div class="container-consent">
+  <div class="container-consent">
     <div class="consent-header">{{ 'QUERYBUILDER.SEARCH.CONSENT_HEADER' | translate }}</div>
     <div>
       <mat-radio-group
@@ -85,8 +85,8 @@
         </mat-radio-button>
       </mat-radio-group>
     </div>
-  </div> -->
-  <!-- <div fxLayout="row" fxLayoutAlign="space-between" class="container">
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between" class="container">
     <num-search-input
       [critType]="'inclusion'"
       [query]="query"
@@ -110,12 +110,14 @@
     <fa-icon icon="plus" size="lg"></fa-icon>
   </button>
   {{ 'QUERYBUILDER.DISPLAY.GROUPS.NEW_GROUP' | translate }}
-</div> -->
-
-  <num-search [label]="'Suchbegriff eingeben'" (searchTextChange)="test($event)"> </num-search>
-  <num-search-result
-    [searchTermListItems]="listItems"
-    [keysToSkip]="keysToSkip"
-    fxFlexFill
-  ></num-search-result>
 </div>
+
+<num-search [label]="'Suchbegriff eingeben'" (searchTextChange)="test($event)"> </num-search>
+<num-search-result
+  [searchTermListItems]="listItems"
+  [keysToSkip]="keysToSkip"
+  fxFlexFill
+></num-search-result>
+<button class="button-add-group" type="button" mat-icon-button (click)="testTranslateCriterion()">
+  <fa-icon icon="plus" size="lg"></fa-icon>
+</button>
