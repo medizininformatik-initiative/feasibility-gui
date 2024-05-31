@@ -1,9 +1,6 @@
-import { UIProfile } from 'src/app/model/terminology/UIProfile';
-import { AbstractSearchResult } from '../AbstractSearchResult';
 import { AbstractTermHashContext } from '../AbstractTermHashContext';
 import { SearchTermRelatives } from './SearchTermRelatives';
 import { SearchTermTranslation } from './SearchTermTranslation';
-import { TerminologyCode } from 'src/app/model/terminology/Terminology';
 
 /**
  * Represents detailed information about a search term, extending the AbstractSearchResult class.
@@ -16,9 +13,6 @@ export class SearchTermDetails extends AbstractTermHashContext {
   parents: SearchTermRelatives[];
   children: SearchTermRelatives[];
   relatedTerms: SearchTermRelatives[];
-  uiProfile: UIProfile;
-  context: TerminologyCode;
-  termCodes: TerminologyCode[];
 
   /**
    *
@@ -28,9 +22,6 @@ export class SearchTermDetails extends AbstractTermHashContext {
    * @param translations
    * @param name
    * @param id
-   * @param uiProfile
-   * @param context
-   * @param termCodes
    */
   constructor(
     children: Array<SearchTermRelatives>,
@@ -38,19 +29,13 @@ export class SearchTermDetails extends AbstractTermHashContext {
     relatedTerms: Array<SearchTermRelatives>,
     translations: Array<SearchTermTranslation>,
     name: string,
-    id: string,
-    uiProfile: UIProfile,
-    context: TerminologyCode,
-    termCodes: TerminologyCode[]
+    id: string
   ) {
     super(name, id);
     this.translations = translations;
     this.parents = parents;
     this.children = children;
     this.relatedTerms = relatedTerms;
-    this.uiProfile = uiProfile;
-    this.context = context;
-    this.termCodes = termCodes;
   }
 
   /**
