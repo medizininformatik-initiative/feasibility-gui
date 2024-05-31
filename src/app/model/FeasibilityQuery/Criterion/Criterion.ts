@@ -1,6 +1,6 @@
 import { AttributeFilter } from './AttributeFilter/AttributeFilter';
 import { CritGroupPosition } from '../../../modules/querybuilder/controller/CritGroupArranger';
-import { TerminologyCode, TerminologyEntry } from '../../terminology/Terminology';
+import { TerminologyCode } from '../../terminology/Terminology';
 import { TimeRestriction } from '../TimeRestriction';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
 
@@ -8,11 +8,9 @@ import { ValueFilter } from './AttributeFilter/ValueFilter';
 // a terminology code (system + version + code), operators and values.
 export class Criterion {
   attributeFilters?: Array<AttributeFilter> = [];
-  children?: Array<TerminologyEntry> = [];
   criterionHash?: string;
   context?: TerminologyCode;
   display?: string;
-  entity?: boolean = false;
   isInvalid?: boolean = false;
   isLinked?: boolean = false;
   linkedCriteria?: Criterion[] = [];
@@ -22,5 +20,4 @@ export class Criterion {
   termCodes?: Array<TerminologyCode> = [];
   timeRestriction?: TimeRestriction;
   valueFilters?: Array<ValueFilter> = [];
-  requiredDataSelection?: boolean;
 }
