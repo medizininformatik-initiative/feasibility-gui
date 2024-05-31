@@ -1,5 +1,5 @@
 <form fxLayout="column" fxFlex="100%" [formGroup]="searchForm">
-  <mat-form-field appearance="outline" color="accent" floatLabel="auto" class="fdpg-input">
+  <mat-form-field color="accent" class="fdpg-input">
     <input
       formControlName="query"
       matInput
@@ -18,5 +18,4 @@
       (click)="clearInput()"
     ></fa-icon>
   </mat-form-field>
-  <div>{{ currentText }}</div>
 </form>

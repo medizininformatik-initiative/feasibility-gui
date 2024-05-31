@@ -7,10 +7,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { SearchTermListItemService } from 'src/app/service/SearchTermListItemService.service';
 import { BackendService } from '../../../modules/querybuilder/service/backend.service';
-import { TerminologyEntry } from '../../../model/terminology/Terminology';
-import { Subscription } from 'rxjs';
+import { SearchTermListItem } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListItem';
+import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
   selector: 'num-search-result',
@@ -19,35 +18,36 @@ import { Subscription } from 'rxjs';
 })
 export class SearchResultComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer') sidenav: MatDrawer;
-  data: any;
-  isOpen = false;
-  subscription: Subscription;
+
   @Input()
-  searchTermlistItems: any[] = [];
+  searchTermListItems: SearchTermListItem[] = [];
+
+  @Input()
+  keysToSkip: string[] = [];
 
   private isInitialized = false;
 
+  data: SearchTermListItem;
+
+  isOpen = false;
+
   constructor(
     private backend: BackendService,
-    private listItemService: SearchTermListItemService,
+    private listItemService: SearchResultListItemSelectionService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.listItemService.getSelectedRow().subscribe((row) => {
+    this.listItemService.getSelectedSearchResultListItem().subscribe((row) => {
       this.data = row;
       if (this.isInitialized) {
+        this.cdr.detectChanges();
         if (row) {
           this.openSidenav();
         } else {
           this.closeSidenav();
         }
       }
-    });
-
-    const test = 'Diabetes';
-    this.subscription = this.backend.getElasticSearchResults(test).subscribe((termEntryList) => {
-      this.searchTermlistItems = termEntryList.results;
     });
   }
 

@@ -20,7 +20,7 @@ import {
 })
 export class SearchComponent implements OnInit, OnChanges, OnDestroy {
   /* istanbul ignore next */
-  private readonly debounceTime = environment.name === 'test' ? 10 : 200;
+  private readonly debounceTime = 200;
   searchForm: UntypedFormGroup;
   constructor() {}
 
