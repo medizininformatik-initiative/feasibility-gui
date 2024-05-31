@@ -24,3 +24,17 @@
 .mat-drawer {
   width: 40%;
 }
+
+.children-container {
+  display: flex;
+  align-items: flex-start; /* Align items to the start of the flex container */
+}
+
+.children-header {
+  flex: 0 0 auto; /* Prevent the header from growing */
+  margin-right: 20px; /* Add space between the header and the list */
+}
+
+.children-list {
+  flex: 1; /* Allow the list to grow and fill the remaining space */
+}

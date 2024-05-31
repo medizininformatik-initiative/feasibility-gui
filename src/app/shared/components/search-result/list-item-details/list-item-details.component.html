@@ -1,13 +1,43 @@
-<ng-container *ngIf="data">
+<ng-container *ngIf="listItemDetails$ | async as listItemDetails">
   <mat-list>
+    <!-- Automatic Translations -->
     <mat-list-item class="mat-divider">
-      <div style="font-size: smaller; color: grey">Name: {{ data.name }}</div>
+      <div>Automatic Translations</div>
     </mat-list-item>
-    <mat-list-item class="mat-divider">
-      <div style="font-size: smaller; color: grey">Termcode: {{ data.termcode }}</div>
+    <mat-list-item *ngFor="let translation of listItemDetails.translations" class="mat-divider">
+      {{ translation.value }}
     </mat-list-item>
-    <mat-list-item class="mat-divider">
-      <div style="font-size: smaller; color: grey">Termcode: {{ data.termcode }}</div>
-    </mat-list-item>
+
+    <!-- Parents -->
+    <ng-container *ngIf="listItemDetails.parents.length">
+      <div class="children-container">
+        <div class="children-header">parents</div>
+        <num-list-item-details-sections [listItemDetails]="listItemDetails.parents">
+        </num-list-item-details-sections>
+      </div>
+    </ng-container>
+
+    <!-- Children -->
+    <ng-container *ngIf="listItemDetails.children?.length">
+      <div class="children-container">
+        <div class="children-header">Children</div>
+        <num-list-item-details-sections [listItemDetails]="listItemDetails.children">
+        </num-list-item-details-sections>
+      </div>
+    </ng-container>
+
+    <!-- Siblings (Related Terms) -->
+    <ng-container *ngIf="listItemDetails.relatedTerms?.length">
+      <mat-list-item class="mat-divider">
+        <div>Siblings</div>
+      </mat-list-item>
+      <mat-list-item
+        *ngFor="let relatedTerm of listItemDetails.relatedTerms"
+        class="mat-divider"
+        (click)="getSelectedRelative(relatedTerm)"
+      >
+        {{ relatedTerm.name }}
+      </mat-list-item>
+    </ng-container>
   </mat-list>
 </ng-container>
