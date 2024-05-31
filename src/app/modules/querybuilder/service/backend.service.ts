@@ -18,6 +18,8 @@ import { AnnotatedStructuredQuery } from '../../../model/result/AnnotatedStructu
 import { SearchTermFilter } from '../../../model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermDetails } from '../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermResultList } from '../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermResultList';
+import { Entries } from 'src/app/model/ElasticSearch/Entrie';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 @Injectable({
   providedIn: 'root',
 })
@@ -37,6 +39,7 @@ export class BackendService {
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
   private static PATH_TERMINOLOGY = 'terminology/';
   private static PATH_SEARCH = 'terminology/entries';
+  private static PATH_ENTRIES = 'terminology/entries';
   private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
   private static PATH_SAVED = 'saved';
   private static PATH_TERMINOLOGY_SEARCH = 'terminology/search';
@@ -70,6 +73,12 @@ export class BackendService {
 
     return this.http.get<TerminologyEntry>(
       this.createUrl(BackendService.PATH_TERMINOLOGY_SUBTREE + '/' + id)
+    );
+  }
+
+  public getElasticSearchEntry(id: string): Observable<SearchTermListEntry> {
+    return this.http.get<SearchTermListEntry>(
+      this.createUrl(BackendService.PATH_ENTRIES + '/' + id)
     );
   }
 
@@ -139,10 +148,14 @@ export class BackendService {
     );
   }
 
-  public getElasticSearchResultById(id: string): Observable<SearchTermDetails> {
-    return this.http.get<SearchTermDetails>(
-      this.createUrl(BackendService.PATH_TERMINOLOGY_SEARCH + '/' + id)
-    );
+  /**
+   * In the future use this.createUrl(BackendService.PATH_SEARCH + '/' + id + '?detail=true' )
+   *
+   * @param id
+   * @returns
+   */
+  public getElasticSearchResultById(id: string): Observable<Entries> {
+    return this.http.get<Entries>(this.createUrl(BackendService.PATH_TERMINOLOGY_SEARCH + '/' + id));
   }
 
   public getTerminolgyEntrySearchResult(
