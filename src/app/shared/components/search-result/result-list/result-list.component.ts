@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, OnChanges, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { SearchTermListItemService } from 'src/app/service/SearchTermListItemService.service';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { SearchTermListItem } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListItem';
+import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
   selector: 'num-result-list',
@@ -8,7 +8,9 @@ import { SearchTermListItemService } from 'src/app/service/SearchTermListItemSer
   styleUrls: ['./result-list.component.scss'],
 })
 export class ResultListComponent implements OnInit, OnChanges {
-  @Input() searchTermResultList: any[] = [];
+  @Input() searchTermResultList: SearchTermListItem[] = [];
+
+  @Input() keysToSkip: Array<string> = [];
 
   /**
    * Columns to be rendered in the header and data rows
@@ -17,13 +19,13 @@ export class ResultListComponent implements OnInit, OnChanges {
    */
   columnsToDisplay: Array<string> = [];
 
-  selectedRow: any = null;
+  selectedRow: SearchTermListItem;
 
-  constructor(private listItemService: SearchTermListItemService) {}
+  constructor(private listItemService: SearchResultListItemSelectionService) {}
 
   ngOnInit(): void {
-    this.extractKeys(this.searchTermResultList);
-    this.listItemService.getSelectedRow().subscribe((row) => {
+    this.extractKeys(this.searchTermResultList, this.keysToSkip);
+    this.listItemService.getSelectedSearchResultListItem().subscribe((row) => {
       this.selectedRow = row;
     });
   }
@@ -33,9 +35,17 @@ export class ResultListComponent implements OnInit, OnChanges {
    *
    * @param data
    */
-  extractKeys(data: any) {
-    const keys = Object.keys(data[0]);
-    keys.forEach((key) => this.columnsToDisplay.push(key));
+  extractKeys(searchTermResultList: SearchTermListItem[], keysToSkip: string[]) {
+    if (!searchTermResultList || searchTermResultList.length === 0) {
+      return;
+    }
+
+    const keys = Object.keys(searchTermResultList[0]);
+    keys.forEach((key) => {
+      if (!keysToSkip.includes(key)) {
+        this.columnsToDisplay.push(key);
+      }
+    });
   }
 
   ngOnChanges(): void {}
@@ -45,11 +55,15 @@ export class ResultListComponent implements OnInit, OnChanges {
    *
    * @param row
    */
-  onRowSelect(row: any) {
-    this.listItemService.setSelectedRow(row);
+  onRowSelect(rowData: SearchTermListItem) {
+    this.listItemService.setSelectedSearchResultListItem(rowData);
   }
 
-  selectCheckbox(event) {
-    this.listItemService.setSelectedRow(event);
+  selectCheckbox(event, searchTermListItem: SearchTermListItem) {
+    if (event.checked) {
+      this.listItemService.addSearchResultListItemToSelection(searchTermListItem);
+    } else {
+      this.listItemService.removeSearchResultListItemFromSelection(searchTermListItem);
+    }
   }
 }

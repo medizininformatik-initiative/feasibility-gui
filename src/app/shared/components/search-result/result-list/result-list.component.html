@@ -1,13 +1,13 @@
 <table mat-table [dataSource]="searchTermResultList" class="mat-elevation-z8">
   <ng-container *ngFor="let column of columnsToDisplay" [matColumnDef]="column">
     <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-    <td mat-cell *matCellDef="let element">
+    <td mat-cell *matCellDef="let listItem">
       <mat-checkbox
         *ngIf="column === 'name'"
-        (change)="selectCheckbox($event)"
+        (change)="selectCheckbox($event, listItem)"
         (click)="$event.stopPropagation()"
       ></mat-checkbox>
-      {{ element[column] }}
+      {{ listItem[column] }}
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
