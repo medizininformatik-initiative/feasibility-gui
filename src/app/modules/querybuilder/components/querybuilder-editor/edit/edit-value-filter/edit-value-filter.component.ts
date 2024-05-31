@@ -15,6 +15,7 @@ import { TerminologyCode } from 'src/app/model/terminology/Terminology';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { ReferenceCriteriaService } from '../../../../../../service/CriterionService/reference-criteria.service';
 import { QueryService } from '../../../../../../service/QueryService.service';
+import { CriterionService } from 'src/app/service/CriterionService.service';
 
 @Component({
   selector: 'num-edit-value-definition',
@@ -60,7 +61,7 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
 
   constructor(
     private referenceCriteriaService: ReferenceCriteriaService,
-    private queryService: QueryService
+    private queryService: CriterionService
   ) {}
 
   ngOnInit(): void {
