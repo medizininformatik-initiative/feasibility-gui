@@ -1,14 +1,16 @@
 <ng-container *ngIf="listItemDetails?.length">
-  <div class="section-container">
-    <div class="section-header">{{ title }}</div>
-    <mat-list class="section-list">
-      <mat-list-item
-        *ngFor="let item of listItemDetails"
-        class="mat-divider"
-        (click)="getSelectedRelative(item)"
-      >
-        <p matListItemLine>{{ item.name }}</p>
-      </mat-list-item>
-    </mat-list>
+  <div
+    style="min-width: 0px"
+    fxLayout="column"
+    fxLayoutAlign="start start"
+    class="padding-left-20 padding-top-5"
+  >
+    <div
+      *ngFor="let item of listItemDetails"
+      class="mat-divider display-sections-flex"
+      (click)="getSelectedRelative(item)"
+    >
+      {{ item.name }}
+    </div>
   </div>
 </ng-container>

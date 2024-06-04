@@ -1,30 +1,3 @@
-.mat-divider {
-  border: 0;
-  border-bottom: 1px solid #0000001f;
-  width: 100%;
-  height: 20px;
-  align-content: center;
-}
-
-/*::ng-deep .mdc-checkbox__native-control:checked~.mdc-checkbox__background .mdc-checkbox__checkmark {
-    background-color:rgb(252, 252, 252);
-  }
-  */
-
-.full-width-table {
-  width: 100%;
-  transition: width 0.3s ease-in-out; /* Add transition for smooth animation */
-}
-
-.partial-width-table {
-  width: 40%;
-  transition: width 0.3s ease-in-out; /* Add transition for smooth animation */
-}
-
-.mat-drawer {
-  width: 40%;
-}
-
 .children-container {
   display: flex;
   align-items: flex-start; /* Align items to the start of the flex container */
@@ -37,4 +10,19 @@
 
 .children-list {
   flex: 1; /* Allow the list to grow and fill the remaining space */
+}
+
+.padding-20 {
+  padding: 20px 0px 0px 20px;
+}
+
+.padding-top-5 {
+  padding-top: 5px;
+}
+
+.divider {
+  border: 0;
+  border-bottom: 1px solid #0000001f;
+  width: 100%;
+  align-content: center;
 }
