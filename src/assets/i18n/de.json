@@ -1,4 +1,11 @@
 {
+  "SHAREDCOMPONENTS": {
+    "kdsModule": "KDS Module",
+    "availability": "Anzahl",
+    "terminology": "Terminologie",
+    "termcode": "Term Code",
+    "name": "Kriterium"
+  },
   "DASHBOARD": {
     "CODEXTHEME": {
       "HEADLINE": "Willkommen auf der CODEX Feasibility Plattform!",

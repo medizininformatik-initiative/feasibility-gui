@@ -1,4 +1,11 @@
 {
+  "SHAREDCOMPONENTS": {
+    "kdsModule": "KDS Module",
+    "availability": "Availability",
+    "terminology": "Terminology",
+    "termcode": "Term Code",
+    "name": "Citeria"
+  },
   "DASHBOARD": {
     "CODEXTHEME": {
       "HEADLINE": "Welcome to the CODEX Feasibility Platform!",
