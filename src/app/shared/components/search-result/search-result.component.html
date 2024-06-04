@@ -1,13 +1,14 @@
 <mat-drawer-container fxFlexFill>
   <mat-drawer #drawer position="end" mode="side">
-    <div fxLayout="row" *ngIf="data">
-      <num-list-item-details [item]="data" fxFlex="75"></num-list-item-details>
+    <div fxLayout="row" *ngIf="data" class="padding-top-50">
+      <num-list-item-details fxFlexFill [item]="data" class="padding-left-2">
+      </num-list-item-details>
       <button fxLayoutAlign="center end" type="button" mat-button (click)="drawer.toggle()">
         close
       </button>
     </div>
   </mat-drawer>
-  <mat-drawer-content class="scrollbar">
+  <mat-drawer-content>
     <ng-container *ngIf="searchTermListItems.length > 0">
       <num-result-list
         [searchTermResultList]="searchTermListItems"
