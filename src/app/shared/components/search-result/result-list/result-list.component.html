@@ -1,7 +1,7 @@
-<table mat-table [dataSource]="searchTermResultList" class="mat-elevation-z8">
+<table mat-table [dataSource]="searchTermResultList">
   <ng-container *ngFor="let column of columnsToDisplay" [matColumnDef]="column">
-    <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-    <td mat-cell *matCellDef="let listItem">
+    <th mat-header-cell *matHeaderCellDef>{{ 'SHAREDCOMPONENTS.' + column | translate }}</th>
+    <td mat-cell *matCellDef="let listItem" [ngClass]="{ test: column !== 'name' }">
       <mat-checkbox
         *ngIf="column === 'name'"
         (change)="selectCheckbox($event, listItem)"
