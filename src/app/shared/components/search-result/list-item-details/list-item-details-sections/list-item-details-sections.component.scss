@@ -1,21 +1,23 @@
-.section-container {
-  display: flex;
-  align-items: flex-start; /* Align items to the start of the flex container */
-}
-
-.section-header {
-  flex: 0 0 auto; /* Prevent the header from growing */
-  margin-right: 20px; /* Add space between the header and the list */
-}
-
-.section-list {
-  flex: 1; /* Allow the list to grow and fill the remaining space */
-}
-
 .mat-divider {
   border: 0;
-  border-bottom: 1px solid #0000001f;
+  border-bottom: 0px solid #0000001f;
   width: 100%;
   height: 20px;
   align-content: center;
+}
+
+.padding-left-20 {
+  padding-left: 20px;
+}
+
+.display-sections-flex {
+  height: 40px;
+  display: flex;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  color: #5170a8;
+  text-overflow: ellipsis;
+  flex-wrap: wrap;
+  min-width: 0px;
+  white-space: nowrap;
 }
