@@ -1,0 +1,24 @@
+.padding-right-1 {
+  padding-right: 1rem;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.height-59 {
+  height: 42px;
+  border-radius: 5px;
+  background: var(--mid-grey, #c5cacf);
+}
+
+.mat-mdc-icon-button {
+  height: 44px;
+  width: 44px;
+  line-height: unset;
+  color: var(--num-color--primary);
+}
+
+::ng-deep.mdc-button__label {
+  color: white;
+}

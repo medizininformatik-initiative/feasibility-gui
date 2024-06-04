@@ -1,0 +1,14 @@
+<div fxFlexFill fxLayout="column" fxLayoutAlign="start">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <num-searchbar
+      fxFlex="50"
+      [label]="'Suchbegriff eingeben'"
+      class="padding-right-1 width-100"
+      (searchTextChange)="startElasticSearch($event)"
+    >
+    </num-searchbar>
+    <button mat-raised-button class="height-59" color="white">Suchen</button>
+  </div>
+  <num-search-result fxFlexFill [searchTermListItems]="listItems" [keysToSkip]="keysToSkip">
+  </num-search-result>
+</div>
