@@ -1,5 +1,4 @@
 import { debounceTime, filter } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import {
@@ -14,11 +13,11 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'num-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss'],
+  selector: 'num-searchbar',
+  templateUrl: './searchbar.component.html',
+  styleUrls: ['./searchbar.component.scss'],
 })
-export class SearchComponent implements OnInit, OnChanges, OnDestroy {
+export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
   /* istanbul ignore next */
   private readonly debounceTime = 200;
   searchForm: UntypedFormGroup;

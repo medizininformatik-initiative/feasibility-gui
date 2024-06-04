@@ -6,7 +6,7 @@ import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testi
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from 'src/app/layout/material/material.module';
 
-import { SearchComponent } from './search.component';
+import { SearchComponent } from './searchbar.component';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;

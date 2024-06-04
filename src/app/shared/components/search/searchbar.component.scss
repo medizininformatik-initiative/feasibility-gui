@@ -1,0 +1,45 @@
+.show-above-overlay {
+  z-index: 2000;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.input-design {
+  height: 42px;
+  color: #333;
+  padding: 0 40px;
+  font-size: 18px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: Titillium Web, serif;
+  border: 1px solid #c3c7ce;
+  border-radius: 4px;
+}
+
+.input-design:focus {
+  outline: none !important;
+  padding: 0 40px;
+  font-weight: 600;
+  border-width: 2px;
+  border-color: #5a79ae;
+  background-color: #eff2f7;
+  box-shadow: 0 0 10px -5px #5a79ae;
+  transition: 1s;
+  transition-property: background-color;
+}
+
+.icon-design {
+  position: absolute;
+  padding-top: 12px;
+  padding-left: 10px;
+  min-width: 40px;
+  color: #c2c2c2;
+  font-size: medium;
+}
+
+.input-design:focus + fa-icon {
+  color: #828282;
+}
