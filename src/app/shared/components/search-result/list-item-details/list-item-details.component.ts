@@ -17,7 +17,7 @@ import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSea
  * Needs a function to call the elastic search service for fetching the the data when
  * on click of parents/children/siblings
  */
-export class ListItemDetailsComponent implements OnInit, AfterViewInit {
+export class ListItemDetailsComponent implements OnInit {
   isOpen = false;
 
   listItemDetails$: Observable<SearchTermDetails>;
@@ -41,6 +41,4 @@ export class ListItemDetailsComponent implements OnInit, AfterViewInit {
   }
 
   getSelectedRelative(name: SearchTermRelatives) {}
-
-  ngAfterViewInit() {}
 }

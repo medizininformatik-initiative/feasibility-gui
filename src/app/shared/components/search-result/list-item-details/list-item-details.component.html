@@ -1,43 +1,43 @@
 <ng-container *ngIf="listItemDetails$ | async as listItemDetails">
   <mat-list>
     <!-- Automatic Translations -->
-    <mat-list-item class="mat-divider">
+    <mat-list-item class="divider">
       <div>Automatic Translations</div>
     </mat-list-item>
-    <mat-list-item *ngFor="let translation of listItemDetails.translations" class="mat-divider">
+    <mat-list-item *ngFor="let translation of listItemDetails.translations" class="divider">
       {{ translation.value }}
     </mat-list-item>
 
     <!-- Parents -->
     <ng-container>
-      <div class="children-container">
-        <div class="children-header">parents</div>
-        <num-list-item-details-sections [listItemDetails]="listItemDetails.parents">
-        </num-list-item-details-sections>
+      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 divider">
+        <div>parents</div>
+        <div>
+          <num-list-item-details-sections [listItemDetails]="listItemDetails.parents">
+          </num-list-item-details-sections>
+        </div>
       </div>
     </ng-container>
 
     <!-- Children -->
     <ng-container>
-      <div class="children-container">
-        <div class="children-header">Children</div>
-        <num-list-item-details-sections [listItemDetails]="listItemDetails.children">
-        </num-list-item-details-sections>
+      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 padding-top-5 divider">
+        <div>Children</div>
+        <div>
+          <num-list-item-details-sections [listItemDetails]="listItemDetails.children">
+          </num-list-item-details-sections>
+        </div>
       </div>
     </ng-container>
 
     <!-- Siblings (Related Terms) -->
     <ng-container>
-      <mat-list-item class="mat-divider">
+      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 padding-top-5 divider">
         <div>Siblings</div>
-      </mat-list-item>
-      <mat-list-item
-        *ngFor="let relatedTerm of listItemDetails.relatedTerms"
-        class="mat-divider"
-        (click)="getSelectedRelative(relatedTerm)"
-      >
-        {{ relatedTerm.name }}
-      </mat-list-item>
-    </ng-container>
-  </mat-list>
-</ng-container>
+        <div>
+          <num-list-item-details-sections [listItemDetails]="listItemDetails.relatedTerms">
+          </num-list-item-details-sections>
+        </div>
+      </div>
+    </ng-container> </mat-list
+></ng-container>
