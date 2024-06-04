@@ -6,6 +6,8 @@
     class="padding-left-20 padding-top-5"
   >
     <div
+      fxLayout="column"
+      fxLayoutAlign="start start"
       *ngFor="let item of listItemDetails"
       class="mat-divider display-sections-flex"
       (click)="getSelectedRelative(item)"
