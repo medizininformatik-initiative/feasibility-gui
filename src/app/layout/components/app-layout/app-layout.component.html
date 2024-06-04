@@ -16,7 +16,7 @@
     ></num-side-menu>
   </mat-sidenav>
 
-  <mat-sidenav-content fxLayout="column" class="fix-overlay">
+  <mat-sidenav-content fxLayout="column" class="fix-overlay padding-left-4">
     <!-- Page Content -->
 
     <section role="heading" fxLayout="row" fxLayoutAlign="center start" *ngIf="currentMainNavItem">
@@ -56,13 +56,21 @@
       </div>
     </section>
 
-    <div class="safari-fix" fxLayout="row" fxLayoutAlign="center start" role="presentation">
+    <div
+      class="safari-fix"
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      role="presentation"
+      fxFlexFill
+    >
       <main
+        class="padding-right-20"
+        fxFlexFill
         fxLayout="column"
-        fxLayoutAlign="center start"
+        fxLayoutAlign="start start"
         fxFlex="95%"
         fxFlex.gt-md="90%"
-        fxFlex.gt-lg="1200px"
+        fxFlex.gt-lg="100%"
       >
         <router-outlet></router-outlet>
       </main>
