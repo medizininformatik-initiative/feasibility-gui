@@ -102,22 +102,15 @@
     ></num-search-input>
   </div>
 </div>
-<div class="querybuilder-container">
+<!-- <div class="querybuilder-container">
   <num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>
-</div>
+</div> -->
 <div *ngIf="featureService.useFeatureMultipleGroups()">
   <button class="button-add-group" type="button" mat-icon-button (click)="addGroup()">
     <fa-icon icon="plus" size="lg"></fa-icon>
   </button>
   {{ 'QUERYBUILDER.DISPLAY.GROUPS.NEW_GROUP' | translate }}
 </div>
-
-<num-search [label]="'Suchbegriff eingeben'" (searchTextChange)="test($event)"> </num-search>
-<num-search-result
-  [searchTermListItems]="listItems"
-  [keysToSkip]="keysToSkip"
-  fxFlexFill
-></num-search-result>
-<button class="button-add-group" type="button" mat-icon-button (click)="testTranslateCriterion()">
-  <fa-icon icon="plus" size="lg"></fa-icon>
-</button>
+<div style="padding-top: 20px">
+  <num-search-filter></num-search-filter>
+</div>
