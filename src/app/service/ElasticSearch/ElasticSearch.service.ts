@@ -8,6 +8,7 @@ import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchR
 import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { Entries } from 'src/app/model/ElasticSearch/Entrie';
+import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -94,5 +95,11 @@ export class ElasticSearchService {
    */
   private mapToSearchTermRelatives(relatives: any[]): SearchTermRelatives[] {
     return relatives.map((r: any) => new SearchTermRelatives(r.name, r.contextualizedTermcodeHash));
+  }
+
+  public getElasticSearchFilter(): Observable<Array<SearchTermFilter>> {
+    return this.backendService.getElasticSearchFilter().pipe(
+      map((response) => response.map((filter) => new SearchTermFilter(filter.name, filter.values)))
+    );
   }
 }
