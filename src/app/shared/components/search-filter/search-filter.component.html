@@ -1,0 +1,15 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <ng-container *ngIf="filters$ | async as filters">
+    <ng-container *ngFor="let filter of filters">
+      <mat-form-field appearance="fill" style="padding-right: 20px">
+        <div class="padding-top-20" fxLayout="column" fxLayoutAlign="center center">
+          <mat-select panelClass="example-panel" placeholder="{{ filter.name }}">
+            <mat-option *ngFor="let value of filter.values" [value]="value.label">
+              {{ value.label }} ({{ value.count }})
+            </mat-option>
+          </mat-select>
+        </div>
+      </mat-form-field>
+    </ng-container>
+  </ng-container>
+</div>

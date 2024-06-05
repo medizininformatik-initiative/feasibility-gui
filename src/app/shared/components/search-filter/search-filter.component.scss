@@ -1,0 +1,27 @@
+::ng-deep.mat-mdc-text-field-wrapper {
+  width: 100%;
+}
+
+.padding-top-20 {
+  padding: 10px;
+}
+
+::ng-deep.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
+  border: 1px solid var(--num-color--primary-300);
+  padding: 0px 6px;
+  border-radius: 5px;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper .mdc-line-ripple {
+  display: none;
+  border: 0px;
+}
+
+::ng-deep .cdk-overlay-container .cdk-overlay-pane .example-panel {
+  background-color: red;
+  width: 1000px;
+}
+
+.example-panel {
+  color: red;
+}

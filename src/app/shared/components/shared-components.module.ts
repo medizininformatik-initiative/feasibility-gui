@@ -13,7 +13,9 @@ import { ResultListComponent } from './search-result/result-list/result-list.com
 import { SearchResultComponent } from './search-result/search-result.component';
 import { ListItemDetailsComponent } from './search-result/list-item-details/list-item-details.component';
 import { ListItemDetailsSectionsComponent } from './search-result/list-item-details/list-item-details-sections/list-item-details-sections.component';
+import { SearchFilterComponent } from './search-filter/search-filter.component';
 const SHARED_DECLARATIONS = [
+  SearchFilterComponent,
   SearchComponent,
   FilterChipsComponent,
   ButtonComponent,
@@ -23,7 +25,7 @@ const SHARED_DECLARATIONS = [
 ];
 
 @NgModule({
-  declarations: [...SHARED_DECLARATIONS, ListItemDetailsSectionsComponent],
+  declarations: [...SHARED_DECLARATIONS, ListItemDetailsSectionsComponent, SearchFilterComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,

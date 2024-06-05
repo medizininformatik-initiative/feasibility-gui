@@ -32,7 +32,6 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
   isOpen = false;
 
   constructor(
-    private backend: BackendService,
     private listItemService: SearchResultListItemSelectionService,
     private cdr: ChangeDetectorRef
   ) {}
