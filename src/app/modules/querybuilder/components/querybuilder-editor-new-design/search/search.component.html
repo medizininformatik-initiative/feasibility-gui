@@ -9,6 +9,11 @@
     </num-searchbar>
     <button mat-raised-button class="height-59" color="white">Suchen</button>
   </div>
-  <num-search-result fxFlexFill [searchTermListItems]="listItems" [keysToSkip]="keysToSkip">
+  <num-search-result
+    fxFlexFill
+    [searchTermListItems]="listItems"
+    [keysToSkip]="keysToSkip"
+    class="padding-top-50"
+  >
   </num-search-result>
 </div>
