@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="searchTermResultList">
+<!-- <table mat-table [dataSource]="searchTermResultList">
   <ng-container *ngFor="let column of columnsToDisplay" [matColumnDef]="column">
     <th mat-header-cell *matHeaderCellDef>{{ 'SHAREDCOMPONENTS.' + column | translate }}</th>
     <td mat-cell *matCellDef="let listItem" [ngClass]="{ test: column !== 'name' }">
@@ -16,4 +16,39 @@
     *matRowDef="let myRowData; columns: columnsToDisplay"
     (click)="onRowSelect(myRowData)"
   ></tr>
+</table> -->
+<table class="table-collapse">
+  <thead class="table-header sticky-header">
+    <tr>
+      <th *ngFor="let column of columnsToDisplay">
+        <div fxLayout="row" fxLayoutAlign="start center" class="padding-bottom-20">
+          {{ 'SHAREDCOMPONENTS.' + column | translate }}
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="overflow-control">
+    <tr
+      *ngFor="let listItem of searchTermResultList"
+      (click)="onRowSelect(listItem)"
+      class="table-border height-3-rem table-row-hover"
+    >
+      <td
+        *ngFor="let column of columnsToDisplay"
+        [ngClass]="{ 'table-row-text-color': column !== 'name' }"
+      >
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <input
+            *ngIf="column === 'name'"
+            type="checkbox"
+            (change)="selectCheckbox($event, listItem)"
+            (click)="$event.stopPropagation()"
+          />
+          <div [ngClass]="{ 'padding-left-20': column === 'name' }">
+            {{ listItem[column] }}
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
 </table>
