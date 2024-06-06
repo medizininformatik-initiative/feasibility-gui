@@ -1,5 +1,4 @@
 import { AbstractTermHashContext } from '../AbstractTermHashContext';
-import { SearchTermTranslation } from './SearchTermTranslation';
 
 /**
  * Represents the relatives (parents, children, related terms) and translations of a search term.
