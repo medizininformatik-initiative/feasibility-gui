@@ -59,6 +59,15 @@ export class ResultListComponent implements OnInit, OnChanges {
     this.listItemService.setSelectedSearchResultListItem(rowData);
   }
 
+  isSelected(listItem: SearchTermListEntry): boolean {
+    let isSelected = false;
+    const itemId = listItem.id;
+    this.listItemService.getSelectedSearchResultListItems().subscribe((selection) => {
+      isSelected = selection.some((selectedItem) => selectedItem.id === itemId);
+    });
+    return isSelected;
+  }
+
   selectCheckbox(event, searchTermListItem: SearchTermListEntry) {
     if (event.checked) {
       this.listItemService.addSearchResultListItemToSelection(searchTermListItem);
