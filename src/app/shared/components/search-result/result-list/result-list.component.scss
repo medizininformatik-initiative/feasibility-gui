@@ -26,12 +26,19 @@ table {
   border-bottom: 1pt solid #c5cacf;
 }
 
-.padding-left-20 {
+.name-column {
   padding-left: 20px;
+  font-size: medium;
 }
 
-.padding-bottom-20 {
+.info-column {
+  font-size: small;
+}
+
+.header-column {
   padding-bottom: 20px;
+  font-size: small;
+  color: #c5cacf;
 }
 
 .height-3-rem {
@@ -40,4 +47,9 @@ table {
 
 .table-row-hover:hover {
   background-color: #f5f5f5;
+}
+
+.font-size-small {
+  font-size: smaller;
+  color: #6a7483;
 }
