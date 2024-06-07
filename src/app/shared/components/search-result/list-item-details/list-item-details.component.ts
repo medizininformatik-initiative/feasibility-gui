@@ -32,11 +32,11 @@ export class ListItemDetailsComponent implements OnInit {
     this.listItemService
       .getSelectedSearchResultListItem()
       .subscribe((selectedRow: SearchTermListEntry) => {
-        const entries$ = this.elasticSearchService.getDetailsForListItem(selectedRow.getId());
-        entries$.subscribe((entry) => {
-          const listItemDetails = entry.getSearchTermDetails();
-          this.listItemDetails$ = of(listItemDetails);
-        });
+        this.elasticSearchService
+          .getDetailsForListItem(selectedRow.getId())
+          .subscribe((entry: SearchTermDetails) => {
+            this.listItemDetails$ = of(entry);
+          });
       });
   }
 

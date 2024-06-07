@@ -4,12 +4,12 @@ import { BackendService } from '../../modules/querybuilder/service/backend.servi
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionHashService } from './CriterionHash.service';
+import { CriterionService } from '../CriterionService.service';
 import { CritGroupPosition } from 'src/app/modules/querybuilder/controller/CritGroupArranger';
 import { FeatureService } from '../Feature.service';
-import { FilterTypes } from 'src/app/model/FilterTypes';
-import { Observable, of, Subject, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { LoadUIProfileService } from '../LoadUIProfile.service';
+import { Observable, of, Subject, switchMap } from 'rxjs';
 import { SearchResultListItemSelectionService } from '../ElasticSearch/SearchTermListItemService.service';
 import { TerminologyCode, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { TimeRestriction } from 'src/app/model/FeasibilityQuery/TimeRestriction';
@@ -20,66 +20,12 @@ import {
   AttributeDefinition,
   ValueDefinition,
 } from 'src/app/model/terminology/AttributeDefinitions/AttributeDefinition';
-import { CriterionService } from '../CriterionService.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CreateCriterionService {
-  uiProfile: UIProfile = {
-    attributeDefinitions: [],
-    name: 'Person1',
-    timeRestrictionAllowed: false,
-    valueDefinition: {
-      allowedUnits: [],
-      max: null,
-      min: null,
-      optional: false,
-      precision: 1,
-      selectableConcepts: [
-        {
-          code: 'female',
-          display: 'Female',
-          system: 'http://hl7.org/fhir/administrative-gender',
-          version: '4.0.1',
-        },
-        {
-          code: 'male',
-          display: 'Male',
-          system: 'http://hl7.org/fhir/administrative-gender',
-          version: '4.0.1',
-        },
-        {
-          code: 'other',
-          display: 'Other',
-          system: 'http://hl7.org/fhir/administrative-gender',
-          version: '4.0.1',
-        },
-        {
-          code: 'unknown',
-          display: 'Unknown',
-          system: 'http://hl7.org/fhir/administrative-gender',
-          version: '4.0.1',
-        },
-      ],
-      type: FilterTypes.CONCEPT,
-    },
-  };
-
-  context = {
-    code: 'Patient',
-    system: 'fdpg.mii.cds',
-    version: '1.0.0',
-    display: 'Patient',
-  };
-
-  termCode = [
-    {
-      code: '263495000',
-      system: 'http://snomed.info/sct',
-      display: 'Geschlecht',
-    },
-  ];
+  ids: Set<string> = new Set<string>();
 
   constructor(
     private criterionHashService: CriterionHashService,
@@ -93,34 +39,39 @@ export class CreateCriterionService {
   public translateListItemsToCriterions() {
     this.listItemService.getSelectedSearchResultListItems().subscribe((listItems) => {
       listItems.forEach((listItem) => {
-        this.backend
-          .getElasticSearchResultById(listItem.getId())
-          .pipe(
-            switchMap((response: any) => {
-              const uiProfile = response.uiprofile;
-              const context = response.context;
-              const termCodes = response.termCodes;
-              return of(new CriteriaProfileData(uiProfile, context, termCodes));
-            })
-          )
-          .subscribe((criteriaProfileData: CriteriaProfileData) => {
-            //this.createCriterionFromProfileData(criteriaProfileData)
-          });
+        this.ids.add(listItem.getId());
       });
+      this.getCriteriaProfileData(this.ids);
     });
   }
 
-  public createCriterionFromProfileData() {
+  private getCriteriaProfileData(ids: Set<string>) {
+    this.backend
+      .getCriteriaProfileData(Array.from(this.ids))
+      .pipe(
+        switchMap((response: any) => {
+          const uiProfile = response.uiprofile;
+          const context = response.context;
+          const termCodes = response.termCodes;
+          return of(new CriteriaProfileData(response.id, uiProfile, context, termCodes));
+        })
+      )
+      .subscribe((criteriaProfileData: CriteriaProfileData) => {
+        this.createCriterionFromProfileData(criteriaProfileData);
+      });
+  }
+
+  public createCriterionFromProfileData(criteriaProfileData: CriteriaProfileData) {
     const criterion: Criterion = new Criterion();
-    //criterion.criterionHash = criteriaProfileData.getId()
+    criterion.criterionHash = criteriaProfileData.getId();
     const localUID = uuidv4();
-    criterion.display = this.termCode[0].display;
-    criterion.termCodes = this.copyTermCodes(this.termCode, localUID);
+    criterion.display = criteriaProfileData.getTermCodes()[0].display;
+    criterion.termCodes = this.copyTermCodes(criteriaProfileData.getTermCodes(), localUID);
     //criterion.isInvalid = invalidCriteriaIssues.length > 0;
-    criterion.context = this.context;
+    criterion.context = criteriaProfileData.getContext();
     criterion.uniqueID = localUID;
     criterion.position = new CritGroupPosition();
-    this.addUIProfileElementsToCriterion(this.uiProfile, criterion);
+    this.addUIProfileElementsToCriterion(criteriaProfileData.getUiProfile(), criterion);
     this.criterionService.setCriterionByUID(criterion);
     this.criterionService
       .getCriterionUIDMap()
