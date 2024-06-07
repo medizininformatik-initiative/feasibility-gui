@@ -8,6 +8,7 @@ export class CriteriaProfileData {
   private uiProfile: UIProfile;
   private context: TerminologyCode;
   private termCodes: TerminologyCode[];
+  private id: string;
 
   /**
    * Constructs a new CriteriaProfileData object.
@@ -16,10 +17,33 @@ export class CriteriaProfileData {
    * @param context - The terminology context.
    * @param termCodes - The terminology codes.
    */
-  constructor(uiProfile: UIProfile, context: TerminologyCode, termCodes: TerminologyCode[]) {
+  constructor(
+    id: string,
+    uiProfile: UIProfile,
+    context: TerminologyCode,
+    termCodes: TerminologyCode[]
+  ) {
     this.uiProfile = uiProfile;
     this.context = context;
     this.termCodes = termCodes;
+    this.id = id;
+  }
+
+  /**
+   *
+   * @returns The id
+   */
+  public getId(): string {
+    return this.id;
+  }
+
+  /**
+   * Sets the id
+   *
+   * @param id
+   */
+  public setId(id: string) {
+    this.id = id;
   }
 
   /**
@@ -27,7 +51,7 @@ export class CriteriaProfileData {
    *
    * @returns The UI profile.
    */
-  getUiProfile(): UIProfile {
+  public getUiProfile(): UIProfile {
     return this.uiProfile;
   }
 
@@ -36,7 +60,7 @@ export class CriteriaProfileData {
    *
    * @param uiProfile - The UI profile to set.
    */
-  setUiProfile(uiProfile: UIProfile): void {
+  public setUiProfile(uiProfile: UIProfile): void {
     this.uiProfile = uiProfile;
   }
 
@@ -45,7 +69,7 @@ export class CriteriaProfileData {
    *
    * @returns The terminology context.
    */
-  getContext(): TerminologyCode {
+  public getContext(): TerminologyCode {
     return this.context;
   }
 
@@ -54,7 +78,7 @@ export class CriteriaProfileData {
    *
    * @param context - The terminology context to set.
    */
-  setContext(context: TerminologyCode): void {
+  public setContext(context: TerminologyCode): void {
     this.context = context;
   }
 
@@ -63,7 +87,7 @@ export class CriteriaProfileData {
    *
    * @returns The terminology codes.
    */
-  getTermCodes(): TerminologyCode[] {
+  public getTermCodes(): TerminologyCode[] {
     return this.termCodes;
   }
 
@@ -72,7 +96,7 @@ export class CriteriaProfileData {
    *
    * @param termCodes - The terminology codes to set.
    */
-  setTermCodes(termCodes: TerminologyCode[]): void {
+  public setTermCodes(termCodes: TerminologyCode[]): void {
     this.termCodes = termCodes;
   }
 }

@@ -38,12 +38,12 @@
         [ngClass]="{ 'table-row-text-color': column !== 'name' }"
       >
         <div fxLayout="row" fxLayoutAlign="start center">
-          <input
+          <mat-checkbox
             *ngIf="column === 'name'"
             type="checkbox"
             (change)="selectCheckbox($event, listItem)"
             (click)="$event.stopPropagation()"
-          />
+          ></mat-checkbox>
           <div [ngClass]="{ 'padding-left-20': column === 'name' }">
             {{ listItem[column] }}
           </div>
