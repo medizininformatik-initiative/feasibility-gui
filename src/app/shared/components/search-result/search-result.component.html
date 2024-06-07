@@ -15,7 +15,7 @@
       </num-list-item-details>
     </div>
   </mat-drawer>
-  <mat-drawer-content *ngIf="searchTermListItems.length > 0">
+  <mat-drawer-content *ngIf="searchTermListItems.length > 0" class="content-height-95">
     <ng-container *ngIf="searchTermListItems.length > 0">
       <num-result-list
         [searchTermResultList]="searchTermListItems"
