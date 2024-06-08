@@ -15,7 +15,8 @@ import { ListItemDetailsComponent } from './search-result/list-item-details/list
 import { ListItemDetailsSectionsComponent } from './search-result/list-item-details/list-item-details-sections/list-item-details-sections.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 const SHARED_DECLARATIONS = [
-  SearchbarComponent,
+  SearchFilterComponent,
+  SearchComponent,
   FilterChipsComponent,
   ButtonComponent,
   ResultListComponent,
