@@ -12,11 +12,6 @@ export class ResultListComponent implements OnInit, OnChanges {
 
   @Input() keysToSkip: Array<string> = [];
 
-  /**
-   * Columns to be rendered in the header and data rows
-   *
-   * @see {@link https://v15.material.angular.io/components/table/overview}
-   */
   columnsToDisplay: Array<string> = [];
 
   selectedRow: SearchTermListEntry;
@@ -25,9 +20,6 @@ export class ResultListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.extractKeys(this.searchTermResultList, this.keysToSkip);
-    this.listItemService.getSelectedSearchResultListItem().subscribe((row) => {
-      this.selectedRow = row;
-    });
   }
 
   /**
@@ -35,7 +27,7 @@ export class ResultListComponent implements OnInit, OnChanges {
    *
    * @param data
    */
-  extractKeys(searchTermResultList: SearchTermListEntry[], keysToSkip: string[]) {
+  private extractKeys(searchTermResultList: SearchTermListEntry[], keysToSkip: string[]) {
     if (!searchTermResultList || searchTermResultList.length === 0) {
       return;
     }
@@ -55,20 +47,22 @@ export class ResultListComponent implements OnInit, OnChanges {
    *
    * @param row
    */
-  onRowSelect(rowData: SearchTermListEntry) {
+  public onRowSelect(rowData: SearchTermListEntry) {
     this.listItemService.setSelectedSearchResultListItem(rowData);
   }
 
-  isSelected(listItem: SearchTermListEntry): boolean {
+  public isSelected(listItem: SearchTermListEntry): boolean {
     let isSelected = false;
     const itemId = listItem.id;
     this.listItemService.getSelectedSearchResultListItems().subscribe((selection) => {
-      isSelected = selection.some((selectedItem) => selectedItem.id === itemId);
+      isSelected = selection.some(
+        (selectedItem) => selectedItem.id === itemId && selectedItem.getSelectable()
+      );
     });
     return isSelected;
   }
 
-  selectCheckbox(event, searchTermListItem: SearchTermListEntry) {
+  public selectCheckbox(event, searchTermListItem: SearchTermListEntry) {
     if (event.checked) {
       this.listItemService.addSearchResultListItemToSelection(searchTermListItem);
     } else {

@@ -45,7 +45,6 @@ export class SearchFilterComponent implements OnInit {
   }
 
   onFiltersChange(values: Array<string>): void {
-    /* eslint-disable */console.log(...oo_oo(`1555450643_48_4_48_50_4`,'Selected filter values:', values))
-    this.filtersChanged.emit(values)
+    this.filtersChanged.emit(values);
   }
 }
