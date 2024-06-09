@@ -7,7 +7,17 @@
       (searchTextChange)="startElasticSearch($event)"
     >
     </num-searchbar>
-    <button mat-raised-button class="height-59" color="white">Suchen</button>
+    <button
+      mat-raised-button
+      class="height-59"
+      color="white"
+      (click)="startElasticSearch(searchtext)"
+    >
+      Suchen
+    </button>
+  </div>
+  <div style="padding-top: 20px" *ngIf="searchtext.length > 0">
+    <num-search-filter (filtersChanged)="startElasticSearchWithFilter($event)"></num-search-filter>
   </div>
   <num-search-result
     fxFlexFill
