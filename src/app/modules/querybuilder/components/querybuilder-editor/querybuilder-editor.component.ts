@@ -13,7 +13,6 @@ import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.com
 import { QueryResult } from 'src/app/model/result/QueryResult';
 import { QueryService } from 'src/app/service/QueryService.service';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermResultList';
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
 @Component({
@@ -83,16 +82,6 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     if (this.featureService.showUpdateInfo()) {
       this.snackbar.displayInfoMessage('UPDATE_NOTE');
     }
-  }
-
-  test(searchTerm: string) {
-    this.elasticSearchService.startElasticSearch(searchTerm).subscribe((resultList) => {
-      this.listItems = resultList.getResults();
-    });
-  }
-
-  testTranslateCriterion() {
-    this.criterionService.createCriterionFromProfileData();
   }
 
   updateResultGotten(resultGotten: boolean) {
