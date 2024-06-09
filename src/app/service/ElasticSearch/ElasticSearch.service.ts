@@ -1,6 +1,6 @@
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
@@ -14,6 +14,7 @@ import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilte
   providedIn: 'root',
 })
 export class ElasticSearchService {
+  private searchTermResultList = new BehaviorSubject<Array<SearchTermListEntry>>([]);
   constructor(private backendService: BackendService) {}
 
   /**
@@ -38,9 +39,23 @@ export class ElasticSearchService {
               item.id
             )
         );
+        this.setSearchtermResultList(searchTermListItems);
         return new SearchTermResultList(totalHits, searchTermListItems);
       })
     );
+  }
+
+  /**
+   * Holds the current List of results found for a searchterm
+   *
+   * @param resultList
+   */
+  public setSearchtermResultList(resultList: Array<SearchTermListEntry>) {
+    this.searchTermResultList.next(resultList);
+  }
+
+  public getSearchTermResultList(): Observable<Array<SearchTermListEntry>> {
+    return this.searchTermResultList.asObservable();
   }
 
   /**
@@ -69,6 +84,24 @@ export class ElasticSearchService {
     );
   }
 
+  public getElasticSearchResultById(id: string): Observable<SearchTermListEntry> {
+    return this.backendService.getElasticSearchResultById(id).pipe(
+      map((response) => {
+        const listEntry = new SearchTermListEntry(
+          response.availability,
+          response.selectable,
+          response.terminology,
+          response.termcode,
+          response.kdsModule,
+          response.name,
+          response.id
+        );
+        this.setSearchtermResultList([listEntry]);
+        return listEntry;
+      })
+    );
+  }
+
   /**
    * Maps raw translation response to SearchTermTranslation objects.
    *
@@ -90,8 +123,14 @@ export class ElasticSearchService {
   }
 
   public getElasticSearchFilter(): Observable<Array<SearchTermFilter>> {
-    return this.backendService.getElasticSearchFilter().pipe(
-      map((response) => response.map((filter) => new SearchTermFilter(filter.name, filter.values)))
-    );
+    return this.backendService
+      .getElasticSearchFilter()
+      .pipe(
+        map((response) =>
+          response
+            .filter((filter) => filter.values && filter.values.length > 0)
+            .map((filter) => new SearchTermFilter(filter.name, filter.values))
+        )
+      );
   }
 }
