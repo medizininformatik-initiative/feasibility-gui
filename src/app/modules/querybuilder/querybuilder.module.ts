@@ -48,6 +48,7 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor-new-design/querybuilder-editor/querybuilder-editor.component';
+import { StageComponent } from './components/querybuilder-editor-new-design/stage/stage.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -99,6 +100,7 @@ export const FORMATS_GERMAN = {
     QueryBoxEndComponent,
     SearchTreeTermEntryDataselectionComponent,
     SearchComponent,
+    StageComponent,
   ],
   imports: [
     CommonModule,
