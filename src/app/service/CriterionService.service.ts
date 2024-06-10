@@ -18,6 +18,10 @@ export class CriterionService {
     this.initCriterionMap();
   }
 
+  /**
+   *
+   * @returns
+   */
   public getCriterionUIDMap(): Observable<Map<string, Criterion>> {
     return this.criterionUIDMapSubject.asObservable();
   }
