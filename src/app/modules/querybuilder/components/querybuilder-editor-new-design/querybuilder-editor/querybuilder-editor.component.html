@@ -1,3 +1,14 @@
-<div fxFlexFill fxLayoutAlign="start">
-  <num-search fxFlexFill></num-search>
+<div fxLayout="column wrap">
+  <div fxFlexFill fxLayoutAlign="start">
+    <num-search fxFlexFill></num-search>
+  </div>
+  <num-stage (click)="scroll(stage)"></num-stage>
+  <div
+    *ngIf="(criteriaArray$ | async)?.length > 0"
+    fxFlexFill
+    #stage
+    style="background-color: #fff"
+  >
+    <h3 *ngFor="let criterion of criteriaArray$ | async">{{ criterion.termCodes[0].display }}</h3>
+  </div>
 </div>
