@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, distinctUntilChanged } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { SearchTermListEntry } from '../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 
@@ -10,13 +10,15 @@ export class SearchResultListItemSelectionService {
   private selectedSearchResultListItemsSource = new BehaviorSubject<SearchTermListEntry[]>([]);
 
   /**
-   * Sets the current selected search term result item and adds it to the selection.
+   * Sets the current selected search term result item
+   * This functions is made for calling the details when a row is selected
+   *
+   * @todo needs to be remamed
    *
    * @param item The SearchTermListEntry to be set as selected.
    */
   public setSelectedSearchResultListItem(item: SearchTermListEntry): void {
     this.selectedSearchResultListItemSource.next(item);
-    this.addSearchResultListItemToSelection(item);
   }
 
   /**
