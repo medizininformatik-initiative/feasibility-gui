@@ -9,7 +9,7 @@ import { CritGroupPosition } from 'src/app/modules/querybuilder/controller/CritG
 import { FeatureService } from '../Feature.service';
 import { Injectable } from '@angular/core';
 import { LoadUIProfileService } from '../LoadUIProfile.service';
-import { Observable, of, Subject, switchMap } from 'rxjs';
+import { finalize, Observable, of, Subject, switchMap, take } from 'rxjs';
 import { SearchResultListItemSelectionService } from '../ElasticSearch/SearchTermListItemService.service';
 import { TerminologyCode, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { TimeRestriction } from 'src/app/model/FeasibilityQuery/TimeRestriction';
@@ -37,35 +37,56 @@ export class CreateCriterionService {
   ) {}
 
   public translateListItemsToCriterions() {
-    this.listItemService.getSelectedSearchResultListItems().subscribe((listItems) => {
-      listItems.forEach((listItem) => {
-        this.ids.add(listItem.getId());
+    this.listItemService
+      .getSelectedSearchResultListItems()
+      .pipe(take(1))
+      .subscribe((listItems) => {
+        listItems.forEach((listItem) => {
+          this.ids.add(listItem.getId());
+        });
+        this.getCriteriaProfileData(this.ids);
       });
-      this.getCriteriaProfileData(this.ids);
-    });
   }
 
   private getCriteriaProfileData(ids: Set<string>) {
     this.backend
       .getCriteriaProfileData(Array.from(this.ids))
       .pipe(
-        switchMap((response: any) => {
-          const uiProfile = response.uiprofile;
-          const context = response.context;
-          const termCodes = response.termCodes;
-          return of(new CriteriaProfileData(response.id, uiProfile, context, termCodes));
+        switchMap((responses: any[]) => {
+          // Map each response object to a CriteriaProfileData object
+          const criteriaProfileDataArray = responses.map((response) => {
+            const uiProfile = response.uiProfile;
+            const context = response.context;
+            const termCode = response.termCode;
+            const id = response.id;
+
+            return new CriteriaProfileData(id, uiProfile, context, [termCode]);
+          });
+          return of(criteriaProfileDataArray);
+        }),
+        finalize(() => {
+          this.ids.clear();
+          this.listItemService.clearSelection();
         })
       )
-      .subscribe((criteriaProfileData: CriteriaProfileData) => {
-        this.createCriterionFromProfileData(criteriaProfileData);
-      });
+      .subscribe(
+        (criteriaProfileDataArray: CriteriaProfileData[] | null) => {
+          criteriaProfileDataArray.forEach((criteriaProfileData) => {
+            this.createCriterionFromProfileData(criteriaProfileData);
+          });
+          this.ids.clear();
+        },
+        (error) => {
+          console.error('Error fetching criteria profile data:', error);
+        }
+      );
   }
 
   public createCriterionFromProfileData(criteriaProfileData: CriteriaProfileData) {
     const criterion: Criterion = new Criterion();
     criterion.criterionHash = criteriaProfileData.getId();
     const localUID = uuidv4();
-    criterion.display = criteriaProfileData.getTermCodes()[0].display;
+    //criterion.display = criteriaProfileData.getTermCodes()[0].display;
     criterion.termCodes = this.copyTermCodes(criteriaProfileData.getTermCodes(), localUID);
     //criterion.isInvalid = invalidCriteriaIssues.length > 0;
     criterion.context = criteriaProfileData.getContext();
@@ -75,7 +96,9 @@ export class CreateCriterionService {
     this.criterionService.setCriterionByUID(criterion);
     this.criterionService
       .getCriterionUIDMap()
-      .subscribe((test) => {})
+      .subscribe((test) => {
+        console.log(test);
+      })
       .unsubscribe();
   }
 
@@ -220,7 +243,7 @@ export class CreateCriterionService {
 
   private addUIProfileElementsToCriterion(profile: UIProfile, criterion: Criterion): Criterion {
     criterion.attributeFilters = this.getAttributeFilters(profile.attributeDefinitions);
-    criterion.valueFilters = this.getValueFilters(profile.valueDefinition);
+    //criterion.valueFilters = this.getValueFilters(profile.valueDefinition);
     criterion.timeRestriction = this.addTimeRestriction(profile.timeRestrictionAllowed);
     return criterion;
   }
@@ -248,8 +271,12 @@ export class CreateCriterionService {
   }
 
   private getAttributeFilters(attributeDefinitions: AttributeDefinition[]): AttributeFilter[] {
-    const attributeFilter = this.UiProfileService.extractAttributeFilters(attributeDefinitions);
-    return attributeFilter;
+    if (attributeDefinitions.length > 0) {
+      const attributeFilter = this.UiProfileService.extractAttributeFilters(attributeDefinitions);
+      return attributeFilter;
+    } else {
+      return [];
+    }
   }
 
   private addTimeRestriction(timeRestrictionAllowed: boolean): TimeRestriction | undefined {
