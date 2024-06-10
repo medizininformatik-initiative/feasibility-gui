@@ -116,6 +116,15 @@
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
+    "STAGE": {
+      "BUTTON": {
+        "ADD_TO_STAGE": "Add to Stage",
+        "VIEW_STAGE": "View Stage"
+      },
+      "MESSAGE": {
+        "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
+      }
+    },
     "SEARCH": {
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
