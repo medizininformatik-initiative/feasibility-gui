@@ -141,7 +141,6 @@ export class BackendService {
     limit?: number,
     offset?: number
   ): Observable<{ totalHits: number; results: any[] }> {
-    console.log(searchString);
     const contextParameter = context ? '&context=' + context : '';
     const terminologyParameter = terminology ? '&terminology=' + terminology : '';
     const kdsParameter = kds ? '&kds=' + kds : '';

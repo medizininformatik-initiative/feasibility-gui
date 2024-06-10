@@ -18,7 +18,6 @@ import {
   styleUrls: ['./searchbar.component.scss'],
 })
 export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
-  /* istanbul ignore next */
   private readonly debounceTime = 200;
   searchForm: UntypedFormGroup;
   constructor() {}
