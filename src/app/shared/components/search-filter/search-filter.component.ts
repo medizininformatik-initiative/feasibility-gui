@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms'; // Import FormGroup
 import { Observable } from 'rxjs';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 
@@ -12,6 +12,7 @@ import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilte
 export class SearchFilterComponent implements OnInit {
   filters$: Observable<Array<SearchTermFilter>>;
   filterControls: FormArray;
+  form: FormGroup; // Declare form property
 
   @Output() filtersChanged = new EventEmitter<Array<string>>();
 
@@ -20,27 +21,24 @@ export class SearchFilterComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.filterControls = this.formBuilder.array([]);
+    this.form = this.formBuilder.group({
+      filterControls: this.filterControls, // Assign filterControls to the form group
+    });
   }
 
-  /**
-   *  Initialize form controls when filters are received
-   *  Subscribe to value changes of the form array
-   */
   ngOnInit(): void {
     this.filters$ = this.elasticSearchService.getElasticSearchFilter();
     this.filters$.subscribe((filters) => {
       this.initFormControls(filters);
-    });
-
-    this.filterControls.valueChanges.subscribe((values) => {
-      this.onFiltersChange(values);
+      this.filterControls.valueChanges.subscribe((values) => {
+        this.onFiltersChange(values);
+      });
     });
   }
-
   initFormControls(filters: Array<SearchTermFilter>): void {
     this.filterControls.clear();
     filters.forEach(() => {
-      this.filterControls.push(this.formBuilder.control([]));
+      this.filterControls.push(this.formBuilder.control('')); // Initialize each control as a single FormControl
     });
   }
 
