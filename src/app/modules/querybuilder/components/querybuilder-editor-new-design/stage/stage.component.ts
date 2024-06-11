@@ -22,12 +22,9 @@ export class StageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.$listItemArray = this.listItemSelectionService.getSelectedSearchResultListItems();
-
-    // Subscribe to the observable to update the preserved length when necessary
     this.listItemSubscription = this.$listItemArray.subscribe((listItems) => {
       const length = listItems.length;
-      // Update the preserved length if new items are added
-      if (length > 0 && length !== this.preservedLength) {
+      if (length >= 0 && length !== this.preservedLength) {
         this.preservedLength = length;
         this.addedToStage = false;
       }
@@ -35,7 +32,6 @@ export class StageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Unsubscribe to avoid memory leaks
     if (this.listItemSubscription) {
       this.listItemSubscription.unsubscribe();
     }
