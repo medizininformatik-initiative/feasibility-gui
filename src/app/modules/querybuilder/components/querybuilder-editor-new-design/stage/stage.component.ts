@@ -24,7 +24,7 @@ export class StageComponent implements OnInit, OnDestroy {
     this.$listItemArray = this.listItemSelectionService.getSelectedSearchResultListItems();
     this.listItemSubscription = this.$listItemArray.subscribe((listItems) => {
       const length = listItems.length;
-      if (length >= 0 && length !== this.preservedLength) {
+      if (length > 0 && length !== this.preservedLength) {
         this.preservedLength = length;
         this.addedToStage = false;
       }
