@@ -11,6 +11,8 @@
   border: 1px solid var(--num-color--primary-300);
   padding: 0px 6px;
   border-radius: 5px;
+  /* Same height as searchbar*/
+  height: 42px;
 }
 
 ::ng-deep .mat-mdc-text-field-wrapper .mdc-line-ripple {
