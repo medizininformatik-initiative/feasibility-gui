@@ -49,3 +49,22 @@
   height: 500px;
   overflow-x: hidden;
 }
+
+/* Scrollbar design */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5cacf;
+}
+
+::-webkit-scrollbar-track-piece {
+  color: red;
+}

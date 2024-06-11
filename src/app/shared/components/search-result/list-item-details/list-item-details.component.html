@@ -1,17 +1,19 @@
 <ng-container *ngIf="listItemDetails$ | async as listItemDetails">
   <mat-list class="border-top">
-    <!-- Automatic Translations -->
-    <mat-list-item class="divider">
-      <div>Automatic Translations</div>
-    </mat-list-item>
-    <mat-list-item *ngFor="let translation of listItemDetails.translations" class="divider">
-      {{ translation.value }}
-    </mat-list-item>
+    <ng-container>
+      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 divider">
+        <div class="section-layout">Automatic Translations</div>
+        <div>
+          <num-list-item-details-sections [listItemDetails]="listItemDetails.translations">
+          </num-list-item-details-sections>
+        </div>
+      </div>
+    </ng-container>
 
     <!-- Parents -->
     <ng-container>
       <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 divider">
-        <div>parents</div>
+        <div class="section-layout">parents</div>
         <div>
           <num-list-item-details-sections [listItemDetails]="listItemDetails.parents">
           </num-list-item-details-sections>
@@ -22,7 +24,7 @@
     <!-- Children -->
     <ng-container>
       <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 padding-top-5 divider">
-        <div>Children</div>
+        <div class="section-layout">Children</div>
         <div>
           <num-list-item-details-sections [listItemDetails]="listItemDetails.children">
           </num-list-item-details-sections>
@@ -33,7 +35,7 @@
     <!-- Siblings (Related Terms) -->
     <ng-container>
       <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 padding-top-5 divider">
-        <div>Siblings</div>
+        <div class="section-layout">Siblings</div>
         <div>
           <num-list-item-details-sections [listItemDetails]="listItemDetails.relatedTerms">
           </num-list-item-details-sections>
