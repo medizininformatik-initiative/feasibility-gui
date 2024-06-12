@@ -49,6 +49,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor-new-design/querybuilder-editor/querybuilder-editor.component';
 import { StageComponent } from './components/querybuilder-editor-new-design/stage/stage.component';
+import { CriteriaComponent } from './components/querybuilder-editor-new-design/criteria/criteria.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -101,6 +102,7 @@ export const FORMATS_GERMAN = {
     SearchTreeTermEntryDataselectionComponent,
     SearchComponent,
     StageComponent,
+    CriteriaComponent,
   ],
   imports: [
     CommonModule,

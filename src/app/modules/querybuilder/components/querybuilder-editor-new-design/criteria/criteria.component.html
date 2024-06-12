@@ -1,0 +1,23 @@
+<div
+  cdkDropList
+  [cdkDropListConnectedTo]="[doneList]"
+  (cdkDropListDropped)="drop($event)"
+  fxFlexFill
+  fxLayout="column"
+  fxLayoutAlign="row"
+  class="criteria-container"
+>
+  <div
+    *ngFor="let criterion of $criteriaArray | async"
+    cdkDrag
+    [cdkDropListData]="criterion"
+    class="criteria-box"
+  >
+    <num-criteria-box [criterion]="criterion"></num-criteria-box>
+  </div>
+</div>
+<div fxFlex="grow" #doneList="cdkDropList" cdkDropList style="height: 3000px; width: 1000px">
+  <div *ngFor="let criterion of $criteriaArray | async">
+    <num-criteria-box [criterion]="criterion"></num-criteria-box>
+  </div>
+</div>
