@@ -1,0 +1,21 @@
+.divider {
+  border: 0;
+  border-bottom: 1px solid #0000001f;
+  width: 100%;
+  align-content: center;
+}
+
+.icon-color {
+  color: rgba(197, 202, 207, 1);
+  padding-right: 10px;
+}
+
+.divider:hover,
+.divider:hover fa-icon {
+  color: rgba(90, 121, 175, 1); /* Hover color */
+}
+
+.last-item:hover,
+.last-item:hover fa-icon {
+  color: rgba(90, 121, 175, 1); /* Hover color */
+}
