@@ -53,14 +53,13 @@ export class CreateCriterionService {
       .getCriteriaProfileData(Array.from(this.ids))
       .pipe(
         switchMap((responses: any[]) => {
-          // Map each response object to a CriteriaProfileData object
           const criteriaProfileDataArray = responses.map((response) => {
             const uiProfile = response.uiProfile;
             const context = response.context;
-            const termCode = response.termCode;
+            const termCodes = response.termCodes;
             const id = response.id;
 
-            return new CriteriaProfileData(id, uiProfile, context, [termCode]);
+            return new CriteriaProfileData(id, uiProfile, context, termCodes);
           });
           return of(criteriaProfileDataArray);
         }),
@@ -94,12 +93,6 @@ export class CreateCriterionService {
     criterion.position = new CritGroupPosition();
     this.addUIProfileElementsToCriterion(criteriaProfileData.getUiProfile(), criterion);
     this.criterionService.setCriterionByUID(criterion);
-    this.criterionService
-      .getCriterionUIDMap()
-      .subscribe((test) => {
-        console.log(test);
-      })
-      .unsubscribe();
   }
 
   public createCriterionFromTermCode(
