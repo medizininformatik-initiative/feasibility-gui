@@ -1,8 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
-import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-search',
