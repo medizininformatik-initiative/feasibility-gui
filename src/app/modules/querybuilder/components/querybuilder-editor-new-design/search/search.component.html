@@ -23,9 +23,9 @@
       Suchen
     </button>
   </div>
-  <div style="padding-top: 20px" *ngIf="searchtext.length > 0">
+  <!----  <div style="padding-top: 20px" *ngIf="searchtext.length > 0">
     <num-search-filter (filtersChanged)="startElasticSearchWithFilter($event)"></num-search-filter>
-  </div>
+  </div>-->
   <num-search-result
     fxFlexFill
     [searchTermListItems]="listItems"
