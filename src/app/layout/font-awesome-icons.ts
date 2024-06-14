@@ -3,6 +3,7 @@ import {
   faClone,
   faEllipsisH,
   faEllipsisV,
+  faExpandArrowsAlt,
   faPaperclip,
   faTh,
 } from '@fortawesome/free-solid-svg-icons';
@@ -109,4 +110,5 @@ export const FONT_AWESOME_ICONS = [
   faPaperclip,
   faLink,
   faCog,
+  faExpandArrowsAlt,
 ];

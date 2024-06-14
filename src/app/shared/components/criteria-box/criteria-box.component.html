@@ -1,4 +1,10 @@
-<div fxLayout="column" fxLayoutAlign="start start" class="container">
+<div
+  cdkDrag
+  [cdkDragData]="criterion"
+  fxLayout="column"
+  fxLayoutAlign="start start"
+  class="container"
+>
   <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="title-section">
     {{ criterion.termCodes[0].display }}
     <div fxFlexAlign="end" class="menu-icon">
@@ -25,5 +31,15 @@
     <div class="info-item">
       {{ criterion.termCodes[0].code }}
     </div>
+  </div>
+  <div fxFlexAlign="end" class="menu-icon" cdkDragHandle>
+    <fa-icon
+      (click)="openMenu()"
+      [matMenuTriggerFor]="menu"
+      #menuTrigger="matMenuTrigger"
+      class="icon drag-handle"
+      size="m"
+      icon="expand-arrows-alt"
+    ></fa-icon>
   </div>
 </div>

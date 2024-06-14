@@ -37,3 +37,13 @@
   background-color: #fff;
   width: 1000px;
 }
+
+.drag-handle {
+  padding-top: 50px;
+  padding-left: 20px;
+  height: 100%;
+  display: block;
+  transform: rotateZ(45deg);
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
