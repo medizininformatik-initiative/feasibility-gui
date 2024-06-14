@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription, take } from 'rxjs';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
+import { Observable, Subscription, take } from 'rxjs';
 import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
+import { CriterionService } from 'src/app/service/CriterionService.service';
 
 @Component({
   selector: 'num-stage',
@@ -12,6 +13,7 @@ import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSea
 export class StageComponent implements OnInit, OnDestroy {
   $listItemArray: Observable<SearchTermListEntry[]>;
   listItemSubscription: Subscription;
+  addItemsSubscription: Subscription;
   preservedLength: number | null = null;
   addedToStage = false;
 
@@ -35,15 +37,18 @@ export class StageComponent implements OnInit, OnDestroy {
     if (this.listItemSubscription) {
       this.listItemSubscription.unsubscribe();
     }
+    if (this.addItemsSubscription) {
+      this.addItemsSubscription.unsubscribe();
+    }
   }
 
   public addItemsToStage() {
     this.criterionService.translateListItemsToCriterions();
-    this.$listItemArray.pipe(take(1)).subscribe((listItems) => {
+    this.addItemsSubscription = this.$listItemArray.pipe(take(1)).subscribe((listItems) => {
       if (listItems.length > 0) {
         this.preservedLength = listItems.length;
       }
+      this.addedToStage = true;
     });
-    this.addedToStage = true;
   }
 }
