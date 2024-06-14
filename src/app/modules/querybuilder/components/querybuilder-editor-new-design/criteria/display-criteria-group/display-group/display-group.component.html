@@ -1,0 +1,5 @@
+<div fxLayout="column" fxLayoutAlign="start" class="criteria-container">
+  <div *ngFor="let criterion of criteriaArray$ | async">
+    <num-criteria-box [criterion]="criterion"></num-criteria-box>
+  </div>
+</div>
