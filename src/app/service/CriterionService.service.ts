@@ -11,7 +11,7 @@ export class CriterionService {
   private criterionUIDMap: Map<string, Criterion> = new Map();
 
   private criterionUIDMapSubject: BehaviorSubject<Map<string, Criterion>> = new BehaviorSubject(
-    null
+    new Map()
   );
 
   constructor(private queryService: QueryService) {
@@ -25,13 +25,24 @@ export class CriterionService {
   public getCriterionUIDMap(): Observable<Map<string, Criterion>> {
     return this.criterionUIDMapSubject.asObservable();
   }
+
   public getCriterionByUID(uid: string): Criterion {
     return this.criterionUIDMap.get(uid);
   }
 
   public setCriterionByUID(criterion: Criterion) {
-    const criterionMapItem = this.criterionUIDMap.set(criterion.uniqueID, criterion);
-    this.criterionUIDMapSubject.next(criterionMapItem);
+    this.criterionUIDMap.set(criterion.uniqueID, criterion);
+    this.criterionUIDMapSubject.next(new Map(this.criterionUIDMap));
+  }
+
+  /**
+   * Delete criterion by UID from the map
+   *
+   * @param uid string
+   */
+  public deleteCriterionByUID(uid: string) {
+    this.criterionUIDMap.delete(uid);
+    this.criterionUIDMapSubject.next(new Map(this.criterionUIDMap));
   }
 
   private initCriterionMap() {
@@ -61,9 +72,9 @@ export class CriterionService {
       )
       .subscribe({
         next: () => {
-          // Emit the updated maps
           this.criterionUIDMapSubject.next(this.criterionUIDMap);
         },
-      });
+      })
+      .unsubscribe();
   }
 }
