@@ -1,0 +1,12 @@
+<div fxFlexFill fxlayout="row" fxLayoutAlign="start" style="width: 600px">
+  <div fxlayout="column" fxFlexFill fxFlex="42.5" class="title-header">
+    {{ 'QUERYBUILDER.SEARCH.EXCLUSION' | translate }}
+    <num-display-group style="width: 600px" cdkDropList numAppDropGroup groupType="Exclusion">
+    </num-display-group>
+  </div>
+  <div fxlayout="column" fxFlexFill fxFlex="42.5" class="title-header">
+    {{ 'QUERYBUILDER.SEARCH.INCLUSION' | translate }}
+    <num-display-group style="width: 600px" cdkDropList numAppDropGroup groupType="Inclusion">
+    </num-display-group>
+  </div>
+</div>

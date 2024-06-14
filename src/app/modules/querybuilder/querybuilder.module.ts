@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DisplayCriterionComponent } from './components/querybuilder-editor/display/display-criterion/display-criterion.component';
 import { DisplayCritGroupComponent } from './components/querybuilder-editor/display/display-crit-group/display-crit-group.component';
-import { DisplayGroupComponent } from './components/querybuilder-editor/display/display-group/display-group.component';
 import { DisplayLinkedCriterionComponent } from './components/querybuilder-editor/display/display-linked-criterion/display-linked-criterion.component';
 import { DisplayQueryComponent } from './components/querybuilder-editor/display/display-query/display-query.component';
 import { DisplayTimeRestrictionComponent } from './components/querybuilder-editor/display/display-time-restriction/display-time-restriction.component';
@@ -26,7 +25,6 @@ import { QueryBoxFrontComponent } from './components/querybuilder-overview/saved
 import { QuerybuilderOverviewComponent } from './components/querybuilder-overview/querybuilder-overview.component';
 import { QuerybuilderRoutingModule } from './querybuilder-routing.module';
 import { ResultDetailsDialogComponent } from './components/querybuilder-editor/result/result-details-dialog/result-details-dialog.component';
-import { ResultSimpleComponent } from './components/querybuilder-editor/result/result-simple/result-simple.component';
 import { SaveDialogComponent } from './components/querybuilder-editor/save/save-dialog/save-dialog.component';
 import { SavedQueriesComponent } from './components/querybuilder-overview/saved-queries/saved-queries.component';
 import { SearchComponent } from './components/querybuilder-editor-new-design/search/search.component';
@@ -50,6 +48,9 @@ import {
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor-new-design/querybuilder-editor/querybuilder-editor.component';
 import { StageComponent } from './components/querybuilder-editor-new-design/stage/stage.component';
 import { CriteriaComponent } from './components/querybuilder-editor-new-design/criteria/criteria.component';
+import { ResultSimpleComponent } from './components/querybuilder-editor/result/result-simple/result-simple.component';
+import { DisplayCriteriaGroupComponent } from './components/querybuilder-editor-new-design/criteria/display-criteria-group/display-criteria-group.component';
+import { DisplayGroupComponent } from './components/querybuilder-editor-new-design/criteria/display-criteria-group/display-group/display-group.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -103,6 +104,7 @@ export const FORMATS_GERMAN = {
     SearchComponent,
     StageComponent,
     CriteriaComponent,
+    DisplayCriteriaGroupComponent,
   ],
   imports: [
     CommonModule,
