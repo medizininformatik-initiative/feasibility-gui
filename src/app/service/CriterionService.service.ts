@@ -3,70 +3,106 @@ import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
 import { Injectable } from '@angular/core';
 import { QueryService } from './QueryService.service';
 import { switchMap, tap } from 'rxjs/operators';
+import { InclusionExclusionService } from './CriteriaService.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionService {
   private criterionUIDMap: Map<string, Criterion> = new Map();
-
   private criterionUIDMapSubject: BehaviorSubject<Map<string, Criterion>> = new BehaviorSubject(
     new Map()
   );
 
-  constructor(private queryService: QueryService) {
+  constructor(
+    private queryService: QueryService,
+    private criteriaService: InclusionExclusionService
+  ) {
     this.initCriterionMap();
   }
 
   /**
+   * Retrieves the observable of the criterion UID map.
    *
-   * @returns
+   * @returns Observable<Map<string, Criterion>>
    */
   public getCriterionUIDMap(): Observable<Map<string, Criterion>> {
     return this.criterionUIDMapSubject.asObservable();
   }
 
-  public getCriterionByUID(uid: string): Criterion {
+  /**
+   * Retrieves a criterion by UID from the map.
+   *
+   * @param uid The unique ID of the criterion
+   * @returns Criterion | undefined
+   */
+  public getCriterionByUID(uid: string): Criterion | undefined {
     return this.criterionUIDMap.get(uid);
   }
 
-  public setCriterionByUID(criterion: Criterion) {
+  /**
+   * Sets a criterion by its unique ID and updates the map.
+   *
+   * @param criterion The criterion to set
+   */
+  public setCriterionByUID(criterion: Criterion): void {
     this.criterionUIDMap.set(criterion.uniqueID, criterion);
     this.criterionUIDMapSubject.next(new Map(this.criterionUIDMap));
   }
 
   /**
-   * Delete criterion by UID from the map
+   * Sets a criterion for inclusion.
    *
-   * @param uid string
+   * @param criterion The criterion to set for inclusion
    */
-  public deleteCriterionByUID(uid: string) {
+  public setCriterionForInclusion(criterion: Criterion): void {
+    this.criteriaService.setCriterionByUIDAndType(criterion, 'inclusion');
+  }
+
+  /**
+   * Sets a criterion for exclusion.
+   *
+   * @param criterion The criterion to set for exclusion
+   */
+  public setCriterionForExclusion(criterion: Criterion): void {
+    this.criteriaService.setCriterionByUIDAndType(criterion, 'exclusion');
+  }
+
+  /**
+   * Deletes a criterion by its UID from the map.
+   *
+   * @param uid The unique ID of the criterion to delete
+   */
+  public deleteCriterionByUID(uid: string): void {
     this.criterionUIDMap.delete(uid);
     this.criterionUIDMapSubject.next(new Map(this.criterionUIDMap));
   }
 
-  private initCriterionMap() {
+  /**
+   * Initializes the criterion map from the current feasibility query.
+   */
+  private initCriterionMap(): void {
     this.queryService
       .getFeasibilityQuery()
       .pipe(
         tap({
           next: () => {
-            // Clear the maps before updating
+            // Clear the map before updating
             this.criterionUIDMap.clear();
           },
         }),
         switchMap((feasibilityQuery) => feasibilityQuery.groups),
         tap({
           next: (group) => {
-            for (const inex of ['inclusion', 'exclusion']) {
-              group[inex + 'Criteria'].forEach((criteriaArray: Criterion[]) => {
+            ;['inclusion', 'exclusion'].forEach((type) => {
+              group[type + 'Criteria'].forEach((criteriaArray: Criterion[]) => {
                 criteriaArray.forEach((criteria) => {
                   if (criteria.uniqueID) {
                     this.criterionUIDMap.set(criteria.uniqueID, criteria);
                   }
                 });
               });
-            }
+            });
           },
         })
       )
