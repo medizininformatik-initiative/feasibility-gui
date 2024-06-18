@@ -2,37 +2,54 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { Query } from '../model/FeasibilityQuery/Query';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QueryService {
-  private STORAGE_QUERY_KEY = 'QUERY';
-
+  private readonly STORAGE_QUERY_KEY = 'QUERY';
   private feasibilityQuery: BehaviorSubject<Query> = new BehaviorSubject(new Query());
 
-  constructor(@Inject(LOCAL_STORAGE) public storage: StorageService) {
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     this.loadInitialQuery();
   }
 
-  private loadInitialQuery() {
+  /**
+   * Loads the initial feasibility query from local storage.
+   * If no query is stored, initializes with a default query.
+   */
+  private loadInitialQuery(): void {
     const storedQuery = this.storage.get(this.STORAGE_QUERY_KEY);
     if (storedQuery && storedQuery.groups) {
       this.storage.remove(this.STORAGE_QUERY_KEY);
       this.setFeasibilityQuery(new Query());
+    } else {
+      this.feasibilityQuery = new BehaviorSubject(new Query());
     }
   }
 
-  public setFeasibilityQuery(feasibilityQuery: Query) {
+  /**
+   * Sets the feasibility query and updates local storage.
+   *
+   * @param feasibilityQuery The new feasibility query to set
+   */
+  public setFeasibilityQuery(feasibilityQuery: Query): void {
     this.storage.set(this.STORAGE_QUERY_KEY, feasibilityQuery);
     this.feasibilityQuery.next(feasibilityQuery);
   }
 
+  /**
+   * Retrieves the current feasibility query as an observable.
+   *
+   * @returns Observable<Query>
+   */
   public getFeasibilityQuery(): Observable<Query> {
     return this.feasibilityQuery.asObservable();
   }
 
+  /**
+   * Resets the feasibility query to the default query and updates local storage.
+   */
   public resetToDefaultQuery(): void {
     const defaultQuery = new Query();
     this.storage.clear();
@@ -41,24 +58,11 @@ export class QueryService {
   }
 
   /**
-   * Function to set inclusion criteria for a specific group
+   * Updates the feasibility query with a new query object.
    *
-   * @param groupId
-   * @param criteria
+   * @param updatedQuery The updated query object
    */
-  public setInclusionCriteria(groupId: number, criteria: Criterion[][]): void {
-    this.feasibilityQuery.value.groups[0].inclusionCriteria.push(...criteria); // Using spread operator to push all elements of criteria array
-    this.feasibilityQuery.next(this.feasibilityQuery.value);
-  }
-
-  /**
-   * Function to set exclusion criteria for a specific group
-   *
-   * @param groupId
-   * @param criteria
-   */
-  public setExclusionCriteria(groupId: number, criteria: Criterion[][]): void {
-    this.feasibilityQuery.value.groups[0].exclusionCriteria.push(...criteria); // Using spread operator to push all elements of criteria array
-    this.feasibilityQuery.next(this.feasibilityQuery.value);
+  public updateFeasibilityQuery(updatedQuery: Query): void {
+    this.setFeasibilityQuery(updatedQuery);
   }
 }
