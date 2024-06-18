@@ -35,13 +35,13 @@ export class DropGroupDirective {
 
   private handleExclusionDrop(event: CdkDragDrop<any[]>): void {
     const droppedCriterion: Criterion = event.item.data;
-    this.queryProviderService.setExclusionCriteria(this.groupId, [[droppedCriterion]]);
+    this.criterionProviderService.setCriterionForExclusion(droppedCriterion);
     this.criterionProviderService.deleteCriterionByUID(droppedCriterion.uniqueID);
   }
 
   private handleInclusionDrop(event: CdkDragDrop<any[]>): void {
     const droppedCriterion: Criterion = event.item.data;
-    this.queryProviderService.setInclusionCriteria(this.groupId, [[droppedCriterion]]);
+    this.criterionProviderService.setCriterionForInclusion(droppedCriterion);
     this.criterionProviderService.deleteCriterionByUID(droppedCriterion.uniqueID);
   }
 }
