@@ -29,9 +29,9 @@ export class QueryService {
 
   public async setFeasibilityQuery(feasibilityQuery: Query) {
     await this.criterionMapInitialized;
-    this.updateCriterionMap();
     this.storage.set(this.STORAGE_QUERY_KEY, feasibilityQuery);
     this.feasibilityQuery.next(feasibilityQuery);
+    this.updateCriterionMap();
   }
 
   /**
