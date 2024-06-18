@@ -7,6 +7,7 @@ import { StructuredQuery } from '../../../../model/StructuredQuery/StructuredQue
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/StructuredQuery2UIQueryTranslator.service';
 import { AnnotatedStructuredQuery } from '../../../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { ValidationService } from '../../../../service/Validation.service';
+import { QueryService } from '../../../../service/QueryService.service';
 
 @Component({
   selector: 'num-querybuilder-overview',
@@ -19,6 +20,7 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
 
   constructor(
     public queryProviderService: QueryProviderService,
+    private queryService: QueryService,
     private router: Router,
     public featureProviderService: FeatureProviderService,
     private changeDetector: ChangeDetectorRef,
@@ -73,7 +75,7 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
   }
 
   storeQueryAndNavigate() {
-    this.queryProviderService.store(this.query);
+    this.queryService.setFeasibilityQuery(this.query);
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
   }
 }
