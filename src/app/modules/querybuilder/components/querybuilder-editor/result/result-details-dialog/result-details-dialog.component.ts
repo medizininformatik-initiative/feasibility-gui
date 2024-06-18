@@ -27,6 +27,8 @@ export class ResultDetailsDialogComponent implements OnInit {
 
   @Output() resultGotten = new EventEmitter<boolean>();
 
+  @Output() refreshedResult = new EventEmitter<QueryResult>();
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsDialogComponentData,
     public dialogRef: MatDialogRef<ResultDetailsDialogComponent>,
@@ -65,6 +67,7 @@ export class ResultDetailsDialogComponent implements OnInit {
             this.sortResult(result);
           }
           this.resultGotten.emit(true);
+          this.refreshedResult.emit(this.result);
         },
         (error) => {
           if (error.status === 404) {

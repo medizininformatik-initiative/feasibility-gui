@@ -87,6 +87,9 @@ export class ResultSimpleComponent implements OnInit, OnDestroy {
     diag.componentInstance.resultGotten.subscribe((resultGotten: boolean) => {
       this.resultGotten.emit(resultGotten);
     });
+    diag.componentInstance.refreshedResult.subscribe((refreshedResult: QueryResult) => {
+      this.result = refreshedResult;
+    });
   }
 
   startProgressSpinner(pollingTime: number): void {
