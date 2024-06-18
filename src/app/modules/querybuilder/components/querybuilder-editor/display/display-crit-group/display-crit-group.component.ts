@@ -41,7 +41,7 @@ export class DisplayCritGroupComponent implements OnInit {
   ngOnInit(): void {
     this.queryService.getFeasibilityQuery().subscribe((query) => {
       this.query = query;
-      this.group = this.query.groups.find((group) => group.id === this.groupId);
+      this.group = this.query.groups[this.groupId];
     });
   }
 
