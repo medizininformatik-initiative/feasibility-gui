@@ -23,6 +23,7 @@ import { QueryProviderService } from '../modules/querybuilder/service/query-prov
 import { StructuredQueryInquiry } from '../model/SavedInquiry/StructuredQueryInquiry';
 import { AnnotatedStructuredQueryCriterion } from '../model/result/AnnotatedStructuredQuery/AnnotatedCriterion/AnnotatedStructuredQueryCriterion';
 import { AnnotatedStructuredQuery } from '../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { ObjectHelper } from '../modules/querybuilder/controller/ObjectHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -333,16 +334,17 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private addReferenceCriteria(inexclusion: Criterion[][]): Criterion[][] {
+    const inexclusionTemp = ObjectHelper.clone(inexclusion);
     inexclusion.forEach((outerCrit) => {
       outerCrit.forEach((innerCrit) => {
         if (innerCrit.linkedCriteria.length > 0) {
           innerCrit.linkedCriteria.forEach((crit) => {
-            inexclusion.unshift([crit]);
+            inexclusionTemp.unshift([crit]);
           });
         }
       });
     });
-    return inexclusion;
+    return inexclusionTemp;
   }
 
   private rePosition(query: Query): Query {

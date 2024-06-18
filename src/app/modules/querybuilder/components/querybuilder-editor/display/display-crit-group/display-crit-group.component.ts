@@ -76,6 +76,7 @@ export class DisplayCritGroupComponent implements OnInit {
     const index = this.query.groups.findIndex((groupTemp) => groupTemp.id === this.groupId);
     if (index >= 0) {
       this.query.groups[index] = this.group;
+      this.queryService.setFeasibilityQuery(this.query);
     }
   }
 
