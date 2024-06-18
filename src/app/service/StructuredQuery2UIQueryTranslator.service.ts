@@ -173,10 +173,13 @@ export class StructuredQuery2UIQueryTranslatorService {
           }
         });
 
-        criterion.timeRestriction = this.addTimeRestriction(
-          structuredQueryCriterion.timeRestriction
-        );
-        criterion.valueFilters = this.getValueFilters(structuredQueryCriterion);
+        if (criterion.timeRestriction) {
+          criterion.timeRestriction = this.addTimeRestriction(
+            structuredQueryCriterion.timeRestriction
+          );
+        }
+
+        criterion.valueFilters = this.getValueFilters(criterion, structuredQueryCriterion);
         subject.next(criterion);
         subject.complete();
       });
@@ -261,13 +264,21 @@ export class StructuredQuery2UIQueryTranslatorService {
   /**
    * @todo We keep ValueFilters as an Array despite being only one element inside the array
    * @todo we need to test if the declaration with 'as' is assigning all requiered fields
+   * @param criterion
    * @param structuredCriterion
    * @returns
    */
-  private getValueFilters(structuredCriterion: StructuredQueryCriterion): ValueFilter[] {
+  private getValueFilters(
+    criterion: Criterion,
+    structuredCriterion: StructuredQueryCriterion
+  ): ValueFilter[] {
     const valueFiltersResult: ValueFilter[] = [];
+
     if (structuredCriterion.valueFilter) {
-      valueFiltersResult.push(this.createValueFilter(structuredCriterion.valueFilter));
+      const valueFilter = this.createValueFilter(structuredCriterion.valueFilter);
+      valueFilter.optional = criterion.valueFilters[0].optional;
+      valueFilter.valueDefinition = criterion.valueFilters[0].valueDefinition;
+      valueFiltersResult.push(valueFilter);
     }
     return valueFiltersResult;
   }

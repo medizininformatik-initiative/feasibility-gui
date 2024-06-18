@@ -140,7 +140,7 @@ export class CreateCriterionService {
         valueDefinition?.allowedUnits.length > 0
           ? valueDefinition?.allowedUnits[0]
           : { code: '', display: '' };
-      valueFilter.valueDefinition = this.UiProfileService.extractValueDefinition(valueDefinition);
+      valueFilter.valueDefinition = valueDefinition;
       return [valueFilter];
     } else {
       return [];
