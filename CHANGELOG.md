@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v5.0.0-alpha.2 (2024-06-19)
+
+### Changed
+* Further Improvement of Data Model Structure
+* New Services for Data Handling:
+  -	Add new services for providing and handling queries, criteria and references
+* Reduce Data Transfer between Components:
+  -	Reduce the data transfer between Angular components by implementing services for data handling
+
+### Bugfix
+* Update overall count on detail update ([#175](https://github.com/medizininformatik-initiative/feasibility-gui/issues/175))
+* Fix logic switch on reference criteria
+* Fix attributes and time-restrictions on referenced criteria when loading from template
+
+
+
 ## v5.0.0-alpha.1 (2024-04-01)
 
 ### Changed
