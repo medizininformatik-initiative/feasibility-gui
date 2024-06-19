@@ -33,6 +33,7 @@ export class CreateCriterionService {
     termCodes: TerminologyCode[],
     context: TerminologyCode,
     invalidCriteriaIssues: AnnotatedStructuredQueryIssue[],
+    islinked: boolean,
     uid?: string
   ): Observable<Criterion> {
     const criterion: Criterion = new Criterion();
@@ -50,6 +51,7 @@ export class CreateCriterionService {
       this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
         Object.assign(criterion, critFromProfile);
         criterion.termCodes = this.copyTermCodes(termCodes, uid);
+        criterion.isLinked = islinked;
         subject.next(criterion);
       });
     } else {
@@ -84,6 +86,7 @@ export class CreateCriterionService {
       termEntry.termCodes,
       termEntry.context,
       [],
+      false,
       uuidv4()
     ).subscribe((crit) => {
       criterion = crit;
