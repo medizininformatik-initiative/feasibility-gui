@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
-import { CritType } from '../../../../../../model/FeasibilityQuery/Group';
+import { CritType, Group } from '../../../../../../model/FeasibilityQuery/Group';
 import { Query } from '../../../../../../model/FeasibilityQuery/Query';
-//import { Criterion } from '../../../../model/api/query/criterion';
-//import { CritType } from '../../../../model/api/query/group';
-//import { Query } from '../../../../model/api/query/query';
+import { QueryService } from 'src/app/service/QueryService.service';
 
 @Component({
   selector: 'num-display-crit-group',
@@ -17,12 +15,8 @@ export class DisplayCritGroupComponent implements OnInit {
   critGroup: Criterion[][];
 
   @Input()
-  searchType: string;
-
-  @Input()
   critType: CritType;
 
-  @Input()
   query: Query;
 
   @Input()
@@ -40,9 +34,16 @@ export class DisplayCritGroupComponent implements OnInit {
   @Output()
   delete = new EventEmitter<{ row: number; column: number }>();
 
-  constructor() {}
+  group: Group;
 
-  ngOnInit(): void {}
+  constructor(private queryService: QueryService) {}
+
+  ngOnInit(): void {
+    this.queryService.getFeasibilityQuery().subscribe((query) => {
+      this.query = query;
+      this.group = this.query.groups.find((group) => group.id === this.groupId);
+    });
+  }
 
   getInnerLabelKey(): 'AND' | 'OR' {
     return this.critType === 'inclusion' ? 'OR' : 'AND';
@@ -62,29 +63,41 @@ export class DisplayCritGroupComponent implements OnInit {
     this.switch.emit(this.critGroup);
   }
 
-  doDrop($event: any): void {
-    this.dropped.emit({
-      addMode: 'position',
-      from: $event.previousContainer.data,
-      to: $event.container.data,
-    });
-  }
-
   doStoreQuery(query: Query): void {
     this.storeQuery.emit(query);
   }
 
   doDelete({ row, column }: { row: number; column: number }): void {
-    this.delete.emit({ row, column });
+    this.group = CritGroupArranger.removeFromGroup(
+      this.group,
+      { groupId: this.groupId, critType: this.critType, row, column },
+      'delete'
+    );
+    const index = this.query.groups.findIndex((groupTemp) => groupTemp.id === this.groupId);
+    if (index >= 0) {
+      this.query.groups[index] = this.group;
+      this.queryService.setFeasibilityQuery(this.query);
+    }
+  }
+
+  doDrop($event: any): void {
+    this.query.groups = CritGroupArranger.moveCriterion(
+      this.query.groups,
+      $event.previousContainer.data,
+      $event.container.data
+    );
+    this.queryService.setFeasibilityQuery(this.query);
   }
 
   doDropAtEnd($event: any): void {
-    this.dropped.emit({
-      addMode: 'end',
-      from: $event.previousContainer.data,
-      to: $event.container.data,
-    });
+    this.query.groups = CritGroupArranger.moveCriterionToEndOfGroup(
+      this.query.groups,
+      $event.previousContainer.data,
+      $event.container.data
+    );
+    this.queryService.setFeasibilityQuery(this.query);
   }
+
   isLastSwitch(i: number): boolean {
     let bool = true;
     for (let x = i + 1; x < this.critGroup.length; x++) {

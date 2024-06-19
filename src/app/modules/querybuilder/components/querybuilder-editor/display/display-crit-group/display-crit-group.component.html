@@ -7,7 +7,6 @@
     <div
       *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index"
       class="inner"
-      [ngClass]="{ 'inner-padding': searchType === 'dataselection' }"
       cdkDropList
       [cdkDropListData]="{ groupId: groupId, critType: critType, row: i, column: j }"
       (cdkDropListDropped)="doDrop($event)"
@@ -15,16 +14,14 @@
       <num-display-criterion
         *ngIf="!criterion.isLinked"
         [criterion]="criterion"
-        [query]="query"
         [position]="{ groupId: groupId, critType: critType, row: i, column: j }"
-        [searchType]="searchType"
         [showCancelButton]="true"
         (storeQuery)="doStoreQuery($event)"
         (delete)="doDelete({ row: i, column: j })"
         cdkDrag
       >
       </num-display-criterion>
-      <ng-container *ngIf="searchType === 'querybuilder'">
+      <ng-container>
         <num-bool-logic-switch
           [position]="'inner'"
           [label]="getInnerLabelKey()"
@@ -33,7 +30,7 @@
         ></num-bool-logic-switch>
       </ng-container>
     </div>
-    <ng-container *ngIf="searchType === 'querybuilder'">
+    <ng-container>
       <num-bool-logic-switch
         [position]="'outer'"
         [label]="getOuterLabelKey()"

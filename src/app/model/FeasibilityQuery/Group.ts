@@ -40,6 +40,10 @@ export class Group {
   selectedCriteria?: Criterion[][] = [];
 
   dependencyInfo?: GroupDependencyInfo;
+
+  constructor(id: number = 0) {
+    this.id = id;
+  }
 }
 
 // Determines which items are considered for comparison

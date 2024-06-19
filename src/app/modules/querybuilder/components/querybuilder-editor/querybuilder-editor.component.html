@@ -88,7 +88,6 @@
   </div>
   <div fxLayout="row" fxLayoutAlign="space-between" class="container">
     <num-search-input
-      [searchType]="'querybuilder'"
       [critType]="'inclusion'"
       [query]="query"
       fxFlex="48.5"
@@ -96,7 +95,6 @@
     ></num-search-input>
     <div fxFlex="1" class="search-input-spacer"></div>
     <num-search-input
-      [searchType]="'querybuilder'"
       [critType]="'exclusion'"
       [query]="query"
       fxFlex="48.5"
@@ -105,11 +103,7 @@
   </div>
 </div>
 <div class="querybuilder-container">
-  <num-display-query
-    [searchType]="'querybuilder'"
-    [query]="query"
-    (storeQuery)="storeQuery($event)"
-  ></num-display-query>
+  <num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>
 </div>
 <div *ngIf="featureService.useFeatureMultipleGroups()">
   <button class="button-add-group" type="button" mat-icon-button (click)="addGroup()">

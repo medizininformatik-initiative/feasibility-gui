@@ -34,7 +34,7 @@ export class LoadUIProfileService {
       });
       return attributeFilters;
     } else {
-      return undefined;
+      return [];
     }
   }
 
@@ -72,6 +72,8 @@ export class LoadUIProfileService {
       return FilterTypes.CONCEPT;
     } else if (this.filter.isReference(type)) {
       return FilterTypes.REFERENCE;
+    } else if (this.filter.isQuantityType(type)) {
+      return FilterTypes.QUANTITY_COMPARATOR;
     } else {
       return FilterTypes.QUANTITY_NOT_SET;
     }

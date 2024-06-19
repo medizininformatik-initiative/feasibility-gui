@@ -101,9 +101,13 @@ export class FeatureService {
 
   public getSendSQContextToBackend(): boolean {
     if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().options.sendsqcontexttobackend;
+      return this.featureProviderService.getFeatures().options.sendsqcontexttobackend !== undefined
+        ? this.featureProviderService.getFeatures().options.sendsqcontexttobackend
+        : true;
     } else {
-      return this.appConfig.getConfig().options.sendsqcontexttobackend;
+      return this.appConfig.getConfig().options.sendsqcontexttobackend !== undefined
+        ? this.appConfig.getConfig().options.sendsqcontexttobackend
+        : true;
     }
   }
 

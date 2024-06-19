@@ -24,7 +24,6 @@ import { EditCriterionComponent } from './components/querybuilder-editor/edit/ed
 import { EditValueFilterComponent } from './components/querybuilder-editor/edit/edit-value-filter/edit-value-filter.component';
 import { MatInputNumberDirective } from './components/querybuilder-editor/edit/mat-input-number.directive';
 import { DisplayValueFilterComponent } from './components/querybuilder-editor/display/display-value-filter/display-value-filter.component';
-import { EditSingleCriterionComponent } from './components/querybuilder-editor/edit/edit-single-criterion/edit-single-criterion.component';
 import { EditValueFilterConceptLineComponent } from './components/querybuilder-editor/edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component';
 import { DisplayTimeRestrictionComponent } from './components/querybuilder-editor/display/display-time-restriction/display-time-restriction.component';
 import { EditTimeRestrictionComponent } from './components/querybuilder-editor/edit/edit-time-restriction/edit-time-restriction.component';
@@ -36,7 +35,6 @@ import {
 import { EditGroupConnectionComponent } from './components/querybuilder-editor/edit/edit-group-connection/edit-group-connection.component';
 import { ResultSimpleComponent } from './components/querybuilder-editor/result/result-simple/result-simple.component';
 import { ResultDetailsDialogComponent } from './components/querybuilder-editor/result/result-details-dialog/result-details-dialog.component';
-import { DisplayEntitiesComponent } from './components/querybuilder-editor/display/display-entities/display-entities.component';
 import { SaveDialogComponent } from './components/querybuilder-editor/save/save-dialog/save-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -84,14 +82,12 @@ export const FORMATS_GERMAN = {
     EditValueFilterComponent,
     MatInputNumberDirective,
     DisplayValueFilterComponent,
-    EditSingleCriterionComponent,
     EditValueFilterConceptLineComponent,
     DisplayTimeRestrictionComponent,
     EditTimeRestrictionComponent,
     EditGroupConnectionComponent,
     ResultSimpleComponent,
     ResultDetailsDialogComponent,
-    DisplayEntitiesComponent,
     SingleQueryComponent,
     SaveDialogComponent,
     DisplayLinkedCriterionComponent,
@@ -128,7 +124,6 @@ export const FORMATS_GERMAN = {
     DisplayQueryComponent,
     EditCriterionComponent,
     EditValueFilterComponent,
-    EditSingleCriterionComponent,
     EditValueFilterConceptLineComponent,
     DisplayTimeRestrictionComponent,
     ResultSimpleComponent,

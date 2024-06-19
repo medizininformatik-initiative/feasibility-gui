@@ -26,5 +26,15 @@ import { Group } from './Group';
 export class Query {
   display: string;
   consent = false;
-  groups: Group[] = [new Group()];
+  groups: Group[] = [];
+
+  constructor(
+    display: string = 'Ausgewählte Merkmale',
+    consent: boolean = false,
+    groups: Group[] = [new Group()]
+  ) {
+    this.display = display;
+    this.consent = consent;
+    this.groups = groups;
+  }
 }

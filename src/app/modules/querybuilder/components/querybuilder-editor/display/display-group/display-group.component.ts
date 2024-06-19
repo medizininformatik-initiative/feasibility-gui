@@ -11,9 +11,6 @@ import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Query } from '../../../../../../model/FeasibilityQuery/Query';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-//import { CritType, Group } from '../../../../model/api/query/group';
-//import { Criterion } from '../../../../model/api/query/criterion';
-//import { Query } from '../../../../model/api/query/query';
 
 @Component({
   selector: 'num-display-group',
@@ -23,9 +20,6 @@ import { TranslateService } from '@ngx-translate/core';
 export class DisplayGroupComponent implements OnInit {
   @Input()
   group: Group;
-
-  @Input()
-  searchType: string;
 
   @Input()
   parentGroup: Group;
@@ -62,10 +56,6 @@ export class DisplayGroupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
-
-  doDrop($event: any): void {
-    this.dropped.emit($event);
-  }
 
   switch(critType: CritType, $event: Criterion[][]): void {
     if (critType === 'inclusion') {

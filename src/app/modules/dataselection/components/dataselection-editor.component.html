@@ -34,15 +34,9 @@
     </mat-card-header>
   </mat-card>
   <div class="container">
-    <num-search-input [critType]="'inclusion'" [query]="query" [searchType]="'dataselection'">
-    </num-search-input>
+    <num-search-input [critType]="'inclusion'" [query]="query"> </num-search-input>
   </div>
   <div class="dialog-frame">
-    <num-display-query
-      [searchType]="'dataselection'"
-      [query]="query"
-      (storeQuery)="storeQuery($event)"
-    >
-    </num-display-query>
+    <num-display-query [query]="query" (storeQuery)="storeQuery($event)"> </num-display-query>
   </div>
 </div>
