@@ -1,6 +1,10 @@
 <button class="divider" mat-menu-item>Optionen</button>
 <div *ngFor="let item of menuItems; let isLast = last">
-  <button [ngClass]="{ divider: !isLast }" mat-menu-item (click)="item.action()">
+  <button
+    [ngClass]="{ divider: !isLast, 'last-item': isLast }"
+    mat-menu-item
+    (click)="item.action()"
+  >
     <fa-icon [icon]="item.icon" size="sm" class="icon-color"></fa-icon>
     {{ item.label }}
   </button>
