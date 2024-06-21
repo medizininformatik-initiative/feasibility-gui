@@ -1,58 +1,124 @@
-import { FilterTypes } from 'src/app/model/FilterTypes';
-import { TerminologyCode } from '../../../terminology/Terminology';
+import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
+import { ConceptFilter } from './Concept/ConceptFilter';
+import { ReferenceFilter } from './Reference/ReferenceFilter';
 
 export abstract class AbstractAttributeFilters {
-  type: FilterTypes = FilterTypes.QUANTITY_NOT_SET;
-  display: string;
+  private display: string;
+  private concept?: ConceptFilter;
+  private quantity?: AbstractQuantityFilter;
+  private reference?: ReferenceFilter;
+  private optional = false;
 
-  // QUANTITY_COMPARATOR & QUANTITY_RANGE
-  unit?: QuantityUnit = null;
+  /**
+   * Creates an instance of AbstractAttributeFilters.
+   *
+   * @param display - The display name for the filter.
+   * @param concept - Optional concept filter.
+   * @param quantity - Optional quantity filter.
+   * @param reference - Optional reference filter.
+   * @param optional - Whether the filter is optional or not. Default is false.
+   */
+  constructor(
+    display: string,
+    concept?: ConceptFilter,
+    quantity?: AbstractQuantityFilter,
+    reference?: ReferenceFilter,
+    optional: boolean = false
+  ) {
+    this.display = display;
+    this.concept = concept;
+    this.quantity = quantity;
+    this.reference = reference;
+    this.optional = optional;
+  }
 
-  precision?: number = null;
+  /**
+   * Gets the display name of the filter.
+   *
+   * @returns The display name.
+   */
+  getDisplay(): string {
+    return this.display;
+  }
 
-  min?: number = null;
+  /**
+   * Sets the display name of the filter.
+   *
+   * @param display - The new display name.
+   */
+  setDisplay(display: string): void {
+    this.display = display;
+  }
 
-  max?: number = null;
+  /**
+   * Gets the concept filter if set, otherwise returns false.
+   *
+   * @returns The concept filter or false if not set.
+   */
+  getConcept(): ConceptFilter | false {
+    return this.concept !== undefined ? this.concept : false;
+  }
 
-  optional = false;
+  /**
+   * Sets the concept filter.
+   *
+   * @param concept - The concept filter to set.
+   */
+  setConcept(concept: ConceptFilter): void {
+    this.concept = concept;
+  }
 
-  // QUANTITY_COMPARATOR
-  value?: number = null;
-  comparator?: Comparator = Comparator.NONE;
+  /**
+   * Gets the quantity filter if set, otherwise returns false.
+   *
+   * @returns The quantity filter or false if not set.
+   */
+  getQuantity(): AbstractQuantityFilter | false {
+    return this.quantity !== undefined ? this.quantity : false;
+  }
 
-  // QUANTITY_RANGE
-  minValue?: number = null;
-  maxValue?: number = null;
+  /**
+   * Sets the quantity filter.
+   *
+   * @param quantity - The quantity filter to set.
+   */
+  setQuantity(quantity: AbstractQuantityFilter): void {
+    this.quantity = quantity;
+  }
 
-  // CONCEPT
-  selectedConcepts?: TerminologyCode[] = [];
-}
+  /**
+   * Gets the reference filter if set, otherwise returns false.
+   *
+   * @returns The reference filter or false if not set.
+   */
+  getReference(): ReferenceFilter | false {
+    return this.reference !== undefined ? this.reference : false;
+  }
 
-export class QuantityUnit {
-  // UCUM
-  code = '';
-  display = '';
-}
+  /**
+   * Sets the reference filter.
+   *
+   * @param reference - The reference filter to set.
+   */
+  setReference(reference: ReferenceFilter): void {
+    this.reference = reference;
+  }
 
-export enum Comparator {
-  NONE = 'none',
-  EQUAL = 'eq',
-  BETWEEN = 'bw',
-  NOT_EQUAL = 'ne',
-  LESS_OR_EQUAL = 'le',
-  LESS_THAN = 'lt',
-  GREATER_OR_EQUAL = 'ge',
-  GREATER_THAN = 'gt',
-}
+  /**
+   * Gets whether the filter is optional.
+   *
+   * @returns True if the filter is optional, false otherwise.
+   */
+  getOptional(): boolean {
+    return this.optional;
+  }
 
-/**
- * @todo new OperatorOptions value timerestriction --> needs to be tested
- */
-export enum OperatorOptions {
-  CONCEPT = 'concept', // e.g. "weiblich, männlich"
-  QUANTITY_COMPARATOR = 'quantity-comparator', // e.g. "< 27.10.2020"
-  QUANTITY_NOT_SET = '',
-  QUANTITY_RANGE = 'quantity-range', // e.g. ">= 27 and <= 30"
-  REFERENCE = 'reference',
-  TIMERESTRICTION = 'time-restriction',
+  /**
+   * Sets whether the filter is optional.
+   *
+   * @param optional - True to make the filter optional, false otherwise.
+   */
+  setOptional(optional: boolean): void {
+    this.optional = optional;
+  }
 }
