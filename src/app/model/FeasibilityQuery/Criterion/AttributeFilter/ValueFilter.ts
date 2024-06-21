@@ -1,7 +1,7 @@
 import { AbstractAttributeFilters } from './AbstractAttributeFilters';
 import { ConceptFilter } from './Concept/ConceptFilter';
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
-import { ReferenceFilter } from './Reference/ReferenceFilter';
+import { ReferenceFilter } from './Concept/ReferenceFilter';
 
 /**
  * Class representing a ValueFilter.

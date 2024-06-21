@@ -2,7 +2,7 @@ import { AbstractAttributeFilters } from './AbstractAttributeFilters';
 import { TerminologyCode } from '../../../terminology/Terminology';
 import { ConceptFilter } from './Concept/ConceptFilter';
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
-import { ReferenceFilter } from './Reference/ReferenceFilter';
+import { ReferenceFilter } from './Concept/ReferenceFilter';
 
 export class AttributeFilter extends AbstractAttributeFilters {
   private attributeCode: TerminologyCode;

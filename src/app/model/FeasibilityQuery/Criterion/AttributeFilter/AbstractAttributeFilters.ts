@@ -1,6 +1,6 @@
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { ConceptFilter } from './Concept/ConceptFilter';
-import { ReferenceFilter } from './Reference/ReferenceFilter';
+import { ReferenceFilter } from './Concept/ReferenceFilter';
 
 export abstract class AbstractAttributeFilters {
   private display: string;
