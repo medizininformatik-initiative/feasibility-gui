@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StageComponent } from './stage.component';
+import { CriteriaStageComponent } from './criteria-stage.component';
 
-describe('StageComponent', () => {
-  let component: StageComponent;
-  let fixture: ComponentFixture<StageComponent>;
+describe('CriteriaComponent', () => {
+  let component: CriteriaStageComponent;
+  let fixture: ComponentFixture<CriteriaStageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StageComponent],
+      declarations: [CriteriaStageComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StageComponent);
+    fixture = TestBed.createComponent(CriteriaStageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
