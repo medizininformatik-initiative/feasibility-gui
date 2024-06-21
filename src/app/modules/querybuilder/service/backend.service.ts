@@ -2,7 +2,6 @@ import { AnnotatedStructuredQuery } from '../../../model/result/AnnotatedStructu
 import { AppConfigService } from '../../../config/app-config.service';
 import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
-import { Entries } from 'src/app/model/ElasticSearch/Entrie';
 import { FeatureService } from '../../../service/Feature.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -16,7 +15,6 @@ import { QueryResultRateLimit } from 'src/app/model/result/QueryResultRateLimit'
 import { SearchTermFilter } from '../../../model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
-import { SearchTermResultList } from '../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermResultList';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
 import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
@@ -40,7 +38,6 @@ export class BackendService {
   private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
   private static PATH_TERMINOLOGY = 'terminology/';
   private static PATH_SEARCH = 'terminology/entries';
-  private static PATH_ENTRIES = 'terminology/entries';
   private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
   private static PATH_SAVED = 'saved';
   private static PATH_TERMINOLOGY_SEARCH = 'terminology/entry/search';
@@ -163,7 +160,7 @@ export class BackendService {
   }
 
   /**
-   * In the future use this.createUrl(BackendService.PATH_SEARCH + '/' + id + '?detail=true' )
+   *
    *
    * @param id
    * @returns
