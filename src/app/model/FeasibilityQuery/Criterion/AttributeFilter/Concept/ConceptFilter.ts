@@ -1,6 +1,6 @@
 import { AbstractConceptFilter } from './AbstractConceptFilter';
 import { FilterTypes } from 'src/app/model/FilterTypes';
-import { TerminologyCode } from 'src/app/model/terminology/Terminology';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 /**
  * Class representing a ConceptFilter.
@@ -59,5 +59,21 @@ export class ConceptFilter extends AbstractConceptFilter {
    */
   setType(type: FilterTypes): void {
     this.type = type;
+  }
+
+  /**
+   * Static method to create a ConceptFilter.
+   *
+   * @param allowedConceptUri - The allowed concept URI.
+   * @param selectedConcepts - The selected concepts.
+   * @param allowedConcepts - The allowed concepts.
+   * @returns The created ConceptFilter instance.
+   */
+  static create(
+    allowedConceptUri: Array<string>,
+    selectedConcepts: TerminologyCode[] = [],
+    allowedConcepts: TerminologyCode[] = []
+  ): ConceptFilter {
+    return new ConceptFilter(allowedConceptUri, selectedConcepts, allowedConcepts);
   }
 }
