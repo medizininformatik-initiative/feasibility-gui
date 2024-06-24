@@ -1,23 +1,23 @@
 import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
 import { AttributeFilter } from './AttributeFilter/AttributeFilter';
 import { CritGroupPosition } from '../CritGroupPosition';
-import { TerminologyCode } from '../../terminology/Terminology';
+import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
 
 /**
  * Abstract class representing a criterion with various filters and properties.
  */
 export abstract class AbstractCriterion {
-  attributeFilters?: Array<AttributeFilter> = [];
-  context?: TerminologyCode;
-  criterionHash?: string;
-  display?: string;
-  isInvalid?: boolean = false;
-  position?: CritGroupPosition;
-  termCodes?: Array<TerminologyCode> = [];
-  timeRestriction?: AbstractTimeRestriction;
-  uniqueID?: string;
-  valueFilters?: Array<ValueFilter> = [];
+  private attributeFilters?: Array<AttributeFilter> = [];
+  private context?: TerminologyCode;
+  private criterionHash?: string;
+  private display?: string;
+  private isInvalid?: boolean = false;
+  private position?: CritGroupPosition;
+  private termCodes?: Array<TerminologyCode> = [];
+  private timeRestriction?: AbstractTimeRestriction;
+  private uniqueID?: string;
+  private valueFilters?: Array<ValueFilter> = [];
 
   /**
    * Constructor for AbstractCriterion.
@@ -62,9 +62,16 @@ export abstract class AbstractCriterion {
    *
    * @returns Array of AttributeFilter objects or false if attributeFilters is undefined.
    */
-  getAttributeFilters(): Array<AttributeFilter> | boolean {
+  isAttributeFiltersSet(): boolean {
     if (this.attributeFilters === undefined) {
       return false;
+    }
+    return true;
+  }
+
+  getAttributeFilters(): Array<AttributeFilter> {
+    if (this.attributeFilters === undefined) {
+      return [];
     }
     return this.attributeFilters;
   }
