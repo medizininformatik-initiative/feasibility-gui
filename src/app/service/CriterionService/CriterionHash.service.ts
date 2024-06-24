@@ -1,6 +1,6 @@
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { Injectable } from '@angular/core';
-import { TerminologyCode } from '../../model/terminology/Terminology';
+import { TerminologyCode } from '../../model/Terminology/TerminologyCode';
 import { v3 as uuidv3 } from 'uuid';
 
 @Injectable({
@@ -16,23 +16,23 @@ export class CriterionHashService {
     let termcodeVersion = '';
 
     if (context) {
-      contextSystem = context.system;
-      contextCode = context.code;
-      if (context.version) {
-        contextVersion = context.version;
+      contextSystem = context.getSystem();
+      contextCode = context.getCode();
+      if (context.getVersion()) {
+        contextVersion = context.getVersion();
       }
     }
 
-    if (termCode.version) {
-      termcodeVersion = termCode.version;
+    if (termCode.getVersion()) {
+      termcodeVersion = termCode.getVersion();
     }
 
     const hashCode =
       contextSystem +
       contextCode +
       contextVersion +
-      termCode.system +
-      termCode.code +
+      termCode.getSystem() +
+      termCode.getCode() +
       termcodeVersion;
 
     return uuidv3(hashCode, BackendService.BACKEND_UUID_NAMESPACE);
