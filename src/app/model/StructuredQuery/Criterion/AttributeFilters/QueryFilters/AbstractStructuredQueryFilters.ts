@@ -1,4 +1,4 @@
-import { TerminologyCode } from 'src/app/model/terminology/Terminology';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { FilterTypes } from '../../../../FilterTypes';
 
 export abstract class AbstractStructuredQueryFilters {

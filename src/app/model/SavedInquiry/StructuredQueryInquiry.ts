@@ -1,5 +1,5 @@
+import { AnnotatedStructuredQuery } from '../Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { AbstractInquiry } from './AbstractInquiry';
-import { AnnotatedStructuredQuery } from '../result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 
 export class StructuredQueryInquiry extends AbstractInquiry {
   createdBy: string;

@@ -1,5 +1,5 @@
 import { FilterTypes } from '../../../FilterTypes';
-import { TerminologyCode } from '../../../terminology/Terminology';
+import { TerminologyCode } from '../../../terminology/TerminologyCode';
 import { AbstractStructuredQuerytAttributeFilters } from './AbstractStructuredQueryAttributeFilters';
 import { ConceptAttributeFilter } from './QueryFilters/ConceptFilter/ConceptAttributeFilter';
 

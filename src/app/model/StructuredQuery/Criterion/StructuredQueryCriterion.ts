@@ -1,4 +1,4 @@
-import { TerminologyCode } from '../../terminology/Terminology';
+import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { AbstractStructuredQueryFilters } from './AttributeFilters/QueryFilters/AbstractStructuredQueryFilters';
 import { AbstractTimeRestriction } from './AttributeFilters/QueryFilters/TimeRestriction/AbstractTimeRestriction';
 
