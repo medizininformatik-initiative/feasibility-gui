@@ -1,7 +1,7 @@
 import { AbstractConceptFilter } from './AbstractConceptFilter';
 import { FilterTypes } from 'src/app/model/FilterTypes';
 import { ReferenceCriterion } from '../../ReferenceCriterion';
-import { TerminologyCode } from 'src/app/model/terminology/Terminology';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 /**
  * Class representing a ReferenceFilter.
@@ -82,5 +82,28 @@ export class ReferenceFilter extends AbstractConceptFilter {
    */
   setType(type: FilterTypes): void {
     this.type = type;
+  }
+
+  /**
+   * Static method to create a ReferenceFilter.
+   *
+   * @param allowedReferenceUri - The allowed reference URI.
+   * @param selectedReference - The selected reference criteria.
+   * @param selectedConcepts - The selected concepts.
+   * @param allowedConcepts - The allowed concepts.
+   * @returns The created ReferenceFilter instance.
+   */
+  static create(
+    allowedReferenceUri: Array<string>,
+    selectedReference: ReferenceCriterion[] = [],
+    selectedConcepts: TerminologyCode[] = [],
+    allowedConcepts: TerminologyCode[] = []
+  ): ReferenceFilter {
+    return new ReferenceFilter(
+      allowedReferenceUri,
+      selectedReference,
+      selectedConcepts,
+      allowedConcepts
+    );
   }
 }
