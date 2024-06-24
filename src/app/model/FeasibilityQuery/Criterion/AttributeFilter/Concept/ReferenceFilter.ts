@@ -17,15 +17,13 @@ export class ReferenceFilter extends AbstractConceptFilter {
    * @param selectedReference - The selected reference criteria.
    * @param allowedReferenceUri - The allowed reference URI.
    * @param selectedConcepts - The selected concepts (inherited from AbstractConceptFilter).
-   * @param allowedConcepts - The allowed concepts (inherited from AbstractConceptFilter).
    */
   constructor(
     allowedReferenceUri: Array<string>,
     selectedReference: ReferenceCriterion[] = [],
-    selectedConcepts: TerminologyCode[] = [],
-    allowedConcepts: TerminologyCode[] = []
+    selectedConcepts: Set<TerminologyCode>
   ) {
-    super(selectedConcepts, allowedConcepts);
+    super(selectedConcepts);
     this.selectedReference = selectedReference;
     this.allowedReferenceUri = allowedReferenceUri;
   }
@@ -90,20 +88,13 @@ export class ReferenceFilter extends AbstractConceptFilter {
    * @param allowedReferenceUri - The allowed reference URI.
    * @param selectedReference - The selected reference criteria.
    * @param selectedConcepts - The selected concepts.
-   * @param allowedConcepts - The allowed concepts.
    * @returns The created ReferenceFilter instance.
    */
   static create(
     allowedReferenceUri: Array<string>,
     selectedReference: ReferenceCriterion[] = [],
-    selectedConcepts: TerminologyCode[] = [],
-    allowedConcepts: TerminologyCode[] = []
+    selectedConcepts: Set<TerminologyCode>
   ): ReferenceFilter {
-    return new ReferenceFilter(
-      allowedReferenceUri,
-      selectedReference,
-      selectedConcepts,
-      allowedConcepts
-    );
+    return new ReferenceFilter(allowedReferenceUri, selectedReference, selectedConcepts);
   }
 }

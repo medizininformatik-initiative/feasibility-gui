@@ -4,8 +4,8 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
  * Abstract class representing a concept filter.
  */
 export abstract class AbstractConceptFilter {
-  protected selectedConcepts: TerminologyCode[] = [];
-  protected allowedConcepts: TerminologyCode[] = [];
+  // Needs to be tested if set works for handling unique elements??
+  protected selectedConcepts: Set<TerminologyCode>;
 
   /**
    * Creates an instance of AbstractConceptFilter.
@@ -13,44 +13,25 @@ export abstract class AbstractConceptFilter {
    * @param selectedConcepts - The selected concepts.
    * @param allowedConcepts - The allowed concepts.
    */
-  constructor(selectedConcepts: TerminologyCode[] = [], allowedConcepts: TerminologyCode[] = []) {
+  constructor(selectedConcepts: Set<TerminologyCode>) {
     this.selectedConcepts = selectedConcepts;
-    this.allowedConcepts = allowedConcepts;
   }
 
   /**
    * Gets the selected concepts.
    *
-   * @returns An array of selected concepts.
+   * @returns A Set of selected concepts.
    */
-  getSelectedConcepts(): TerminologyCode[] {
+  getSelectedConcepts(): Set<TerminologyCode> {
     return this.selectedConcepts;
   }
 
   /**
    * Sets the selected concepts.
    *
-   * @param selectedConcepts - An array of selected concepts.
+   * @param selectedConcepts - A Set of selected concepts.
    */
-  setSelectedConcepts(selectedConcepts: TerminologyCode[]): void {
+  setSelectedConcepts(selectedConcepts: Set<TerminologyCode>): void {
     this.selectedConcepts = selectedConcepts;
-  }
-
-  /**
-   * Gets the allowed concepts.
-   *
-   * @returns An array of allowed concepts.
-   */
-  getAllowedConcepts(): TerminologyCode[] {
-    return this.allowedConcepts;
-  }
-
-  /**
-   * Sets the allowed concepts.
-   *
-   * @param allowedConcepts - An array of allowed concepts.
-   */
-  setAllowedConcepts(allowedConcepts: TerminologyCode[]): void {
-    this.allowedConcepts = allowedConcepts;
   }
 }
