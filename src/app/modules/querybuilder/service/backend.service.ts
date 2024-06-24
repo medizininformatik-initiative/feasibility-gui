@@ -1,14 +1,14 @@
 import { AnnotatedStructuredQuery } from '../../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { AppConfigService } from '../../../config/app-config.service';
-import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
+//import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { FeatureService } from '../../../service/Feature.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, of } from 'rxjs';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
-import { QueryProviderService } from './query-provider.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+//import { QueryProviderService } from './query-provider.service';
 import { QueryResponse } from '../model/api/result/QueryResponse';
 import { QueryResult } from '../model/api/result/QueryResult';
 import { QueryResultRateLimit } from 'src/app/model/result/QueryResultRateLimit';
@@ -18,7 +18,7 @@ import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchRe
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
 import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
-import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
+//import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,12 +26,12 @@ export class BackendService {
   constructor(
     private config: AppConfigService,
     private feature: FeatureService,
-    private queryProviderService: QueryProviderService,
+    //private queryProviderService: QueryProviderService,
     private http: HttpClient,
-    private authStorage: OAuthStorage,
-    private apiTranslator: UIQuery2StructuredQueryTranslatorService,
-    private latestQueryResult: QueryProviderService
-  ) {}
+    private authStorage: OAuthStorage
+  ) //private apiTranslator: UIQuery2StructuredQueryTranslatorService,
+  //private latestQueryResult: QueryProviderService
+  {}
 
   public static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
   private static PATH_ROOT_ENTRIES = 'terminology/categories';
@@ -58,7 +58,7 @@ export class BackendService {
   headers = new HttpHeaders()
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + this.token);
-
+  /*
   public getCategories(): Observable<Array<CategoryEntry>> {
     if (this.feature.mockTerminology()) {
       return of();
@@ -75,7 +75,7 @@ export class BackendService {
       this.createUrl(BackendService.PATH_TERMINOLOGY_SUBTREE + '/' + id)
     );
   }
-
+*/
   public getElasticSearchEntry(id: string): Observable<SearchTermListEntry> {
     return this.http.get<SearchTermListEntry>(this.createUrl(BackendService.PATH_ENTRY + '/' + id));
   }
@@ -168,7 +168,7 @@ export class BackendService {
   public getElasticSearchResultById(id: string): Observable<any> {
     return this.http.get<any>(this.createUrl(BackendService.PATH_ENTRY + id));
   }
-
+  /*
   public getTerminolgyEntrySearchResult(
     catId: string,
     search: string
@@ -182,8 +182,9 @@ export class BackendService {
 
     return this.http.get<Array<TerminologyEntry>>(url);
   }
-
-  public postQuery(query: Query): Observable<any> {
+*/
+  /*
+  public postQuery(query: FeasibilityQuery): Observable<any> {
     if (this.feature.getQueryVersion() === 'v2') {
       const queryV2 = this.apiTranslator.translateToStructuredQuery(query);
       return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV2, {
@@ -191,7 +192,7 @@ export class BackendService {
       });
     }
   }
-
+*/
   public getSummaryResult(resultUrl: string): Observable<QueryResult> {
     if (this.feature.mockResult()) {
       const result = {
@@ -256,16 +257,16 @@ export class BackendService {
       this.createUrl(BackendService.PATH_QUERY_RESULT_LIMIT)
     );
   }
-
+  /*
   public saveQuery(
-    query: Query,
+    query: FeasibilityQuery,
     title: string,
     comment: string,
     saveWithQuery: boolean | string
   ): Observable<any> {
     if (this.feature.mockLoadnSave()) {
       let savedQueries: Array<{
-        content: Query
+        content: FeasibilityQuery
         label: string
         comment: string
         lastModified: number
@@ -289,7 +290,7 @@ export class BackendService {
           const savedQuery = {
             label: title,
             comment,
-            content: this.apiTranslator.translateToStructuredQuery(query),
+            //content: this.apiTranslator.translateToStructuredQuery(query),
           };
           return this.http.post<any>(this.createUrl(BackendService.PATH_STORED_QUERY), savedQuery, {
             headers,
@@ -317,7 +318,7 @@ export class BackendService {
       }
     }
   }
-
+*/
   public validateStructuredQueryBackend(
     structuredQuery: StructuredQuery
   ): Observable<AnnotatedStructuredQuery> {
@@ -337,7 +338,7 @@ export class BackendService {
       }
     );
   }
-
+  /*
   public loadSavedTemplates(validate?: boolean): Observable<StructuredQueryTemplate[]> {
     if (this.feature.mockLoadnSave()) {
       return of(this.queryProviderService.loadQueries());
@@ -352,7 +353,7 @@ export class BackendService {
       );
     }
   }
-
+*/
   public deleteSavedTemplate(id: number) {
     const headers = this.headers;
     const url = this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id);

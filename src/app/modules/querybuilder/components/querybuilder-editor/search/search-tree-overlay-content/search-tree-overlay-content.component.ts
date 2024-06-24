@@ -1,4 +1,4 @@
-import { BackendService } from '../../../../service/backend.service';
+/*import { BackendService } from '../../../../service/backend.service';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -138,3 +138,4 @@ export class SearchTreeOverlayContentComponent implements OnInit, OnDestroy {
     });
   }
 }
+*/

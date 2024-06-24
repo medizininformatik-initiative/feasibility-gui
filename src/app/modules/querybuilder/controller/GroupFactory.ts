@@ -1,4 +1,4 @@
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
+/*import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import {
   Group,
   GroupDependencyInfo,
@@ -40,3 +40,4 @@ export class GroupFactory {
     };
   }
 }
+*/

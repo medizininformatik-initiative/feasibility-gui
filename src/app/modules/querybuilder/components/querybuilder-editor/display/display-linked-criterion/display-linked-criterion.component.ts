@@ -1,4 +1,4 @@
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+/*import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Component, Input, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FeatureService } from 'src/app/service/Feature.service';
@@ -47,3 +47,4 @@ export class DisplayLinkedCriterionComponent implements OnInit {
     }
   }
 }
+*/

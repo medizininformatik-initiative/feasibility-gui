@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+/*import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TerminologyEntry } from 'src/app/model/terminology/Terminology';
 
 @Component({
@@ -21,3 +21,4 @@ export class SearchTreeTermEntryComponent implements OnInit {
     this.toggleEvent.emit(this.node);
   }
 }
+*/

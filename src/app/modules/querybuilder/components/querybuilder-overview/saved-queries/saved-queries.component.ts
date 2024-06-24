@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+/*import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BackendService } from '../../../service/backend.service';
 import { Query } from '../../../../../model/FeasibilityQuery/Query';
 import { QueryProviderService } from '../../../service/query-provider.service';
@@ -71,7 +71,7 @@ export class SavedQueriesComponent implements OnInit, AfterViewChecked {
       });
     });
   }*/
-
+/*
   loadSavedQueries(): void {
     this.templateService.getSavedStructuredQuerySavedQueries().subscribe((uiSavedQueries) => {
       this.savedQueries = uiSavedQueries;
@@ -98,3 +98,4 @@ export class SavedQueriesComponent implements OnInit, AfterViewChecked {
     this.editModusQuery[index] = mode;
   }
 }
+*/

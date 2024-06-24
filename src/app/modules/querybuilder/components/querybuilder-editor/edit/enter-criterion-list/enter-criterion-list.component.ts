@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+/*import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FeatureService } from '../../../../../../service/Feature.service';
 import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
@@ -134,3 +134,4 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 }
+*/

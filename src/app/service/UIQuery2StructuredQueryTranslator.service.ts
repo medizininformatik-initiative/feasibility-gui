@@ -1,4 +1,4 @@
-import { AbstractAttributeFilters } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
+/*import { AbstractAttributeFilters } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { AbstractStructuredQueryFilters } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/AbstractStructuredQueryFilters';
 import { AbstractTimeRestriction } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/TimeRestriction/AbstractTimeRestriction';
 import { AfterFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/TimeRestriction/AfterFilter';
@@ -371,3 +371,4 @@ export class UIQuery2StructuredQueryTranslatorService {
     ];
   }
 }
+*/

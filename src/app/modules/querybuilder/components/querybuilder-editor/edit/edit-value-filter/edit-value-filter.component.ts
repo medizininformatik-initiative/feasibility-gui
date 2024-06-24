@@ -1,4 +1,4 @@
-import {
+/*import {
   AbstractAttributeFilters,
   Comparator,
   QuantityUnit,
@@ -414,3 +414,4 @@ export class EditValueFilterComponent implements OnInit, AfterViewInit {
     return values.code === option.code;
   }
 }
+*/

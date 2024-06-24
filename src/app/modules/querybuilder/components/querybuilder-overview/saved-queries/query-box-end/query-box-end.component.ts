@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+/*import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { QueryProviderService } from '../../../../service/query-provider.service';
 import { Router } from '@angular/router';
@@ -107,3 +107,4 @@ export class QueryBoxEndComponent implements OnInit {
     });
   }
 }
+*/

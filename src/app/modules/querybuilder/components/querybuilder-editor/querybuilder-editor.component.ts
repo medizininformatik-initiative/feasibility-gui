@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+/*import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BackendService } from '../../service/backend.service';
 import { FeatureService } from '../../../../service/Feature.service';
 import { GroupFactory } from '../../controller/GroupFactory';
@@ -257,3 +257,4 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
     }
   }
 }
+*/

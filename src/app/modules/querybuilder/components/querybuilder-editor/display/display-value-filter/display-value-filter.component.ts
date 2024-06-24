@@ -1,4 +1,4 @@
-import { Comparator } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
+/*import { Comparator } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { Component, Input, OnInit } from '@angular/core';
 import { FeatureService } from 'src/app/service/Feature.service';
 import { FilterTypes } from 'src/app/model/FilterTypes';
@@ -64,3 +64,4 @@ export class DisplayValueFilterComponent implements OnInit {
     return comparatorIcon;
   }
 }
+*/
