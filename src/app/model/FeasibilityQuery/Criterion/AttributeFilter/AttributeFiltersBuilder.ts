@@ -1,10 +1,13 @@
-import { ConceptFilter } from './Concept/ConceptFilter';
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
-import { TerminologyCode } from '../../../terminology/Terminology';
-import { ReferenceFilter } from './Concept/ReferenceFilter';
-import { QuantityNotSet } from './Quantity/QuantityNotSet';
-import { ValueFilter } from './ValueFilter';
 import { AttributeFilter } from './AttributeFilter';
+import { ConceptFilter } from './Concept/ConceptFilter';
+import { FilterTypes } from 'src/app/model/FilterTypes';
+import { QuantityNotSet } from './Quantity/QuantityNotSet';
+import { QuantityUnit } from '../../../QuantityUnit';
+import { ReferenceCriterion } from '../ReferenceCriterion';
+import { ReferenceFilter } from './Concept/ReferenceFilter';
+import { TerminologyCode } from '../../../Terminology/TerminologyCode';
+import { ValueFilter } from './ValueFilter';
 
 /**
  * Builder class for constructing instances of AbstractAttributeFilters and its subclasses.
@@ -16,10 +19,12 @@ export class AttributeFiltersBuilder {
   private reference?: ReferenceFilter;
   private quantity?: AbstractQuantityFilter;
   private attributeCode?: TerminologyCode;
+  private filterType: FilterTypes;
 
-  constructor(display: string, optional: boolean) {
+  constructor(display: string, optional: boolean, filterType: FilterTypes) {
     this.display = display;
     this.optional = optional;
+    this.filterType = filterType;
   }
 
   /**
@@ -74,6 +79,7 @@ export class AttributeFiltersBuilder {
   buildAttributeFilter(): AttributeFilter {
     return new AttributeFilter(
       this.display,
+      this.filterType,
       this.attributeCode,
       this.concept,
       this.quantity,
@@ -88,6 +94,52 @@ export class AttributeFiltersBuilder {
    * @returns An instance of ValueFilter.
    */
   buildValueFilter(): ValueFilter {
-    return new ValueFilter(this.display, this.concept, this.quantity, this.optional);
+    return new ValueFilter(
+      this.display,
+      this.filterType,
+      this.concept,
+      this.quantity,
+      this.optional
+    );
+  }
+
+  /**
+   * Builds an instance of QuantityNotSet based on the current builder configuration.
+   *
+   * @returns An instance of QuantityFilter.
+   */
+  buildQuantityFilter(
+    allowedUnits?: QuantityUnit[],
+    precision?: number,
+    selectedUnit?: QuantityUnit
+  ): QuantityNotSet {
+    return new QuantityNotSet(selectedUnit, allowedUnits, precision);
+  }
+
+  buildConceptFilter(
+    allowedConceptUri,
+    selectedConcepts: TerminologyCode[] = [],
+    allowedConcepts?: TerminologyCode[]
+  ) {
+    return new ConceptFilter(allowedConceptUri, selectedConcepts, allowedConcepts);
+  }
+
+  /**
+   * Builds an instance of ReferenceFilter based on the current builder configuration.
+   *
+   * @returns An instance of ReferenceFilter.
+   */
+  buildReferenceFilter(
+    allowedReferenceUri: Array<string>,
+    selectedReference: ReferenceCriterion[] = [],
+    selectedConcepts: TerminologyCode[] = [],
+    allowedConcepts: TerminologyCode[] = []
+  ): ReferenceFilter {
+    return new ReferenceFilter(
+      allowedReferenceUri,
+      selectedReference,
+      selectedConcepts,
+      allowedConcepts
+    );
   }
 }
