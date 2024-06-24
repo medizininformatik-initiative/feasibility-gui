@@ -1,6 +1,7 @@
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { ConceptFilter } from './Concept/ConceptFilter';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
+import { FilterTypes } from 'src/app/model/FilterTypes';
 
 export abstract class AbstractAttributeFilters {
   private display: string;
@@ -8,11 +9,13 @@ export abstract class AbstractAttributeFilters {
   private quantity?: AbstractQuantityFilter;
   private reference?: ReferenceFilter;
   private optional = false;
+  private filter: FilterTypes;
 
   /**
    * Creates an instance of AbstractAttributeFilters.
    *
    * @param display - The display name for the filter.
+   * @param filter
    * @param concept - Optional concept filter.
    * @param quantity - Optional quantity filter.
    * @param reference - Optional reference filter.
@@ -20,6 +23,7 @@ export abstract class AbstractAttributeFilters {
    */
   constructor(
     display: string,
+    filter: FilterTypes,
     concept?: ConceptFilter,
     quantity?: AbstractQuantityFilter,
     reference?: ReferenceFilter,
@@ -30,6 +34,7 @@ export abstract class AbstractAttributeFilters {
     this.quantity = quantity;
     this.reference = reference;
     this.optional = optional;
+    this.filter = filter;
   }
 
   /**
@@ -55,8 +60,8 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns The concept filter or false if not set.
    */
-  getConcept(): ConceptFilter | false {
-    return this.concept !== undefined ? this.concept : false;
+  getConcept(): ConceptFilter {
+    return this.concept;
   }
 
   /**
@@ -73,8 +78,8 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns The quantity filter or false if not set.
    */
-  getQuantity(): AbstractQuantityFilter | false {
-    return this.quantity !== undefined ? this.quantity : false;
+  getQuantity(): AbstractQuantityFilter {
+    return this.quantity;
   }
 
   /**
@@ -91,8 +96,8 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns The reference filter or false if not set.
    */
-  getReference(): ReferenceFilter | false {
-    return this.reference !== undefined ? this.reference : false;
+  getReference(): ReferenceFilter {
+    return this.reference;
   }
 
   /**
@@ -120,5 +125,32 @@ export abstract class AbstractAttributeFilters {
    */
   setOptional(optional: boolean): void {
     this.optional = optional;
+  }
+
+  /**
+   * Checks if the concept filter is set.
+   *
+   * @returns True if the concept filter is set, false otherwise.
+   */
+  isConceptSet(): boolean {
+    return this.concept !== undefined;
+  }
+
+  /**
+   * Checks if the quantity filter is set.
+   *
+   * @returns True if the quantity filter is set, false otherwise.
+   */
+  isQuantitySet(): boolean {
+    return this.quantity !== undefined;
+  }
+
+  /**
+   * Checks if the reference filter is set.
+   *
+   * @returns True if the reference filter is set, false otherwise.
+   */
+  isReferenceSet(): boolean {
+    return this.reference !== undefined;
   }
 }

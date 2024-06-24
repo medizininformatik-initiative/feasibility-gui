@@ -1,8 +1,9 @@
 import { AbstractAttributeFilters } from './AbstractAttributeFilters';
-import { TerminologyCode } from '../../../terminology/Terminology';
+import { TerminologyCode } from '../../../Terminology/TerminologyCode';
 import { ConceptFilter } from './Concept/ConceptFilter';
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
+import { FilterTypes } from 'src/app/model/FilterTypes';
 
 export class AttributeFilter extends AbstractAttributeFilters {
   private attributeCode: TerminologyCode;
@@ -19,13 +20,14 @@ export class AttributeFilter extends AbstractAttributeFilters {
    */
   constructor(
     display: string,
+    filter: FilterTypes,
     attributeCode: TerminologyCode,
     concept?: ConceptFilter,
     quantity?: AbstractQuantityFilter,
     reference?: ReferenceFilter,
     optional: boolean = false
   ) {
-    super(display, concept, quantity, reference, optional);
+    super(display, filter, concept, quantity, reference, optional);
     this.attributeCode = attributeCode;
   }
 

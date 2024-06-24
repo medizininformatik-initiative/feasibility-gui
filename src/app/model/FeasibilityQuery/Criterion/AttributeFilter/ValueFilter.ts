@@ -2,6 +2,7 @@ import { AbstractAttributeFilters } from './AbstractAttributeFilters';
 import { ConceptFilter } from './Concept/ConceptFilter';
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
+import { FilterTypes } from 'src/app/model/FilterTypes';
 
 /**
  * Class representing a ValueFilter.
@@ -17,10 +18,11 @@ export class ValueFilter extends AbstractAttributeFilters {
    */
   constructor(
     display: string,
+    filter: FilterTypes,
     concept?: ConceptFilter,
     quantity?: AbstractQuantityFilter,
     optional: boolean = false
   ) {
-    super(display, concept, quantity, undefined, optional);
+    super(display, filter, concept, quantity, undefined, optional);
   }
 }
