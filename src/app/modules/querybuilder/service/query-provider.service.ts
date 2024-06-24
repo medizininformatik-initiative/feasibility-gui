@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Inject, Injectable } from '@angular/core';
+/*import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { environment } from '../../../../environments/environment';
 import { GroupFactory } from '../controller/GroupFactory';
@@ -256,3 +256,4 @@ export class QueryProviderService {
     };
   }
 }
+*/

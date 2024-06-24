@@ -1,4 +1,4 @@
-import { CategoryEntry } from 'src/app/model/terminology/Terminology';
+/*import { CategoryEntry } from 'src/app/model/terminology/Terminology';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -24,3 +24,4 @@ export class SearchTreeHeaderComponent implements OnInit {
     this.switchCategory.emit(catId);
   }
 }
+*/

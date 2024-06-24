@@ -3,7 +3,7 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FeatureService } from 'src/app/service/Feature.service';
 import { Observable, Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { QueryResult } from 'src/app/model/result/QueryResult';
+import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 
 export class ResultDetailsDialogComponentData {

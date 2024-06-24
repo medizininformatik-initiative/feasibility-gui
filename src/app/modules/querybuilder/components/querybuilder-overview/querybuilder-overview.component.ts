@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+/*import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FeatureProviderService } from '../../service/feature-provider.service';
 import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import { QueryProviderService } from '../../service/query-provider.service';
@@ -77,3 +77,4 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
   }
 }
+*/

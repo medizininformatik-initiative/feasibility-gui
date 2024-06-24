@@ -46,7 +46,7 @@ export class CriterionService {
    * @param criterion The criterion to set
    */
   public setCriterionByUID(criterion: Criterion): void {
-    this.criterionUIDMap.set(criterion.uniqueID, criterion);
+    this.criterionUIDMap.set(criterion.getUniqueID(), criterion);
     this.criterionUIDMapSubject.next(new Map(this.criterionUIDMap));
   }
 
@@ -97,8 +97,8 @@ export class CriterionService {
             ;['inclusion', 'exclusion'].forEach((type) => {
               group[type + 'Criteria'].forEach((criteriaArray: Criterion[]) => {
                 criteriaArray.forEach((criteria) => {
-                  if (criteria.uniqueID) {
-                    this.criterionUIDMap.set(criteria.uniqueID, criteria);
+                  if (criteria.getUniqueID()) {
+                    this.criterionUIDMap.set(criteria.getUniqueID(), criteria);
                   }
                 });
               });

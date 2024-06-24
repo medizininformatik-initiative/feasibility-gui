@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+/*import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
 import { FeatureService } from 'src/app/service/Feature.service';
 import { Group } from '../../../../../../model/FeasibilityQuery/Group';
@@ -156,3 +156,4 @@ export class DisplayQueryComponent implements OnInit {
     return this.query.groups;
   }
 }
+*/

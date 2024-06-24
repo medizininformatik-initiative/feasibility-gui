@@ -1,4 +1,4 @@
-import {
+/*import {
   Component,
   EventEmitter,
   Input,
@@ -113,3 +113,4 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
     this.switchSearchMode.emit();
   }
 }
+*/

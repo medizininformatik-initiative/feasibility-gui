@@ -1,4 +1,4 @@
-import { BackendService } from '../modules/querybuilder/service/backend.service';
+/*import { BackendService } from '../modules/querybuilder/service/backend.service';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { StructuredQuerySavedQuery } from '../model/SavedInquiry/StructuredQuery/StructuredQuerySavedQuery';
@@ -82,3 +82,4 @@ export class StructuredQueryTemplate2UITemplateTranslatorService {
     return structuredQuerySavedQueries.sort((a, b) => a.id - b.id);
   }
 }
+*/

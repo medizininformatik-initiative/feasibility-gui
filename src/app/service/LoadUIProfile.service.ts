@@ -1,4 +1,4 @@
-import { AbstractAttributeDefinitions } from '../model/terminology/AttributeDefinitions/AbstractAttributeDefinitions';
+/*import { AbstractAttributeDefinitions } from '../model/terminology/AttributeDefinitions/AbstractAttributeDefinitions';
 import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BackendService } from '../modules/querybuilder/service/backend.service';
 import { FilterTypes } from '../model/FilterTypes';
@@ -79,3 +79,4 @@ export class LoadUIProfileService {
     }
   }
 }
+*/

@@ -1,4 +1,4 @@
-import { AttributeFilter } from '../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+/*import { AttributeFilter } from '../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BackendService } from '../../../../service/backend.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupArranger, CritGroupPosition } from '../../../../controller/CritGroupArranger';
@@ -163,3 +163,4 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     );
   }
 }
+*/

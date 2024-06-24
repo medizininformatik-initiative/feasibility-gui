@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+/*import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
 import { CritType, Group } from '../../../../../../model/FeasibilityQuery/Group';
@@ -105,3 +105,4 @@ export class DisplayCritGroupComponent implements OnInit {
     return !bool;
   }
 }
+*/

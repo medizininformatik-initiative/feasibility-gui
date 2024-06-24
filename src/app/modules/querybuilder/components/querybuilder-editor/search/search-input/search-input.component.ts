@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+/*import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
 import { merge, Observable, Subscription } from 'rxjs';
 import { MatInput } from '@angular/material/input';
@@ -135,3 +135,4 @@ export class SearchInputComponent implements OnInit, OnDestroy {
 }
 
 export type SearchMode = 'text' | 'tree';
+*/

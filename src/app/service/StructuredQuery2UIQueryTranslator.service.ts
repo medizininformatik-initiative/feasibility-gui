@@ -1,4 +1,4 @@
-import { AbstractAttributeFilters } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
+/*import { AbstractAttributeFilters } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { AbstractStructuredQueryFilters } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/AbstractStructuredQueryFilters';
 import { AbstractTimeRestriction } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/TimeRestriction/AbstractTimeRestriction';
 import { AttributeDefinition } from '../model/terminology/AttributeDefinitions/AttributeDefinition';
@@ -264,6 +264,7 @@ export class StructuredQuery2UIQueryTranslatorService {
    * @param structuredCriterion
    * @returns
    */
+/*
   private getValueFilters(structuredCriterion: StructuredQueryCriterion): ValueFilter[] {
     const valueFiltersResult: ValueFilter[] = [];
     if (structuredCriterion.valueFilter) {
@@ -375,3 +376,4 @@ export class StructuredQuery2UIQueryTranslatorService {
     return query;
   }
 }
+*/

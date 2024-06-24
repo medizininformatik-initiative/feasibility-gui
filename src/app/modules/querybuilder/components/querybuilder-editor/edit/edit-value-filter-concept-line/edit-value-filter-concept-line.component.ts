@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { TerminologyCode } from 'src/app/model/terminology/Terminology';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Component({
   selector: 'num-edit-value-filter-concept-line',

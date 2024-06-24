@@ -1,3 +1,4 @@
+/*
 //import { Criterion } from '../model/api/query/criterion';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CritType, Group } from '../../../model/FeasibilityQuery/Group';
@@ -298,3 +299,4 @@ export class CritGroupPosition {
   row: number;
   column: number;
 }
+*/

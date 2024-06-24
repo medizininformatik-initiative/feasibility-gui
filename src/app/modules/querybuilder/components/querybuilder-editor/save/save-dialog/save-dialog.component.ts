@@ -1,14 +1,14 @@
-import { BackendService } from '../../../../service/backend.service';
+/*import { BackendService } from '../../../../service/backend.service';
 import { AfterViewChecked, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FileSaverService } from 'ngx-filesaver';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { QueryProviderService } from '../../../../service/query-provider.service';
 import { Subscription } from 'rxjs';
 import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 /* eslint-disable */
-
+/*
 export class SaveDialogComponentData {
   hasQuerySend: boolean | string
 }
@@ -33,7 +33,7 @@ export class SaveDialogComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.hasQuerySend = data.hasQuerySend
   }
 
-  query: Query
+  query: FeasibilityQuery
   title = ''
   comment = ''
   filename = ''
@@ -123,3 +123,4 @@ export class SaveDialogComponent implements OnInit, OnDestroy, AfterViewChecked 
     })
   }
 }
+*/
