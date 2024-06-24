@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy } fr
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionService } from 'src/app/service/CriterionService.service';
 import { map, Observable, of, Subscription } from 'rxjs';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { QueryService } from 'src/app/service/QueryService.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   public $criterionUIDMap: Observable<Map<string, Criterion>>;
   public $criteriaArray: Observable<Criterion[]> = of([]);
   private subscription: Subscription;
-  $feasibilityQuery: Observable<Query>;
+  $feasibilityQuery: Observable<FeasibilityQuery>;
 
   constructor(
     public elementRef: ElementRef,

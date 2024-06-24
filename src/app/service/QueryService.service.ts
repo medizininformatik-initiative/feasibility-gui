@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
-import { Query } from '../model/FeasibilityQuery/Query';
+import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 
 @Injectable({
@@ -8,7 +8,9 @@ import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 })
 export class QueryService {
   private readonly STORAGE_QUERY_KEY = 'QUERY';
-  private feasibilityQuery: BehaviorSubject<Query> = new BehaviorSubject(new Query());
+  private feasibilityQuery: BehaviorSubject<FeasibilityQuery> = new BehaviorSubject(
+    new FeasibilityQuery()
+  );
 
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     this.loadInitialQuery();
@@ -22,9 +24,9 @@ export class QueryService {
     const storedQuery = this.storage.get(this.STORAGE_QUERY_KEY);
     if (storedQuery && storedQuery.groups) {
       this.storage.remove(this.STORAGE_QUERY_KEY);
-      this.setFeasibilityQuery(new Query());
+      this.setFeasibilityQuery(new FeasibilityQuery());
     } else {
-      this.feasibilityQuery = new BehaviorSubject(new Query());
+      this.feasibilityQuery = new BehaviorSubject(new FeasibilityQuery());
     }
   }
 
@@ -33,9 +35,10 @@ export class QueryService {
    *
    * @param feasibilityQuery The new feasibility query to set
    */
-  public setFeasibilityQuery(feasibilityQuery: Query): void {
+  public setFeasibilityQuery(feasibilityQuery: FeasibilityQuery): void {
     this.storage.set(this.STORAGE_QUERY_KEY, feasibilityQuery);
     this.feasibilityQuery.next(feasibilityQuery);
+    console.log(this.feasibilityQuery);
   }
 
   /**
@@ -43,7 +46,7 @@ export class QueryService {
    *
    * @returns Observable<Query>
    */
-  public getFeasibilityQuery(): Observable<Query> {
+  public getFeasibilityQuery(): Observable<FeasibilityQuery> {
     return this.feasibilityQuery.asObservable();
   }
 
@@ -51,7 +54,7 @@ export class QueryService {
    * Resets the feasibility query to the default query and updates local storage.
    */
   public resetToDefaultQuery(): void {
-    const defaultQuery = new Query();
+    const defaultQuery = new FeasibilityQuery();
     this.storage.clear();
     this.storage.set(this.STORAGE_QUERY_KEY, defaultQuery);
     this.feasibilityQuery.next(defaultQuery);
@@ -62,7 +65,7 @@ export class QueryService {
    *
    * @param updatedQuery The updated query object
    */
-  public updateFeasibilityQuery(updatedQuery: Query): void {
+  public updateFeasibilityQuery(updatedQuery: FeasibilityQuery): void {
     this.setFeasibilityQuery(updatedQuery);
   }
 }

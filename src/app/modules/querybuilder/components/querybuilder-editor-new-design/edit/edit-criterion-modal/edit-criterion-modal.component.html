@@ -1,8 +1,8 @@
 <div class="container">
-  {{ criterion.termCodes[0].display }}
+  {{ criterion.getTermCodes()[0].getDisplay() }}
   <num-concept></num-concept>
   <num-edit-time-restriction
-    [timeRestriction]="criterion.timeRestriction"
+    [timeRestriction]="criterion.getTimeRestriction()"
   ></num-edit-time-restriction>
   <num-quantity></num-quantity>
 </div>

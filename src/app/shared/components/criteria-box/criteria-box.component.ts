@@ -1,17 +1,6 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { Observable, map } from 'rxjs';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { CriterionService } from 'src/app/service/CriterionService.service';
-import { CriteriaMenuComponent } from './criteria-menu/criteria-menu.component';
 
 @Component({
   selector: 'num-criteria-box',

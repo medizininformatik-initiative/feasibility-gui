@@ -1,4 +1,4 @@
-import { Comparator } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
+import { Comparator } from '../model/Comparator';
 import { FilterTypes } from '../model/FilterTypes';
 import { Injectable } from '@angular/core';
 
