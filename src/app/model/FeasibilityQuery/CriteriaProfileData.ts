@@ -1,32 +1,35 @@
-import { TerminologyCode } from '../terminology/Terminology';
-import { UIProfile } from '../terminology/UIProfile';
+import { TerminologyCode } from '../Terminology/TerminologyCode';
+import { AttributeDefinitions } from '../AttributeDefinitions';
 
 /**
  * Represents criteria profile data.
  */
 export class CriteriaProfileData {
-  private uiProfile: UIProfile;
+  private attributeDefinitions: Array<AttributeDefinitions>;
   private context: TerminologyCode;
   private termCodes: TerminologyCode[];
   private id: string;
+  private timeRestrictionAllowed = false;
 
   /**
    * Constructs a new CriteriaProfileData object.
    *
-   * @param uiProfile - The UI profile.
+   * @param attributeDefinitions - The UI profile.
    * @param context - The terminology context.
    * @param termCodes - The terminology codes.
    */
   constructor(
     id: string,
-    uiProfile: UIProfile,
+    timeRestrictionAllowed: boolean,
+    attributeDefinitions: Array<AttributeDefinitions>,
     context: TerminologyCode,
     termCodes: TerminologyCode[]
   ) {
-    this.uiProfile = uiProfile;
+    this.attributeDefinitions = attributeDefinitions;
     this.context = context;
     this.termCodes = termCodes;
     this.id = id;
+    this.timeRestrictionAllowed = timeRestrictionAllowed;
   }
 
   /**
@@ -51,8 +54,8 @@ export class CriteriaProfileData {
    *
    * @returns The UI profile.
    */
-  public getUiProfile(): UIProfile {
-    return this.uiProfile;
+  public getAttributeDefinitions(): AttributeDefinitions[] {
+    return this.attributeDefinitions;
   }
 
   /**
@@ -60,8 +63,8 @@ export class CriteriaProfileData {
    *
    * @param uiProfile - The UI profile to set.
    */
-  public setUiProfile(uiProfile: UIProfile): void {
-    this.uiProfile = uiProfile;
+  public setUiProfile(attributeDefinitions: AttributeDefinitions[]): void {
+    this.attributeDefinitions = attributeDefinitions;
   }
 
   /**
@@ -98,5 +101,23 @@ export class CriteriaProfileData {
    */
   public setTermCodes(termCodes: TerminologyCode[]): void {
     this.termCodes = termCodes;
+  }
+
+  /**
+   * Get whether time restriction is allowed
+   *
+   * @returns True if time restriction is allowed, otherwise false
+   */
+  getTimeRestrictionAllowed(): boolean {
+    return this.timeRestrictionAllowed;
+  }
+
+  /**
+   * Set whether time restriction is allowed
+   *
+   * @param timeRestrictionAllowed - True if time restriction is allowed, otherwise false
+   */
+  setTimeRestrictionAllowed(timeRestrictionAllowed: boolean): void {
+    this.timeRestrictionAllowed = timeRestrictionAllowed;
   }
 }
