@@ -6,7 +6,7 @@
   class="container"
 >
   <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="title-section">
-    {{ criterion.termCodes[0].display }}
+    {{ criterion.getTermCodes()[0].getDisplay() }}
     <div fxFlexAlign="end" class="menu-icon">
       <fa-icon
         (click)="openMenu()"
@@ -19,17 +19,17 @@
     </div>
   </div>
   <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
-    <num-criteria-menu [criterionUuid]="criterion.uniqueID"></num-criteria-menu>
+    <num-criteria-menu [criterionUuid]="criterion.getUniqueID()"></num-criteria-menu>
   </mat-menu>
   <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
     <div class="info-item">
-      {{ criterion.context.code }}
+      {{ criterion.getContext().getCode() }}
     </div>
     <div class="info-item">
-      {{ criterion.termCodes[0].system }}
+      {{ criterion.getTermCodes()[0].getSystem() }}
     </div>
     <div class="info-item">
-      {{ criterion.termCodes[0].code }}
+      {{ criterion.getTermCodes()[0].getCode() }}
     </div>
   </div>
   <div fxFlexAlign="end" class="menu-icon" cdkDragHandle>

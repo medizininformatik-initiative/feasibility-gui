@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CriterionService } from '../CriterionService.service';
 import { v4 as uuidv4 } from 'uuid';
-import { EditCriterionService } from '../CriterionService/edit-criterion.service';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { EditCriterionService } from '../CriterionService/EditCriterionService.service';
 import { QueryService } from '../QueryService.service';
 
 @Injectable({
@@ -11,15 +10,18 @@ import { QueryService } from '../QueryService.service';
 export class MenuService {
   constructor(
     private criterionService: CriterionService,
-    private editCriterionService: EditCriterionService,
-    private queryProviderService: QueryService
+    private editCriterionService: EditCriterionService
   ) {}
 
   getMenuItems(criterionUuid: string) {
     return [
       { icon: 'trash', label: 'löschen', action: () => this.deleteAction(criterionUuid) },
       { icon: 'clone', label: 'dublizieren', action: () => this.duplicateAction(criterionUuid) },
-      { icon: 'link', label: 'kriterien verknüpfen', action: this.linkCriteriaAction.bind(this) },
+      {
+        icon: 'link',
+        label: 'kriterien verknüpfen',
+        action: () => this.linkCriteriaAction.bind(this),
+      },
       {
         icon: 'cog',
         label: 'Filter anwenden',
@@ -32,12 +34,12 @@ export class MenuService {
     this.criterionService.deleteCriterionByUID(uid);
   }
 
-  duplicateAction(uid) {
+  duplicateAction(uid: string) {
     const originalElement = this.criterionService.getCriterionByUID(uid);
     if (originalElement) {
       const duplicateElement = { ...originalElement };
-      duplicateElement.uniqueID = uuidv4();
-      this.criterionService.setCriterionByUID(duplicateElement);
+      //duplicateElement.setUniqueID(uuidv4());
+      //this.criterionService.setCriterionByUID(duplicateElement);
     }
   }
 
@@ -45,5 +47,8 @@ export class MenuService {
     console.log('Link criteria action triggered');
   }
 
-  applyFilterAction(criterionUuid: string) {}
+  applyFilterAction(criterionUuid: string) {
+    const test = this.criterionService.getCriterionByUID(criterionUuid);
+    this.editCriterionService.newEditCriterion(test);
+  }
 }
