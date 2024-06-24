@@ -4,6 +4,7 @@
 export class QuantityUnit {
   private code: string;
   private display: string;
+  private system: string;
 
   /**
    * Constructor to initialize the QuantityUnit with code and display.
@@ -11,9 +12,10 @@ export class QuantityUnit {
    * @param code - The code of the quantity unit.
    * @param display - The display name of the quantity unit.
    */
-  constructor(code: string, display: string) {
+  constructor(code: string, display: string, system: string) {
     this.code = code;
     this.display = display;
+    this.system = system;
   }
 
   /**
