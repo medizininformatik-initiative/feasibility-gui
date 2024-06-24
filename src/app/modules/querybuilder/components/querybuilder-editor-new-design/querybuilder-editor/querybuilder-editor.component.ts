@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CriteriaComponent } from '../criteria/criteria.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CriteriaStageComponent } from '../stage/criteria-stage.component';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { QueryService } from 'src/app/service/QueryService.service';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
 
 @Component({
   selector: 'num-querybuilder-editor',
@@ -9,9 +9,9 @@ import { Query } from 'src/app/model/FeasibilityQuery/Query';
   styleUrls: ['./querybuilder-editor.component.scss'],
 })
 export class QuerybuilderEditorComponent implements OnInit {
-  @ViewChild('stage') stage: CriteriaComponent;
+  @ViewChild('stage') stage: CriteriaStageComponent;
 
-  query: Query;
+  query: FeasibilityQuery;
 
   constructor(public queryService: QueryService) {}
 
