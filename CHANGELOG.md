@@ -1,6 +1,12 @@
 # Changelog
 
 
+## v5.0.0-alpha.3 (2024-06-25)
+
+### Bugfix
+* Add referencedCriteria correctly to selectedCriteria when loading or importing a query
+
+
 ## v5.0.0-alpha.2 (2024-06-19)
 
 ### Changed

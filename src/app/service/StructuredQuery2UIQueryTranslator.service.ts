@@ -162,6 +162,7 @@ export class StructuredQuery2UIQueryTranslatorService {
                 find.attributeDefinition.selectableConcepts =
                   attribute.attributeDefinition.selectableConcepts;
                 find.attributeDefinition.optional = attribute.attributeDefinition.optional;
+                find.selectedConcepts = attribute.selectedConcepts;
               }
               if (find?.type === 'concept') {
                 if (attribute.selectedConcepts) {
@@ -226,17 +227,16 @@ export class StructuredQuery2UIQueryTranslatorService {
       attributeFilter.attributeCode = conceptFilter.attributeCode;
       attributeFilter.type = FilterTypes.CONCEPT;
       attributeFilter.selectedConcepts = conceptFilter.selectedConcepts;
-
       setTimeout(() => {
         subject.next(attributeFilter);
-      }, 10);
+      }, 20);
     }
     if (this.filter.isQuantityComparator(structuredQueryAttributeFilter.type)) {
       setTimeout(() => {
         subject.next(
           this.createQuantityComparatorFilter(structuredQueryAttributeFilter, attributeFilter)
         );
-      }, 10);
+      }, 20);
     }
     if (this.filter.isQuantityRange(structuredQueryAttributeFilter.type)) {
       setTimeout(() => {
@@ -246,12 +246,13 @@ export class StructuredQuery2UIQueryTranslatorService {
             attributeFilter
           ) as AttributeFilter
         );
-      }, 10);
+      }, 20);
     }
     if (this.filter.isReference(structuredQueryAttributeFilter.type)) {
       const referenceFilter = structuredQueryAttributeFilter as ReferenceFilter;
       attributeFilter.attributeCode = referenceFilter.attributeCode;
       attributeFilter.type = FilterTypes.REFERENCE;
+
       referenceFilter.criteria.forEach((refCrit) => {
         this.createCriterionService
           .createCriterionFromTermCode(refCrit.termCodes, refCrit.context, [], true)
@@ -263,6 +264,7 @@ export class StructuredQuery2UIQueryTranslatorService {
             subject.next(attributeFilter);
           });
 
+        attributeFilter.selectedConcepts.push(refCrit.termCodes[0]);
         attributeFilter.attributeDefinition = new AttributeDefinition();
         attributeFilter.attributeDefinition.selectableConcepts.push(refCrit.termCodes[0]);
         attributeFilter.attributeDefinition.optional = true;
