@@ -25,7 +25,7 @@ export class ListItemDetailsComponent implements OnInit {
   entries: Observable<Entries>;
   constructor(
     private listItemService: SearchResultListItemSelectionService<SearchTermListEntry>,
-    private elasticSearchService: ElasticSearchService
+    private elasticSearchService: ElasticSearchService<SearchTermListEntry>
   ) {}
 
   ngOnInit() {

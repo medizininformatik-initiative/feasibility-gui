@@ -3,6 +3,7 @@ import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearc
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms'; // Import FormGroup
 import { Observable } from 'rxjs';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 
 @Component({
   selector: 'num-search-filter',
@@ -17,7 +18,7 @@ export class SearchFilterComponent implements OnInit {
   @Output() filtersChanged = new EventEmitter<Array<string>>();
 
   constructor(
-    private elasticSearchService: ElasticSearchService,
+    private elasticSearchService: ElasticSearchService<SearchTermListEntry>,
     private formBuilder: FormBuilder
   ) {
     this.filterControls = this.formBuilder.array([]);
