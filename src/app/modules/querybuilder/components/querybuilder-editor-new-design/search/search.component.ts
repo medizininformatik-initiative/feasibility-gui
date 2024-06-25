@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 import { Subscription } from 'rxjs';
+import { SearchTermListEntry } from '../../../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 
 @Component({
   selector: 'num-search',

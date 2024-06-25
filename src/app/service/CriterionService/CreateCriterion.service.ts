@@ -19,6 +19,7 @@ import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeF
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
+import { InterfaceListEntry } from '../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,7 @@ export class CreateCriterionService {
     private featureService: FeatureService,
     //private UiProfileService: LoadUIProfileService,
     private backend: BackendService,
-    private listItemService: SearchResultListItemSelectionService,
+    private listItemService: SearchResultListItemSelectionService<InterfaceListEntry>,
     private criterionService: CriterionService
   ) {}
 

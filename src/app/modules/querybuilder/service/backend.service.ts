@@ -13,11 +13,11 @@ import { QueryResponse } from '../model/api/result/QueryResponse';
 import { QueryResult } from '../model/api/result/QueryResult';
 import { QueryResultRateLimit } from 'src/app/model/result/QueryResultRateLimit';
 import { SearchTermFilter } from '../../../model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
 import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
+import { SearchTermListEntry } from '../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 //import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 @Injectable({
   providedIn: 'root',
@@ -28,9 +28,8 @@ export class BackendService {
     private feature: FeatureService,
     //private queryProviderService: QueryProviderService,
     private http: HttpClient,
-    private authStorage: OAuthStorage
-  ) //private apiTranslator: UIQuery2StructuredQueryTranslatorService,
-  //private latestQueryResult: QueryProviderService
+    private authStorage: OAuthStorage //private apiTranslator: UIQuery2StructuredQueryTranslatorService,
+  ) //private latestQueryResult: QueryProviderService
   {}
 
   public static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
