@@ -5,7 +5,7 @@ import { CriterionHashService } from './CriterionService/CriterionHash.service';
 import { FeatureService } from './Feature.service';
 import { Injectable } from '@angular/core';
 import { LoadUIProfileService } from './LoadUIProfile.service';
-import { TerminologyCode, TerminologyEntry } from '../model/terminology/Terminology';
+import { TerminologyCode, TerminologyEntry } from '../model/terminology/TerminologyCode';
 import { TimeRestriction } from '../model/FeasibilityQuery/TimeRestriction';
 import { UIProfile } from '../model/terminology/UIProfile';
 import { v3 as uuidv3 } from 'uuid';

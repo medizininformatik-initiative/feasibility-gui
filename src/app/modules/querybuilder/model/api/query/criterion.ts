@@ -3,7 +3,7 @@ import { TerminologyCode, TerminologyEntry } from '../terminology/terminology';
 import { ValueFilter } from './valueFilter';
 import { TimeRestriction } from './timerestriction';
 import { AttributeFilter } from './attributeFilter';
-import { CritGroupPosition } from '../../../controller/CritGroupArranger';
+//import { CritGroupPosition } from '../../../controller/CritGroupArranger';
 
 // A Criterion is an atomic building block of a query. However, a Criterion itself is defined by
 // a terminology code (system + version + code), operators and values.
@@ -18,7 +18,7 @@ export class Criterion {
   attributeFilters?: Array<AttributeFilter> = [];
   children?: Array<TerminologyEntry> = [];
   isinvalid?: boolean;
-  position?: CritGroupPosition;
+  //position?: CritGroupPosition;
   linkedCriteria?: Criterion[] = [];
   isLinked?: boolean;
   context?: TerminologyCode;

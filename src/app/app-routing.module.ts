@@ -29,18 +29,6 @@ export const routes: Routes = [
       ).then((m) => m.QuerybuilderModule),
   },
   {
-    path: 'dataselection',
-    canLoad: [RoleGuard],
-    data: {
-      navId: 'dataselection',
-      roles: ['main'],
-    },
-    loadChildren: () =>
-      import(
-        /* webpackChunkName: "Dataselection.Module" */ './modules/dataselection/dataselection.module'
-      ).then((m) => m.DataselectionModule),
-  },
-  {
     path: 'options',
     canLoad: [RoleGuard],
     data: {

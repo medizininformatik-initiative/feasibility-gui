@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AttributeFilter } from '../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { Query } from '../../model/FeasibilityQuery/Query';
+import { Query } from '../../model/FeasibilityQuery/FeasibilityQuery';
 import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
 import { FilterTypesService } from '../FilterTypes.service';
 import { QueryService } from '../QueryService.service';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
-import { TerminologyCode } from '../../model/terminology/Terminology';
+import { TerminologyCode } from '../../model/terminology/TerminologyCode';
 import { Subscription } from 'rxjs';
 import { CritGroupArranger } from '../../modules/querybuilder/controller/CritGroupArranger';
 

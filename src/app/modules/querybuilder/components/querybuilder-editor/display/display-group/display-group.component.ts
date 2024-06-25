@@ -1,3 +1,4 @@
+/*
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
@@ -8,7 +9,7 @@ import { GroupFactory } from '../../../../controller/GroupFactory';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { Query } from '../../../../../../model/FeasibilityQuery/Query';
+import { Query } from '../../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -153,3 +154,4 @@ export class DisplayGroupComponent implements OnInit {
       .subscribe((query) => this.storeQuery.emit(query));
   }
 }
+*/

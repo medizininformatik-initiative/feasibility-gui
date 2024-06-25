@@ -1,3 +1,4 @@
 <div fxLayout="column" class="container">
-  <num-searchbar></num-searchbar>
+  <num-searchbar (searchTextChange)="startElasticSearch($event)"></num-searchbar>
+  <num-result-list></num-result-list>
 </div>

@@ -1,3 +1,4 @@
+/*
 import { Component, Inject, OnInit, Query } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
@@ -60,3 +61,4 @@ export class EditGroupConnectionComponent implements OnInit {
     this.dialogRef.close(this.querySnapshot);
   }
 }
+*/

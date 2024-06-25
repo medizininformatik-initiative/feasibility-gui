@@ -27,9 +27,8 @@ export class BackendService {
     private feature: FeatureService,
     //private queryProviderService: QueryProviderService,
     private http: HttpClient,
-    private authStorage: OAuthStorage
-  ) //private apiTranslator: UIQuery2StructuredQueryTranslatorService,
-  //private latestQueryResult: QueryProviderService
+    private authStorage: OAuthStorage //private apiTranslator: UIQuery2StructuredQueryTranslatorService,
+  ) //private latestQueryResult: QueryProviderService
   {}
 
   public static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
@@ -39,6 +38,7 @@ export class BackendService {
   private static PATH_SEARCH = 'terminology/entries';
   private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
   private static PATH_SAVED = 'saved';
+  private static PATH_TERMINOLOGY_SEARCH_CONCEPT = 'codeable_concept/entry/search';
   private static PATH_TERMINOLOGY_SEARCH = 'terminology/entry/search';
   private static PATH_TERMINOLOGY_SEARCH_FILTER = 'terminology/search/filter';
   private static PATH_CRITERIA_PROFILE = 'terminology/criteria-profile-data';
@@ -113,6 +113,7 @@ export class BackendService {
    */
   public getElasticSearchResults(
     searchString: string,
+    url?: string,
     context?: string,
     terminology?: string,
     kds?: string,
@@ -124,8 +125,9 @@ export class BackendService {
     const terminologyParameter = terminology ? '&terminology=' + terminology : '';
     const kdsParameter = kds ? '&kds=' + kds : '';
     const availabilityParameter = availability ? '&availability=' + availability : '';
-    const limitParameter = limit ? '&limit=' + limit : '';
-    const offsetParameter = offset ? '&offset=' + offset : '';
+    const limitParameter = limit ? '&pageSize=' + limit : '';
+    const offsetParameter = offset ? '&page=' + offset : '';
+    const urlParameter = url ? '&criteriaSets=' + encodeURI(url) : '';
     return this.http.get<{ totalHits: number; results: any[] }>(
       this.createUrl(
         BackendService.PATH_TERMINOLOGY_SEARCH +
@@ -136,7 +138,29 @@ export class BackendService {
           kdsParameter +
           availabilityParameter +
           limitParameter +
-          offsetParameter
+          offsetParameter +
+          urlParameter
+      )
+    );
+  }
+
+  public getElasticSearchResultsConcept(
+    searchString: string,
+    url?: string,
+    limit?: number,
+    offset?: number
+  ): Observable<{ totalHits: number; results: any[] }> {
+    const limitParameter = limit ? '&pageSize=' + limit : '';
+    const offsetParameter = offset ? '&page=' + offset : '';
+    const urlParameter = url ? '&valueSets=' + encodeURI(url) : '';
+    return this.http.get<{ totalHits: number; results: any[] }>(
+      this.createUrl(
+        BackendService.PATH_TERMINOLOGY_SEARCH_CONCEPT +
+          '?searchterm=' +
+          searchString +
+          limitParameter +
+          offsetParameter +
+          urlParameter
       )
     );
   }

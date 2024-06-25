@@ -1,5 +1,6 @@
+/*
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CategoryEntry } from 'src/app/model/terminology/Terminology';
+import { CategoryEntry } from 'src/app/model/Terminology/TerminologyCode';
 
 @Component({
   selector: 'num-search-text-header',
@@ -24,3 +25,4 @@ export class SearchTextHeaderComponent implements OnInit {
     this.selectedId = entryId;
   }
 }
+*/

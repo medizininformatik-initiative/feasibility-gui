@@ -1,3 +1,4 @@
+/*
 import { AttributeFilter } from '../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BackendService } from '../../../../service/backend.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
@@ -5,7 +6,7 @@ import { CritGroupArranger, CritGroupPosition } from '../../../../controller/Cri
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component';
 import { FeatureService } from '../../../../../../service/Feature.service';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { Query } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { Subscription } from 'rxjs';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import {
@@ -163,3 +164,4 @@ export class EditCriterionComponent implements OnInit, OnDestroy, AfterViewCheck
     );
   }
 }
+*/

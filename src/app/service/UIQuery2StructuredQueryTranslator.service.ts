@@ -1,3 +1,4 @@
+/*
 import { AbstractAttributeFilters } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { AbstractStructuredQueryFilters } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/AbstractStructuredQueryFilters';
 import { AbstractTimeRestriction } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/TimeRestriction/AbstractTimeRestriction';
@@ -12,34 +13,31 @@ import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
 import { FeatureService } from './Feature.service';
 import { FilterTypes } from '../model/FilterTypes';
 import { FilterTypesService } from './FilterTypes.service';
-import { Group } from '../model/FeasibilityQuery/Group';
 import { Injectable } from '@angular/core';
 import { ObjectHelper } from '../modules/querybuilder/controller/ObjectHelper';
 import { QuantityComparatorFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/QuantityFilter/QuantityComparatorFilter';
 import { QuantityRangeFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/QuantityFilter/QuantityRangeFilter';
-import { Query } from '../model/FeasibilityQuery/Query';
+import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
 import { ReferenceFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ReferenceFilter/ReferenceFilter';
 import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
 import { StructuredQueryCriterion } from '../model/StructuredQuery/Criterion/StructuredQueryCriterion';
-import { TerminologyCode } from '../model/terminology/Terminology';
+import { TerminologyCode } from '../model/Terminology/TerminologyCode';
 import { TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-
 @Injectable({
   providedIn: 'root',
 })
 export class UIQuery2StructuredQueryTranslatorService {
   constructor(private featureService: FeatureService, private filter: FilterTypesService) {}
 
-  public translateToStructuredQuery(feasibilityQuery: Query): StructuredQuery {
+  public translateToStructuredQuery(feasibilityQuery: FeasibilityQuery): StructuredQuery {
     const structuredQuery = new StructuredQuery();
-    if (feasibilityQuery.display) {
-      structuredQuery.display = feasibilityQuery.display;
+    if (feasibilityQuery.getDisplay()) {
+      structuredQuery.display = feasibilityQuery.getDisplay();
     }
-    const group: Group = feasibilityQuery.groups[0];
-    structuredQuery.inclusionCriteria = this.translateInclusionCriteria(group);
-    structuredQuery.exclusionCriteria = this.translateExclusionCriteria(group);
-    if (feasibilityQuery.consent) {
+    structuredQuery.inclusionCriteria = this.translateInclusionCriteria(feasibilityQuery.getInclusionCriteria());
+    structuredQuery.exclusionCriteria = this.translateExclusionCriteria(feasibilityQuery.getExclusionCriteria());
+    if (feasibilityQuery.getConsent()) {
       structuredQuery.inclusionCriteria.push(this.getConsent());
     }
     return structuredQuery;
@@ -52,9 +50,9 @@ export class UIQuery2StructuredQueryTranslatorService {
     }
   }
 
-  private translateExclusionCriteria(group: Group): StructuredQueryCriterion[][] | undefined {
-    const exclusionCriteria = ObjectHelper.clone(group.exclusionCriteria);
-    if (exclusionCriteria.length > 0) {
+  private translateExclusionCriteria(exclusionCriteria: Criterion[][]): StructuredQueryCriterion[][] | undefined {
+    const exclusionCriteriaClone = ObjectHelper.clone(exclusionCriteria);
+    if (exclusionCriteriaClone.length > 0) {
       return this.translateCriterionGroup(exclusionCriteria);
     } else {
       return undefined;
@@ -371,3 +369,4 @@ export class UIQuery2StructuredQueryTranslatorService {
     ];
   }
 }
+*/

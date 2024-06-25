@@ -1,8 +1,9 @@
+/*
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FeatureService } from '../../../../../../service/Feature.service';
 import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
-import { Query } from '../../../../../../model/FeasibilityQuery/Query';
+import { Query } from '../../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { CritType } from '../../../../../../model/FeasibilityQuery/Group';
 import { QueryService } from '../../../../../../service/QueryService.service';
 import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
@@ -134,3 +135,4 @@ export class EnterCriterionListComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 }
+*/

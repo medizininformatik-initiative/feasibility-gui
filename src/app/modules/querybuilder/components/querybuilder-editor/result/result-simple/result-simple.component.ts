@@ -7,7 +7,7 @@ import {
   ResultDetailsDialogComponent,
   ResultDetailsDialogComponentData,
 } from '../result-details-dialog/result-details-dialog.component';
-import { QueryResult } from 'src/app/model/result/QueryResult';
+import { QueryResult } from 'src/app/model/Result/QueryResult';
 
 @Component({
   selector: 'num-result-simple',

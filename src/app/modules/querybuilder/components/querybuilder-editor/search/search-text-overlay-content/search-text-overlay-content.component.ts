@@ -1,3 +1,4 @@
+/*
 import {
   Component,
   EventEmitter,
@@ -14,9 +15,9 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SearchMode } from '../search-input/search-input.component';
 import { CritType } from '../../../../model/api/query/group';
 import { EnterCriterionListComponent } from '../../edit/enter-criterion-list/enter-criterion-list.component';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
-import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
-import { CategoryEntry, TerminologyEntry } from '../../../../../../model/terminology/Terminology';
+import { Query } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { EditCriterionService } from '../../../../../../service/CriterionService/EditCriterionService.service';
+import { CategoryEntry, TerminologyEntry } from '../../../../../../model/terminology/TerminologyCode';
 
 @Component({
   selector: 'num-search-text-overlay-content',
@@ -113,3 +114,4 @@ export class SearchTextOverlayContentComponent implements OnInit, OnChanges, OnD
     this.switchSearchMode.emit();
   }
 }
+*/

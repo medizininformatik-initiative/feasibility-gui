@@ -1,13 +1,13 @@
+/*
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupPosition } from '../../../../controller/CritGroupArranger';
 import { FeatureService } from 'src/app/service/Feature.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
 import { Subscription } from 'rxjs';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
+import { EditCriterionService } from '../../../../../../service/CriterionService/EditCriterionService.service';
 
 @Component({
   selector: 'num-display-criterion',
@@ -72,6 +72,7 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
    *
    * @returns
    */
+/*
   getAttributeFilters(): AttributeFilter[] {
     if (this.criterion.attributeFilters) {
       if (!this.featureService.useFeatureMultipleValueDefinitions()) {
@@ -86,3 +87,4 @@ export class DisplayCriterionComponent implements OnInit, OnDestroy {
     }
   }
 }
+*/

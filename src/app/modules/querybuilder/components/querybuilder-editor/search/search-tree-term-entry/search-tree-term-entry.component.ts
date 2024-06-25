@@ -1,5 +1,6 @@
+/*
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TerminologyEntry } from 'src/app/model/terminology/Terminology';
+import { TerminologyEntry } from 'src/app/model/terminology/TerminologyCode';
 
 @Component({
   selector: 'num-search-tree-term-entry',
@@ -21,3 +22,4 @@ export class SearchTreeTermEntryComponent implements OnInit {
     this.toggleEvent.emit(this.node);
   }
 }
+*/

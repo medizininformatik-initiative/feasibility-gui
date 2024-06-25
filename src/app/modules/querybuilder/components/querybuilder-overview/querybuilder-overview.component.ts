@@ -1,12 +1,14 @@
+/*
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FeatureProviderService } from '../../service/feature-provider.service';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { QueryProviderService } from '../../service/query-provider.service';
 import { Router } from '@angular/router';
 import { StructuredQuery } from '../../../../model/StructuredQuery/StructuredQuery';
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/StructuredQuery2UIQueryTranslator.service';
-import { AnnotatedStructuredQuery } from '../../../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { AnnotatedStructuredQuery } from '../../../../model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { ValidationService } from '../../../../service/Validation.service';
+import { QueryService } from 'src/app/service/QueryService.service';
 
 @Component({
   selector: 'num-querybuilder-overview',
@@ -18,7 +20,7 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
   actionDisabled: boolean;
 
   constructor(
-    public queryProviderService: QueryProviderService,
+    public queryProviderService: QueryService,
     private router: Router,
     public featureProviderService: FeatureProviderService,
     private changeDetector: ChangeDetectorRef,
@@ -26,7 +28,7 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     private validationService: ValidationService
   ) {}
 
-  query: Query;
+  query: FeasibilityQuery;
 
   fileName: string;
 
@@ -77,3 +79,4 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
   }
 }
+*/

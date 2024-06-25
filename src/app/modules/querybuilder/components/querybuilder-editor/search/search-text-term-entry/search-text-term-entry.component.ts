@@ -1,5 +1,6 @@
+/*
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TerminologyEntry } from 'src/app/model/terminology/Terminology';
+import { TerminologyEntry } from 'src/app/model/Terminology/TerminologyCode';
 
 @Component({
   selector: 'num-search-text-term-entry',
@@ -21,3 +22,4 @@ export class SearchTextTermEntryComponent implements OnInit {
     this.choose.emit(this.node);
   }
 }
+*/
