@@ -1,9 +1,9 @@
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
 import { Injectable } from '@angular/core';
 import { QueryService } from './QueryService.service';
 import { switchMap, tap } from 'rxjs/operators';
-import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
+import { InclusionExclusionService } from './CriteriaService.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,10 @@ export class CriterionService {
     new Map()
   );
 
-  constructor(private queryService: QueryService) {
+  constructor(
+    private queryService: QueryService,
+    private criteriaService: InclusionExclusionService
+  ) {
     this.initCriterionMap();
   }
 
@@ -48,6 +51,24 @@ export class CriterionService {
   }
 
   /**
+   * Sets a criterion for inclusion.
+   *
+   * @param criterion The criterion to set for inclusion
+   */
+  public setCriterionForInclusion(criterion: Criterion): void {
+    this.criteriaService.setCriterionByUIDAndType(criterion, 'inclusion');
+  }
+
+  /**
+   * Sets a criterion for exclusion.
+   *
+   * @param criterion The criterion to set for exclusion
+   */
+  public setCriterionForExclusion(criterion: Criterion): void {
+    this.criteriaService.setCriterionByUIDAndType(criterion, 'exclusion');
+  }
+
+  /**
    * Deletes a criterion by its UID from the map.
    *
    * @param uid The unique ID of the criterion to delete
@@ -70,27 +91,26 @@ export class CriterionService {
             this.criterionUIDMap.clear();
           },
         }),
-        switchMap((feasibilityQuery: FeasibilityQuery) => {
-          const inclusionCriteriaGroups = feasibilityQuery.getInclusionCriteria();
-          const exclusionCriteriaGroups = feasibilityQuery.getExclusionCriteria();
-          const allCriteriaGroups = [...inclusionCriteriaGroups, ...exclusionCriteriaGroups];
-          allCriteriaGroups.forEach((criteriaGroup: Criterion[]) => {
-            criteriaGroup.forEach((criteria) => {
-              if (criteria.getUniqueID()) {
-                this.criterionUIDMap.set(criteria.getUniqueID(), criteria);
-              }
+        switchMap((feasibilityQuery) => feasibilityQuery.groups),
+        tap({
+          next: (group) => {
+            ;['inclusion', 'exclusion'].forEach((type) => {
+              group[type + 'Criteria'].forEach((criteriaArray: Criterion[]) => {
+                criteriaArray.forEach((criteria) => {
+                  if (criteria.getUniqueID()) {
+                    this.criterionUIDMap.set(criteria.getUniqueID(), criteria);
+                  }
+                });
+              });
             });
-          });
-          return of(null);
+          },
         })
       )
       .subscribe({
         next: () => {
           this.criterionUIDMapSubject.next(this.criterionUIDMap);
         },
-        error: (error) => {
-          console.error('Error updating criterion map:', error);
-        },
-      });
+      })
+      .unsubscribe();
   }
 }
