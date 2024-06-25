@@ -1,37 +1,57 @@
-import { AbstractTermHashContext } from './AbstractTermHashContext';
+import { AbstractListEntry } from './AbstractListEntry';
 
 /**
- * Represents an abstract search result, extending AbstractTermHashContext.
+ * Represents a search term list item, extending AbstractSearchResult.
+ *
+ * @see AbstractSearchResult
  */
-export abstract class AbstractSearchResult extends AbstractTermHashContext {
-  availability: number;
-  terminology: string;
-  termcode: string;
-  kdsModule: string;
-
+export class SearchTermListEntry extends AbstractListEntry {
+  private selectable = true;
+  private availability: number;
+  private terminology: string;
+  private termcode: string;
+  private kdsModule: string;
   /**
-   * Constructs a new AbstractSearchResult instance.
    *
-   * @param availability - The availability of the term.
-   * @param terminology - The terminology of the term.
-   * @param termcode - The term code.
-   * @param kdsModule - The KDS module.
+   * @param availability
+   * @param selectable
+   * @param terminology
+   * @param termcode
+   * @param kdsModule
    * @param name
    * @param id
    */
   constructor(
-    name: string,
-    id: string,
     availability: number,
+    selectable: boolean,
     terminology: string,
     termcode: string,
-    kdsModule: string
+    kdsModule: string,
+    name: string,
+    id: string
   ) {
     super(name, id);
     this.availability = availability;
     this.terminology = terminology;
     this.termcode = termcode;
     this.kdsModule = kdsModule;
+    this.selectable = selectable;
+  }
+
+  /**
+   *
+   * @returns if the Item is selectable
+   */
+  getSelectable() {
+    return this.selectable;
+  }
+
+  /**
+   *
+   * @param isSelectable
+   */
+  setSelectable(isSelectable: boolean) {
+    this.selectable = isSelectable;
   }
 
   /**
