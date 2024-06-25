@@ -61,7 +61,9 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     this.validationService
       .validateStructuredQuery(this.importQuery)
       .subscribe((annotatedStructuredQuery) => {
-        this.translateAnnotatedStructuredQuery(annotatedStructuredQuery);
+        setTimeout(() => {
+          this.translateAnnotatedStructuredQuery(annotatedStructuredQuery);
+        }, 100);
       });
   }
 
