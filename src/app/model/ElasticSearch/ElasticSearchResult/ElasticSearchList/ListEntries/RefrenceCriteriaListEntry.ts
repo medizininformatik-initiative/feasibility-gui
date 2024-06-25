@@ -1,7 +1,7 @@
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { AbstractListEntry } from './AbstractListEntry';
 
-export class RefrenceCriteriaListEntry extends AbstractListEntry {
+export class ReferenceCriteriaListEntry extends AbstractListEntry {
   private terminologyCode: TerminologyCode;
 
   /**

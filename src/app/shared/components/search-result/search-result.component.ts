@@ -7,8 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { BackendService } from '../../../modules/querybuilder/service/backend.service';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
+import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
   isOpen = false;
 
   constructor(
-    private listItemService: SearchResultListItemSelectionService,
+    private listItemService: SearchResultListItemSelectionService<SearchTermListEntry>,
     private cdr: ChangeDetectorRef
   ) {}
 

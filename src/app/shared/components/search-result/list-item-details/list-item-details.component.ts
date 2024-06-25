@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 import { Entries } from 'src/app/model/ElasticSearch/Entrie';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
@@ -24,7 +24,7 @@ export class ListItemDetailsComponent implements OnInit {
 
   entries: Observable<Entries>;
   constructor(
-    private listItemService: SearchResultListItemSelectionService,
+    private listItemService: SearchResultListItemSelectionService<SearchTermListEntry>,
     private elasticSearchService: ElasticSearchService
   ) {}
 
