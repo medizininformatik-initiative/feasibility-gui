@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/co
 import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
 import { Observable, Subscription, take } from 'rxjs';
 import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 
 @Component({
   selector: 'num-stage',
@@ -19,7 +19,7 @@ export class PreStageComponent implements OnInit, OnDestroy {
   addedToStage = false;
 
   constructor(
-    private listItemSelectionService: SearchResultListItemSelectionService,
+    private listItemSelectionService: SearchResultListItemSelectionService<SearchTermListEntry>,
     private criterionService: CreateCriterionService
   ) {}
 

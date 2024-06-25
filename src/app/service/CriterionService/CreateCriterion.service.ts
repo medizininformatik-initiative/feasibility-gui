@@ -1,24 +1,19 @@
-//import { AnnotatedStructuredQueryIssue } from '../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQueryIssue';
+import { AttributeDefinitions } from 'src/app/model/AttributeDefinitions';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionHashService } from './CriterionHash.service';
 import { CriterionService } from '../CriterionService.service';
-//import { CritGroupPosition } from 'src/app/modules/querybuilder/controller/CritGroupArranger';
 import { FeatureService } from '../Feature.service';
+import { finalize, of, switchMap, take } from 'rxjs';
 import { Injectable } from '@angular/core';
-//import { LoadUIProfileService } from '../LoadUIProfile.service';
-import { finalize, Observable, of, Subject, switchMap, take } from 'rxjs';
+import { QuantityUnit } from 'src/app/model/QuantityUnit';
 import { SearchResultListItemSelectionService } from '../ElasticSearch/SearchTermListItemService.service';
-//import { TerminologyCode, TerminologyEntry } from 'src/app/model/terminology/TerminologyCode';
-import { TimeRestriction } from 'src/app/model/FeasibilityQuery/TimeRestriction';
-import { AttributeDefinitions } from 'src/app/model/AttributeDefinitions';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { QuantityUnit } from 'src/app/model/QuantityUnit';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
+import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
 
 @Injectable({
   providedIn: 'root',
@@ -31,29 +26,21 @@ export class CreateCriterionService {
     private featureService: FeatureService,
     //private UiProfileService: LoadUIProfileService,
     private backend: BackendService,
-    private listItemService: SearchResultListItemSelectionService,
+    private listItemService: SearchResultListItemSelectionService<InterfaceListEntry>,
     private criterionService: CriterionService
   ) {}
 
   public translateListItemsToCriterions() {
-    this.listItemService
-      .getSelectedSearchResultListItems()
-      .pipe(take(1))
-      .subscribe((listItems) => {
-        listItems.forEach((listItem) => {
-          this.ids.add(listItem.getId());
-        });
-        this.getCriteriaProfileData();
-      });
+    this.getCriteriaProfileData(this.listItemService.getIds());
   }
 
   /**
    * @todo check if ids exceed 50 --> if so send second request and so on
    * due to url length
    */
-  public getCriteriaProfileData() {
+  public getCriteriaProfileData(ids: Array<string>) {
     this.backend
-      .getCriteriaProfileData(Array.from(this.ids))
+      .getCriteriaProfileData(ids)
       .pipe(
         switchMap((responses: any[]) => {
           const criteriaProfileDataArray = responses.map((response) => {
