@@ -1,7 +1,40 @@
 # Changelog
 
 
-## v5.0.0-alpha.3 (2024-06-25)
+## v5.0.0 (2024-06-25)
+
+
+### Changed
+* Custom Internal Data Format for Structured Queries:
+  -	Developed an internal data format specifically for Structured Queries, a data representation developed by our team.
+* Improved Data Model Structure:
+  -	Restructured the data model for better representation of Structured Queries through class and folder organization.
+* Utilization of Abstract Classes and General Concepts:
+  -	Incorporated abstract classes and general concepts into the data model for improved versatility.
+* Simplified Attribute and Value Filter Types:
+  -	Cleaned up attribute and value filter types for easier use.
+* Type Checking Service Implementation:
+  -	Added a service to perform type validation checks for attribute and value filter types.
+* Structured Query Translation Service
+  -	New translation services for translating UI query model to Structured Query and backwards for loading and import
+* Structured Query validation:
+  -	Uploaded Structured Queries gets validated
+  -	Validation process changed for more precise information, which part of the structured query is corrupt
+* Further Improvement of Data Model Structure
+* New Services for Data Handling:
+  -	Add new services for providing and handling queries, criteria and references
+* Reduce Data Transfer between Components:
+  -	Reduce the data transfer between Angular components by implementing services for data handling
+* Update nginx base image to fix vulnerabilities
+
+### Bugfix
+* Update overall count on detail update ([#175](https://github.com/medizininformatik-initiative/feasibility-gui/issues/175))
+* Fix logic switch on reference criteria
+* Fix attributes and time-restrictions on referenced criteria when loading from template
+* Add referencedCriteria correctly to selectedCriteria when loading or importing a query
+
+
+## v5.0.0-alpha.3 (2024-06-26)
 
 ### Bugfix
 * Add referencedCriteria correctly to selectedCriteria when loading or importing a query
