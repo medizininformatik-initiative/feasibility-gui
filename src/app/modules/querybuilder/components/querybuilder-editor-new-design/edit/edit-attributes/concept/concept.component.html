@@ -1,4 +1,9 @@
 <div fxLayout="column" class="container">
   <num-searchbar (searchTextChange)="startElasticSearch($event)"></num-searchbar>
-  <num-result-list></num-result-list>
+  <num-result-list
+    *ngIf="listItems.length > 0 && adaptedData"
+    [tableData]="adaptedData"
+    [searchTermResultList]="listItems"
+    [keysToSkip]="['version']"
+  ></num-result-list>
 </div>

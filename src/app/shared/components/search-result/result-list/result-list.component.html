@@ -1,4 +1,4 @@
-<table class="table-collapse">
+<table *ngIf="searchTermResultList.length > 0" class="table-collapse">
   <thead class="table-header sticky-header">
     <tr>
       <th *ngFor="let column of columnsToDisplay">
@@ -21,7 +21,6 @@
         <div fxLayout="row" fxLayoutAlign="start center">
           <mat-checkbox
             *ngIf="column === 'name'"
-            [disabled]="!listItem.getSelectable()"
             [checked]="isSelected(listItem)"
             type="checkbox"
             (change)="selectCheckbox($event, listItem)"
@@ -29,6 +28,47 @@
           ></mat-checkbox>
           <div [ngClass]="{ 'name-column': column === 'name', 'info-column': column !== 'name' }">
             {{ listItem[column] }}
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table *ngIf="tableData" class="table-collapse">
+  <thead class="table-header sticky-header">
+    <tr>
+      <th *ngFor="let headerItem of tableData.header.headers">
+        <div fxLayout="row" fxLayoutAlign="start center" class="header-column">
+          {{ 'SHAREDCOMPONENTS.' + headerItem | translate }}
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="overflow-control">
+    <tr
+      *ngFor="let row of tableData.body.rows; let i = index"
+      (click)="onRowSelect(listItems[i])"
+      class="table-border height-3-rem table-row-hover"
+    >
+      <td
+        *ngFor="let cell of row; let j = index"
+        [ngClass]="{ 'table-row-text-color': columnsToDisplay[j] !== 'name' }"
+      >
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <mat-checkbox
+            *ngIf="columnsToDisplay[j] === 'name'"
+            [checked]="isSelected(listItems[i])"
+            (change)="selectCheckbox($event, listItems[i])"
+            (click)="$event.stopPropagation()"
+          ></mat-checkbox>
+          <div
+            [ngClass]="{
+              'name-column': columnsToDisplay[j] === 'name',
+              'info-column': columnsToDisplay[j] !== 'name'
+            }"
+          >
+            {{ cell }}
           </div>
         </div>
       </td>

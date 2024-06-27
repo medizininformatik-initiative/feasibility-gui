@@ -17,6 +17,7 @@ import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
 import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { encode } from 'punycode';
 //import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 @Injectable({
   providedIn: 'root',
@@ -27,9 +28,8 @@ export class BackendService {
     private feature: FeatureService,
     //private queryProviderService: QueryProviderService,
     private http: HttpClient,
-    private authStorage: OAuthStorage //private apiTranslator: UIQuery2StructuredQueryTranslatorService,
-  ) //private latestQueryResult: QueryProviderService
-  {}
+    private authStorage: OAuthStorage //private apiTranslator: UIQuery2StructuredQueryTranslatorService, //private latestQueryResult: QueryProviderService
+  ) {}
 
   public static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
   private static PATH_ROOT_ENTRIES = 'terminology/categories';
@@ -111,7 +111,7 @@ export class BackendService {
    * @returns
    * offset optional?
    */
-  public getElasticSearchResults(
+  public getElasticSearchResultsForCriteria(
     searchString: string,
     url?: string,
     context?: string,
@@ -127,7 +127,6 @@ export class BackendService {
     const availabilityParameter = availability ? '&availability=' + availability : '';
     const limitParameter = limit ? '&pageSize=' + limit : '';
     const offsetParameter = offset ? '&page=' + offset : '';
-    const urlParameter = url ? '&criteriaSets=' + encodeURI(url) : '';
     return this.http.get<{ totalHits: number; results: any[] }>(
       this.createUrl(
         BackendService.PATH_TERMINOLOGY_SEARCH +
@@ -138,21 +137,20 @@ export class BackendService {
           kdsParameter +
           availabilityParameter +
           limitParameter +
-          offsetParameter +
-          urlParameter
+          offsetParameter
       )
     );
   }
 
-  public getElasticSearchResultsConcept(
+  public getElasticSearchResultsForCodeableConcept(
     searchString: string,
-    url?: string,
+    valueSets: string[],
     limit?: number,
     offset?: number
   ): Observable<{ totalHits: number; results: any[] }> {
     const limitParameter = limit ? '&pageSize=' + limit : '';
     const offsetParameter = offset ? '&page=' + offset : '';
-    const urlParameter = url ? '&valueSets=' + encodeURI(url) : '';
+    const encodedCommaSeperatedValueSets = '&valueSets' + encodeURI(valueSets.join(','));
     return this.http.get<{ totalHits: number; results: any[] }>(
       this.createUrl(
         BackendService.PATH_TERMINOLOGY_SEARCH_CONCEPT +
@@ -160,7 +158,28 @@ export class BackendService {
           searchString +
           limitParameter +
           offsetParameter +
-          urlParameter
+          encodedCommaSeperatedValueSets
+      )
+    );
+  }
+
+  public getElasticSearchResultsForCriteriaSets(
+    searchString: string,
+    criteriaSets: string[],
+    limit?: number,
+    offset?: number
+  ): Observable<{ totalHits: number; results: any[] }> {
+    const limitParameter = limit ? '&pageSize=' + limit : '';
+    const offsetParameter = offset ? '&page=' + offset : '';
+    const encodedCommaSeperatedCriteriaSets = '&criteriaSets' + encodeURI(criteriaSets.join(','));
+    return this.http.get<{ totalHits: number; results: any[] }>(
+      this.createUrl(
+        BackendService.PATH_TERMINOLOGY_SEARCH +
+          '?searchterm=' +
+          searchString +
+          limitParameter +
+          offsetParameter +
+          encodedCommaSeperatedCriteriaSets
       )
     );
   }

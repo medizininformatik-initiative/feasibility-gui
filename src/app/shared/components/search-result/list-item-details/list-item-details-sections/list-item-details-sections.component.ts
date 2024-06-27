@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 
 @Component({
@@ -11,7 +11,9 @@ import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearc
 export class ListItemDetailsSectionsComponent implements OnInit {
   @Input() listItemDetails: any;
 
-  constructor(private elasticSearchService: ElasticSearchService<SearchTermListEntry>) {}
+  constructor(
+    private elasticSearchService: ElasticSearchService<SearchTermResultList, SearchTermListEntry>
+  ) {}
 
   ngOnInit() {}
 
