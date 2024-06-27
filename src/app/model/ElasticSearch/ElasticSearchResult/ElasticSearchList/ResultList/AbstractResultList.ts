@@ -1,4 +1,6 @@
-export abstract class AbstractResultList<T> {
+import { InterfaceResultList } from './InterfaceResultList';
+
+export abstract class AbstractResultList<T> implements InterfaceResultList<T> {
   totalHits: number;
   results: Array<T>;
 
