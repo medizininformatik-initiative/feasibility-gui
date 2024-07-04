@@ -1,43 +1,46 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
 import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SearchResultListItemSelectionService<T extends InterfaceListEntry> {
-  private selectedSearchResultListItemSource = new BehaviorSubject<T | null>(null);
-  private selectedSearchResultListItemsSource = new BehaviorSubject<T[]>([]);
+export class SelectedTableItemsService<T extends InterfaceListEntry> {
+  private selectedTableItemSource = new BehaviorSubject<T | null>(null);
+  private selectedTableItemsSource = new BehaviorSubject<T[]>([]);
   private ids: Set<string> = new Set<string>();
 
   /**
-   * Sets the current selected search term result item
-   * This function is made for calling the details when a row is selected
+   * Sets the current selected table item.
    *
-   * @todo needs to be renamed
-   *
-   * @param item The ListEntry to be set as selected.
+   * @param item The table row data to be set as selected.
    */
-  public setSelectedSearchResultListItem(item: T): void {
-    this.selectedSearchResultListItemSource.next(item);
+  public setSelectedTableItem(item: T): void {
+    this.selectedTableItemSource.next(item);
+    this.addToSelection(item);
   }
 
   /**
-   * Gets the currently selected search term result item as an observable.
+   * Gets the currently selected table item as an observable.
    *
-   * @returns An Observable of the currently selected ListEntry.
+   * @returns An Observable of the currently selected table row data.
    */
-  public getSelectedSearchResultListItem(): Observable<T | null> {
-    return this.selectedSearchResultListItemSource.asObservable();
+  public getSelectedTableItem(): Observable<T | null> {
+    return this.selectedTableItemSource.asObservable();
   }
 
   /**
-   * Gets the list of all selected search term result items as an observable.
+   * Gets the list of all selected table items as an observable.
    *
-   * @returns An Observable of an array of selected ListEntry.
+   * @returns An Observable of an array of selected table row data.
    */
-  public getSelectedSearchResultListItems(): Observable<T[]> {
-    return this.selectedSearchResultListItemsSource.asObservable();
+  public getSelectedTableItems(): Observable<T[]> {
+    return this.selectedTableItemsSource.asObservable();
+  }
+
+  public getCurrentSelectedTableItem(): T | null {
+    return this.selectedTableItemSource.getValue();
   }
 
   /**
@@ -45,39 +48,40 @@ export class SearchResultListItemSelectionService<T extends InterfaceListEntry> 
    *
    * @returns An array of IDs.
    */
-  public getIds(): string[] {
+  public getSelectedIds(): string[] {
     return Array.from(this.ids);
   }
 
   /**
-   * Adds a search term result item to the current selection if it is not already included.
+   * Adds a table row data item to the current selection if it is not already included.
    *
-   * @param item The ListEntry to be added to the selection.
+   * @param item The table row data to be added to the selection.
    */
-  public addSearchResultListItemToSelection(item: T): void {
-    const currentSelection = this.selectedSearchResultListItemsSource.getValue();
-    if (!currentSelection.includes(item)) {
-      this.selectedSearchResultListItemsSource.next([...currentSelection, item]);
-      this.ids.add(item.getId());
+  public addToSelection(item: T): void {
+    const currentSelection = this.selectedTableItemsSource.getValue();
+    if (!currentSelection.some((entry) => entry.id === item.id)) {
+      this.selectedTableItemsSource.next([...currentSelection, item]);
+      this.ids.add(item.id);
     }
   }
 
   /**
-   * Removes a search term result item from the current selection.
+   * Removes a table row data item from the current selection.
    *
-   * @param item The ListEntry to be removed from the selection.
+   * @param item The table row data to be removed from the selection.
    */
-  public removeSearchResultListItemFromSelection(item: T): void {
-    const currentSelection = this.selectedSearchResultListItemsSource.getValue();
-    this.selectedSearchResultListItemsSource.next(
-      currentSelection.filter((resultItem) => resultItem !== item)
-    );
+  public removeFromSelection(item: T): void {
+    const currentSelection = this.selectedTableItemsSource.getValue();
+    const updatedSelection = currentSelection.filter((entry) => entry.id !== item.id);
+    this.selectedTableItemsSource.next(updatedSelection);
+    this.ids.delete(item.id);
   }
 
   /**
-   * Clears the current selection of all search term result items.
+   * Clears the current selection of all table row data items.
    */
   public clearSelection(): void {
-    this.selectedSearchResultListItemsSource.next([]);
+    this.selectedTableItemsSource.next([]);
+    this.ids.clear();
   }
 }
