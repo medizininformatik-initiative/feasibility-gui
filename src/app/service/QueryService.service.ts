@@ -38,7 +38,6 @@ export class QueryService {
   public setFeasibilityQuery(feasibilityQuery: FeasibilityQuery): void {
     this.storage.set(this.STORAGE_QUERY_KEY, feasibilityQuery);
     this.feasibilityQuery.next(feasibilityQuery);
-    console.log(this.feasibilityQuery);
   }
 
   /**
