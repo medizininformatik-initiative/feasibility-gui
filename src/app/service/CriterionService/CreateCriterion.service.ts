@@ -5,15 +5,14 @@ import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProf
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionHashService } from './CriterionHash.service';
 import { CriterionService } from '../CriterionService.service';
-import { FeatureService } from '../Feature.service';
 import { finalize, of, switchMap, take } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
-import { SearchResultListItemSelectionService } from '../ElasticSearch/SearchTermListItemService.service';
+import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemService.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 
 @Injectable({
   providedIn: 'root',
@@ -23,15 +22,13 @@ export class CreateCriterionService {
 
   constructor(
     private criterionHashService: CriterionHashService,
-    private featureService: FeatureService,
-    //private UiProfileService: LoadUIProfileService,
     private backend: BackendService,
-    private listItemService: SearchResultListItemSelectionService<InterfaceListEntry>,
+    private listItemService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionService: CriterionService
   ) {}
 
   public translateListItemsToCriterions() {
-    this.getCriteriaProfileData(this.listItemService.getIds());
+    this.getCriteriaProfileData(this.listItemService.getSelectedIds());
   }
 
   /**
@@ -154,12 +151,14 @@ export class CreateCriterionService {
     const context = criteriaProfileData.getContext();
     const termCodes = criteriaProfileData.getTermCodes();
     const display = criteriaProfileData.getTermCodes()[0].getDisplay();
+    const criterionHash = this.criterionHashService.createHash(context, termCodes[0]);
+    const uniqueId = uuidv4();
 
     return {
       context,
-      criterionHash: this.criterionHashService.createHash(context, termCodes[0]),
+      criterionHash,
       display,
-      isInvalid: false,
+      isInvalid: true,
       uniqueID: uuidv4(),
       termCodes,
     };
