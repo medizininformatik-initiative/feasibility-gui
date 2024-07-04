@@ -6,7 +6,6 @@ import { DisplayCriteriaGroupComponent } from './components/querybuilder-editor-
 import { DisplayGroupComponent } from './components/querybuilder-editor-new-design/criteria/display-criteria-group/display-group/display-group.component';
 import { DisplayTimeRestrictionComponent } from './components/querybuilder-editor/display/display-time-restriction/display-time-restriction.component';
 import { EditCriterionModalComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-criterion-modal.component';
-import { EditTimeRestrictionComponent } from './components/querybuilder-editor/edit/edit-time-restriction/edit-time-restriction.component';
 import { EditValueFilterConceptLineComponent } from './components/querybuilder-editor/edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { LayoutModule } from 'src/app/layout/layout.module';
@@ -35,6 +34,9 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { EditReferenceCriteriaModalComponent } from './components/querybuilder-editor-new-design/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
+import { EditTimeRestrictionComponent } from './components/querybuilder-editor-new-design/edit/edit-time-restriction/edit-time-restriction.component';
+import { BeforeFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-time-restriction/before-filter/before-filter.component';
+import { BetweenFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-time-restriction/between-filter/between-filter.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -73,6 +75,8 @@ export const FORMATS_GERMAN = {
     QuantityRangeComponent,
     QuantityComparatorComponent,
     ConceptComponent,
+    BeforeFilterComponent,
+    BetweenFilterComponent,
   ],
   imports: [
     CommonModule,

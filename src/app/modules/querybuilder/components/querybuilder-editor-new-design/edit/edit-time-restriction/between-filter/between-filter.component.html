@@ -1,0 +1,24 @@
+<mat-form-field class="form-field-from" appearance="outline">
+  <mat-label>{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.FROM' | translate }}</mat-label>
+  <mat-label>{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.' + betweenFilter.type | translate }}</mat-label>
+  <input
+    matInput
+    [matDatepicker]="dateStartPicker"
+    [(ngModel)]="beforeDate"
+    (dateChange)="onBeforeDateChange($event)"
+  />
+  <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
+  <mat-datepicker #dateStartPicker></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field class="form-field-to" appearance="outline">
+  <mat-label>{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.TO' | translate }}</mat-label>
+  <input
+    matInput
+    [matDatepicker]="dateEndPicker"
+    [(ngModel)]="afterDate"
+    (dateChange)="onAfterDateChange($event)"
+  />
+  <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
+  <mat-datepicker #dateEndPicker></mat-datepicker>
+</mat-form-field>
