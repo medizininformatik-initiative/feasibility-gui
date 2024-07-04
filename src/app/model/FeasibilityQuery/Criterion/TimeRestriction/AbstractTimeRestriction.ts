@@ -6,6 +6,7 @@ import { TimeRestrictionType } from '../../TimeRestriction';
 export abstract class AbstractTimeRestriction {
   beforeDate?: string;
   afterDate?: string;
+  type: TimeRestrictionType;
 
   /**
    * Creates an instance of AbstractTimeRestriction.
