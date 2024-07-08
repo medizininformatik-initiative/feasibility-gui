@@ -1,13 +1,48 @@
-<div class="container">
+<div class="container" *ngIf="quantityFilter">
   <mat-expansion-panel togglePosition="before" [expanded]="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{ 'QUERYBUILDER.EDIT.VALUE' | translate }}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <div>
-      <num-quantity-range></num-quantity-range>
-      <num-quantity-comparator></num-quantity-comparator>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-form-field appearance="outline" class="operator-part">
+        <!--<mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>-->
+        <mat-select>
+          <mat-option
+            *ngFor="let option of quantityFilterOptionsArray"
+            [value]="option"
+            (click)="selectQuantityFilterOption(option)"
+          >
+            {{ 'QUERYBUILDER.EDIT.' + option | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-container *ngIf="selectedQuantityFilterOption === QuantityFilterOption.BETWEEN">
+        <num-quantity-range></num-quantity-range>
+      </ng-container>
+      <ng-container
+        *ngIf="
+          selectedQuantityFilterOption !== QuantityFilterOption.BETWEEN &&
+          selectedQuantityFilterOption !== QuantityFilterOption.NONE
+        "
+      >
+        <num-quantity-comparator></num-quantity-comparator>
+      </ng-container>
+      <mat-form-field
+        *ngIf="selectedQuantityFilterOption !== QuantityFilterOption.NONE"
+        appearance="outline"
+        class="operator-part"
+      >
+        <mat-select>
+          <mat-option
+            *ngFor="let unit of quantityFilter.getAllowedUnits()"
+            [value]="unit.getDisplay()"
+          >
+            {{ unit.display }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </mat-expansion-panel>
 </div>
