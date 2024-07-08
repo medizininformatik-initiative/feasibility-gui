@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 
-import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 
-export const MY_DATE_FORMATS: MatDateFormats = {
+export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'DD.MM.YYYY',
   },
@@ -35,11 +35,11 @@ export class BetweenFilterComponent implements OnChanges {
 
   onBeforeDateChange(event: any) {
     this.beforeDate = event.value;
-    this.betweenFilter.setBeforeDate(this.beforeDate); // Assuming such a method exists
+    this.betweenFilter.setBeforeDate(this.beforeDate);
   }
 
   onAfterDateChange(event: any) {
     this.afterDate = event.value;
-    this.betweenFilter.setAfterDate(this.afterDate); // Assuming such a method exists
+    this.betweenFilter.setAfterDate(this.afterDate);
   }
 }
