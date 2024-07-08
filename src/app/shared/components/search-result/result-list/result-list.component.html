@@ -1,40 +1,3 @@
-<table *ngIf="searchTermResultList.length > 0" class="table-collapse">
-  <thead class="table-header sticky-header">
-    <tr>
-      <th *ngFor="let column of columnsToDisplay">
-        <div fxLayout="row" fxLayoutAlign="start center" class="header-column">
-          {{ 'SHAREDCOMPONENTS.' + column | translate }}
-        </div>
-      </th>
-    </tr>
-  </thead>
-  <tbody class="overflow-control">
-    <tr
-      *ngFor="let listItem of searchTermResultList"
-      (click)="onRowSelect(listItem)"
-      class="table-border height-3-rem table-row-hover"
-    >
-      <td
-        *ngFor="let column of columnsToDisplay"
-        [ngClass]="{ 'table-row-text-color': column !== 'name' }"
-      >
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <mat-checkbox
-            *ngIf="column === 'name'"
-            [checked]="isSelected(listItem)"
-            type="checkbox"
-            (change)="selectCheckbox($event, listItem)"
-            (click)="$event.stopPropagation()"
-          ></mat-checkbox>
-          <div [ngClass]="{ 'name-column': column === 'name', 'info-column': column !== 'name' }">
-            {{ listItem[column] }}
-          </div>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 <table *ngIf="tableData" class="table-collapse">
   <thead class="table-header sticky-header">
     <tr>
@@ -48,18 +11,19 @@
   <tbody class="overflow-control">
     <tr
       *ngFor="let row of tableData.body.rows; let i = index"
-      (click)="onRowSelect(listItems[i])"
+      [ngClass]="{ 'clickable-row': row.isClickable }"
       class="table-border height-3-rem table-row-hover"
     >
       <td
-        *ngFor="let cell of row; let j = index"
+        *ngFor="let cell of row.data; let j = index"
+        (click)="onRowClick(row)"
         [ngClass]="{ 'table-row-text-color': columnsToDisplay[j] !== 'name' }"
       >
         <div fxLayout="row" fxLayoutAlign="start center">
           <mat-checkbox
-            *ngIf="columnsToDisplay[j] === 'name'"
-            [checked]="isSelected(listItems[i])"
-            (change)="selectCheckbox($event, listItems[i])"
+            *ngIf="row.hasCheckbox && row.checkboxColumnIndex === j"
+            [checked]="isSelected(row)"
+            (change)="onCheckboxSelect(row)"
             (click)="$event.stopPropagation()"
           ></mat-checkbox>
           <div
