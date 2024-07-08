@@ -1,8 +1,4 @@
-<div
-  cdkDropListGroup
-  fxFlexFill
-  *ngIf="($criteriaArray | async)?.length > 0 || ($feasibilityQuery | async)?.length > 0"
->
+<div cdkDropListGroup fxFlexFill>
   >
   <div>
     <p style="font-size: xx-large">Criteria</p>
@@ -15,3 +11,4 @@
   </div>
   <num-display-criteria-group style="height: 400px"> </num-display-criteria-group>
 </div>
+<!--*ngIf="($criteriaArray | async)?.length > 0 || ($feasibilityQuery | async)?.length > 0"-->
