@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
 import { Observable, Subscription, take } from 'rxjs';
-import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
 
 @Component({
   selector: 'num-stage',
@@ -19,15 +20,15 @@ export class PreStageComponent implements OnInit, OnDestroy {
   addedToStage = false;
 
   constructor(
-    private listItemSelectionService: SearchResultListItemSelectionService<SearchTermListEntry>,
+    private listItemSelectionService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionService: CreateCriterionService
   ) {}
 
   ngOnInit() {
-    this.$listItemArray = this.listItemSelectionService.getSelectedSearchResultListItems();
+    this.$listItemArray = this.listItemSelectionService.getSelectedTableItems();
     this.listItemSubscription = this.$listItemArray.subscribe((listItems) => {
       const length = listItems.length;
-      if (length > 0) {
+      if (length >= 0) {
         this.preservedLength = length;
         this.addedToStage = false;
       }
