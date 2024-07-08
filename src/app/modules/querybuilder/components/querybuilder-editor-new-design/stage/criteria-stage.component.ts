@@ -4,6 +4,7 @@ import { CriterionService } from 'src/app/service/CriterionService.service';
 import { map, Observable, of, Subscription } from 'rxjs';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { QueryService } from 'src/app/service/QueryService.service';
+import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 
 @Component({
   selector: 'num-criteria',
@@ -13,8 +14,8 @@ import { QueryService } from 'src/app/service/QueryService.service';
 export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   public $criterionUIDMap: Observable<Map<string, Criterion>>;
   public $criteriaArray: Observable<Criterion[]> = of([]);
+
   private subscription: Subscription;
-  $feasibilityQuery: Observable<FeasibilityQuery>;
 
   constructor(
     public elementRef: ElementRef,
@@ -24,8 +25,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit() {
-    this.getCriterionUIDMap();
-    this.getFeasibilityQuery();
+    this.getCriterionArray();
     this.subscribeToCriterionUIDMap();
   }
 
@@ -35,20 +35,33 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  getCriterionUIDMap() {
+  /**
+   * Need to build a new criterion from Map for each item in order to trigger change detection
+   * Need a better solution...
+   */
+  getCriterionArray() {
     this.$criterionUIDMap = this.criterionProviderService.getCriterionUIDMap();
     this.$criteriaArray = this.$criterionUIDMap.pipe(
-      map((criterionMap: Map<string, Criterion>) => Array.from(criterionMap.values()))
+      map((criterionMap: Map<string, Criterion>) => Array.from(criterionMap.values()).map((criterion) => new CriterionBuilder({
+            context: criterion.getContext(),
+            criterionHash: criterion.getCriterionHash(),
+            display: criterion.getDisplay(),
+            isInvalid: criterion.getIsInvalid(),
+            uniqueID: criterion.getUniqueID(),
+            termCodes: criterion.getTermCodes(),
+          })
+            .withAttributeFilters(criterion.getAttributeFilters())
+            .withPosition(criterion.getPosition())
+            .withTimeRestriction(criterion.getTimeRestriction())
+            .withValueFilters(criterion.getValueFilters()[0])
+            .buildCriterion()))
     );
-  }
-
-  getFeasibilityQuery() {
-    this.$feasibilityQuery = this.queryProviderService.getFeasibilityQuery().pipe();
   }
 
   subscribeToCriterionUIDMap(): void {
     this.subscription = this.$criterionUIDMap.subscribe(() => {
       this.changeDetectorRef.detectChanges();
+      this.getCriterionArray();
     });
   }
 }
