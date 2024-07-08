@@ -1,8 +1,17 @@
 <div class="container">
   {{ criterion.getTermCodes()[0].getDisplay() }}
-  <num-concept></num-concept>
+  <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+    <num-concept [attributeFilter]="attributeFilter"></num-concept>
+    <num-quantity></num-quantity>
+  </div>
+  <div *ngFor="let valueFilter of criterion.getValueFilters()">
+    <num-quantity [quantityFilter]="valueFilter.getQuantity()"></num-quantity>
+  </div>
   <num-edit-time-restriction
     [timeRestriction]="criterion.getTimeRestriction()"
   ></num-edit-time-restriction>
-  <num-quantity></num-quantity>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-raised-button class="select-button" (click)="saveCriterion()">Auswählen</button>
+    <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>
+  </div>
 </div>

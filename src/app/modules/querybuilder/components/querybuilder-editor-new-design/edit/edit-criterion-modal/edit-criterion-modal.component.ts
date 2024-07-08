@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 export class EnterCriterionListComponentData {
   criterion: Criterion;
@@ -13,12 +14,21 @@ export class EnterCriterionListComponentData {
 })
 export class EditCriterionModalComponent implements OnInit {
   criterion: Criterion;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
-    private dialogRef: MatDialogRef<EditCriterionModalComponent, void>
+    private dialogRef: MatDialogRef<EditCriterionModalComponent, Criterion>
   ) {}
 
   ngOnInit() {
     this.criterion = this.data.criterion;
+  }
+
+  saveCriterion() {
+    this.dialogRef.close(this.criterion);
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }
