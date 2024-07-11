@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FilterTypes } from 'src/app/model/FilterTypes';
 
 @Component({
@@ -8,4 +8,15 @@ import { FilterTypes } from 'src/app/model/FilterTypes';
 })
 export class QuantityRangeComponent {
   FilterTypes: typeof FilterTypes = FilterTypes;
+
+  @Output()
+  quantityValues: EventEmitter<{ min: number; max: number }> = new EventEmitter();
+
+  minValue: number;
+  maxValue: number;
+
+  emitValues() {
+    const values = { min: this.minValue, max: this.maxValue };
+    this.quantityValues.emit(values);
+  }
 }
