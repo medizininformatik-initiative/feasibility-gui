@@ -1,15 +1,13 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
+import { CodeableConceptResultListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/CodeableConceptResultListEntry';
+import { Component, Input, OnInit } from '@angular/core';
+import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
+import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
 import { Observable, of } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
-import { CodeableConceptResultListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/CodeableConceptResultListEntry';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
-import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
-import { InterfaceResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/InterfaceResultList';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { Entries } from 'src/app/model/ElasticSearch/Entrie';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
   selector: 'num-list-item-details',
@@ -24,30 +22,15 @@ import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSea
 export class ListItemDetailsComponent implements OnInit {
   isOpen = false;
 
+  @Input()
+  selectedTableItemId: string;
+
+  @Input()
   listItemDetails$: Observable<SearchTermDetails>;
 
-  entries: Observable<Entries>;
-  constructor(
-    private listItemService: SearchResultListItemSelectionService<SearchTermListEntry>,
-    private elasticSearchService: ElasticSearchService<
-      CodeableConceptResultList,
-      CodeableConceptResultListEntry
-    >
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.listItemService
-      .getSelectedSearchResultListItem()
-      .subscribe((selectedRow: SearchTermListEntry) => {
-        if (selectedRow) {
-          this.elasticSearchService
-            .getDetailsForListItem(selectedRow.getId())
-            .subscribe((entry: SearchTermDetails) => {
-              this.listItemDetails$ = of(entry);
-            });
-        }
-      });
-  }
+  ngOnInit() {}
 
   getSelectedRelative(name: SearchTermRelatives) {}
 }
