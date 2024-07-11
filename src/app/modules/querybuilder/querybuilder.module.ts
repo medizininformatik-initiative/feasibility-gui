@@ -37,6 +37,8 @@ import { EditReferenceCriteriaModalComponent } from './components/querybuilder-e
 import { EditTimeRestrictionComponent } from './components/querybuilder-editor-new-design/edit/edit-time-restriction/edit-time-restriction.component';
 import { BeforeFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-time-restriction/before-filter/before-filter.component';
 import { BetweenFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-time-restriction/between-filter/between-filter.component';
+import { AllowedUnitsComponent } from './components/querybuilder-editor-new-design/edit/edit-attributes/quantity/allowed-units/allowed-units.component';
+import { QuantityComparisionSelectComponent } from './components/querybuilder-editor-new-design/edit/edit-attributes/quantity/quantity-comparision-select/quantity-comparision-select.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -77,6 +79,8 @@ export const FORMATS_GERMAN = {
     ConceptComponent,
     BeforeFilterComponent,
     BetweenFilterComponent,
+    AllowedUnitsComponent,
+    QuantityComparisionSelectComponent,
   ],
   imports: [
     CommonModule,
