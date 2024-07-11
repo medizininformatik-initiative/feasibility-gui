@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { MenuService } from 'src/app/service/MenuService/MenuService.service';
 
 @Component({
@@ -14,6 +14,6 @@ export class CriteriaMenuComponent implements OnInit {
   constructor(private menuService: MenuService) {}
 
   ngOnInit() {
-    this.menuItems = this.menuService.getMenuItems(this.criterionUuid); // Pass UUID to getMenuItems
+    this.menuItems = this.menuService.getMenuItems(this.criterionUuid);
   }
 }
