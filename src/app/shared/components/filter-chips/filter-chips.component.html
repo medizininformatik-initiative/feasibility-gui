@@ -1,18 +1,14 @@
-<div *ngIf="(chipData$ | async)?.length > 0" fxLayout="row wrap" fxLayoutAlign="start center">
-  <div
-    *ngFor="let filterChip of chipData$ | async"
-    fxLayout="row wrap"
-    fxLayoutAlign="center center"
-    class="block"
-  >
-    <div>{{ filterChip.type }}</div>
-  </div>
-  <div
-    *ngFor="let filterChip of chipData$ | async; let i = index"
-    class="chip-container"
-    (click)="toggleExpanded(filterChip)"
-    [ngClass]="{ expanded: filterChip.expanded }"
-  >
-    {{ filterChip.data[0].text }}
+<div *ngIf="(chipData$ | async)?.length > 0">
+  <div *ngFor="let filterChip of chipData$ | async" fxLayout="row" fxLayoutAlign="start center">
+    <div class="block">{{ filterChip.type }}</div>
+    <div *ngFor="let chip of filterChip.data">
+      <div
+        class="chip-container"
+        [ngClass]="{ expanded: filterChip.expanded }"
+        (click)="toggleExpanded(chip)"
+      >
+        {{ chip.text }}
+      </div>
+    </div>
   </div>
 </div>
