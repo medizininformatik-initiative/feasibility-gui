@@ -6,43 +6,30 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div fxLayout="row" fxLayoutAlign="start center">
-      <mat-form-field appearance="outline" class="operator-part">
-        <!--<mat-label>{{ 'QUERYBUILDER.EDIT.OPERATOR' | translate }}</mat-label>-->
-        <mat-select>
-          <mat-option
-            *ngFor="let option of quantityFilterOptionsArray"
-            [value]="option"
-            (click)="selectQuantityFilterOption(option)"
-          >
-            {{ 'QUERYBUILDER.EDIT.' + option | translate }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <ng-container *ngIf="selectedQuantityFilterOption === QuantityFilterOption.BETWEEN">
-        <num-quantity-range></num-quantity-range>
+      <num-quantity-comparision-select
+        (selectedOption)="setSelectedQuantityFilterOption($event)"
+      ></num-quantity-comparision-select>
+      <ng-container *ngIf="selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN">
+        <num-quantity-range
+          (quantityValues)="setSelectedQuantityValues($event)"
+        ></num-quantity-range>
       </ng-container>
       <ng-container
         *ngIf="
-          selectedQuantityFilterOption !== QuantityFilterOption.BETWEEN &&
-          selectedQuantityFilterOption !== QuantityFilterOption.NONE
+          selectedQuantityFilterOption !== QuantityComparisonOption.BETWEEN &&
+          selectedQuantityFilterOption !== QuantityComparisonOption.NONE
         "
       >
-        <num-quantity-comparator></num-quantity-comparator>
+        <num-quantity-comparator
+          (quantityValue)="setSelectedQuantityValue($event)"
+        ></num-quantity-comparator>
       </ng-container>
-      <mat-form-field
-        *ngIf="selectedQuantityFilterOption !== QuantityFilterOption.NONE"
-        appearance="outline"
-        class="operator-part"
+      <num-allowed-units
+        *ngIf="selectedQuantityFilterOption !== QuantityComparisonOption.NONE"
+        [allowedUnits]="quantityFilter.getAllowedUnits()"
+        (selectionChange)="setSelectQuantityFilterUnit($event)"
       >
-        <mat-select>
-          <mat-option
-            *ngFor="let unit of quantityFilter.getAllowedUnits()"
-            [value]="unit.getDisplay()"
-          >
-            {{ unit.display }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      </num-allowed-units>
     </div>
   </mat-expansion-panel>
 </div>
