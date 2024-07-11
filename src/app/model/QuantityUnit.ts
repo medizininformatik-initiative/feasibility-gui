@@ -53,4 +53,22 @@ export class QuantityUnit {
   setDisplay(display: string): void {
     this.display = display;
   }
+
+  /**
+   * Gets the system name of the quantity unit.
+   *
+   * @returns The system name of the quantity unit.
+   */
+  getSystem(): string {
+    return this.system;
+  }
+
+  /**
+   * Sets the system name of the quantity unit.
+   *
+   * @param system - The new system name of the quantity unit.
+   */
+  setSystem(system: string): void {
+    this.system = system;
+  }
 }
