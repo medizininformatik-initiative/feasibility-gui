@@ -7,13 +7,17 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class CodeableConceptLinsEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['Terminology Code', 'Display'],
+    headers: ['Display', 'Terminology', 'Terminology Code'],
   };
 
   public static adapt(listEntries: CodeableConceptResultListEntry[]): TableData {
     const rows: InterfaceTableDataRow[] = listEntries.map((entry) => ({
       id: uuidv4(),
-      data: [entry.getTerminologyCode().getCode(), entry.getTerminologyCode().getDisplay()],
+      data: [
+        entry.getTerminologyCode().getDisplay(),
+        entry.getTerminologyCode().getSystem(),
+        entry.getTerminologyCode().getCode(),
+      ],
       hasCheckbox: true,
       isClickable: false,
       checkboxColumnIndex: 0,
