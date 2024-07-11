@@ -1,13 +1,22 @@
-import { ChangeDetectorRef, Component, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { Subscription } from 'rxjs';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 import { mapToSearchTermResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { MatDrawer } from '@angular/material/sidenav';
-import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { Observable, Subscription, of } from 'rxjs';
 import { TableData } from 'src/app/model/TableData/InterfaceTableData';
-import { SearchTermListEntryAdapter } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/ListEntryAdapter/SearchTermListEntryAdapter ';
+import { SearchTermListEntryAdapter } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/ListEntryAdapter/SearchTermListEntryAdapter';
+import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
+import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
 
 @Component({
   selector: 'num-search',
@@ -18,20 +27,22 @@ import { SearchTermListEntryAdapter } from 'src/app/model/ElasticSearch/ElasticS
     { provide: ElasticSearchService, useClass: ElasticSearchService },
   ],
 })
-export class SearchComponent implements OnDestroy, AfterViewInit {
+export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('drawer') sidenav: MatDrawer;
 
-  keysToSkip = ['id', 'selectable'];
   listItems: Array<SearchTermListEntry> = [];
   searchtext = '';
   adaptedData: TableData;
   private subscription: Subscription;
   private isInitialized = false;
+  isOpen = false;
+
+  selectedDetails$: Observable<SearchTermDetails>;
 
   constructor(
     private elasticSearchService: ElasticSearchService<SearchTermResultList, SearchTermListEntry>,
     private cdr: ChangeDetectorRef,
-    private listItemService: SearchResultListItemSelectionService<SearchTermListEntry>
+    private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>
   ) {
     this.subscription = this.elasticSearchService
       .getSearchTermResultList()
@@ -41,18 +52,9 @@ export class SearchComponent implements OnDestroy, AfterViewInit {
           this.adaptedData = SearchTermListEntryAdapter.adapt(searchTermResults.results);
         }
       });
-
-    this.listItemService.getSelectedSearchResultListItem().subscribe((row) => {
-      if (this.isInitialized) {
-        this.cdr.detectChanges();
-        if (row) {
-          this.openSidenav();
-        } else {
-          this.closeSidenav();
-        }
-      }
-    });
   }
+
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.isInitialized = true;
@@ -72,14 +74,36 @@ export class SearchComponent implements OnDestroy, AfterViewInit {
     }
   }
 
+  setSelectedRowItem(item) {
+    const selectedIds = this.selectedTableItemsService.getSelectedIds();
+    const itemId = item.originalEntry.id;
+    if (selectedIds.includes(itemId)) {
+      this.selectedTableItemsService.removeFromSelection(item.originalEntry);
+    } else {
+      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry);
+    }
+  }
+
+  setClickedRow(row: InterfaceTableDataRow) {
+    const originalEntry = row.originalEntry as SearchTermListEntry;
+    this.elasticSearchService
+      .getDetailsForListItem(originalEntry.id)
+      .subscribe((details: SearchTermDetails) => {
+        this.selectedDetails$ = of(details);
+        this.sidenav.open();
+      });
+  }
+
   openSidenav() {
     if (this.sidenav) {
+      this.isOpen = true;
       this.sidenav.open();
     }
   }
 
   closeSidenav() {
     if (this.sidenav) {
+      this.isOpen = false;
       this.sidenav.close();
     }
   }
