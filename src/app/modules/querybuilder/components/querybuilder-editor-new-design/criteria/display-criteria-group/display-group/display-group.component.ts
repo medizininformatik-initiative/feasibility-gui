@@ -44,7 +44,7 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
     }
   }
 
-  dropped(event: CdkDragDrop<Criterion[]>) {
+  /*dropped(event: CdkDragDrop<Criterion[]>) {
     const droppedCriterion: Criterion = event.item.data;
 
     // Determine the source and destination group types
@@ -74,5 +74,5 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
           this.queryService.setFeasibilityQuery(query);
         });
     }
-  }
+  }*/
 }

@@ -34,7 +34,7 @@ export class DisplayCriteriaGroupComponent implements OnInit {
     return criteria.reduce((acc, val) => acc.concat(val), []);
   }
 
-  dropped(event: CdkDragDrop<any[]>, groupType) {
+  /*dropped(event: CdkDragDrop<any[]>, groupType) {
     this.groupType = groupType;
     if (event.previousContainer !== event.container) {
       const droppedCriterion: Criterion = event.item.data;
@@ -51,5 +51,5 @@ export class DisplayCriteriaGroupComponent implements OnInit {
       //this.queryProviderService.setExclusionCriteria(groupId, [[criterion]]);
     }
     //this.queryProviderService.getFeasibilityQuery().subscribe((test) => console.log(test.groups[0]));
-  }
+  }*/
 }
