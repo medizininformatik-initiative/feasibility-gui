@@ -1,13 +1,13 @@
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
-import { Comparator } from 'src/app/model/Comparator';
 import { FilterTypes } from 'src/app/model/FilterTypes';
+import { QuantityComparisonOption } from 'src/app/model/QuantityFilterOptions';
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
 
 /**
  * Class representing a QuantityComparatorFilter.
  */
 export class QuantityComparatorFilter extends AbstractQuantityFilter {
-  private comparator: Comparator = Comparator.NONE;
+  protected comparator: QuantityComparisonOption = QuantityComparisonOption.NONE;
   private readonly type: FilterTypes = FilterTypes.QUANTITY_COMPARATOR;
   private value: number | null = null;
 
@@ -24,7 +24,7 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
     selectedUnit: QuantityUnit,
     allowedUnits: QuantityUnit[] = [],
     precision: number = 0,
-    comparator: Comparator = Comparator.NONE,
+    comparator: QuantityComparisonOption = QuantityComparisonOption.NONE,
     value: number | null = null
   ) {
     super(selectedUnit, allowedUnits, precision);
@@ -37,7 +37,7 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
    *
    * @returns The comparator type.
    */
-  getComparator(): Comparator {
+  getComparator(): QuantityComparisonOption {
     return this.comparator;
   }
 
@@ -46,7 +46,7 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
    *
    * @param comparator - The comparator type to set.
    */
-  setComparator(comparator: Comparator): void {
+  setComparator(comparator: QuantityComparisonOption): void {
     this.comparator = comparator;
   }
 
