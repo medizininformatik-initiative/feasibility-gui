@@ -1,5 +1,7 @@
 import { FilterTypes } from 'src/app/model/FilterTypes';
+import { QuantityComparisonOption } from 'src/app/model/QuantityFilterOptions';
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
+import { QuantityComparatorFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/QuantityFilter/QuantityComparatorFilter';
 
 /**
  * Abstract class representing a quantity filter.
@@ -8,6 +10,7 @@ export abstract class AbstractQuantityFilter {
   private selectedUnit: QuantityUnit;
   private allowedUnits: QuantityUnit[] = [];
   private precision: number;
+  protected comparator: QuantityComparisonOption;
 
   /**
    * Creates an instance of AbstractQuantityFilter.
@@ -78,5 +81,9 @@ export abstract class AbstractQuantityFilter {
    */
   setPrecision(precision: number): void {
     this.precision = precision;
+  }
+
+  getComparator() {
+    return this.comparator;
   }
 }
