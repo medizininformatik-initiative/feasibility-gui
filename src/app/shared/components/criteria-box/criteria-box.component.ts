@@ -1,6 +1,17 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { FilterChipAdapter, InterfaceFilterChip } from '../../models/filter-chip.interface';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'num-criteria-box',
@@ -19,7 +30,6 @@ export class CriteriaBoxComponent implements AfterViewInit, OnInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    // Ensure the menuTrigger references the correct MatMenu
     if (this.criteriaMenuTrigger) {
       this.menuTrigger = this.criteriaMenuTrigger;
     }
