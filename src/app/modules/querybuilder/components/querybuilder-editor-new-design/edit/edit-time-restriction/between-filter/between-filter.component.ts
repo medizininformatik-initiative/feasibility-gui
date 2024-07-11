@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -22,8 +22,13 @@ export const MY_DATE_FORMATS = {
   providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }],
 })
 export class BetweenFilterComponent implements OnChanges {
-  @Input() betweenFilter: BetweenFilter;
-  beforeDate: string;
+  @Input()
+  betweenFilter: BetweenFilter;
+
+  @Output()
+  betweenFilterChanged = new EventEmitter<BetweenFilter>();
+
+  beforeDate = '';
   afterDate: string;
 
   ngOnChanges(changes: SimpleChanges) {
@@ -34,12 +39,16 @@ export class BetweenFilterComponent implements OnChanges {
   }
 
   onBeforeDateChange(event: any) {
-    this.beforeDate = event.value;
-    this.betweenFilter.setBeforeDate(this.beforeDate);
+    if (this.beforeDate !== this.betweenFilter.getBeforeDate()) {
+      this.beforeDate = event.value;
+      this.betweenFilter.setBeforeDate(this.beforeDate);
+    }
   }
 
   onAfterDateChange(event: any) {
-    this.afterDate = event.value;
-    this.betweenFilter.setAfterDate(this.afterDate);
+    if (this.afterDate !== this.betweenFilter.getAfterDate()) {
+      this.afterDate = event.value;
+      this.betweenFilter.setAfterDate(this.afterDate);
+    }
   }
 }
