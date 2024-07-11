@@ -234,10 +234,7 @@ export abstract class AbstractCriterion {
    *
    * @returns Array of ValueFilter objects or false if valueFilters is undefined.
    */
-  getValueFilters(): Array<ValueFilter> | boolean {
-    if (this.valueFilters === undefined) {
-      return false;
-    }
+  getValueFilters(): Array<ValueFilter> {
     return this.valueFilters;
   }
 
