@@ -23,36 +23,25 @@
       Suchen
     </button>
   </div>
-  <!----  <div style="padding-top: 20px" *ngIf="searchtext.length > 0">
-    <num-search-filter (filtersChanged)="startElasticSearchWithFilter($event)"></num-search-filter>
-  </div>
-  <num-search-result
-    fxFlexFill
-    [searchTermListItems]="listItems"
-    [keysToSkip]="keysToSkip"
-    class="padding-top-50"
-  >
-  </num-search-result>-->
-
   <mat-drawer-container fxFlexFill>
     <mat-drawer #drawer position="end" mode="side">
       <div fxLayout="column" *ngIf="listItems" class="padding-top-50">
-        <button class="cancel-button" fxLayoutAlign="center end" (click)="drawer.toggle()">
+        <button (click)="closeSidenav()" class="cancel-button" fxLayoutAlign="center end">
           Back to list
-          <fa-icon
-            class="close-icon"
-            [attr.aria-label]="'BUTTON.CANCEL' | translate"
-            icon="times"
-            (click)="handleDialogClose()"
-            [fixedWidth]="true"
-          ></fa-icon>
+          <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
         </button>
-        <num-list-item-details class="padding-left-2"> </num-list-item-details>
+        <num-list-item-details [listItemDetails$]="selectedDetails$" class="padding-left-2">
+        </num-list-item-details>
       </div>
     </mat-drawer>
     <mat-drawer-content *ngIf="listItems.length > 0" class="content-height-95">
       <ng-container *ngIf="adaptedData">
-        <num-result-list [tableData]="adaptedData" fxFlexFill></num-result-list>
+        <num-result-list
+          (selectedRow)="setSelectedRowItem($event)"
+          (rowClicked)="setClickedRow($event)"
+          [tableData]="adaptedData"
+          fxFlexFill
+        ></num-result-list>
       </ng-container>
     </mat-drawer-content>
   </mat-drawer-container>
