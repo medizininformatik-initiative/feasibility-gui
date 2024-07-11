@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
 
 export class EnterCriterionListComponentData {
   criterion: Criterion;
@@ -22,6 +23,14 @@ export class EditCriterionModalComponent implements OnInit {
 
   ngOnInit() {
     this.criterion = this.data.criterion;
+  }
+
+  updateQuantityFilter(newQuantityFilter: AbstractQuantityFilter) {
+    this.criterion.getValueFilters()[0].setQuantity(newQuantityFilter);
+  }
+
+  updateAtributeFilter(attributeFilter) {
+    this.criterion.setAttributeFilters([attributeFilter]);
   }
 
   saveCriterion() {

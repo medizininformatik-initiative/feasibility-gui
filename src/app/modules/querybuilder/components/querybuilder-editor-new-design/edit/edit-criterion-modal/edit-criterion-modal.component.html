@@ -1,11 +1,17 @@
 <div class="container">
   {{ criterion.getTermCodes()[0].getDisplay() }}
   <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
-    <num-concept [attributeFilter]="attributeFilter"></num-concept>
+    <num-concept
+      (changedAttributeFilter)="updateAtributeFilter($event)"
+      [attributeFilter]="attributeFilter"
+    ></num-concept>
     <num-quantity></num-quantity>
   </div>
   <div *ngFor="let valueFilter of criterion.getValueFilters()">
-    <num-quantity [quantityFilter]="valueFilter.getQuantity()"></num-quantity>
+    <num-quantity
+      (quantityFilterChange)="updateQuantityFilter($event)"
+      [quantityFilter]="valueFilter.getQuantity()"
+    ></num-quantity>
   </div>
   <num-edit-time-restriction
     [timeRestriction]="criterion.getTimeRestriction()"
