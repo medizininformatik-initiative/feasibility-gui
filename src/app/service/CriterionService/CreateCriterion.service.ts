@@ -4,7 +4,7 @@ import { BackendService } from '../../modules/querybuilder/service/backend.servi
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionHashService } from './CriterionHash.service';
-import { CriterionService } from '../CriterionService.service';
+import { CriterionProviderService } from '../Provider/CriterionProvider.service';
 //import { CritGroupPosition } from 'src/app/modules/querybuilder/controller/CritGroupArranger';
 import { FeatureService } from '../Feature.service';
 import { Injectable } from '@angular/core';
@@ -20,7 +20,8 @@ import { QuantityUnit } from 'src/app/model/QuantityUnit';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { InterfaceListEntry } from '../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
-
+import { StageProviderService } from '../Provider/StageProvider.service';
+import { v3 as uuidv3 } from 'uuid';
 @Injectable({
   providedIn: 'root',
 })
@@ -33,7 +34,8 @@ export class CreateCriterionService {
     //private UiProfileService: LoadUIProfileService,
     private backend: BackendService,
     private listItemService: SearchResultListItemSelectionService<InterfaceListEntry>,
-    private criterionService: CriterionService
+    private criterionService: CriterionProviderService,
+    private stageProviderService: StageProviderService
   ) {}
 
   public translateListItemsToCriterions() {
@@ -155,6 +157,43 @@ export class CreateCriterionService {
     }
     const criterion = criterionBuilder.buildCriterion();
     this.criterionService.setCriterionByUID(criterion);
+    this.stageProviderService.addCriterionToStage(criterion.getUniqueID());
+    this.stageProviderService
+      .getStageUIDArray()
+      .subscribe((ausgabe) => {
+        console.log(ausgabe);
+      })
+      .unsubscribe();
+    console.log(this.getCriterionHash());
+  }
+  public getCriterionHash(): string {
+    const termcode = {
+      code: '1234',
+      system: 'http://fhir.de/CodeSystem/bfarm/icd-10-gm',
+      version: '2024',
+      display: 'Testkriterion',
+    };
+    let contextVersion = '';
+    let contextSystem = '';
+    let contextCode = '';
+    let termcodeVersion = '';
+    contextSystem = 'fdpg.mii.cds';
+    contextCode = 'KontextCode';
+    contextVersion = '1.0.0';
+
+    if (termcode.version) {
+      termcodeVersion = termcode.version;
+    }
+
+    const contextTermcodeHashInput =
+      contextSystem +
+      contextCode +
+      contextVersion +
+      termcode.system +
+      termcode.code +
+      termcodeVersion;
+
+    return uuidv3(contextTermcodeHashInput, BackendService.BACKEND_UUID_NAMESPACE);
   }
 
   private createMandatoryFields(criteriaProfileData: CriteriaProfileData): {

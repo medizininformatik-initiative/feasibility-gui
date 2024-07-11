@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { CriterionService } from '../CriterionService.service';
+import { CriterionProviderService } from '../Provider/CriterionProvider.service';
 import { v4 as uuidv4 } from 'uuid';
 import { EditCriterionService } from '../CriterionService/EditCriterionService.service';
-import { QueryService } from '../QueryService.service';
+import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuService {
   constructor(
-    private criterionService: CriterionService,
+    private criterionService: CriterionProviderService,
     private editCriterionService: EditCriterionService
   ) {}
 

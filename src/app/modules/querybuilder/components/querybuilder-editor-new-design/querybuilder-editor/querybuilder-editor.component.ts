@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CriteriaStageComponent } from '../stage/criteria-stage.component';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { QueryService } from 'src/app/service/QueryService.service';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 
 @Component({
   selector: 'num-querybuilder-editor',
@@ -13,7 +13,7 @@ export class QuerybuilderEditorComponent implements OnInit {
 
   query: FeasibilityQuery;
 
-  constructor(public queryService: QueryService) {}
+  constructor(public queryService: FeasibilityQueryProviderService) {}
 
   ngOnInit(): void {
     this.queryService.getFeasibilityQuery().subscribe((query) => {

@@ -1,9 +1,9 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { CriterionService } from 'src/app/service/CriterionService.service';
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { map, Observable, of, Subscription } from 'rxjs';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { QueryService } from 'src/app/service/QueryService.service';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 
 @Component({
   selector: 'num-criteria',
@@ -18,8 +18,8 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     public elementRef: ElementRef,
-    private criterionProviderService: CriterionService,
-    private queryProviderService: QueryService,
+    private criterionProviderService: CriterionProviderService,
+    private queryProviderService: FeasibilityQueryProviderService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 

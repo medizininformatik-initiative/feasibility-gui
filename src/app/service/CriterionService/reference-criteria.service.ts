@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AttributeFilter } from '../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { Query } from '../../model/FeasibilityQuery/Query';
 import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
 import { FilterTypesService } from '../FilterTypes.service';
-import { QueryService } from '../QueryService.service';
+import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
-import { TerminologyCode } from '../../model/terminology/Terminology';
 import { Subscription } from 'rxjs';
 import { CritGroupArranger } from '../../modules/querybuilder/controller/CritGroupArranger';
+import { TerminologyCode } from '../../model/Terminology/TerminologyCode';
+import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class ReferenceCriteriaService {
   private querySubscription: Subscription;
   constructor(
     private filter: FilterTypesService,
-    private queryService: QueryService,
+    private queryService: FeasibilityQueryProviderService,
     private backendService: BackendService
   ) {}
 
@@ -35,7 +35,7 @@ export class ReferenceCriteriaService {
     this.querySubscription.unsubscribe();
   }
 
-  private createListOfCriteriaAndHashes(query: Query): void {
+  private createListOfCriteriaAndHashes(query: FeasibilityQuery): void {
     this.criterionSet = [];
     const queryCriteriaHashes: Array<string> = [];
     for (const inex of ['inclusion', 'exclusion']) {
@@ -106,7 +106,7 @@ export class ReferenceCriteriaService {
     return isLinked;
   }
 
-  moveReferenceCriteria(query: Query): void {
+  moveReferenceCriteria(query: FeasibilityQuery): void {
     for (const inex of ['inclusion', 'exclusion']) {
       let x = 0;
       query.groups[0][inex + 'Criteria'].forEach((disj) => {
@@ -141,7 +141,7 @@ export class ReferenceCriteriaService {
     }
     this.queryService.setFeasibilityQuery(query);
   }
-  rePosition(query: Query): void {
+  rePosition(query: FeasibilityQuery): void {
     for (const inex of ['inclusion', 'exclusion']) {
       query.groups[0][inex + 'Criteria'].forEach((disj, i) => {
         disj.forEach((conj, j) => {

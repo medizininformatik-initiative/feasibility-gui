@@ -1,12 +1,12 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
-import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class QueryService {
+export class FeasibilityQueryProviderService {
   private readonly STORAGE_QUERY_KEY = 'QUERY';
   private feasibilityQuery: BehaviorSubject<FeasibilityQuery> = new BehaviorSubject(
     new FeasibilityQuery()

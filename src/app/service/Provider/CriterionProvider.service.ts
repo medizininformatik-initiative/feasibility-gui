@@ -1,20 +1,20 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
+import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
 import { Injectable } from '@angular/core';
-import { QueryService } from './QueryService.service';
+import { FeasibilityQueryProviderService } from './FeasibilityQueryProvider.service';
 import { switchMap, tap } from 'rxjs/operators';
-import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CriterionService {
+export class CriterionProviderService {
   private criterionUIDMap: Map<string, Criterion> = new Map();
   private criterionUIDMapSubject: BehaviorSubject<Map<string, Criterion>> = new BehaviorSubject(
     new Map()
   );
 
-  constructor(private queryService: QueryService) {
+  constructor(private queryService: FeasibilityQueryProviderService) {
     this.initCriterionMap();
   }
 

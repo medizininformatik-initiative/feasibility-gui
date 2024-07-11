@@ -12,7 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 //import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { QueryService } from 'src/app/service/QueryService.service';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -46,10 +46,9 @@ export class OptionsComponent implements OnInit {
   constructor(
     public featureService: FeatureService,
     public featureProviderService: FeatureProviderService,
-    private queryService: QueryService,
-    private http: HttpClient
-  ) //private apiTranslator: ApiTranslator,
-  //private newTranslator: UIQuery2StructuredQueryTranslatorService
+    private queryService: FeasibilityQueryProviderService,
+    private http: HttpClient //private apiTranslator: ApiTranslator,
+  ) //private newTranslator: UIQuery2StructuredQueryTranslatorService
   {}
 
   ngOnInit(): void {
