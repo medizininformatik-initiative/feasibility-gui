@@ -7,24 +7,24 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
  * Class representing a ReferenceFilter.
  */
 export class ReferenceFilter extends AbstractConceptFilter {
-  private selectedReference: ReferenceCriterion[] = [];
+  private selectedReferences: ReferenceCriterion[] = [];
   private allowedReferenceUri: Array<string> = []; // Renamed to allowedReferenceUri
   private type: FilterTypes = FilterTypes.REFERENCE;
 
   /**
    * Creates an instance of ReferenceFilter.
    *
-   * @param selectedReference - The selected reference criteria.
+   * @param selectedReferences - The selected reference criteria.
    * @param allowedReferenceUri - The allowed reference URI.
    * @param selectedConcepts - The selected concepts (inherited from AbstractConceptFilter).
    */
   constructor(
     allowedReferenceUri: Array<string>,
-    selectedReference: ReferenceCriterion[] = [],
+    selectedReferences: ReferenceCriterion[] = [],
     selectedConcepts: Set<TerminologyCode>
   ) {
     super(selectedConcepts);
-    this.selectedReference = selectedReference;
+    this.selectedReferences = selectedReferences;
     this.allowedReferenceUri = allowedReferenceUri;
   }
 
@@ -33,17 +33,17 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @returns An array of selected reference criteria.
    */
-  getSelectedReference(): ReferenceCriterion[] {
-    return this.selectedReference;
+  getSelectedReferences(): ReferenceCriterion[] {
+    return this.selectedReferences;
   }
 
   /**
    * Sets the selected reference criteria.
    *
-   * @param selectedReference - An array of selected reference criteria.
+   * @param selectedReferences - An array of selected reference criteria.
    */
-  setSelectedReference(selectedReference: ReferenceCriterion[]): void {
-    this.selectedReference = selectedReference;
+  setSelectedReference(selectedReferences: ReferenceCriterion[]): void {
+    this.selectedReferences = selectedReferences;
   }
 
   /**

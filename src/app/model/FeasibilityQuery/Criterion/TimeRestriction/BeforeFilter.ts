@@ -3,7 +3,7 @@ import { TimeRestrictionType } from '../../TimeRestriction';
 
 export class BeforeFilter extends AbstractTimeRestriction {
   beforeDate: string;
-  readonly type: TimeRestrictionType = TimeRestrictionType.BEFORE;
+  protected readonly type: TimeRestrictionType = TimeRestrictionType.BEFORE;
 
   constructor(beforeDate: string) {
     super();

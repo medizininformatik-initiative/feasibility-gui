@@ -8,7 +8,7 @@ import { QuantityUnit } from 'src/app/model/QuantityUnit';
  */
 export class QuantityComparatorFilter extends AbstractQuantityFilter {
   private comparator: Comparator = Comparator.NONE;
-  private readonly type: FilterTypes = FilterTypes.QUANTITY_COMPARATOR;
+  protected readonly type: FilterTypes = FilterTypes.QUANTITY_COMPARATOR;
   private value: number | null = null;
 
   /**

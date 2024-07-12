@@ -4,7 +4,7 @@ import { TimeRestrictionType } from '../../TimeRestriction';
 export class AtFilter extends AbstractTimeRestriction {
   afterDate: string;
   beforeDate: string;
-  readonly type: TimeRestrictionType = TimeRestrictionType.AT;
+  protected readonly type: TimeRestrictionType = TimeRestrictionType.AT;
 
   constructor(afterDate: string, beforeDate: string) {
     super();

@@ -4,7 +4,7 @@ import { TimeRestrictionType } from '../../TimeRestriction';
 export class BetweenFilter extends AbstractTimeRestriction {
   afterDate: string;
   beforeDate: string;
-  readonly type: TimeRestrictionType = TimeRestrictionType.BETWEEN;
+  protected readonly type: TimeRestrictionType = TimeRestrictionType.BETWEEN;
 
   constructor(afterDate: string, beforeDate: string) {
     super();
