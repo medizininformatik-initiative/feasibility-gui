@@ -17,6 +17,7 @@ export class ReferenceCriteriaListEntryAdapter {
         listEntry.getTerminologyCode().getSystem(),
       ],
       hasCheckbox: true,
+      isCheckboxSelected: false,
       isClickable: false,
       checkboxColumnIndex: 0,
       originalEntry: listEntry,

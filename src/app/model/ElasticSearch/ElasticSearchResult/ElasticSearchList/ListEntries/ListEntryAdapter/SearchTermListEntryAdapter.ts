@@ -21,6 +21,7 @@ export class SearchTermListEntryAdapter {
         listEntry.getKdsModule(),
       ],
       hasCheckbox: true,
+      isCheckboxSelected: false,
       isClickable: true,
       checkboxColumnIndex: 0,
       originalEntry: listEntry,
