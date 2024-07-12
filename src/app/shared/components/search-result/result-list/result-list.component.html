@@ -22,7 +22,7 @@
         <div fxLayout="row" fxLayoutAlign="start center">
           <mat-checkbox
             *ngIf="row.hasCheckbox && row.checkboxColumnIndex === j"
-            [checked]="isSelected(row)"
+            [checked]="row.isCheckboxSelected"
             (change)="onCheckboxSelect(row)"
             (click)="$event.stopPropagation()"
           ></mat-checkbox>
