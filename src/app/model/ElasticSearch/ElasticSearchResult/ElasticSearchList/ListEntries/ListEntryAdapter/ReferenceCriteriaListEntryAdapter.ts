@@ -1,12 +1,10 @@
 import { InterfaceTableDataBody } from 'src/app/model/TableData/InterfaceTableDataBody';
 import { InterfaceTableDataHeader } from 'src/app/model/TableData/InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
-import { SearchTermListEntry } from '../SearchTermListEntry';
 import { TableData } from 'src/app/model/TableData/InterfaceTableData';
-import { v4 as uuidv4 } from 'uuid';
 import { ReferenceCriteriaListEntry } from '../RefrenceCriteriaListEntry';
 
-export class RefrenceCriteriaListEntryAdapter {
+export class ReferenceCriteriaListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
     headers: ['Name', 'Terminology'],
   };
@@ -26,6 +24,6 @@ export class RefrenceCriteriaListEntryAdapter {
 
     const body: InterfaceTableDataBody = { rows };
 
-    return { header: RefrenceCriteriaListEntryAdapter.headers, body };
+    return { header: ReferenceCriteriaListEntryAdapter.headers, body };
   }
 }
