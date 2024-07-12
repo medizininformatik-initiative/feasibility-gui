@@ -5,7 +5,7 @@ import { TimeRestrictionType } from '../../TimeRestriction';
  */
 export abstract class AbstractTimeRestriction {
   protected beforeDate?: string;
-  protected afterDate?: string;
+  protected afterDate: string;
   protected type: TimeRestrictionType;
 
   /**
@@ -15,7 +15,7 @@ export abstract class AbstractTimeRestriction {
    * @param afterDate - Date after which the restriction applies.
    * @param type - Type of time restriction.
    */
-  constructor(beforeDate?: string, afterDate?: string) {
+  constructor(afterDate: string, beforeDate?: string) {
     this.beforeDate = beforeDate;
     this.afterDate = afterDate;
   }

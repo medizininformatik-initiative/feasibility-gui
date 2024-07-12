@@ -1,5 +1,5 @@
 import { FilterTypes } from 'src/app/model/FilterTypes';
-import { QuantityUnit } from 'src/app/model/QuantityUnit';
+import { QuantityUnit } from '../../../QuantityUnit';
 
 /**
  * Abstract class representing a quantity filter.

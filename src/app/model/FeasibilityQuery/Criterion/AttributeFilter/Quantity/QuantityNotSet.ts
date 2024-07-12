@@ -1,6 +1,6 @@
 import { FilterTypes } from 'src/app/model/FilterTypes';
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
-import { QuantityUnit } from 'src/app/model/QuantityUnit';
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 
 export class QuantityNotSet extends AbstractQuantityFilter {
   type: FilterTypes = FilterTypes.QUANTITY_NOT_SET;

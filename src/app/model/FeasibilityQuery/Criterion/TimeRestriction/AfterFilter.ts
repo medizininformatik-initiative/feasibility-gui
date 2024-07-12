@@ -6,7 +6,7 @@ export class AfterFilter extends AbstractTimeRestriction {
   protected readonly type: TimeRestrictionType = TimeRestrictionType.AFTER;
 
   constructor(afterDate: string) {
-    super();
+    super(afterDate);
     this.afterDate = afterDate;
   }
 

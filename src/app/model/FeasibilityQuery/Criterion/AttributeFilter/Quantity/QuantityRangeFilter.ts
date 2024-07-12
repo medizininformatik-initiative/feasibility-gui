@@ -1,6 +1,6 @@
-import { QuantityUnit } from 'src/app/model/QuantityUnit';
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
 import { FilterTypes } from 'src/app/model/FilterTypes';
+import { QuantityUnit } from '../../../QuantityUnit';
 
 /**
  * Class representing a QuantityRangeFilter.

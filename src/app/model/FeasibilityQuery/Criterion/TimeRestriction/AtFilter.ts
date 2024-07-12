@@ -7,7 +7,7 @@ export class AtFilter extends AbstractTimeRestriction {
   protected readonly type: TimeRestrictionType = TimeRestrictionType.AT;
 
   constructor(afterDate: string, beforeDate: string) {
-    super();
+    super(afterDate);
     this.afterDate = afterDate;
     this.beforeDate = beforeDate;
   }

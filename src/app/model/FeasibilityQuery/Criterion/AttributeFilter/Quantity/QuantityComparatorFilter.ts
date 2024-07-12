@@ -1,7 +1,7 @@
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
 import { Comparator } from 'src/app/model/Comparator';
 import { FilterTypes } from 'src/app/model/FilterTypes';
-import { QuantityUnit } from 'src/app/model/QuantityUnit';
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 
 /**
  * Class representing a QuantityComparatorFilter.

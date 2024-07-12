@@ -64,8 +64,8 @@ export abstract class AbstractCriterion {
    *
    * @param hasRefrence
    */
-  setHasReference(hasRefrence: boolean) {
-    this.hasReference = hasRefrence;
+  setHasReference(hasReference: boolean) {
+    this.hasReference = hasReference;
   }
 
   /**

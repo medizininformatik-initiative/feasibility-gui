@@ -27,6 +27,8 @@ import { StructuredQueryCriterion } from '../model/StructuredQuery/Criterion/Str
 import { TerminologyCode } from '../model/Terminology/TerminologyCode';
 import { TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { QuantityUnit as QuantityUnitSQ } from '../model/StructuredQuery/QuantityUnit';
+import { QuantityUnit as QuantityUnitFQ } from '../model/FeasibilityQuery/QuantityUnit';
 
 @Injectable({
   providedIn: 'root',
@@ -95,7 +97,7 @@ export class UIQuery2StructuredQueryTranslatorService {
     return structuredQueryInnerArray;
   }
 
-  public assignStructuredQueryCriterionElements(criterion: Criterion): StructuredQueryCriterion {
+  private assignStructuredQueryCriterionElements(criterion: Criterion): StructuredQueryCriterion {
     const structuredQueryCriterion = new StructuredQueryCriterion();
     structuredQueryCriterion.attributeFilters = this.translateAttributeFilters(criterion);
     structuredQueryCriterion.context = this.addContextToStructuredQuery(criterion);
@@ -146,10 +148,7 @@ export class UIQuery2StructuredQueryTranslatorService {
         conceptFilter.attributeCode = attributeCode;
         translatedFilters.push(conceptFilter);
       }
-      if (
-        attributeFilter.getReference() &&
-        attributeFilter.getReference()?.getSelectedConcepts()?.size > 0
-      ) {
+      if (attributeFilter.isReferenceSet()) {
         const referenceFilter = this.createReferences(attributeFilter.getReference());
         referenceFilter.attributeCode = attributeCode;
         translatedFilters.push(referenceFilter);
@@ -168,9 +167,10 @@ export class UIQuery2StructuredQueryTranslatorService {
   ): AbstractStructuredQueryFilters | undefined {
     const translatedFilters: AbstractStructuredQueryFilters[] = [];
     criterion.getValueFilters().forEach((valueFilter) => {
-      if (valueFilter.getConcept()) {
+      if (valueFilter.getConcept()?.getSelectedConcepts()) {
         translatedFilters.push(this.createAttributeConceptFilter(valueFilter.getConcept()));
-      } else {
+      }
+      if (valueFilter.getQuantity()) {
         translatedFilters.push(this.quantityFilters(valueFilter));
       }
     });
@@ -277,7 +277,8 @@ export class UIQuery2StructuredQueryTranslatorService {
   ): QuantityComparatorFilterSQ {
     const comparatorFilter = new QuantityComparatorFilterSQ();
     comparatorFilter.comparator = quantityComparator.getComparator();
-    comparatorFilter.setUnit(quantityComparator.getSelectedUnit());
+    comparatorFilter.value = quantityComparator.getValue();
+    comparatorFilter.setUnit(this.assignQuantityUnit(quantityComparator.getSelectedUnit()));
     return comparatorFilter;
   }
 
@@ -285,20 +286,13 @@ export class UIQuery2StructuredQueryTranslatorService {
     const rangeFilter = new QuantityRangeFilterSQ();
     rangeFilter.maxValue = quantityRange.getMaxValue();
     rangeFilter.minValue = quantityRange.getMinValue();
-    rangeFilter.setUnit(quantityRange.getSelectedUnit());
+    rangeFilter.setUnit(this.assignQuantityUnit(quantityRange.getSelectedUnit()));
     return rangeFilter;
   }
 
-  /*private assignAttributeCode(attributeCode: TerminologyCode): TerminologyCode {
-    const attributeCodeStructured: TerminologyCode = new TerminologyCode();
-    attributeCodeStructured.code = attributeCode?.code;
-    attributeCodeStructured.display = attributeCode?.display;
-    attributeCodeStructured.system = attributeCode?.system;
-    if (attributeCode.version !== undefined && attributeCode.version !== null) {
-      attributeCodeStructured.version = attributeCode.version;
-    }
-    return attributeCodeStructured;
-  }*/
+  private assignQuantityUnit(quantityUnit: QuantityUnitFQ): QuantityUnitSQ {
+    return new QuantityUnitSQ(quantityUnit.getCode(), quantityUnit.getDisplay());
+  }
 
   /**
    * best to create in next iteration an own instance
