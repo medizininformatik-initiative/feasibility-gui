@@ -12,7 +12,7 @@ import { CriterionProviderService } from '../../../../../../service/Provider/Cri
 })
 export class DisplayCriteriaGroupComponent implements OnInit {
   droppedItems: Criterion[] = [];
-  groupType: 'Inclusion' | 'Exclusion'; // Example default value
+  groupType: 'Inclusion' | 'Exclusion';
   querySubscription: Subscription;
 
   constructor(
@@ -20,19 +20,7 @@ export class DisplayCriteriaGroupComponent implements OnInit {
     private criterionProviderService: CriterionProviderService
   ) {}
 
-  ngOnInit() {
-    this.querySubscription = this.queryProviderService.getFeasibilityQuery().subscribe((query) => {
-      if (this.groupType === 'Inclusion') {
-        this.droppedItems = this.flattenCriteria(query.getInclusionCriteria());
-      } else if (this.groupType === 'Exclusion') {
-        this.droppedItems = this.flattenCriteria(query.getExclusionCriteria());
-      }
-    });
-  }
-
-  private flattenCriteria(criteria: Criterion[][]): Criterion[] {
-    return criteria.reduce((acc, val) => acc.concat(val), []);
-  }
+  ngOnInit() {}
 
   /*dropped(event: CdkDragDrop<any[]>, groupType) {
     this.groupType = groupType;

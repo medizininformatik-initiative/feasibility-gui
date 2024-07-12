@@ -8,6 +8,7 @@ export abstract class AbstractQuantityFilter {
   private selectedUnit: QuantityUnit;
   private allowedUnits: QuantityUnit[] = [];
   private precision: number;
+  protected readonly type: FilterTypes;
 
   /**
    * Creates an instance of AbstractQuantityFilter.
@@ -24,6 +25,14 @@ export abstract class AbstractQuantityFilter {
     this.selectedUnit = selectedUnit;
     this.allowedUnits = allowedUnits;
     this.precision = precision;
+  }
+
+  /**
+   *
+   * @returns
+   */
+  getType(): FilterTypes {
+    return this.type;
   }
 
   /**
