@@ -2,15 +2,31 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { AbstractListEntry } from './AbstractListEntry';
 
 export class CodeableConceptResultListEntry extends AbstractListEntry {
+  private isSelected = false;
   private terminologyCode: TerminologyCode;
 
   /**
    * @param terminologyCode
    * @param id
    */
-  constructor(terminologyCode: TerminologyCode, id: string) {
+  constructor(terminologyCode: TerminologyCode, id: string, isSelected: boolean = false) {
     super(terminologyCode.getDisplay(), id);
     this.terminologyCode = terminologyCode;
+    this.isSelected = isSelected;
+  }
+
+  /**
+   * @returns
+   */
+  getIsSelected(): boolean {
+    return this.isSelected;
+  }
+
+  /**
+   * @param isSelected
+   */
+  setIsSelected(isSelected: boolean) {
+    this.isSelected = isSelected;
   }
 
   /**

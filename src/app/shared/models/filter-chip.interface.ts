@@ -24,22 +24,23 @@ export interface InterfaceFilterChipData {
 
 export class FilterChipAdapter {
   public static adaptCodeableConcept(attributeFilter: AttributeFilter): InterfaceFilterChip[] {
-    const selectedConcepts = attributeFilter.getConcept().getSelectedConcepts();
+    const selectedConcepts = attributeFilter.getConcept()?.getSelectedConcepts();
     const filterChips: InterfaceFilterChip[] = [];
 
-    selectedConcepts.forEach((concept: TerminologyCode) => {
-      filterChips.push({
-        type: FilterTypes.CONCEPT,
-        data: [
-          {
-            id: uuidv4(),
-            text: concept.getDisplay(),
-            expanded: false,
-          },
-        ],
+    if (selectedConcepts) {
+      selectedConcepts.forEach((concept: TerminologyCode) => {
+        filterChips.push({
+          type: FilterTypes.CONCEPT,
+          data: [
+            {
+              id: uuidv4(),
+              text: concept.getDisplay(),
+              expanded: false,
+            },
+          ],
+        });
       });
-    });
-
+    }
     return filterChips;
   }
 
@@ -198,7 +199,7 @@ export class FilterChipService {
 
   getFilterChipsQuantity(criterion: Criterion) {
     const currentChips = this.filterChipsSubject.getValue();
-    if (criterion.getValueFilters()[0]?.getQuantity().getComparator()) {
+    if (criterion.getValueFilters()[0]?.getQuantity()?.getComparator()) {
       const newChips = FilterChipAdapter.adaptQuantity(criterion);
       this.updateChips(currentChips, newChips);
     }

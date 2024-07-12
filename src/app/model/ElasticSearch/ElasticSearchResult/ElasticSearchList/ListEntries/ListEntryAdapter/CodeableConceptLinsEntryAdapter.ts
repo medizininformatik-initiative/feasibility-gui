@@ -19,6 +19,7 @@ export class CodeableConceptLinsEntryAdapter {
         entry.getTerminologyCode().getCode(),
       ],
       hasCheckbox: true,
+      isCheckboxSelected: entry.getIsSelected(),
       isClickable: false,
       checkboxColumnIndex: 0,
       originalEntry: entry,
