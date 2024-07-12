@@ -150,7 +150,7 @@ export class BackendService {
   ): Observable<{ totalHits: number; results: any[] }> {
     const limitParameter = limit ? '&pageSize=' + limit : '';
     const offsetParameter = offset ? '&page=' + offset : '';
-    const encodedCommaSeperatedValueSets = '&valueSets' + encodeURI(valueSets.join(','));
+    const encodedCommaSeperatedValueSets = '&valueSets' + encodeURI([valueSets].join(','));
     return this.http.get<{ totalHits: number; results: any[] }>(
       this.createUrl(
         BackendService.PATH_TERMINOLOGY_SEARCH_CONCEPT +
@@ -171,7 +171,8 @@ export class BackendService {
   ): Observable<{ totalHits: number; results: any[] }> {
     const limitParameter = limit ? '&pageSize=' + limit : '';
     const offsetParameter = offset ? '&page=' + offset : '';
-    const encodedCommaSeperatedCriteriaSets = '&criteriaSets=' + encodeURI(criteriaSets.join(','));
+
+    const encodedCommaSeperatedCriteriaSets = '&criteriaSets=' + encodeURI([criteriaSets].join(','));
     return this.http.get<{ totalHits: number; results: any[] }>(
       this.createUrl(
         BackendService.PATH_TERMINOLOGY_SEARCH +
