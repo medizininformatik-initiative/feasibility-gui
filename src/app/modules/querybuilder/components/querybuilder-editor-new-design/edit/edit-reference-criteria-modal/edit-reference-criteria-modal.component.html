@@ -1,10 +1,11 @@
-<div fxLayout="column" class="container">
-  <num-searchbar (searchTextChange)="startElasticSearch($event)"></num-searchbar>
-  <num-result-list
-    *ngIf="listItems.length > 0 && adaptedData"
-    class="result-list-container"
-    [tableData]="adaptedData"
-    [searchTermResultList]="listItems"
-    (selectedRow)="setSelectedConcept($event)"
-  ></num-result-list>
+<div
+  fxLayout="column"
+  class="container"
+  *ngFor="let attributeFilter of criterion.getAttributeFilters()"
+>
+  <num-reference [referenceFilter]="attributeFilter.getReference()"></num-reference>
+</div>
+
+<div fxLayout="column" class="container" *ngFor="let valueFilter of criterion.getValueFilters()">
+  <num-reference [referenceFilter]="attributeFilter.getReference()"></num-reference>
 </div>

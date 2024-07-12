@@ -39,6 +39,7 @@ import { BeforeFilterComponent } from './components/querybuilder-editor-new-desi
 import { BetweenFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-time-restriction/between-filter/between-filter.component';
 import { AllowedUnitsComponent } from './components/querybuilder-editor-new-design/edit/edit-attributes/quantity/allowed-units/allowed-units.component';
 import { QuantityComparisionSelectComponent } from './components/querybuilder-editor-new-design/edit/edit-attributes/quantity/quantity-comparision-select/quantity-comparision-select.component';
+import { ReferenceComponent } from './components/querybuilder-editor-new-design/edit/edit-attributes/reference/reference.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -81,6 +82,7 @@ export const FORMATS_GERMAN = {
     BetweenFilterComponent,
     AllowedUnitsComponent,
     QuantityComparisionSelectComponent,
+    ReferenceComponent,
   ],
   imports: [
     CommonModule,
