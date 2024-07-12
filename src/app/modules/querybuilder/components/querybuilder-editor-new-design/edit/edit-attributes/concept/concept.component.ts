@@ -60,14 +60,9 @@ export class ConceptComponent implements OnDestroy, OnInit {
   }
 
   setSelectedConcept(item) {
-    const terminologyCode = new TerminologyCode(
-      item.originalEntry.terminologyCode.getCode(),
-      item.originalEntry.terminologyCode.getDisplay(),
-      item.originalEntry.terminologyCode.getSystem(),
-      item.originalEntry.terminologyCode.getVersion()
-    );
-
-    if (this.attributeFilter && this.attributeFilter.getConcept()) {
+    item.originalEntry.setIsSelected(true);
+    const terminologyCode = this.createNewTerminologyCode(item.originalEntry.terminologyCode);
+    if (this.attributeFilter && this.attributeFilter.getConcept().getSelectedConcepts()) {
       const existingConceptSet = this.attributeFilter.getConcept().getSelectedConcepts();
       existingConceptSet.add(terminologyCode);
       this.attributeFilter.getConcept().setSelectedConcepts(existingConceptSet);
@@ -76,6 +71,15 @@ export class ConceptComponent implements OnDestroy, OnInit {
       this.attributeFilter.getConcept().setSelectedConcepts(selectedConceptSet);
     }
     this.changedAttributeFilter.emit(this.attributeFilter);
+  }
+
+  createNewTerminologyCode(terminologyCode: TerminologyCode) {
+    return new TerminologyCode(
+      terminologyCode.getCode(),
+      terminologyCode.getDisplay(),
+      terminologyCode.getSystem(),
+      terminologyCode.getVersion()
+    );
   }
 
   ngOnDestroy(): void {
