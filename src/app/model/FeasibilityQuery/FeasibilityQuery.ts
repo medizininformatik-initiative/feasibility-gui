@@ -27,21 +27,40 @@ import { Criterion } from './Criterion/Criterion';
  * Represents a query with display name, consent, inclusion criteria, and exclusion criteria.
  */
 export class FeasibilityQuery {
+  private consent = false;
   private display: string;
   private version = '';
-  private inclusionCriteria: Criterion[][];
-  private exclusionCriteria: Criterion[][];
+  private inclusionCriteria: string[][];
+  private exclusionCriteria: string[][];
 
   /**
    * Constructor to initialize the Query with display and consent.
    *
    * @param display - The display name of the query.
-   * @param consent - The consent status of the query.
    */
-  constructor(display: string = 'Ausgewählte Merkmale') {
+  constructor(display: string = 'Ausgewählte Merkmale', consent: boolean = false) {
+    this.consent = consent;
     this.display = display;
     this.inclusionCriteria = [];
     this.exclusionCriteria = [];
+  }
+
+  /**
+   * Gets the consent name of the query.
+   *
+   * @returns The consent name of the query.
+   */
+  getConsent(): boolean {
+    return this.consent;
+  }
+
+  /**
+   * Sets the consent name of the query.
+   *
+   * @param consent - The new consent name of the query.
+   */
+  setConsent(consent: boolean): void {
+    this.consent = consent;
   }
 
   /**
@@ -67,7 +86,7 @@ export class FeasibilityQuery {
    *
    * @returns The inclusion criteria of the query.
    */
-  getInclusionCriteria(): Criterion[][] {
+  getInclusionCriteria(): string[][] {
     return this.inclusionCriteria;
   }
 
@@ -76,7 +95,7 @@ export class FeasibilityQuery {
    *
    * @param inclusionCriteria - The new inclusion criteria of the query.
    */
-  setInclusionCriteria(inclusionCriteria: Criterion[][]): void {
+  setInclusionCriteria(inclusionCriteria: string[][]): void {
     this.inclusionCriteria = inclusionCriteria;
   }
 
@@ -85,7 +104,7 @@ export class FeasibilityQuery {
    *
    * @returns The exclusion criteria of the query.
    */
-  getExclusionCriteria(): Criterion[][] {
+  getExclusionCriteria(): string[][] {
     return this.exclusionCriteria;
   }
 
@@ -94,7 +113,7 @@ export class FeasibilityQuery {
    *
    * @param exclusionCriteria - The new exclusion criteria of the query.
    */
-  setExclusionCriteria(exclusionCriteria: Criterion[][]): void {
+  setExclusionCriteria(exclusionCriteria: string[][]): void {
     this.exclusionCriteria = exclusionCriteria;
   }
 }
