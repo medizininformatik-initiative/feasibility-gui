@@ -13,7 +13,6 @@ import { FeasibilityQueryProviderService } from 'src/app/service/Provider/Feasib
 export class DisplayGroupComponent implements OnInit, OnDestroy {
   @Input() groupType: string;
 
-  critType = 'inclusion';
   criteriaArray$: Observable<Criterion[][]>;
   private querySubscription: Subscription;
 
@@ -24,12 +23,10 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
       .getFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
         if (this.groupType === 'Inclusion') {
-          this.critType = 'inclusion';
           this.criteriaArray$ = this.queryService
             .getFeasibilityQuery()
             .pipe(map((queryObject) => queryObject.getInclusionCriteria()));
         } else if (this.groupType === 'Exclusion') {
-          this.critType = 'exclusion';
           this.criteriaArray$ = this.queryService
             .getFeasibilityQuery()
             .pipe(map((queryObject) => queryObject.getExclusionCriteria()));
@@ -48,54 +45,50 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   }
 
   getInnerLabelKey(): 'AND' | 'OR' {
-    return this.critType === 'inclusion' ? 'OR' : 'AND';
+    return this.groupType === 'Inclusion' ? 'OR' : 'AND';
   }
 
   getOuterLabelKey(): 'AND' | 'OR' {
-    return this.critType === 'exclusion' ? 'OR' : 'AND';
+    return this.groupType === 'Exclusion' ? 'OR' : 'AND';
   }
 
   splitInnerArray(i: number, j: number): void {
     console.log('split');
-    let tempQuery: FeasibilityQuery = new FeasibilityQuery();
+    let tempcrit: Criterion[][];
 
     this.queryService
       .getFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
-        if (this.critType === 'inclusion') {
-          tempQuery = query;
+        if (this.groupType === 'Inclusion') {
+          tempcrit = this.splitInnerArray2(query.getInclusionCriteria(), i, j);
         }
-        if (this.critType === 'exclusion') {
-          this.queryService.setExclusionCriteria(
-            this.splitInnerArray2(query.getExclusionCriteria(), i, j)
-          );
+        if (this.groupType === 'Exclusion') {
+          tempcrit = this.splitInnerArray2(query.getExclusionCriteria(), i, j);
         }
         //this.switch.emit(this.critGroup);
       })
       .unsubscribe();
-    this.queryService.setInclusionCriteria(
-      this.splitInnerArray2(tempQuery.getInclusionCriteria(), i, j)
-    );
+    this.queryService.setInclusionCriteria(tempcrit);
   }
 
   joinInnerArrays(i: number): void {
     console.log('join');
+    console.log(this.groupType);
+    let tempcrit: Criterion[][];
+
     this.queryService
       .getFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
-        if (this.critType === 'inclusion') {
-          this.queryService.setInclusionCriteria(
-            this.joinInnerArrays2(query.getInclusionCriteria(), i)
-          );
+        if (this.groupType === 'Inclusion') {
+          tempcrit = this.joinInnerArrays2(query.getInclusionCriteria(), i);
         }
-        if (this.critType === 'exclusion') {
-          this.queryService.setExclusionCriteria(
-            this.joinInnerArrays2(query.getExclusionCriteria(), i)
-          );
+        if (this.groupType === 'Exclusion') {
+          tempcrit = this.joinInnerArrays2(query.getExclusionCriteria(), i);
         }
       })
       .unsubscribe();
-    //this.critGroup = CritGroupArranger.joinInnerArrays(this.critGroup, i);
+    this.queryService.setInclusionCriteria(tempcrit);
+
     //this.switch.emit(this.critGroup);
   }
 
