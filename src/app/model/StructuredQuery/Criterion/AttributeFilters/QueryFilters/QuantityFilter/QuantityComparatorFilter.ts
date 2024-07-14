@@ -1,6 +1,6 @@
-import { Comparator } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { FilterTypes } from 'src/app/model/FilterTypes';
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
+import { Comparator } from 'src/app/model/Comparator';
 
 export class QuantityComparatorFilter extends AbstractQuantityFilter {
   comparator: Comparator = Comparator.NONE;

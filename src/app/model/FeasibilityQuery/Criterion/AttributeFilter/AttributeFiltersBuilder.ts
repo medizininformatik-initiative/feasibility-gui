@@ -3,7 +3,7 @@ import { AttributeFilter } from './AttributeFilter';
 import { ConceptFilter } from './Concept/ConceptFilter';
 import { FilterTypes } from 'src/app/model/FilterTypes';
 import { QuantityNotSet } from './Quantity/QuantityNotSet';
-import { QuantityUnit } from '../../../QuantityUnit';
+import { QuantityUnit } from '../../../FeasibilityQuery/QuantityUnit';
 import { ReferenceCriterion } from '../ReferenceCriterion';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
 import { TerminologyCode } from '../../../Terminology/TerminologyCode';

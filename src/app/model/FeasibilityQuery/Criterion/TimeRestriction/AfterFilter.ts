@@ -3,10 +3,10 @@ import { TimeRestrictionType } from '../../TimeRestriction';
 
 export class AfterFilter extends AbstractTimeRestriction {
   afterDate: string;
-  readonly type: TimeRestrictionType = TimeRestrictionType.AFTER;
+  protected readonly type: TimeRestrictionType = TimeRestrictionType.AFTER;
 
   constructor(afterDate: string) {
-    super();
+    super(afterDate);
     this.afterDate = afterDate;
   }
 

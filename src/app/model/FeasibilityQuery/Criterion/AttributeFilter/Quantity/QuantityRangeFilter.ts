@@ -1,6 +1,6 @@
-import { QuantityUnit } from 'src/app/model/QuantityUnit';
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
 import { FilterTypes } from 'src/app/model/FilterTypes';
+import { QuantityUnit } from '../../../QuantityUnit';
 
 /**
  * Class representing a QuantityRangeFilter.
@@ -8,7 +8,7 @@ import { FilterTypes } from 'src/app/model/FilterTypes';
 export class QuantityRangeFilter extends AbstractQuantityFilter {
   private minValue: number | null = null;
   private maxValue: number | null = null;
-  private readonly type: FilterTypes = FilterTypes.QUANTITY_RANGE;
+  protected readonly type: FilterTypes = FilterTypes.QUANTITY_RANGE;
 
   /**
    * Creates an instance of QuantityRangeFilter.
