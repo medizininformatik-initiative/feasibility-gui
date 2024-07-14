@@ -13,16 +13,16 @@ import { FeasibilityQueryProviderService } from 'src/app/service/Provider/Feasib
 export class DisplayGroupComponent implements OnInit, OnDestroy {
   @Input() groupType: string;
 
-  criteriaArray$: Observable<Criterion[][]>;
+  criteriaArray$: Observable<string[][]>;
   private querySubscription: Subscription;
 
   constructor(
     private queryService: FeasibilityQueryProviderService,
-    private criterionProvider: CriterionProviderService
+    public criterionProvider: CriterionProviderService
   ) {}
 
   ngOnInit() {
-    /*this.querySubscription = this.queryService
+    this.querySubscription = this.queryService
       .getFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
         if (this.groupType === 'Inclusion') {
@@ -34,7 +34,7 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
             .getFeasibilityQuery()
             .pipe(map((queryObject) => queryObject.getExclusionCriteria()));
         }
-      });*/
+      });
   }
 
   private flattenCriteria(criteria: string[][]): Criterion[] {
@@ -57,7 +57,7 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
 
   splitInnerArray(i: number, j: number): void {
     console.log('split');
-    let tempcrit: Criterion[][];
+    let tempcrit: string[][];
 
     this.queryService
       .getFeasibilityQuery()
@@ -77,7 +77,7 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   joinInnerArrays(i: number): void {
     console.log('join');
     console.log(this.groupType);
-    let tempcrit: Criterion[][];
+    let tempcrit: string[][];
 
     this.queryService
       .getFeasibilityQuery()
@@ -95,8 +95,8 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
     //this.switch.emit(this.critGroup);
   }
 
-  public splitInnerArray2(critGroup: Criterion[][], i: number, j: number): Criterion[][] {
-    const critGroupTemp: Criterion[][] = [];
+  public splitInnerArray2(critGroup: string[][], i: number, j: number): string[][] {
+    const critGroupTemp: string[][] = [];
 
     let index = 0;
     critGroup.forEach((subarray) => {
@@ -112,8 +112,8 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
     return critGroupTemp;
   }
 
-  public joinInnerArrays2(critGroup: Criterion[][], i: number): Criterion[][] {
-    const critGroupTemp: Criterion[][] = [];
+  public joinInnerArrays2(critGroup: string[][], i: number): string[][] {
+    const critGroupTemp: string[][] = [];
 
     let index = 0;
     let subarrayTemp;

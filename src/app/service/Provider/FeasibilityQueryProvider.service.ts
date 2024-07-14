@@ -70,15 +70,13 @@ export class FeasibilityQueryProviderService {
     this.setFeasibilityQuery(updatedQuery);
   }
 
-  public setInclusionCriteria(criteria: Criterion[][]): void {
+  public setInclusionCriteria(criteria: string[][]): void {
     this.feasibilityQuery.value.setInclusionCriteria(criteria);
     this.feasibilityQuery.next(this.feasibilityQuery.value);
   }
 
-  public setExclusionCriteria(criteria: Criterion[][]): void {
+  public setExclusionCriteria(criteria: string[][]): void {
     this.feasibilityQuery.value.setExclusionCriteria(criteria);
     this.feasibilityQuery.next(this.feasibilityQuery.value);
   }
-
-  public addCriterionToFQ(criterion: Criterion, inex: string): void {}
 }

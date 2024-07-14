@@ -3,7 +3,9 @@
     *ngFor="let criterionInnerArray of criteriaArray$ | async; let lastOuter = last; let i = index"
   >
     <div *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index">
-      <num-criteria-box [criterion]="criterion"></num-criteria-box>
+      <num-criteria-box
+        [criterion]="criterionProvider.getCriterionByUID(criterion)"
+      ></num-criteria-box>
       <ng-container>
         <num-bool-logic-switch
           [position]="'inner'"

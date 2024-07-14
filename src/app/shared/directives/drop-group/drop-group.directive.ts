@@ -14,7 +14,7 @@ import { StageProviderService } from '../../../service/Provider/StageProvider.se
 export class DropGroupDirective {
   @Input() groupType: string;
 
-  criteria: Criterion[][] = [];
+  criteria: string[][] = [];
   feasibilityQuery: FeasibilityQuery = new FeasibilityQuery();
   querySubscription: Subscription;
   constructor(
@@ -39,16 +39,17 @@ export class DropGroupDirective {
   }
 
   private handleInclusionDrop(event: CdkDragDrop<any[]>): void {
-    const droppedCriterion: Criterion = event.item.data;
+    const droppedCriterion: string = event.item.data;
 
     console.log('dropped in');
+    console.log(event.item.data);
     this.criteria = this.feasibilityQuery.getInclusionCriteria();
     this.criteria.push([droppedCriterion]);
     this.queryProviderService.setInclusionCriteria(this.criteria);
     console.log(this.feasibilityQuery.getInclusionCriteria());
 
     //this.criterionProviderService.setCriterionByUID(droppedCriterion);
-    this.stageProviderService.deleteCriterionByUID(droppedCriterion.getUniqueID());
+    this.stageProviderService.deleteCriterionByUID(droppedCriterion);
     /* this.criterionProviderService.getCriterionUIDMap().subscribe((map) => {
         console.log('map')
         console.log(map)
@@ -56,7 +57,7 @@ export class DropGroupDirective {
     console.log(event);
   }
   private handleExclusionDrop(event: CdkDragDrop<any[]>): void {
-    const droppedCriterion: Criterion = event.item.data;
+    const droppedCriterion: string = event.item.data;
     console.log('dropped ex');
     this.criteria = this.feasibilityQuery.getExclusionCriteria();
     this.criteria.push([droppedCriterion]);
@@ -64,6 +65,6 @@ export class DropGroupDirective {
     console.log(this.feasibilityQuery.getExclusionCriteria());
     //this.criterionProviderService.setCriterionByUID(droppedCriterion);
     //this.criterionProviderService.deleteCriterionByUID(droppedCriterion.getUniqueID());
-    this.stageProviderService.deleteCriterionByUID(droppedCriterion.getUniqueID());
+    this.stageProviderService.deleteCriterionByUID(droppedCriterion);
   }
 }
