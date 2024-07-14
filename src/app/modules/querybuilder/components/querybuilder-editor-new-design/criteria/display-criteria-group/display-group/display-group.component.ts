@@ -13,7 +13,8 @@ import { FeasibilityQueryProviderService } from 'src/app/service/Provider/Feasib
 export class DisplayGroupComponent implements OnInit, OnDestroy {
   @Input() groupType: string;
 
-  criteriaArray$: Observable<Criterion[]>;
+  critType = 'inclusion';
+  criteriaArray$: Observable<Criterion[][]>;
   private querySubscription: Subscription;
 
   constructor(private queryService: FeasibilityQueryProviderService) {}
@@ -23,13 +24,15 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
       .getFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
         if (this.groupType === 'Inclusion') {
+          this.critType = 'inclusion';
           this.criteriaArray$ = this.queryService
             .getFeasibilityQuery()
-            .pipe(map((queryObject) => this.flattenCriteria(queryObject.getInclusionCriteria())));
+            .pipe(map((queryObject) => queryObject.getInclusionCriteria()));
         } else if (this.groupType === 'Exclusion') {
+          this.critType = 'exclusion';
           this.criteriaArray$ = this.queryService
             .getFeasibilityQuery()
-            .pipe(map((queryObject) => this.flattenCriteria(queryObject.getExclusionCriteria())));
+            .pipe(map((queryObject) => queryObject.getExclusionCriteria()));
         }
       });
   }
@@ -42,6 +45,94 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
     if (this.querySubscription) {
       this.querySubscription.unsubscribe();
     }
+  }
+
+  getInnerLabelKey(): 'AND' | 'OR' {
+    return this.critType === 'inclusion' ? 'OR' : 'AND';
+  }
+
+  getOuterLabelKey(): 'AND' | 'OR' {
+    return this.critType === 'exclusion' ? 'OR' : 'AND';
+  }
+
+  splitInnerArray(i: number, j: number): void {
+    console.log('split');
+    let tempQuery: FeasibilityQuery = new FeasibilityQuery();
+
+    this.queryService
+      .getFeasibilityQuery()
+      .subscribe((query: FeasibilityQuery) => {
+        if (this.critType === 'inclusion') {
+          tempQuery = query;
+        }
+        if (this.critType === 'exclusion') {
+          this.queryService.setExclusionCriteria(
+            this.splitInnerArray2(query.getExclusionCriteria(), i, j)
+          );
+        }
+        //this.switch.emit(this.critGroup);
+      })
+      .unsubscribe();
+    this.queryService.setInclusionCriteria(
+      this.splitInnerArray2(tempQuery.getInclusionCriteria(), i, j)
+    );
+  }
+
+  joinInnerArrays(i: number): void {
+    console.log('join');
+    this.queryService
+      .getFeasibilityQuery()
+      .subscribe((query: FeasibilityQuery) => {
+        if (this.critType === 'inclusion') {
+          this.queryService.setInclusionCriteria(
+            this.joinInnerArrays2(query.getInclusionCriteria(), i)
+          );
+        }
+        if (this.critType === 'exclusion') {
+          this.queryService.setExclusionCriteria(
+            this.joinInnerArrays2(query.getExclusionCriteria(), i)
+          );
+        }
+      })
+      .unsubscribe();
+    //this.critGroup = CritGroupArranger.joinInnerArrays(this.critGroup, i);
+    //this.switch.emit(this.critGroup);
+  }
+
+  public splitInnerArray2(critGroup: Criterion[][], i: number, j: number): Criterion[][] {
+    const critGroupTemp: Criterion[][] = [];
+
+    let index = 0;
+    critGroup.forEach((subarray) => {
+      if (index === i) {
+        critGroupTemp.push(subarray.slice(0, j + 1));
+        critGroupTemp.push(subarray.slice(j + 1));
+      } else {
+        critGroupTemp.push(subarray);
+      }
+      index++;
+    });
+
+    return critGroupTemp;
+  }
+
+  public joinInnerArrays2(critGroup: Criterion[][], i: number): Criterion[][] {
+    const critGroupTemp: Criterion[][] = [];
+
+    let index = 0;
+    let subarrayTemp;
+    critGroup.forEach((subarray) => {
+      if (index === i) {
+        subarrayTemp = subarray;
+      } else if (index === i + 1) {
+        critGroupTemp.push(subarrayTemp.concat(subarray));
+      } else {
+        critGroupTemp.push(subarray);
+      }
+      index++;
+    });
+
+    return critGroupTemp;
   }
 
   /*dropped(event: CdkDragDrop<Criterion[]>) {

@@ -4,6 +4,7 @@ import { CriterionProviderService } from 'src/app/service/Provider/CriterionProv
 import { map, Observable, of, Subscription } from 'rxjs';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
 
 @Component({
   selector: 'num-criteria',
@@ -11,7 +12,7 @@ import { FeasibilityQueryProviderService } from 'src/app/service/Provider/Feasib
   styleUrls: ['./criteria-stage.component.scss'],
 })
 export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
-  public $criterionUIDMap: Observable<Map<string, Criterion>>;
+  public $criterionUIDMap: Observable<Array<string>>;
   public $criteriaArray: Observable<Criterion[]> = of([]);
   private subscription: Subscription;
   $feasibilityQuery: Observable<FeasibilityQuery>;
@@ -20,6 +21,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
     public elementRef: ElementRef,
     private criterionProviderService: CriterionProviderService,
     private queryProviderService: FeasibilityQueryProviderService,
+    private stageProviderService: StageProviderService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
@@ -36,10 +38,24 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   }
 
   getCriterionUIDMap() {
-    this.$criterionUIDMap = this.criterionProviderService.getCriterionUIDMap();
+    this.$criterionUIDMap = this.stageProviderService.getStageUIDArray();
     this.$criteriaArray = this.$criterionUIDMap.pipe(
-      map((criterionMap: Map<string, Criterion>) => Array.from(criterionMap.values()))
+      map((criterionMap: string[]) =>
+        criterionMap.map((uid) => this.criterionProviderService.getCriterionByUID(uid))
+      )
     );
+    this.$criterionUIDMap.subscribe((bla) => {
+      console.log('map');
+      console.log(bla);
+    });
+    this.criterionProviderService.getCriterionUIDMap().subscribe((bla2) => {
+      console.log('criteria');
+      console.log(bla2);
+    });
+    this.$criteriaArray.subscribe((test) => {
+      console.log('stage');
+      console.log(test);
+    });
   }
 
   getFeasibilityQuery() {

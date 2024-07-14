@@ -24,6 +24,8 @@ export class DisplayCriteriaGroupComponent implements OnInit {
     this.querySubscription = this.queryProviderService.getFeasibilityQuery().subscribe((query) => {
       if (this.groupType === 'Inclusion') {
         this.droppedItems = this.flattenCriteria(query.getInclusionCriteria());
+        console.log('oninit');
+        console.log(query.getInclusionCriteria());
       } else if (this.groupType === 'Exclusion') {
         this.droppedItems = this.flattenCriteria(query.getExclusionCriteria());
       }

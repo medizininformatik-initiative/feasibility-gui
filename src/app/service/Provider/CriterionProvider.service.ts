@@ -15,7 +15,7 @@ export class CriterionProviderService {
   );
 
   constructor(private queryService: FeasibilityQueryProviderService) {
-    this.initCriterionMap();
+    //this.initCriterionMap();
   }
 
   /**
@@ -60,7 +60,7 @@ export class CriterionProviderService {
   /**
    * Initializes the criterion map from the current feasibility query.
    */
-  private initCriterionMap(): void {
+  /*private initCriterionMap(): void {
     this.queryService
       .getFeasibilityQuery()
       .pipe(
@@ -92,5 +92,5 @@ export class CriterionProviderService {
           console.error('Error updating criterion map:', error);
         },
       });
-  }
+  }*/
 }

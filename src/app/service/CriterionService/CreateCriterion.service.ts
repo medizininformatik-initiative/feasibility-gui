@@ -161,39 +161,9 @@ export class CreateCriterionService {
     this.stageProviderService
       .getStageUIDArray()
       .subscribe((ausgabe) => {
-        console.log(ausgabe);
+        //console.log(ausgabe);
       })
       .unsubscribe();
-    console.log(this.getCriterionHash());
-  }
-  public getCriterionHash(): string {
-    const termcode = {
-      code: '1234',
-      system: 'http://fhir.de/CodeSystem/bfarm/icd-10-gm',
-      version: '2024',
-      display: 'Testkriterion',
-    };
-    let contextVersion = '';
-    let contextSystem = '';
-    let contextCode = '';
-    let termcodeVersion = '';
-    contextSystem = 'fdpg.mii.cds';
-    contextCode = 'KontextCode';
-    contextVersion = '1.0.0';
-
-    if (termcode.version) {
-      termcodeVersion = termcode.version;
-    }
-
-    const contextTermcodeHashInput =
-      contextSystem +
-      contextCode +
-      contextVersion +
-      termcode.system +
-      termcode.code +
-      termcodeVersion;
-
-    return uuidv3(contextTermcodeHashInput, BackendService.BACKEND_UUID_NAMESPACE);
   }
 
   private createMandatoryFields(criteriaProfileData: CriteriaProfileData): {

@@ -29,8 +29,8 @@ import { Criterion } from './Criterion/Criterion';
 export class FeasibilityQuery {
   private display: string;
   private version = '';
-  private inclusionCriteria: Criterion[][];
-  private exclusionCriteria: Criterion[][];
+  inclusionCriteria: Criterion[][];
+  exclusionCriteria: Criterion[][];
 
   /**
    * Constructor to initialize the Query with display and consent.
