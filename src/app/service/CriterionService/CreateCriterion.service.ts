@@ -2,26 +2,33 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionHashService } from './CriterionHash.service';
 import { CriterionProviderService } from '../Provider/CriterionProvider.service';
 //import { CritGroupPosition } from 'src/app/modules/querybuilder/controller/CritGroupArranger';
 import { FeatureService } from '../Feature.service';
 import { Injectable } from '@angular/core';
 //import { LoadUIProfileService } from '../LoadUIProfile.service';
-import { finalize, Observable, of, Subject, switchMap, take } from 'rxjs';
+import { finalize, of, switchMap, take } from 'rxjs';
 import { SearchResultListItemSelectionService } from '../ElasticSearch/SearchTermListItemService.service';
 //import { TerminologyCode, TerminologyEntry } from 'src/app/model/terminology/TerminologyCode';
-import { TimeRestriction } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { AttributeDefinitions } from 'src/app/model/AttributeDefinitions';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { QuantityUnit } from 'src/app/model/QuantityUnit';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { InterfaceListEntry } from '../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
 import { StageProviderService } from '../Provider/StageProvider.service';
-import { v3 as uuidv3 } from 'uuid';
+import { UIQuery2StructuredQueryTranslatorService } from '../UIQuery2StructuredQueryTranslator.service';
+import { QuantityRangeFilter } from '../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
+import { QuantityUnit } from '../../model/FeasibilityQuery/QuantityUnit';
+import { QuantityComparatorFilter } from '../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
+import { Comparator } from '../../model/Comparator';
+import { AtFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AtFilter';
+import { AfterFilter } from '../../model/FeasibilityQuery/Criterion/TimeRestriction/AfterFilter';
+import { AttributeFiltersBuilder } from '../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFiltersBuilder';
+import { FilterTypes } from '../../model/FilterTypes';
+import { ReferenceCriterion } from '../../model/FeasibilityQuery/Criterion/ReferenceCriterion';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -35,7 +42,8 @@ export class CreateCriterionService {
     private backend: BackendService,
     private listItemService: SearchResultListItemSelectionService<InterfaceListEntry>,
     private criterionService: CriterionProviderService,
-    private stageProviderService: StageProviderService
+    private stageProviderService: StageProviderService,
+    private translator: UIQuery2StructuredQueryTranslatorService
   ) {}
 
   public translateListItemsToCriterions() {
@@ -111,7 +119,7 @@ export class CreateCriterionService {
           attributeDefinition.allowedUnits?.map(
             (unit) => new QuantityUnit(unit.code, unit.display, unit.system)
           ) || [],
-          !!uiProfile.valueDefinition,
+          false,
           attributeDefinition.attributeCode,
           attributeDefinition.max,
           attributeDefinition.min,
@@ -156,17 +164,13 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion = criterionBuilder.buildCriterion();
+
     this.criterionService.setCriterionByUID(criterion);
     this.stageProviderService.addCriterionToStage(criterion.getUniqueID());
-    this.stageProviderService
-      .getStageUIDArray()
-      .subscribe((ausgabe) => {
-        //console.log(ausgabe);
-      })
-      .unsubscribe();
   }
 
   private createMandatoryFields(criteriaProfileData: CriteriaProfileData): {
+    hasReference: false
     context: TerminologyCode
     criterionHash: string
     display: string
@@ -179,6 +183,7 @@ export class CreateCriterionService {
     const display = criteriaProfileData.getTermCodes()[0].getDisplay();
 
     return {
+      hasReference: false,
       context,
       criterionHash: this.criterionHashService.createHash(context, termCodes[0]),
       display,

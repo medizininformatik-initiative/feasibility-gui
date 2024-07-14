@@ -18,6 +18,7 @@ export abstract class AbstractCriterion {
   private timeRestriction?: AbstractTimeRestriction;
   private uniqueID?: string;
   private valueFilters?: Array<ValueFilter> = [];
+  private hasReference = false;
 
   /**
    * Constructor for AbstractCriterion.
@@ -34,6 +35,7 @@ export abstract class AbstractCriterion {
    * @param valueFilters - Array of ValueFilter objects.
    */
   constructor(
+    hasReference: boolean,
     attributeFilters?: Array<AttributeFilter>,
     context?: TerminologyCode,
     criterionHash?: string,
@@ -50,11 +52,28 @@ export abstract class AbstractCriterion {
     this.criterionHash = criterionHash;
     this.display = display;
     this.isInvalid = isInvalid;
+    this.hasReference = hasReference;
     this.position = position;
     this.termCodes = termCodes;
     this.timeRestriction = timeRestriction;
     this.uniqueID = uniqueID;
     this.valueFilters = valueFilters;
+  }
+
+  /**
+   *
+   * @param hasRefrence
+   */
+  setHasReference(hasReference: boolean) {
+    this.hasReference = hasReference;
+  }
+
+  /**
+   *
+   * @returns
+   */
+  getHasReference(): boolean {
+    return this.hasReference;
   }
 
   /**
@@ -234,10 +253,7 @@ export abstract class AbstractCriterion {
    *
    * @returns Array of ValueFilter objects or false if valueFilters is undefined.
    */
-  getValueFilters(): Array<ValueFilter> | boolean {
-    if (this.valueFilters === undefined) {
-      return false;
-    }
+  getValueFilters(): Array<ValueFilter> {
     return this.valueFilters;
   }
 

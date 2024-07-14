@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { FeasibilityQueryProviderService } from './FeasibilityQueryProvider.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 
 @Injectable({
   providedIn: 'root',

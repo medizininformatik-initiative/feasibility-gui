@@ -1,8 +1,8 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription, map, take } from 'rxjs';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 
 @Component({
@@ -16,10 +16,13 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   criteriaArray$: Observable<Criterion[][]>;
   private querySubscription: Subscription;
 
-  constructor(private queryService: FeasibilityQueryProviderService) {}
+  constructor(
+    private queryService: FeasibilityQueryProviderService,
+    private criterionProvider: CriterionProviderService
+  ) {}
 
   ngOnInit() {
-    this.querySubscription = this.queryService
+    /*this.querySubscription = this.queryService
       .getFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
         if (this.groupType === 'Inclusion') {
@@ -31,10 +34,10 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
             .getFeasibilityQuery()
             .pipe(map((queryObject) => queryObject.getExclusionCriteria()));
         }
-      });
+      });*/
   }
 
-  private flattenCriteria(criteria: Criterion[][]): Criterion[] {
+  private flattenCriteria(criteria: string[][]): Criterion[] {
     return Array.prototype.concat.apply([], criteria);
   }
 

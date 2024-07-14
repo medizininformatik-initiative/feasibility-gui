@@ -1,5 +1,5 @@
 import { FilterTypes } from './FilterTypes';
-import { QuantityUnit } from './QuantityUnit';
+import { QuantityUnit } from './FeasibilityQuery/QuantityUnit';
 import { TerminologyCode } from './Terminology/TerminologyCode';
 
 export class AttributeDefinitions {

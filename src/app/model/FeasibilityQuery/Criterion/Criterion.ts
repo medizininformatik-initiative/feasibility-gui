@@ -4,6 +4,7 @@ import { AttributeFilter } from './AttributeFilter/AttributeFilter';
 import { CritGroupPosition } from '../CritGroupPosition';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
+import { FilterTypes } from '../../FilterTypes';
 
 /**
  * Class representing a specific criterion that extends the abstract criterion.
@@ -24,6 +25,7 @@ export class Criterion extends AbstractCriterion {
    * @param valueFilters - Array of ValueFilter objects.
    */
   constructor(
+    hasReference: boolean,
     attributeFilters?: Array<AttributeFilter>,
     context?: TerminologyCode,
     criterionHash?: string,
@@ -36,6 +38,7 @@ export class Criterion extends AbstractCriterion {
     valueFilters?: Array<ValueFilter>
   ) {
     super(
+      hasReference,
       attributeFilters,
       context,
       criterionHash,

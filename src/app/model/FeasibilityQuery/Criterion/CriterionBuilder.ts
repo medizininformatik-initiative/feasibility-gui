@@ -12,11 +12,13 @@ import { AbstractAttributeFilters } from './AttributeFilter/AbstractAttributeFil
 import { AttributeDefinitions } from '../../AttributeDefinitions';
 import { TimeRestriction } from '../TimeRestriction';
 import { BetweenFilter } from './TimeRestriction/BetweenFilter';
+import { has } from 'lodash';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
  */
 export class CriterionBuilder {
+  private hasReference = false;
   private attributeFilters?: Array<AttributeFilter> = [];
   private context?: TerminologyCode;
   private criterionHash?: string;
@@ -30,6 +32,7 @@ export class CriterionBuilder {
 
   constructor(
     private readonly mandatoryFields: {
+      hasReference: boolean
       context: TerminologyCode
       criterionHash: string
       display: string
@@ -101,6 +104,11 @@ export class CriterionBuilder {
     return this;
   }
 
+  witHasReference(hasReference: boolean): CriterionBuilder {
+    this.hasReference = hasReference;
+    return this;
+  }
+
   /**
    * Builds a Criterion instance using the current builder configuration.
    *
@@ -108,6 +116,7 @@ export class CriterionBuilder {
    */
   buildCriterion(): Criterion {
     return new Criterion(
+      false,
       this.attributeFilters,
       this.context,
       this.criterionHash,
@@ -128,6 +137,7 @@ export class CriterionBuilder {
    */
   buildReferenceCriterion(): AbstractCriterion {
     return new ReferenceCriterion(
+      true,
       this.attributeFilters,
       this.context,
       this.criterionHash,

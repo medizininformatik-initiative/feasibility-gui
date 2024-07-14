@@ -20,21 +20,7 @@ export class DisplayCriteriaGroupComponent implements OnInit {
     private criterionProviderService: CriterionProviderService
   ) {}
 
-  ngOnInit() {
-    this.querySubscription = this.queryProviderService.getFeasibilityQuery().subscribe((query) => {
-      if (this.groupType === 'Inclusion') {
-        this.droppedItems = this.flattenCriteria(query.getInclusionCriteria());
-        console.log('oninit');
-        console.log(query.getInclusionCriteria());
-      } else if (this.groupType === 'Exclusion') {
-        this.droppedItems = this.flattenCriteria(query.getExclusionCriteria());
-      }
-    });
-  }
-
-  private flattenCriteria(criteria: Criterion[][]): Criterion[] {
-    return criteria.reduce((acc, val) => acc.concat(val), []);
-  }
+  ngOnInit() {}
 
   /*dropped(event: CdkDragDrop<any[]>, groupType) {
     this.groupType = groupType;

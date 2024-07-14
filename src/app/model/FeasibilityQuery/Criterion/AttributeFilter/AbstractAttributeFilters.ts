@@ -142,7 +142,7 @@ export abstract class AbstractAttributeFilters {
    * @returns True if the quantity filter is set, false otherwise.
    */
   isQuantitySet(): boolean {
-    return this.quantity !== undefined;
+    return this.quantity !== undefined && this.quantity.getType() !== FilterTypes.QUANTITY_NOT_SET;
   }
 
   /**

@@ -6,9 +6,9 @@ import { AbstractTimeRestriction } from './AttributeFilters/QueryFilters/TimeRes
  * @todo we need default values for all class attributes
  */
 export class StructuredQueryCriterion {
+  termCodes: Array<TerminologyCode> = [];
   attributeFilters?: Array<AbstractStructuredQueryFilters>;
   context?: TerminologyCode;
   timeRestriction?: AbstractTimeRestriction;
-  termCodes: Array<TerminologyCode> = [];
   valueFilter?: AbstractStructuredQueryFilters;
 }
