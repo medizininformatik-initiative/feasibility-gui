@@ -44,7 +44,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
         criterionMap.map((uid) => this.criterionProviderService.getCriterionByUID(uid))
       )
     );
-    this.$criterionUIDMap.subscribe((bla) => {
+    /*this.$criterionUIDMap.subscribe((bla) => {
       console.log('map');
       console.log(bla);
     });
@@ -55,7 +55,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
     this.$criteriaArray.subscribe((test) => {
       console.log('stage');
       console.log(test);
-    });
+    });*/
   }
 
   getFeasibilityQuery() {

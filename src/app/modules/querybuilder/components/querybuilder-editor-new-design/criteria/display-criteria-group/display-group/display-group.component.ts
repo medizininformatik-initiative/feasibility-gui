@@ -29,7 +29,8 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
           this.criteriaArray$ = this.queryService
             .getFeasibilityQuery()
             .pipe(map((queryObject) => queryObject.getInclusionCriteria()));
-        } else if (this.groupType === 'Exclusion') {
+        }
+        if (this.groupType === 'Exclusion') {
           this.criteriaArray$ = this.queryService
             .getFeasibilityQuery()
             .pipe(map((queryObject) => queryObject.getExclusionCriteria()));
@@ -42,9 +43,7 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.querySubscription) {
-      this.querySubscription.unsubscribe();
-    }
+    this.querySubscription?.unsubscribe();
   }
 
   getInnerLabelKey(): 'AND' | 'OR' {
@@ -57,7 +56,8 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
 
   splitInnerArray(i: number, j: number): void {
     console.log('split');
-    let tempcrit: string[][];
+    console.log(this.groupType);
+    let tempcrit: string[][] = [];
 
     this.queryService
       .getFeasibilityQuery()
@@ -71,13 +71,18 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
         //this.switch.emit(this.critGroup);
       })
       .unsubscribe();
-    this.queryService.setInclusionCriteria(tempcrit);
+    if (this.groupType === 'Inclusion') {
+      this.queryService.setInclusionCriteria(tempcrit);
+    }
+    if (this.groupType === 'Exclusion') {
+      this.queryService.setExclusionCriteria(tempcrit);
+    }
   }
 
   joinInnerArrays(i: number): void {
     console.log('join');
     console.log(this.groupType);
-    let tempcrit: string[][];
+    let tempcrit: string[][] = [];
 
     this.queryService
       .getFeasibilityQuery()
@@ -90,8 +95,12 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
         }
       })
       .unsubscribe();
-    this.queryService.setInclusionCriteria(tempcrit);
-
+    if (this.groupType === 'Inclusion') {
+      this.queryService.setInclusionCriteria(tempcrit);
+    }
+    if (this.groupType === 'Exclusion') {
+      this.queryService.setExclusionCriteria(tempcrit);
+    }
     //this.switch.emit(this.critGroup);
   }
 

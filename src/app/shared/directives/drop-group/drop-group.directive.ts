@@ -48,23 +48,18 @@ export class DropGroupDirective {
     this.queryProviderService.setInclusionCriteria(this.criteria);
     console.log(this.feasibilityQuery.getInclusionCriteria());
 
-    //this.criterionProviderService.setCriterionByUID(droppedCriterion);
     this.stageProviderService.deleteCriterionByUID(droppedCriterion);
-    /* this.criterionProviderService.getCriterionUIDMap().subscribe((map) => {
-        console.log('map')
-        console.log(map)
-      }).unsubscribe()*/
-    console.log(event);
   }
   private handleExclusionDrop(event: CdkDragDrop<any[]>): void {
     const droppedCriterion: string = event.item.data;
+
     console.log('dropped ex');
+    console.log(event.item.data);
     this.criteria = this.feasibilityQuery.getExclusionCriteria();
     this.criteria.push([droppedCriterion]);
     this.queryProviderService.setExclusionCriteria(this.criteria);
     console.log(this.feasibilityQuery.getExclusionCriteria());
-    //this.criterionProviderService.setCriterionByUID(droppedCriterion);
-    //this.criterionProviderService.deleteCriterionByUID(droppedCriterion.getUniqueID());
+
     this.stageProviderService.deleteCriterionByUID(droppedCriterion);
   }
 }
