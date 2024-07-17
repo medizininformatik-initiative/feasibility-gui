@@ -8,6 +8,8 @@ import { mapToCodeableConceptResultList } from 'src/app/service/ElasticSearch/Li
 import { Subscription } from 'rxjs';
 import { TableData } from 'src/app/model/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
 
 @Component({
   selector: 'num-concept',
@@ -20,71 +22,149 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 })
 export class ConceptComponent implements OnDestroy, OnInit {
   @Input()
-  attributeFilter: AttributeFilter;
+  conceptFilter: ConceptFilter;
 
   @Output()
-  changedAttributeFilter = new EventEmitter<AttributeFilter>();
+  changedConceptFilter = new EventEmitter<ConceptFilter>();
 
   listItems: CodeableConceptResultListEntry[] = [];
+
   adaptedData: TableData;
+
   private subscription: Subscription;
+
   searchtext = '';
+
+  selectedListEntries: CodeableConceptResultListEntry[] = [];
+
+  arrayOfSelectedConcepts: TerminologyCode[] = [];
 
   constructor(
     private elasticSearchService: ElasticSearchService<
       CodeableConceptResultList,
       CodeableConceptResultListEntry
     >
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.subscription = this.elasticSearchService
       .getSearchTermResultList()
-      .subscribe((searchTermResults) => {
+      .subscribe((searchTermResults: CodeableConceptResultList) => {
         if (searchTermResults) {
-          this.listItems = searchTermResults.results;
-          this.adaptedData = CodeableConceptLinsEntryAdapter.adapt(this.listItems);
+          this.adaptListItems(searchTermResults.results);
         }
       });
+    this.initializeArrayOfSelectedConcepts();
   }
 
-  ngOnInit() {}
-
-  startElasticSearch(searchtext: string) {
-    if (this.searchtext !== searchtext) {
-      this.searchtext = searchtext;
-      this.elasticSearchService
-        .startElasticSearch(searchtext, this.attributeFilter.getConcept().getAllowedConceptUri())
-        .subscribe((response) => {
-          this.listItems = response.results;
-        });
+  private initializeArrayOfSelectedConcepts() {
+    if (this.conceptFilter && this.conceptFilter.isSelectedConceptSet()) {
+      this.arrayOfSelectedConcepts = Array.from(this.conceptFilter.getSelectedConcepts());
     }
   }
 
-  setSelectedConcept(item) {
-    item.originalEntry.setIsSelected(true);
-    const terminologyCode = this.createNewTerminologyCode(item.originalEntry.terminologyCode);
-    if (this.attributeFilter && this.attributeFilter.getConcept().getSelectedConcepts()) {
-      const existingConceptSet = this.attributeFilter.getConcept().getSelectedConcepts();
-      existingConceptSet.add(terminologyCode);
-      this.attributeFilter.getConcept().setSelectedConcepts(existingConceptSet);
-    } else {
-      const selectedConceptSet = new Set([terminologyCode]);
-      this.attributeFilter.getConcept().setSelectedConcepts(selectedConceptSet);
-    }
-    this.changedAttributeFilter.emit(this.attributeFilter);
+  private adaptListItems(results: CodeableConceptResultListEntry[]) {
+    this.listItems = results;
+    this.listItems.forEach((listItem) => {
+      const isSelected = this.isConceptSelected(listItem.getTerminologyCode().getCode());
+      listItem.setIsSelected(isSelected);
+    });
+    this.adaptedData = CodeableConceptLinsEntryAdapter.adapt(this.listItems);
   }
 
-  createNewTerminologyCode(terminologyCode: TerminologyCode) {
-    return new TerminologyCode(
-      terminologyCode.getCode(),
-      terminologyCode.getDisplay(),
-      terminologyCode.getSystem(),
-      terminologyCode.getVersion()
-    );
+  private isConceptSelected(terminologyCode: string): boolean {
+    const selectedConcepts = this.conceptFilter.getSelectedConcepts()?.values();
+    if (selectedConcepts) {
+      for (const concept of selectedConcepts) {
+        if (concept.getCode() === terminologyCode) {
+          return true;
+        }
+      }
+      return false;
+    }
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  public startElasticSearch(searchtext: string) {
+    if (this.searchtext !== searchtext) {
+      this.searchtext = searchtext;
+      this.elasticSearchService
+        .startElasticSearch(searchtext, this.conceptFilter.getAllowedConceptUri())
+        .subscribe((response) => {
+          this.listItems = response.results;
+        });
+    }
+  }
+
+  public setSelectedRow(item: InterfaceTableDataRow) {
+    this.selectedListEntries.push(item.originalEntry as CodeableConceptResultListEntry);
+  }
+
+  public setSelectedConceptFromListItem() {
+    this.selectedListEntries.forEach((selectedListEntry) => {
+      const terminologyCode = this.createNewTerminologyCode(selectedListEntry.getTerminologyCode());
+      if (
+        !this.arrayOfSelectedConcepts.some(
+          (concept) => concept.getCode() === terminologyCode.getCode()
+        )
+      ) {
+        this.arrayOfSelectedConcepts.push(terminologyCode);
+      }
+      if (this.conceptFilter && this.conceptFilter.getSelectedConcepts()) {
+        const selectedConcepts = this.conceptFilter.getSelectedConcepts();
+        if (this.isConceptSelected(terminologyCode.getCode())) {
+          const newSet: Set<TerminologyCode> = this.createNewSetExcludingConcept(
+            selectedConcepts,
+            terminologyCode.getCode()
+          );
+          this.conceptFilter.setSelectedConcepts(newSet);
+        } else {
+          selectedConcepts.add(terminologyCode);
+        }
+      } else {
+        const selectedConceptSet = new Set([terminologyCode]);
+        this.conceptFilter.setSelectedConcepts(selectedConceptSet);
+      }
+    });
+    this.changedConceptFilter.emit(this.conceptFilter);
+  }
+
+  public removeSelectedConcept(selectedConceptFilter: TerminologyCode) {
+    const selectedConcepts = this.conceptFilter.getSelectedConcepts();
+    const newSet: Set<TerminologyCode> = this.createNewSetExcludingConcept(
+      selectedConcepts,
+      selectedConceptFilter.getCode()
+    );
+    this.conceptFilter.setSelectedConcepts(newSet);
+    this.arrayOfSelectedConcepts = Array.from(this.conceptFilter.getSelectedConcepts());
+    this.adaptListItems(this.listItems);
+  }
+
+  private createNewSetExcludingConcept(
+    set: Set<TerminologyCode>,
+    terminologyCode: string
+  ): Set<TerminologyCode> {
+    const newSet = new Set<any>();
+    for (const concept of set) {
+      if (concept.getCode() !== terminologyCode) {
+        newSet.add(concept);
+      }
+    }
+
+    return newSet;
+  }
+
+  private createNewTerminologyCode(terminologyCode: TerminologyCode) {
+    return new TerminologyCode(
+      terminologyCode.getCode(),
+      terminologyCode.getDisplay(),
+      terminologyCode.getSystem(),
+      terminologyCode.getVersion()
+    );
   }
 }
