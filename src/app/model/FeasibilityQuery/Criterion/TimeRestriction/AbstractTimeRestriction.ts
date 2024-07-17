@@ -55,4 +55,6 @@ export abstract class AbstractTimeRestriction {
   setAfterDate(afterDate: string): void {
     this.afterDate = afterDate;
   }
+
+  abstract getType();
 }

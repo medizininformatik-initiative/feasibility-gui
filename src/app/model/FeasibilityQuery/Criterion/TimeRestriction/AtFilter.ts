@@ -47,4 +47,12 @@ export class AtFilter extends AbstractTimeRestriction {
   setBeforeDate(beforeDate: string): void {
     this.beforeDate = beforeDate;
   }
+
+  /**
+   *
+   * @returns TimeRestrictionType
+   */
+  getType() {
+    return this.type;
+  }
 }

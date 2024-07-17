@@ -20,4 +20,11 @@ export class QuantityNotSet extends AbstractQuantityFilter {
   ): QuantityNotSet {
     return new QuantityNotSet(selectedUnit, allowedUnits, precision);
   }
+
+  /**
+   * @returns
+   */
+  getType(): FilterTypes {
+    return FilterTypes.QUANTITY_NOT_SET;
+  }
 }

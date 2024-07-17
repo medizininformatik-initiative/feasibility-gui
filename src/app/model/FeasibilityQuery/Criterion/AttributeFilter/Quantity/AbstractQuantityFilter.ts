@@ -86,4 +86,6 @@ export abstract class AbstractQuantityFilter {
   getComparator() {
     return this.comparator;
   }
+
+  abstract getType(): FilterTypes;
 }
