@@ -69,4 +69,13 @@ export class ConceptFilter extends AbstractConceptFilter {
   ): ConceptFilter {
     return new ConceptFilter(allowedConceptUri, selectedConcepts);
   }
+
+  /**
+   * Checks whether the selected concepts set exists.
+   *
+   * @returns True if the selected concepts set exists, otherwise false.
+   */
+  isSelectedConceptSet(): boolean {
+    return this.selectedConcepts !== undefined && this.selectedConcepts !== null;
+  }
 }
