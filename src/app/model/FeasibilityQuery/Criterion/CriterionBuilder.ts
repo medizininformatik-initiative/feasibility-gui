@@ -52,7 +52,20 @@ export class CriterionBuilder {
   }
 
   withAttributeFilter(attributeFilter: AttributeFilter): CriterionBuilder {
-    this.attributeFilters.push(attributeFilter);
+    if (this.attributeFilters.length > 0) {
+      const index = this.attributeFilters.findIndex(
+        (existingAttributeFilter) =>
+          attributeFilter.getAttributeCode()?.getCode() ===
+          existingAttributeFilter.getAttributeCode()?.getCode()
+      );
+      if (index !== -1) {
+        this.attributeFilters[index] = attributeFilter;
+      } else {
+        this.attributeFilters.push(attributeFilter);
+      }
+    } else {
+      this.attributeFilters.push(attributeFilter);
+    }
     return this;
   }
 
