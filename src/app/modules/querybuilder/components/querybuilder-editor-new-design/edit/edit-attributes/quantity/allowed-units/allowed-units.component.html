@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline" class="operator-part">
-  <mat-select (selectionChange)="onSelectionChange($event.value)">
+  <mat-select [(value)]="selectedUnitDisplay" (selectionChange)="onSelectionChange($event.value)">
     <mat-option *ngFor="let unit of allowedUnits" [value]="unit.getDisplay()">
       {{ unit.display }}
     </mat-option>

@@ -7,9 +7,15 @@
     </mat-expansion-panel-header>
     <div fxLayout="row" fxLayoutAlign="start center">
       <num-quantity-comparision-select
+        [existingOption]="quantityFilter.getComparator()"
         (selectedOption)="setSelectedQuantityFilterOption($event)"
       ></num-quantity-comparision-select>
-      <ng-container *ngIf="selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN">
+      <ng-container
+        *ngIf="
+          selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN &&
+          selectedQuantityFilterOption !== QuantityComparisonOption.NONE
+        "
+      >
         <num-quantity-range
           (quantityValues)="setSelectedQuantityValues($event)"
         ></num-quantity-range>
@@ -26,6 +32,7 @@
       </ng-container>
       <num-allowed-units
         *ngIf="selectedQuantityFilterOption !== QuantityComparisonOption.NONE"
+        [selectedUnit]="quantityFilter.getSelectedUnit()"
         [allowedUnits]="quantityFilter.getAllowedUnits()"
         (selectionChange)="setSelectQuantityFilterUnit($event)"
       >

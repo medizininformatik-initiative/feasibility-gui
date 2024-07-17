@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { QuantityComparisonOption } from 'src/app/model/QuantityFilterOptions';
 
 @Component({
@@ -8,6 +8,9 @@ import { QuantityComparisonOption } from 'src/app/model/QuantityFilterOptions';
 })
 export class QuantityComparisionSelectComponent {
   quantityFilterOptionsArray: string[] = Object.values(QuantityComparisonOption);
+
+  @Input()
+  existingOption: QuantityComparisonOption;
 
   @Output()
   selectedOption = new EventEmitter<string>();

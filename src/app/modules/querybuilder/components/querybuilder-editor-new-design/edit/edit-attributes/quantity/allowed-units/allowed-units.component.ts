@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
 
 @Component({
@@ -6,19 +14,38 @@ import { QuantityUnit } from 'src/app/model/QuantityUnit';
   templateUrl: './allowed-units.component.html',
   styleUrls: ['./allowed-units.component.scss'],
 })
-export class AllowedUnitsComponent implements OnInit {
+export class AllowedUnitsComponent implements OnInit, OnChanges {
   @Input()
   allowedUnits: QuantityUnit[] = [];
+
+  @Input()
+  selectedUnit: QuantityUnit;
 
   @Output()
   selectionChange = new EventEmitter<QuantityUnit>();
 
-  ngOnInit() {}
+  selectedUnitDisplay: string;
+
+  ngOnInit() {
+    this.updateSelectedUnitDisplay();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.selectedUnit) {
+      this.updateSelectedUnitDisplay();
+    }
+  }
+
+  updateSelectedUnitDisplay() {
+    this.selectedUnitDisplay = this.selectedUnit ? this.selectedUnit.getDisplay() : null;
+  }
 
   onSelectionChange(selectedValue: string) {
-    const selectedIndex = this.allowedUnits.findIndex((unit) => unit.getDisplay() === selectedValue);
-    if (selectedIndex > -1) {
-      this.selectionChange.emit(this.allowedUnits[selectedIndex]);
+    const selectedUnit = this.allowedUnits.find((unit) => unit.getDisplay() === selectedValue);
+    if (selectedUnit) {
+      this.selectedUnit = selectedUnit;
+      this.selectedUnitDisplay = selectedUnit.getDisplay();
+      this.selectionChange.emit(this.selectedUnit);
     }
   }
 }

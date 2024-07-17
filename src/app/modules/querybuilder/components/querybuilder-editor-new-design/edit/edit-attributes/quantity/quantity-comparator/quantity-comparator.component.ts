@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'num-quantity-comparator',
@@ -6,6 +6,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./quantity-comparator.component.scss'],
 })
 export class QuantityComparatorComponent {
+  @Input()
+  value: number;
+
   @Output()
   quantityValue = new EventEmitter<number>();
 
