@@ -7,17 +7,28 @@
     </mat-expansion-panel-header>
 
     <mat-form-field appearance="outline" class="operator-part">
-      <mat-select [(value)]="timeRestriction.type">
+      <mat-select
+        [(ngModel)]="selectedTimeRestrictionType"
+        (selectionChange)="onTimeRestrictionChange($event.value)"
+      >
         <mat-option *ngFor="let option of timeRestrictionOptions" [value]="option">
           {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.' + option | translate }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <ng-container *ngIf="timeRestriction.type === 'BETWEEN'">
+
+    <ng-container *ngIf="selectedTimeRestrictionType === 'BETWEEN'">
       <num-between-filter
         (betweenFilterChanged)="updateTimeRestriction($event)"
         [betweenFilter]="timeRestriction"
       ></num-between-filter>
+    </ng-container>
+
+    <ng-container *ngIf="selectedTimeRestrictionType !== 'BETWEEN'">
+      <num-before-filter
+        [selectedDate]="timeRestriction.getBeforeDate()"
+        (selectedDateChanged)="onTimeRestrictionChange($event)"
+      ></num-before-filter>
     </ng-container>
   </mat-expansion-panel>
 </div>
