@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { FilterTypes } from 'src/app/model/FilterTypes';
+import { Injectable } from '@angular/core';
+import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { QuantityComparisonOption } from 'src/app/model/QuantityFilterOptions';
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface InterfaceFilterChip {
@@ -23,8 +24,8 @@ export interface InterfaceFilterChipData {
 }
 
 export class FilterChipAdapter {
-  public static adaptCodeableConcept(attributeFilter: AttributeFilter): InterfaceFilterChip[] {
-    const selectedConcepts = attributeFilter.getConcept()?.getSelectedConcepts();
+  public static adaptCodeableConcept(conceptFilter: ConceptFilter): InterfaceFilterChip[] {
+    const selectedConcepts = conceptFilter?.getSelectedConcepts();
     const filterChips: InterfaceFilterChip[] = [];
 
     if (selectedConcepts) {
@@ -44,53 +45,48 @@ export class FilterChipAdapter {
     return filterChips;
   }
 
-  static adaptQuantity(criterion: Criterion) {
+  static adaptQuantity(quantity: AbstractQuantityFilter) {
     const chips: InterfaceFilterChip[] = [];
-    const valueFilters = criterion.getValueFilters();
-    if (valueFilters && valueFilters.length > 0) {
-      const quantity = valueFilters[0]?.getQuantity();
+    if (quantity && quantity.getType() !== FilterTypes.QUANTITY_NOT_SET) {
+      const display = quantity.getSelectedUnit().getDisplay();
+      const comparator = quantity.getComparator();
+      switch (comparator) {
+        case QuantityComparisonOption.BETWEEN:
+          const quantityRange = quantity as QuantityRangeFilter;
+          const quantityRangeMinValue = quantityRange.getMinValue();
+          const quantityRangeMaxValue = quantityRange.getMaxValue();
+          const quantityRangeText = `Between ${quantityRangeMinValue} and ${quantityRangeMaxValue} ${display}`;
+          chips.push({
+            type: FilterTypes.QUANTITY,
+            data: [
+              {
+                id: uuidv4(),
+                text: quantityRangeText,
+                expanded: false,
+              },
+            ],
+          });
+          break;
 
-      if (quantity) {
-        const display = quantity.getSelectedUnit().getDisplay();
-        const comparator = quantity.getComparator();
-        switch (comparator) {
-          case QuantityComparisonOption.BETWEEN:
-            const quantityRange = quantity as QuantityRangeFilter;
-            const quantityRangeMinValue = quantityRange.getMinValue();
-            const quantityRangeMaxValue = quantityRange.getMaxValue();
-            const quantityRangeText = `Between ${quantityRangeMinValue} and ${quantityRangeMaxValue} ${display}`;
-            chips.push({
-              type: FilterTypes.QUANTITY,
-              data: [
-                {
-                  id: uuidv4(),
-                  text: quantityRangeText,
-                  expanded: false,
-                },
-              ],
-            });
-            break;
-
-          case QuantityComparisonOption.EQUAL:
-          case QuantityComparisonOption.GREATER_THAN:
-          case QuantityComparisonOption.LESS_THAN:
-            const quantityComparator = quantity as QuantityComparatorFilter;
-            const quantityComparatorValue = quantityComparator.getValue();
-            const quantityComparatorText = `${quantityComparatorValue} ${display}`;
-            chips.push({
-              type: FilterTypes.QUANTITY,
-              data: [
-                {
-                  id: uuidv4(),
-                  text: quantityComparatorText,
-                  expanded: false,
-                },
-              ],
-            });
-            break;
-          default:
-            break;
-        }
+        case QuantityComparisonOption.EQUAL:
+        case QuantityComparisonOption.GREATER_THAN:
+        case QuantityComparisonOption.LESS_THAN:
+          const quantityComparator = quantity as QuantityComparatorFilter;
+          const quantityComparatorValue = quantityComparator.getValue();
+          const quantityComparatorText = `${quantityComparatorValue} ${display}`;
+          chips.push({
+            type: FilterTypes.QUANTITY,
+            data: [
+              {
+                id: uuidv4(),
+                text: quantityComparatorText,
+                expanded: false,
+              },
+            ],
+          });
+          break;
+        default:
+          break;
       }
     }
     return chips;
@@ -170,9 +166,9 @@ export class FilterChipService {
     return this.filterChipsSubject.asObservable();
   }
 
-  getCodeableConceptChips(attributeFilter: AttributeFilter) {
+  getCodeableConceptChips(conceptFilter: ConceptFilter) {
     const currentChips = this.filterChipsSubject.getValue();
-    const newChips = FilterChipAdapter.adaptCodeableConcept(attributeFilter);
+    const newChips = FilterChipAdapter.adaptCodeableConcept(conceptFilter);
     newChips.forEach((newChip) => {
       const existingChipIndex = currentChips.findIndex((chip) => chip.type === newChip.type);
       if (existingChipIndex !== -1) {
@@ -199,9 +195,18 @@ export class FilterChipService {
 
   getFilterChipsQuantity(criterion: Criterion) {
     const currentChips = this.filterChipsSubject.getValue();
+    const attributeFilters = criterion.getAttributeFilters();
     if (criterion.getValueFilters()[0]?.getQuantity()?.getComparator()) {
-      const newChips = FilterChipAdapter.adaptQuantity(criterion);
+      const newChips = FilterChipAdapter.adaptQuantity(criterion.getValueFilters()[0].getQuantity());
       this.updateChips(currentChips, newChips);
+    }
+    if (attributeFilters.length > 0) {
+      attributeFilters.forEach((attributeFilter) => {
+        if (attributeFilter.isQuantitySet()) {
+          const newChips = FilterChipAdapter.adaptQuantity(attributeFilter.getQuantity());
+          this.updateChips(currentChips, newChips);
+        }
+      });
     }
     this.filterChipsSubject.next(currentChips);
   }

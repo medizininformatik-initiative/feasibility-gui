@@ -40,8 +40,9 @@ export class FilterChipsComponent implements OnInit, OnDestroy {
     this.filterChipService.getFilterChipsQuantity(this.criterion);
     this.filterChipService.getFilterChipsTimeRestriction(this.criterion);
     this.criterion.getAttributeFilters().forEach((attributeFilter) => {
-      this.filterChipService.getCodeableConceptChips(attributeFilter);
+      this.filterChipService.getCodeableConceptChips(attributeFilter.getConcept());
     });
+    this.filterChipService.getCodeableConceptChips(this.criterion.getValueFilters()[0].getConcept());
   }
 
   toggleExpanded(chip) {
