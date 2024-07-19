@@ -1,11 +1,23 @@
-<div
-  fxLayout="column"
-  class="container"
-  *ngFor="let attributeFilter of criterion.getAttributeFilters()"
->
-  <num-reference [referenceFilter]="attributeFilter.getReference()"></num-reference>
-</div>
+<div class="container">
+  <div fxLayout="column" *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+    <num-reference
+      *ngIf="attributeFilter.getReference()"
+      [referenceFilter]="attributeFilter.getReference()"
+      (selectedReferenceIds)="setSelectedReferenceIds($event)"
+    >
+    </num-reference>
+  </div>
 
-<div fxLayout="column" class="container" *ngFor="let valueFilter of criterion.getValueFilters()">
-  <num-reference [referenceFilter]="attributeFilter.getReference()"></num-reference>
+  <div *ngFor="let valueFilter of criterion.getValueFilters()" fxLayout="column">
+    <num-reference
+      *ngIf="valueFilter.getReference()"
+      [referenceFilter]="valueFilter.getReference()"
+      (selectedReferenceIds)="setSelectedReferenceIds($event)"
+    >
+    </num-reference>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-raised-button class="select-button" (click)="saveCriterion()">Auswählen</button>
+    <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>
+  </div>
 </div>

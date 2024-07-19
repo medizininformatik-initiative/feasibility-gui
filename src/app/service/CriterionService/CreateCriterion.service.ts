@@ -2,17 +2,18 @@ import { AttributeDefinitions } from 'src/app/model/AttributeDefinitions';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionHashService } from './CriterionHash.service';
 import { CriterionService } from '../CriterionService.service';
-import { finalize, of, switchMap, take } from 'rxjs';
+import { finalize, of, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemService.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 
 @Injectable({
   providedIn: 'root',
@@ -143,7 +144,7 @@ export class CreateCriterionService {
     if (criteriaProfileData.getTimeRestrictionAllowed()) {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
-    const criterion = criterionBuilder.buildCriterion();
+    const criterion: Criterion = criterionBuilder.buildCriterion();
     this.criterionService.setCriterionByUID(criterion);
   }
 
