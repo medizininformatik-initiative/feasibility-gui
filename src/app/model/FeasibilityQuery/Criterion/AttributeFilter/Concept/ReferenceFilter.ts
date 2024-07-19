@@ -33,7 +33,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @returns An array of selected reference criteria.
    */
-  getSelectedReference(): ReferenceCriterion[] {
+  getSelectedReferences(): ReferenceCriterion[] {
     return this.selectedReference;
   }
 
@@ -42,7 +42,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @param selectedReference - An array of selected reference criteria.
    */
-  setSelectedReference(selectedReference: ReferenceCriterion[]): void {
+  setSelectedReferences(selectedReference: ReferenceCriterion[]): void {
     this.selectedReference = selectedReference;
   }
 
