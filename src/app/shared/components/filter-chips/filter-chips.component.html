@@ -1,10 +1,11 @@
 <div *ngIf="(chipData$ | async)?.length > 0">
-  <div *ngFor="let filterChip of chipData$ | async" fxLayout="row" fxLayoutAlign="start center">
+  <div *ngFor="let filterChip of chipData$ | async" fxLayout="row" fxLayoutAlign="start start">
     <div class="block">{{ filterChip.type }}</div>
-    <div *ngFor="let chip of filterChip.data">
+    <div fxLayout="row wrap" class="padding-left-20">
       <div
+        *ngFor="let chip of filterChip.data"
         class="chip-container"
-        [ngClass]="{ expanded: filterChip.expanded }"
+        [ngClass]="{ expanded: chip.expanded }"
         (click)="toggleExpanded(chip)"
       >
         {{ chip.text }}
