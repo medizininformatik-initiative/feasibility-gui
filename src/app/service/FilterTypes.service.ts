@@ -1,5 +1,5 @@
-import { Comparator } from '../model/Comparator';
-import { FilterTypes } from '../model/FilterTypes';
+import { Comparator } from '../model/Utilities/Quantity/Comparator';
+import { FilterTypes } from '../model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
 
 @Injectable({

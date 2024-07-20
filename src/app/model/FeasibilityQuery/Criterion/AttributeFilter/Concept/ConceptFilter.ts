@@ -1,5 +1,5 @@
 import { AbstractConceptFilter } from './AbstractConceptFilter';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 /**

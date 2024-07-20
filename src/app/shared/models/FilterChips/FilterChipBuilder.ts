@@ -1,4 +1,4 @@
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { InterfaceFilterChip } from './InterfaceFilterChip';
 import { InterfaceFilterChipData } from './InterfaceFilterChipData';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';

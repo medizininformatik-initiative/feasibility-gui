@@ -6,7 +6,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';

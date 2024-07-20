@@ -1,7 +1,7 @@
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { ConceptFilter } from './Concept/ConceptFilter';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 
 export abstract class AbstractAttributeFilters {
   private display: string;

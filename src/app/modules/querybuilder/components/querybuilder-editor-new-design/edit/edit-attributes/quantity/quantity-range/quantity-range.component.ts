@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 
 @Component({
   selector: 'num-quantity-range',

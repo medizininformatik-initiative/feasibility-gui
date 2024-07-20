@@ -1,5 +1,5 @@
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { Comparator } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 
 export class QuantityRangeFilter extends AbstractQuantityFilter {

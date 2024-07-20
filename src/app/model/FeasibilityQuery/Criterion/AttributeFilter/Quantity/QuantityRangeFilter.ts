@@ -1,7 +1,7 @@
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
-import { FilterTypes } from 'src/app/model/FilterTypes';
-import { QuantityComparisonOption } from 'src/app/model/QuantityFilterOptions';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 
 /**
  * Class representing a QuantityRangeFilter.

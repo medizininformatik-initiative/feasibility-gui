@@ -1,4 +1,4 @@
-import { FilterTypes } from '../../../FilterTypes';
+import { FilterTypes } from '../../../Utilities/FilterTypes';
 import { TerminologyCode } from '../../../terminology/TerminologyCode';
 import { AbstractStructuredQuerytAttributeFilters } from './AbstractStructuredQueryAttributeFilters';
 import { ConceptAttributeFilter } from './QueryFilters/ConceptFilter/ConceptAttributeFilter';

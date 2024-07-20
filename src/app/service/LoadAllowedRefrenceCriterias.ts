@@ -1,7 +1,7 @@
 import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BackendService } from '../modules/querybuilder/service/backend.service';
 import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
-import { FilterTypes } from '../model/FilterTypes';
+import { FilterTypes } from '../model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 

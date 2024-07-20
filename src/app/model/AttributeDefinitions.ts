@@ -1,4 +1,4 @@
-import { FilterTypes } from './FilterTypes';
+import { FilterTypes } from './Utilities/FilterTypes';
 import { QuantityUnit } from './QuantityUnit';
 import { TerminologyCode } from './Terminology/TerminologyCode';
 

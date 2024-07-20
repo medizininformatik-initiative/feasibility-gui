@@ -1,6 +1,6 @@
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { FilterChipBuilder } from '../FilterChipBuilder';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { InterfaceFilterChip } from '../InterfaceFilterChip';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';

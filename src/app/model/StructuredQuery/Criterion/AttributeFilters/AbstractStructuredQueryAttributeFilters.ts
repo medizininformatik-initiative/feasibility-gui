@@ -1,7 +1,7 @@
 import { AbstractConceptFilter } from './QueryFilters/ConceptFilter/AbstractConceptFilter';
 import { AtFilter } from './QueryFilters/TimeRestriction/AtFilter';
 import { BetweenFilter } from './QueryFilters/TimeRestriction/BetweenFilter';
-import { FilterTypes } from '../../../FilterTypes';
+import { FilterTypes } from '../../../Utilities/FilterTypes';
 import { QuantityComparatorFilter } from './QueryFilters/QuantityFilter/QuantityComparatorFilter';
 import { QuantityRangeFilter } from './QueryFilters/QuantityFilter/QuantityRangeFilter';
 import { ReferenceFilter } from './QueryFilters/ReferenceFilter/ReferenceFilter';

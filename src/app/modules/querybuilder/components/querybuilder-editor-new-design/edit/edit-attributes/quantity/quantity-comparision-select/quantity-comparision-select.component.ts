@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { QuantityComparisonOption } from 'src/app/model/QuantityFilterOptions';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 
 @Component({
   selector: 'num-quantity-comparision-select',

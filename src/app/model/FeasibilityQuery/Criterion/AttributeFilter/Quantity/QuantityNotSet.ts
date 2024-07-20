@@ -1,4 +1,4 @@
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
 
