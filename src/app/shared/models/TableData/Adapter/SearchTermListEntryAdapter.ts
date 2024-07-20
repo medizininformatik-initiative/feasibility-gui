@@ -1,9 +1,8 @@
-import { InterfaceTableDataBody } from 'src/app/model/TableData/InterfaceTableDataBody';
-import { InterfaceTableDataHeader } from 'src/app/model/TableData/InterfaceTableDataHeader';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
-import { SearchTermListEntry } from '../SearchTermListEntry';
-import { TableData } from 'src/app/model/TableData/InterfaceTableData';
-import { v4 as uuidv4 } from 'uuid';
+import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
+import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
+import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { TableData } from '../InterfaceTableData';
 
 export class SearchTermListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {

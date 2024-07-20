@@ -1,8 +1,8 @@
-import { InterfaceTableDataBody } from 'src/app/model/TableData/InterfaceTableDataBody';
-import { InterfaceTableDataHeader } from 'src/app/model/TableData/InterfaceTableDataHeader';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
-import { TableData } from 'src/app/model/TableData/InterfaceTableData';
-import { ReferenceCriteriaListEntry } from '../RefrenceCriteriaListEntry';
+import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
+import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
+import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
+import { ReferenceCriteriaListEntry } from '../../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/RefrenceCriteriaListEntry';
+import { TableData } from '../InterfaceTableData';
 
 export class ReferenceCriteriaListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {

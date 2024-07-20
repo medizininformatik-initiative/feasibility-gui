@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
 import { Observable, Subscription, take } from 'rxjs';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
   selector: 'num-stage',

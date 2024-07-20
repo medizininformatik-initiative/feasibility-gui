@@ -13,10 +13,10 @@ import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchT
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { Observable, Subscription, of } from 'rxjs';
-import { TableData } from 'src/app/model/TableData/InterfaceTableData';
-import { SearchTermListEntryAdapter } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/ListEntryAdapter/SearchTermListEntryAdapter';
+import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
+import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 
 @Component({
   selector: 'num-search',

@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
-import { TableData } from 'src/app/model/TableData/InterfaceTableData';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
+import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { Subscription } from 'rxjs';
+import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 
 @Component({
   selector: 'num-result-list',

@@ -1,3 +1,6 @@
+import { MatDrawer } from '@angular/material/sidenav';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -6,11 +9,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
-import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
   selector: 'num-search-result',

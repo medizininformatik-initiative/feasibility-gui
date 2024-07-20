@@ -1,13 +1,7 @@
-import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
-import { CodeableConceptResultListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/CodeableConceptResultListEntry';
 import { Component, Input, OnInit } from '@angular/core';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
 import { Observable, of } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 
 @Component({
   selector: 'num-list-item-details',

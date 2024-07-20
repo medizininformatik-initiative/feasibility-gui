@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
 import { ReferenceCriteriaListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/RefrenceCriteriaListEntry';
-import { ReferenceCriteriaListEntryAdapter } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/ListEntryAdapter/ReferenceCriteriaListEntryAdapter';
+import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter';
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 import { Subscription } from 'rxjs';
-import { TableData } from 'src/app/model/TableData/InterfaceTableData';
+import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 
 @Component({
   selector: 'num-reference',

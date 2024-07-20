@@ -1,6 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
 import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
 
 @Injectable({

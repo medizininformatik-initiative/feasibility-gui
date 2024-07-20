@@ -1,8 +1,8 @@
-import { InterfaceTableDataHeader } from 'src/app/model/TableData/InterfaceTableDataHeader';
-import { CodeableConceptResultListEntry } from '../CodeableConceptResultListEntry';
-import { InterfaceTableDataBody } from 'src/app/model/TableData/InterfaceTableDataBody';
-import { TableData } from 'src/app/model/TableData/InterfaceTableData';
-import { InterfaceTableDataRow } from 'src/app/model/TableData/InterfaceTableDataRows';
+import { CodeableConceptResultListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/CodeableConceptResultListEntry';
+import { TableData } from '../InterfaceTableData';
+import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
+import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
+import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { v4 as uuidv4 } from 'uuid';
 
 export class CodeableConceptLinsEntryAdapter {
