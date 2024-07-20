@@ -25,8 +25,6 @@ export class FilterChipConceptAdapter {
           console.warn('Concept display text is undefined or null', concept);
         }
       });
-    } else {
-      console.warn('No selected concepts found', conceptFilter);
     }
     return filterChips;
   }

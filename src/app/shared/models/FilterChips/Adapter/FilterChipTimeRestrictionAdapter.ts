@@ -27,8 +27,6 @@ export class FilterChipTimeRestrictionAdapter {
           console.warn('Unsupported time restriction type:', timeRestriction.type);
           break;
       }
-    } else {
-      console.warn('No time restriction found in criterion:', criterion);
     }
     return chips;
   }

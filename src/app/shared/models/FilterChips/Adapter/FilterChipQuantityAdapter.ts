@@ -30,8 +30,6 @@ export class FilterChipQuantityAdapter {
           console.warn('Unsupported comparator type:', comparator);
           break;
       }
-    } else {
-      console.warn('Quantity is not set or invalid:', quantity);
     }
     return chips;
   }
@@ -42,9 +40,9 @@ export class FilterChipQuantityAdapter {
   ): InterfaceFilterChip {
     const minValue = quantity.getMinValue();
     const maxValue = quantity.getMaxValue();
-    const text = `Between ${minValue} and ${maxValue} ${display}`;
+    const text = `Between ${minValue} - ${maxValue} ${display}`;
 
-    const builder = new FilterChipBuilder(FilterTypes.QUANTITY_RANGE);
+    const builder = new FilterChipBuilder(FilterTypes.QUANTITY);
     builder.addData(uuidv4(), text);
     return builder.buildFilterChip();
   }
@@ -56,7 +54,7 @@ export class FilterChipQuantityAdapter {
     const value = quantity.getValue();
     const text = `${value} ${display}`;
 
-    const builder = new FilterChipBuilder(FilterTypes.QUANTITY_COMPARATOR);
+    const builder = new FilterChipBuilder(FilterTypes.QUANTITY);
     builder.addData(uuidv4(), text);
     return builder.buildFilterChip();
   }
