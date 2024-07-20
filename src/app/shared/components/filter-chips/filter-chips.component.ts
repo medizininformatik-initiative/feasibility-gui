@@ -1,11 +1,8 @@
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { Observable, of, Subscription } from 'rxjs';
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import {
-  FilterChipService,
-  InterfaceFilterChip,
-  InterfaceFilterChipData,
-} from '../../models/filter-chip.interface';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { FilterChipService } from '../../service/FilterChip.service';
+import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
+import { Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-filter-chips',
@@ -40,7 +37,10 @@ export class FilterChipsComponent implements OnInit, OnDestroy {
     this.filterChipService.getFilterChipsQuantity(this.criterion);
     this.filterChipService.getFilterChipsTimeRestriction(this.criterion);
     this.criterion.getAttributeFilters().forEach((attributeFilter) => {
-      this.filterChipService.getCodeableConceptChips(attributeFilter.getConcept());
+      this.filterChipService.getCodeableConceptChips(
+        attributeFilter.getConcept(),
+        attributeFilter.getAttributeCode()
+      );
     });
     this.filterChipService.getCodeableConceptChips(this.criterion.getValueFilters()[0].getConcept());
   }
