@@ -10,7 +10,7 @@ export abstract class AbstractQuantityFilter {
   private selectedUnit: QuantityUnit;
   private allowedUnits: QuantityUnit[] = [];
   private precision: number;
-  protected comparator: QuantityComparisonOption;
+  protected comparator: QuantityComparisonOption = QuantityComparisonOption.NONE;
 
   /**
    * Creates an instance of AbstractQuantityFilter.

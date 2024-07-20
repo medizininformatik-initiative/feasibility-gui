@@ -12,6 +12,7 @@ import { QuantityComparisonOption } from 'src/app/model/QuantityFilterOptions';
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
+import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
 
 @Component({
   selector: 'num-quantity',
@@ -55,12 +56,16 @@ export class QuantityComponent implements OnInit {
     }
   }
 
-  setSelectedQuantityFilterOption(option: QuantityComparisonOption): void {
+  public setSelectedQuantityFilterOption(option: QuantityComparisonOption): void {
     this.selectedQuantityFilterOption = option;
-    this.buildQuantityFilter();
+    if (option !== QuantityComparisonOption.NONE) {
+      this.buildQuantityFilter();
+    } else {
+      this.quantityFilterChange.emit(new QuantityNotSet());
+    }
   }
 
-  setSelectQuantityFilterUnit(selectedUnit: QuantityUnit) {
+  public setSelectQuantityFilterUnit(selectedUnit: QuantityUnit) {
     this.selectedQuantityFilterUnit = new QuantityUnit(
       selectedUnit.getCode(),
       selectedUnit.getDisplay(),
@@ -69,48 +74,57 @@ export class QuantityComponent implements OnInit {
     this.buildQuantityFilter();
   }
 
-  setSelectedQuantityValue(value: number) {
+  public setSelectedQuantityValue(value: number) {
     this.selectedQuantityValue = value;
     this.buildQuantityFilter();
   }
 
-  setSelectedQuantityValues(values: { min: number; max: number }) {
+  public setSelectedQuantityValues(values: { min: number; max: number }) {
     this.selectedQuantityMinValue = values.min;
     this.selectedQuantityMaxValue = values.max;
     this.buildQuantityFilter();
   }
 
-  private buildQuantityFilter() {
-    if (
-      this.selectedQuantityFilterOption !== QuantityComparisonOption.NONE &&
-      this.selectedQuantityFilterUnit &&
-      this.selectedQuantityValue !== undefined
-    ) {
-      const quantityFilter = new QuantityComparatorFilter(
-        this.selectedQuantityFilterUnit,
-        this.quantityFilter.getAllowedUnits(),
-        this.quantityFilter.getPrecision(),
-        this.selectedQuantityFilterOption,
-        this.selectedQuantityValue
-      );
+  private buildQuantityFilter(): void {
+    if (this.isBetweenFilter()) {
+      this.emitQuantityComparatorFilter();
+    } else if (this.isRangeFilter()) {
+      this.emitQuantityRangeFilter();
+    }
+  }
 
-      this.quantityFilterChange.emit(quantityFilter);
-    }
-    if (
-      this.selectedQuantityFilterOption !== QuantityComparisonOption.NONE &&
-      this.selectedQuantityFilterUnit &&
-      this.selectedQuantityMinValue !== undefined &&
-      this.selectedQuantityMaxValue !== undefined
-    ) {
-      const quantityFilter = new QuantityRangeFilter(
-        this.selectedQuantityFilterUnit,
-        this.quantityFilter.getAllowedUnits(),
-        this.quantityFilter.getPrecision(),
-        this.selectedQuantityMinValue,
-        this.selectedQuantityMaxValue
-      );
-      this.quantityFilterChange.emit(quantityFilter);
-    }
+  private isBetweenFilter(): boolean {
+    return this.selectedQuantityFilterUnit != null && this.selectedQuantityValue != null;
+  }
+
+  private isRangeFilter(): boolean {
+    return (
+      this.selectedQuantityFilterUnit != null &&
+      this.selectedQuantityMinValue != null &&
+      this.selectedQuantityMaxValue != null
+    );
+  }
+
+  private emitQuantityComparatorFilter(): void {
+    const quantityFilter = new QuantityComparatorFilter(
+      this.selectedQuantityFilterUnit,
+      this.quantityFilter.getAllowedUnits(),
+      this.quantityFilter.getPrecision(),
+      this.selectedQuantityFilterOption,
+      this.selectedQuantityValue
+    );
+    this.quantityFilterChange.emit(quantityFilter);
+  }
+
+  private emitQuantityRangeFilter(): void {
+    const quantityFilter = new QuantityRangeFilter(
+      this.selectedQuantityFilterUnit,
+      this.quantityFilter.getAllowedUnits(),
+      this.quantityFilter.getPrecision(),
+      this.selectedQuantityMinValue,
+      this.selectedQuantityMaxValue
+    );
+    this.quantityFilterChange.emit(quantityFilter);
   }
 
   roundMinValue(): void {}
@@ -133,13 +147,3 @@ export class QuantityComponent implements OnInit {
 
   compareFunction = (o1: any, o2: any) => o1 && o2 && o1.id === o2.id;
 }
-
-const transformQuantityFilter = (abstractQuantityFilter: AbstractQuantityFilter): QuantityComparatorFilter | QuantityRangeFilter => {
-  const type: FilterTypes = abstractQuantityFilter.getType();
-  if (type === FilterTypes.QUANTITY_COMPARATOR) {
-    return abstractQuantityFilter as QuantityComparatorFilter;
-  }
-  if (type === FilterTypes.QUANTITY_RANGE) {
-    return abstractQuantityFilter as QuantityRangeFilter;
-  }
-};

@@ -10,7 +10,7 @@ export class QuantityComparisionSelectComponent {
   quantityFilterOptionsArray: string[] = Object.values(QuantityComparisonOption);
 
   @Input()
-  existingOption: QuantityComparisonOption;
+  existingOption: QuantityComparisonOption = QuantityComparisonOption.NONE;
 
   @Output()
   selectedOption = new EventEmitter<string>();
