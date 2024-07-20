@@ -1,9 +1,10 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
 import { FilterChipBuilder } from '../FilterChipBuilder';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
+import { getArithmeticSymbol } from 'src/app/model/Utilities/Quantity/ArithmeticSymbolResolver';
 import { InterfaceFilterChip } from '../InterfaceFilterChip';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { QuantityComparisonOption } from 'src/app/model/QuantityFilterOptions';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -14,7 +15,7 @@ export class FilterChipQuantityAdapter {
     if (quantity && quantity.getType() !== FilterTypes.QUANTITY_NOT_SET) {
       const display = quantity.getSelectedUnit().getDisplay();
       const comparator = quantity.getComparator();
-
+      const symbol = getArithmeticSymbol(comparator);
       switch (comparator) {
         case QuantityComparisonOption.BETWEEN:
           chips.push(this.createQuantityRangeChip(quantity as QuantityRangeFilter, display));
@@ -23,11 +24,10 @@ export class FilterChipQuantityAdapter {
         case QuantityComparisonOption.GREATER_THAN:
         case QuantityComparisonOption.LESS_THAN:
           chips.push(
-            this.createQuantityComparatorChip(quantity as QuantityComparatorFilter, display)
+            this.createQuantityComparatorChip(quantity as QuantityComparatorFilter, display, symbol)
           );
           break;
         default:
-          console.warn('Unsupported comparator type:', comparator);
           break;
       }
     }
@@ -49,10 +49,11 @@ export class FilterChipQuantityAdapter {
 
   private static createQuantityComparatorChip(
     quantity: QuantityComparatorFilter,
-    display: string
+    display: string,
+    symbol
   ): InterfaceFilterChip {
     const value = quantity.getValue();
-    const text = `${value} ${display}`;
+    const text = `${symbol} ${value} ${display}`;
 
     const builder = new FilterChipBuilder(FilterTypes.QUANTITY);
     builder.addData(uuidv4(), text);
