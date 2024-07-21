@@ -2,12 +2,14 @@
   background-color: rgb(90, 121, 175, 0.1);
   height: 50%;
   padding: 1rem;
-  margin: 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
 }
 
 .result-list-container {
   height: auto;
   overflow: auto;
+  padding-top: 20px;
 }
 
 .add-button {
@@ -45,4 +47,9 @@
   color: #6a7483;
   font-size: 16px;
   font-weight: 500;
+}
+
+.attribute-code-display {
+  color: #6a7483;
+  padding-bottom: 5px;
 }

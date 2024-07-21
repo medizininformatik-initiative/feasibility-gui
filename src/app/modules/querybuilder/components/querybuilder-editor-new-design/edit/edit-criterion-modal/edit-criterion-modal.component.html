@@ -1,26 +1,19 @@
-<!--AttributeFilter-->
 <div class="container">
-  {{ criterion.getTermCodes()[0].getDisplay() }}
-  <h3>AttributeFilter</h3>
   <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
-    <num-concept
-      (changedConceptFilter)="updateConceptFilterOfAttributeFilter($event, attributeFilter)"
-      [conceptFilter]="attributeFilter.getConcept()"
-    ></num-concept>
-    <num-quantity
-      (quantityFilterChange)="updateQuantityFilterOfAttributeFilter($event, attributeFilter)"
-      [quantityFilter]="attributeFilter.getQuantity()"
-    >
-    </num-quantity>
+    <num-attribute-filter
+      [attributeFilter]="attributeFilter"
+      (attributeFilterChange)="updateAttributeFilter($event)"
+    ></num-attribute-filter>
   </div>
   <!--ValueFilter-->
-  <h3>ValueFilter</h3>
   <div *ngFor="let valueFilter of criterion.getValueFilters()">
     <num-concept
+      *ngIf="valueFilter.isConceptSet()"
       (changedAttributeFilter)="updateConceptFilterOfValueFilter($event)"
       [conceptFilter]="valueFilter.getConcept()"
     ></num-concept>
     <num-quantity
+      *ngIf="valueFilter.isQuantitySet()"
       (quantityFilterChange)="updateQuantityFilterOfValueFilter($event)"
       [quantityFilter]="valueFilter.getQuantity()"
     ></num-quantity>

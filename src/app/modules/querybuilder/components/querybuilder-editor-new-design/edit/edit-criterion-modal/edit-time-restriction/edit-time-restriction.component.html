@@ -19,7 +19,7 @@
 
     <ng-container *ngIf="selectedTimeRestrictionType === 'BETWEEN'">
       <num-between-filter
-        (betweenFilterChanged)="updateTimeRestriction($event)"
+        (betweenFilterChanged)="updateTimeRestrictionBetweenFilter($event)"
         [betweenFilter]="timeRestriction"
       ></num-between-filter>
     </ng-container>

@@ -26,6 +26,9 @@ export class ConceptComponent implements OnDestroy, OnInit {
   @Output()
   changedConceptFilter = new EventEmitter<ConceptFilter>();
 
+  @Input()
+  attributeCodeDisplay: string;
+
   listItems: CodeableConceptResultListEntry[] = [];
 
   adaptedData: TableData;
@@ -92,11 +95,16 @@ export class ConceptComponent implements OnDestroy, OnInit {
   public startElasticSearch(searchtext: string) {
     if (this.searchtext !== searchtext) {
       this.searchtext = searchtext;
-      this.elasticSearchService
-        .startElasticSearch(searchtext, this.conceptFilter.getAllowedConceptUri())
-        .subscribe((response) => {
-          this.listItems = response.results;
-        });
+      const allowedConceptUri = this.conceptFilter.getAllowedConceptUri();
+      if (allowedConceptUri) {
+        this.elasticSearchService
+          .startElasticSearch(searchtext, this.conceptFilter.getAllowedConceptUri())
+          .subscribe((response) => {
+            this.listItems = response.results;
+          });
+      } else {
+        console.warn('No referencedValueSet was provided');
+      }
     }
   }
 
@@ -130,6 +138,7 @@ export class ConceptComponent implements OnDestroy, OnInit {
         this.conceptFilter.setSelectedConcepts(selectedConceptSet);
       }
     });
+    this.selectedListEntries = [];
     this.changedConceptFilter.emit(this.conceptFilter);
   }
 

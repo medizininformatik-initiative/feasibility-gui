@@ -34,22 +34,6 @@ export class EditCriterionModalComponent implements OnInit {
     this.instantiateCriterion();
   }
 
-  updateQuantityFilterOfAttributeFilter(
-    newQuantityFilter: AbstractQuantityFilter,
-    attributeFilter: AttributeFilter
-  ) {
-    const newAttributeFilter = new AttributeFilter(
-      attributeFilter.getDisplay(),
-      newQuantityFilter.getType(),
-      attributeFilter.getAttributeCode(),
-      attributeFilter.getConcept(),
-      newQuantityFilter,
-      attributeFilter.getReference(),
-      attributeFilter.getOptional()
-    );
-    this.criterionBuilder.withAttributeFilter(newAttributeFilter);
-  }
-
   updateQuantityFilterOfValueFilter(newQuantityFilter: AbstractQuantityFilter) {
     const valueFilter = new ValueFilter(
       this.criterion.getValueFilters()[0].getDisplay(),
@@ -61,20 +45,9 @@ export class EditCriterionModalComponent implements OnInit {
     this.criterionBuilder.withValueFilters(valueFilter);
   }
 
-  updateConceptFilterOfAttributeFilter(
-    newConceptFilter: ConceptFilter,
-    attributeFilter: AttributeFilter
-  ) {
-    const newAttributeFilter = new AttributeFilter(
-      attributeFilter.getDisplay(),
-      newConceptFilter.getType(),
-      attributeFilter.getAttributeCode(),
-      newConceptFilter,
-      attributeFilter.getQuantity(),
-      attributeFilter.getReference(),
-      attributeFilter.getOptional()
-    );
-    this.criterionBuilder.withAttributeFilter(newAttributeFilter);
+  public updateAttributeFilter(attributeFilter: AttributeFilter) {
+    console.log(attributeFilter);
+    this.criterionBuilder.withAttributeFilter(attributeFilter);
   }
 
   updateConceptFilterOfValueFilter(newConceptFilter: ConceptFilter) {

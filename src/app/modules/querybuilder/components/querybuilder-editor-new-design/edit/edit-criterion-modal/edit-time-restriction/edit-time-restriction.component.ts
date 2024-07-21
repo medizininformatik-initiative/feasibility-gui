@@ -1,9 +1,10 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
 import { AfterFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AfterFilter';
 import { AtFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AtFilter';
+import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
-import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter';
+import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 
 @Component({
   selector: 'num-edit-time-restriction',
@@ -48,5 +49,15 @@ export class EditTimeRestrictionComponent implements OnInit {
         return this.timeRestrictionChanged.emit(beforeFilter);
       }
     }
+  }
+
+  /**
+   * @todo Adjust the corresponding component to ensure that only the selected dates are emitted.
+   *       The actual object should be instantiated here in this component.
+   * @param betweenFilter The filter to apply for the date range.
+   * @returns The filtered result.
+   */
+  public updateTimeRestrictionBetweenFilter(beweenFilter: BetweenFilter) {
+    return this.timeRestrictionChanged.emit(beweenFilter);
   }
 }
