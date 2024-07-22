@@ -86,29 +86,22 @@ export class DropGroupDirective implements OnInit {
 
   private deleteFromInclusion(droppedCriterion: string): void {
     const criteria: string[][] = this.feasibilityQuery.getInclusionCriteria();
-    console.log('bla1');
-    console.log(criteria);
+    criteria.forEach((idArray) => {
+      const index = idArray.indexOf(droppedCriterion);
+      if (index > -1) {
+        idArray.splice(index, 1);
+      }
+    });
+    this.queryProviderService.setInclusionCriteria(criteria);
   }
   private deleteFromExclusion(droppedCriterion: string): void {
     const criteria: string[][] = this.feasibilityQuery.getExclusionCriteria();
-
     criteria.forEach((idArray) => {
-      let innerArray: number;
-      idArray.forEach((id, i) => {
-        if (id === droppedCriterion) {
-          innerArray = i;
-          console.log('treffer');
-        }
-      });
-      //if (innerArray)
+      const index = idArray.indexOf(droppedCriterion);
+      if (index > -1) {
+        idArray.splice(index, 1);
+      }
     });
-
-    console.log('bla2');
-    console.log(criteria);
-    console.log(this.feasibilityQuery.getExclusionCriteria());
-    this.queryProviderService.getFeasibilityQueryByID().subscribe((test) => {
-      console.log('test');
-      console.log(test);
-    });
+    this.queryProviderService.setExclusionCriteria(criteria);
   }
 }
