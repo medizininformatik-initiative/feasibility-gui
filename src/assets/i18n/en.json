@@ -100,6 +100,7 @@
     "DASHBOARD": "Home",
     "QUERYBUILDER_EDITOR": "Feasibility Query",
     "QUERYBUILDER_OVERVIEW": "My Queries",
+    "QUERYBUILDER_RESULT": "Result",
     "DATASELECTION_EDITOR": "Dataselection",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"

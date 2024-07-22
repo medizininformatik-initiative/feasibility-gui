@@ -41,6 +41,18 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'result',
+    canLoad: [RoleGuard],
+    data: {
+      navId: 'result',
+      roles: ['main'],
+    },
+    loadChildren: () =>
+      import(
+        /* webpackChunkName: "Result.Module" */ './modules/querybuilder/querybuilder.module'
+      ).then((m) => m.QuerybuilderModule),
+  },
+  {
     path: 'data-protection',
     component: DataProtectionComponent,
   },

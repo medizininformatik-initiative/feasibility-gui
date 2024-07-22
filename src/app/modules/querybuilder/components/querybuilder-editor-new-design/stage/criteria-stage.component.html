@@ -3,7 +3,14 @@
     <p style="font-size: xx-large">Criteria</p>
     <p class="title-header">Ausgewählte Kriterien</p>
   </div>
-  <div cdkDropList fxFlexFill fxLayout="row wrap" fxLayoutAlign="start" class="criteria-container">
+  <div
+    id="Stage"
+    cdkDropList
+    fxFlexFill
+    fxLayout="row wrap"
+    fxLayoutAlign="start"
+    class="criteria-container"
+  >
     <div *ngFor="let criterion of $criteriaArray | async" class="criteria-box">
       <num-criteria-box [criterion]="criterion"></num-criteria-box>
     </div>

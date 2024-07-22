@@ -15,7 +15,6 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   public $criterionUIDMap: Observable<Array<string>>;
   public $criteriaArray: Observable<Criterion[]> = of([]);
   private subscription: Subscription;
-  $feasibilityQuery: Observable<FeasibilityQuery>;
 
   constructor(
     public elementRef: ElementRef,
@@ -27,7 +26,6 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.getCriterionUIDMap();
-    this.getFeasibilityQuery();
     this.subscribeToCriterionUIDMap();
   }
 
@@ -56,10 +54,6 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
       console.log('stage');
       console.log(test);
     });*/
-  }
-
-  getFeasibilityQuery() {
-    this.$feasibilityQuery = this.queryProviderService.getFeasibilityQuery().pipe();
   }
 
   subscribeToCriterionUIDMap(): void {

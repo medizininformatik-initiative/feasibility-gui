@@ -22,20 +22,20 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.querySubscription = this.queryService
-      .getFeasibilityQuery()
-      .subscribe((query: FeasibilityQuery) => {
-        if (this.groupType === 'Inclusion') {
-          this.criteriaArray$ = this.queryService
-            .getFeasibilityQuery()
-            .pipe(map((queryObject) => queryObject.getInclusionCriteria()));
-        }
-        if (this.groupType === 'Exclusion') {
-          this.criteriaArray$ = this.queryService
-            .getFeasibilityQuery()
-            .pipe(map((queryObject) => queryObject.getExclusionCriteria()));
-        }
-      });
+    // this.querySubscription = this.queryService
+    //   .getFeasibilityQueryByID()
+    //   .subscribe((query: Map<string,FeasibilityQuery>) => {
+    if (this.groupType === 'Inclusion') {
+      this.criteriaArray$ = this.queryService
+        .getFeasibilityQueryByID()
+        .pipe(map((queryObject) => queryObject.get('1').getInclusionCriteria()));
+    }
+    if (this.groupType === 'Exclusion') {
+      this.criteriaArray$ = this.queryService
+        .getFeasibilityQueryByID()
+        .pipe(map((queryObject) => queryObject.get('1').getExclusionCriteria()));
+    }
+    //   });
   }
 
   private flattenCriteria(criteria: string[][]): Criterion[] {
@@ -60,13 +60,13 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
     let tempcrit: string[][] = [];
 
     this.queryService
-      .getFeasibilityQuery()
-      .subscribe((query: FeasibilityQuery) => {
+      .getFeasibilityQueryByID()
+      .subscribe((query: Map<string, FeasibilityQuery>) => {
         if (this.groupType === 'Inclusion') {
-          tempcrit = this.splitInnerArray2(query.getInclusionCriteria(), i, j);
+          tempcrit = this.splitInnerArray2(query.get('1').getInclusionCriteria(), i, j);
         }
         if (this.groupType === 'Exclusion') {
-          tempcrit = this.splitInnerArray2(query.getExclusionCriteria(), i, j);
+          tempcrit = this.splitInnerArray2(query.get('1').getExclusionCriteria(), i, j);
         }
         //this.switch.emit(this.critGroup);
       })
@@ -85,13 +85,13 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
     let tempcrit: string[][] = [];
 
     this.queryService
-      .getFeasibilityQuery()
-      .subscribe((query: FeasibilityQuery) => {
+      .getFeasibilityQueryByID()
+      .subscribe((query: Map<string, FeasibilityQuery>) => {
         if (this.groupType === 'Inclusion') {
-          tempcrit = this.joinInnerArrays2(query.getInclusionCriteria(), i);
+          tempcrit = this.joinInnerArrays2(query.get('1').getInclusionCriteria(), i);
         }
         if (this.groupType === 'Exclusion') {
-          tempcrit = this.joinInnerArrays2(query.getExclusionCriteria(), i);
+          tempcrit = this.joinInnerArrays2(query.get('1').getExclusionCriteria(), i);
         }
       })
       .unsubscribe();

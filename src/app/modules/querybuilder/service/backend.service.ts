@@ -189,9 +189,13 @@ export class BackendService {
         observe: 'response',
       });
     }
+  }*/
+  public postQueryNew(query: StructuredQuery): Observable<any> {
+    return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), query, {
+      observe: 'response',
+    });
   }
-*/
-  public getSummaryResult(resultUrl: string): Observable<QueryResult> {
+  public getSummaryResult(resultUrl: string): Observable<any> {
     if (this.feature.mockResult()) {
       const result = {
         totalNumberOfPatients: Math.floor(Math.random() * 10000000),
@@ -202,7 +206,7 @@ export class BackendService {
       return of(result);
     }
 
-    return this.http.get<QueryResult>(resultUrl);
+    return this.http.get<any>(resultUrl);
   }
 
   public getDetailedResult(

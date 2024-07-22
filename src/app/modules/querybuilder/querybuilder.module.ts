@@ -57,6 +57,8 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { EditReferenceCriteriaModalComponent } from './components/querybuilder-editor-new-design/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
+import { SimpleResultComponent } from './components/querybuilder-result/simple-result/simple-result.component';
+import { ResultComponent } from './components/querybuilder-result/result/result.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -117,6 +119,8 @@ export const FORMATS_GERMAN = {
     QuantityRangeComponent,
     QuantityComparatorComponent,
     ConceptComponent,
+    SimpleResultComponent,
+    ResultComponent,
   ],
   imports: [
     CommonModule,

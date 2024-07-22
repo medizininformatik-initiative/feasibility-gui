@@ -47,15 +47,14 @@ export class OptionsComponent implements OnInit {
     public featureService: FeatureService,
     public featureProviderService: FeatureProviderService,
     private queryService: FeasibilityQueryProviderService,
-    private http: HttpClient //private apiTranslator: ApiTranslator,
-  ) //private newTranslator: UIQuery2StructuredQueryTranslatorService
-  {}
+    private http: HttpClient //private apiTranslator: ApiTranslator, //private newTranslator: UIQuery2StructuredQueryTranslatorService
+  ) {}
 
   ngOnInit(): void {
     this.features = this.featureProviderService.getFeatures();
     this.stylesheet = this.features.stylesheet;
-    this.queryService.getFeasibilityQuery().subscribe((query) => {
-      this.query = query;
+    this.queryService.getFeasibilityQueryByID().subscribe((query) => {
+      this.query = query.get('1');
     });
     this.pollingTime = this.features.options.pollingtimeinseconds;
     this.pollingIntervall = this.features.options.pollingintervallinseconds;

@@ -2,17 +2,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeasibilityQueryProviderService {
   private readonly STORAGE_QUERY_KEY = 'QUERY';
-  private feasibilityQuery: BehaviorSubject<FeasibilityQuery> = new BehaviorSubject(
-    new FeasibilityQuery()
-  );
+  private feasibilityQueryMap: Map<string, FeasibilityQuery> = new Map();
+  private feasibilityQueryMapSubject: BehaviorSubject<Map<string, FeasibilityQuery>> =
+    new BehaviorSubject(new Map());
 
+  private feasibilityQueryIDToResultIDMap: Map<string, string> = new Map();
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     this.loadInitialQuery();
   }
@@ -23,23 +24,27 @@ export class FeasibilityQueryProviderService {
    */
   private loadInitialQuery(): void {
     const storedQuery = this.storage.get(this.STORAGE_QUERY_KEY);
+    const uid = '1'; //uuidv4();
     if (storedQuery && storedQuery.groups) {
       this.storage.remove(this.STORAGE_QUERY_KEY);
-      this.setFeasibilityQuery(new FeasibilityQuery());
+      this.setFeasibilityQueryByID(new FeasibilityQuery(uid), uid);
     } else {
-      this.feasibilityQuery = new BehaviorSubject(new FeasibilityQuery());
+      this.feasibilityQueryMap = new Map<string, FeasibilityQuery>();
+      this.feasibilityQueryMap.set(uid, new FeasibilityQuery(uid));
+      this.feasibilityQueryMapSubject = new BehaviorSubject(this.feasibilityQueryMap);
     }
   }
 
   /**
    * Sets the feasibility query and updates local storage.
    *
+   * @param id the uid to set
    * @param feasibilityQuery The new feasibility query to set
    */
-  public setFeasibilityQuery(feasibilityQuery: FeasibilityQuery): void {
+  public setFeasibilityQueryByID(feasibilityQuery: FeasibilityQuery, id: string): void {
     this.storage.set(this.STORAGE_QUERY_KEY, feasibilityQuery);
-    this.feasibilityQuery.next(feasibilityQuery);
-    console.log(this.feasibilityQuery);
+    this.feasibilityQueryMap.set(id, feasibilityQuery);
+    this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
   }
 
   /**
@@ -47,18 +52,18 @@ export class FeasibilityQueryProviderService {
    *
    * @returns Observable<Query>
    */
-  public getFeasibilityQuery(): Observable<FeasibilityQuery> {
-    return this.feasibilityQuery.asObservable();
+  public getFeasibilityQueryByID(id?: string): Observable<Map<string, FeasibilityQuery>> {
+    return this.feasibilityQueryMapSubject.asObservable();
   }
 
   /**
    * Resets the feasibility query to the default query and updates local storage.
    */
   public resetToDefaultQuery(): void {
-    const defaultQuery = new FeasibilityQuery();
+    //const defaultQuery = new FeasibilityQuery();
     this.storage.clear();
-    this.storage.set(this.STORAGE_QUERY_KEY, defaultQuery);
-    this.feasibilityQuery.next(defaultQuery);
+    //this.storage.set(this.STORAGE_QUERY_KEY, defaultQuery);
+    //this.feasibilityQueryMapSubject.next(defaultQuery);
   }
 
   /**
@@ -67,16 +72,20 @@ export class FeasibilityQueryProviderService {
    * @param updatedQuery The updated query object
    */
   public updateFeasibilityQuery(updatedQuery: FeasibilityQuery): void {
-    this.setFeasibilityQuery(updatedQuery);
+    //this.setFeasibilityQuery(updatedQuery);
   }
 
   public setInclusionCriteria(criteria: string[][]): void {
-    this.feasibilityQuery.value.setInclusionCriteria(criteria);
-    this.feasibilityQuery.next(this.feasibilityQuery.value);
+    const feasibilityQuery = this.feasibilityQueryMap.get('1');
+    feasibilityQuery.setInclusionCriteria(criteria);
+    this.feasibilityQueryMap.set('1', feasibilityQuery);
+    this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
   }
 
   public setExclusionCriteria(criteria: string[][]): void {
-    this.feasibilityQuery.value.setExclusionCriteria(criteria);
-    this.feasibilityQuery.next(this.feasibilityQuery.value);
+    const feasibilityQuery = this.feasibilityQueryMap.get('1');
+    feasibilityQuery.setExclusionCriteria(criteria);
+    this.feasibilityQueryMap.set('1', feasibilityQuery);
+    this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
   }
 }

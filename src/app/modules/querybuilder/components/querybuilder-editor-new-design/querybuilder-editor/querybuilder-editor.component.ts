@@ -16,8 +16,8 @@ export class QuerybuilderEditorComponent implements OnInit {
   constructor(public queryService: FeasibilityQueryProviderService) {}
 
   ngOnInit(): void {
-    this.queryService.getFeasibilityQuery().subscribe((query) => {
-      this.query = query;
+    this.queryService.getFeasibilityQueryByID().subscribe((query) => {
+      this.query = query.get('1');
     });
   }
 
