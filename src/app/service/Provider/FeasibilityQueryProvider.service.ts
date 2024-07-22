@@ -2,6 +2,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
+import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
 
 @Injectable({
   providedIn: 'root',
@@ -67,5 +68,15 @@ export class FeasibilityQueryProviderService {
    */
   public updateFeasibilityQuery(updatedQuery: FeasibilityQuery): void {
     this.setFeasibilityQuery(updatedQuery);
+  }
+
+  public setInclusionCriteria(criteria: string[][]): void {
+    this.feasibilityQuery.value.setInclusionCriteria(criteria);
+    this.feasibilityQuery.next(this.feasibilityQuery.value);
+  }
+
+  public setExclusionCriteria(criteria: string[][]): void {
+    this.feasibilityQuery.value.setExclusionCriteria(criteria);
+    this.feasibilityQuery.next(this.feasibilityQuery.value);
   }
 }

@@ -33,5 +33,14 @@
           : ('QUERYBUILDER.STAGE.BUTTON.ADD_TO_STAGE' | translate)
       }}
     </button>
+    <button
+      class="align-button-end background-color-button"
+      (click)="translate()"
+      mat-raised-button
+      class="height-59"
+      [color]="addedToStage ? 'green' : 'blue'"
+    >
+      Translate
+    </button>
   </div>
 </div>

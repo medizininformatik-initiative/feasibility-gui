@@ -37,6 +37,7 @@ export class FeasibilityQuery {
    * Constructor to initialize the Query with display and consent.
    *
    * @param display - The display name of the query.
+   * @param consent - The consent status of the query.
    */
   constructor(display: string = 'Ausgewählte Merkmale', consent: boolean = false) {
     this.consent = consent;

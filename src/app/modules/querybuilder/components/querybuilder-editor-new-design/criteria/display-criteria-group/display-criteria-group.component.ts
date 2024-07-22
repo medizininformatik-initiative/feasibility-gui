@@ -12,7 +12,7 @@ import { CriterionProviderService } from '../../../../../../service/Provider/Cri
 })
 export class DisplayCriteriaGroupComponent implements OnInit {
   droppedItems: Criterion[] = [];
-  groupType: 'Inclusion' | 'Exclusion';
+  groupType: 'Inclusion' | 'Exclusion'; // Example default value
   querySubscription: Subscription;
 
   constructor(

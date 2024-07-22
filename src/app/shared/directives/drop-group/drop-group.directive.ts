@@ -2,6 +2,11 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { FeasibilityQueryProviderService } from '../../../service/Provider/FeasibilityQueryProvider.service';
+import { Subscription } from 'rxjs';
+import { ObjectHelper } from '../../../modules/querybuilder/controller/ObjectHelper';
+import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery';
+import { StageProviderService } from '../../../service/Provider/StageProvider.service';
 
 @Directive({
   selector: '[numAppDropGroup]',
@@ -9,8 +14,12 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 export class DropGroupDirective {
   @Input() groupType: string;
 
+  criteria: string[][] = [];
+  feasibilityQuery: FeasibilityQuery = new FeasibilityQuery();
+  querySubscription: Subscription;
   constructor(
-    private criterionProviderService: CriterionProviderService,
+    private queryProviderService: FeasibilityQueryProviderService,
+    private stageProviderService: StageProviderService,
     private elementRef: ElementRef
   ) {}
 
@@ -29,16 +38,28 @@ export class DropGroupDirective {
     }
   }
 
-  private handleExclusionDrop(event: CdkDragDrop<any[]>): void {
-    const droppedCriterion: Criterion = event.item.data;
-    //this.criterionProviderService.setCriterionForExclusion(droppedCriterion);
-    this.criterionProviderService.deleteCriterionByUID(droppedCriterion.getUniqueID());
-  }
-
   private handleInclusionDrop(event: CdkDragDrop<any[]>): void {
-    const droppedCriterion: Criterion = event.item.data;
-    //this.criterionProviderService.setCriterionForInclusion(droppedCriterion);
-    this.criterionProviderService.deleteCriterionByUID(droppedCriterion.getUniqueID());
-    console.log(event);
+    const droppedCriterion: string = event.item.data;
+
+    console.log('dropped in');
+    console.log(event.item.data);
+    this.criteria = this.feasibilityQuery.getInclusionCriteria();
+    this.criteria.push([droppedCriterion]);
+    this.queryProviderService.setInclusionCriteria(this.criteria);
+    console.log(this.feasibilityQuery.getInclusionCriteria());
+
+    this.stageProviderService.deleteCriterionByUID(droppedCriterion);
+  }
+  private handleExclusionDrop(event: CdkDragDrop<any[]>): void {
+    const droppedCriterion: string = event.item.data;
+
+    console.log('dropped ex');
+    console.log(event.item.data);
+    this.criteria = this.feasibilityQuery.getExclusionCriteria();
+    this.criteria.push([droppedCriterion]);
+    this.queryProviderService.setExclusionCriteria(this.criteria);
+    console.log(this.feasibilityQuery.getExclusionCriteria());
+
+    this.stageProviderService.deleteCriterionByUID(droppedCriterion);
   }
 }

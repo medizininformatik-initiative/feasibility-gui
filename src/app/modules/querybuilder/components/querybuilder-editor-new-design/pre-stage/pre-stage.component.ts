@@ -3,6 +3,8 @@ import { CreateCriterionService } from 'src/app/service/CriterionService/CreateC
 import { Observable, Subscription, take } from 'rxjs';
 import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { SearchTermListEntry } from '../../../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
+import { UIQuery2StructuredQueryTranslatorService } from '../../../../../service/UIQuery2StructuredQueryTranslator.service';
 
 @Component({
   selector: 'num-stage',
@@ -20,7 +22,9 @@ export class PreStageComponent implements OnInit, OnDestroy {
 
   constructor(
     private listItemSelectionService: SearchResultListItemSelectionService<SearchTermListEntry>,
-    private criterionService: CreateCriterionService
+    private criterionService: CreateCriterionService,
+    private queryProviderService: FeasibilityQueryProviderService,
+    private translator: UIQuery2StructuredQueryTranslatorService
   ) {}
 
   ngOnInit() {
@@ -59,5 +63,10 @@ export class PreStageComponent implements OnInit, OnDestroy {
       const element = this.stage.nativeElement;
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+  translate(): void {
+    this.queryProviderService.getFeasibilityQuery().subscribe((query) => {
+      console.log(this.translator.translateToStructuredQuery(query));
+    });
   }
 }

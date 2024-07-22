@@ -1,5 +1,27 @@
 <div fxLayout="column" fxLayoutAlign="start" class="criteria-container">
-  <div *ngFor="let criterion of criteriaArray$ | async">
-    <num-criteria-box [criterion]="criterion"></num-criteria-box>
+  <div
+    *ngFor="let criterionInnerArray of criteriaArray$ | async; let lastOuter = last; let i = index"
+  >
+    <div *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index">
+      <num-criteria-box
+        [criterion]="criterionProvider.getCriterionByUID(criterion)"
+      ></num-criteria-box>
+      <ng-container>
+        <num-bool-logic-switch
+          [position]="'inner'"
+          [label]="getInnerLabelKey()"
+          (switched)="splitInnerArray(i, j)"
+          *ngIf="!lastInner"
+        ></num-bool-logic-switch>
+      </ng-container>
+    </div>
+    <ng-container>
+      <num-bool-logic-switch
+        [position]="'outer'"
+        [label]="getOuterLabelKey()"
+        (switched)="joinInnerArrays(i)"
+        *ngIf="!lastOuter"
+      ></num-bool-logic-switch>
+    </ng-container>
   </div>
 </div>
