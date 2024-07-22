@@ -41,7 +41,7 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { ValueFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-attribute-filter/value-filter/value-filter.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -86,6 +86,7 @@ export const FORMATS_GERMAN = {
     QuantityComparisionSelectComponent,
     ReferenceComponent,
     AttributeFilterComponent,
+    ValueFilterComponent,
   ],
   imports: [
     CommonModule,
