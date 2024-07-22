@@ -1,12 +1,5 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityUnit } from 'src/app/model/QuantityUnit';
@@ -44,9 +37,13 @@ export class QuantityComponent implements OnInit {
 
   QuantityComparisonOption: typeof QuantityComparisonOption = QuantityComparisonOption;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setQuantityFilterType();
+    this.setSelectQuantityFilterUnit(this.quantityFilter.getAllowedUnits()[0]);
+    this.selectedQuantityFilterOption = this.quantityFilter.getComparator();
+  }
 
-  setQuantityFilterType() {
+  private setQuantityFilterType() {
     const type: FilterTypes = this.quantityFilter.getType();
     if (type === FilterTypes.QUANTITY_COMPARATOR) {
       this.quantityComparatorFilter = this.quantityFilter as QuantityComparatorFilter;
@@ -126,24 +123,4 @@ export class QuantityComponent implements OnInit {
     );
     this.quantityFilterChange.emit(quantityFilter);
   }
-
-  roundMinValue(): void {}
-
-  roundMaxValue(): void {}
-
-  roundValue(): void {}
-
-  valueTooSmall(value: any): boolean {
-    return true;
-  }
-
-  valueTooLarge(value: any): boolean {
-    return true;
-  }
-
-  minimumSmallerMaximum(): boolean {
-    return true;
-  }
-
-  compareFunction = (o1: any, o2: any) => o1 && o2 && o1.id === o2.id;
 }

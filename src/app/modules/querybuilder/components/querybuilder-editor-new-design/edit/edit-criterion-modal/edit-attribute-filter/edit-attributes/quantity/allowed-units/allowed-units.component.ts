@@ -36,7 +36,7 @@ export class AllowedUnitsComponent implements OnInit, OnChanges {
     }
   }
 
-  updateSelectedUnit() {
+  private updateSelectedUnit() {
     if (this.selectedUnit && this.allowedUnits.some((unit) => unit === this.selectedUnit)) {
       this.selectedUnitDisplay = this.selectedUnit.getDisplay();
     } else if (this.allowedUnits.length > 0) {
@@ -48,10 +48,9 @@ export class AllowedUnitsComponent implements OnInit, OnChanges {
   }
 
   onSelectionChange(selectedValue: string) {
-    const selectedUnit = this.allowedUnits.find((unit) => unit.getDisplay() === selectedValue);
-    if (selectedUnit) {
-      this.selectedUnit = selectedUnit;
-      this.selectedUnitDisplay = selectedUnit.getDisplay();
+    this.selectedUnit = this.allowedUnits.find((unit) => unit.getDisplay() === selectedValue);
+    if (this.selectedUnit) {
+      this.selectedUnitDisplay = this.selectedUnit.getDisplay();
       this.selectionChange.emit(this.selectedUnit);
     }
   }

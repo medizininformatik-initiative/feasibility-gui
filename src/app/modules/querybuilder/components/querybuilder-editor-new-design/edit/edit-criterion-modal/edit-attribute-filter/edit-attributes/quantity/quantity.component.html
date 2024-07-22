@@ -12,8 +12,9 @@
       ></num-quantity-comparision-select>
       <ng-container
         *ngIf="
-          selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN &&
-          selectedQuantityFilterOption !== QuantityComparisonOption.NONE
+          (selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN &&
+            selectedQuantityFilterOption !== QuantityComparisonOption.NONE) ||
+          quantityRangeFilter
         "
       >
         <num-quantity-range
@@ -22,13 +23,16 @@
       </ng-container>
       <ng-container
         *ngIf="
-          selectedQuantityFilterOption !== QuantityComparisonOption.BETWEEN &&
-          selectedQuantityFilterOption !== QuantityComparisonOption.NONE
+          (selectedQuantityFilterOption !== QuantityComparisonOption.BETWEEN &&
+            selectedQuantityFilterOption !== QuantityComparisonOption.NONE) ||
+          quantityComparatorFilter
         "
       >
         <num-quantity-comparator
+          [value]="quantityComparatorFilter?.getValue()"
           (quantityValue)="setSelectedQuantityValue($event)"
-        ></num-quantity-comparator>
+        >
+        </num-quantity-comparator>
       </ng-container>
       <num-allowed-units
         *ngIf="selectedQuantityFilterOption !== QuantityComparisonOption.NONE"
