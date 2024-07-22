@@ -47,9 +47,12 @@ export class QuantityComponent implements OnInit {
     const type: FilterTypes = this.quantityFilter.getType();
     if (type === FilterTypes.QUANTITY_COMPARATOR) {
       this.quantityComparatorFilter = this.quantityFilter as QuantityComparatorFilter;
+      this.selectedQuantityValue = this.quantityComparatorFilter.getValue();
     }
     if (type === FilterTypes.QUANTITY_RANGE) {
       this.quantityRangeFilter = this.quantityFilter as QuantityRangeFilter;
+      this.selectedQuantityMinValue = this.quantityRangeFilter.getMinValue();
+      this.selectedQuantityMaxValue = this.quantityRangeFilter.getMaxValue();
     }
   }
 
