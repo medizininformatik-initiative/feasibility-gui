@@ -3,25 +3,18 @@
     <num-attribute-filter
       [attributeFilter]="attributeFilter"
       (attributeFilterChange)="updateAttributeFilter($event)"
-    ></num-attribute-filter>
+    >
+    </num-attribute-filter>
   </div>
-  <!--ValueFilter-->
   <div *ngFor="let valueFilter of criterion.getValueFilters()">
-    <num-concept
-      *ngIf="valueFilter.isConceptSet()"
-      (changedAttributeFilter)="updateConceptFilterOfValueFilter($event)"
-      [conceptFilter]="valueFilter.getConcept()"
-    ></num-concept>
-    <num-quantity
-      *ngIf="valueFilter.isQuantitySet()"
-      (quantityFilterChange)="updateQuantityFilterOfValueFilter($event)"
-      [quantityFilter]="valueFilter.getQuantity()"
-    ></num-quantity>
+    <num-value-filter [valueFilter]="valueFilter" (valueFilterChange)="updateValueFilter($event)">
+    </num-value-filter>
   </div>
   <num-edit-time-restriction
     [timeRestriction]="criterion.getTimeRestriction()"
     (timeRestrictionChanged)="updateTimeRestriction($event)"
-  ></num-edit-time-restriction>
+  >
+  </num-edit-time-restriction>
   <div fxLayout="row" fxLayoutAlign="start center">
     <button mat-raised-button class="select-button" (click)="saveCriterion()">Auswählen</button>
     <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>

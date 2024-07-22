@@ -3,10 +3,8 @@ import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterio
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { Component, Inject, OnInit } from '@angular/core';
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
@@ -34,37 +32,12 @@ export class EditCriterionModalComponent implements OnInit {
     this.instantiateCriterion();
   }
 
-  updateQuantityFilterOfValueFilter(newQuantityFilter: AbstractQuantityFilter) {
-    const valueFilter = new ValueFilter(
-      this.criterion.getValueFilters()[0].getDisplay(),
-      newQuantityFilter.getType(),
-      undefined,
-      newQuantityFilter,
-      this.criterion.getValueFilters()[0].getOptional()
-    );
-    this.criterionBuilder.withValueFilters(valueFilter);
-  }
-
-  public updateAttributeFilter(attributeFilter: AttributeFilter) {
-    console.log(attributeFilter);
-    this.criterionBuilder.withAttributeFilter(attributeFilter);
-  }
-
-  updateConceptFilterOfValueFilter(newConceptFilter: ConceptFilter) {
-    const valueFilter = new ValueFilter(
-      this.criterion.getValueFilters()[0].getDisplay(),
-      FilterTypes.CONCEPT,
-      newConceptFilter,
-      undefined,
-      this.criterion.getValueFilters()[0].getOptional()
-    );
-    this.criterionBuilder.withValueFilters(valueFilter);
-  }
-
-  updateTimeRestriction(timeRestriction: AbstractTimeRestriction) {
-    this.criterionBuilder.withTimeRestriction(timeRestriction);
-  }
-
+  /**
+   * Need to create a copy of the criterion in order to avoid references
+   * which lead to unwanted change detection cyles
+   *
+   * @todo introduce Changedetection.OnPuSh
+   */
   private instantiateCriterion() {
     const mandatoryFields = this.createMandatoryFields(this.criterion);
     this.criterionBuilder = new CriterionBuilder(mandatoryFields);
@@ -123,13 +96,25 @@ export class EditCriterionModalComponent implements OnInit {
       termCodes,
     };
   }
+  public updateValueFilter(valueFilter: ValueFilter) {
+    this.criterionBuilder.withValueFilters(valueFilter);
+  }
 
-  saveCriterion() {
+  public updateAttributeFilter(attributeFilter: AttributeFilter) {
+    console.log(attributeFilter);
+    this.criterionBuilder.withAttributeFilter(attributeFilter);
+  }
+
+  public updateTimeRestriction(timeRestriction: AbstractTimeRestriction) {
+    this.criterionBuilder.withTimeRestriction(timeRestriction);
+  }
+
+  public saveCriterion() {
     const criterion = this.criterionBuilder.buildCriterion();
     this.dialogRef.close(criterion);
   }
 
-  closeDialog() {
+  public closeDialog() {
     this.dialogRef.close();
   }
 }
