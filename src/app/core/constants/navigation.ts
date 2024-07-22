@@ -14,6 +14,12 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
   },
   {
+    routeTo: 'querybuilder/result',
+    roles: ['main'],
+    icon: 'dna',
+    translationKey: 'NAVIGATION.QUERYBUILDER_RESULT',
+  },
+  {
     routeTo: 'dataselection/editor',
     roles: ['main'],
     icon: 'dna',

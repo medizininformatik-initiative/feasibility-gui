@@ -5,6 +5,7 @@ import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSea
 import { SearchTermListEntry } from '../../../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { UIQuery2StructuredQueryTranslatorService } from '../../../../../service/UIQuery2StructuredQueryTranslator.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'num-stage',
@@ -24,7 +25,8 @@ export class PreStageComponent implements OnInit, OnDestroy {
     private listItemSelectionService: SearchResultListItemSelectionService<SearchTermListEntry>,
     private criterionService: CreateCriterionService,
     private queryProviderService: FeasibilityQueryProviderService,
-    private translator: UIQuery2StructuredQueryTranslatorService
+    private translator: UIQuery2StructuredQueryTranslatorService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -65,8 +67,9 @@ export class PreStageComponent implements OnInit, OnDestroy {
     }
   }
   translate(): void {
-    this.queryProviderService.getFeasibilityQuery().subscribe((query) => {
+    /* this.queryProviderService.getFeasibilityQuery().subscribe((query) => {
       console.log(this.translator.translateToStructuredQuery(query));
-    });
+    });*/
+    this.router.navigate(['/querybuilder/result'], { state: { preventReset: true } });
   }
 }

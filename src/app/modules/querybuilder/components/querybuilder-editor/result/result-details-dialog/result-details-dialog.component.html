@@ -10,16 +10,16 @@
       <thead>
         <tr>
           <td class="left-column">{{ 'RESULT.TOTAL' | translate }}</td>
-          <td *ngIf="result?.totalNumberOfPatients" class="right-column">
-            {{ backend.obfuscateResult(result?.totalNumberOfPatients) }}
+          <td *ngIf="result?.getTotalNumberOfPatients()" class="right-column">
+            {{ backend.obfuscateResult(result?.getTotalNumberOfPatients()) }}
           </td>
         </tr>
       </thead>
       <tr class="empty-row"></tr>
       <ng-container
-        *ngIf="resultStatus === '200' && result?.resultLines?.length >= lowerBoundaryLocation"
+        *ngIf="resultStatus === '200' && result?.getResultLines()?.length >= lowerBoundaryLocation"
       >
-        <tr *ngFor="let location of result.resultLines; index as i" class="result-lines">
+        <tr *ngFor="let location of result.getResultLines(); index as i" class="result-lines">
           <td class="left-column">{{ 'RESULT.SITE' | translate }} {{ i + 1 }}</td>
           <td class="right-column">
             {{ backend.obfuscateResult(location.numberOfPatients) }}

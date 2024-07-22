@@ -101,6 +101,7 @@
     "DASHBOARD": "Startseite",
     "QUERYBUILDER_EDITOR": "Machbarkeitsabfrage",
     "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
+    "QUERYBUILDER_RESULT": "Ergebnis",
     "DATASELECTION_EDITOR": "Datenselektion",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"

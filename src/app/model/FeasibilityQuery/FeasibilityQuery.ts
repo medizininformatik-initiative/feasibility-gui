@@ -1,5 +1,3 @@
-import { Criterion } from './Criterion/Criterion';
-
 // The atomic building block of a query is a Criterion (e.g. "Geschlecht: weiblich")
 //
 // We have following hierarchy from Query (top) to Criterion (bottom):
@@ -27,6 +25,8 @@ import { Criterion } from './Criterion/Criterion';
  * Represents a query with display name, consent, inclusion criteria, and exclusion criteria.
  */
 export class FeasibilityQuery {
+  private id: string;
+  private resultIDs: number[] = [];
   private consent = false;
   private display: string;
   private version = '';
@@ -36,16 +36,21 @@ export class FeasibilityQuery {
   /**
    * Constructor to initialize the Query with display and consent.
    *
+   * @param id - The uid of the query.
    * @param display - The display name of the query.
    * @param consent - The consent status of the query.
    */
-  constructor(display: string = 'Ausgewählte Merkmale', consent: boolean = false) {
+  constructor(id: string, display: string = 'Ausgewählte Merkmale', consent: boolean = false) {
+    this.id = id;
     this.consent = consent;
     this.display = display;
     this.inclusionCriteria = [];
     this.exclusionCriteria = [];
   }
 
+  getID(): string {
+    return this.id;
+  }
   /**
    * Gets the consent name of the query.
    *

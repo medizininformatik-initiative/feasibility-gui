@@ -1,7 +1,7 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from '../../../service/Provider/FeasibilityQueryProvider.service';
 import { Subscription } from 'rxjs';
 import { ObjectHelper } from '../../../modules/querybuilder/controller/ObjectHelper';
@@ -11,12 +11,11 @@ import { StageProviderService } from '../../../service/Provider/StageProvider.se
 @Directive({
   selector: '[numAppDropGroup]',
 })
-export class DropGroupDirective {
+export class DropGroupDirective implements OnInit {
   @Input() groupType: string;
 
   criteria: string[][] = [];
-  feasibilityQuery: FeasibilityQuery = new FeasibilityQuery();
-  querySubscription: Subscription;
+  feasibilityQuery: FeasibilityQuery;
   constructor(
     private queryProviderService: FeasibilityQueryProviderService,
     private stageProviderService: StageProviderService,
@@ -25,41 +24,91 @@ export class DropGroupDirective {
 
   @HostListener('cdkDropListDropped', ['$event'])
   onDrop(event: CdkDragDrop<any[]>) {
+    console.log('event');
+    console.log(event.container.id);
+    console.log(event.previousContainer.id);
     const groupType = this.groupType || this.elementRef.nativeElement.getAttribute('groupType');
-    switch (groupType) {
+    const droppedCriterion: string = event.item.data;
+    switch (event.container.id) {
       case 'Exclusion':
-        this.handleExclusionDrop(event);
+        this.addToExclusion(droppedCriterion);
         break;
       case 'Inclusion':
-        this.handleInclusionDrop(event);
+        this.addToInclusion(droppedCriterion);
+        break;
+      case 'Stage':
+        break;
+      default:
+        break;
+    }
+    switch (event.previousContainer.id) {
+      case 'Exclusion':
+        this.deleteFromExclusion(droppedCriterion);
+        break;
+      case 'Inclusion':
+        this.deleteFromInclusion(droppedCriterion);
+        break;
+      case 'Stage':
+        this.stageProviderService.deleteCriterionByUID(droppedCriterion);
         break;
       default:
         break;
     }
   }
+  /*@HostListener('cdkDropListExited', ['$event'])
+  onExit(event: CdkDragDrop<any[]>) {
+    console.log('exit')
+    console.log(event)
+  }*/
 
-  private handleInclusionDrop(event: CdkDragDrop<any[]>): void {
-    const droppedCriterion: string = event.item.data;
-
+  ngOnInit() {
+    this.queryProviderService.getFeasibilityQueryByID().subscribe((feasibilityQuery) => {
+      this.feasibilityQuery = feasibilityQuery.get('1');
+    });
+  }
+  private addToInclusion(droppedCriterion: string): void {
     console.log('dropped in');
-    console.log(event.item.data);
+    console.log(droppedCriterion);
     this.criteria = this.feasibilityQuery.getInclusionCriteria();
     this.criteria.push([droppedCriterion]);
     this.queryProviderService.setInclusionCriteria(this.criteria);
     console.log(this.feasibilityQuery.getInclusionCriteria());
-
-    this.stageProviderService.deleteCriterionByUID(droppedCriterion);
   }
-  private handleExclusionDrop(event: CdkDragDrop<any[]>): void {
-    const droppedCriterion: string = event.item.data;
-
+  private addToExclusion(droppedCriterion: string): void {
     console.log('dropped ex');
-    console.log(event.item.data);
+    console.log(droppedCriterion);
     this.criteria = this.feasibilityQuery.getExclusionCriteria();
+    console.log(this.criteria);
     this.criteria.push([droppedCriterion]);
     this.queryProviderService.setExclusionCriteria(this.criteria);
     console.log(this.feasibilityQuery.getExclusionCriteria());
+  }
 
-    this.stageProviderService.deleteCriterionByUID(droppedCriterion);
+  private deleteFromInclusion(droppedCriterion: string): void {
+    const criteria: string[][] = this.feasibilityQuery.getInclusionCriteria();
+    console.log('bla1');
+    console.log(criteria);
+  }
+  private deleteFromExclusion(droppedCriterion: string): void {
+    const criteria: string[][] = this.feasibilityQuery.getExclusionCriteria();
+
+    criteria.forEach((idArray) => {
+      let innerArray: number;
+      idArray.forEach((id, i) => {
+        if (id === droppedCriterion) {
+          innerArray = i;
+          console.log('treffer');
+        }
+      });
+      //if (innerArray)
+    });
+
+    console.log('bla2');
+    console.log(criteria);
+    console.log(this.feasibilityQuery.getExclusionCriteria());
+    this.queryProviderService.getFeasibilityQueryByID().subscribe((test) => {
+      console.log('test');
+      console.log(test);
+    });
   }
 }

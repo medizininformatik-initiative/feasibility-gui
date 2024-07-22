@@ -83,6 +83,6 @@ export class ResultDetailsDialogComponent implements OnInit {
   }
   sortResult(resultTemp): void {
     this.result = resultTemp;
-    this.result?.resultLines?.sort((a, b) => b.numberOfPatients - a.numberOfPatients);
+    this.result?.getResultLines()?.sort((a, b) => b.getNumberOfPatients() - a.getNumberOfPatients());
   }
 }
