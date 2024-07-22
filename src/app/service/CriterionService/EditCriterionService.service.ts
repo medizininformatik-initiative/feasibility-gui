@@ -1,8 +1,8 @@
 import { ApplicationRef, ChangeDetectorRef, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
-import { EditCriterionModalComponent } from 'src/app/modules/querybuilder/components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-criterion-modal.component';
-import { EditReferenceCriteriaModalComponent } from 'src/app/modules/querybuilder/components/querybuilder-editor-new-design/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
+import { EditCriterionModalComponent } from 'src/app/modules/querybuilder/components/qb-editor2/edit/edit-criterion-modal/edit-criterion-modal.component';
+import { EditReferenceCriteriaModalComponent } from 'src/app/modules/querybuilder/components/qb-editor2/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
 import { CriterionService } from '../CriterionService.service';
 
 @Injectable({
