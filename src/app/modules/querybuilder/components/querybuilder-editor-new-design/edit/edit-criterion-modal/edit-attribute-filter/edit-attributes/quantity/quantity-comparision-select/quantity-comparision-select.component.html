@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline" class="operator-part">
+  <mat-select
+    [(value)]="existingOption"
+    (selectionChange)="selectQuantityFilterOption($event.value)"
+  >
+    <mat-option *ngFor="let option of quantityFilterOptionsArray" [value]="option">
+      {{ 'QUERYBUILDER.EDIT.' + option | translate }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
