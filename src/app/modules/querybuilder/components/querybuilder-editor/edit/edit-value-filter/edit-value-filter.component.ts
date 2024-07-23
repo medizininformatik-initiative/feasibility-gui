@@ -10,8 +10,8 @@ import { EditValueFilterConceptLineComponent } from '../edit-value-filter-concep
 import { FilterTypes } from 'src/app/model/FilterTypes';
 import { MatSelectModule } from '@angular/material/select';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
-import { TerminologyCode } from 'src/app/model/terminology/Terminology';
+import { Query } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { TerminologyCode } from 'src/app/model/terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { ReferenceCriteriaService } from '../../../../../../service/CriterionService/reference-criteria.service';
 import { QueryService } from '../../../../../../service/QueryService.service';

@@ -53,7 +53,7 @@ export class CriterionProviderService {
    *
    * @param uid The unique ID of the criterion to delete
    */
-  public deleteCriterionByUID(uid: string): void {
+  public deleteCriterionFromMapByUID(uid: string): void {
     this.criterionUIDMap.delete(uid);
     this.criterionUIDMapSubject.next(new Map(this.criterionUIDMap));
   }

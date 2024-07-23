@@ -1,3 +1,6 @@
+import { MatDrawer } from '@angular/material/sidenav';
+import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -6,10 +9,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
-import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
-import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
   selector: 'num-search-result',
@@ -32,12 +31,12 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
   isOpen = false;
 
   constructor(
-    private listItemService: SearchResultListItemSelectionService<SearchTermListEntry>,
+    private listItemService: SelectedTableItemsService<SearchTermListEntry>,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.listItemService.getSelectedSearchResultListItem().subscribe((row) => {
+    this.listItemService.getSelectedTableItem().subscribe((row) => {
       this.data = row;
       if (this.isInitialized) {
         this.cdr.detectChanges();

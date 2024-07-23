@@ -20,7 +20,7 @@ export class MenuService {
       {
         icon: 'link',
         label: 'kriterien verknüpfen',
-        action: () => this.linkCriteriaAction.bind(this),
+        action: () => this.linkCriteriaAction(criterionUuid),
       },
       {
         icon: 'cog',
@@ -31,7 +31,7 @@ export class MenuService {
   }
 
   deleteAction(uid: string) {
-    this.criterionService.deleteCriterionByUID(uid);
+    this.criterionService.deleteCriterionFromMapByUID(uid);
   }
 
   duplicateAction(uid: string) {
@@ -43,12 +43,17 @@ export class MenuService {
     }
   }
 
-  linkCriteriaAction() {
-    console.log('Link criteria action triggered');
+  linkCriteriaAction(criterionUuid: string) {
+    const criterion = this.criterionService.getCriterionByUID(criterionUuid);
+    if (criterion) {
+      this.editCriterionService.editCriterionReferenceCriteria(criterion);
+    }
   }
 
   applyFilterAction(criterionUuid: string) {
-    const test = this.criterionService.getCriterionByUID(criterionUuid);
-    this.editCriterionService.newEditCriterion(test);
+    const criterion = this.criterionService.getCriterionByUID(criterionUuid);
+    if (criterion) {
+      this.editCriterionService.editCriterionAttribute(criterion);
+    }
   }
 }

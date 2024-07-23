@@ -53,6 +53,7 @@ export class DropGroupDirective implements OnInit {
         break;
       default:
         break;
+        break;
     }
   }
   /*@HostListener('cdkDropListExited', ['$event'])

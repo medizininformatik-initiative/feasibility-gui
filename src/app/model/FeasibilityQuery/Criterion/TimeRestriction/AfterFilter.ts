@@ -27,4 +27,12 @@ export class AfterFilter extends AbstractTimeRestriction {
   setAfterDate(afterDate: string): void {
     this.afterDate = afterDate;
   }
+
+  /**
+   *
+   * @returns TimeRestrictionType
+   */
+  getType() {
+    return this.type;
+  }
 }

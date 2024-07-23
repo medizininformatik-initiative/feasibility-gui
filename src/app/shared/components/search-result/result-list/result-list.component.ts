@@ -1,7 +1,9 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
-import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { Subscription } from 'rxjs';
+import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 
 @Component({
   selector: 'num-result-list',
@@ -11,31 +13,21 @@ import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSea
 export class ResultListComponent<T extends InterfaceListEntry>
   implements OnInit, OnChanges, OnDestroy
 {
-  @Input() searchTermResultList: T[] = [];
-  @Input() keysToSkip: string[] = [];
+  @Input()
+  tableData: TableData;
+
+  @Output()
+  selectedRow: EventEmitter<InterfaceTableDataRow> = new EventEmitter();
+
+  @Output()
+  rowClicked: EventEmitter<InterfaceTableDataRow> = new EventEmitter();
 
   columnsToDisplay: string[] = [];
-  selectedRow: T | null = null;
   listItemServiceSubscription: Subscription;
 
-  constructor(private listItemService: SearchResultListItemSelectionService<T>) {}
+  constructor(private tableItemService: SelectedTableItemsService<InterfaceListEntry>) {}
 
-  ngOnInit(): void {
-    this.extractKeys(this.searchTermResultList, this.keysToSkip);
-  }
-
-  private extractKeys(searchTermResultList: T[], keysToSkip: string[]): void {
-    if (!searchTermResultList || searchTermResultList.length === 0) {
-      return;
-    }
-
-    const keys = Object.keys(searchTermResultList[0]);
-    keys.forEach((key) => {
-      if (!keysToSkip.includes(key)) {
-        this.columnsToDisplay.push(key);
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     if (this.listItemServiceSubscription) {
@@ -45,33 +37,29 @@ export class ResultListComponent<T extends InterfaceListEntry>
 
   ngOnChanges(): void {}
 
-  public onRowSelect(rowData: T): void {
-    this.listItemService.setSelectedSearchResultListItem(rowData);
+  public onRowClick(row: InterfaceTableDataRow): void {
+    this.rowClicked.emit(row);
   }
 
   public isSelected(listItem: T): boolean {
     let isSelected = false;
     const itemId = listItem.id;
-    this.listItemServiceSubscription = this.listItemService
-      .getSelectedSearchResultListItems()
+    this.listItemServiceSubscription = this.tableItemService
+      .getSelectedTableItems()
       .subscribe((selection) => {
         isSelected = selection.some(
           (selectedItem) =>
             selectedItem.id === itemId &&
-            hasSelectable(selectedItem) &&
-            selectedItem.getSelectable()
+            (hasSelectable(selectedItem) ? selectedItem.getSelectable() : true)
         );
       });
     return isSelected;
   }
 
-  public selectCheckbox(event, searchTermListItem: T): void {
-    if (event.checked) {
-      this.listItemService.addSearchResultListItemToSelection(searchTermListItem);
-    } else {
-      this.listItemService.removeSearchResultListItemFromSelection(searchTermListItem);
-    }
+  public onCheckboxSelect(row: InterfaceTableDataRow): void {
+    this.selectedRow.emit(row);
   }
 }
 
-const hasSelectable = (entry: any): entry is { getSelectable: () => boolean } => entry && typeof entry.getSelectable === 'function';
+const hasSelectable = (entry: any): entry is { getSelectable: () => boolean } =>
+  entry && typeof entry.getSelectable === 'function';

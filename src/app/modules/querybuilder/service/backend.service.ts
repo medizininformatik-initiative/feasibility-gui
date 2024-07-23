@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, of } from 'rxjs';
+//import { QueryProviderService } from './query-provider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 //import { QueryProviderService } from './query-provider.service';
 import { QueryResponse } from '../model/api/result/QueryResponse';
@@ -27,6 +28,7 @@ export class BackendService {
     private config: AppConfigService,
     private feature: FeatureService,
     //private queryProviderService: QueryProviderService,
+    //private queryProviderService: QueryProviderService,
     private http: HttpClient,
     private authStorage: OAuthStorage //private apiTranslator: UIQuery2StructuredQueryTranslatorService, //private latestQueryResult: QueryProviderService
   ) {}
@@ -38,6 +40,7 @@ export class BackendService {
   private static PATH_SEARCH = 'terminology/entries';
   private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
   private static PATH_SAVED = 'saved';
+  private static PATH_TERMINOLOGY_SEARCH_CONCEPT = 'codeable_concept/entry/search';
   private static PATH_TERMINOLOGY_SEARCH = 'terminology/entry/search';
   private static PATH_TERMINOLOGY_SEARCH_FILTER = 'terminology/search/filter';
   private static PATH_CRITERIA_PROFILE = 'terminology/criteria-profile-data';
@@ -127,8 +130,9 @@ export class BackendService {
    * @returns
    * offset optional?
    */
-  public getElasticSearchResults(
+  public getElasticSearchResultsForCriteria(
     searchString: string,
+    url?: string,
     context?: string,
     terminology?: string,
     kds?: string,
@@ -140,8 +144,8 @@ export class BackendService {
     const terminologyParameter = terminology ? '&terminology=' + terminology : '';
     const kdsParameter = kds ? '&kds=' + kds : '';
     const availabilityParameter = availability ? '&availability=' + availability : '';
-    const limitParameter = limit ? '&limit=' + limit : '';
-    const offsetParameter = offset ? '&offset=' + offset : '';
+    const limitParameter = limit ? '&pageSize=' + limit : '';
+    const offsetParameter = offset ? '&page=' + offset : '';
     return this.http.get<{ totalHits: number; results: any[] }>(
       this.createUrl(
         BackendService.PATH_TERMINOLOGY_SEARCH +
@@ -153,6 +157,49 @@ export class BackendService {
           availabilityParameter +
           limitParameter +
           offsetParameter
+      )
+    );
+  }
+
+  public getElasticSearchResultsForCodeableConcept(
+    searchString: string,
+    valueSets: string[],
+    limit?: number,
+    offset?: number
+  ): Observable<{ totalHits: number; results: any[] }> {
+    const limitParameter = limit ? '&pageSize=' + limit : '';
+    const offsetParameter = offset ? '&page=' + offset : '';
+    const encodedCommaSeperatedValueSets = '&valueSets' + encodeURI([valueSets].join(','));
+    return this.http.get<{ totalHits: number; results: any[] }>(
+      this.createUrl(
+        BackendService.PATH_TERMINOLOGY_SEARCH_CONCEPT +
+          '?searchterm=' +
+          searchString +
+          limitParameter +
+          offsetParameter +
+          encodedCommaSeperatedValueSets
+      )
+    );
+  }
+
+  public getElasticSearchResultsForCriteriaSets(
+    searchString: string,
+    criteriaSets: string[],
+    limit?: number,
+    offset?: number
+  ): Observable<{ totalHits: number; results: any[] }> {
+    const limitParameter = limit ? '&pageSize=' + limit : '';
+    const offsetParameter = offset ? '&page=' + offset : '';
+
+    const encodedCommaSeperatedCriteriaSets = '&criteriaSets=' + encodeURI([criteriaSets].join(','));
+    return this.http.get<{ totalHits: number; results: any[] }>(
+      this.createUrl(
+        BackendService.PATH_TERMINOLOGY_SEARCH +
+          '?searchterm=' +
+          searchString +
+          limitParameter +
+          offsetParameter +
+          encodedCommaSeperatedCriteriaSets
       )
     );
   }
@@ -259,6 +306,7 @@ export class BackendService {
       this.createUrl(BackendService.PATH_QUERY_RESULT_LIMIT)
     );
   }
+  /*
   /*
   public saveQuery(
     query: FeasibilityQuery,

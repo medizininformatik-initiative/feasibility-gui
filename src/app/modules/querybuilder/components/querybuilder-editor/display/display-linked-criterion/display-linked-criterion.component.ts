@@ -2,7 +2,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FeatureService } from 'src/app/service/Feature.service';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { Query } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Component({

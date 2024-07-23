@@ -1,7 +1,7 @@
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { AttributeFilter } from './AttributeFilter';
 import { ConceptFilter } from './Concept/ConceptFilter';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityNotSet } from './Quantity/QuantityNotSet';
 import { QuantityUnit } from '../../../FeasibilityQuery/QuantityUnit';
 import { ReferenceCriterion } from '../ReferenceCriterion';
@@ -116,7 +116,7 @@ export class AttributeFiltersBuilder {
     return new QuantityNotSet(selectedUnit, allowedUnits, precision);
   }
 
-  buildConceptFilter(allowedConceptUri, selectedConcepts?: Set<TerminologyCode>) {
+  buildConceptFilter(allowedConceptUri: Array<string>, selectedConcepts?: Set<TerminologyCode>) {
     return new ConceptFilter(allowedConceptUri, selectedConcepts);
   }
 

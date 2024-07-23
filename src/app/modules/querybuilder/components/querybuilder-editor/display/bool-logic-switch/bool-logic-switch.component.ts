@@ -1,3 +1,4 @@
+/*
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -27,3 +28,4 @@ export class BoolLogicSwitchComponent implements OnInit {
     this.switched.emit(this.position);
   }
 }
+*/

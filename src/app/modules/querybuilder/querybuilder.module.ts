@@ -1,5 +1,10 @@
-import { BoolLogicSwitchComponent } from './components/querybuilder-editor/display/bool-logic-switch/bool-logic-switch.component';
+import { AllowedUnitsComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/quantity/allowed-units/allowed-units.component';
+import { AttributeFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/attribute-filter/attribute-filter.component';
+import { BeforeFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-time-restriction/before-filter/before-filter.component';
+import { BetweenFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-time-restriction/between-filter/between-filter.component';
+//import { BoolLogicSwitchComponent } from './components/querybuilder-editor/display/bool-logic-switch/bool-logic-switch.component';
 import { CommonModule } from '@angular/common';
+import { ConceptComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/concept/concept.component';
 import { CriteriaStageComponent } from './components/querybuilder-editor-new-design/stage/criteria-stage.component';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DisplayCriteriaGroupComponent } from './components/querybuilder-editor-new-design/criteria/display-criteria-group/display-criteria-group.component';
@@ -25,11 +30,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PreStageComponent } from './components/querybuilder-editor-new-design/pre-stage/pre-stage.component';
-//import { QueryBoxEndComponent } from './components/querybuilder-overview/saved-queries/query-box-end/query-box-end.component';
+import { QuantityComparatorComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/quantity/quantity-comparator/quantity-comparator.component';
+import { QuantityComparisionSelectComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/quantity/quantity-comparision-select/quantity-comparision-select.component';
+import { QuantityRangeComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/quantity/quantity-range/quantity-range.component';
 import { QueryBoxFrontComponent } from './components/querybuilder-overview/saved-queries/query-box-front/query-box-front.component';
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor-new-design/querybuilder-editor/querybuilder-editor.component';
 //import { QuerybuilderOverviewComponent } from './components/querybuilder-overview/querybuilder-overview.component';
 import { QuerybuilderRoutingModule } from './querybuilder-routing.module';
+import { ReferenceComponent } from './components/querybuilder-editor-new-design/edit/edit-reference-criteria-modal/reference/reference.component';
 import { ResultDetailsDialogComponent } from './components/querybuilder-editor/result/result-details-dialog/result-details-dialog.component';
 import { ResultSimpleComponent } from './components/querybuilder-editor/result/result-simple/result-simple.component';
 //import { SaveDialogComponent } from './components/querybuilder-editor/save/save-dialog/save-dialog.component';
@@ -45,16 +53,19 @@ import { SearchTreeFooterComponent } from './components/querybuilder-editor/sear
 //import { SearchTreeTermEntryComponent } from './components/querybuilder-editor/search/search-tree-term-entry/search-tree-term-entry.component';
 import { SearchTreeTermEntryDataselectionComponent } from './components/querybuilder-editor/search/dataselection/search-tree-term-entry-dataselection/search-tree-term-entry-dataselection.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SingleQueryComponent } from './components/querybuilder-overview/saved-queries/single-query/single-query.component';
 import { SingleTemplateComponent } from './components/querybuilder-overview/saved-queries/single-template/single-template.component';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
+//import { QuerybuilderOverviewComponent } from './components/querybuilder-overview/querybuilder-overview.component';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
-import { EditReferenceCriteriaModalComponent } from './components/querybuilder-editor-new-design/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
+import { ValueFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/value-filter/value-filter.component';
+//import { EditTimeRestrictionComponent } from './components/querybuilder-editor/edit/edit-time-restriction/edit-time-restriction.component';
+import { QuantityComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/quantity/quantity.component';
 import { SimpleResultComponent } from './components/querybuilder-result/simple-result/simple-result.component';
 import { ResultComponent } from './components/querybuilder-result/result/result.component';
+import { EditReferenceCriteriaModalComponent } from './components/querybuilder-editor-new-design/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -77,7 +88,7 @@ export const FORMATS_GERMAN = {
     DisplayGroupComponent,
     //DisplayCritGroupComponent,
     //DisplayCriterionComponent,
-    BoolLogicSwitchComponent,
+    //BoolLogicSwitchComponent,
     //SearchInputComponent,
     //SearchTreeOverlayContentComponent,
     //SearchTreeHeaderComponent,
@@ -97,7 +108,7 @@ export const FORMATS_GERMAN = {
     //EditGroupConnectionComponent,
     ResultSimpleComponent,
     ResultDetailsDialogComponent,
-    SingleQueryComponent,
+    //SingleQueryComponent,
     //SaveDialogComponent,
     //DisplayLinkedCriterionComponent,
     SingleTemplateComponent,
@@ -113,6 +124,13 @@ export const FORMATS_GERMAN = {
     EditReferenceCriteriaModalComponent,
     SimpleResultComponent,
     ResultComponent,
+    BeforeFilterComponent,
+    BetweenFilterComponent,
+    AllowedUnitsComponent,
+    QuantityComparisionSelectComponent,
+    ReferenceComponent,
+    AttributeFilterComponent,
+    ValueFilterComponent,
   ],
   imports: [
     CommonModule,

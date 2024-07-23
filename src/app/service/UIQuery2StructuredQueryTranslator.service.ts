@@ -12,7 +12,7 @@ import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from './Provider/CriterionProvider.service';
 import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
 import { FeatureService } from './Feature.service';
-import { FilterTypes } from '../model/FilterTypes';
+import { FilterTypes } from '../model/Utilities/FilterTypes';
 import { FilterTypesService } from './FilterTypes.service';
 import { Injectable } from '@angular/core';
 import { ObjectHelper } from '../modules/querybuilder/controller/ObjectHelper';

@@ -1,5 +1,5 @@
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 
 export class QuantityRangeFilter extends AbstractQuantityFilter {
   minValue: number = null;

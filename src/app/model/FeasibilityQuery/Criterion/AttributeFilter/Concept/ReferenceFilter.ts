@@ -1,5 +1,5 @@
 import { AbstractConceptFilter } from './AbstractConceptFilter';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { ReferenceCriterion } from '../../ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
@@ -42,7 +42,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @param selectedReferences - An array of selected reference criteria.
    */
-  setSelectedReference(selectedReferences: ReferenceCriterion[]): void {
+  setSelectedReferences(selectedReferences: ReferenceCriterion[]): void {
     this.selectedReferences = selectedReferences;
   }
 

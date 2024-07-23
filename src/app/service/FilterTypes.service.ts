@@ -1,6 +1,7 @@
-import { Comparator } from '../model/Comparator';
-import { FilterTypes } from '../model/FilterTypes';
+import { Comparator } from '../model/Utilities/Quantity/Comparator';
+import { FilterTypes } from '../model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
+import { QuantityComparisonOption } from '../model/Utilities/Quantity/QuantityFilterOptions';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,7 @@ export class FilterTypesService {
     return type === FilterTypes.REFERENCE ? true : false;
   }
 
-  public isNoneComparator(type: Comparator): boolean {
-    return type === Comparator.NONE ? true : false;
+  public isNoneComparator(type: QuantityComparisonOption): boolean {
+    return type === QuantityComparisonOption.NONE ? true : false;
   }
 }

@@ -7,10 +7,10 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
 import { Observable, of, Subscription } from 'rxjs';
 import { SearchMode } from '../search-input/search-input.component';
-import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
+import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/TerminologyCode';
 import { CritType } from 'src/app/model/FeasibilityQuery/Group';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
-import { EditCriterionService } from '../../../../../../service/CriterionService/edit-criterion.service';
+import { Query } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { EditCriterionService } from '../../../../../../service/CriterionService/EditCriterionService.service';
 
 @Component({
   selector: 'num-search-tree-overlay-content',

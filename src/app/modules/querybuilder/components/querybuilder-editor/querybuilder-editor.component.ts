@@ -6,11 +6,11 @@ import { interval, Observable, Subscription, timer } from 'rxjs';
 import { map, share, switchAll, takeUntil } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { QueryProviderService } from '../../service/query-provider.service';
 import { SaveDialogComponent } from './save/save-dialog/save-dialog.component';
 import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
-import { QueryResult } from 'src/app/model/result/QueryResult';
+import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { QueryService } from 'src/app/service/QueryService.service';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/SearchTermListEntry';
@@ -24,7 +24,7 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
   readonly POLLING_INTERVALL_MILLISECONDS = this.featureService.getPollingIntervall() * 1000;
   readonly POLLING_MAXL_MILLISECONDS = this.featureService.getPollingTime() * 1000;
 
-  query: Query;
+  query: FeasibilityQuery;
 
   result: QueryResult;
 

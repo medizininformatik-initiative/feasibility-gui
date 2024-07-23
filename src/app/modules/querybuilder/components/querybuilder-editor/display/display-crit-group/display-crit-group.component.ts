@@ -2,7 +2,7 @@
 import { Criterion } from '../../../../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CritGroupArranger } from '../../../../controller/CritGroupArranger';
 import { CritType, Group } from '../../../../../../model/FeasibilityQuery/Group';
-import { Query } from '../../../../../../model/FeasibilityQuery/Query';
+import { Query } from '../../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { QueryService } from 'src/app/service/QueryService.service';
 
 @Component({

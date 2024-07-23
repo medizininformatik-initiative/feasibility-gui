@@ -1,12 +1,15 @@
-<label for="filter-chips">Filter</label>
-<mat-chip-listbox id="filter-chips" aria-label="Filter" [multiple]="true">
-  <mat-chip-option
-    color="primary"
-    *ngFor="let chip of filterChips"
-    [selected]="chip.isSelected"
-    (click)="handleClickOnChip(chip)"
-  >
-    <fa-icon icon="check"></fa-icon>
-    {{ chip.title | translate }}
-  </mat-chip-option>
-</mat-chip-listbox>
+<div *ngIf="(chipData$ | async)?.length > 0">
+  <div *ngFor="let filterChip of chipData$ | async" fxLayout="row" fxLayoutAlign="start start">
+    <div class="block">{{ filterChip.type }}</div>
+    <div fxLayout="row wrap" class="padding-left-20">
+      <div
+        *ngFor="let chip of filterChip.data"
+        class="chip-container"
+        [ngClass]="{ expanded: chip.expanded }"
+        (click)="toggleExpanded(chip)"
+      >
+        {{ chip.text }}
+      </div>
+    </div>
+  </div>
+</div>

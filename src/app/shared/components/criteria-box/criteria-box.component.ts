@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatMenuTrigger } from '@angular/material/menu';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'num-criteria-box',
@@ -19,7 +19,6 @@ export class CriteriaBoxComponent implements AfterViewInit, OnInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    // Ensure the menuTrigger references the correct MatMenu
     if (this.criteriaMenuTrigger) {
       this.menuTrigger = this.criteriaMenuTrigger;
     }

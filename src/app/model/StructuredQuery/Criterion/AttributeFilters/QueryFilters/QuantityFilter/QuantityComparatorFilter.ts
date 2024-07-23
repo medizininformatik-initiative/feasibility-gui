@@ -1,9 +1,9 @@
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
-import { Comparator } from 'src/app/model/Comparator';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 
 export class QuantityComparatorFilter extends AbstractQuantityFilter {
-  comparator: Comparator = Comparator.NONE;
+  comparator: QuantityComparisonOption = QuantityComparisonOption.NONE;
   type: FilterTypes = FilterTypes.QUANTITY_COMPARATOR;
   value: number = null;
 }

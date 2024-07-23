@@ -18,7 +18,7 @@ export class Criterion {
   attributeFilters?: Array<AttributeFilter> = [];
   children?: Array<TerminologyEntry> = [];
   isinvalid?: boolean;
-  position?: CritGroupPosition;
+  //position?: CritGroupPosition;
   linkedCriteria?: Criterion[] = [];
   isLinked?: boolean;
   context?: TerminologyCode;

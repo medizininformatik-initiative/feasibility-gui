@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { AttributeFilter } from '../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
 import { FilterTypesService } from '../FilterTypes.service';
 import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { Subscription } from 'rxjs';
-import { CritGroupArranger } from '../../modules/querybuilder/controller/CritGroupArranger';
 import { TerminologyCode } from '../../model/Terminology/TerminologyCode';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 
@@ -152,3 +151,4 @@ export class ReferenceCriteriaService {
     }
   }
 }
+*/

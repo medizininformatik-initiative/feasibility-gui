@@ -1,7 +1,8 @@
 /*import { AbstractAttributeFilters } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { AbstractStructuredQueryFilters } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/AbstractStructuredQueryFilters';
 import { AbstractTimeRestriction } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/TimeRestriction/AbstractTimeRestriction';
-import { AttributeDefinition } from '../model/terminology/AttributeDefinitions/AttributeDefinition';
+import { AnnotatedStructuredQuery } from '../model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { AnnotatedStructuredQueryCriterion } from '../model/Result/AnnotatedStructuredQuery/AnnotatedCriterion/AnnotatedStructuredQueryCriterion';
 import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { ConceptAttributeFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ConceptFilter/ConceptAttributeFilter';
 import { ConceptValueFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ConceptFilter/ConceptValueFilter';
@@ -9,20 +10,21 @@ import { CreateCriterionService } from './CriterionService/CreateCriterion.servi
 import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
 import { FilterTypes } from '../model/FilterTypes';
 import { FilterTypesService } from './FilterTypes.service';
-import { forkJoin, Observable, of, Subject } from 'rxjs';
+import {
+  forkJoin,
+  Observable,
+  of,
+  Subject
+  } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Query } from '../model/FeasibilityQuery/Query';
-import { ReferenceFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ReferenceFilter/ReferenceFilter';
-import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
+import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
+import { ReferenceFilter as SQReferenceFilter} from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ReferenceFilter/ReferenceFilter';
 import { StructuredQueryCriterion } from '../model/StructuredQuery/Criterion/StructuredQueryCriterion';
-import { TerminologyCode } from '../model/terminology/Terminology';
-import { TimeRestriction, TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
-import { ValidationService } from './Validation.service';
-import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { QueryProviderService } from '../modules/querybuilder/service/query-provider.service';
 import { StructuredQueryInquiry } from '../model/SavedInquiry/StructuredQueryInquiry';
-import { AnnotatedStructuredQueryCriterion } from '../model/result/AnnotatedStructuredQuery/AnnotatedCriterion/AnnotatedStructuredQueryCriterion';
-import { AnnotatedStructuredQuery } from '../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { TerminologyCode } from '../model/Terminology/TerminologyCode';
+import { TimeRestriction, TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
+import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { ReferenceFilter as FQReferenceFilter} from '../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -37,10 +39,10 @@ export class StructuredQuery2UIQueryTranslatorService {
 
   public translateImportedSQtoUIQuery(
     annotatedStructuredQuery: AnnotatedStructuredQuery
-  ): Observable<Query> {
+  ): Observable<FeasibilityQuery> {
     this.hasConsent = false;
-    const uiquery: Query = QueryProviderService.createDefaultQuery();
-    const subject = new Subject<Query>();
+    const feasibilityQuery: FeasibilityQuery = new FeasibilityQuery(annotatedStructuredQuery.display);
+    const subject = new Subject<FeasibilityQuery>();
     const inclusion = annotatedStructuredQuery.inclusionCriteria
       ? annotatedStructuredQuery.inclusionCriteria
       : [];
@@ -49,12 +51,11 @@ export class StructuredQuery2UIQueryTranslatorService {
       : [];
 
     this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
-      uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
+      feasibilityQuery.setInclusionCriteria(this.addReferenceCriteria(inclusionQuery))
       //TODO: find a better way for joining in- and exclusion instead of nested subscription
       this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
-        uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
-        uiquery.consent = this.hasConsent;
-        subject.next(this.rePosition(uiquery));
+        feasibilityQuery.setExclusionCriteria(this.addReferenceCriteria(exclusionQuery))
+        subject.next(this.rePosition(feasibilityQuery));
         subject.complete();
       });
     });
@@ -62,10 +63,10 @@ export class StructuredQuery2UIQueryTranslatorService {
     return subject.asObservable();
   }
 
-  public translateSQtoUIQuery(structuredQueryInquiry: StructuredQueryInquiry): Observable<Query> {
-    const uiquery: Query = QueryProviderService.createDefaultQuery();
+  public translateSQtoUIQuery(structuredQueryInquiry: StructuredQueryInquiry): Observable<FeasibilityQuery> {
+    const feasibilityQuery: FeasibilityQuery = new FeasibilityQuery(structuredQueryInquiry.content.display);
     this.hasConsent = false;
-    const subject = new Subject<Query>();
+    const subject = new Subject<FeasibilityQuery>();
     const inclusion = structuredQueryInquiry.content.inclusionCriteria
       ? structuredQueryInquiry.content.inclusionCriteria
       : [];
@@ -74,12 +75,11 @@ export class StructuredQuery2UIQueryTranslatorService {
       : [];
 
     this.translateSQtoUICriteria(inclusion).subscribe((inclusionQuery) => {
-      uiquery.groups[0].inclusionCriteria = this.addReferenceCriteria(inclusionQuery);
+      feasibilityQuery.setInclusionCriteria(this.addReferenceCriteria(inclusionQuery))
       //TODO: find a better way for joining in- and exclusion instead of nested subscription
       this.translateSQtoUICriteria(exclusion).subscribe((exclusionQuery) => {
-        uiquery.groups[0].exclusionCriteria = this.addReferenceCriteria(exclusionQuery);
-        uiquery.consent = this.hasConsent;
-        subject.next(this.rePosition(uiquery));
+        feasibilityQuery.setExclusionCriteria(this.addReferenceCriteria(exclusionQuery))
+        subject.next(this.rePosition(feasibilityQuery));
         subject.complete();
       });
     });
@@ -120,7 +120,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   private consentIsNotSet(termCodes: Array<TerminologyCode>): boolean {
     const consentCode = '2.16.840.1.113883.3.1937.777.24.5.3.8';
     const systemConsent = 'urn:oid:2.16.840.1.113883.3.1937.777.24.5.3';
-    if (termCodes[0].code === consentCode && termCodes[0].system === systemConsent) {
+    if (termCodes[0].getCode() === consentCode && termCodes[0].getSystem() === systemConsent) {
       this.hasConsent = true;
       return false;
     } else {
@@ -141,25 +141,24 @@ export class StructuredQuery2UIQueryTranslatorService {
       )
       .subscribe((crit) => {
         criterion = crit;
-        if (criterion.attributeFilters === undefined) {
-          criterion.attributeFilters = [];
-        }
         const structuredQueryAttribute = this.getAttributeFilters(
           structuredQueryCriterion,
           criterion
         );
         //TODO: outsource this in a separate function:
-        structuredQueryAttribute.forEach((attribute) => {
-          const find = criterion.attributeFilters.find(
-            (attr) => attribute.attributeCode.code === attr.attributeDefinition.attributeCode.code
+        structuredQueryAttribute.forEach((structuredQueryAttributeFilter) => {
+          const find = criterion.getAttributeFilters().find(
+            (attr) => structuredQueryAttributeFilter.getAttributeCode().getCode() === attr.getAttributeCode().getCode()
           );
-          if (find?.type === 'reference') {
+          if (structuredQueryAttributeFilter.isReferenceSet()) {
+            const reference = new ReferenceFilter()
+            find.setReference(reference)
             find.attributeDefinition.selectableConcepts =
               attribute.attributeDefinition.selectableConcepts;
             find.attributeDefinition.optional = attribute.attributeDefinition.optional;
           }
           if (find?.type === 'concept') {
-            if (attribute.selectedConcepts) {
+            if (attribute.getSelectedConcepts()) {
               find.selectedConcepts = attribute.selectedConcepts;
             }
           }
@@ -265,6 +264,7 @@ export class StructuredQuery2UIQueryTranslatorService {
    * @returns
    */
 /*
+/*
   private getValueFilters(structuredCriterion: StructuredQueryCriterion): ValueFilter[] {
     const valueFiltersResult: ValueFilter[] = [];
     if (structuredCriterion.valueFilter) {
@@ -335,7 +335,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     return inexclusion;
   }
 
-  private rePosition(query: Query): Query {
+  private rePosition(query: FeasibilityQuery): FeasibilityQuery {
     for (const inex of ['inclusion', 'exclusion']) {
       query.groups[0][inex + 'Criteria'].forEach((disj, i) => {
         disj.forEach((conj, j) => {
@@ -352,12 +352,12 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private setPositionForRefCrit(
-    query: Query,
+    query: FeasibilityQuery,
     uid: string,
     row: number,
     column: number,
     critType: string
-  ): Query {
+  ): FeasibilityQuery {
     for (const inex of ['inclusion', 'exclusion']) {
       query.groups[0][inex + 'Criteria'].forEach((disj) => {
         disj.forEach((conj) => {

@@ -2,8 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from 'src/app/layout/material/material.module';
-import { IFilterChip } from '../../models/filter-chip.interface';
-
 import { FilterChipsComponent } from './filter-chips.component';
 
 describe('FilterChipsComponent', () => {

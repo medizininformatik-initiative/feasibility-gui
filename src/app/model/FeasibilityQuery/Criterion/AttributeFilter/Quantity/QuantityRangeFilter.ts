@@ -1,11 +1,13 @@
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityUnit } from '../../../QuantityUnit';
 
 /**
  * Class representing a QuantityRangeFilter.
  */
 export class QuantityRangeFilter extends AbstractQuantityFilter {
+  protected comparator: QuantityComparisonOption = QuantityComparisonOption.BETWEEN;
   private minValue: number | null = null;
   private maxValue: number | null = null;
   protected readonly type: FilterTypes = FilterTypes.QUANTITY_RANGE;

@@ -5,7 +5,7 @@ import { CritGroupArranger, CritGroupPosition } from '../../../../controller/Cri
 import { EditValueFilterComponent } from '../edit-value-filter/edit-value-filter.component';
 import { FeatureService } from '../../../../../../service/Feature.service';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { Query } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { Subscription } from 'rxjs';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import {

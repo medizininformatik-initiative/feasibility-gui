@@ -1,12 +1,12 @@
 import { AbstractConceptFilter } from './AbstractConceptFilter';
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 /**
  * Class representing a ConceptFilter.
  */
 export class ConceptFilter extends AbstractConceptFilter {
-  private allowedConceptUri: Array<string> = []; // Renamed from conceptSetUri
+  private allowedConceptUri: Array<string> = [];
   private type: FilterTypes = FilterTypes.CONCEPT;
 
   /**
@@ -15,7 +15,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @param allowedConceptUri - The allowed concept URI.
    * @param selectedConcepts - The selected concepts.
    */
-  constructor(allowedConceptUri: Array<string>, selectedConcepts: Set<TerminologyCode>) {
+  constructor(allowedConceptUri: Array<string> = [], selectedConcepts: Set<TerminologyCode>) {
     super(selectedConcepts);
     this.allowedConceptUri = allowedConceptUri;
   }
@@ -68,5 +68,14 @@ export class ConceptFilter extends AbstractConceptFilter {
     selectedConcepts: Set<TerminologyCode>
   ): ConceptFilter {
     return new ConceptFilter(allowedConceptUri, selectedConcepts);
+  }
+
+  /**
+   * Checks whether the selected concepts set exists.
+   *
+   * @returns True if the selected concepts set exists, otherwise false.
+   */
+  isSelectedConceptSet(): boolean {
+    return this.selectedConcepts !== undefined && this.selectedConcepts !== null;
   }
 }

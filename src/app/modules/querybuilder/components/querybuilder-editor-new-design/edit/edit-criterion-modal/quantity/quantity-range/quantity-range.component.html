@@ -1,0 +1,13 @@
+<div>
+  <mat-form-field appearance="outline" class="min-part">
+    <mat-label>{{ 'QUERYBUILDER.EDIT.MIN' | translate }}</mat-label>
+    <input matInput type="number" [(ngModel)]="minValue" (ngModelChange)="emitValues()" />
+  </mat-form-field>
+
+  <span>{{ 'QUERYBUILDER.EDIT.AND' | translate }}</span>
+
+  <mat-form-field appearance="outline" class="max-part">
+    <mat-label>{{ 'QUERYBUILDER.EDIT.MAX' | translate }}</mat-label>
+    <input matInput type="number" [(ngModel)]="maxValue" (ngModelChange)="emitValues()" />
+  </mat-form-field>
+</div>

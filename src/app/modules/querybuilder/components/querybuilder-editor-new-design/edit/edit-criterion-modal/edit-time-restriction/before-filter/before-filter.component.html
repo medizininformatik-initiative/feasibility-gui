@@ -1,0 +1,11 @@
+<mat-form-field class="form-field-from" appearance="outline">
+  <mat-label>{{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.FROM' | translate }}</mat-label>
+  <input
+    matInput
+    [matDatepicker]="dateStartPicker"
+    [(ngModel)]="selectedDate"
+    (dateChange)="onBeforeDateChange($event.value)"
+  />
+  <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
+  <mat-datepicker #dateStartPicker></mat-datepicker>
+</mat-form-field>

@@ -5,6 +5,7 @@ import { map, Observable, of, Subscription } from 'rxjs';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
+import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 
 @Component({
   selector: 'num-criteria',
@@ -14,6 +15,7 @@ import { StageProviderService } from '../../../../../service/Provider/StageProvi
 export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   public $criterionUIDMap: Observable<Array<string>>;
   public $criteriaArray: Observable<Criterion[]> = of([]);
+
   private subscription: Subscription;
 
   constructor(
@@ -34,6 +36,29 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
+
+  /**
+   *
+   *   getCriterionArray() {
+    this.$criterionUIDMap = this.criterionProviderService.getCriterionUIDMap();
+    this.$criteriaArray = this.$criterionUIDMap.pipe(
+      map((criterionMap: Map<string, Criterion>) => Array.from(criterionMap.values()).map((criterion) => new CriterionBuilder({
+            context: criterion.getContext(),
+            criterionHash: criterion.getCriterionHash(),
+            display: criterion.getDisplay(),
+            isInvalid: criterion.getIsInvalid(),
+            uniqueID: criterion.getUniqueID(),
+            termCodes: criterion.getTermCodes(),
+          })
+            .withAttributeFilters(criterion.getAttributeFilters())
+            .withPosition(criterion.getPosition())
+            .withTimeRestriction(criterion.getTimeRestriction())
+            .withValueFilters(criterion.getValueFilters()[0])
+            .buildCriterion()))
+    );
+   *
+   *
+   */
 
   getCriterionUIDMap() {
     this.$criterionUIDMap = this.stageProviderService.getStageUIDArray();
@@ -59,6 +84,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   subscribeToCriterionUIDMap(): void {
     this.subscription = this.$criterionUIDMap.subscribe(() => {
       this.changeDetectorRef.detectChanges();
+      //this.getCriterionArray();
     });
   }
 }

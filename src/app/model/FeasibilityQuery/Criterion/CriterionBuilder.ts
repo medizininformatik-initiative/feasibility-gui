@@ -1,18 +1,16 @@
-import { AbstractCriterion } from './AbstractCriterion';
-import { AttributeFilter } from './AttributeFilter/AttributeFilter';
-import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { CritGroupPosition } from '../CritGroupPosition';
-import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
-import { ValueFilter } from './AttributeFilter/ValueFilter';
-import { ReferenceCriterion } from './ReferenceCriterion';
-import { Criterion } from './Criterion';
-import { AttributeFiltersBuilder } from './AttributeFilter/AttributeFiltersBuilder';
-import { FilterTypes } from '../../FilterTypes';
 import { AbstractAttributeFilters } from './AttributeFilter/AbstractAttributeFilters';
+import { AbstractCriterion } from './AbstractCriterion';
+import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
 import { AttributeDefinitions } from '../../AttributeDefinitions';
-import { TimeRestriction } from '../TimeRestriction';
+import { AttributeFilter } from './AttributeFilter/AttributeFilter';
+import { AttributeFiltersBuilder } from './AttributeFilter/AttributeFiltersBuilder';
 import { BetweenFilter } from './TimeRestriction/BetweenFilter';
-import { has } from 'lodash';
+import { Criterion } from './Criterion';
+import { CritGroupPosition } from '../CritGroupPosition';
+import { FilterTypes } from '../../Utilities/FilterTypes';
+import { ReferenceCriterion } from './ReferenceCriterion';
+import { TerminologyCode } from '../../Terminology/TerminologyCode';
+import { ValueFilter } from './AttributeFilter/ValueFilter';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
@@ -55,7 +53,20 @@ export class CriterionBuilder {
   }
 
   withAttributeFilter(attributeFilter: AttributeFilter): CriterionBuilder {
-    this.attributeFilters.push(attributeFilter);
+    if (this.attributeFilters.length > 0) {
+      const index = this.attributeFilters.findIndex(
+        (existingAttributeFilter) =>
+          attributeFilter.getAttributeCode()?.getCode() ===
+          existingAttributeFilter.getAttributeCode()?.getCode()
+      );
+      if (index !== -1) {
+        this.attributeFilters[index] = attributeFilter;
+      } else {
+        this.attributeFilters.push(attributeFilter);
+      }
+    } else {
+      this.attributeFilters.push(attributeFilter);
+    }
     return this;
   }
 

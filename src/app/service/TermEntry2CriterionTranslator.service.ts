@@ -1,11 +1,11 @@
-import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+/*import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BackendService } from '../modules/querybuilder/service/backend.service';
 import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionHashService } from './CriterionService/CriterionHash.service';
 import { FeatureService } from './Feature.service';
 import { Injectable } from '@angular/core';
 import { LoadUIProfileService } from './LoadUIProfile.service';
-import { TerminologyCode, TerminologyEntry } from '../model/terminology/Terminology';
+import { TerminologyCode, TerminologyEntry } from '../model/terminology/TerminologyCode';
 import { TimeRestriction } from '../model/FeasibilityQuery/TimeRestriction';
 import { UIProfile } from '../model/terminology/UIProfile';
 import { v3 as uuidv3 } from 'uuid';
@@ -111,3 +111,4 @@ export class TermEntry2CriterionTranslatorService {
       : undefined;
   }
 }
+*/

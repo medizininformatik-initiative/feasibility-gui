@@ -1,4 +1,4 @@
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { AbstractQuantityFilter } from './AbstractQuantityFilter';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 
@@ -19,5 +19,12 @@ export class QuantityNotSet extends AbstractQuantityFilter {
     precision: number = 0
   ): QuantityNotSet {
     return new QuantityNotSet(selectedUnit, allowedUnits, precision);
+  }
+
+  /**
+   * @returns
+   */
+  getType(): FilterTypes {
+    return FilterTypes.QUANTITY_NOT_SET;
   }
 }

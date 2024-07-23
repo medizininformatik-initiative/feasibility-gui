@@ -1,0 +1,12 @@
+<div>
+  <num-concept
+    *ngIf="valueFilter.isConceptSet()"
+    [conceptFilter]="valueFilter.getConcept()"
+    (changedConceptFilter)="updateConceptFilter($event)"
+  ></num-concept>
+  <num-quantity
+    *ngIf="valueFilter.isQuantitySet()"
+    (quantityFilterChange)="updateQuantityFilter($event)"
+    [quantityFilter]="valueFilter.getQuantity()"
+  ></num-quantity>
+</div>

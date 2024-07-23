@@ -5,7 +5,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
  */
 export abstract class AbstractConceptFilter {
   // Needs to be tested if set works for handling unique elements??
-  protected selectedConcepts: Set<TerminologyCode>;
+  protected selectedConcepts: Set<TerminologyCode> = new Set([]);
 
   /**
    * Creates an instance of AbstractConceptFilter.
@@ -33,5 +33,14 @@ export abstract class AbstractConceptFilter {
    */
   setSelectedConcepts(selectedConcepts: Set<TerminologyCode>): void {
     this.selectedConcepts = selectedConcepts;
+  }
+
+  /**
+   * Checks whether the selected concepts set exists.
+   *
+   * @returns True if the selected concepts set exists, otherwise false.
+   */
+  isSelectedConceptSet(): boolean {
+    return this.selectedConcepts !== undefined && this.selectedConcepts !== null;
   }
 }

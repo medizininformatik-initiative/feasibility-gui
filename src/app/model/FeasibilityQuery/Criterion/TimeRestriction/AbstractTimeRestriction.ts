@@ -21,13 +21,6 @@ export abstract class AbstractTimeRestriction {
   }
 
   /**
-   * @returns
-   */
-  getType(): TimeRestrictionType {
-    return this.type;
-  }
-
-  /**
    * Gets the date before which the restriction applies.
    *
    * @returns The before date.
@@ -62,4 +55,6 @@ export abstract class AbstractTimeRestriction {
   setAfterDate(afterDate: string): void {
     this.afterDate = afterDate;
   }
+
+  abstract getType();
 }

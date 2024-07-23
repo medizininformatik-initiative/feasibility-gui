@@ -4,7 +4,7 @@ import { FeatureService } from 'src/app/service/Feature.service';
 import { Group } from '../../../../../../model/FeasibilityQuery/Group';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ObjectHelper } from '../../../../controller/ObjectHelper';
-import { Query } from '../../../../../../model/FeasibilityQuery/Query';
+import { Query } from '../../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 //import { Query } from '../../../../model/api/query/query';

@@ -1,11 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
-import { Entries } from 'src/app/model/ElasticSearch/Entrie';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
   selector: 'num-list-item-details',
@@ -20,25 +16,15 @@ import { SearchResultListItemSelectionService } from 'src/app/service/ElasticSea
 export class ListItemDetailsComponent implements OnInit {
   isOpen = false;
 
+  @Input()
+  selectedTableItemId: string;
+
+  @Input()
   listItemDetails$: Observable<SearchTermDetails>;
 
-  entries: Observable<Entries>;
-  constructor(
-    private listItemService: SearchResultListItemSelectionService<SearchTermListEntry>,
-    private elasticSearchService: ElasticSearchService
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.listItemService
-      .getSelectedSearchResultListItem()
-      .subscribe((selectedRow: SearchTermListEntry) => {
-        this.elasticSearchService
-          .getDetailsForListItem(selectedRow.getId())
-          .subscribe((entry: SearchTermDetails) => {
-            this.listItemDetails$ = of(entry);
-          });
-      });
-  }
+  ngOnInit() {}
 
   getSelectedRelative(name: SearchTermRelatives) {}
 }

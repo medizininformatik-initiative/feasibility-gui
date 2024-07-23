@@ -9,4 +9,12 @@ export class BeforeFilter extends AbstractTimeRestriction {
     super(afterDate);
     this.afterDate = afterDate;
   }
+
+  /**
+   *
+   * @returns TimeRestrictionType
+   */
+  getType() {
+    return this.type;
+  }
 }

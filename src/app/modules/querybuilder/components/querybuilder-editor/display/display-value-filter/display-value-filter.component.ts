@@ -4,6 +4,7 @@ import { FeatureService } from 'src/app/service/Feature.service';
 import { FilterTypes } from 'src/app/model/FilterTypes';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { AttributeFilter } from '../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { Comparator } from 'src/app/model/Comparator';
 
 class ComperatorIcon {
   icon: string;

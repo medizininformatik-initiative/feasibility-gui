@@ -13,6 +13,16 @@ import { OAuthInitService } from './core/auth/oauth-init.service';
 import { OAuthInterceptor } from './core/interceptors/oauth.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {
+  CODEABLE_CONCEPT_ENTRY,
+  REFERENCE_CRITERIA_ENTRY,
+  SEARCH_TERM_ENTRY,
+} from './service/ElasticSearch/ListEntry/ListEntryInjectionTokens';
+import {
+  mapToCodeableConceptResultList,
+  mapToRefrenceCriteriaSetResultList,
+  mapToSearchTermResultList,
+} from './service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
 
 export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   new TranslateHttpLoader(http);
@@ -36,6 +46,9 @@ export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     }),
   ],
   providers: [
+    { provide: SEARCH_TERM_ENTRY, useValue: mapToSearchTermResultList },
+    { provide: CODEABLE_CONCEPT_ENTRY, useValue: mapToCodeableConceptResultList },
+    { provide: REFERENCE_CRITERIA_ENTRY, useValue: mapToRefrenceCriteriaSetResultList },
     {
       provide: APP_INITIALIZER,
       multi: true,

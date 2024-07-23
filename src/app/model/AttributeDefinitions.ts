@@ -1,4 +1,4 @@
-import { FilterTypes } from './FilterTypes';
+import { FilterTypes } from './Utilities/FilterTypes';
 import { QuantityUnit } from './FeasibilityQuery/QuantityUnit';
 import { TerminologyCode } from './Terminology/TerminologyCode';
 
@@ -11,7 +11,7 @@ export class AttributeDefinitions {
   private precision = 1;
   private type: FilterTypes;
   private referenceCriteriaSet?: string;
-  private referencedValueSet?: string;
+  private referencedValueSet?: Array<string>;
   private name: string;
   private valueDefinition: boolean;
 
@@ -40,7 +40,7 @@ export class AttributeDefinitions {
     min?: number,
     precision: number = 1,
     referenceCriteriaSet?: string,
-    referencedValueSet?: string
+    referencedValueSet?: string[]
   ) {
     this.name = name;
     this.type = type;
@@ -240,7 +240,7 @@ export class AttributeDefinitions {
    *
    * @returns The referenced value set
    */
-  getReferencedValueSet(): string | undefined {
+  getReferencedValueSet(): string[] {
     return this.referencedValueSet;
   }
 
@@ -249,7 +249,7 @@ export class AttributeDefinitions {
    *
    * @param referencedValueSet - The referenced value set
    */
-  setReferencedValueSet(referencedValueSet: string | undefined): void {
+  setReferencedValueSet(referencedValueSet: string[]): void {
     this.referencedValueSet = referencedValueSet;
   }
 }

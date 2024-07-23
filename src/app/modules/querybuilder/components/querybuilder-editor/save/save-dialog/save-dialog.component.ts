@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 /* eslint-disable */
 /*
+/*
 export class SaveDialogComponentData {
   hasQuerySend: boolean | string
 }

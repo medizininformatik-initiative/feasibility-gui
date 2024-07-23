@@ -1,3 +1,22 @@
 <div class="container">
-  {{ criterion.getTermCodes()[0].getDisplay() }}
+  <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+    <num-attribute-filter
+      [attributeFilter]="attributeFilter"
+      (attributeFilterChange)="updateAttributeFilter($event)"
+    >
+    </num-attribute-filter>
+  </div>
+  <div *ngFor="let valueFilter of criterion.getValueFilters()">
+    <num-value-filter [valueFilter]="valueFilter" (valueFilterChange)="updateValueFilter($event)">
+    </num-value-filter>
+  </div>
+  <num-edit-time-restriction
+    [timeRestriction]="criterion.getTimeRestriction()"
+    (timeRestrictionChanged)="updateTimeRestriction($event)"
+  >
+  </num-edit-time-restriction>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-raised-button class="select-button" (click)="saveCriterion()">Auswählen</button>
+    <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>
+  </div>
 </div>

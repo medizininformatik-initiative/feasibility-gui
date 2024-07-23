@@ -1,5 +1,6 @@
-import { FilterTypes } from 'src/app/model/FilterTypes';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityUnit } from '../../../QuantityUnit';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 
 /**
  * Abstract class representing a quantity filter.
@@ -8,7 +9,7 @@ export abstract class AbstractQuantityFilter {
   private selectedUnit: QuantityUnit;
   private allowedUnits: QuantityUnit[] = [];
   private precision: number;
-  protected readonly type: FilterTypes;
+  protected comparator: QuantityComparisonOption = QuantityComparisonOption.NONE;
 
   /**
    * Creates an instance of AbstractQuantityFilter.
@@ -25,14 +26,6 @@ export abstract class AbstractQuantityFilter {
     this.selectedUnit = selectedUnit;
     this.allowedUnits = allowedUnits;
     this.precision = precision;
-  }
-
-  /**
-   *
-   * @returns
-   */
-  getType(): FilterTypes {
-    return this.type;
   }
 
   /**
@@ -88,4 +81,10 @@ export abstract class AbstractQuantityFilter {
   setPrecision(precision: number): void {
     this.precision = precision;
   }
+
+  getComparator() {
+    return this.comparator;
+  }
+
+  abstract getType(): FilterTypes;
 }

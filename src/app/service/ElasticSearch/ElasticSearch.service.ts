@@ -1,19 +1,25 @@
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { InterfaceListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/InterfaceListEntry';
+import { InterfaceResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/InterfaceResultList';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ElasticSearchService {
-  private searchTermResultList = new BehaviorSubject<Array<SearchTermListEntry>>([]);
-  constructor(private backendService: BackendService) {}
+export class ElasticSearchService<T extends InterfaceResultList<C>, C extends InterfaceListEntry> {
+  private searchTermResultList = new BehaviorSubject<T>({
+    totalHits: 0,
+    results: [] as C[],
+  } as T);
+  constructor(
+    private backendService: BackendService,
+    @Inject('ENTRY_MAPPER') private mapToListEntry: (item: any) => T
+  ) {}
 
   /**
    * Starts an ElasticSearch query for the given search term.
@@ -21,38 +27,46 @@ export class ElasticSearchService {
    * @param searchTerm The term to search for.
    * @returns An Observable emitting the result list of search terms.
    */
-  public startElasticSearch(searchTerm: string): Observable<SearchTermResultList> {
-    return this.backendService.getElasticSearchResults(searchTerm).pipe(
-      map((response) => {
-        const totalHits = response.totalHits;
-        const searchTermListItems = response.results.map(
-          (item) =>
-            new SearchTermListEntry(
-              item.availability,
-              item.selectable,
-              item.terminology,
-              item.termcode,
-              item.kdsModule,
-              item.name,
-              item.id
-            )
-        );
-        this.setSearchtermResultList(searchTermListItems);
-        return new SearchTermResultList(totalHits, searchTermListItems);
-      })
+  public startElasticSearch(
+    searchTerm: string,
+    valueSets: string[] = [],
+    criteriaSets: string[] = []
+  ): Observable<T> {
+    return this.makeElasticSearchRequest(searchTerm, valueSets, criteriaSets).pipe(
+      map((response) => this.processElasticSearchResults(response))
     );
   }
 
+  public makeElasticSearchRequest(
+    searchTerm: string,
+    valueSets: string[] = [],
+    criteriaSets: string[] = []
+  ): Observable<any> {
+    if (valueSets.length > 0) {
+      return this.backendService.getElasticSearchResultsForCodeableConcept(searchTerm, valueSets);
+    } else if (criteriaSets.length > 0) {
+      return this.backendService.getElasticSearchResultsForCriteriaSets(searchTerm, criteriaSets);
+    } else {
+      return this.backendService.getElasticSearchResultsForCriteria(searchTerm);
+    }
+  }
+
+  public processElasticSearchResults(response: any): T {
+    const searchTermResultList: T = this.mapToListEntry(response);
+    this.setSearchtermResultList(searchTermResultList);
+    return searchTermResultList;
+  }
+
   /**
-   * Holds the current List of results found for a searchterm
+   * Holds the current List of results found for a search term
    *
    * @param resultList
    */
-  public setSearchtermResultList(resultList: Array<SearchTermListEntry>) {
+  public setSearchtermResultList(resultList: T) {
     this.searchTermResultList.next(resultList);
   }
 
-  public getSearchTermResultList(): Observable<Array<SearchTermListEntry>> {
+  public getSearchTermResultList(): Observable<T | null> {
     return this.searchTermResultList.asObservable();
   }
 
@@ -82,8 +96,8 @@ export class ElasticSearchService {
     );
   }
 
-  public getElasticSearchResultById(id: string): Observable<SearchTermListEntry> {
-    return this.backendService.getElasticSearchResultById(id).pipe(
+  public getElasticSearchResultById(id: string) {
+    /*return this.backendService.getElasticSearchResultById(id).pipe(
       map((response) => {
         const listEntry = new SearchTermListEntry(
           response.availability,
@@ -97,7 +111,8 @@ export class ElasticSearchService {
         this.setSearchtermResultList([listEntry]);
         return listEntry;
       })
-    );
+    );*/
+    /* eslint-disable */
   }
 
   /**
@@ -107,7 +122,7 @@ export class ElasticSearchService {
    * @returns An array of SearchTermTranslation objects.
    */
   private mapToSearchTermTranslations(translations: any[]): SearchTermTranslation[] {
-    return translations.map((t: any) => new SearchTermTranslation(t.lang, t.value));
+    return translations.map((t: any) => new SearchTermTranslation(t.lang, t.value))
   }
 
   /**
@@ -117,7 +132,7 @@ export class ElasticSearchService {
    * @returns An array of SearchTermRelatives objects.
    */
   private mapToSearchTermRelatives(relatives: any[]): SearchTermRelatives[] {
-    return relatives.map((r: any) => new SearchTermRelatives(r.name, r.contextualizedTermcodeHash));
+    return relatives.map((r: any) => new SearchTermRelatives(r.name, r.contextualizedTermcodeHash))
   }
 
   public getElasticSearchFilter(): Observable<Array<SearchTermFilter>> {
@@ -129,6 +144,6 @@ export class ElasticSearchService {
             .filter((filter) => filter.values && filter.values.length > 0)
             .map((filter) => new SearchTermFilter(filter.name, filter.values))
         )
-      );
+      )
   }
 }
