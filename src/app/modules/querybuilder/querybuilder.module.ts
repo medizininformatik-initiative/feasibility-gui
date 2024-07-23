@@ -1,6 +1,5 @@
 import { BoolLogicSwitchComponent } from './components/querybuilder-editor/display/bool-logic-switch/bool-logic-switch.component';
 import { CommonModule } from '@angular/common';
-import { ConceptComponent } from './components/querybuilder-editor-new-design/edit/edit-attributes/concept/concept.component';
 import { CriteriaStageComponent } from './components/querybuilder-editor-new-design/stage/criteria-stage.component';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DisplayCriteriaGroupComponent } from './components/querybuilder-editor-new-design/criteria/display-criteria-group/display-criteria-group.component';
@@ -26,9 +25,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PreStageComponent } from './components/querybuilder-editor-new-design/pre-stage/pre-stage.component';
-import { QuantityComparatorComponent } from './components/querybuilder-editor-new-design/edit/edit-attributes/quantity/quantity-comparator/quantity-comparator.component';
-import { QuantityComponent } from './components/querybuilder-editor-new-design/edit/edit-attributes/quantity/quantity.component';
-import { QuantityRangeComponent } from './components/querybuilder-editor-new-design/edit/edit-attributes/quantity/quantity-range/quantity-range.component';
 //import { QueryBoxEndComponent } from './components/querybuilder-overview/saved-queries/query-box-end/query-box-end.component';
 import { QueryBoxFrontComponent } from './components/querybuilder-overview/saved-queries/query-box-front/query-box-front.component';
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor-new-design/querybuilder-editor/querybuilder-editor.component';
@@ -115,10 +111,6 @@ export const FORMATS_GERMAN = {
     DisplayCriteriaGroupComponent,
     EditCriterionModalComponent,
     EditReferenceCriteriaModalComponent,
-    QuantityComponent,
-    QuantityRangeComponent,
-    QuantityComparatorComponent,
-    ConceptComponent,
     SimpleResultComponent,
     ResultComponent,
   ],
