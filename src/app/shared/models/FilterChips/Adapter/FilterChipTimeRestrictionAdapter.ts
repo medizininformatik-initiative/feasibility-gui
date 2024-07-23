@@ -10,7 +10,7 @@ export class FilterChipTimeRestrictionAdapter {
     const timeRestriction = criterion.getTimeRestriction();
 
     if (timeRestriction) {
-      switch (timeRestriction.type) {
+      switch (timeRestriction.getType()) {
         case TimeRestrictionType.BETWEEN:
           chips.push(this.createBetweenChip(timeRestriction));
           break;
@@ -24,7 +24,7 @@ export class FilterChipTimeRestrictionAdapter {
           chips.push(this.createAfterChip(timeRestriction));
           break;
         default:
-          console.warn('Unsupported time restriction type:', timeRestriction.type);
+          console.warn('Unsupported time restriction type:', timeRestriction.getType());
           break;
       }
     }
