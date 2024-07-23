@@ -1,0 +1,51 @@
+.number-of-patients {
+  text-align: center;
+}
+
+.result-text {
+  font-size: 16px;
+}
+.button-dialog-result-details {
+  margin-right: 1em;
+  min-width: fit-content;
+}
+
+::ng-deep .mdc-tooltip__surface {
+  max-width: 250px !important;
+  font-size: 12px !important;
+  box-shadow: 0 11px 15px -4px #0003, 0 24px 38px 5px #00000024, 0 9px 46px 8px #0000001f;
+  letter-spacing: 0.5px !important;
+}
+
+.result-spinning-icon {
+  margin-left: 1em;
+  height: 2em;
+}
+
+::ng-deep .mat-mdc-progress-spinner {
+  right: -10px;
+  width: 40px !important;
+  height: 40px !important;
+}
+::ng-deep .mat-mdc-progress-spinner svg {
+  width: 40px !important;
+  height: 40px !important;
+}
+.spinner-counter {
+  position: relative;
+  right: -10px;
+  top: -28px;
+  text-align: center;
+}
+.spinner-box {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+.button-placeholder {
+  width: 112px;
+  margin-right: 1em;
+}
+::ng-deep .mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: var(--num-color--accent-600);
+}

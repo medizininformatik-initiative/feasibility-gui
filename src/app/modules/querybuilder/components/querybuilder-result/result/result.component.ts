@@ -34,6 +34,7 @@ export class ResultComponent implements OnInit, OnDestroy {
   loadedResult = false;
   callsLimit: number;
   callsRemaining: number;
+  tempFeasQueryID = '1';
   constructor(
     private queryProviderService: FeasibilityQueryProviderService,
     private translator: UIQuery2StructuredQueryTranslatorService,
@@ -61,10 +62,10 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
     this.getDetailedResultRateLimit();
     this.queryProviderService
-      .getFeasibilityQueryByID()
+      .getFeasibilityQueryByID(this.tempFeasQueryID)
       .subscribe((query) => {
         this.subscriptionResult = this.backend
-          .postQueryNew(this.translator.translateToStructuredQuery(query.get('1')))
+          .postQueryNew(this.translator.translateToStructuredQuery(query.get(this.tempFeasQueryID)))
           .subscribe((response) => {
             this.resultUrl = response.headers.get('location'); // response.location)
             this.startRequestingResult();
@@ -100,6 +101,7 @@ export class ResultComponent implements OnInit, OnDestroy {
             map(
               (result) =>
                 new QueryResult(
+                  this.tempFeasQueryID,
                   result.totalNumberOfPatients,
                   result.queryId,
                   result.resultLines,
