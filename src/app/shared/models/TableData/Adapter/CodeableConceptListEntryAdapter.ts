@@ -5,7 +5,7 @@ import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
 import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { v4 as uuidv4 } from 'uuid';
 
-export class CodeableConceptLinsEntryAdapter {
+export class CodeableConceptListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
     headers: ['Display', 'Terminology', 'Terminology Code'],
   };
@@ -27,6 +27,6 @@ export class CodeableConceptLinsEntryAdapter {
 
     const body: InterfaceTableDataBody = { rows };
 
-    return { header: CodeableConceptLinsEntryAdapter.headers, body };
+    return { header: CodeableConceptListEntryAdapter.headers, body };
   }
 }

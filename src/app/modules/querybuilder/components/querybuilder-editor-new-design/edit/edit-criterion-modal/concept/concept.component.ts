@@ -1,4 +1,4 @@
-import { CodeableConceptLinsEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptLinsEntryAdapter';
+import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/CodeableConceptResultListEntry';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
@@ -71,7 +71,7 @@ export class ConceptComponent implements OnDestroy, OnInit {
       const isSelected = this.isConceptSelected(listItem.getTerminologyCode().getCode());
       listItem.setIsSelected(isSelected);
     });
-    this.adaptedData = CodeableConceptLinsEntryAdapter.adapt(this.listItems);
+    this.adaptedData = CodeableConceptListEntryAdapter.adapt(this.listItems);
   }
 
   private isConceptSelected(terminologyCode: string): boolean {
@@ -96,7 +96,7 @@ export class ConceptComponent implements OnDestroy, OnInit {
     if (this.searchtext !== searchtext) {
       this.searchtext = searchtext;
       const allowedConceptUri = this.conceptFilter.getAllowedConceptUri();
-      if (allowedConceptUri) {
+      if (allowedConceptUri.length > 0) {
         this.elasticSearchService
           .startElasticSearch(searchtext, this.conceptFilter.getAllowedConceptUri())
           .subscribe((response) => {

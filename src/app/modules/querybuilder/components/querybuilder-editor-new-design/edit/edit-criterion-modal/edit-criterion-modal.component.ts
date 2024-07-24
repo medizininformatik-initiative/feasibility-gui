@@ -48,22 +48,26 @@ export class EditCriterionModalComponent implements OnInit {
 
   private setInitialAttributeFilter() {
     const attributeFilters: AttributeFilter[] = [];
-    this.criterion
-      .getAttributeFilters()
-      .forEach((attributeFilter) => attributeFilters.push(attributeFilter));
-    this.criterionBuilder.withAttributeFilters(attributeFilters);
+    if (this.criterion.getAttributeFilters()) {
+      this.criterion
+        .getAttributeFilters()
+        .forEach((attributeFilter) => attributeFilters.push(attributeFilter));
+      this.criterionBuilder.withAttributeFilters(attributeFilters);
+    }
   }
 
   private setInitialValueFilter() {
     const currentValueFilter = this.criterion.getValueFilters()[0];
-    const valueFilter: ValueFilter = new ValueFilter(
-      currentValueFilter.getDisplay(),
-      undefined,
-      currentValueFilter.getConcept(),
-      currentValueFilter.getQuantity(),
-      currentValueFilter.getOptional()
-    );
-    this.criterionBuilder.withValueFilters(valueFilter);
+    if (currentValueFilter) {
+      const valueFilter: ValueFilter = new ValueFilter(
+        currentValueFilter.getDisplay(),
+        undefined,
+        currentValueFilter.getConcept(),
+        currentValueFilter.getQuantity(),
+        currentValueFilter.getOptional()
+      );
+      this.criterionBuilder.withValueFilters(valueFilter);
+    }
   }
 
   private setInitialTimeRestriction() {

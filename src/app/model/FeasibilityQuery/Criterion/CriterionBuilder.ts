@@ -111,7 +111,12 @@ export class CriterionBuilder {
   }
 
   withValueFilters(valueFilters: ValueFilter): CriterionBuilder {
-    this.valueFilters.push(valueFilters);
+    if (this.valueFilters.length > 0) {
+      this.valueFilters[0] = valueFilters;
+    } else {
+      this.valueFilters.push(valueFilters);
+    }
+
     return this;
   }
 

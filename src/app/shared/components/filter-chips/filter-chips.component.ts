@@ -42,7 +42,9 @@ export class FilterChipsComponent implements OnInit, OnDestroy {
         attributeFilter.getAttributeCode()
       );
     });
-    this.filterChipService.getCodeableConceptChips(this.criterion.getValueFilters()[0].getConcept());
+    this.filterChipService.getCodeableConceptChips(
+      this.criterion.getValueFilters()[0]?.getConcept()
+    );
   }
 
   toggleExpanded(chip) {
