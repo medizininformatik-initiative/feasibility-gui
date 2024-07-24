@@ -59,6 +59,7 @@ export class QuantityComponent implements OnInit {
   public setSelectedQuantityFilterOption(option: QuantityComparisonOption): void {
     this.selectedQuantityFilterOption = option;
     if (option !== QuantityComparisonOption.NONE) {
+      this.setQuantityFilterType();
       this.buildQuantityFilter();
     } else {
       this.quantityFilterChange.emit(new QuantityNotSet());

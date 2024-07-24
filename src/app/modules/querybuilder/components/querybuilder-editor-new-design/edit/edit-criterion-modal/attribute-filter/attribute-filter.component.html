@@ -6,7 +6,7 @@
     (changedConceptFilter)="updateConceptFilter($event)"
   ></num-concept>
   <num-quantity
-    *ngIf="attributeFilter.isQuantitySet()"
+    *ngIf="attributeFilter.getQuantity()"
     (quantityFilterChange)="updateQuantityFilter($event)"
     [quantityFilter]="attributeFilter.getQuantity()"
   ></num-quantity>
