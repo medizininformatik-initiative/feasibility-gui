@@ -16,14 +16,16 @@ import { ListItemDetailsSectionsComponent } from './search-result/list-item-deta
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
 import { CriteriaMenuComponent } from './criteria-box/criteria-menu/criteria-menu.component';
+import { ActionBarComponent } from './action-bar/action-bar.component';
 const SHARED_DECLARATIONS = [
+  ActionBarComponent,
+  ButtonComponent,
   CriteriaBoxComponent,
+  FilterChipsComponent,
+  ListItemDetailsComponent,
+  ResultListComponent,
   SearchFilterComponent,
   SearchbarComponent,
-  FilterChipsComponent,
-  ButtonComponent,
-  ResultListComponent,
-  ListItemDetailsComponent,
   SearchResultComponent,
 ];
 
@@ -34,6 +36,7 @@ const SHARED_DECLARATIONS = [
     SearchFilterComponent,
     CriteriaBoxComponent,
     CriteriaMenuComponent,
+    ActionBarComponent,
   ],
   imports: [
     CommonModule,
