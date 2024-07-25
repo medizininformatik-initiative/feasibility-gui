@@ -107,7 +107,6 @@ export class EditCriterionModalComponent implements OnInit {
   }
 
   public updateAttributeFilter(attributeFilter: AttributeFilter) {
-    console.log(attributeFilter);
     this.criterionBuilder.withAttributeFilter(attributeFilter);
   }
 
