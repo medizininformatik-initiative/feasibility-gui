@@ -17,14 +17,16 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
+import { ActionBarComponent } from './action-bar/action-bar.component';
 const SHARED_DECLARATIONS = [
+  ActionBarComponent,
+  ButtonComponent,
   CriteriaBoxComponent,
+  FilterChipsComponent,
+  ListItemDetailsComponent,
+  ResultListComponent,
   SearchFilterComponent,
   SearchbarComponent,
-  FilterChipsComponent,
-  ButtonComponent,
-  ResultListComponent,
-  ListItemDetailsComponent,
   SearchResultComponent,
   TreeComponent,
 ];
@@ -37,6 +39,7 @@ const SHARED_DECLARATIONS = [
     CriteriaBoxComponent,
     CriteriaMenuComponent,
     TreeComponent,
+    ActionBarComponent,
   ],
   imports: [
     CommonModule,
