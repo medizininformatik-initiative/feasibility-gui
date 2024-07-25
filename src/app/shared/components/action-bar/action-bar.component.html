@@ -1,0 +1,13 @@
+<div class="action-bar">
+  <button
+    *ngFor="let action of state.actionItems"
+    [disabled]="!action.isEnabled"
+    (click)="action.action()"
+    [class.hidden]="!action.isVisible"
+  >
+    {{ action.label }}
+    <span *ngIf="action.badgeCount !== undefined" class="badge">
+      {{ action.badgeCount }}
+    </span>
+  </button>
+</div>
