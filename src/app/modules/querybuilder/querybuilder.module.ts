@@ -12,7 +12,6 @@ import { DisplayGroupComponent } from './components/querybuilder-editor-new-desi
 import { DisplayTimeRestrictionComponent } from './components/querybuilder-editor/display/display-time-restriction/display-time-restriction.component';
 import { EditCriterionModalComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-criterion-modal.component';
 import { EditReferenceCriteriaModalComponent } from './components/querybuilder-editor-new-design/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
-import { EditTimeRestrictionComponent } from './components/querybuilder-editor/edit/edit-time-restriction/edit-time-restriction.component';
 import { EditValueFilterConceptLineComponent } from './components/querybuilder-editor/edit/edit-value-filter-concept-line/edit-value-filter-concept-line.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { LayoutModule } from 'src/app/layout/layout.module';
@@ -65,7 +64,7 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
-//import { EditTimeRestrictionComponent } from './components/querybuilder-editor/edit/edit-time-restriction/edit-time-restriction.component';
+import { EditTimeRestrictionComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-time-restriction/edit-time-restriction.component';
 
 export const FORMATS_GERMAN = {
   parse: {
