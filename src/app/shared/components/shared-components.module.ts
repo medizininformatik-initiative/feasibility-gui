@@ -18,6 +18,7 @@ import { ActionBarComponent } from './action-bar/action-bar.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
+import { ActionBarComponent } from './action-bar/action-bar.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -40,6 +41,7 @@ const SHARED_DECLARATIONS = [
     CriteriaMenuComponent,
     ActionBarComponent,
     TreeComponent,
+    ActionBarComponent,
   ],
   imports: [
     CommonModule,
