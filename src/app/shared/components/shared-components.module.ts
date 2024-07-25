@@ -14,10 +14,10 @@ import { NgModule } from '@angular/core';
 import { ResultListComponent } from './search-result/result-list/result-list.component';
 import { SearchbarComponent } from './search/searchbar.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
-import { SearchResultComponent } from './search-result/search-result.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { TreeComponent } from './tree/tree.component';
 import { ActionBarComponent } from './action-bar/action-bar.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { TreeComponent } from './tree/tree.component';
+import { TranslateModule } from '@ngx-translate/core';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -38,7 +38,6 @@ const SHARED_DECLARATIONS = [
     SearchFilterComponent,
     CriteriaBoxComponent,
     CriteriaMenuComponent,
-    TreeComponent,
     ActionBarComponent,
   ],
   imports: [
