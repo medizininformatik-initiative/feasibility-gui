@@ -30,7 +30,7 @@ export class SearchTermListEntry extends AbstractListEntry {
     name: string,
     id: string
   ) {
-    super(name, id);
+    super(id);
     this.availability = availability;
     this.terminology = terminology;
     this.termcode = termcode;
@@ -124,5 +124,11 @@ export class SearchTermListEntry extends AbstractListEntry {
    */
   setKdsModule(kdsModule: string): void {
     this.kdsModule = kdsModule;
+  }
+  getName(): string {
+    return this.name;
+  }
+  setName(name: string): void {
+    this.name = name;
   }
 }

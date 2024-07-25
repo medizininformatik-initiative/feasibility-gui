@@ -4,22 +4,21 @@ import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
 import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { v4 as uuidv4 } from 'uuid';
+import { QueryResult } from '../../../../model/Result/QueryResult';
+import { QueryResultLine } from '../../../../model/Result/QueryResultLine';
+import { FeasibilityQueryResultDetailstListEntry } from '../../ListEntries/FeasibilityQueryResultDetailstListEntry';
 
-export class CodeableConceptListEntryAdapter {
+export class FeasibilityQueryResultDetailsListAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['Display', 'Terminology', 'Terminology Code'],
+    headers: ['Standort', 'Patienten'],
   };
 
-  public static adapt(listEntries: CodeableConceptResultListEntry[]): TableData {
+  public static adapt(listEntries: FeasibilityQueryResultDetailstListEntry[]): TableData {
     const rows: InterfaceTableDataRow[] = listEntries.map((entry) => ({
       id: uuidv4(),
-      data: [
-        entry.getTerminologyCode().getDisplay(),
-        entry.getTerminologyCode().getSystem(),
-        entry.getTerminologyCode().getCode(),
-      ],
-      hasCheckbox: true,
-      isCheckboxSelected: entry.getIsSelected(),
+      data: [entry.getSiteName(), entry.getNumberOfPatients().toString()],
+      hasCheckbox: false,
+      isCheckboxSelected: false,
       isClickable: false,
       checkboxColumnIndex: 0,
       originalEntry: entry,
@@ -27,6 +26,6 @@ export class CodeableConceptListEntryAdapter {
 
     const body: InterfaceTableDataBody = { rows };
 
-    return { header: CodeableConceptListEntryAdapter.headers, body };
+    return { header: FeasibilityQueryResultDetailsListAdapter.headers, body };
   }
 }

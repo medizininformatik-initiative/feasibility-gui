@@ -10,7 +10,7 @@ export class CodeableConceptResultListEntry extends AbstractListEntry {
    * @param id
    */
   constructor(terminologyCode: TerminologyCode, id: string, isSelected: boolean = false) {
-    super(terminologyCode.getDisplay(), id);
+    super(id);
     this.terminologyCode = terminologyCode;
     this.isSelected = isSelected;
   }
@@ -41,5 +41,11 @@ export class CodeableConceptResultListEntry extends AbstractListEntry {
    */
   setTerminologyCode(terminologyCode: TerminologyCode) {
     this.terminologyCode = terminologyCode;
+  }
+  getName(): string {
+    return this.terminologyCode.getDisplay();
+  }
+  setName(name: string): void {
+    this.terminologyCode.setDisplay(name);
   }
 }

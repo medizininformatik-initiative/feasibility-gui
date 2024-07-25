@@ -6,7 +6,7 @@ import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchT
 import { UIQuery2StructuredQueryTranslatorService } from '../../../../../service/UIQuery2StructuredQueryTranslator.service';
 import { Router } from '@angular/router';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 
 @Component({
   selector: 'num-stage',

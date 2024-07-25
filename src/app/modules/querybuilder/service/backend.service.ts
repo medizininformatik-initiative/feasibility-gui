@@ -16,7 +16,7 @@ import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchRe
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
 import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
-import { SearchTermListEntry } from '../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { SearchTermListEntry } from '../../../shared/models/ListEntries/SearchTermListEntry';
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
 import { AnnotatedStructuredQuery } from 'src/app/model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 //import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';

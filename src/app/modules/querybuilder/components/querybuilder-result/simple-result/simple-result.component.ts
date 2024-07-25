@@ -2,12 +2,12 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { BackendService } from '../../../service/backend.service';
 import { FeatureService } from '../../../../../service/Feature.service';
-import {
-  ResultDetailsDialogComponent,
-  ResultDetailsDialogComponentData,
-} from '../../querybuilder-editor/result/result-details-dialog/result-details-dialog.component';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {
+  ResultDetailModalComponent,
+  ResultDetailsModalComponentData,
+} from '../result-detail-modal/result-detail-modal.component';
 
 @Component({
   selector: 'num-simple-result',
@@ -63,14 +63,18 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('result');
+    console.log(this.result);
+    console.log(this.result.getTotalNumberOfPatients());
+  }
 
   ngOnDestroy(): void {
     this.clickEventsubscription?.unsubscribe();
   }
 
   openDialogResultDetails(): void {
-    const dialogConfig = new MatDialogConfig<ResultDetailsDialogComponentData>();
+    const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -82,10 +86,10 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
       gottenDetailedResult: this.gottenDetailedResult,
     };
 
-    const diag = this.dialog.open(ResultDetailsDialogComponent, dialogConfig);
+    const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig);
 
-    diag.componentInstance.resultGotten.subscribe((resultGotten: boolean) => {
-      this.resultGotten.emit(resultGotten);
+    modal.componentInstance.resultGotten.subscribe((resultGotten: boolean) => {
+      //this.resultGotten.emit(resultGotten);
     });
   }
 

@@ -52,7 +52,7 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   doSend(): void {
-    this.gottenDetailedResult = false;
+    this.gottenDetailedResult = true; //false;
     this.loadedResult = false;
     this.resultUrl = '';
     this.result = undefined;

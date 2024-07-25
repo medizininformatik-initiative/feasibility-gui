@@ -9,7 +9,7 @@ export class ReferenceCriteriaListEntry extends AbstractListEntry {
    * @param id
    */
   constructor(terminologyCode: TerminologyCode, id: string) {
-    super(terminologyCode.getDisplay(), id);
+    super(id);
     this.terminologyCode = terminologyCode;
   }
 
@@ -25,5 +25,11 @@ export class ReferenceCriteriaListEntry extends AbstractListEntry {
    */
   setTerminologyCode(terminologyCode: TerminologyCode) {
     this.terminologyCode = terminologyCode;
+  }
+  getName(): string {
+    return this.terminologyCode.getDisplay();
+  }
+  setName(name: string): void {
+    this.terminologyCode.setDisplay(name);
   }
 }

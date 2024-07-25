@@ -65,6 +65,7 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { EditTimeRestrictionComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-time-restriction/edit-time-restriction.component';
+import { ResultDetailModalComponent } from './components/querybuilder-result/result-detail-modal/result-detail-modal.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -135,6 +136,7 @@ export const FORMATS_GERMAN = {
     QuantityComparatorComponent,
     ConceptComponent,
     QuantityComponent,
+    ResultDetailModalComponent,
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import { AbstractTermHashContext } from '../../AbstractTermHashContext';
+import { AbstractTermHashContext } from '../../../model/ElasticSearch/ElasticSearchResult/AbstractTermHashContext';
 import { InterfaceListEntry } from './InterfaceListEntry';
 
 /**
@@ -11,15 +11,10 @@ export abstract class AbstractListEntry
   /**
    * Constructs a new AbstractSearchResult instance.
    *
-   * @param name
    * @param id
    */
-  constructor(name: string, id: string) {
-    super(name, id);
-  }
-
-  getName(): string {
-    return this.name;
+  constructor(id: string) {
+    super(id);
   }
 
   getId(): string {

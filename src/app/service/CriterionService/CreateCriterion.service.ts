@@ -18,7 +18,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionProviderService } from '../Provider/CriterionProvider.service';
 import { UIQuery2StructuredQueryTranslatorService } from '../UIQuery2StructuredQueryTranslator.service';
-import { SearchTermListEntry } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/SearchTermListEntry';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { StageProviderService } from '../Provider/StageProvider.service';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 

@@ -1,7 +1,7 @@
 import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
-import { ReferenceCriteriaListEntry } from '../../../../model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ListEntries/RefrenceCriteriaListEntry';
+import { ReferenceCriteriaListEntry } from '../../ListEntries/ReferenceCriteriaListEntry';
 import { TableData } from '../InterfaceTableData';
 
 export class ReferenceCriteriaListEntryAdapter {
