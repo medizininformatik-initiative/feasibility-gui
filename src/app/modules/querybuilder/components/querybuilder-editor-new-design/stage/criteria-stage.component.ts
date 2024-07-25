@@ -6,6 +6,7 @@ import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuer
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
+import { stringToFileBuffer } from '@angular-devkit/core/src/virtual-fs/host';
 
 @Component({
   selector: 'num-criteria',
@@ -13,7 +14,10 @@ import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/Crite
   styleUrls: ['./criteria-stage.component.scss'],
 })
 export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
-  public $criterionUIDMap: Observable<Array<string>>;
+  public $criterionUIDMap: Observable<Map<string, Criterion>>;
+
+  public $stageUIDMap: Observable<Array<string>>;
+
   public $criteriaArray: Observable<Criterion[]> = of([]);
 
   private subscription: Subscription;
@@ -21,13 +25,13 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   constructor(
     public elementRef: ElementRef,
     private criterionProviderService: CriterionProviderService,
-    private queryProviderService: FeasibilityQueryProviderService,
     private stageProviderService: StageProviderService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit() {
-    this.getCriterionUIDMap();
+    this.getCriterionArray();
+    //this.getCriterionUIDMap();
     this.subscribeToCriterionUIDMap();
   }
 
@@ -37,12 +41,16 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  /**
-   *
-   *   getCriterionArray() {
+  getCriterionArray() {
+    this.$criteriaArray = of([]);
+    this.$stageUIDMap = this.stageProviderService.getStageUIDArray();
     this.$criterionUIDMap = this.criterionProviderService.getCriterionUIDMap();
-    this.$criteriaArray = this.$criterionUIDMap.pipe(
-      map((criterionMap: Map<string, Criterion>) => Array.from(criterionMap.values()).map((criterion) => new CriterionBuilder({
+
+    this.$criteriaArray = this.$stageUIDMap.pipe(
+      map((uids: string[]) => uids.map((uid) => {
+          const criterion = this.criterionProviderService.getCriterionByUID(uid);
+          return new CriterionBuilder({
+            hasReference: false,
             context: criterion.getContext(),
             criterionHash: criterion.getCriterionHash(),
             display: criterion.getDisplay(),
@@ -54,12 +62,14 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
             .withPosition(criterion.getPosition())
             .withTimeRestriction(criterion.getTimeRestriction())
             .withValueFilters(criterion.getValueFilters()[0])
-            .buildCriterion()))
+            .buildCriterion();
+        }))
     );
-   *
-   *
-   */
+    console.log(this.$criteriaArray);
+    this.$stageUIDMap.subscribe((test) => console.log(test));
+  }
 
+  /*
   getCriterionUIDMap() {
     this.$criterionUIDMap = this.stageProviderService.getStageUIDArray();
     this.$criteriaArray = this.$criterionUIDMap.pipe(
@@ -67,24 +77,12 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
         criterionMap.map((uid) => this.criterionProviderService.getCriterionByUID(uid))
       )
     );
-    /*this.$criterionUIDMap.subscribe((bla) => {
-      console.log('map');
-      console.log(bla);
-    });
-    this.criterionProviderService.getCriterionUIDMap().subscribe((bla2) => {
-      console.log('criteria');
-      console.log(bla2);
-    });
-    this.$criteriaArray.subscribe((test) => {
-      console.log('stage');
-      console.log(test);
-    });*/
-  }
+  }*/
 
   subscribeToCriterionUIDMap(): void {
     this.subscription = this.$criterionUIDMap.subscribe(() => {
       this.changeDetectorRef.detectChanges();
-      //this.getCriterionArray();
+      this.getCriterionArray();
     });
   }
 }
