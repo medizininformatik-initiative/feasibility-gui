@@ -47,9 +47,10 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
     this.$criterionUIDMap = this.criterionProviderService.getCriterionUIDMap();
 
     this.$criteriaArray = this.$stageUIDMap.pipe(
-      map((uids: string[]) => uids.map((uid) => {
+      map((uids: string[]) =>
+        uids.map((uid) => {
           const criterion = this.criterionProviderService.getCriterionByUID(uid);
-          return new CriterionBuilder({
+          /*return new CriterionBuilder({
             hasReference: false,
             context: criterion.getContext(),
             criterionHash: criterion.getCriterionHash(),
@@ -62,11 +63,12 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
             .withPosition(criterion.getPosition())
             .withTimeRestriction(criterion.getTimeRestriction())
             .withValueFilters(criterion.getValueFilters()[0])
-            .buildCriterion();
-        }))
+            .buildCriterion();*/
+          console.log(criterion);
+          return criterion;
+        })
+      )
     );
-    console.log(this.$criteriaArray);
-    this.$stageUIDMap.subscribe((test) => console.log(test));
   }
 
   /*

@@ -48,7 +48,7 @@ export class EditCriterionModalComponent implements OnInit {
 
   private setInitialAttributeFilter() {
     const attributeFilters: AttributeFilter[] = [];
-    if (this.criterion.getAttributeFilters()) {
+    if (this.criterion.getAttributeFilters().length > 0) {
       this.criterion
         .getAttributeFilters()
         .forEach((attributeFilter) => attributeFilters.push(attributeFilter));

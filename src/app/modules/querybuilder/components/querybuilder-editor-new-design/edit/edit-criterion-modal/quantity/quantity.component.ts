@@ -25,7 +25,7 @@ export class QuantityComponent implements OnInit {
 
   quantityRangeFilter: QuantityRangeFilter;
 
-  selectedQuantityFilterOption: QuantityComparisonOption = QuantityComparisonOption.NONE;
+  selectedQuantityFilterOption: QuantityComparisonOption; //= QuantityComparisonOption.NONE;
 
   selectedQuantityFilterUnit: QuantityUnit;
 
@@ -39,7 +39,9 @@ export class QuantityComponent implements OnInit {
 
   ngOnInit() {
     this.setQuantityFilterType();
-    this.setSelectQuantityFilterUnit(this.quantityFilter.getAllowedUnits()[0]);
+    if (!this.quantityFilter.getSelectedUnit()) {
+      this.setSelectQuantityFilterUnit(this.quantityFilter.getAllowedUnits()[0]);
+    }
     this.selectedQuantityFilterOption = this.quantityFilter.getComparator();
   }
 
@@ -57,11 +59,12 @@ export class QuantityComponent implements OnInit {
   }
 
   public setSelectedQuantityFilterOption(option: QuantityComparisonOption): void {
-    this.selectedQuantityFilterOption = option;
+    this.selectedQuantityFilterOption = option; //QuantityComparisonOption[option as keyof typeof QuantityComparisonOption];
     if (option !== QuantityComparisonOption.NONE) {
       this.setQuantityFilterType();
       this.buildQuantityFilter();
     } else {
+      console.log('ich lande hier');
       this.quantityFilterChange.emit(new QuantityNotSet());
     }
   }
