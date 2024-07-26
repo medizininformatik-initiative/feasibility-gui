@@ -59,12 +59,12 @@ export class QuantityComponent implements OnInit {
   }
 
   public setSelectedQuantityFilterOption(option: QuantityComparisonOption): void {
-    this.selectedQuantityFilterOption = option; //QuantityComparisonOption[option as keyof typeof QuantityComparisonOption];
+    this.selectedQuantityFilterOption =
+      QuantityComparisonOption[option as keyof typeof QuantityComparisonOption];
     if (option !== QuantityComparisonOption.NONE) {
       this.setQuantityFilterType();
       this.buildQuantityFilter();
     } else {
-      console.log('ich lande hier');
       this.quantityFilterChange.emit(new QuantityNotSet());
     }
   }
@@ -90,18 +90,25 @@ export class QuantityComponent implements OnInit {
   }
 
   private buildQuantityFilter(): void {
-    if (this.isBetweenFilter()) {
+    if (
+      this.selectedQuantityFilterOption !== QuantityComparisonOption.BETWEEN &&
+      this.selectedQuantityFilterOption !== QuantityComparisonOption.NONE &&
+      this.isComparatorFilterValueSet()
+    ) {
       this.emitQuantityComparatorFilter();
-    } else if (this.isRangeFilter()) {
+    } else if (
+      this.selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN &&
+      this.isRangeFilterValuesSet()
+    ) {
       this.emitQuantityRangeFilter();
     }
   }
 
-  private isBetweenFilter(): boolean {
+  private isComparatorFilterValueSet(): boolean {
     return this.selectedQuantityFilterUnit != null && this.selectedQuantityValue != null;
   }
 
-  private isRangeFilter(): boolean {
+  private isRangeFilterValuesSet(): boolean {
     return (
       this.selectedQuantityFilterUnit != null &&
       this.selectedQuantityMinValue != null &&

@@ -10,22 +10,15 @@
         [existingOption]="quantityFilter.getComparator()"
         (selectedOption)="setSelectedQuantityFilterOption($event)"
       ></num-quantity-comparision-select>
-      <ng-container
-        *ngIf="
-          (selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN &&
-            selectedQuantityFilterOption !== QuantityComparisonOption.NONE) ||
-          quantityRangeFilter
-        "
-      >
+      <ng-container *ngIf="selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN">
         <num-quantity-range
           (quantityValues)="setSelectedQuantityValues($event)"
         ></num-quantity-range>
       </ng-container>
       <ng-container
         *ngIf="
-          (selectedQuantityFilterOption !== QuantityComparisonOption.BETWEEN &&
-            selectedQuantityFilterOption !== QuantityComparisonOption.NONE) ||
-          quantityComparatorFilter
+          selectedQuantityFilterOption !== QuantityComparisonOption.BETWEEN &&
+          selectedQuantityFilterOption !== QuantityComparisonOption.NONE
         "
       >
         <num-quantity-comparator
