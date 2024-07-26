@@ -11,6 +11,7 @@ export class SearchTermListEntry extends AbstractListEntry {
   private terminology: string;
   private termcode: string;
   private kdsModule: string;
+  private name: string;
   /**
    *
    * @param availability
@@ -36,6 +37,7 @@ export class SearchTermListEntry extends AbstractListEntry {
     this.termcode = termcode;
     this.kdsModule = kdsModule;
     this.selectable = selectable;
+    this.name = name;
   }
 
   /**

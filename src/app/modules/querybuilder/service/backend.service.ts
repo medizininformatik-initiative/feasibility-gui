@@ -10,7 +10,6 @@ import { Observable, of } from 'rxjs';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 //import { QueryProviderService } from './query-provider.service';
 import { QueryResponse } from '../model/api/result/QueryResponse';
-import { QueryResult } from '../model/api/result/QueryResult';
 import { SearchTermFilter } from '../../../model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
@@ -19,7 +18,6 @@ import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQu
 import { SearchTermListEntry } from '../../../shared/models/ListEntries/SearchTermListEntry';
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
 import { AnnotatedStructuredQuery } from 'src/app/model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
-//import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -256,11 +254,8 @@ export class BackendService {
     return this.http.get<any>(resultUrl);
   }
 
-  public getDetailedResult(
-    resultUrl: string,
-    gottenDetailedResult: boolean
-  ): Observable<QueryResult> {
-    if (this.feature.mockResult()) {
+  public getDetailedResult(resultUrl: string, gottenDetailedResult: boolean): Observable<any> {
+    /*if (this.feature.mockResult()) {
       const mockResult = {
         totalNumberOfPatients: Math.floor(Math.random() * 10000000),
         queryId: '12345',
@@ -272,12 +267,12 @@ export class BackendService {
         ],
       };
       return of(mockResult);
-    }
+    }*/
     if (gottenDetailedResult) {
       return this.resultObservable;
     }
 
-    const result = this.http.get<QueryResult>(resultUrl);
+    const result = this.http.get<any>(resultUrl);
 
     return Observable.create((obs: any) => {
       result.subscribe(

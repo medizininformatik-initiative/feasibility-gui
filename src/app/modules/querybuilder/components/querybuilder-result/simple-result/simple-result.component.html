@@ -27,7 +27,7 @@
     <div *ngIf="showSpinner" class="spinner-counter">{{ pollingTime }}</div>
   </div>
   <num-button
-    *ngIf="isResultLoaded; else showPlaceholder"
+    *ngIf="loadedResult; else showPlaceholder"
     [matTooltip]="'RESULT.DETAILS_TOOLTIP' | translate"
     matTooltipPosition="right"
     [type]="'primary'"

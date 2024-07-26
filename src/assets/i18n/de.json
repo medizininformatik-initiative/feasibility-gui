@@ -4,7 +4,9 @@
     "availability": "Anzahl",
     "terminology": "Terminologie",
     "termcode": "Term Code",
-    "name": "Kriterium"
+    "name": "Kriterium",
+    "site": "Standort",
+    "patient_number": "Anzahl der Patienten"
   },
   "DASHBOARD": {
     "CODEXTHEME": {

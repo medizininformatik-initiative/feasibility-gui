@@ -4,7 +4,9 @@
     "availability": "Availability",
     "terminology": "Terminology",
     "termcode": "Term Code",
-    "name": "Citeria"
+    "name": "Citeria",
+    "site": "Site",
+    "patient_number": "Number of Patients"
   },
   "DASHBOARD": {
     "CODEXTHEME": {

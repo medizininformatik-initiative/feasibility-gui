@@ -2,12 +2,14 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { BackendService } from '../../../service/backend.service';
 import { FeatureService } from '../../../../../service/Feature.service';
-import { Observable, Subscription } from 'rxjs';
+import { endWith, first, Observable, Subscription, switchMap, takeWhile } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
   ResultDetailModalComponent,
   ResultDetailsModalComponentData,
 } from '../result-detail-modal/result-detail-modal.component';
+import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
+import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
 
 @Component({
   selector: 'num-simple-result',
@@ -15,9 +17,6 @@ import {
   styleUrls: ['./simple-result.component.scss'],
 })
 export class SimpleResultComponent implements OnInit, OnDestroy {
-  @Input()
-  resultObservable: Observable<QueryResult>;
-
   @Input()
   result: QueryResult;
 
@@ -27,8 +26,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   @Input()
   resultFromSavedQuery: boolean;
 
-  @Input()
-  showSpinner: boolean;
+  showSpinner = false;
 
   @Input()
   resultUrl: string;
@@ -48,11 +46,16 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   spinnerValue: number;
   pollingTime: number;
   interval;
-
+  loadedResult = false;
+  tempFeasQueryID = '1';
+  withDetails = false;
+  queryUrl: string;
   constructor(
     public dialog: MatDialog,
     public backend: BackendService,
-    private featureService: FeatureService
+    private featureService: FeatureService,
+    private queryProviderService: FeasibilityQueryProviderService,
+    private resultService: FeasibilityQueryResultService
   ) {
     this.clickEventsubscription?.unsubscribe();
     this.clickEventsubscription = this.featureService.getClickEvent().subscribe((pollingTime) => {
@@ -64,9 +67,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('result');
-    console.log(this.result);
-    console.log(this.result.getTotalNumberOfPatients());
+    this.getDetailedResultRateLimit();
+    this.doSend();
   }
 
   ngOnDestroy(): void {
@@ -76,21 +78,27 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   openDialogResultDetails(): void {
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>();
 
+    this.resultService.getResult(this.queryUrl, this.result.getQueryId(), true).subscribe(() => {
+      const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig);
+      modal
+        .afterClosed()
+        .subscribe(() => (this.withDetails = false))
+        .unsubscribe();
+    });
+
+    this.withDetails = true;
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
-      resultObservable$: this.resultObservable,
-      myResult: this.result,
+      resultID: this.result.getQueryId(),
       isResultLoaded: this.isResultLoaded,
       resultUrl: this.resultUrl,
       gottenDetailedResult: this.gottenDetailedResult,
     };
 
-    const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig);
-
-    modal.componentInstance.resultGotten.subscribe((resultGotten: boolean) => {
-      //this.resultGotten.emit(resultGotten);
-    });
+    //modal.componentInstance.resultGotten.subscribe((resultGotten: boolean) => {
+    //this.resultGotten.emit(resultGotten);
+    //});
   }
 
   startProgressSpinner(pollingTime: number): void {
@@ -105,5 +113,92 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
         clearInterval(this.interval);
       }
     }, 1000);
+  }
+
+  /**
+   * need better pipe ending -> https://stackoverflow.com/questions/47031924/when-using-rxjs-why-doesnt-switchmap-trigger-a-complete-event
+   *
+   */
+  doSend(): void {
+    this.initializeState();
+    this.featureService.sendClickEvent(this.featureService.getPollingTime());
+    this.getDetailedResultRateLimit();
+    this.queryProviderService
+      .getFeasibilityQueryByID(this.tempFeasQueryID)
+      .pipe(
+        switchMap((query) => this.resultService.getPollingUrl(query.get(this.tempFeasQueryID))),
+        switchMap((url) => {
+          this.queryUrl = url;
+          return this.resultService
+            .getResultPolling(url, this.tempFeasQueryID, false)
+            .pipe(endWith(null));
+        }),
+        takeWhile((x) => x != null)
+      )
+      .subscribe(
+        (result) => this.handleResult(result),
+        (error) => this.handleError(error),
+        () => this.finalize()
+      );
+  }
+
+  private initializeState(): void {
+    this.gottenDetailedResult = true;
+    this.loadedResult = false;
+    this.resultUrl = '';
+    this.result = undefined;
+    this.showSpinner = true;
+  }
+
+  private handleResult(result: any): void {
+    this.result = result;
+    this.loadedResult = false;
+    // Optional: Store or process the result further if needed
+
+    if (result.getQueryId() !== undefined) {
+      // Optional: Handle query ID if needed
+    }
+
+    if (result.getIssues() !== undefined) {
+      if (result.getIssues()[0].code !== undefined) {
+        // Optional: Handle issue code if needed
+      }
+    } else {
+      // Optional: Handle result when no issues are present
+    }
+  }
+
+  private handleError(error: any): void {
+    console.log('error!');
+    this.showSpinner = false;
+    // Optional: Handle error status codes
+    if (error.status === 404) {
+      // this.snackbar.displayErrorMessage(this.snackbar.errorCodes['404']);
+    }
+    if (error.status === 429) {
+      // this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
+    }
+  }
+
+  private finalize(): void {
+    console.log('finalize');
+    this.loadedResult = true;
+    this.showSpinner = false;
+  }
+
+  getDetailedResultRateLimit(): void {
+    this.backend.getDetailedResultRateLimit().subscribe(
+      (result) => {
+        this.callsLimit = result.limit;
+        this.callsRemaining = result.remaining;
+      },
+      (error) => {
+        if (error.error.issues !== undefined) {
+          if (error.error.issues[0].code !== undefined) {
+            //this.snackbar.displayErrorMessage(error.error.issues[0].code);
+          }
+        }
+      }
+    );
   }
 }

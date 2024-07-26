@@ -4,17 +4,15 @@ import { InterfaceListEntry } from './InterfaceListEntry';
 /**
  * Represents an abstract search result, extending AbstractTermHashContext.
  */
-export abstract class AbstractListEntry
-  extends AbstractTermHashContext
-  implements InterfaceListEntry
-{
+export abstract class AbstractListEntry implements InterfaceListEntry {
+  id: string;
   /**
    * Constructs a new AbstractSearchResult instance.
    *
    * @param id
    */
   constructor(id: string) {
-    super(id);
+    this.id = id;
   }
 
   getId(): string {

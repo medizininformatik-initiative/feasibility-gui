@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
+  first,
   interval,
   map,
   Observable,
@@ -15,6 +16,7 @@ import { UIQuery2StructuredQueryTranslatorService } from '../../../../../service
 import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { FeatureService } from '../../../../../service/Feature.service';
 import { BackendService } from '../../../service/backend.service';
+import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
 
 @Component({
   selector: 'num-result',
@@ -37,18 +39,17 @@ export class ResultComponent implements OnInit, OnDestroy {
   tempFeasQueryID = '1';
   constructor(
     private queryProviderService: FeasibilityQueryProviderService,
-    private translator: UIQuery2StructuredQueryTranslatorService,
     public backend: BackendService,
-    public featureService: FeatureService
+    public featureService: FeatureService,
+    private resultService: FeasibilityQueryResultService
   ) {}
 
   ngOnInit() {
-    this.getDetailedResultRateLimit();
-    this.doSend();
+    //this.getDetailedResultRateLimit();
+    //this.doSend2();
   }
   ngOnDestroy(): void {
     this.subscriptionPolling?.unsubscribe();
-    this.subscriptionResult?.unsubscribe();
   }
 
   doSend(): void {
@@ -57,22 +58,63 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.resultUrl = '';
     this.result = undefined;
     this.showSpinningIcon = true;
-    this.subscriptionResult?.unsubscribe();
     this.subscriptionPolling?.unsubscribe();
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
-    this.getDetailedResultRateLimit();
+    //this.getDetailedResultRateLimit();
     this.queryProviderService
       .getFeasibilityQueryByID(this.tempFeasQueryID)
       .subscribe((query) => {
-        this.subscriptionResult = this.backend
-          .postQueryNew(this.translator.translateToStructuredQuery(query.get(this.tempFeasQueryID)))
-          .subscribe((response) => {
-            this.resultUrl = response.headers.get('location'); // response.location)
-            this.startRequestingResult();
-          });
+        console.log(query);
+        this.resultService.getPollingUrl(query.get(this.tempFeasQueryID)).subscribe((url) => {
+          this.loadedResult = false;
+          this.subscriptionPolling = this.resultService
+            .getResultPolling(url, this.tempFeasQueryID, false)
+            .subscribe(
+              (result) => {
+                this.result = result;
+                //this.storeQueryResult(this.result);
+                if (result.getQueryId() !== undefined) {
+                  //this.hasQuerySend = result.queryId;
+                }
+
+                if (result.getIssues() !== undefined) {
+                  if (result.getIssues()[0].code !== undefined) {
+                    //this.resultsLargeEnough = false;
+                  }
+                } else {
+                  //this.resultsLargeEnough = true;
+                  this.result = result;
+                  if (result.getQueryId() !== undefined) {
+                    //this.hasQuerySend = result.queryId;
+                  } else {
+                    //this.hasQuerySend = false;
+                  }
+                }
+              },
+              (error) => {
+                this.showSpinningIcon = false;
+                //this.hasQuerySend = false;
+                if (error.status === 404) {
+                  //this.snackbar.displayErrorMessage(this.snackbar.errorCodes['404']);
+                }
+                if (error.status === 429) {
+                  //this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
+                }
+              },
+              () => {
+                //    if (this.resultsLargeEnough === false) {
+                //      this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10004']);
+                //    } else {
+                this.loadedResult = true;
+                //    }
+                this.showSpinningIcon = false;
+              }
+            );
+        });
       })
       .unsubscribe();
   }
+
   startRequestingResult(): void {
     const summaryResultUrl = this.resultUrl + '/summary-result';
     this.loadedResult = false;
@@ -90,7 +132,7 @@ export class ResultComponent implements OnInit, OnDestroy {
       share(),
       switchAll()
     );
-*/
+
 
     this.resultObservable$ = interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 100)),
@@ -152,22 +194,6 @@ export class ResultComponent implements OnInit, OnDestroy {
         //    }
         this.showSpinningIcon = false;
       }
-    );
-  }
-
-  getDetailedResultRateLimit(): void {
-    this.backend.getDetailedResultRateLimit().subscribe(
-      (result) => {
-        this.callsLimit = result.limit;
-        this.callsRemaining = result.remaining;
-      },
-      (error) => {
-        if (error.error.issues !== undefined) {
-          if (error.error.issues[0].code !== undefined) {
-            //this.snackbar.displayErrorMessage(error.error.issues[0].code);
-          }
-        }
-      }
-    );
+    );*/
   }
 }

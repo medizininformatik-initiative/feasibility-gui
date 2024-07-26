@@ -10,7 +10,7 @@ import { FeasibilityQueryResultDetailstListEntry } from '../../ListEntries/Feasi
 
 export class FeasibilityQueryResultDetailsListAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['Standort', 'Patienten'],
+    headers: ['site', 'patient_number'],
   };
 
   public static adapt(listEntries: FeasibilityQueryResultDetailstListEntry[]): TableData {

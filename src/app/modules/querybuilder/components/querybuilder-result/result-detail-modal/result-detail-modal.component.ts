@@ -4,10 +4,14 @@ import { Observable, Subscription } from 'rxjs';
 import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { BackendService } from '../../../service/backend.service';
 import { FeatureService } from '../../../../../service/Feature.service';
+import { ResultProviderService } from '../../../../../service/Provider/ResultProvider.service';
+import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
+import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter';
+import { FeasibilityQueryResultDetailstListEntry } from '../../../../../shared/models/ListEntries/FeasibilityQueryResultDetailstListEntry';
+import { TableData } from '../../../../../shared/models/TableData/InterfaceTableData';
 
 export class ResultDetailsModalComponentData {
-  resultObservable$: Observable<QueryResult>;
-  myResult: QueryResult;
+  resultID: string;
   isResultLoaded: boolean;
   gottenDetailedResult: boolean;
   resultUrl: string;
@@ -21,61 +25,35 @@ export class ResultDetailModalComponent implements OnInit {
   @Output() resultGotten = new EventEmitter<boolean>();
 
   result: QueryResult;
-  resultSubscription: Subscription;
   resultStatus: string;
-
+  adaptedData: TableData;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsModalComponentData,
     public dialogRef: MatDialogRef<ResultDetailModalComponent>,
     public backend: BackendService,
-    public featureService: FeatureService
+    private featureService: FeatureService,
+    private resultProvider: ResultProviderService
   ) {
-    if (this.data.isResultLoaded) {
-      this.result = this.data.myResult;
-    }
+    /*if (this.data.isResultLoaded) {
+      this.result = this.resultProvider.getResultByID(this.data.resultID)
+    }*/
   }
   lowerBoundaryLocation: number = this.featureService.getLocationResultLowerBoundary();
 
   ngOnInit(): void {
     const detailedResultUrl = this.data.resultUrl + '/detailed-obfuscated-result';
     this.resultStatus = '';
-    this.getDetailedResult(detailedResultUrl);
+
+    this.sortResult(this.resultProvider.getResultByID(this.data.resultID));
+    this.adaptedData = FeasibilityQueryResultDetailsListAdapter.adapt(
+      this.result.getResultLines() as unknown as FeasibilityQueryResultDetailstListEntry[]
+    );
   }
 
   doClose(): void {
-    this.resultSubscription?.unsubscribe();
     this.dialogRef.close();
   }
 
-  getDetailedResult(url: string): void {
-    this.resultSubscription = this.backend
-      .getDetailedResult(url, this.data.gottenDetailedResult)
-      .subscribe(
-        (result) => {
-          this.resultStatus = '200';
-          if (result.issues !== undefined) {
-            this.resultStatus = result.issues[0].code;
-            //this.snackbar.displayErrorMessage(this.snackbar.errorCodes[this.resultStatus]);
-          } else {
-            this.sortResult(result);
-          }
-          this.resultGotten.emit(true);
-        },
-        (error) => {
-          if (error.status === 404) {
-            this.resultStatus = '404';
-            //this.snackbar.displayErrorMessage(this.snackbar.errorCodes['404']);
-          }
-          if (error.status === 429) {
-            this.resultStatus = '429';
-            //this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
-          }
-        },
-        () => {
-          console.log('done');
-        }
-      );
-  }
   sortResult(resultTemp): void {
     this.result = resultTemp;
     this.result?.getResultLines()?.sort((a, b) => b.getNumberOfPatients() - a.getNumberOfPatients());
