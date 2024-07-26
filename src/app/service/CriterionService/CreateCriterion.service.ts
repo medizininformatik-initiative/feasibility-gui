@@ -32,7 +32,7 @@ export class CreateCriterionService {
     private criterionHashService: CriterionHashService,
     private backend: BackendService,
     private listItemService: SelectedTableItemsService<SearchTermListEntry>,
-    private criterionService: CriterionProviderService,
+    private criterionProviderService: CriterionProviderService,
     private stageProviderService: StageProviderService,
     private translator: UIQuery2StructuredQueryTranslatorService
   ) {}
@@ -154,7 +154,7 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion: Criterion = criterionBuilder.buildCriterion();
-    this.criterionService.setCriterionByUID(criterion);
+    this.criterionProviderService.setCriterionByUID(criterion);
     this.stageProviderService.addCriterionToStage(criterion.getUniqueID());
   }
 
