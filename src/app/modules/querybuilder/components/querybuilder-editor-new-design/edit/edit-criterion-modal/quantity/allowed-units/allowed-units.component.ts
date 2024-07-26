@@ -37,7 +37,10 @@ export class AllowedUnitsComponent implements OnInit, OnChanges {
   }
 
   private updateSelectedUnit() {
-    if (this.selectedUnit && this.allowedUnits.some((unit) => unit === this.selectedUnit)) {
+    if (
+      this.selectedUnit &&
+      this.allowedUnits.some((unit) => unit.getCode() === this.selectedUnit.getCode())
+    ) {
       this.selectedUnitDisplay = this.selectedUnit.getDisplay();
     } else if (this.allowedUnits.length > 0) {
       this.selectedUnit = this.allowedUnits[0];
