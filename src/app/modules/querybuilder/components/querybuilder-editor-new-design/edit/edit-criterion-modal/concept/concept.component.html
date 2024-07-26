@@ -5,7 +5,6 @@
     *ngIf="listItems.length > 0 && adaptedData"
     class="result-list-container"
     [tableData]="adaptedData"
-    [searchTermResultList]="listItems"
     (selectedRow)="setSelectedRow($event)"
   >
   </num-result-list>
