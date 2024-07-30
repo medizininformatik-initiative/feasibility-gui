@@ -4,6 +4,7 @@
 @import './themes';
 @import './custom-material';
 @import './general-styles/_margin-bottom-classes';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 //@include mat-core();
 @include mat.core();
