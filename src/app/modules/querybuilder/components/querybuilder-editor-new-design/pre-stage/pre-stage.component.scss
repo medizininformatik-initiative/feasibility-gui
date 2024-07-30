@@ -1,26 +1,3 @@
-/* Base layout styles */
-.layout {
-  width: 450px;
-  border-radius: 5px;
-  height: 80px;
-  border: 1px solid #0000001f;
-  position: fixed;
-  bottom: 20%;
-  right: 5%;
-  z-index: 99;
-}
-
-/* Specific layout styles */
-.basic-layout {
-  @extend .layout;
-  background-color: #e8effc;
-}
-
-.green-layout {
-  @extend .layout;
-  background-color: #f9fcf1;
-}
-
 /* Button styles */
 .mat-button {
   background-color: #5a79af;
@@ -34,6 +11,7 @@
 .mat-green {
   background-color: #9bb923;
   height: 2rem;
+  margin-right: 10px;
   font-size: smaller;
 }
 
@@ -41,6 +19,7 @@
   background-color: #5a79af;
   height: 2rem;
   font-size: smaller;
+  margin-right: 10px;
 }
 
 /* Box styles */
@@ -83,17 +62,9 @@
   border-radius: 5px;
 }
 
-.align-button-end {
-  align-self: flex-end;
-}
-
-.padding-left-right-5px {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
 .background-color-button {
   background-color: #5a79af;
+  margin-right: 10px;
 }
 
 .font-added-criteria {
