@@ -1,46 +1,30 @@
-<div [ngClass]="addedToStage ? 'green-layout' : 'basic-layout'">
-  <div fxFill fxLayout="row" fxLayoutAlign="space-between center" class="padding-left-right-5px">
-    <div class="absolute-test">
-      <span
-        [ngClass]="{
-          'dotted-box': preservedLength > 0,
-          'normal-box': preservedLength === 0 || preservedLength === null,
-          'green-box': addedToStage
-        }"
-        fxFill
-        fxLayout="row"
-        fxLayoutAlign="center center"
-      >
-        {{ preservedLength !== null ? preservedLength : ($listItemArray | async)?.length }}
-      </span>
-    </div>
-    <span *ngIf="addedToStage" class="font-added-criteria">
-      {{
-        'QUERYBUILDER.STAGE.MESSAGE.ADDED_CRITERIA' | translate : { number: this.preservedLength }
-      }}
-    </span>
-    <button
-      class="align-button-end background-color-button"
-      (click)="addItemsToStage(); scroll()"
-      [disabled]="($listItemArray | async)?.length <= 0"
-      mat-raised-button
-      class="height-59"
-      [color]="addedToStage ? 'green' : 'blue'"
-    >
-      {{
-        addedToStage
-          ? ('QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate)
-          : ('QUERYBUILDER.STAGE.BUTTON.ADD_TO_STAGE' | translate)
-      }}
-    </button>
-    <button
-      class="align-button-end background-color-button"
-      (click)="translate()"
-      mat-raised-button
-      class="height-59"
-      [color]="addedToStage ? 'green' : 'blue'"
-    >
-      Anfrage starten
-    </button>
-  </div>
-</div>
+<num-action-bar>
+  <span *ngIf="addedToStage" class="font-added-criteria">
+    {{ 'QUERYBUILDER.STAGE.MESSAGE.ADDED_CRITERIA' | translate : { number: this.preservedLength } }}
+  </span>
+  <button
+    class="background-color-button"
+    (click)="addItemsToStage(); scroll()"
+    [disabled]="($listItemArray | async)?.length <= 0"
+    mat-raised-button
+    [matBadge]="preservedLength !== null ? preservedLength : ($listItemArray | async)?.length"
+    matBadgePosition="above after"
+    class="height-59"
+    [color]="addedToStage ? 'green' : 'blue'"
+  >
+    {{
+      addedToStage
+        ? ('QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate)
+        : ('QUERYBUILDER.STAGE.BUTTON.ADD_TO_STAGE' | translate)
+    }}
+  </button>
+  <button
+    class="background-color-button"
+    (click)="translate()"
+    mat-raised-button
+    class="height-59"
+    [color]="addedToStage ? 'green' : 'blue'"
+  >
+    Anfrage starten
+  </button>
+</num-action-bar>
