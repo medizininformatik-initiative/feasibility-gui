@@ -14,7 +14,10 @@ export class QuerybuilderEditorComponent implements OnInit {
   @ViewChild('search') search: SearchComponent;
 
   query: FeasibilityQuery;
-  constructor(public queryService: FeasibilityQueryProviderService) {}
+
+  constructor(
+    public queryService: FeasibilityQueryProviderService,
+  ) {}
 
   ngOnInit(): void {
     this.queryService.getFeasibilityQueryByID().subscribe((query) => {
@@ -41,4 +44,5 @@ export class QuerybuilderEditorComponent implements OnInit {
       }
     }
   }
+
 }
