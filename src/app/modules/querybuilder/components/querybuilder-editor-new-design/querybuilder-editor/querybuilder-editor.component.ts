@@ -41,4 +41,9 @@ export class QuerybuilderEditorComponent implements OnInit {
       }
     }
   }
+
+  getTree() {
+    const tree = this.profileTreeService.createProfileTree();
+    this.tree = DataSelectionTreeAdapter.fromTree(tree);
+  }
 }
