@@ -39,6 +39,7 @@ const SHARED_DECLARATIONS = [
     CriteriaBoxComponent,
     CriteriaMenuComponent,
     ActionBarComponent,
+    TreeComponent,
   ],
   imports: [
     CommonModule,
