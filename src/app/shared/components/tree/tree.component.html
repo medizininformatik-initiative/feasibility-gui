@@ -4,7 +4,7 @@
   <div class="divider" [style.marginLeft]="calcMarginLeft(level)">
     <div fxLayout="row" fxLayoutAlign="start center">
       <div>
-        <mat-checkbox class="tree-checkbox"></mat-checkbox>
+        <mat-checkbox (change)="checkboxSelected(node)" class="tree-checkbox"></mat-checkbox>
       </div>
       <div class="tree-node" [style.marginLeft]="calcMarginLeftDisplay(level)">
         <div

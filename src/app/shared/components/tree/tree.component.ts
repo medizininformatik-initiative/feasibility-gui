@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TreeNode } from '../../models/TreeNode/TreeNodeInterface';
 
 @Component({
@@ -10,8 +10,8 @@ export class TreeComponent implements OnInit {
   @Input()
   treeData: TreeNode;
 
-  @Input()
-  node: any;
+  @Output()
+  selectedCheckbox: EventEmitter<TreeNode> = new EventEmitter();
 
   expandedNodes: Set<any> = new Set();
 
@@ -39,5 +39,9 @@ export class TreeComponent implements OnInit {
 
   calcMarginLeftDisplay(level: number): string {
     return `calc(${level} * 30px)`;
+  }
+
+  checkboxSelected(node: TreeNode): void {
+    this.selectedCheckbox.emit(node);
   }
 }
