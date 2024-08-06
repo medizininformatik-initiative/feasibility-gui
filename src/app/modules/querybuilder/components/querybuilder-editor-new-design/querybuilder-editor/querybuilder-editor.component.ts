@@ -51,4 +51,8 @@ export class QuerybuilderEditorComponent implements OnInit {
     const tree = this.profileTreeService.createProfileTree();
     this.tree = DataSelectionTreeAdapter.fromTree(tree);
   }
+
+  checkboxSelected(event) {
+    console.log(event);
+  }
 }
