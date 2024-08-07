@@ -21,4 +21,8 @@ export class DataSelectionComponent implements OnInit {
     const tree = this.profileTreeService.createProfileTree();
     this.tree = DataSelectionTreeAdapter.fromTree(tree);
   }
+
+  addItemsToStage(node: TreeNode) {
+    console.log(node);
+  }
 }

@@ -17,9 +17,7 @@ export class TreeComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.treeData);
-  }
+  ngOnInit() {}
 
   toggleExpand(node: any) {
     if (this.expandedNodes.has(node)) {
