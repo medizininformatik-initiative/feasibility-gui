@@ -17,18 +17,12 @@ export class QuerybuilderEditorComponent implements OnInit {
 
   query: FeasibilityQuery;
 
-  tree: TreeNode;
-
-  constructor(
-    public queryService: FeasibilityQueryProviderService,
-    private profileTreeService: DataSelectionProfileTreeService
-  ) {}
+  constructor(public queryService: FeasibilityQueryProviderService) {}
 
   ngOnInit(): void {
     this.queryService.getFeasibilityQueryByID().subscribe((query) => {
       this.query = query.get('1');
     });
-    this.getTree();
   }
 
   scroll() {
@@ -36,14 +30,5 @@ export class QuerybuilderEditorComponent implements OnInit {
       const element = this.stage.elementRef.nativeElement;
       element.scrollIntoView({ behavior: 'smooth' });
     }
-  }
-
-  getTree() {
-    const tree = this.profileTreeService.createProfileTree();
-    this.tree = DataSelectionTreeAdapter.fromTree(tree);
-  }
-
-  checkboxSelected(event) {
-    console.log(event);
   }
 }
