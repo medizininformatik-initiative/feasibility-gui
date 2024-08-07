@@ -42,4 +42,8 @@ export class DataSelectionComponent implements OnInit {
       this.selectedDataSelectionProfileNodeIds.add(originalEntry.url);
     }
   }
+
+  addItemsToStage(node: TreeNode) {
+    console.log(node);
+  }
 }
