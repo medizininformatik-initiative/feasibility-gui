@@ -37,4 +37,8 @@ export class DataSelectionComponent implements OnInit {
   public getDataSelectionProfileData() {
     this.createDataSelectionProfileService.getDataSelectionProfileProfileData().subscribe();
   }
+
+  addItemsToStage(node: TreeNode) {
+    console.log(node);
+  }
 }
