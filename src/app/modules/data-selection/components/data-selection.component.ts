@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
-import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -41,9 +41,5 @@ export class DataSelectionComponent implements OnInit {
     } else {
       this.selectedDataSelectionProfileNodeIds.add(originalEntry.url);
     }
-  }
-
-  addItemsToStage(node: TreeNode) {
-    console.log(node);
   }
 }
