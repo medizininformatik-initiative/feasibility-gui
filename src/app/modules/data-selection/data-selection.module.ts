@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { DataSelectionComponent } from './components/data-selection.component';
+import { DataSelectionRoutingModule } from './data-selection-routing.module';
 import { FileSaverModule } from 'ngx-filesaver';
 import { LayoutModule } from '../../layout/layout.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -8,10 +9,10 @@ import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
-import { DataSelectionRoutingModule } from './data-selection-routing.module';
+import { DataSelectionBoxesComponent } from './components/data-selection-boxes/data-selection-boxes.component';
 
 @NgModule({
-  declarations: [DataSelectionComponent],
+  declarations: [DataSelectionComponent, DataSelectionBoxesComponent],
   imports: [
     CommonModule,
     DataSelectionRoutingModule,

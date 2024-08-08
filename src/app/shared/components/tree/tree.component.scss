@@ -1,0 +1,48 @@
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+span:hover {
+  text-decoration: underline;
+}
+
+.tree-checkbox {
+  margin-right: 10px; /* Adjust the spacing between checkbox and text */
+}
+
+.chevron {
+  margin-right: 5px;
+}
+
+ul {
+  list-style-type: none;
+  //padding-left: 20px;
+  margin: 0px;
+}
+
+li {
+  padding: 5px 0;
+}
+
+.node-display-container {
+  padding-right: 10px;
+}
+
+.tree-node {
+  width: 5%;
+}
+
+.divider {
+  border-bottom: 1px solid #0000001f;
+  width: 100%;
+}
+
+.icon-container {
+  background-color: #5a79af;
+  color: white;
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+  font-size: small;
+}

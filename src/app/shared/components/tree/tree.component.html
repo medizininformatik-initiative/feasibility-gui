@@ -1,0 +1,36 @@
+<ng-container *ngTemplateOutlet="tree; context: { node: treeData, level: 0 }"> </ng-container>
+
+<ng-template #tree let-node="node" let-level="level">
+  <div class="divider" [style.marginLeft]="calcMarginLeft(level)">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <div>
+        <mat-checkbox (change)="checkboxSelected(node)" class="tree-checkbox"></mat-checkbox>
+      </div>
+      <div class="tree-node" [style.marginLeft]="calcMarginLeftDisplay(level)">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          *ngIf="node.children && node.children.length > 0"
+          (click)="toggleExpand(node)"
+          class="icon-container"
+          style="cursor: pointer"
+        >
+          <fa-icon *ngIf="!isExpanded(node)" icon="chevron-right"></fa-icon>
+          <fa-icon *ngIf="isExpanded(node)" icon="chevron-down"></fa-icon>
+        </div>
+      </div>
+      <div class="node-display-container">
+        {{ node.data.display }}
+      </div>
+    </div>
+  </div>
+  <ul *ngIf="isExpanded(node) && node.children && node.children.length > 0">
+    <ng-container *ngFor="let child of node.children">
+      <li>
+        <ng-container
+          *ngTemplateOutlet="tree; context: { node: child, level: level + 1 }"
+        ></ng-container>
+      </li>
+    </ng-container>
+  </ul>
+</ng-template>

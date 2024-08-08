@@ -60,7 +60,10 @@ export const routes: Routes = [
       navId: 'data-selection',
       roles: ['main'],
     },
-    component: DataSelectionComponent,
+    loadChildren: () =>
+      import(
+        /* webpackChunkName: "DataSelection.Module" */ './modules/data-selection/data-selection.module'
+      ).then((m) => m.DataSelectionModule),
   },
   {
     path: 'data-protection',

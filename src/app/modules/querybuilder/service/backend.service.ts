@@ -51,6 +51,8 @@ export class BackendService {
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345';
   private resultObservable = null;
 
+  private static PATH_DATASELECTION_PROFILE_DATA = 'dse/profile-data';
+
   lowerBoundaryPatient: number = this.feature.getPatientResultLowerBoundary();
 
   token = this.authStorage.getItem('access_token');
@@ -252,6 +254,16 @@ export class BackendService {
     }
 
     return this.http.get<any>(resultUrl);
+  }
+
+  public getDataSelectionProfileData(ids: string[]) {
+    console.log(ids);
+    const commaSeparatedIds: string = ids.join(',');
+    const test = BackendService.PATH_DATASELECTION_PROFILE_DATA + '?ids=' + commaSeparatedIds;
+    console.log(test);
+    return this.http.get<any>(
+      this.createUrl(BackendService.PATH_DATASELECTION_PROFILE_DATA + '?ids=' + commaSeparatedIds)
+    );
   }
 
   public getDetailedResult(resultUrl: string, gottenDetailedResult: boolean): Observable<any> {
