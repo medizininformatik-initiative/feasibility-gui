@@ -17,6 +17,7 @@ import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { FeatureService } from '../../../../../service/Feature.service';
 import { BackendService } from '../../../service/backend.service';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'num-result',
@@ -41,7 +42,8 @@ export class ResultComponent implements OnInit, OnDestroy {
     private queryProviderService: FeasibilityQueryProviderService,
     public backend: BackendService,
     public featureService: FeatureService,
-    private resultService: FeasibilityQueryResultService
+    private resultService: FeasibilityQueryResultService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -52,6 +54,9 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.subscriptionPolling?.unsubscribe();
   }
 
+  editStage(): void {
+    this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage: true } });
+  }
   doSend(): void {
     this.gottenDetailedResult = true; //false;
     this.loadedResult = false;

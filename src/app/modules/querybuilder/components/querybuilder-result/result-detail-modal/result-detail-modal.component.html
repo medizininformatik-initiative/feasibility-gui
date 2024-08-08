@@ -1,12 +1,20 @@
 <div class="result-details-box">
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxFlex="80" class="result-header">{{ 'RESULT.PATIENT_NUMBER' | translate }}</div>
+    <div fxFlex="80" class="result-header"></div>
     <button class="close-button" type="button" mat-icon-button (click)="doClose()">
       <fa-icon size="2x" icon="window-close"></fa-icon>
     </button>
   </div>
+  <div>
+    <p style="font-size: xx-large">Anzahl Patienten</p>
+    <p style="width: 50%; color: #c5cacf">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+      Aenean massa. Cum sociis natoque penatibus
+    </p>
+  </div>
+  <br />
   <num-result-list class="result-list-container" [tableData]="adaptedData"> </num-result-list>
-  <div class="result-div">
+  <!--<div class="result-div">
     <table class="result-table">
       <thead>
         <tr>
@@ -32,5 +40,5 @@
     <div *ngIf="resultStatus === '429'" class="error-message">
       {{ 'RESULT.MESSAGE429' | translate }}
     </div>
-  </div>
+  </div>-->
 </div>

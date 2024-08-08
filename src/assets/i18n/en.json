@@ -1,12 +1,14 @@
 {
   "SHAREDCOMPONENTS": {
-    "kdsModule": "KDS Module",
-    "availability": "Availability",
-    "terminology": "Terminology",
-    "termcode": "Term Code",
-    "name": "Citeria",
+    "KDS Module": "KDS Module",
+    "Availability": "Availability",
+    "Terminology": "Terminology",
+    "Termcode": "Term Code",
+    "Name": "Citeria",
     "site": "Site",
-    "patient_number": "Number of Patients"
+    "patient_number": "Number of Patients",
+    "Display": "Display",
+    "Terminology Code": "Term Code"
   },
   "DASHBOARD": {
     "CODEXTHEME": {
@@ -122,6 +124,7 @@
     "STAGE": {
       "BUTTON": {
         "ADD_TO_STAGE": "Add to Stage",
+        "BACK_TO_SEARCH":"Add Criteria",
         "VIEW_STAGE": "View Stage"
       },
       "MESSAGE": {
