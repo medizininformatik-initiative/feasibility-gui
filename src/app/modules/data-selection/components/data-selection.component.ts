@@ -3,6 +3,8 @@ import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelection
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { DataSelectionProviderService } from '../services/DataSelectionProviderService';
+import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -38,7 +40,16 @@ export class DataSelectionComponent implements OnInit {
     this.createDataSelectionProfileService.getDataSelectionProfileProfileData().subscribe();
   }
 
-  addItemsToStage(node: TreeNode) {
-    console.log(node);
+  public addItemsToStage(node: TreeNode) {
+    const nodeId: string = node.id;
+    if (this.selectedDataSelectionProfileNodeIds.has(nodeId)) {
+      this.selectedDataSelectionProfileNodeIds.delete(nodeId);
+    } else {
+      this.selectedDataSelectionProfileNodeIds.add(nodeId);
+    }
+  }
+
+  public getDataSelectionProfileData() {
+    this.createDataSelectionProfileService.getDataSelectionProfileProfileData().subscribe();
   }
 }
