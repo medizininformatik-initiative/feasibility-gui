@@ -3,6 +3,7 @@ import { DataProtectionComponent } from './site/data-protection/data-protection.
 import { NgModule } from '@angular/core';
 import { RoleGuard } from './core/auth/guards/role.guard';
 import { RouterModule, Routes } from '@angular/router';
+import { DataSelectionComponent } from './modules/data-selection/components/data-selection.component';
 
 export const routes: Routes = [
   {
@@ -51,6 +52,15 @@ export const routes: Routes = [
       import(
         /* webpackChunkName: "Result.Module" */ './modules/querybuilder/querybuilder.module'
       ).then((m) => m.QuerybuilderModule),
+  },
+  {
+    path: 'data-selection',
+    canLoad: [RoleGuard],
+    data: {
+      navId: 'data-selection',
+      roles: ['main'],
+    },
+    component: DataSelectionComponent,
   },
   {
     path: 'data-protection',
