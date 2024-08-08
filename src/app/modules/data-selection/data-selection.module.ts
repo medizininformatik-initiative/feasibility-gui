@@ -9,9 +9,10 @@ import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
+import { DataSelectionBoxesComponent } from './components/data-selection-boxes/data-selection-boxes.component';
 
 @NgModule({
-  declarations: [DataSelectionComponent],
+  declarations: [DataSelectionComponent, DataSelectionBoxesComponent],
   imports: [
     CommonModule,
     DataSelectionRoutingModule,

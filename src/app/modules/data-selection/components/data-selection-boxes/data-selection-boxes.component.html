@@ -1,0 +1,9 @@
+<div *ngFor="let profile of $dataSelectionProfileArray | async" class="container">
+  <div fxLayout="row" fxLayoutAlign="start center" class="selection-box">
+    <div class="display-container">
+      {{ profile.getDisplay() }}
+    </div>
+    <div class="display-container">Selected Fields</div>
+    <div class="filter-container">Applied Filters</div>
+  </div>
+</div>
