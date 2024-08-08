@@ -2,6 +2,13 @@
   <num-searchbar class="searchbar-container"></num-searchbar>
   <num-tree fxFlexFill (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
   <num-action-bar class="action-bar-layout">
-    <button class="background-color-button" mat-raised-button>Zur Datenselektion hinzufügen</button>
+    <button
+      class="background-color-button"
+      mat-raised-button
+      (click)="getDataSelectionProfileData()"
+    >
+      Zur Datenselektion hinzufügen
+    </button>
   </num-action-bar>
+  <num-data-selection-boxes fxFlexFill></num-data-selection-boxes>
 </div>
