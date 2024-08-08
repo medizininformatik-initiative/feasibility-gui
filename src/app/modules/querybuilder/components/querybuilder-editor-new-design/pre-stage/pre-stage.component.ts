@@ -47,6 +47,7 @@ export class PreStageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.$listItemArray = this.listItemSelectionService.getSelectedTableItems();
     this.listItemSubscription = this.$listItemArray.subscribe((listItems) => {
+      console.log(listItems);
       const length = listItems.length;
       if (length > 0) {
         this.preservedLength = length;
