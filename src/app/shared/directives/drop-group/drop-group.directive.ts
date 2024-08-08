@@ -22,31 +22,33 @@ export class DropGroupDirective implements OnInit {
   onDrop(event: CdkDragDrop<any[]>) {
     const groupType = this.groupType || this.elementRef.nativeElement.getAttribute('groupType');
     const droppedCriterion: string = event.item.data;
-    switch (event.container.id) {
-      case 'Exclusion':
-        this.addToExclusion(droppedCriterion);
-        break;
-      case 'Inclusion':
-        this.addToInclusion(droppedCriterion);
-        break;
-      case 'Stage':
-        this.stageProviderService.addCriterionToStage(droppedCriterion);
-        break;
-      default:
-        break;
-    }
-    switch (event.previousContainer.id) {
-      case 'Exclusion':
-        this.deleteFromExclusion(droppedCriterion);
-        break;
-      case 'Inclusion':
-        this.deleteFromInclusion(droppedCriterion);
-        break;
-      case 'Stage':
-        this.stageProviderService.deleteCriterionByUID(droppedCriterion);
-        break;
-      default:
-        break;
+    if (event.container.id !== event.previousContainer.id) {
+      switch (event.container.id) {
+        case 'Exclusion':
+          this.addToExclusion(droppedCriterion);
+          break;
+        case 'Inclusion':
+          this.addToInclusion(droppedCriterion);
+          break;
+        case 'Stage':
+          this.stageProviderService.addCriterionToStage(droppedCriterion);
+          break;
+        default:
+          break;
+      }
+      switch (event.previousContainer.id) {
+        case 'Exclusion':
+          this.deleteFromExclusion(droppedCriterion);
+          break;
+        case 'Inclusion':
+          this.deleteFromInclusion(droppedCriterion);
+          break;
+        case 'Stage':
+          this.stageProviderService.deleteCriterionByUID(droppedCriterion);
+          break;
+        default:
+          break;
+      }
     }
   }
   /*@HostListener('cdkDropListExited', ['$event'])

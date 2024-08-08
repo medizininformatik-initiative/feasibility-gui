@@ -1,14 +1,15 @@
 .container {
-  width: 600px;
-  height: 150px;
+  width: 550px;
+  min-height: 130px;
   background-color: rgba(90, 121, 175, 0.1);
   border-radius: 10px;
+  position: relative;
 }
 
 .title-section {
   padding-left: 20px;
   padding-top: 20px;
-  padding-right: 5%;
+  padding-right: 3%;
   font-size: larger;
   width: 100%;
   color: black;
@@ -17,6 +18,7 @@
 .info-section {
   height: 100%;
   width: 100%;
+  margin-bottom: 5px;
 }
 
 .info-item {
@@ -44,11 +46,9 @@
 }
 
 .drag-handle {
-  padding-top: 50px;
-  padding-left: 20px;
-  height: 100%;
+  position: absolute;
   display: block;
   transform: rotateZ(45deg);
-  padding-bottom: 10px;
-  padding-right: 10px;
+  bottom: 15px;
+  right: 20px;
 }

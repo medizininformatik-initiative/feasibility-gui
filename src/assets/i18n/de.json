@@ -1,12 +1,14 @@
 {
   "SHAREDCOMPONENTS": {
-    "kdsModule": "KDS Module",
-    "availability": "Anzahl",
-    "terminology": "Terminologie",
-    "termcode": "Term Code",
-    "name": "Kriterium",
+    "KDS Module": "KDS Module",
+    "Availability": "Anzahl",
+    "Terminology": "Terminologie",
+    "Termcode": "Term Code",
+    "Name": "Kriterium",
     "site": "Standort",
-    "patient_number": "Anzahl der Patienten"
+    "patient_number": "Anzahl der Patienten",
+    "Display": "Display",
+    "Terminology Code": "Term Code"
   },
   "DASHBOARD": {
     "CODEXTHEME": {
@@ -123,6 +125,7 @@
     "STAGE": {
       "BUTTON": {
         "ADD_TO_STAGE": "Zur Bühne hinzufügen",
+        "BACK_TO_SEARCH":"Kriterien hinzufügen",
         "VIEW_STAGE": "Bühne anzeigen"
       },
       "MESSAGE": {

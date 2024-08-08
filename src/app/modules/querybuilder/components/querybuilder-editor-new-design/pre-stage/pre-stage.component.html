@@ -1,29 +1,40 @@
-<num-action-bar>
+<num-action-bar class="bottom">
   <span *ngIf="addedToStage" class="font-added-criteria">
     {{ 'QUERYBUILDER.STAGE.MESSAGE.ADDED_CRITERIA' | translate : { number: this.preservedLength } }}
   </span>
   <button
     class="background-color-button"
-    (click)="addItemsToStage(); scroll()"
-    [disabled]="($listItemArray | async)?.length <= 0"
+    (click)="addItemsToStage()"
+    [disabled]="!hasListItems"
     mat-raised-button
-    [matBadge]="preservedLength !== null ? preservedLength : ($listItemArray | async)?.length"
+    [matBadge]="($listItemArray | async)?.length"
     matBadgePosition="above after"
     class="height-59"
-    [color]="addedToStage ? 'green' : 'blue'"
+    [color]="hasListItems ? 'green' : 'blue'"
+  >
+    {{ 'QUERYBUILDER.STAGE.BUTTON.ADD_TO_STAGE' | translate }}
+  </button>
+  <button
+    class="background-color-button"
+    (click)="scroll()"
+    [disabled]="!hasStageItems && !hasQueryItems"
+    mat-raised-button
+    class="height-59"
+    [color]="hasStageItems || hasQueryItems ? 'green' : 'blue'"
   >
     {{
-      addedToStage
-        ? ('QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate)
-        : ('QUERYBUILDER.STAGE.BUTTON.ADD_TO_STAGE' | translate)
+      atStage
+        ? ('QUERYBUILDER.STAGE.BUTTON.BACK_TO_SEARCH' | translate)
+        : ('QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate)
     }}
   </button>
   <button
     class="background-color-button"
     (click)="translate()"
     mat-raised-button
+    [disabled]="!isValidQuery()"
     class="height-59"
-    [color]="addedToStage ? 'green' : 'blue'"
+    [color]="isValidQuery() ? 'green' : 'blue'"
   >
     Anfrage starten
   </button>

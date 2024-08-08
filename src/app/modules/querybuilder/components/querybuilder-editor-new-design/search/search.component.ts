@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -40,6 +41,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedDetails$: Observable<SearchTermDetails>;
 
   constructor(
+    public elementRef: ElementRef,
     private elasticSearchService: ElasticSearchService<SearchTermResultList, SearchTermListEntry>,
     private cdr: ChangeDetectorRef,
     private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>

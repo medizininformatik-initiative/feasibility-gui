@@ -1,9 +1,10 @@
-<div fxLayout="column wrap">
-  <div fxFlexFill fxLayoutAlign="start">
-    <num-search fxFlexFill></num-search>
+<div class="relative" fxLayout="column wrap">
+  <num-stage (scrollClick)="scroll($event)"></num-stage>
+  <div fxFlexFill fxLayoutAlign="start" class="fullscreen">
+    <num-search fxFlexFill #search></num-search>
   </div>
-  <num-stage (click)="scroll()"></num-stage>
-  <div fxFlexFill>
+
+  <div fxFlexFill class="fullscreen">
     <num-criteria
       fxFlexFill
       fxLayout="row wrap"

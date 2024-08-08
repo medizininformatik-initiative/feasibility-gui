@@ -33,6 +33,7 @@
   content: '';
   position: absolute;
   right: -13px;
+  top: 0;
 }
 .block {
   border-top-left-radius: 5px;
@@ -44,6 +45,8 @@
   height: 26px;
   display: inline-block;
   position: relative;
+  padding-left: 4px;
+  padding-top: 2px;
 }
 
 .padding-left-20 {

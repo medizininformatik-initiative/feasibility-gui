@@ -1,4 +1,15 @@
 {
+  "SHAREDCOMPONENTS": {
+    "KDS Module": "KDS Module",
+    "Availability": "Anzahl",
+    "Terminology": "Terminologie",
+    "Termcode": "Term Code",
+    "Name": "Kriterium",
+    "site": "Standort",
+    "patient_number": "Anzahl der Patienten",
+    "Display": "Display",
+    "Terminology Code": "Term Code"
+  },
   "DASHBOARD": {
     "CODEXTHEME": {
       "HEADLINE": "Willkommen auf der CODEX Feasibility Plattform!",
@@ -111,6 +122,16 @@
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
+    "STAGE": {
+      "BUTTON": {
+        "ADD_TO_STAGE": "Zur Bühne hinzufügen",
+        "BACK_TO_SEARCH":"Kriterien hinzufügen",
+        "VIEW_STAGE": "Bühne anzeigen"
+      },
+      "MESSAGE": {
+        "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Bühne hinzugefügt"
+      }
+    },
     "SEARCH": {
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",

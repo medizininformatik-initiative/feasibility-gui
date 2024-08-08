@@ -1,4 +1,12 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" class="result-header-line">
+<div class="result-header-line">
+  <div style="margin-top: 5px">
+    <p style="font-size: xx-large">Machbarkeitsabfrage wird bearbeitet</p>
+    <p style="width: 30%; color: #c5cacf">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+      Aenean massa. Cum sociis natoque penatibus
+    </p>
+  </div>
+  <br />
   <num-simple-result
     class="result-simple-box"
     [result]="result"
@@ -8,3 +16,14 @@
     [callsLimit]="callsLimit"
   ></num-simple-result>
 </div>
+<num-action-bar class="bottom">
+  <button
+    class="background-color-button"
+    (click)="editStage()"
+    mat-raised-button
+    class="height-59"
+    [color]="true ? 'green' : 'blue'"
+  >
+    Edit Stage
+  </button>
+</num-action-bar>

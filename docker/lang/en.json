@@ -1,4 +1,15 @@
 {
+  "SHAREDCOMPONENTS": {
+    "KDS Module": "KDS Module",
+    "Availability": "Availability",
+    "Terminology": "Terminology",
+    "Termcode": "Term Code",
+    "Name": "Citeria",
+    "site": "Site",
+    "patient_number": "Number of Patients",
+    "Display": "Display",
+    "Terminology Code": "Term Code"
+  },
   "DASHBOARD": {
     "CODEXTHEME": {
       "HEADLINE": "Welcome to the CODEX Feasibility Platform!",
@@ -109,6 +120,16 @@
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
+    "STAGE": {
+      "BUTTON": {
+        "ADD_TO_STAGE": "Add to Stage",
+        "BACK_TO_SEARCH":"Add Criteria",
+        "VIEW_STAGE": "View Stage"
+      },
+      "MESSAGE": {
+        "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
+      }
+    },
     "SEARCH": {
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",

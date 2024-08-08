@@ -23,10 +23,7 @@
   </mat-menu>
   <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
     <div class="info-item">
-      {{ criterion.getContext().getCode() }}
-    </div>
-    <div class="info-item">
-      {{ criterion.getTermCodes()[0].getSystem() }}
+      {{ criterion.getContext().getCode() }}, {{ criterion.getTermCodes()[0].getSystem() }}
     </div>
   </div>
   <div class="filter-chips-container">

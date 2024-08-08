@@ -1,12 +1,6 @@
-<div fxLayout="row" fxLayoutAlign="space-between center">
+<div fxLayout="row">
   <div fxLayout="row" fxLayoutAlign="none center">
     <div class="result-text">
-      <fa-icon
-        size="1x"
-        [matTooltip]="'RESULT.PATIENT_NUMBER_TOOLTIP' | translate"
-        matTooltipPosition="left"
-        icon="exclamation-circle"
-      ></fa-icon>
       {{ 'RESULT.PATIENT_NUMBER' | translate }}:
       <span *ngIf="result; else showZeroPatients" class="number-of-patients">
         {{ backend.obfuscateResult(result?.totalNumberOfPatients) }}
