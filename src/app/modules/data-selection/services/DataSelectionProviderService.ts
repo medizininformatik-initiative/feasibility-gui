@@ -18,4 +18,9 @@ export class DataSelectionProviderService {
   public getDataSelectionProfileByUID(uid: string): DataSelectionProfileProfile | undefined {
     return this.dataSelectionProfileUIDMap.get(uid);
   }
+
+  public setDataSelectionProfileByUID(uid: string, profile: DataSelectionProfileProfile): void {
+    this.dataSelectionProfileUIDMap.set(uid, profile);
+    this.dataSelectionProfileUIDMapSubject.next(new Map(this.dataSelectionProfileUIDMap));
+  }
 }
