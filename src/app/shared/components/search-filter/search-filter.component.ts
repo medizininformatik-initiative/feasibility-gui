@@ -1,10 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms'; // Import FormGroup
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+// Import FormGroup
 
 @Component({
   selector: 'num-search-filter',

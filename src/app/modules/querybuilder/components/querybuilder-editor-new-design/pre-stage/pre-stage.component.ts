@@ -1,24 +1,21 @@
+import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
+import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
+import { Observable, Subscription, take } from 'rxjs';
+import { Router } from '@angular/router';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
+import { UIQuery2StructuredQueryTranslatorService } from '../../../../../service/UIQuery2StructuredQueryTranslator.service';
 import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
-import { Observable, Subscription, take } from 'rxjs';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
-
-import { UIQuery2StructuredQueryTranslatorService } from '../../../../../service/UIQuery2StructuredQueryTranslator.service';
-import { Router } from '@angular/router';
-import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
-import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
-import { CriteriaStageComponent } from '../stage/criteria-stage.component';
 
 @Component({
   selector: 'num-stage',
@@ -43,7 +40,6 @@ export class PreStageComponent implements OnInit, OnDestroy {
     private listItemSelectionService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionService: CreateCriterionService,
     private queryProviderService: FeasibilityQueryProviderService,
-    private translator: UIQuery2StructuredQueryTranslatorService,
     private router: Router,
     private stageProviderService: StageProviderService
   ) {}
@@ -51,7 +47,6 @@ export class PreStageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.$listItemArray = this.listItemSelectionService.getSelectedTableItems();
     this.listItemSubscription = this.$listItemArray.subscribe((listItems) => {
-      console.log(listItems);
       const length = listItems.length;
       if (length > 0) {
         this.preservedLength = length;

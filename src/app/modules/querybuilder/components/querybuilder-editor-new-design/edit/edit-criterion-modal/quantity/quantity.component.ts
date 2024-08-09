@@ -1,10 +1,10 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 
 @Component({
@@ -25,7 +25,7 @@ export class QuantityComponent implements OnInit {
 
   quantityRangeFilter: QuantityRangeFilter;
 
-  selectedQuantityFilterOption: QuantityComparisonOption; //= QuantityComparisonOption.NONE;
+  selectedQuantityFilterOption: QuantityComparisonOption;
 
   selectedQuantityFilterUnit: QuantityUnit;
 

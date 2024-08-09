@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { BackendService } from '../../../service/backend.service';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { endWith, Subscription, switchMap, takeWhile } from 'rxjs';
+import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
+import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
 import { FeatureService } from '../../../../../service/Feature.service';
-import { endWith, first, Observable, Subscription, switchMap, takeWhile } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { QueryResult } from '../../../../../model/Result/QueryResult';
 import {
   ResultDetailModalComponent,
   ResultDetailsModalComponentData,
 } from '../result-detail-modal/result-detail-modal.component';
-import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
 
 @Component({
   selector: 'num-simple-result',
@@ -153,19 +153,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private handleResult(result: any): void {
     this.result = result;
     this.loadedResult = false;
-    // Optional: Store or process the result further if needed
-
-    if (result.getQueryId() !== undefined) {
-      // Optional: Handle query ID if needed
-    }
-
-    if (result.getIssues() !== undefined) {
-      if (result.getIssues()[0].code !== undefined) {
-        // Optional: Handle issue code if needed
-      }
-    } else {
-      // Optional: Handle result when no issues are present
-    }
   }
 
   private handleError(error: any): void {
@@ -181,7 +168,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   private finalize(): void {
-    console.log('finalize');
     this.loadedResult = true;
     this.showSpinner = false;
   }

@@ -1,4 +1,3 @@
-import { AbstractTermHashContext } from '../../../model/ElasticSearch/ElasticSearchResult/AbstractTermHashContext';
 import { InterfaceListEntry } from './InterfaceListEntry';
 
 /**

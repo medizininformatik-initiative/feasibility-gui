@@ -1,23 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  first,
-  interval,
-  map,
-  Observable,
-  share,
-  Subscription,
-  switchAll,
-  switchMap,
-  takeUntil,
-  timer,
-} from 'rxjs';
-import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
-import { UIQuery2StructuredQueryTranslatorService } from '../../../../../service/UIQuery2StructuredQueryTranslator.service';
-import { QueryResult } from '../../../../../model/Result/QueryResult';
-import { FeatureService } from '../../../../../service/Feature.service';
 import { BackendService } from '../../../service/backend.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
+import { FeatureService } from '../../../../../service/Feature.service';
+import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-result',

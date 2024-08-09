@@ -1,9 +1,8 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { Subscription, SubscriptionLike } from 'rxjs';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { FeasibilityQueryProviderService } from '../../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { CriterionProviderService } from '../../../../../../service/Provider/CriterionProvider.service';
+import { FeasibilityQueryProviderService } from '../../../../../../service/Provider/FeasibilityQueryProvider.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-display-criteria-group',
@@ -12,7 +11,7 @@ import { CriterionProviderService } from '../../../../../../service/Provider/Cri
 })
 export class DisplayCriteriaGroupComponent implements OnInit {
   droppedItems: Criterion[] = [];
-  groupType: 'Inclusion' | 'Exclusion'; // Example default value
+  groupType: 'Inclusion' | 'Exclusion';
   querySubscription: Subscription;
 
   constructor(

@@ -1,12 +1,9 @@
-import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { TableData } from '../InterfaceTableData';
+import { FeasibilityQueryResultDetailstListEntry } from '../../ListEntries/FeasibilityQueryResultDetailstListEntry';
+import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
-import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
+import { TableData } from '../InterfaceTableData';
 import { v4 as uuidv4 } from 'uuid';
-import { QueryResult } from '../../../../model/Result/QueryResult';
-import { QueryResultLine } from '../../../../model/Result/QueryResultLine';
-import { FeasibilityQueryResultDetailstListEntry } from '../../ListEntries/FeasibilityQueryResultDetailstListEntry';
 
 export class FeasibilityQueryResultDetailsListAdapter {
   private static headers: InterfaceTableDataHeader = {

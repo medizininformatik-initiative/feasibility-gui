@@ -3,24 +3,19 @@ import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/Attrib
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionHashService } from './CriterionHash.service';
-//import { CritGroupPosition } from 'src/app/modules/querybuilder/controller/CritGroupArranger';
-import { FeatureService } from '../Feature.service';
+import { CriterionProviderService } from '../Provider/CriterionProvider.service';
+import { finalize, of, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
-//import { LoadUIProfileService } from '../LoadUIProfile.service';
-import { finalize, Observable, of, Subject, switchMap, take } from 'rxjs';
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemService.service';
-//import { TerminologyCode, TerminologyEntry } from 'src/app/model/terminology/TerminologyCode';
-import { TimeRestriction } from 'src/app/model/FeasibilityQuery/TimeRestriction';
+import { StageProviderService } from '../Provider/StageProvider.service';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { UIQuery2StructuredQueryTranslatorService } from '../UIQuery2StructuredQueryTranslator.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { CriterionProviderService } from '../Provider/CriterionProvider.service';
-import { UIQuery2StructuredQueryTranslatorService } from '../UIQuery2StructuredQueryTranslator.service';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { StageProviderService } from '../Provider/StageProvider.service';
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 
 @Injectable({
   providedIn: 'root',
@@ -33,8 +28,7 @@ export class CreateCriterionService {
     private backend: BackendService,
     private listItemService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionProviderService: CriterionProviderService,
-    private stageProviderService: StageProviderService,
-    private translator: UIQuery2StructuredQueryTranslatorService
+    private stageProviderService: StageProviderService
   ) {}
 
   public translateListItemsToCriterions() {

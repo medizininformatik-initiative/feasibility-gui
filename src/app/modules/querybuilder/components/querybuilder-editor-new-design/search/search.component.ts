@@ -1,3 +1,14 @@
+import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
+import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
+import { mapToSearchTermResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
+import { MatDrawer } from '@angular/material/sidenav';
+import { Observable, of, Subscription } from 'rxjs';
+import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
+import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -7,17 +18,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { mapToSearchTermResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
-import { MatDrawer } from '@angular/material/sidenav';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { Observable, Subscription, of } from 'rxjs';
-import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
-import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
-import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 
 @Component({
   selector: 'num-search',

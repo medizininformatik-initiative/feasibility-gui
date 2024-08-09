@@ -2,9 +2,9 @@ import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterio
 import { AfterFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AfterFilter';
 import { AtFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AtFilter';
 import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter';
+import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
-import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 
 @Component({
   selector: 'num-edit-time-restriction',

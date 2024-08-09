@@ -1,13 +1,11 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
-import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { BackendService } from '../../../service/backend.service';
-import { FeatureService } from '../../../../../service/Feature.service';
-import { ResultProviderService } from '../../../../../service/Provider/ResultProvider.service';
-import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter';
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../shared/models/ListEntries/FeasibilityQueryResultDetailstListEntry';
+import { FeatureService } from '../../../../../service/Feature.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { QueryResult } from '../../../../../model/Result/QueryResult';
+import { ResultProviderService } from '../../../../../service/Provider/ResultProvider.service';
 import { TableData } from '../../../../../shared/models/TableData/InterfaceTableData';
 
 export class ResultDetailsModalComponentData {

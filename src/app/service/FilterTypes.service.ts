@@ -1,4 +1,3 @@
-import { Comparator } from '../model/Utilities/Quantity/Comparator';
 import { FilterTypes } from '../model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
 import { QuantityComparisonOption } from '../model/Utilities/Quantity/QuantityFilterOptions';
