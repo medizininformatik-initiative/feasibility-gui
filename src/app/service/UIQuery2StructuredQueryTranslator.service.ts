@@ -20,6 +20,8 @@ import { QuantityComparatorFilter as QuantityComparatorFilterSQ } from '../model
 import { QuantityComparatorFilter as QuantityComparatorFilterFQ } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { QuantityRangeFilter as QuantityRangeFilterSQ } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/QuantityFilter/QuantityRangeFilter';
 import { QuantityRangeFilter as QuantityRangeFilterFQ } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
+import { QuantityUnit as QuantityUnitSQ } from '../model/StructuredQuery/QuantityUnit';
+import { QuantityUnit as QuantityUnitFQ } from '../model/FeasibilityQuery/QuantityUnit';
 import { ReferenceFilter as ReferenceFilterSQ } from '../model/StructuredQuery/Criterion/AttributeFilters/QueryFilters/ReferenceFilter/ReferenceFilter';
 import { ReferenceFilter as ReferenceFilterFQ } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
@@ -27,8 +29,6 @@ import { StructuredQueryCriterion } from '../model/StructuredQuery/Criterion/Str
 import { TerminologyCode } from '../model/Terminology/TerminologyCode';
 import { TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { QuantityUnit as QuantityUnitSQ } from '../model/StructuredQuery/QuantityUnit';
-import { QuantityUnit as QuantityUnitFQ } from '../model/FeasibilityQuery/QuantityUnit';
 
 @Injectable({
   providedIn: 'root',

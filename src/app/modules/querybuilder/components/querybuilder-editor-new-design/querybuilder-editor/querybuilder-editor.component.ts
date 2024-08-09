@@ -1,16 +1,8 @@
-import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
 import { CriteriaStageComponent } from '../stage/criteria-stage.component';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { SearchComponent } from '../search/search.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'num-querybuilder-editor',
@@ -30,7 +22,6 @@ export class QuerybuilderEditorComponent implements OnInit {
     });
     setTimeout(() => {
       if (window.history.state.jumpToStage) {
-        console.log('jump!');
         this.scroll(true);
         //window.history.state.jumpToStage = false
       }
@@ -39,8 +30,6 @@ export class QuerybuilderEditorComponent implements OnInit {
 
   scroll(event: boolean) {
     if (event) {
-      console.log('scroll!');
-      console.log(this.stage);
       if (this.stage) {
         const element = this.stage.elementRef.nativeElement;
         element.scrollIntoView({ behavior: 'smooth' });

@@ -1,5 +1,4 @@
 import { AbstractListEntry } from './AbstractListEntry';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 export class FeasibilityQueryResultDetailstListEntry extends AbstractListEntry {
   private numberOfPatients: number;

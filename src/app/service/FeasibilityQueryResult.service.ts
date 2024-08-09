@@ -1,12 +1,12 @@
+import { BackendService } from '../modules/querybuilder/service/backend.service';
+import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
+import { FeatureService } from './Feature.service';
 import { Injectable } from '@angular/core';
 import { interval, map, Observable, share, switchMap, takeUntil, timer } from 'rxjs';
 import { QueryResult } from '../model/Result/QueryResult';
-import { BackendService } from '../modules/querybuilder/service/backend.service';
-import { FeatureService } from './Feature.service';
-import { UIQuery2StructuredQueryTranslatorService } from './UIQuery2StructuredQueryTranslator.service';
-import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
-import { ResultProviderService } from './Provider/ResultProvider.service';
 import { QueryResultLine } from '../model/Result/QueryResultLine';
+import { ResultProviderService } from './Provider/ResultProvider.service';
+import { UIQuery2StructuredQueryTranslatorService } from './UIQuery2StructuredQueryTranslator.service';
 
 @Injectable({
   providedIn: 'root',

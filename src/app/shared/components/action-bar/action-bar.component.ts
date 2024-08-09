@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
 import { BackgroundColor } from '../../models/ActionBar/ActioBarBackgroundColor';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'num-action-bar',

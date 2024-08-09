@@ -1,6 +1,6 @@
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'num-criteria-box',

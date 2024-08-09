@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { DataSelectionProfileTree } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTree';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeRoot } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeRoot';
-import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

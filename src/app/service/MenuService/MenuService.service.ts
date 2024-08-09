@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
 import { CriterionProviderService } from '../Provider/CriterionProvider.service';
-import { v4 as uuidv4 } from 'uuid';
 import { EditCriterionService } from '../CriterionService/EditCriterionService.service';
-import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
