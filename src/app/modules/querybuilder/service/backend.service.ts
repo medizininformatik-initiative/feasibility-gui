@@ -52,6 +52,7 @@ export class BackendService {
   private resultObservable = null;
 
   private static PATH_DATASELECTION_PROFILE_DATA = 'dse/profile-data';
+  private static PATH_DATASELECTION_PROFILE_TREE = 'dse/profile-tree';
 
   lowerBoundaryPatient: number = this.feature.getPatientResultLowerBoundary();
 
@@ -205,8 +206,6 @@ export class BackendService {
   }
 
   /**
-   *
-   *
    * @param id
    * @returns
    */
@@ -257,13 +256,15 @@ export class BackendService {
   }
 
   public getDataSelectionProfileData(ids: string[]) {
-    console.log(ids);
     const commaSeparatedIds: string = ids.join(',');
     const test = BackendService.PATH_DATASELECTION_PROFILE_DATA + '?ids=' + commaSeparatedIds;
-    console.log(test);
     return this.http.get<any>(
       this.createUrl(BackendService.PATH_DATASELECTION_PROFILE_DATA + '?ids=' + commaSeparatedIds)
     );
+  }
+
+  public getDataSelectionProfileTree() {
+    return this.http.get<any>(this.createUrl(BackendService.PATH_DATASELECTION_PROFILE_TREE));
   }
 
   public getDetailedResult(resultUrl: string, gottenDetailedResult: boolean): Observable<any> {
