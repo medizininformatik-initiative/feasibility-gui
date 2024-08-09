@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start start" fxFlexFill>
   <num-searchbar class="searchbar-container"></num-searchbar>
   <num-tree fxFlexFill (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
-  <num-action-bar class="action-bar-layout">
+  <num-action-bar class="bottom">
     <button
       class="background-color-button"
       mat-raised-button
@@ -10,5 +10,5 @@
       Zur Datenselektion hinzufügen
     </button>
   </num-action-bar>
-  <num-data-selection-boxes fxFlexFill></num-data-selection-boxes>
+  <num-data-selection-boxes></num-data-selection-boxes>
 </div>
