@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { DataSelectionProviderService } from '../services/DataSelectionProviderService';
-import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -16,17 +15,14 @@ export class DataSelectionComponent implements OnInit {
   selectedDataSelectionProfileNodeIds: Set<string> = new Set();
 
   constructor(
-    private profileTreeService: DataSelectionProfileTreeService,
-    private createDataSelectionProfileService: CreateDataSelectionProfileProfile
+    private createDataSelectionProfileService: CreateDataSelectionProfileProfile,
+    private dataSelectionProfileTreeService: DataSelectionProfileTreeService
   ) {}
 
   ngOnInit(): void {
-    this.getTree();
-  }
-
-  getTree() {
-    const tree = this.profileTreeService.createProfileTree();
-    this.tree = DataSelectionTreeAdapter.fromTree(tree);
+    this.dataSelectionProfileTreeService.createProfileTree().subscribe((tree) => {
+      this.tree = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
+    });
   }
 
   public addItemsToStage(node: TreeNode) {
