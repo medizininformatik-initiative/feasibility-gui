@@ -11,25 +11,26 @@ export class MenuServiceCriterionFunctions {
     private editCriterionService: EditCriterionService
   ) {}
 
-  deleteAction(uid: string) {
+  deleteCriterion(uid: string) {
+    console.log(uid);
     this.criterionService.deleteCriterionFromMapByUID(uid);
   }
 
-  duplicateAction(uid: string) {
+  duplicateCriterion(uid: string) {
     const originalElement = this.criterionService.getCriterionByUID(uid);
     if (originalElement) {
       const duplicateElement = { ...originalElement };
     }
   }
 
-  linkCriteriaAction(criterionUuid: string) {
+  editLinkedCriteria(criterionUuid: string) {
     const criterion = this.criterionService.getCriterionByUID(criterionUuid);
     if (criterion) {
       this.editCriterionService.editCriterionReferenceCriteria(criterion);
     }
   }
 
-  applyFilterAction(criterionUuid: string) {
+  applyCriterionFilter(criterionUuid: string) {
     const criterion = this.criterionService.getCriterionByUID(criterionUuid);
     if (criterion) {
       this.editCriterionService.editCriterionAttribute(criterion);
