@@ -42,9 +42,7 @@ export class FilterChipQuantityAdapter {
     const maxValue = quantity.getMaxValue();
     const text = `Between ${minValue} - ${maxValue} ${display}`;
 
-    const builder = new FilterChipBuilder(FilterTypes.QUANTITY);
-    builder.addData(uuidv4(), text);
-    return builder.buildFilterChip();
+    return this.createFilterChip(FilterTypes.QUANTITY, text);
   }
 
   private static createQuantityComparatorChip(
@@ -55,7 +53,18 @@ export class FilterChipQuantityAdapter {
     const value = quantity.getValue();
     const text = `${symbol} ${value} ${display}`;
 
-    const builder = new FilterChipBuilder(FilterTypes.QUANTITY);
+    return this.createFilterChip(FilterTypes.QUANTITY, text);
+  }
+
+  /**
+   * Creates a filter chip with the given type and text.
+   *
+   * @param type The type of filter chip
+   * @param text The text to display in the chip
+   * @returns An InterfaceFilterChip
+   */
+  private static createFilterChip(type: string, text: string): InterfaceFilterChip {
+    const builder = new FilterChipBuilder(type);
     builder.addData(uuidv4(), text);
     return builder.buildFilterChip();
   }
