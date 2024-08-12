@@ -10,9 +10,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { DataSelectionBoxesComponent } from './components/data-selection-boxes/data-selection-boxes.component';
+import {
+  EditFieldsModalComponent,
+  EnterDataSelectionProfileProfileComponentData,
+} from './components/edit-fields-modal/edit-fields-modal.component';
 
 @NgModule({
-  declarations: [DataSelectionComponent, DataSelectionBoxesComponent],
+  declarations: [DataSelectionComponent, DataSelectionBoxesComponent, EditFieldsModalComponent],
   imports: [
     CommonModule,
     DataSelectionRoutingModule,

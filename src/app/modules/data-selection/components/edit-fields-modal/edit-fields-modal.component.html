@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="tree-container">
+    <num-tree [treeData]="tree" (selectedCheckbox)="setSelectedFieldElement($event)"></num-tree>
+  </div>
+  <div *ngIf="arrayOfSelectedFields.length > 0">
+    <div class="filter-title">Filter selection</div>
+    <div>required</div>
+    <div
+      *ngFor="let selectedField of arrayOfSelectedFields"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="selectedFilterBox"
+    >
+      <div>
+        <mat-checkbox (change)="setFieldAsRequired(selectedField)"></mat-checkbox>
+      </div>
+      <div class="display-part">
+        {{ selectedField.display }}
+      </div>
+      <div fxFlexAlign="end">
+        <button (click)="removeSelectedConcept(selectedConceptFilter)" class="delete-button">
+          entfernen
+        </button>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-raised-button class="select-button" (click)="saveFields()">Auswählen</button>
+    <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>
+  </div>
+</div>
