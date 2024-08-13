@@ -95,6 +95,7 @@ export class ConceptComponent implements OnDestroy, OnInit {
   public startElasticSearch(searchtext: string) {
     if (this.searchtext !== searchtext) {
       this.searchtext = searchtext;
+      this.conceptFilter.setAllowedConceptUri(['test']);
       const allowedConceptUri = this.conceptFilter.getAllowedConceptUri();
       if (allowedConceptUri.length > 0) {
         this.elasticSearchService
