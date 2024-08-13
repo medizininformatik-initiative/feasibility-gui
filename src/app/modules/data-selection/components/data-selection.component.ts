@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
-import { EditDataSelectionFields } from 'src/app/service/DataSelectionService/EditDataSelectionFields.service';
-import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { DataSelectionProviderService } from '../services/DataSelectionProviderService';
+import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
+import { EditDataSelectionFields } from 'src/app/service/DataSelectionService/EditDataSelectionFields.service';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 
 @Component({
   selector: 'num-data-selection',
@@ -49,7 +49,7 @@ export class DataSelectionComponent implements OnInit {
         const profile = this.dataSelectionProfileProvider.getDataSelectionProfileByUID(
           'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab'
         );
-        this.dataSelectionModalService.editCriterionAttribute(profile.getFields());
+        this.dataSelectionModalService.ediDataSelectionFileds(profile.getUrl());
       });
   }
 }
