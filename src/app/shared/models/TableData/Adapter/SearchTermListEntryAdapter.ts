@@ -22,6 +22,7 @@ export class SearchTermListEntryAdapter {
       hasCheckbox: true,
       isCheckboxSelected: false,
       isClickable: true,
+      isDisabled: listEntry.getSelectable(),
       checkboxColumnIndex: 0,
       originalEntry: listEntry,
     }));

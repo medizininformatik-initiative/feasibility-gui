@@ -17,6 +17,7 @@ export class FeasibilityQueryResultDetailsListAdapter {
       hasCheckbox: false,
       isCheckboxSelected: false,
       isClickable: false,
+      isDisabled: false,
       checkboxColumnIndex: 0,
       originalEntry: entry,
     }));
