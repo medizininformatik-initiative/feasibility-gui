@@ -1,19 +1,9 @@
-import { DataSelectionProfileTree } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTree';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { TreeNode } from '../TreeNodeInterface';
 
 export class DataSelectionTreeAdapter {
-  static fromTree(tree: DataSelectionProfileTree): TreeNode {
-    const root = tree.getTreeRoot();
-    return {
-      id: 'root',
-      data: {
-        name: root.getName(),
-        module: root.getModule(),
-        url: root.getUrl(),
-      },
-      children: root.getChildren().map((child) => DataSelectionTreeAdapter.toTreeNode(child)),
-    };
+  static fromTree(tree: DataSelectionProfileTreeNode[]): TreeNode {
+    return DataSelectionTreeAdapter.toTreeNode(tree[0]);
   }
 
   static toTreeNode(node: DataSelectionProfileTreeNode): TreeNode {
@@ -27,7 +17,7 @@ export class DataSelectionTreeAdapter {
         leaf: node.leaf,
         selectable: node.selectable,
       },
-      children: node.children.map((child) => DataSelectionTreeAdapter.toTreeNode(child)),
+      children: node.children?.map((child) => DataSelectionTreeAdapter.toTreeNode(child)),
     };
   }
 }

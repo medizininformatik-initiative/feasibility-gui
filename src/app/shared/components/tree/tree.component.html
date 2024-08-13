@@ -10,7 +10,7 @@
         <div
           fxLayout="row"
           fxLayoutAlign="center center"
-          *ngIf="node.children && node.children.length > 0"
+          *ngIf="node?.children && node.children.length > 0"
           (click)="toggleExpand(node)"
           class="icon-container"
           style="cursor: pointer"
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="node-display-container">
-        {{ node.data.display }}
+        {{ node?.data.display }}
       </div>
     </div>
   </div>

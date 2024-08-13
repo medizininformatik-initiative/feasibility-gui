@@ -1,8 +1,8 @@
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { TableData } from '../InterfaceTableData';
+import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
-import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
+import { TableData } from '../InterfaceTableData';
 import { v4 as uuidv4 } from 'uuid';
 
 export class CodeableConceptListEntryAdapter {

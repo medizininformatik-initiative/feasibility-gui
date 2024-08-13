@@ -1,8 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Inject, Injectable } from '@angular/core';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
+import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',

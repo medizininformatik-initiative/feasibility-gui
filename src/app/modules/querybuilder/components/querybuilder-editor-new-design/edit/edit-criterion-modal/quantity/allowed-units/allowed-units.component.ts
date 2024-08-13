@@ -1,3 +1,4 @@
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 import {
   Component,
   EventEmitter,
@@ -7,7 +8,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 
 @Component({
   selector: 'num-allowed-units',

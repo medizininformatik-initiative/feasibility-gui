@@ -1,10 +1,7 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
-import { Injectable } from '@angular/core';
 import { FeasibilityQueryProviderService } from './FeasibilityQueryProvider.service';
-import { switchMap, tap } from 'rxjs/operators';
-import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',

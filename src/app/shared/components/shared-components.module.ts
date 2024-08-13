@@ -1,5 +1,7 @@
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { CommonModule } from '@angular/common';
+import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
+import { CriteriaMenuComponent } from './criteria-box/criteria-menu/criteria-menu.component';
 import { FilterChipsComponent } from './filter-chips/filter-chips.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -12,12 +14,10 @@ import { NgModule } from '@angular/core';
 import { ResultListComponent } from './search-result/result-list/result-list.component';
 import { SearchbarComponent } from './search/searchbar.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
-import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
-import { CriteriaMenuComponent } from './criteria-box/criteria-menu/criteria-menu.component';
-import { ActionBarComponent } from './action-bar/action-bar.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
+import { ActionBarComponent } from './action-bar/action-bar.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -40,6 +40,7 @@ const SHARED_DECLARATIONS = [
     CriteriaMenuComponent,
     ActionBarComponent,
     TreeComponent,
+    ActionBarComponent,
   ],
   imports: [
     CommonModule,

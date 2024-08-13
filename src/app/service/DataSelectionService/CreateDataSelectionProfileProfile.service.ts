@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProfileFilter } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileFilter';
 import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProviderService';
-import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

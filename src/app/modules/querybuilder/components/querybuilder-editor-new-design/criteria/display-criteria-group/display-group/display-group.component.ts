@@ -1,9 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, map, take } from 'rxjs';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { map, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-display-group',

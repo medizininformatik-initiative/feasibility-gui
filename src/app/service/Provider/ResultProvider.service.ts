@@ -1,7 +1,5 @@
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
-import { FeasibilityQueryProviderService } from './FeasibilityQueryProvider.service';
+import { Injectable } from '@angular/core';
 import { QueryResult } from '../../model/Result/QueryResult';
 
 @Injectable({
