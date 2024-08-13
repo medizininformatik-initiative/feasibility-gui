@@ -11,20 +11,20 @@ import { ListItemDetailsSectionsComponent } from './search-result/list-item-deta
 import { MaterialModule } from 'src/app/layout/material/material.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
-import { ResultListComponent } from './search-result/result-list/result-list.component';
 import { SearchbarComponent } from './search/searchbar.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { ActionBarComponent } from './action-bar/action-bar.component';
+import { TableComponent } from './table/table.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
   CriteriaBoxComponent,
   FilterChipsComponent,
   ListItemDetailsComponent,
-  ResultListComponent,
+  TableComponent,
   SearchFilterComponent,
   SearchbarComponent,
   SearchResultComponent,
