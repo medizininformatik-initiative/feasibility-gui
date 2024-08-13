@@ -17,10 +17,10 @@
   <button
     class="background-color-button"
     (click)="scroll()"
-    [disabled]="!hasStageItems && !hasQueryItems"
+    [disabled]="!atStage && !hasStageItems && !hasQueryItems"
     mat-raised-button
     class="height-59"
-    [color]="hasStageItems || hasQueryItems ? 'green' : 'blue'"
+    [color]="hasStageItems || hasQueryItems || atStage ? 'green' : 'blue'"
   >
     {{
       atStage

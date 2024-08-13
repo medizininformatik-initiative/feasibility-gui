@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { EditCriterionService } from 'src/app/service/CriterionService/EditCriterionService.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { MenuServiceCriterionFunctions } from './MenuServiceCriterionFunctions';
+import { MenuItem } from '../../service/MenuService/MenuItemInterface';
 
 @Injectable({
   providedIn: 'root',
