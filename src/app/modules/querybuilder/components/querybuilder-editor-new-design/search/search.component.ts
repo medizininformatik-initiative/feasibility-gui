@@ -56,7 +56,33 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.handleSelectedItemsSubscription();
+  }
+
+  private handleSelectedItemsSubscription(): void {
+    this.selectedTableItemsService.getSelectedTableItems().subscribe((selectedItems) => {
+      if (this.shouldUncheckAll(selectedItems)) {
+        this.uncheckAllRows();
+      }
+    });
+  }
+
+  private shouldUncheckAll(selectedItems: SearchTermListEntry[]): boolean {
+    return selectedItems.length === 0;
+  }
+
+  private uncheckAllRows(): void {
+    this.adaptedData.body.rows.forEach((item) => {
+      if (item.isCheckboxSelected) {
+        this.uncheckRow(item);
+      }
+    });
+  }
+
+  private uncheckRow(item: InterfaceTableDataRow): void {
+    item.isCheckboxSelected = false;
+  }
 
   ngAfterViewInit() {
     this.isInitialized = true;
@@ -76,7 +102,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  setSelectedRowItem(item) {
+  public setSelectedRowItem(item) {
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
     const itemId = item.originalEntry.id;
     if (selectedIds.includes(itemId)) {
@@ -86,7 +112,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  setClickedRow(row: InterfaceTableDataRow) {
+  public setClickedRow(row: InterfaceTableDataRow) {
     const originalEntry = row.originalEntry as SearchTermListEntry;
     this.elasticSearchService
       .getDetailsForListItem(originalEntry.id)
