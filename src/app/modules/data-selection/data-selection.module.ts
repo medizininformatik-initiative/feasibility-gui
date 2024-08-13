@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
+import { DataSelectionBoxesComponent } from './components/display-profiles/data-selection-boxes/data-selection-boxes.component';
 import { DataSelectionComponent } from './components/data-selection.component';
 import { DataSelectionRoutingModule } from './data-selection-routing.module';
+import { DisplayProfilesComponent } from './components/display-profiles/display-profiles.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { LayoutModule } from '../../layout/layout.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -9,14 +11,15 @@ import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
-import { DataSelectionBoxesComponent } from './components/data-selection-boxes/data-selection-boxes.component';
-import {
-  EditFieldsModalComponent,
-  EnterDataSelectionProfileProfileComponentData,
-} from './components/edit-fields-modal/edit-fields-modal.component';
+import { EditFieldsModalComponent } from './components/edit-fields-modal/edit-fields-modal.component';
 
 @NgModule({
-  declarations: [DataSelectionComponent, DataSelectionBoxesComponent, EditFieldsModalComponent],
+  declarations: [
+    DataSelectionComponent,
+    DataSelectionBoxesComponent,
+    EditFieldsModalComponent,
+    DisplayProfilesComponent,
+  ],
   imports: [
     CommonModule,
     DataSelectionRoutingModule,

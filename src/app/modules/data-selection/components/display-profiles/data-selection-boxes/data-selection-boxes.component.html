@@ -1,0 +1,8 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="selection-box">
+  <div class="display-container">
+    {{ profile.getDisplay() }}
+  </div>
+  <div class="display-container">Selected Fields</div>
+  <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
+  <div class="filter-container">Applied Filters</div>
+</div>
