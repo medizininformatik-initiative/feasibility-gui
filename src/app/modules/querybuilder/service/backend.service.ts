@@ -109,7 +109,7 @@ export class BackendService {
   public getCriteriaProfileData(ids: Array<string>): Observable<Array<CriteriaProfileData>> {
     const commaSeparatedIds: string = ids.join(',');
     return this.http.get<Array<CriteriaProfileData>>(
-      this.createUrl(BackendService.PATH_CRITERIA_PROFILE + '?id=' + commaSeparatedIds)
+      this.createUrl(BackendService.PATH_CRITERIA_PROFILE + '?ids=' + commaSeparatedIds)
     );
   }
 
