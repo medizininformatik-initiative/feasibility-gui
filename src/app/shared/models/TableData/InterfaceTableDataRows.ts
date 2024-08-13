@@ -6,6 +6,7 @@ export interface InterfaceTableDataRow {
   hasCheckbox?: boolean
   isCheckboxSelected?: boolean
   isClickable?: boolean
+  isDisabled: boolean
   checkboxColumnIndex?: number
   originalEntry: InterfaceListEntry
 }

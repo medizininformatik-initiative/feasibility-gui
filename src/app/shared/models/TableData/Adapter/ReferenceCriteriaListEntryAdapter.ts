@@ -19,6 +19,7 @@ export class ReferenceCriteriaListEntryAdapter {
       hasCheckbox: true,
       isCheckboxSelected: false,
       isClickable: false,
+      isDisabled: false,
       checkboxColumnIndex: 0,
       originalEntry: listEntry,
     }));

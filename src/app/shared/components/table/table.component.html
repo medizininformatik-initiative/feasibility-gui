@@ -24,6 +24,7 @@
             *ngIf="row.hasCheckbox && row.checkboxColumnIndex === j"
             color="primary"
             disableRipple="true"
+            [disabled]="!row.isDisabled"
             [checked]="row.isCheckboxSelected"
             (change)="onCheckboxSelect(row)"
             (click)="$event.stopPropagation()"
