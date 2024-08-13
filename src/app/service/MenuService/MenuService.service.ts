@@ -1,6 +1,9 @@
 import { CriterionProviderService } from '../Provider/CriterionProvider.service';
 import { EditCriterionService } from '../CriterionService/EditCriterionService.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { StageProviderService } from '../Provider/StageProvider.service';
+import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +11,9 @@ import { Injectable } from '@angular/core';
 export class MenuService {
   constructor(
     private criterionService: CriterionProviderService,
-    private editCriterionService: EditCriterionService
+    private editCriterionService: EditCriterionService,
+    private stageService: StageProviderService,
+    private queryProviderService: FeasibilityQueryProviderService
   ) {}
 
   getMenuItems(criterionUuid: string) {
@@ -29,6 +34,9 @@ export class MenuService {
   }
 
   deleteAction(uid: string) {
+    this.stageService.deleteCriterionByUID(uid);
+    this.queryProviderService.deleteFromInclusion(uid);
+    this.queryProviderService.deleteFromExclusion(uid);
     this.criterionService.deleteCriterionFromMapByUID(uid);
   }
 
