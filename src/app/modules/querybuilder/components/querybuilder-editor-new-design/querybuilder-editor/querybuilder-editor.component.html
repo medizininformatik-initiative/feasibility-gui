@@ -1,17 +1,17 @@
-<div class="relative" fxLayout="column wrap">
+<div class="container" fxLayout="column">
   <num-stage (scrollClick)="scroll($event)"></num-stage>
   <div fxFlexFill fxLayoutAlign="start" class="fullscreen">
     <num-search fxFlexFill #search></num-search>
   </div>
 
   <div fxFlexFill class="fullscreen">
-    <num-criteria
+    <num-criteria-stage
       fxFlexFill
       fxLayout="row wrap"
       fxLayoutAlign="start start"
       style="padding-top: 50px"
       #stage
     >
-    </num-criteria>
+    </num-criteria-stage>
   </div>
 </div>

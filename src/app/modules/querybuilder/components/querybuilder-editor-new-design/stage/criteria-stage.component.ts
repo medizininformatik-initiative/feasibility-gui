@@ -5,7 +5,7 @@ import { map, Observable, of, Subscription } from 'rxjs';
 import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
 
 @Component({
-  selector: 'num-criteria',
+  selector: 'num-criteria-stage',
   templateUrl: './criteria-stage.component.html',
   styleUrls: ['./criteria-stage.component.scss'],
 })
