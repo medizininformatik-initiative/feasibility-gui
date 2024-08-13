@@ -11,6 +11,7 @@
     </num-value-filter>
   </div>
   <num-edit-time-restriction
+    *ngIf="criterion.getTimeRestriction()"
     [timeRestriction]="criterion.getTimeRestriction()"
     (timeRestrictionChanged)="updateTimeRestriction($event)"
   >
