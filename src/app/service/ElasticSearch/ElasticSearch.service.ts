@@ -8,6 +8,7 @@ import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilte
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 
 @Injectable({
   providedIn: 'root',
@@ -97,7 +98,7 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
     );
   }
 
-  public getElasticSearchResultById(id: string) {
+  public getElasticSearchResultById(id: string): Observable<T> {
     return this.backendService.getElasticSearchResultById(id).pipe(
       map((response) => {
         const listEntry = new SearchTermListEntry(
@@ -109,8 +110,9 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
           response.name,
           response.id
         );
-        //this.setSearchtermResultList([listEntry]);
-        return listEntry;
+        const resultList = new SearchTermResultList(1, [listEntry]) as unknown as T;
+        this.setSearchtermResultList(resultList);
+        return resultList as unknown as T;
       })
     );
   }
