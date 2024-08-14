@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
+import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 
 @Component({
   selector: 'num-list-item-details-sections',
@@ -9,17 +10,21 @@ import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearc
   styleUrls: ['./list-item-details-sections.component.scss'],
 })
 export class ListItemDetailsSectionsComponent implements OnInit {
-  @Input() listItemDetails: any;
+  @Input()
+  listItemDetails: any;
+
+  @Output()
+  selectedRelative: EventEmitter<SearchTermListEntry> = new EventEmitter();
 
   constructor(
     private elasticSearchService: ElasticSearchService<SearchTermResultList, SearchTermListEntry>
   ) {}
 
-  ngOnInit() {}
+  public ngOnInit() {}
 
-  /*getSelectedRelative(item: SearchTermRelatives) {
-    this.elasticSearchService
-      .getElasticSearchResultById(item.getId())
-      .subscribe((test) => console.log(test))
-  }*/
+  public getSelectedRelative(item: SearchTermRelatives) {
+    this.elasticSearchService.getElasticSearchResultById(item.getId()).subscribe((resultList) => {
+      this.selectedRelative.emit(resultList.getResults()[0]);
+    });
+  }
 }
