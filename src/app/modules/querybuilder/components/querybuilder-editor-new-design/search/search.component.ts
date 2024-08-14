@@ -38,6 +38,8 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   private isInitialized = false;
   isOpen = false;
 
+  elasticSearchEnabled = false;
+
   selectedDetails$: Observable<SearchTermDetails>;
 
   constructor(
@@ -60,12 +62,19 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleSelectedItemsSubscription();
   }
 
+  /**
+   * If the checked table items get added to stage they will be removed from the SelectedTableItemsService
+   * Behaviour Subject Array and therefore an empty Array will be returned. Therefore all checkboxes can be
+   * unchecked in the table
+   */
   private handleSelectedItemsSubscription(): void {
-    this.selectedTableItemsService.getSelectedTableItems().subscribe((selectedItems) => {
-      if (this.shouldUncheckAll(selectedItems)) {
-        this.uncheckAllRows();
-      }
-    });
+    this.selectedTableItemsService
+      .getSelectedTableItems()
+      .subscribe((selectedItems: SearchTermListEntry[]) => {
+        if (this.shouldUncheckAll(selectedItems)) {
+          this.uncheckAllRows();
+        }
+      });
   }
 
   private shouldUncheckAll(selectedItems: SearchTermListEntry[]): boolean {
@@ -96,10 +105,15 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public startElasticSearch(searchtext: string) {
-    if (this.searchtext !== searchtext) {
+    if (this.isElasticSearchEnabled(searchtext)) {
       this.searchtext = searchtext;
       this.elasticSearchService.startElasticSearch(searchtext).subscribe();
     }
+  }
+
+  private isElasticSearchEnabled(searchtext: string): boolean {
+    const isDifferentSearchText = this.searchtext !== searchtext;
+    return isDifferentSearchText;
   }
 
   public setSelectedRowItem(item) {
@@ -120,6 +134,10 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selectedDetails$ = of(details);
         this.sidenav.open();
       });
+  }
+
+  public setSelectedRelative(entry: SearchTermListEntry) {
+    console.log(entry);
   }
 
   openSidenav() {
