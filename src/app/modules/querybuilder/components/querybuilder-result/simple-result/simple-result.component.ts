@@ -1,6 +1,18 @@
 import { BackendService } from '../../../service/backend.service';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { endWith, Subscription, switchMap, takeWhile } from 'rxjs';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+  } from '@angular/core';
+import {
+  endWith,
+  Subscription,
+  switchMap,
+  takeWhile
+  } from 'rxjs';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
 import { FeatureService } from '../../../../../service/Feature.service';
