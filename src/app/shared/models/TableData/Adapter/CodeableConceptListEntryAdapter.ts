@@ -21,7 +21,7 @@ export class CodeableConceptListEntryAdapter {
       hasCheckbox: true,
       isCheckboxSelected: entry.getIsSelected(),
       isClickable: false,
-      isDisabled: false,
+      isDisabled: true,
       checkboxColumnIndex: 0,
       originalEntry: entry,
     }));
