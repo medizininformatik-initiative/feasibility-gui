@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 
 @Component({
   selector: 'num-list-item-details',
@@ -22,9 +23,14 @@ export class ListItemDetailsComponent implements OnInit {
   @Input()
   listItemDetails$: Observable<SearchTermDetails>;
 
+  @Output()
+  selectedRelative: EventEmitter<SearchTermListEntry> = new EventEmitter();
+
   constructor() {}
 
   ngOnInit() {}
 
-  getSelectedRelative(name: SearchTermRelatives) {}
+  public getSelectedRelative(entry: SearchTermListEntry) {
+    this.selectedRelative.emit(entry);
+  }
 }
