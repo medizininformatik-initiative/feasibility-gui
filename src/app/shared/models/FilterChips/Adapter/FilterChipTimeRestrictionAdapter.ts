@@ -1,14 +1,15 @@
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter';
+import { FilterChipBuilder } from '../FilterChipBuilder';
 import { InterfaceFilterChip } from '../InterfaceFilterChip';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { v4 as uuidv4 } from 'uuid';
-import { FilterChipBuilder } from '../FilterChipBuilder';
 
 export class FilterChipTimeRestrictionAdapter {
-  public static adaptTimeRestriction(criterion: Criterion): InterfaceFilterChip[] {
+  public static adaptTimeRestriction(
+    timeRestriction: AbstractTimeRestriction
+  ): InterfaceFilterChip[] {
     const chips: InterfaceFilterChip[] = [];
-    const timeRestriction = criterion.getTimeRestriction();
-
     if (timeRestriction) {
       switch (timeRestriction.getType()) {
         case TimeRestrictionType.BETWEEN:
@@ -18,7 +19,7 @@ export class FilterChipTimeRestrictionAdapter {
           chips.push(this.createAtChip(timeRestriction));
           break;
         case TimeRestrictionType.BEFORE:
-          chips.push(this.createBeforeChip(timeRestriction));
+          chips.push(this.createBeforeChip(timeRestriction as BeforeFilter));
           break;
         case TimeRestrictionType.AFTER:
           chips.push(this.createAfterChip(timeRestriction));
@@ -45,8 +46,8 @@ export class FilterChipTimeRestrictionAdapter {
     return builder.buildFilterChip();
   }
 
-  private static createBeforeChip(timeRestriction: any): InterfaceFilterChip {
-    const beforeText = `Before ${timeRestriction.getBeforeDate()}`;
+  private static createBeforeChip(timeRestriction: BeforeFilter): InterfaceFilterChip {
+    const beforeText = `Before ${timeRestriction.getAfterDate()}`;
     const builder = new FilterChipBuilder(TimeRestrictionType.BEFORE);
     builder.addData(uuidv4(), beforeText);
     return builder.buildFilterChip();

@@ -1,5 +1,5 @@
-<div *ngIf="(chipData$ | async)?.length > 0">
-  <div *ngFor="let filterChip of chipData$ | async" fxLayout="row" fxLayoutAlign="start start">
+<div *ngIf="filterChips.length > 0">
+  <div *ngFor="let filterChip of filterChips" fxLayout="row" fxLayoutAlign="start start">
     <div class="block">{{ filterChip.type }}</div>
     <div fxLayout="row wrap" class="padding-left-20">
       <div

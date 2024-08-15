@@ -1,4 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="start start" fxFlexFill>
+  <button mat-raised-button (click)="openDataSelectionFieldModal()">Fields modal</button>
+  <button mat-raised-button (click)="openDataSelectionFilterModal()">Filter modal</button>
   <num-searchbar class="searchbar-container"></num-searchbar>
   <num-tree
     class="tree-container"
@@ -14,5 +16,5 @@
       Zur Datenselektion hinzufügen
     </button>
   </num-action-bar>
-  <num-data-selection-boxes class="box-container"></num-data-selection-boxes>
+  <num-display-profiles class="box-container"></num-display-profiles>
 </div>

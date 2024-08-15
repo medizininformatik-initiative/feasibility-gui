@@ -1,3 +1,4 @@
+import { ActionBarComponent } from './action-bar/action-bar.component';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { CommonModule } from '@angular/common';
 import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
@@ -16,7 +17,6 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
-import { ActionBarComponent } from './action-bar/action-bar.component';
 import { TableComponent } from './table/table.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
