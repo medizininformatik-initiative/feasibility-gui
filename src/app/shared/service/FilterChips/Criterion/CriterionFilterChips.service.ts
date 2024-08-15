@@ -1,12 +1,10 @@
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ConceptFilterChipService } from './ConceptFilterChipService.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { Injectable } from '@angular/core';
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { QuantityFilterChipService } from './QuantityFilterChipService.service';
 import { TimeRestrictionChipService } from './TimeRestrictionChipService.service';
+import { ConceptFilterChipService } from './ConceptFilterChipService.service';
 
 @Injectable({
   providedIn: 'root',
