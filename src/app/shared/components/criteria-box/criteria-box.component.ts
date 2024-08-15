@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
 
 @Component({
