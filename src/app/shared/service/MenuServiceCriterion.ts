@@ -1,36 +1,39 @@
 import { Injectable } from '@angular/core';
-import { EditCriterionService } from 'src/app/service/CriterionService/EditCriterionService.service';
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { MenuItemInterface } from 'src/app/service/MenuService/MenuItemInterface';
 import { MenuServiceCriterionFunctions } from './MenuServiceCriterionFunctions';
 import { MenuItem } from '../../service/MenuService/MenuItemInterface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MenuService {
+export class MenuServiceCriterion {
   constructor(private menuServiceCriterionFunctions: MenuServiceCriterionFunctions) {}
 
-  public getMenuItemsForCriterion(criterionUuid: string): MenuItem[] {
+  /**
+   * @todo Labels need to be redefined for translation jsons
+   * @returns Array of Menu functions for a criterion box
+   */
+  public getMenuItemsForCriterion(): MenuItemInterface[] {
     return [
       {
         icon: 'trash',
         label: 'löschen',
-        action: () => this.menuServiceCriterionFunctions.deleteAction(criterionUuid),
+        action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
       },
       {
         icon: 'clone',
         label: 'dublizieren',
-        action: () => this.menuServiceCriterionFunctions.duplicateAction(criterionUuid),
+        action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
       },
       {
         icon: 'link',
         label: 'kriterien verknüpfen',
-        action: () => this.menuServiceCriterionFunctions.linkCriteriaAction(criterionUuid),
+        action: (id: string) => this.menuServiceCriterionFunctions.editLinkedCriteria(id),
       },
       {
         icon: 'cog',
         label: 'Filter anwenden',
-        action: () => this.menuServiceCriterionFunctions.applyFilterAction(criterionUuid),
+        action: (id: string) => this.menuServiceCriterionFunctions.applyCriterionFilter(id),
       },
     ];
   }

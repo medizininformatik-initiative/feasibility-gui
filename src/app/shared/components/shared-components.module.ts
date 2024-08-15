@@ -1,8 +1,8 @@
 import { ActionBarComponent } from './action-bar/action-bar.component';
+import { ActionBarComponent } from './action-bar/action-bar.component';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { CommonModule } from '@angular/common';
 import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
-import { CriteriaMenuComponent } from './criteria-box/criteria-menu/criteria-menu.component';
 import { FilterChipsComponent } from './filter-chips/filter-chips.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -11,6 +11,7 @@ import { ListItemDetailsComponent } from './search-result/list-item-details/list
 import { ListItemDetailsSectionsComponent } from './search-result/list-item-details/list-item-details-sections/list-item-details-sections.component';
 import { MaterialModule } from 'src/app/layout/material/material.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MenuComponent } from './menu/menu.component';
 import { NgModule } from '@angular/core';
 import { SearchbarComponent } from './search/searchbar.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
@@ -29,6 +30,7 @@ const SHARED_DECLARATIONS = [
   SearchbarComponent,
   SearchResultComponent,
   TreeComponent,
+  MenuComponent,
 ];
 
 @NgModule({
@@ -37,10 +39,10 @@ const SHARED_DECLARATIONS = [
     ListItemDetailsSectionsComponent,
     SearchFilterComponent,
     CriteriaBoxComponent,
-    CriteriaMenuComponent,
     ActionBarComponent,
     TreeComponent,
     ActionBarComponent,
+    MenuComponent,
   ],
   imports: [
     CommonModule,

@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { MatMenuTrigger } from '@angular/material/menu';
-import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
-import { Observable, of } from 'rxjs';
+import { MenuItemInterface } from 'src/app/service/MenuService/MenuItemInterface';
+import { MenuServiceCriterion } from '../../service/MenuServiceCriterion';
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'num-criteria-box',
@@ -11,31 +10,20 @@ import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/
   styleUrls: ['./criteria-box.component.scss'],
   providers: [CriterionFilterChipService],
 })
-export class CriteriaBoxComponent implements AfterViewInit, OnInit {
+export class CriteriaBoxComponent implements OnInit {
   @Input()
   criterion: Criterion;
 
-  $filterChips: Observable<InterfaceFilterChip[]> = of([]);
+  menuItems: MenuItemInterface[] = [];
 
-  @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
-  @ViewChild('menu', { read: MatMenuTrigger }) criteriaMenuTrigger: MatMenuTrigger;
-
-  constructor(private filterChipsService: CriterionFilterChipService) {}
+  constructor(private menuService: MenuServiceCriterion) {}
 
   ngOnInit() {
-    if (this.criterion) {
-      this.getFilterChips();
-    }
+    this.getMenuItems();
   }
 
-  ngAfterViewInit() {
-    if (this.criteriaMenuTrigger) {
-      this.menuTrigger = this.criteriaMenuTrigger;
-    }
-  }
-
-  openMenu() {
-    this.menuTrigger.openMenu();
+  getMenuItems() {
+    this.menuItems = this.menuService.getMenuItemsForCriterion();
   }
 
   getFilterChips() {

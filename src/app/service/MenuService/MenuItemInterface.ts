@@ -1,5 +1,5 @@
-export interface MenuItem {
+export interface MenuItemInterface {
   icon: string
   label: string
-  action: () => void
+  action: (id: string) => void
 }

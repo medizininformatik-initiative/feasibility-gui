@@ -12,10 +12,25 @@
 
 .divider:hover,
 .divider:hover .icon-color {
-  color: rgba(90, 121, 175, 1); /* Hover color */
+  color: rgba(90, 121, 175, 1);
+  /* Hover color */
 }
 
 .last-item:hover,
 .last-item:hover .icon-color {
-  color: rgba(90, 121, 175, 1); /* Hover color */
+  color: rgba(90, 121, 175, 1);
+  /* Hover color */
+}
+
+.menu-icon {
+  color: rgba(90, 121, 175, 1);
+}
+
+.menu-icon:hover {
+  cursor: pointer;
+}
+
+::ng-deep.mat-mdc-menu-panel {
+  background-color: #fff;
+  width: 1000px;
 }
