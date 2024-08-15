@@ -37,4 +37,5 @@ export class CriteriaBoxComponent implements OnInit {
   private getFilterChips() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion);
   }
+
 }
