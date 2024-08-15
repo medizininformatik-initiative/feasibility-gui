@@ -7,8 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { ConceptFilterChipService } from 'src/app/shared/service/FilterChips/Criterion/ConceptFilterChipService.service';
 
 export class FilterChipConceptAdapter {
-  public static conceptFilterChips: InterfaceFilterChip[] = [];
-
   /**
    * Adapts a ConceptFilter and optional attribute code into an array of InterfaceFilterChip.
    *
@@ -20,74 +18,40 @@ export class FilterChipConceptAdapter {
     conceptFilter: ConceptFilter,
     attributeCode?: TerminologyCode
   ): InterfaceFilterChip[] {
-    this.resetFilterChips();
-
-    const type = this.getFilterType(attributeCode);
-    const selectedConcepts = this.getSelectedConcepts(conceptFilter);
+    const type = attributeCode?.getDisplay() || FilterTypes.CONCEPT;
+    const selectedConcepts = conceptFilter?.getSelectedConcepts();
 
     if (!selectedConcepts) {
       console.warn('No selected concepts found in the ConceptFilter');
       return [];
     }
-    this.buildFilterChips(selectedConcepts, type);
-    return this.conceptFilterChips;
+
+    const conceptsArray = Array.from(selectedConcepts);
+    return conceptsArray
+      .map((concept) => this.createFilterChip(concept, type))
+      .filter((chip) => chip !== null);
   }
 
   /**
-   * Resets the conceptFilterChips array.
-   */
-  private static resetFilterChips(): void {
-    this.conceptFilterChips = [];
-  }
-
-  /**
-   * Determines the filter type.
-   *
-   * @param attributeCode Optional TerminologyCode
-   * @returns The filter type as a string
-   */
-  private static getFilterType(attributeCode?: TerminologyCode): string {
-    return attributeCode?.getDisplay() || FilterTypes.CONCEPT;
-  }
-
-  /**
-   * Retrieves the selected concepts from the ConceptFilter.
-   *
-   * @param conceptFilter The ConceptFilter to retrieve concepts from
-   * @returns A Set of TerminologyCode or null
-   */
-  private static getSelectedConcepts(conceptFilter: ConceptFilter): Set<TerminologyCode> | null {
-    return conceptFilter?.getSelectedConcepts() || null;
-  }
-
-  /**
-   * Builds filter chips and adds them to the conceptFilterChips array.
-   *
-   * @param selectedConcepts A Set of TerminologyCode
-   * @param type The filter type
-   */
-  private static buildFilterChips(selectedConcepts: Set<TerminologyCode>, type: string): void {
-    const builder = new FilterChipBuilder(type);
-    Array.from(selectedConcepts).forEach((concept) => {
-      this.createFilterChip(concept, builder);
-    });
-    this.conceptFilterChips.push(builder.buildFilterChip());
-  }
-
-  /**
-   * Creates an InterfaceFilterChip from a TerminologyCode and adds it to the builder.
+   * Creates an InterfaceFilterChip from a TerminologyCode.
    *
    * @param concept The TerminologyCode to use for creating the chip
-   * @param builder The FilterChipBuilder instance
+   * @param type The filter type
+   * @returns An InterfaceFilterChip
    */
-  private static createFilterChip(concept: TerminologyCode, builder: FilterChipBuilder): void {
+  private static createFilterChip(
+    concept: TerminologyCode,
+    type: string
+  ): InterfaceFilterChip | null {
     const displayText = concept.getDisplay();
 
     if (!displayText) {
       console.warn('Concept display text is undefined or null', concept);
-      return;
+      return null;
     }
 
+    const builder = new FilterChipBuilder(type);
     builder.addData(uuidv4(), displayText);
+    return builder.buildFilterChip();
   }
 }

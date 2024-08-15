@@ -150,6 +150,7 @@ export const FORMATS_GERMAN = {
     SnackBarComponent,
   ],
   exports: [
+    EditTimeRestrictionComponent,
     SearchComponent,
     //SearchInputComponent,
     //SearchTreeOverlayContentComponent,

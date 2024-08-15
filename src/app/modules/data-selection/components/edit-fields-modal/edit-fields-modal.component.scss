@@ -1,0 +1,72 @@
+.container {
+  min-width: 50em;
+  height: 75vh;
+  overflow: auto;
+  background-color: rgb(90, 121, 175, 0.1);
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+}
+
+.tree-container {
+  height: auto;
+  max-height: 50%;
+  overflow: auto;
+}
+
+.result-list-container {
+  height: auto;
+  overflow: auto;
+  padding-top: 20px;
+}
+
+.add-button {
+  margin-top: 10px;
+  background-color: #5a79af;
+  color: #5a79af;
+  height: 30px;
+  width: 30px;
+}
+
+.selectedFilterBox {
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.display-part {
+  padding-left: 10px;
+  width: 90%;
+}
+
+.delete-button {
+  width: auto;
+  background-color: white;
+  color: rgba(95, 98, 102, 1);
+  border: 0px;
+  text-decoration: underline #5170a8;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.filter-title {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  color: #6a7483;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.attribute-code-display {
+  color: #6a7483;
+  padding-bottom: 5px;
+}
+
+.select-button {
+  border-radius: 5px;
+  background: rgb(90, 121, 175, 1);
+  margin-left: 2%;
+  color: white;
+}

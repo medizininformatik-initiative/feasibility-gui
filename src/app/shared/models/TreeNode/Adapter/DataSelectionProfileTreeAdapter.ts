@@ -19,6 +19,7 @@ export class DataSelectionTreeAdapter {
         selectable: node.selectable,
       },
       children: node.children?.map((child) => DataSelectionTreeAdapter.toTreeNode(child)),
+      originalEntry: node,
     };
   }
 }
