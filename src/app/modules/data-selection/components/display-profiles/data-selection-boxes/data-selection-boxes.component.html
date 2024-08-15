@@ -2,7 +2,9 @@
   <div class="display-container">
     {{ profile.getDisplay() }}
   </div>
-  <div class="display-container">Selected Fields</div>
-  <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
+  <div class="display-container">
+    Selected Fields
+    <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
+  </div>
   <div class="filter-container">Applied Filters</div>
 </div>

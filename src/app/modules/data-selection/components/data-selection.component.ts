@@ -3,8 +3,9 @@ import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelection
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
 import { DataSelectionProviderService } from '../services/DataSelectionProviderService';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
-import { EditDataSelectionFields } from 'src/app/service/DataSelectionService/EditDataSelectionFields.service';
+import { EditDataSelectionFields } from 'src/app/service/DataSelectionService/ModalWindowServices/EditDataSelectionFields.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { EditDataSelectionFilter } from 'src/app/service/DataSelectionService/ModalWindowServices/EditDataSelectionFilter.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -19,7 +20,8 @@ export class DataSelectionComponent implements OnInit {
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileProfile,
     private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
-    private dataSelectionModalService: EditDataSelectionFields,
+    private dataSelectionFieldsModalService: EditDataSelectionFields,
+    private dataSelectionFilterModalService: EditDataSelectionFilter,
     private dataSelectionProfileProvider: DataSelectionProviderService
   ) {}
 
@@ -42,14 +44,25 @@ export class DataSelectionComponent implements OnInit {
     }
   }
 
-  public openDataSelectionModal() {
+  public openDataSelectionFieldModal() {
     this.createDataSelectionProfileService
       .getDataSelectionProfileProfileData()
       .subscribe((dataSelectionProfile) => {
         const profile = this.dataSelectionProfileProvider.getDataSelectionProfileByUID(
           'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab'
         );
-        this.dataSelectionModalService.ediDataSelectionFileds(profile.getUrl());
+        this.dataSelectionFieldsModalService.ediDataSelectionFileds(profile.getUrl());
+      });
+  }
+
+  public openDataSelectionFilterModal() {
+    this.createDataSelectionProfileService
+      .getDataSelectionProfileProfileData()
+      .subscribe((dataSelectionProfile) => {
+        const profile = this.dataSelectionProfileProvider.getDataSelectionProfileByUID(
+          'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab'
+        );
+        this.dataSelectionFilterModalService.ediDataSelectionFilter(profile.getUrl());
       });
   }
 }
