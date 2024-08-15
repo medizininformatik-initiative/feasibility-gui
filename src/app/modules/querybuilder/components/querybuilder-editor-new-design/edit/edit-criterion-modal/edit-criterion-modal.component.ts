@@ -70,11 +70,13 @@ export class EditCriterionModalComponent implements OnInit {
   }
 
   private setInitialTimeRestriction() {
-    const timeRestriction = new BetweenFilter(
-      this.criterion.getTimeRestriction().getAfterDate(),
-      this.criterion.getTimeRestriction().getBeforeDate()
-    );
-    this.criterionBuilder.withTimeRestriction(timeRestriction);
+    if (this.criterion.getTimeRestriction()) {
+      const timeRestriction = new BetweenFilter(
+        this.criterion.getTimeRestriction().getAfterDate(),
+        this.criterion.getTimeRestriction().getBeforeDate()
+      );
+      this.criterionBuilder.withTimeRestriction(timeRestriction);
+    }
   }
 
   private createMandatoryFields(criterion: Criterion): {

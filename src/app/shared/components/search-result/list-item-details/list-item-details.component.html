@@ -26,7 +26,10 @@
       <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 padding-top-5 divider">
         <div class="section-layout">Children</div>
         <div>
-          <num-list-item-details-sections [listItemDetails]="listItemDetails.children">
+          <num-list-item-details-sections
+            [listItemDetails]="listItemDetails.children"
+            (selectedRelative)="getSelectedRelative($event)"
+          >
           </num-list-item-details-sections>
         </div>
       </div>

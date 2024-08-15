@@ -30,18 +30,22 @@
           Back to list
           <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
         </button>
-        <num-list-item-details [listItemDetails$]="selectedDetails$" class="padding-left-2">
+        <num-list-item-details
+          [listItemDetails$]="selectedDetails$"
+          (selectedRelative)="setSelectedRelative($event)"
+          class="padding-left-2"
+        >
         </num-list-item-details>
       </div>
     </mat-drawer>
     <mat-drawer-content *ngIf="listItems.length > 0" class="content-height-90">
       <ng-container *ngIf="adaptedData">
-        <num-result-list
+        <num-table
           (selectedRow)="setSelectedRowItem($event)"
           (rowClicked)="setClickedRow($event)"
           [tableData]="adaptedData"
           fxFlexFill
-        ></num-result-list>
+        ></num-table>
       </ng-container>
     </mat-drawer-content>
   </mat-drawer-container>

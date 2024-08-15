@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { MenuItemInterface } from 'src/app/service/MenuService/MenuItemInterface';
+import { MenuServiceCriterion } from '../../service/MenuServiceCriterion';
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
-import { MatMenuTrigger } from '@angular/material/menu';
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -11,34 +12,29 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./criteria-box.component.scss'],
   providers: [CriterionFilterChipService],
 })
-export class CriteriaBoxComponent implements AfterViewInit, OnInit {
+export class CriteriaBoxComponent implements OnInit {
   @Input()
   criterion: Criterion;
 
+  menuItems: MenuItemInterface[] = [];
+
   $filterChips: Observable<InterfaceFilterChip[]> = of([]);
 
-  @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
-  @ViewChild('menu', { read: MatMenuTrigger }) criteriaMenuTrigger: MatMenuTrigger;
-
-  constructor(private filterChipsService: CriterionFilterChipService) {}
+  constructor(
+    private menuService: MenuServiceCriterion,
+    private filterChipsService: CriterionFilterChipService
+  ) {}
 
   ngOnInit() {
-    if (this.criterion) {
-      this.getFilterChips();
-    }
+    this.getMenuItems();
+    this.getFilterChips();
   }
 
-  ngAfterViewInit() {
-    if (this.criteriaMenuTrigger) {
-      this.menuTrigger = this.criteriaMenuTrigger;
-    }
+  private getMenuItems() {
+    this.menuItems = this.menuService.getMenuItemsForCriterion();
   }
 
-  openMenu() {
-    this.menuTrigger.openMenu();
-  }
-
-  getFilterChips() {
+  private getFilterChips() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion);
   }
 }

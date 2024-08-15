@@ -40,7 +40,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   @Input()
   callsLimit: number;
 
-  @Output() resultGotten = new EventEmitter<boolean>();
+  @Output()
+  resultGotten = new EventEmitter<boolean>();
 
   clickEventsubscription: Subscription;
   spinnerValue: number;
@@ -104,7 +105,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   startProgressSpinner(pollingTime: number): void {
     this.interval = setInterval(() => {
       if (this.pollingTime > 0) {
-        // console.log(this.spinnerValue)
         this.pollingTime--;
         this.spinnerValue = this.spinnerValue - 100 / pollingTime;
       } else {

@@ -87,4 +87,26 @@ export class FeasibilityQueryProviderService {
     this.feasibilityQueryMap.set('1', feasibilityQuery);
     this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
   }
+
+  public deleteFromInclusion(uid: string): void {
+    const feasibilityQuery = this.feasibilityQueryMap.get('1');
+    const criteria = this.deleteCriterion(feasibilityQuery.getInclusionCriteria(), uid);
+    this.setInclusionCriteria(criteria);
+  }
+  public deleteFromExclusion(uid: string): void {
+    const feasibilityQuery = this.feasibilityQueryMap.get('1');
+    const criteria = this.deleteCriterion(feasibilityQuery.getExclusionCriteria(), uid);
+    this.setExclusionCriteria(criteria);
+  }
+
+  private deleteCriterion(inexclusion: string[][], criterionID: string): string[][] {
+    inexclusion.forEach((idArray) => {
+      const index = idArray.indexOf(criterionID);
+      if (index > -1) {
+        idArray.splice(index, 1);
+      }
+    });
+    inexclusion = inexclusion.filter((item) => item.length > 0);
+    return inexclusion;
+  }
 }

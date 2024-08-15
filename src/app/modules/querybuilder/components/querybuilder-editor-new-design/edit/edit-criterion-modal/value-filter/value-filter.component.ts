@@ -1,5 +1,5 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
@@ -9,9 +9,14 @@ import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeF
   templateUrl: './value-filter.component.html',
   styleUrls: ['./value-filter.component.scss'],
 })
-export class ValueFilterComponent {
-  @Input() valueFilter: ValueFilter;
-  @Output() valueFilterChange = new EventEmitter<ValueFilter>();
+export class ValueFilterComponent implements OnInit {
+  @Input()
+  valueFilter: ValueFilter;
+
+  @Output()
+  valueFilterChange = new EventEmitter<ValueFilter>();
+
+  public ngOnInit(): void {}
 
   public updateConceptFilter(conceptFilter: ConceptFilter) {
     const newValueFilter = new ValueFilter(
