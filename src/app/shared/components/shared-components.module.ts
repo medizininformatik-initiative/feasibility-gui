@@ -1,5 +1,4 @@
 import { ActionBarComponent } from './action-bar/action-bar.component';
-import { ActionBarComponent } from './action-bar/action-bar.component';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { CommonModule } from '@angular/common';
 import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';

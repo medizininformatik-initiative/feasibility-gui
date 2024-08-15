@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MenuItemInterface } from 'src/app/service/MenuService/MenuItemInterface';
 import { MenuServiceCriterionFunctions } from './MenuServiceCriterionFunctions';
-import { MenuItem } from '../../service/MenuService/MenuItemInterface';
 
 @Injectable({
   providedIn: 'root',

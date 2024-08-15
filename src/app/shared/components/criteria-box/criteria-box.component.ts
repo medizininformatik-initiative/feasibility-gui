@@ -2,7 +2,9 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { MenuItemInterface } from 'src/app/service/MenuService/MenuItemInterface';
 import { MenuServiceCriterion } from '../../service/MenuServiceCriterion';
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'num-criteria-box',
@@ -16,17 +18,23 @@ export class CriteriaBoxComponent implements OnInit {
 
   menuItems: MenuItemInterface[] = [];
 
-  constructor(private menuService: MenuServiceCriterion) {}
+  $filterChips: Observable<InterfaceFilterChip[]> = of([]);
+
+  constructor(
+    private menuService: MenuServiceCriterion,
+    private filterChipsService: CriterionFilterChipService
+  ) {}
 
   ngOnInit() {
     this.getMenuItems();
+    this.getFilterChips();
   }
 
-  getMenuItems() {
+  private getMenuItems() {
     this.menuItems = this.menuService.getMenuItemsForCriterion();
   }
 
-  getFilterChips() {
+  private getFilterChips() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion);
   }
 }
