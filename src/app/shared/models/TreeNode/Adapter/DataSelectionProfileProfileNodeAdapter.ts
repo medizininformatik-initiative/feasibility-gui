@@ -3,7 +3,6 @@ import { TreeNode } from '../TreeNodeInterface';
 
 export class FieldsTreeAdapter {
   static fromTree(tree: DataSelectionProfileProfileNode): TreeNode {
-    console.log(tree[0]);
     return FieldsTreeAdapter.toTreeNode(tree);
   }
 

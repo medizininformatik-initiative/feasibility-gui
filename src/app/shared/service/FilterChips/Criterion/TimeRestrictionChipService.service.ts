@@ -1,22 +1,26 @@
-import { Injectable } from '@angular/core';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
 import { FilterChipTimeRestrictionAdapter } from '../../../models/FilterChips/Adapter/FilterChipTimeRestrictionAdapter';
+import { Injectable } from '@angular/core';
+import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TimeRestrictionChipService {
   /**
-   *
    * @param criterion
    * @returns
    */
-  public generateTimeRestrictionChips(criterion: Criterion): InterfaceFilterChip[] {
-    const timeRestriction = criterion.getTimeRestriction();
-    if (timeRestriction?.getBeforeDate() !== null || timeRestriction?.getAfterDate()) {
-      return FilterChipTimeRestrictionAdapter.adaptTimeRestriction(criterion.getTimeRestriction());
+  public generateTimeRestrictionChips(
+    timeRestriction: AbstractTimeRestriction
+  ): InterfaceFilterChip[] {
+    if (this.isTimeRestrictionSet(timeRestriction)) {
+      return FilterChipTimeRestrictionAdapter.adaptTimeRestriction(timeRestriction);
     }
     return [];
+  }
+
+  private isTimeRestrictionSet(timeRestriction: AbstractTimeRestriction) {
+    return timeRestriction?.getBeforeDate() !== null || timeRestriction?.getAfterDate();
   }
 }

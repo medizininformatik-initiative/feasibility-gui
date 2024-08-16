@@ -15,35 +15,35 @@ export class CreateDataSelectionProfileProfile {
     private dataSelectionProvider: DataSelectionProviderService
   ) {}
 
-  public getDataSelectionProfileProfileData(): Observable<DataSelectionProfileProfile[]> {
-    return this.backend
-      .getDataSelectionProfileData([
-        'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab',
-      ])
-      .pipe(
-        map((data: any[]) =>
-          // Transform each item in the array
-          data.map((item: any) => {
-            const fields = this.mapNodes(item.fields);
-            const filters = item.filters.map(
-              (filter: any) =>
-                new DataSelectionProfileProfileFilter(
-                  filter.type,
-                  filter.name,
-                  filter.ui_type,
-                  filter.referencedCriteriaSet || ''
-                )
-            );
-            const dataSelectionProfileProfile: DataSelectionProfileProfile =
-              new DataSelectionProfileProfile(item.url, item.display, fields, filters);
-            this.dataSelectionProvider.setDataSelectionProfileByUID(
-              dataSelectionProfileProfile.getUrl(),
-              dataSelectionProfileProfile
-            );
-            return dataSelectionProfileProfile;
-          })
-        )
-      );
+  public getDataSelectionProfileProfileData(
+    urls: string[]
+  ): Observable<DataSelectionProfileProfile[]> {
+    urls = [
+      'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab',
+    ];
+    return this.backend.getDataSelectionProfileData(urls).pipe(
+      map((data: any[]) =>
+        data.map((item: any) => {
+          const fields = this.mapNodes(item.fields);
+          const filters = item.filters.map(
+            (filter: any) =>
+              new DataSelectionProfileProfileFilter(
+                filter.type,
+                filter.name,
+                filter.ui_type,
+                filter.referencedCriteriaSet || ''
+              )
+          );
+          const dataSelectionProfileProfile: DataSelectionProfileProfile =
+            new DataSelectionProfileProfile(item.url, item.display, fields, filters);
+          this.dataSelectionProvider.setDataSelectionProfileByUID(
+            dataSelectionProfileProfile.getUrl(),
+            dataSelectionProfileProfile
+          );
+          return dataSelectionProfileProfile;
+        })
+      )
+    );
   }
 
   private mapNodes(nodes: any[]): DataSelectionProfileProfileNode[] {

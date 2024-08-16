@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
+import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
-import { DataSelectionProviderService } from '../services/DataSelectionProviderService';
-import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
-import { EditDataSelectionFields } from 'src/app/service/DataSelectionService/ModalWindowServices/EditDataSelectionFields.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { EditDataSelectionFilter } from 'src/app/service/DataSelectionService/ModalWindowServices/EditDataSelectionFilter.service';
+import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
+import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 
 @Component({
   selector: 'num-data-selection',
@@ -19,10 +17,7 @@ export class DataSelectionComponent implements OnInit {
 
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileProfile,
-    private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
-    private dataSelectionFieldsModalService: EditDataSelectionFields,
-    private dataSelectionFilterModalService: EditDataSelectionFilter,
-    private dataSelectionProfileProvider: DataSelectionProviderService
+    private dataSelectionProfileTreeService: DataSelectionProfileTreeService
   ) {}
 
   ngOnInit(): void {
@@ -32,37 +27,19 @@ export class DataSelectionComponent implements OnInit {
   }
 
   public getDataSelectionProfileData() {
-    this.createDataSelectionProfileService.getDataSelectionProfileProfileData().subscribe();
+    const dataSelectionProfileUrls = Array.from(this.selectedDataSelectionProfileNodeIds);
+    this.createDataSelectionProfileService
+      .getDataSelectionProfileProfileData(dataSelectionProfileUrls)
+      .subscribe();
   }
 
   public addItemsToStage(node: TreeNode) {
-    const nodeId: string = node.id;
-    if (this.selectedDataSelectionProfileNodeIds.has(nodeId)) {
-      this.selectedDataSelectionProfileNodeIds.delete(nodeId);
+    const originalEntry: DataSelectionProfileTreeNode =
+      node.originalEntry as DataSelectionProfileTreeNode;
+    if (this.selectedDataSelectionProfileNodeIds.has(originalEntry.url)) {
+      this.selectedDataSelectionProfileNodeIds.delete(originalEntry.url);
     } else {
-      this.selectedDataSelectionProfileNodeIds.add(nodeId);
+      this.selectedDataSelectionProfileNodeIds.add(originalEntry.url);
     }
-  }
-
-  public openDataSelectionFieldModal() {
-    this.createDataSelectionProfileService
-      .getDataSelectionProfileProfileData()
-      .subscribe((dataSelectionProfile) => {
-        const profile = this.dataSelectionProfileProvider.getDataSelectionProfileByUID(
-          'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab'
-        );
-        this.dataSelectionFieldsModalService.ediDataSelectionFileds(profile.getUrl());
-      });
-  }
-
-  public openDataSelectionFilterModal() {
-    this.createDataSelectionProfileService
-      .getDataSelectionProfileProfileData()
-      .subscribe((dataSelectionProfile) => {
-        const profile = this.dataSelectionProfileProvider.getDataSelectionProfileByUID(
-          'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab'
-        );
-        this.dataSelectionFilterModalService.ediDataSelectionFilter(profile.getUrl());
-      });
   }
 }

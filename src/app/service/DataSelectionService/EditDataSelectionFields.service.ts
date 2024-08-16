@@ -19,7 +19,7 @@ export class EditDataSelectionFields implements OnDestroy {
     this.dialogSubscription.unsubscribe();
   }
 
-  public ediDataSelectionFields(url: string) {
+  public ediDataSelectionFileds(url: string) {
     const dialogRef = this.dialog.open(EditFieldsModalComponent, {
       data: url,
     });

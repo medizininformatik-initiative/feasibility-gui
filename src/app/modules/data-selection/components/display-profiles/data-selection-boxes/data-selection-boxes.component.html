@@ -7,4 +7,7 @@
     <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
   </div>
   <div class="filter-container">Applied Filters</div>
+  <div class="menu-container">
+    <num-menu [menuItems]="menuItems" [id]="profile.getUrl()"></num-menu>
+  </div>
 </div>
