@@ -26,8 +26,9 @@ export class CriterionFilterChipService {
 
     const conceptChips = this.generateConceptChips(criterion);
     const quantityChips = this.generateQuantityChips(criterion);
-    const timeRestrictionChips =
-      this.timeRestrictionChipService.generateTimeRestrictionChips(criterion);
+    const timeRestrictionChips = this.timeRestrictionChipService.generateTimeRestrictionChips(
+      criterion.getTimeRestriction()
+    );
 
     const allChips = [...conceptChips, ...quantityChips, ...timeRestrictionChips];
     this.filterChipsSubject.next(allChips);
