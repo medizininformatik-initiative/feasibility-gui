@@ -1,9 +1,9 @@
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { MenuItemInterface } from 'src/app/service/MenuService/MenuItemInterface';
-import { MenuServiceCriterion } from '../../service/MenuServiceCriterion';
-import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
 import { Component, Input, OnInit } from '@angular/core';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
 import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
+import { MenuItemInterface } from 'src/app/service/MenuService/MenuItemInterface';
+import { MenuServiceCriterion } from '../../service/Menu/Criterion/MenuServiceCriterion';
 import { Observable, of } from 'rxjs';
 
 @Component({
