@@ -1,24 +1,14 @@
 import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
-import { FilterChipBuilder } from '../../FilterChipBuilder';
 import { InterfaceFilterChip } from '../../InterfaceFilterChip';
+import { FilterChipBuilder } from '../../FilterChipBuilder';
 
 export class FilterChipDataSelectionAdapter {
-  public static adaptFields(fields: DataSelectionProfileProfileNode[]): InterfaceFilterChip[] {
+  public static adaptFields(fields: DataSelectionProfileProfileNode): InterfaceFilterChip[] {
     const filterChips: InterfaceFilterChip[] = [];
-
-    fields.forEach((field) => {
-      if (field.getIsSelected()) {
-        const type = field.getIsRequired() ? 'required' : 'optional';
-        const builder = new FilterChipBuilder(type);
-        builder.addData(field.getId(), field.getName());
-        filterChips.push(builder.buildFilterChip());
-      }
-
-      if (field.getChildren().length > 0) {
-        const childChips = FilterChipDataSelectionAdapter.adaptFields(field.getChildren());
-        filterChips.push(...childChips);
-      }
-    });
+    const builder = new FilterChipBuilder('required');
+    builder.addData(fields.getId(), fields.getName());
+    filterChips.push(builder.buildFilterChip());
+    console.log(filterChips);
     return filterChips;
   }
 }
