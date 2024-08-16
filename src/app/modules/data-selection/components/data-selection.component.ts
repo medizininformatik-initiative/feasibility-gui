@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
-import { DataSelectionProviderService } from '../services/DataSelectionProviderService';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
-import { EditDataSelectionFields } from 'src/app/service/DataSelectionService/ModalWindowServices/EditDataSelectionFields.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 
@@ -20,9 +18,6 @@ export class DataSelectionComponent implements OnInit {
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileProfile,
     private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
-    private dataSelectionFieldsModalService: EditDataSelectionFields,
-    private dataSelectionFilterModalService: EditDataSelectionFilter,
-    private dataSelectionProfileProvider: DataSelectionProviderService
   ) {}
 
   ngOnInit(): void {
