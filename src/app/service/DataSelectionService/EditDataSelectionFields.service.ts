@@ -1,9 +1,8 @@
-import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProviderService';
 import { EditFieldsModalComponent } from 'src/app/modules/data-selection/components/edit-fields-modal/edit-fields-modal.component';
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipDataSelectionAdapter';
 
 @Injectable({
   providedIn: 'root',
@@ -11,24 +10,20 @@ import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChip
 export class EditDataSelectionFields implements OnDestroy {
   dialogSubscription: Subscription;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private dataSelectionProvider: DataSelectionProviderService
+  ) {}
 
   ngOnDestroy() {
     this.dialogSubscription.unsubscribe();
   }
 
-  public editCriterionAttribute(
-    dataSelectionProfileProfileNode: DataSelectionProfileProfileNode[]
-  ) {
+  public ediDataSelectionFileds(url: string) {
     const dialogRef = this.dialog.open(EditFieldsModalComponent, {
-      data: dataSelectionProfileProfileNode,
+      data: url,
     });
 
-    dialogRef.afterClosed().subscribe((selectedDataSelectionProfileNodeFields) => {
-      if (selectedDataSelectionProfileNodeFields) {
-        console.log(selectedDataSelectionProfileNodeFields);
-        FilterChipDataSelectionAdapter.adaptFields(selectedDataSelectionProfileNodeFields[0]);
-      }
-    });
+    dialogRef.afterClosed().subscribe();
   }
 }
