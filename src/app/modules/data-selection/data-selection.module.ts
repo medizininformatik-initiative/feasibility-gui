@@ -11,18 +11,13 @@ import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
-import { EditFieldsModalComponent } from './components/edit-fields-modal/edit-fields-modal.component';
-import { EditFilterModalComponent } from './components/edit-filter-modal/edit-filter-modal.component';
+import {
+  EditFieldsModalComponent,
+} from './components/edit-fields-modal/edit-fields-modal.component';
 import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 
 @NgModule({
-  declarations: [
-    DataSelectionComponent,
-    DataSelectionBoxesComponent,
-    EditFieldsModalComponent,
-    DisplayProfilesComponent,
-    EditFilterModalComponent,
-  ],
+  declarations: [DataSelectionComponent, DataSelectionBoxesComponent, EditFieldsModalComponent],
   imports: [
     CommonModule,
     DataSelectionRoutingModule,

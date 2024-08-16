@@ -3,26 +3,24 @@
     <num-tree [treeData]="tree" (selectedCheckbox)="setSelectedFieldElement($event)"></num-tree>
   </div>
   <div *ngIf="arrayOfSelectedFields.length > 0">
-    <div class="filter-title">Field selection</div>
+    <div class="filter-title">Filter selection</div>
+    <div>required</div>
     <div
       *ngFor="let selectedField of arrayOfSelectedFields"
       fxLayout="row"
       fxLayoutAlign="start center"
       class="selectedFilterBox"
     >
+      <div>
+        <mat-checkbox (change)="setFieldAsRequired(selectedField)"></mat-checkbox>
+      </div>
       <div class="display-part">
         {{ selectedField.display }}
       </div>
-      <div>
-        <mat-checkbox (change)="setFieldAsRequired(selectedField)"> requiered </mat-checkbox>
-      </div>
-      <div fxFlexAlign="center">
-        <fa-icon
-          [icon]="'times'"
-          size="1x"
-          (click)="removeSelectedConcept(selectedConceptFilter)"
-          class="delete-button"
-        ></fa-icon>
+      <div fxFlexAlign="end">
+        <button (click)="removeSelectedConcept(selectedConceptFilter)" class="delete-button">
+          entfernen
+        </button>
       </div>
     </div>
   </div>

@@ -10,7 +10,7 @@
 
 .tree-container {
   height: auto;
-  max-height: 50%;
+  max-height: 90%;
   overflow: auto;
 }
 
@@ -43,12 +43,11 @@
 
 .delete-button {
   width: auto;
+  align-self: end;
   background-color: white;
-  color: rgba(95, 98, 102, 1);
   border: 0px;
   text-decoration: underline #5170a8;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding-bottom: 10px;
 }
 
 .filter-title {
