@@ -1,6 +1,9 @@
 <div class="container">
   hello
-  <num-edit-time-restriction></num-edit-time-restriction>
+  <num-edit-time-restriction
+    [timeRestriction]="timeRestriction"
+    (timeRestrictionChanged)="setTimeRestriction($event)"
+  ></num-edit-time-restriction>
   <div fxLayout="row" fxLayoutAlign="start center">
     <button mat-raised-button class="select-button">Auswählen</button>
     <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>
