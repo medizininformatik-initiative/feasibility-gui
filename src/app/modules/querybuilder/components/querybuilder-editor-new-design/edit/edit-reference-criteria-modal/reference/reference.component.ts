@@ -1,16 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
+import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
 import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter';
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
+import { SelectedTableItemsService } from '../../../../../../../service/ElasticSearch/SearchTermListItemService.service';
 import { Subscription } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { SelectedTableItemsService } from '../../../../../../../service/ElasticSearch/SearchTermListItemService.service';
-import { SearchTermListEntry } from '../../../../../../../shared/models/ListEntries/SearchTermListEntry';
 import { TerminologyCode } from '../../../../../../../model/Terminology/TerminologyCode';
 
 interface selectedItem {
@@ -21,12 +17,12 @@ interface selectedItem {
   selector: 'num-reference',
   templateUrl: './reference.component.html',
   styleUrls: ['./reference.component.scss'],
+  providers: [SelectedTableItemsService],
 })
 export class ReferenceComponent implements OnInit, OnDestroy {
   @Input()
-  referenceFilter: ReferenceFilter;
+  referenceFilterUri: string[];
 
-  @Input()
   listItems: ReferenceCriteriaListEntry[] = [];
 
   @Output()
@@ -77,6 +73,7 @@ export class ReferenceComponent implements OnInit, OnDestroy {
         }
       });
   }
+
   private shouldUncheckAll(selectedItems: ReferenceCriteriaListEntry[]): boolean {
     return selectedItems.length === 0;
   }
@@ -92,20 +89,11 @@ export class ReferenceComponent implements OnInit, OnDestroy {
     item.isCheckboxSelected = false;
   }
 
-  /*private initializeArrayOfReferenceCriterions() {
-    if (this.referenceFilter && this.referenceFilter.getSelectedReferences()) {
-      this.referenceFilter.getSelectedReferences().forEach((referenceCriterion) => {
-        this.arrayOfSelectedReferences.push(referenceCriterion);
-      });
-    }
-  }*/
-
   startElasticSearch(searchtext: string) {
     if (this.searchtext !== searchtext) {
       this.searchtext = searchtext;
-      const allowedReferenceUri = this.referenceFilter.getAllowedReferenceUri();
       this.elasticSearchService
-        .startElasticSearch(searchtext, [], allowedReferenceUri)
+        .startElasticSearch(searchtext, [], this.referenceFilterUri)
         .subscribe((test) => {
           this.listItems = test.results;
         });

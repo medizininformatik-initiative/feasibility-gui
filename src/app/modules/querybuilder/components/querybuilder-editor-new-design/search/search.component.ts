@@ -115,13 +115,13 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.searchtext !== searchtext;
   }
 
-  public setSelectedRowItem(item) {
+  public setSelectedRowItem(item: InterfaceTableDataRow) {
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
     const itemId = item.originalEntry.id;
     if (selectedIds.includes(itemId)) {
-      this.selectedTableItemsService.removeFromSelection(item.originalEntry);
+      this.selectedTableItemsService.removeFromSelection(item.originalEntry as SearchTermListEntry);
     } else {
-      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry);
+      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry as SearchTermListEntry);
     }
   }
 
