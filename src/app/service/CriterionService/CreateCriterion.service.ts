@@ -148,6 +148,7 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion: Criterion = criterionBuilder.buildCriterion();
+    console.log(criterion);
     this.criterionProviderService.setCriterionByUID(criterion);
     this.stageProviderService.addCriterionToStage(criterion.getUniqueID());
   }
@@ -190,9 +191,9 @@ export class CreateCriterionService {
         criterionBuilder.buildAttributeFilter(name, code, type, attributeDef) as AttributeFilter
       );
     } else {
-      criterionBuilder.withValueFilters(
-        criterionBuilder.buildAttributeFilter(name, code, type, attributeDef) as ValueFilter
-      );
+      criterionBuilder.withValueFilters([
+        criterionBuilder.buildAttributeFilter(name, code, type, attributeDef) as ValueFilter,
+      ]);
     }
   }
 }
