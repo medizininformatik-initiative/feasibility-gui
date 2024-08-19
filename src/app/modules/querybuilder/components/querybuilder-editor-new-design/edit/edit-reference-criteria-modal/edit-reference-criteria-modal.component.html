@@ -2,8 +2,8 @@
   <div fxLayout="column" *ngFor="let attributeFilter of criterion.getAttributeFilters()">
     <num-reference
       *ngIf="attributeFilter.getReference()"
-      [referenceFilter]="attributeFilter.getReference()"
-      (selectedReferenceIds)="setSelectedReferenceIds($event)"
+      [referenceFilter]="attributeFilter.getReference().getAllowedReferenceUri()"
+      (selectedReferenceIds)="setSelectedReferenceIds($event, attributeFilter)"
     >
     </num-reference>
   </div>

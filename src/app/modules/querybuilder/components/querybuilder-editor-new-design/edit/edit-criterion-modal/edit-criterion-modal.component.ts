@@ -65,7 +65,7 @@ export class EditCriterionModalComponent implements OnInit {
         currentValueFilter.getQuantity(),
         currentValueFilter.getOptional()
       );
-      this.criterionBuilder.withValueFilters(valueFilter);
+      this.criterionBuilder.withValueFilters([valueFilter]);
     }
   }
 
@@ -104,7 +104,7 @@ export class EditCriterionModalComponent implements OnInit {
     };
   }
   public updateValueFilter(valueFilter: ValueFilter) {
-    this.criterionBuilder.withValueFilters(valueFilter);
+    this.criterionBuilder.withValueFilters([valueFilter]);
   }
 
   public updateAttributeFilter(attributeFilter: AttributeFilter) {
