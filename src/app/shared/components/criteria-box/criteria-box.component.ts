@@ -1,10 +1,10 @@
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { MenuItemInterface } from 'src/app/service/MenuService/MenuItemInterface';
-import { MenuServiceCriterion } from '../../service/MenuServiceCriterion';
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
 import { Observable, of } from 'rxjs';
+import { MenuServiceCriterion } from '../../service/Menu/Criterion/MenuServiceCriterion';
 
 @Component({
   selector: 'num-criteria-box',

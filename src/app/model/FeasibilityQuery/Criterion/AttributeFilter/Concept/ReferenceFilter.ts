@@ -97,4 +97,11 @@ export class ReferenceFilter extends AbstractConceptFilter {
   ): ReferenceFilter {
     return new ReferenceFilter(allowedReferenceUri, selectedReference, selectedConcepts);
   }
+  isSelectedReferenceSet(): boolean {
+    return (
+      this.selectedReferences !== undefined &&
+      this.selectedReferences !== null &&
+      this.selectedReferences.length > 0
+    );
+  }
 }

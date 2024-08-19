@@ -41,6 +41,10 @@ export abstract class AbstractConceptFilter {
    * @returns True if the selected concepts set exists, otherwise false.
    */
   isSelectedConceptSet(): boolean {
-    return this.selectedConcepts !== undefined && this.selectedConcepts !== null;
+    return (
+      this.selectedConcepts !== undefined &&
+      this.selectedConcepts !== null &&
+      this.selectedConcepts.size > 0
+    );
   }
 }

@@ -59,6 +59,10 @@ export class ConceptComponent implements OnDestroy, OnInit {
     this.initializeArrayOfSelectedConcepts();
   }
 
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
   private initializeArrayOfSelectedConcepts() {
     if (this.conceptFilter && this.conceptFilter.isSelectedConceptSet()) {
       this.arrayOfSelectedConcepts = Array.from(this.conceptFilter.getSelectedConcepts());
@@ -83,12 +87,6 @@ export class ConceptComponent implements OnDestroy, OnInit {
         }
       }
       return false;
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
     }
   }
 

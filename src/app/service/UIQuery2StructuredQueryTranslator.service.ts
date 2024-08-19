@@ -140,15 +140,15 @@ export class UIQuery2StructuredQueryTranslatorService {
     const translatedFilters: AbstractStructuredQueryFilters[] = [];
     criterion.getAttributeFilters().forEach((attributeFilter) => {
       const attributeCode = attributeFilter.getAttributeCode();
-      if (
-        attributeFilter.getConcept() &&
-        attributeFilter.getConcept()?.getSelectedConcepts()?.size > 0
-      ) {
+      if (attributeFilter.isConceptSet() && attributeFilter.getConcept()?.isSelectedConceptSet()) {
         const conceptFilter = this.createAttributeConceptFilter(attributeFilter.getConcept());
         conceptFilter.attributeCode = attributeCode;
         translatedFilters.push(conceptFilter);
       }
-      if (attributeFilter.isReferenceSet()) {
+      if (
+        attributeFilter.isReferenceSet() &&
+        attributeFilter.getReference()?.isSelectedReferenceSet()
+      ) {
         const referenceFilter = this.createReferences(attributeFilter.getReference());
         referenceFilter.attributeCode = attributeCode;
         translatedFilters.push(referenceFilter);

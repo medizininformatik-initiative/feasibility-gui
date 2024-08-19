@@ -112,8 +112,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private isElasticSearchEnabled(searchtext: string): boolean {
-    const isDifferentSearchText = this.searchtext !== searchtext;
-    return isDifferentSearchText;
+    return this.searchtext !== searchtext;
   }
 
   public setSelectedRowItem(item) {

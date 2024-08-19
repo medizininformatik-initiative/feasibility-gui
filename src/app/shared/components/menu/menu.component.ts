@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MenuItemInterface } from 'src/app/service/MenuService/MenuItemInterface';
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 
 @Component({
   selector: 'num-menu',
