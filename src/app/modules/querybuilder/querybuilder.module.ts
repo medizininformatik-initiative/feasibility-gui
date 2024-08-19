@@ -66,6 +66,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { EditTimeRestrictionComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-time-restriction/edit-time-restriction.component';
 import { ResultDetailModalComponent } from './components/querybuilder-result/result-detail-modal/result-detail-modal.component';
+import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -148,6 +149,7 @@ export const FORMATS_GERMAN = {
     MatTooltipModule,
     FileSaverModule,
     SnackBarComponent,
+    SharedFilterModule,
   ],
   exports: [
     EditTimeRestrictionComponent,
