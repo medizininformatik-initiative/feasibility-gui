@@ -1,5 +1,5 @@
-<div class="container">
-  <div fxLayout="column" *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+<num-modal-window (saveButtonSelected)="saveCriterion()" (cancelButtonSelected)="closeDialog()">
+  <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
     <num-reference
       *ngIf="attributeFilter.getReference()"
       [referenceFilter]="attributeFilter.getReference().getAllowedReferenceUri()"
@@ -7,7 +7,6 @@
     >
     </num-reference>
   </div>
-
   <div *ngFor="let valueFilter of criterion.getValueFilters()" fxLayout="column">
     <num-reference
       *ngIf="valueFilter.getReference()"
@@ -16,8 +15,4 @@
     >
     </num-reference>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <button mat-raised-button class="select-button" (click)="saveCriterion()">Auswählen</button>
-    <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>
-  </div>
-</div>
+</num-modal-window>
