@@ -1,10 +1,13 @@
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProfileFilter } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileFilter';
 import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProviderService';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { CRTDLFilterTypes } from 'src/app/model/Utilities/CRTDLFilterTypes';
+import { ProfileDateFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -25,15 +28,18 @@ export class CreateDataSelectionProfileProfile {
       map((data: any[]) =>
         data.map((item: any) => {
           const fields = this.mapNodes(item.fields);
-          const filters = item.filters.map(
-            (filter: any) =>
-              new DataSelectionProfileProfileFilter(
-                filter.type,
-                filter.name,
-                filter.ui_type,
-                filter.referencedCriteriaSet || ''
-              )
-          );
+          const filters = item.filters.map((filter: any) => {
+            switch (filter.type) {
+              case CRTDLFilterTypes.DATE:
+                return new ProfileDateFilter(
+                  filter.name,
+                  filter.ui_type,
+                  new BetweenFilter(null, null)
+                );
+              case CRTDLFilterTypes.TOKEN:
+                return new ProfileTokenFilter(filter.name, filter.ui_type, filter.valueSetUrls, []);
+            }
+          });
           const dataSelectionProfileProfile: DataSelectionProfileProfile =
             new DataSelectionProfileProfile(item.url, item.display, fields, filters);
           this.dataSelectionProvider.setDataSelectionProfileByUID(
