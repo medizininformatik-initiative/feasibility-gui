@@ -1,99 +1,83 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
-import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
+import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ElasticSearchFilterService {
-  private filtersSubject = new BehaviorSubject<Map<ElasticSearchFilterTypes, string[]>>(new Map());
-
   constructor(private backendService: BackendService) {}
 
   /**
-   * Fetches available filters from the backend and updates the filters subject.
+   * Fetches available filters from the backend.
    *
    * @returns An Observable emitting the current list of filters.
    */
   public fetchElasticSearchFilters(): Observable<Array<SearchTermFilter>> {
-    return this.backendService.getElasticSearchFilter().pipe(
-      map((response) =>
-        response
-          .filter((filter) => filter.values && filter.values.length > 0)
-          .map((filter) => {
-            const searchTermValues = filter.values.map(
-              (value) => new SearchTermFilterValues(value.count, value.label)
-            );
-            const filterType =
-              ElasticSearchFilterTypes[filter.name as keyof typeof ElasticSearchFilterTypes];
-            return new SearchTermFilter(ElasticSearchFilterTypes.TERMINOLOGY, searchTermValues);
-          })
-      ),
-      map((filters) => {
-        this.setFilters(filters);
-        console.log(filters);
-        return filters;
-      })
-    );
+    return this.backendService
+      .getElasticSearchFilter()
+      .pipe(map(this.filterValidFilters), map(this.mapToSearchTermFilters));
   }
 
   /**
-   * Sets the current list of filters in the BehaviorSubject.
+   * Filters out invalid filters that have no values or empty values.
    *
-   * @param filters The list of filters to set.
+   * @param response The array of filters from the backend.
+   * @returns An array of valid filters with non-empty values.
    */
-  public setFilters(filters: SearchTermFilter[]): void {
-    const filterMap = new Map<ElasticSearchFilterTypes, string[]>();
-
-    filters.forEach((filter) => {
-      filterMap.set(filter.getName(), filter.selectedValues);
-    });
-
-    this.filtersSubject.next(filterMap);
+  private filterValidFilters(response: any[]): any[] {
+    return response.filter((filter) => filter.values && filter.values.length > 0);
   }
 
   /**
-   * Gets the current list of filters as an Observable.
+   * Maps an array of filter objects to an array of SearchTermFilter instances.
    *
-   * @returns An Observable emitting the current list of filters.
+   * @param filters The array of valid filters.
+   * @returns An array of SearchTermFilter instances.
    */
-  public getFilters(): Observable<Map<ElasticSearchFilterTypes, string[]>> {
-    return this.filtersSubject.asObservable();
+  private mapToSearchTermFilters(filters: any[]): SearchTermFilter[] {
+    return filters.map((filter) => this.createSearchTermFilter(filter));
   }
 
   /**
-   * Update selected values for a specific filter.
+   * Creates a SearchTermFilter object from the given filter data.
    *
-   * @param name The name of the filter to update.
-   * @param selectedValues The new array of selected values.
+   * @param filter The raw filter data containing name, type, and values.
+   * @returns A SearchTermFilter object initialized with the filter type and its values.
    */
-  public updateSelectedValues(name: ElasticSearchFilterTypes, selectedValues: string[]): void {
-    const currentMap = this.filtersSubject.value;
-    currentMap.set(name, selectedValues);
-    this.filtersSubject.next(currentMap);
+  private createSearchTermFilter(filter: {
+    name: string
+    type: string
+    values: [{ count: number; label: string }]
+  }): SearchTermFilter {
+    const searchTermValues = this.buildSearchTermValues(filter.values);
+    const filterType = this.setElasticSearchFilterType(filter.name);
+    return new SearchTermFilter(filterType, searchTermValues);
   }
 
   /**
-   * Gets selected values for a specific filter name.
+   * Builds an array of SearchTermFilterValues objects from the raw values data.
    *
-   * @param name The name of the filter to retrieve selected values for.
-   * @returns An array of selected values for the specified filter name, or an empty array if the filter is not found.
+   * @param values An array of raw values each containing a count and label.
+   * @returns An array of SearchTermFilterValues objects.
    */
-  public getSelectedValuesForName(name: ElasticSearchFilterTypes): string[] {
-    const filterMap = this.filtersSubject.value;
-    return filterMap.get(name) || [];
+  private buildSearchTermValues(
+    values: [{ count: number; label: string }]
+  ): SearchTermFilterValues[] {
+    return values.map((value) => new SearchTermFilterValues(value.count, value.label));
   }
 
   /**
-   * Gets the current list of filter names.
+   * Determines the ElasticSearchFilterType based on the filter name.
    *
-   * @returns An array of filter names.
+   * @param name The name of the filter, which will be converted to upper case.
+   * @returns The corresponding ElasticSearchFilterType for the given filter name.
    */
-  public getFilterNames(): ElasticSearchFilterTypes[] {
-    return Array.from(this.filtersSubject.value.keys());
+  private setElasticSearchFilterType(name: string): ElasticSearchFilterTypes {
+    return ElasticSearchFilterTypes[name.toUpperCase() as keyof typeof ElasticSearchFilterTypes];
   }
 }
