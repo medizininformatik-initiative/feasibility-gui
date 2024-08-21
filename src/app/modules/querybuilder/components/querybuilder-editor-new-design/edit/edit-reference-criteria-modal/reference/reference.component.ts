@@ -8,6 +8,7 @@ import { SelectedTableItemsService } from '../../../../../../../service/ElasticS
 import { Subscription } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from '../../../../../../../model/Terminology/TerminologyCode';
+import { ElasticSearchSearchResultProviderService } from 'src/app/service/Provider/ElasticSearchSearchResultProviderService.service';
 
 interface selectedItem {
   id: string
@@ -42,11 +43,15 @@ export class ReferenceComponent implements OnInit, OnDestroy {
       ReferenceCriteriaResultList,
       ReferenceCriteriaListEntry
     >,
+    private searchResultProviderService: ElasticSearchSearchResultProviderService<
+      ReferenceCriteriaResultList,
+      ReferenceCriteriaListEntry
+    >,
     private selectedTableItemsService: SelectedTableItemsService<ReferenceCriteriaListEntry>
   ) {}
 
   ngOnInit() {
-    this.subscription = this.elasticSearchService
+    this.subscription = this.searchResultProviderService
       .getSearchTermResultList()
       .subscribe((searchTermResults) => {
         if (searchTermResults) {
