@@ -1,6 +1,6 @@
 import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { StructuredQueryCriterion } from '../../../StructuredQueryCriterion';
+import { StructuredQueryCriterion } from '../../StructuredQueryCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 export class ReferenceFilter extends AbstractStructuredQueryFilters {
