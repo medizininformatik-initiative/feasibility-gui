@@ -1,32 +1,22 @@
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { ElasticSearchFilterProvider } from '../Provider/ElasticSearchFilterProvider.service';
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
+import { ElasticSearchSearchResultProviderService } from '../Provider/ElasticSearchSearchResultProviderService.service';
 import { Inject, Injectable } from '@angular/core';
 import { InterfaceListEntry } from 'src/app/shared/models/ListEntries/InterfaceListEntry';
 import { InterfaceResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/InterfaceResultList';
-import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
-import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
+import { map, Observable } from 'rxjs';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { ElasticSearchFilterService } from './ElasticSearchFilter.service';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ElasticSearchService<T extends InterfaceResultList<C>, C extends InterfaceListEntry> {
-  private searchTermResultList = new BehaviorSubject<T>({
-    totalHits: 0,
-    results: [] as C[],
-  } as T);
-
-  private filtersSubject = new BehaviorSubject<Array<SearchTermFilter>>([]);
-
   constructor(
     private backendService: BackendService,
-    private filterService: ElasticSearchFilterService,
-
+    private elasticSearchFilterProvider: ElasticSearchFilterProvider,
+    private searchResultProviderService: ElasticSearchSearchResultProviderService<T, C>,
     @Inject('ENTRY_MAPPER') private mapToListEntry: (item: any) => T
   ) {}
 
@@ -51,62 +41,58 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
     valueSets: string[] = [],
     criteriaSets: string[] = []
   ): Observable<any> {
-    const filters = this.filterService.getSelectedValuesForName(
-      ElasticSearchFilterTypes.TERMINOLOGY
-    );
-    console.log(filters);
     if (valueSets.length > 0) {
       return this.backendService.getElasticSearchResultsForCodeableConcept(searchTerm, valueSets);
     } else if (criteriaSets.length > 0) {
       return this.backendService.getElasticSearchResultsForCriteriaSets(searchTerm, criteriaSets);
     } else {
-      return this.backendService.getElasticSearchResultsForCriteria(searchTerm, [], filters);
+      return this.sendElasticSearchRequestForCriteria(searchTerm);
     }
+  }
+
+  private sendElasticSearchRequestForCriteria(searchTerm: string): Observable<any> {
+    const availabilityFilter = this.getAvailabilityFilter();
+    const contextFilter = this.getContextFilter();
+    const kdsModuleFilter = this.getKdsModuleFilter();
+    const terminologyFilters = this.getTerminologyFilter();
+
+    return this.backendService.getElasticSearchResultsForCriteria(
+      searchTerm,
+      contextFilter,
+      terminologyFilters,
+      kdsModuleFilter,
+      availabilityFilter
+    );
+  }
+
+  private getTerminologyFilter(): string[] {
+    return this.elasticSearchFilterProvider.getSelectedValuesOfType(
+      ElasticSearchFilterTypes.TERMINOLOGY
+    );
+  }
+
+  private getContextFilter(): string[] {
+    return this.elasticSearchFilterProvider.getSelectedValuesOfType(
+      ElasticSearchFilterTypes.CONTEXT
+    );
+  }
+
+  private getAvailabilityFilter(): string[] {
+    return this.elasticSearchFilterProvider.getSelectedValuesOfType(
+      ElasticSearchFilterTypes.AVAILABILITY
+    );
+  }
+
+  private getKdsModuleFilter(): string[] {
+    return this.elasticSearchFilterProvider.getSelectedValuesOfType(
+      ElasticSearchFilterTypes.KDSMODULE
+    );
   }
 
   public processElasticSearchResults(response: any): T {
     const searchTermResultList: T = this.mapToListEntry(response);
-    this.setSearchtermResultList(searchTermResultList);
+    this.searchResultProviderService.setSearchtermResultList(searchTermResultList);
     return searchTermResultList;
-  }
-
-  /**
-   * Holds the current List of results found for a search term
-   *
-   * @param resultList
-   */
-  public setSearchtermResultList(resultList: T) {
-    this.searchTermResultList.next(resultList);
-  }
-
-  public getSearchTermResultList(): Observable<T | null> {
-    return this.searchTermResultList.asObservable();
-  }
-
-  /**
-   * Retrieves details for a specific list item.
-   *
-   * @param id The ID of the list item.
-   * @returns An Observable emitting the details of the list item.
-   */
-  public getDetailsForListItem(id: string): Observable<SearchTermDetails> {
-    return this.backendService.getSearchTermEntryRelations(id).pipe(
-      map((response: any) => {
-        const translations = this.mapToSearchTermTranslations(response.translations);
-        const parents = this.mapToSearchTermRelatives(response.parents);
-        const children = this.mapToSearchTermRelatives(response.children);
-        const relatedTerms = this.mapToSearchTermRelatives(response.relatedTerms);
-
-        return new SearchTermDetails(
-          children,
-          parents,
-          relatedTerms,
-          translations,
-          response.name,
-          response.id
-        );
-      })
-    );
   }
 
   public getElasticSearchResultById(id: string): Observable<T> {
@@ -122,29 +108,9 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
           response.id
         );
         const resultList = new SearchTermResultList(1, [listEntry]) as unknown as T;
-        this.setSearchtermResultList(resultList);
+        this.searchResultProviderService.setSearchtermResultList(resultList);
         return resultList as unknown as T;
       })
     );
-  }
-
-  /**
-   * Maps raw translation response to SearchTermTranslation objects.
-   *
-   * @param translations Raw translation response.
-   * @returns An array of SearchTermTranslation objects.
-   */
-  private mapToSearchTermTranslations(translations: any[]): SearchTermTranslation[] {
-    return translations.map((t: any) => new SearchTermTranslation(t.lang, t.value));
-  }
-
-  /**
-   * Maps raw relative response to SearchTermRelatives objects.
-   *
-   * @param relatives Raw relative response.
-   * @returns An array of SearchTermRelatives objects.
-   */
-  private mapToSearchTermRelatives(relatives: any[]): SearchTermRelatives[] {
-    return relatives.map((r: any) => new SearchTermRelatives(r.name, r.contextualizedTermcodeHash));
   }
 }
