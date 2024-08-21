@@ -13,7 +13,6 @@ import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTer
 import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemService.service';
 import { StageProviderService } from '../Provider/StageProvider.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { UIQuery2StructuredQueryTranslatorService } from '../UIQuery2StructuredQueryTranslator.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 

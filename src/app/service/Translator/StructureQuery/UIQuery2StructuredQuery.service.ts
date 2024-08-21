@@ -1,39 +1,39 @@
-import { AbstractStructuredQueryFilters } from '../model/StructuredQuery/Criterion/AttributeFilters/AbstractStructuredQueryFilters';
-import { AbstractTimeRestriction } from '../model/StructuredQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
-import { AfterFilter } from '../model/StructuredQuery/Criterion/TimeRestriction/AfterFilter';
-import { AtFilter } from '../model/StructuredQuery/Criterion/TimeRestriction/AtFilter';
-import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { BeforeFilter } from '../model/StructuredQuery/Criterion/TimeRestriction/BeforeFilter';
-import { BetweenFilter } from '../model/StructuredQuery/Criterion/TimeRestriction/BetweenFilter';
-import { ConceptAttributeFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptAttributeFilter';
-import { ConceptFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { ConceptValueFilter } from '../model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptValueFilter';
-import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion';
-import { CriterionProviderService } from './Provider/CriterionProvider.service';
-import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
-import { FeatureService } from './Feature.service';
-import { FilterTypes } from '../model/Utilities/FilterTypes';
-import { FilterTypesService } from './FilterTypes.service';
+import { AbstractStructuredQueryFilters } from '../../../model/StructuredQuery/Criterion/AttributeFilters/AbstractStructuredQueryFilters';
+import { AbstractTimeRestriction } from '../../../model/StructuredQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { AfterFilter } from '../../../model/StructuredQuery/Criterion/TimeRestriction/AfterFilter';
+import { AtFilter } from '../../../model/StructuredQuery/Criterion/TimeRestriction/AtFilter';
+import { AttributeFilter } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { BeforeFilter } from '../../../model/StructuredQuery/Criterion/TimeRestriction/BeforeFilter';
+import { BetweenFilter } from '../../../model/StructuredQuery/Criterion/TimeRestriction/BetweenFilter';
+import { ConceptAttributeFilter } from '../../../model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptAttributeFilter';
+import { ConceptFilter } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { ConceptValueFilter } from '../../../model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptValueFilter';
+import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion';
+import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
+import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery';
+import { FeatureService } from '../../Feature.service';
+import { FilterTypes } from '../../../model/Utilities/FilterTypes';
+import { FilterTypesService } from '../../FilterTypes.service';
 import { Injectable } from '@angular/core';
-import { ObjectHelper } from '../modules/querybuilder/controller/ObjectHelper';
-import { QuantityComparatorFilter as QuantityComparatorFilterSQ } from '../model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/QuantityComparatorFilter';
-import { QuantityComparatorFilter as QuantityComparatorFilterFQ } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { QuantityRangeFilter as QuantityRangeFilterSQ } from '../model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/QuantityRangeFilter';
-import { QuantityRangeFilter as QuantityRangeFilterFQ } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
-import { QuantityUnit as QuantityUnitSQ } from '../model/StructuredQuery/QuantityUnit';
-import { QuantityUnit as QuantityUnitFQ } from '../model/FeasibilityQuery/QuantityUnit';
-import { ReferenceFilter as ReferenceFilterSQ } from '../model/StructuredQuery/Criterion/AttributeFilters/ReferenceFilter/ReferenceFilter';
-import { ReferenceFilter as ReferenceFilterFQ } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
-import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
-import { StructuredQueryCriterion } from '../model/StructuredQuery/Criterion/StructuredQueryCriterion';
-import { TerminologyCode } from '../model/Terminology/TerminologyCode';
-import { TimeRestrictionType } from '../model/FeasibilityQuery/TimeRestriction';
-import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { ObjectHelper } from '../../../modules/querybuilder/controller/ObjectHelper';
+import { QuantityComparatorFilter as QuantityComparatorFilterSQ } from '../../../model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/QuantityComparatorFilter';
+import { QuantityComparatorFilter as QuantityComparatorFilterFQ } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
+import { QuantityRangeFilter as QuantityRangeFilterSQ } from '../../../model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/QuantityRangeFilter';
+import { QuantityRangeFilter as QuantityRangeFilterFQ } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
+import { QuantityUnit as QuantityUnitSQ } from '../../../model/StructuredQuery/QuantityUnit';
+import { QuantityUnit as QuantityUnitFQ } from '../../../model/FeasibilityQuery/QuantityUnit';
+import { ReferenceFilter as ReferenceFilterSQ } from '../../../model/StructuredQuery/Criterion/AttributeFilters/ReferenceFilter/ReferenceFilter';
+import { ReferenceFilter as ReferenceFilterFQ } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
+import { StructuredQuery } from '../../../model/StructuredQuery/StructuredQuery';
+import { StructuredQueryCriterion } from '../../../model/StructuredQuery/Criterion/StructuredQueryCriterion';
+import { TerminologyCode } from '../../../model/Terminology/TerminologyCode';
+import { TimeRestrictionType } from '../../../model/FeasibilityQuery/TimeRestriction';
+import { ValueFilter } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UIQuery2StructuredQueryTranslatorService {
+export class UIQuery2StructuredQueryService {
   constructor(
     private featureService: FeatureService,
     private filter: FilterTypesService,

@@ -6,7 +6,7 @@ import { interval, map, Observable, share, switchMap, takeUntil, timer } from 'r
 import { QueryResult } from '../model/Result/QueryResult';
 import { QueryResultLine } from '../model/Result/QueryResultLine';
 import { ResultProviderService } from './Provider/ResultProvider.service';
-import { UIQuery2StructuredQueryTranslatorService } from './UIQuery2StructuredQueryTranslator.service';
+import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class FeasibilityQueryResultService {
   constructor(
     private backend: BackendService,
     private featureService: FeatureService,
-    private translator: UIQuery2StructuredQueryTranslatorService,
+    private translator: UIQuery2StructuredQueryService,
     private resultProvider: ResultProviderService
   ) {}
 
