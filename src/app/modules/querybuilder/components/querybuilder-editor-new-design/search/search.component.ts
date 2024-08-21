@@ -1,9 +1,11 @@
+import { ElasticSearchFilterService } from 'src/app/service/ElasticSearch/ElasticSearchFilter.service';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { mapToSearchTermResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Observable, of, Subscription } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
+import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
@@ -42,8 +44,11 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   selectedDetails$: Observable<SearchTermDetails>;
 
+  searchFilters$: Observable<SearchTermFilter[]>;
+
   constructor(
     public elementRef: ElementRef,
+    private filterService: ElasticSearchFilterService,
     private elasticSearchService: ElasticSearchService<SearchTermResultList, SearchTermListEntry>,
     private cdr: ChangeDetectorRef,
     private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>
@@ -60,6 +65,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.handleSelectedItemsSubscription();
+    this.getElasticSearchFilter();
   }
 
   /**
@@ -153,5 +159,11 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public startElasticSearchWithFilter(filter) {}
+  public getElasticSearchFilter() {
+    this.searchFilters$ = this.filterService.fetchElasticSearchFilters();
+  }
+
+  public setElasticSearchFilter(filter: SearchTermFilter) {
+    this.filterService.setFilters([filter]);
+  }
 }

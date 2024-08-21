@@ -23,6 +23,11 @@
       Suchen
     </button>
   </div>
+  <num-search-filter
+    *ngFor="let searchFilter of searchFilters$ | async"
+    [filter]="searchFilter"
+    (filterChanged)="setElasticSearchFilter($event)"
+  ></num-search-filter>
   <mat-drawer-container>
     <mat-drawer #drawer position="end" mode="side">
       <div fxLayout="column" *ngIf="listItems" class="padding-top-50">
