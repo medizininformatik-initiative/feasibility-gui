@@ -9,6 +9,8 @@ import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchRe
 import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { ElasticSearchFilterService } from './ElasticSearchFilter.service';
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +20,13 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
     totalHits: 0,
     results: [] as C[],
   } as T);
+
+  private filtersSubject = new BehaviorSubject<Array<SearchTermFilter>>([]);
+
   constructor(
     private backendService: BackendService,
+    private filterService: ElasticSearchFilterService,
+
     @Inject('ENTRY_MAPPER') private mapToListEntry: (item: any) => T
   ) {}
 
@@ -44,12 +51,16 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
     valueSets: string[] = [],
     criteriaSets: string[] = []
   ): Observable<any> {
+    const filters = this.filterService.getSelectedValuesForName(
+      ElasticSearchFilterTypes.TERMINOLOGY
+    );
+    console.log(filters);
     if (valueSets.length > 0) {
       return this.backendService.getElasticSearchResultsForCodeableConcept(searchTerm, valueSets);
     } else if (criteriaSets.length > 0) {
       return this.backendService.getElasticSearchResultsForCriteriaSets(searchTerm, criteriaSets);
     } else {
-      return this.backendService.getElasticSearchResultsForCriteria(searchTerm);
+      return this.backendService.getElasticSearchResultsForCriteria(searchTerm, [], filters);
     }
   }
 
@@ -135,17 +146,5 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
    */
   private mapToSearchTermRelatives(relatives: any[]): SearchTermRelatives[] {
     return relatives.map((r: any) => new SearchTermRelatives(r.name, r.contextualizedTermcodeHash));
-  }
-
-  public getElasticSearchFilter(): Observable<Array<SearchTermFilter>> {
-    return this.backendService
-      .getElasticSearchFilter()
-      .pipe(
-        map((response) =>
-          response
-            .filter((filter) => filter.values && filter.values.length > 0)
-            .map((filter) => new SearchTermFilter(filter.name, filter.values))
-        )
-      );
   }
 }
