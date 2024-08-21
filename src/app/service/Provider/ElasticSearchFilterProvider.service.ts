@@ -35,7 +35,7 @@ export class ElasticSearchFilterProvider {
    * @param name The name of the filter to retrieve selected values for.
    * @returns An array of selected values for the specified filter name, or an empty array if the filter is not found.
    */
-  public getSelectedValuesFromType(name: ElasticSearchFilterTypes): string[] {
+  public getSelectedValuesOfType(name: ElasticSearchFilterTypes): string[] {
     const filterMap = this.filtersSubject.value;
     return filterMap.get(name) || [];
   }
