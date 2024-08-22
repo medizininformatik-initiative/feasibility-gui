@@ -1,11 +1,11 @@
-import { CRTDLFilterTypes } from 'src/app/model/Utilities/CRTDLFilterTypes';
+import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 
 export abstract class AbstractProfileFilter {
-  private type: CRTDLFilterTypes;
+  private type: string;
   private name: string;
-  private uiType: string;
+  private uiType: DataSelectionFilterTypes;
 
-  constructor(type: CRTDLFilterTypes, name: string, uiType: string) {
+  constructor(type: string, name: string, uiType: DataSelectionFilterTypes) {
     this.type = type;
     this.name = name;
     this.uiType = uiType;
@@ -19,15 +19,15 @@ export abstract class AbstractProfileFilter {
     this.name = name;
   }
 
-  public getUiType(): string {
+  public getUiType(): DataSelectionFilterTypes {
     return this.uiType;
   }
 
-  public setUiType(value: string): void {
-    this.uiType = value;
+  public setUiType(uiType: DataSelectionFilterTypes): void {
+    this.uiType = uiType;
   }
 
-  public getType(): CRTDLFilterTypes {
+  public getType(): string {
     return this.type;
   }
 }

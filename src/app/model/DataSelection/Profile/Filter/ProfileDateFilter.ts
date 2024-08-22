@@ -1,12 +1,12 @@
-import { CRTDLFilterTypes } from 'src/app/model/Utilities/CRTDLFilterTypes';
 import { AbstractProfileFilter } from './AbstractProfileFilter';
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 
-export class ProfileDateFilter extends AbstractProfileFilter {
+export class ProfileTimeRestrictionFilter extends AbstractProfileFilter {
   private timeRestriction: AbstractTimeRestriction;
 
-  constructor(name: string, ui_type: string, timeRestriction: AbstractTimeRestriction) {
-    super(CRTDLFilterTypes.DATE, name, ui_type);
+  constructor(name: string, type: string, timeRestriction: AbstractTimeRestriction) {
+    super(type, name, DataSelectionFilterTypes.TIMERESTRICTION);
     this.timeRestriction = timeRestriction;
   }
 
