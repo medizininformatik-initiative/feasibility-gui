@@ -1,16 +1,16 @@
 import { AbstractAttributeFilters } from './AttributeFilter/AbstractAttributeFilters';
 import { AbstractCriterion } from './AbstractCriterion';
-import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
 import { AttributeDefinitions } from '../../AttributeDefinitions';
 import { AttributeFilter } from './AttributeFilter/AttributeFilter';
 import { AttributeFiltersBuilder } from './AttributeFilter/AttributeFiltersBuilder';
-import { BetweenFilter } from './TimeRestriction/BetweenFilter';
 import { Criterion } from './Criterion';
 import { CritGroupPosition } from '../CritGroupPosition';
 import { FilterTypes } from '../../Utilities/FilterTypes';
 import { ReferenceCriterion } from './ReferenceCriterion';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
+import { BetweenFilter } from './TimeRestriction/BetweenFilter';
+import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
