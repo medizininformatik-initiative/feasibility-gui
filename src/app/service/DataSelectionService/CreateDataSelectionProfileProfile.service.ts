@@ -1,13 +1,13 @@
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProviderService';
+import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { CRTDLFilterTypes } from 'src/app/model/Utilities/CRTDLFilterTypes';
-import { ProfileDateFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -29,15 +29,15 @@ export class CreateDataSelectionProfileProfile {
         data.map((item: any) => {
           const fields = this.mapNodes(item.fields);
           const filters = item.filters.map((filter: any) => {
-            switch (filter.type) {
-              case CRTDLFilterTypes.DATE:
-                return new ProfileDateFilter(
+            switch (filter.ui_type) {
+              case DataSelectionFilterTypes.TIMERESTRICTION:
+                return new ProfileTimeRestrictionFilter(
                   filter.name,
-                  filter.ui_type,
+                  filter.type,
                   new BetweenFilter(null, null)
                 );
-              case CRTDLFilterTypes.TOKEN:
-                return new ProfileTokenFilter(filter.name, filter.ui_type, filter.valueSetUrls, []);
+              case DataSelectionFilterTypes.CODE:
+                return new ProfileCodeFilter(filter.name, filter.type, filter.valueSetUrls, []);
             }
           });
           const dataSelectionProfileProfile: DataSelectionProfileProfile =
