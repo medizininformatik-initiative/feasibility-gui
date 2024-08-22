@@ -25,7 +25,6 @@ export class EditCriterionService implements OnDestroy {
     const dialogRef = this.dialog.open(EditCriterionModalComponent, {
       data: { criterion },
     });
-
     this.dialogSubscription = dialogRef.afterClosed().subscribe((updatedCriterion: Criterion) => {
       if (updatedCriterion) {
         this.criterionProviderService.setCriterionByUID(updatedCriterion);
@@ -37,6 +36,11 @@ export class EditCriterionService implements OnDestroy {
     const dialogRef = this.dialog.open(EditReferenceCriteriaModalComponent, {
       data: { criterion },
     });
-    this.dialogSubscription = dialogRef.afterClosed().subscribe();
+    this.dialogSubscription = dialogRef.afterClosed().subscribe((updatedCriterion: Criterion) => {
+      if (updatedCriterion) {
+        this.criterionProviderService.setCriterionByUID(updatedCriterion);
+        this.criterionProviderService.getCriterionUIDMap().subscribe((test) => console.log(test));
+      }
+    });
   }
 }

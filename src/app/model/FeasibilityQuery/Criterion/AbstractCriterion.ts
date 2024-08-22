@@ -13,16 +13,17 @@ export abstract class AbstractCriterion {
   private criterionHash?: string;
   private display?: string;
   private isInvalid?: boolean = false;
+  private isReference = false;
   private position?: CritGroupPosition;
   private termCodes?: Array<TerminologyCode> = [];
   private timeRestriction?: AbstractTimeRestriction;
   private uniqueID?: string;
   private valueFilters?: Array<ValueFilter> = [];
-  private hasReference = false;
 
   /**
    * Constructor for AbstractCriterion.
    *
+   * @param isReference - Wether a criterion is a reference
    * @param attributeFilters - Array of AttributeFilter objects.
    * @param criterionHash - Hash string for the criterion.
    * @param context - TerminologyCode object representing the context.
@@ -35,7 +36,7 @@ export abstract class AbstractCriterion {
    * @param valueFilters - Array of ValueFilter objects.
    */
   constructor(
-    hasReference: boolean,
+    isReference: boolean,
     attributeFilters?: Array<AttributeFilter>,
     context?: TerminologyCode,
     criterionHash?: string,
@@ -52,7 +53,7 @@ export abstract class AbstractCriterion {
     this.criterionHash = criterionHash;
     this.display = display;
     this.isInvalid = isInvalid;
-    this.hasReference = hasReference;
+    this.isReference = isReference;
     this.position = position;
     this.termCodes = termCodes;
     this.timeRestriction = timeRestriction;
@@ -62,18 +63,18 @@ export abstract class AbstractCriterion {
 
   /**
    *
-   * @param hasRefrence
+   * @param isReference
    */
-  setHasReference(hasReference: boolean) {
-    this.hasReference = hasReference;
+  setisReference(isReference: boolean) {
+    this.isReference = isReference;
   }
 
   /**
    *
    * @returns
    */
-  getHasReference(): boolean {
-    return this.hasReference;
+  getisReference(): boolean {
+    return this.isReference;
   }
 
   /**

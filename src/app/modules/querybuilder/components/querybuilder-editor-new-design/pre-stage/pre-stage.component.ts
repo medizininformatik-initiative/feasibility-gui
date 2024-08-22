@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
-import { UIQuery2StructuredQueryTranslatorService } from '../../../../../service/UIQuery2StructuredQueryTranslator.service';
 import {
   Component,
   ElementRef,
@@ -47,7 +46,6 @@ export class PreStageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.$listItemArray = this.listItemSelectionService.getSelectedTableItems();
     this.listItemSubscription = this.$listItemArray.subscribe((listItems) => {
-      console.log(listItems);
       const length = listItems.length;
       if (length > 0) {
         this.preservedLength = length;
@@ -73,14 +71,6 @@ export class PreStageComponent implements OnInit, OnDestroy {
 
   public addItemsToStage() {
     this.criterionService.translateListItemsToCriterions();
-    //this.listItemSelectionService.clearSelection();
-    /*this.addItemsSubscription = this.$listItemArray.pipe(take(1)).subscribe((listItems) => {
-      if (listItems.length > 0) {
-        this.preservedLength = listItems.length;
-      }
-      this.addedToStage = true;
-      this.scroll();
-    });*/
   }
 
   scroll() {
@@ -88,13 +78,10 @@ export class PreStageComponent implements OnInit, OnDestroy {
     this.scrollClick.emit(this.atStage);
   }
   translate(): void {
-    /* this.queryProviderService.getFeasibilityQuery().subscribe((query) => {
-      console.log(this.translator.translateToStructuredQuery(query));
-    });*/
     this.router.navigate(['/querybuilder/result'], { state: { preventReset: true } });
   }
 
   isValidQuery(): boolean {
-    return this.query.getInclusionCriteria().length > 0; //|| this.hasInvalidCriteria;
+    return this.query.getInclusionCriteria().length > 0;
   }
 }

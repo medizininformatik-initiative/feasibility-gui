@@ -1,11 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-// Import FormGroup
 
 @Component({
   selector: 'num-search-filter',
@@ -13,39 +7,20 @@ import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchR
   styleUrls: ['./search-filter.component.scss'],
 })
 export class SearchFilterComponent implements OnInit {
-  filters$: Observable<Array<SearchTermFilter>>;
-  filterControls: FormArray;
-  form: FormGroup; // Declare form property
+  @Input()
+  filter: SearchTermFilter;
 
-  @Output() filtersChanged = new EventEmitter<Array<string>>();
+  @Output()
+  filterChanged = new EventEmitter<SearchTermFilter>();
 
-  constructor(
-    private elasticSearchService: ElasticSearchService<SearchTermResultList, SearchTermListEntry>,
-    private formBuilder: FormBuilder
-  ) {
-    this.filterControls = this.formBuilder.array([]);
-    this.form = this.formBuilder.group({
-      filterControls: this.filterControls, // Assign filterControls to the form group
-    });
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-    this.filters$ = this.elasticSearchService.getElasticSearchFilter();
-    this.filters$.subscribe((filters) => {
-      this.initFormControls(filters);
-      this.filterControls.valueChanges.subscribe((values) => {
-        this.onFiltersChange(values);
-      });
-    });
-  }
-  initFormControls(filters: Array<SearchTermFilter>): void {
-    this.filterControls.clear();
-    filters.forEach(() => {
-      this.filterControls.push(this.formBuilder.control('')); // Initialize each control as a single FormControl
-    });
-  }
+  ngOnInit(): void {}
 
-  onFiltersChange(values: Array<string>): void {
-    this.filtersChanged.emit(values);
+  onSelectionChange(selectedValues: string[]): void {
+    if (this.filter) {
+      this.filter.setSelectedValues(selectedValues);
+      this.filterChanged.emit(this.filter);
+    }
   }
 }

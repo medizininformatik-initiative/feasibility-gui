@@ -13,7 +13,6 @@ import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTer
 import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemService.service';
 import { StageProviderService } from '../Provider/StageProvider.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { UIQuery2StructuredQueryTranslatorService } from '../UIQuery2StructuredQueryTranslator.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
@@ -148,6 +147,7 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion: Criterion = criterionBuilder.buildCriterion();
+    console.log(criterion);
     this.criterionProviderService.setCriterionByUID(criterion);
     this.stageProviderService.addCriterionToStage(criterion.getUniqueID());
   }
@@ -190,9 +190,9 @@ export class CreateCriterionService {
         criterionBuilder.buildAttributeFilter(name, code, type, attributeDef) as AttributeFilter
       );
     } else {
-      criterionBuilder.withValueFilters(
-        criterionBuilder.buildAttributeFilter(name, code, type, attributeDef) as ValueFilter
-      );
+      criterionBuilder.withValueFilters([
+        criterionBuilder.buildAttributeFilter(name, code, type, attributeDef) as ValueFilter,
+      ]);
     }
   }
 }

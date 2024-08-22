@@ -1,9 +1,11 @@
+import { ElasticSearchFilterService } from 'src/app/service/ElasticSearch/ElasticSearchFilter.service';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { mapToSearchTermResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Observable, of, Subscription } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
+import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
@@ -18,6 +20,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { ElasticSearchFilterProvider } from 'src/app/service/Provider/ElasticSearchFilterProvider.service';
+import { ElasticSearchSearchTermDetailsService } from 'src/app/service/ElasticSearch/ElasticSearchSearchTermDetails.service';
+import { ElasticSearchSearchResultProviderService } from 'src/app/service/Provider/ElasticSearchSearchResultProviderService.service';
 
 @Component({
   selector: 'num-search',
@@ -26,6 +31,7 @@ import {
   providers: [
     { provide: 'ENTRY_MAPPER', useValue: mapToSearchTermResultList },
     { provide: ElasticSearchService, useClass: ElasticSearchService },
+    { provide: ElasticSearchSearchResultProviderService },
   ],
 })
 export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -42,13 +48,22 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   selectedDetails$: Observable<SearchTermDetails>;
 
+  searchFilters$: Observable<SearchTermFilter[]>;
+
   constructor(
     public elementRef: ElementRef,
+    private filterService: ElasticSearchFilterService,
     private elasticSearchService: ElasticSearchService<SearchTermResultList, SearchTermListEntry>,
     private cdr: ChangeDetectorRef,
-    private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>
+    private elasticSearchFilterProvider: ElasticSearchFilterProvider,
+    private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>,
+    private searchTermDetailsService: ElasticSearchSearchTermDetailsService,
+    private searchResultProviderService: ElasticSearchSearchResultProviderService<
+      SearchTermResultList,
+      SearchTermListEntry
+    >
   ) {
-    this.subscription = this.elasticSearchService
+    this.subscription = this.searchResultProviderService
       .getSearchTermResultList()
       .subscribe((searchTermResults) => {
         if (searchTermResults) {
@@ -60,6 +75,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.handleSelectedItemsSubscription();
+    this.getElasticSearchFilter();
   }
 
   /**
@@ -105,30 +121,23 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public startElasticSearch(searchtext: string) {
-    if (this.isElasticSearchEnabled(searchtext)) {
-      this.searchtext = searchtext;
-      this.elasticSearchService.startElasticSearch(searchtext).subscribe();
-    }
+    this.searchtext = searchtext;
+    this.elasticSearchService.startElasticSearch(searchtext).subscribe();
   }
 
-  private isElasticSearchEnabled(searchtext: string): boolean {
-    const isDifferentSearchText = this.searchtext !== searchtext;
-    return isDifferentSearchText;
-  }
-
-  public setSelectedRowItem(item) {
+  public setSelectedRowItem(item: InterfaceTableDataRow) {
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
     const itemId = item.originalEntry.id;
     if (selectedIds.includes(itemId)) {
-      this.selectedTableItemsService.removeFromSelection(item.originalEntry);
+      this.selectedTableItemsService.removeFromSelection(item.originalEntry as SearchTermListEntry);
     } else {
-      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry);
+      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry as SearchTermListEntry);
     }
   }
 
   public setClickedRow(row: InterfaceTableDataRow) {
     const originalEntry = row.originalEntry as SearchTermListEntry;
-    this.elasticSearchService
+    this.searchTermDetailsService
       .getDetailsForListItem(originalEntry.id)
       .subscribe((details: SearchTermDetails) => {
         this.selectedDetails$ = of(details);
@@ -154,5 +163,12 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public startElasticSearchWithFilter(filter) {}
+  public getElasticSearchFilter() {
+    this.searchFilters$ = this.filterService.fetchElasticSearchFilters();
+  }
+
+  public setElasticSearchFilter(filter: SearchTermFilter) {
+    this.elasticSearchFilterProvider.setFilter(filter);
+    this.startElasticSearch(this.searchtext);
+  }
 }

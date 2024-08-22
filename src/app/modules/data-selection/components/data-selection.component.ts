@@ -4,6 +4,8 @@ import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionSe
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
+import { DataSelection2DataExtraction } from 'src/app/service/Translator/CRTDL/DataSelection2DataExtraction.service';
+import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -17,7 +19,9 @@ export class DataSelectionComponent implements OnInit {
 
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileProfile,
-    private dataSelectionProfileTreeService: DataSelectionProfileTreeService
+    private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
+    private service: DataSelection2DataExtraction,
+    private crdtlService: CreateCRDTL
   ) {}
 
   ngOnInit(): void {
@@ -41,5 +45,10 @@ export class DataSelectionComponent implements OnInit {
     } else {
       this.selectedDataSelectionProfileNodeIds.add(originalEntry.url);
     }
+  }
+
+  test() {
+    this.crdtlService.createCRDTL().subscribe((test) => console.log(test));
+    this.service.translateToDataExtraction();
   }
 }

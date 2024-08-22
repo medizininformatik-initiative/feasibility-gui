@@ -1,6 +1,25 @@
+import { ElasticSearchFilterTypes } from '../../Utilities/ElasticSearchFilterTypes';
+import { SearchTermFilterValues } from './SearchTermFilterValues';
+
 export class SearchTermFilter {
-  name: string;
-  values: string[] = [];
+  name: ElasticSearchFilterTypes;
+
+  /**
+   * @todo
+   * Needs to be checked if its usable for all types (selectaböe-concept | boolean )
+   *    {
+        "name": "kds_module",
+        "type": "selectable-concept",
+        "values": []
+    },
+    {
+        "name": "availability",
+        "type": "boolean",
+        "values": []
+    }
+   */
+  values: SearchTermFilterValues[] = [];
+  selectedValues: string[] = [];
 
   /**
    * Constructs a new SearchTermFilter.
@@ -8,7 +27,7 @@ export class SearchTermFilter {
    * @param name - The name of the filter.
    * @param values - An array of filter values.
    */
-  constructor(name: string, values: string[]) {
+  constructor(name: ElasticSearchFilterTypes, values: SearchTermFilterValues[]) {
     this.name = name;
     this.values = values;
   }
@@ -18,7 +37,7 @@ export class SearchTermFilter {
    *
    * @returns The name of the filter.
    */
-  public getName(): string {
+  public getName(): ElasticSearchFilterTypes {
     return this.name;
   }
 
@@ -27,7 +46,7 @@ export class SearchTermFilter {
    *
    * @param name - The new name of the filter.
    */
-  public setName(name: string): void {
+  public setName(name: ElasticSearchFilterTypes): void {
     this.name = name;
   }
 
@@ -36,7 +55,7 @@ export class SearchTermFilter {
    *
    * @returns An array of filter values.
    */
-  public getValues(): string[] {
+  public getValues(): SearchTermFilterValues[] {
     return this.values;
   }
 
@@ -45,7 +64,15 @@ export class SearchTermFilter {
    *
    * @param values - The new filter values.
    */
-  public setValues(values: string[]): void {
+  public setValues(values: SearchTermFilterValues[]): void {
     this.values = values;
+  }
+
+  public setSelectedValues(values: string[]): void {
+    this.selectedValues = values;
+  }
+
+  public getSelectedValues(): string[] {
+    return this.selectedValues;
   }
 }

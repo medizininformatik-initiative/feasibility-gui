@@ -9,6 +9,7 @@ import { mapToCodeableConceptResultList } from 'src/app/service/ElasticSearch/Li
 import { Subscription } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { ElasticSearchSearchResultProviderService } from 'src/app/service/Provider/ElasticSearchSearchResultProviderService.service';
 
 @Component({
   selector: 'num-concept',
@@ -17,6 +18,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
   providers: [
     { provide: 'ENTRY_MAPPER', useValue: mapToCodeableConceptResultList },
     { provide: ElasticSearchService, useClass: ElasticSearchService },
+    { provide: ElasticSearchSearchResultProviderService },
   ],
 })
 export class ConceptComponent implements OnDestroy, OnInit {
@@ -45,18 +47,27 @@ export class ConceptComponent implements OnDestroy, OnInit {
     private elasticSearchService: ElasticSearchService<
       CodeableConceptResultList,
       CodeableConceptResultListEntry
+    >,
+    private searchResultProviderService: ElasticSearchSearchResultProviderService<
+      CodeableConceptResultList,
+      CodeableConceptResultListEntry
     >
   ) {}
 
   ngOnInit() {
-    this.subscription = this.elasticSearchService
+    this.subscription = this.searchResultProviderService
       .getSearchTermResultList()
       .subscribe((searchTermResults: CodeableConceptResultList) => {
+        console.log(searchTermResults);
         if (searchTermResults) {
           this.adaptListItems(searchTermResults.results);
         }
       });
     this.initializeArrayOfSelectedConcepts();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   private initializeArrayOfSelectedConcepts() {
@@ -83,12 +94,6 @@ export class ConceptComponent implements OnDestroy, OnInit {
         }
       }
       return false;
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
     }
   }
 

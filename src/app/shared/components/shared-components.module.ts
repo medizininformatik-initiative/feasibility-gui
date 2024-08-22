@@ -18,6 +18,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { TableComponent } from './table/table.component';
+import { ModalWindowComponent } from './modal-window/modal-window.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -30,6 +31,7 @@ const SHARED_DECLARATIONS = [
   SearchResultComponent,
   TreeComponent,
   MenuComponent,
+  ModalWindowComponent,
 ];
 
 @NgModule({
@@ -42,6 +44,7 @@ const SHARED_DECLARATIONS = [
     TreeComponent,
     ActionBarComponent,
     MenuComponent,
+    ModalWindowComponent,
   ],
   imports: [
     CommonModule,

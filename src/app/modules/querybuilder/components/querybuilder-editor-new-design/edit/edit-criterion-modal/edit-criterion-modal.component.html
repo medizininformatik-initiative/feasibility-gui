@@ -1,4 +1,4 @@
-<div class="container">
+<num-modal-window (saveButtonSelected)="saveCriterion()" (cancelButtonSelected)="closeDialog()">
   <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
     <num-attribute-filter
       [attributeFilter]="attributeFilter"
@@ -16,8 +16,4 @@
     (timeRestrictionChanged)="updateTimeRestriction($event)"
   >
   </num-edit-time-restriction>
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <button mat-raised-button class="select-button" (click)="saveCriterion()">Auswählen</button>
-    <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>
-  </div>
-</div>
+</num-modal-window>

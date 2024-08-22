@@ -1,10 +1,13 @@
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProfileFilter } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileFilter';
 import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProviderService';
+import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -25,15 +28,18 @@ export class CreateDataSelectionProfileProfile {
       map((data: any[]) =>
         data.map((item: any) => {
           const fields = this.mapNodes(item.fields);
-          const filters = item.filters.map(
-            (filter: any) =>
-              new DataSelectionProfileProfileFilter(
-                filter.type,
-                filter.name,
-                filter.ui_type,
-                filter.referencedCriteriaSet || ''
-              )
-          );
+          const filters = item.filters.map((filter: any) => {
+            switch (filter.ui_type) {
+              case DataSelectionFilterTypes.TIMERESTRICTION:
+                return new ProfileTimeRestrictionFilter(
+                  filter.name,
+                  filter.type,
+                  new BetweenFilter(null, null)
+                );
+              case DataSelectionFilterTypes.CODE:
+                return new ProfileCodeFilter(filter.name, filter.type, filter.valueSetUrls, []);
+            }
+          });
           const dataSelectionProfileProfile: DataSelectionProfileProfile =
             new DataSelectionProfileProfile(item.url, item.display, fields, filters);
           this.dataSelectionProvider.setDataSelectionProfileByUID(

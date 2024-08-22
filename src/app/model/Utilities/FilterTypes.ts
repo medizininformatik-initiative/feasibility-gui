@@ -1,5 +1,6 @@
 /**
  * @todo We need to define a main type for Quantity which holds QUANTITY_COMPARATOR, QUANTITY_NOT_SET, QUANTITY_RANGE
+ * @todo needs to be renamed to FeasibilityFilterTypes
  */
 export enum FilterTypes {
   CONCEPT = 'concept', // e.g. "weiblich, männlich"

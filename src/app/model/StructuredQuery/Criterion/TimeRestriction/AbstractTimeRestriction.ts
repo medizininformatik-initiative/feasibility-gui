@@ -1,5 +1,5 @@
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters';
+import { AbstractStructuredQueryFilters } from '../AttributeFilters/AbstractStructuredQueryFilters';
 
 /**
  * @todo make sure that type doesnt appear in timeRestriction in the AnnotatedStructuredQuery
