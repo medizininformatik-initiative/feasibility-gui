@@ -3,6 +3,21 @@ import { SearchTermFilterValues } from './SearchTermFilterValues';
 
 export class SearchTermFilter {
   name: ElasticSearchFilterTypes;
+
+  /**
+   * @todo
+   * Needs to be checked if its usable for all types (selectaböe-concept | boolean )
+   *    {
+        "name": "kds_module",
+        "type": "selectable-concept",
+        "values": []
+    },
+    {
+        "name": "availability",
+        "type": "boolean",
+        "values": []
+    }
+   */
   values: SearchTermFilterValues[] = [];
   selectedValues: string[] = [];
 

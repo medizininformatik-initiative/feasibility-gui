@@ -29,7 +29,6 @@ export class EditTimeRestrictionComponent implements OnInit {
   }
 
   onTimeRestrictionChange(timeRestriction: string) {
-    console.log(timeRestriction);
     this.selectedDate = timeRestriction;
     this.setSelectedTimeRestriction();
   }

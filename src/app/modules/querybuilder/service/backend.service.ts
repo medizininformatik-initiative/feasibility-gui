@@ -1,23 +1,17 @@
+import { AnnotatedStructuredQuery } from 'src/app/model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { AppConfigService } from '../../../config/app-config.service';
-//import { CategoryEntry, TerminologyEntry } from 'src/app/model/terminology/Terminology';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { FeatureService } from '../../../service/Feature.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, of } from 'rxjs';
-//import { QueryProviderService } from './query-provider.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-//import { QueryProviderService } from './query-provider.service';
 import { QueryResponse } from '../model/api/result/QueryResponse';
-import { SearchTermFilter } from '../../../model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
+import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
+import { SearchTermListEntry } from '../../../shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
-import { StructuredQueryTemplate } from 'src/app/model/SavedInquiry/StructuredQuery/StructuredQueryTemplate';
-import { SearchTermListEntry } from '../../../shared/models/ListEntries/SearchTermListEntry';
-import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
-import { AnnotatedStructuredQuery } from 'src/app/model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 @Injectable({
   providedIn: 'root',
 })
@@ -25,17 +19,12 @@ export class BackendService {
   constructor(
     private config: AppConfigService,
     private feature: FeatureService,
-    //private queryProviderService: QueryProviderService,
-    //private queryProviderService: QueryProviderService,
     private http: HttpClient,
-    private authStorage: OAuthStorage //private apiTranslator: UIQuery2StructuredQueryTranslatorService, //private latestQueryResult: QueryProviderService
+    private authStorage: OAuthStorage
   ) {}
 
   public static BACKEND_UUID_NAMESPACE = '00000000-0000-0000-0000-000000000000';
-  private static PATH_ROOT_ENTRIES = 'terminology/categories';
-  private static PATH_TERMINOLOGY_SUBTREE = 'terminology/entries';
   private static PATH_TERMINOLOGY = 'terminology/';
-  private static PATH_SEARCH = 'terminology/entries';
   private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
   private static PATH_SAVED = 'saved';
   private static PATH_TERMINOLOGY_SEARCH_CONCEPT = 'codeable_concept/entry/search';
@@ -100,10 +89,8 @@ export class BackendService {
     );
   }
 
-  public getElasticSearchFilter(): Observable<Array<SearchTermFilter>> {
-    return this.http.get<Array<SearchTermFilter>>(
-      this.createUrl(BackendService.PATH_TERMINOLOGY_SEARCH_FILTER)
-    );
+  public getElasticSearchFilter(): Observable<Array<any>> {
+    return this.http.get<any>(this.createUrl(BackendService.PATH_TERMINOLOGY_SEARCH_FILTER));
   }
 
   public getCriteriaProfileData(ids: Array<string>): Observable<Array<CriteriaProfileData>> {
@@ -129,23 +116,24 @@ export class BackendService {
    * @param limit
    * @param offset
    * @returns
-   * offset optional?
    */
   public getElasticSearchResultsForCriteria(
     searchString: string,
-    url?: string,
-    context?: string,
-    terminology?: string,
-    kds?: string,
-    availability?: number,
-    limit?: number,
+    context: string[] = [],
+    terminologies: string[] = [],
+    kds: string[] = [],
+    availability: string[],
+    limit: number = 100,
     offset?: number
   ): Observable<{ totalHits: number; results: any[] }> {
-    const contextParameter = context ? '&context=' + context : '';
-    const terminologyParameter = terminology ? '&terminology=' + terminology : '';
-    const kdsParameter = kds ? '&kds=' + kds : '';
+    const contextParameter = context ? '&contexts=' + context : '';
+    const commaSeparatedTerminologyParameter: string = terminologies.join(',');
+    const terminologyParameter = commaSeparatedTerminologyParameter
+      ? '&terminologies=' + commaSeparatedTerminologyParameter
+      : '';
+    const kdsParameter = kds ? '&kds-modules=' + kds : '';
     const availabilityParameter = availability ? '&availability=' + availability : '';
-    const limitParameter = limit ? '&pageSize=' + limit : '';
+    const limitParameter = limit ? '&page-size=' + limit : '';
     const offsetParameter = offset ? '&page=' + offset : '';
     return this.http.get<{ totalHits: number; results: any[] }>(
       this.createUrl(
@@ -168,9 +156,9 @@ export class BackendService {
     limit?: number,
     offset?: number
   ): Observable<{ totalHits: number; results: any[] }> {
-    const limitParameter = limit ? '&pageSize=' + limit : '';
+    const limitParameter = limit ? '&page-size=' + limit : '';
     const offsetParameter = offset ? '&page=' + offset : '';
-    const encodedCommaSeperatedValueSets = '&valueSets' + encodeURI([valueSets].join(','));
+    const encodedCommaSeperatedValueSets = '&value-sets=' + encodeURI([valueSets].join(','));
     return this.http.get<{ totalHits: number; results: any[] }>(
       this.createUrl(
         BackendService.PATH_TERMINOLOGY_SEARCH_CONCEPT +
@@ -189,10 +177,11 @@ export class BackendService {
     limit?: number,
     offset?: number
   ): Observable<{ totalHits: number; results: any[] }> {
-    const limitParameter = limit ? '&pageSize=' + limit : '';
+    const limitParameter = limit ? '&page-size=' + limit : '';
     const offsetParameter = offset ? '&page=' + offset : '';
 
-    const encodedCommaSeperatedCriteriaSets = '&criteriaSets=' + encodeURI([criteriaSets].join(','));
+    const encodedCommaSeperatedCriteriaSets =
+      '&criteria-sets=' + encodeURI([criteriaSets].join(','));
     return this.http.get<{ totalHits: number; results: any[] }>(
       this.createUrl(
         BackendService.PATH_TERMINOLOGY_SEARCH +
