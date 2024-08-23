@@ -12,6 +12,8 @@
       ></num-quantity-comparision-select>
       <ng-container *ngIf="selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN">
         <num-quantity-range
+          [minValue]="quantityRangeFilter?.getMinValue()"
+          [maxValue]="quantityRangeFilter?.getMaxValue()"
           (quantityValues)="setSelectedQuantityValues($event)"
         ></num-quantity-range>
       </ng-container>

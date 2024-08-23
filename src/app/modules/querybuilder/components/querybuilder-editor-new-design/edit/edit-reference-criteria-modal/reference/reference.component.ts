@@ -95,14 +95,12 @@ export class ReferenceComponent implements OnInit, OnDestroy {
   }
 
   startElasticSearch(searchtext: string) {
-    if (this.searchtext !== searchtext) {
       this.searchtext = searchtext;
       this.elasticSearchService
         .startElasticSearch(searchtext, [], this.referenceFilterUri)
         .subscribe((test) => {
           this.listItems = test.results;
         });
-    }
   }
 
   setSelectedReferenceCriteria() {

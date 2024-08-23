@@ -9,10 +9,10 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 export const mapToCodeableConceptResultList = (item: any): CodeableConceptResultList => {
   const listItems: Array<CodeableConceptResultListEntry> = item.results.map((resultItem) => {
     const terminologyCode = new TerminologyCode(
-      resultItem.termCode.code,
-      resultItem.termCode.display,
-      resultItem.termCode.system,
-      resultItem.termCode.version
+      resultItem.code,
+      resultItem.display,
+      resultItem.system,
+      resultItem.version
     );
     return new CodeableConceptResultListEntry(terminologyCode, item.termCodecode);
   });

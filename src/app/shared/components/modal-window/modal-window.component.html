@@ -3,7 +3,7 @@
     <ng-content></ng-content>
   </div>
   <div fxLayout="row" fxLayoutAlign="start center">
-    <button mat-raised-button class="select-button" (click)="save()">Auswählen</button>
+    <button mat-raised-button class="select-button" [disabled] ="disabled" (click)="save()">Auswählen</button>
     <button mat-raised-button class="select-button" (click)="cancel()">abrechen</button>
   </div>
 </div>

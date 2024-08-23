@@ -27,7 +27,7 @@ export class BackendService {
   private static PATH_TERMINOLOGY = 'terminology/';
   private static PATH_CRITERIA_SET_INTERSECT = 'terminology/criteria-set/intersect';
   private static PATH_SAVED = 'saved';
-  private static PATH_TERMINOLOGY_SEARCH_CONCEPT = 'codeable_concept/entry/search';
+  private static PATH_TERMINOLOGY_SEARCH_CONCEPT = 'codeable-concept/entry/search';
   private static PATH_TERMINOLOGY_SEARCH = 'terminology/entry/search';
   private static PATH_TERMINOLOGY_SEARCH_FILTER = 'terminology/search/filter';
   private static PATH_CRITERIA_PROFILE = 'terminology/criteria-profile-data';

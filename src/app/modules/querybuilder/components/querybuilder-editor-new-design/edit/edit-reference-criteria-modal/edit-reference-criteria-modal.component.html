@@ -1,4 +1,4 @@
-<num-modal-window (saveButtonSelected)="saveCriterion()" (cancelButtonSelected)="closeDialog()">
+<num-modal-window [disabled]="ids.length === 0" (saveButtonSelected)="saveCriterion()" (cancelButtonSelected)="closeDialog()">
   <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
     <num-reference
       *ngIf="attributeFilter.getReference()"
@@ -11,7 +11,6 @@
     <num-reference
       *ngIf="valueFilter.getReference()"
       [referenceFilter]="valueFilter.getReference()"
-      (selectedReferenceIds)="setSelectedReferenceIds($event)"
     >
     </num-reference>
   </div>

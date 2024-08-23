@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'num-modal-window',
@@ -6,6 +6,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./modal-window.component.scss'],
 })
 export class ModalWindowComponent {
+  @Input()
+  disabled: boolean = false;
+
   @Output()
   cancelButtonSelected = new EventEmitter();
 
