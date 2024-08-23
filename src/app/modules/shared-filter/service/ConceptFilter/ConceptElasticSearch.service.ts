@@ -13,6 +13,9 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root',
 })
 export class ConceptElasticSearchService {
+  /**
+   * @Todo muss ne Map vom BehaviourSubject werden, um mehrere Ergebnisslisten zu pflegen
+   */
   private searchResultsSubject = new BehaviorSubject<CodeableConceptResultList | null>(null);
   searchResults$ = this.searchResultsSubject.asObservable();
 
@@ -21,7 +24,7 @@ export class ConceptElasticSearchService {
 
   public searchConcepts(searchText: string, allowedConceptUri: string[]): void {
     this.backendService
-      .getElasticSearchResultsForCriteria(searchText, [], [], [], [])
+      .getElasticSearchResultsForCodeableConcept(searchText, allowedConceptUri)
       .pipe(map((response) => this.mapToCodeableConceptResultList(response)))
       .subscribe((results) => this.searchResultsSubject.next(results));
   }

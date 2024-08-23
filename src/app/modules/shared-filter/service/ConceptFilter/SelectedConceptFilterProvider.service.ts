@@ -6,7 +6,10 @@ import { TerminologyCodeService } from '../TerminologyService/TerminologyCode.se
 @Injectable({
   providedIn: 'root',
 })
-export class ConceptFilterProviderService {
+export class SelectedConceptFilterProviderService {
+  /**
+   * @Todo muss ne Map vom BehaviourSubject werden, um mehrere Ergebnisslisten zu pflegen
+   */
   private selectedConceptsSubject: BehaviorSubject<Array<TerminologyCode>> = new BehaviorSubject<
     Array<TerminologyCode>
   >([]);
@@ -55,5 +58,11 @@ export class ConceptFilterProviderService {
 
   public getTerminologyCodeDetails(code: string): TerminologyCode | undefined {
     return this.terminologyCodeService.getTerminologyCode(code);
+  }
+
+  public findConcept(terminologyCode: TerminologyCode): TerminologyCode | undefined {
+    return this.selectedConceptsSubject
+      .getValue()
+      .find((tc) => tc.getCode() === terminologyCode.getCode());
   }
 }
