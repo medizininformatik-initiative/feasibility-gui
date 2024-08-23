@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ConceptService } from '../../../service/ConceptFilter/ConceptFilter.service';
+import { ConceptFilterProviderService } from '../../../service/ConceptFilter/ConceptFilterProvider.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Observable, of } from 'rxjs';
+import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
   selector: 'num-staged-concepts',
@@ -8,17 +11,15 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
   styleUrls: ['./staged-concepts.component.scss'],
 })
 export class StagedConceptsComponent implements OnInit {
-  arrayOfSelectedConcepts: TerminologyCode[] = [];
+  arrayOfSelectedConcepts$: Observable<TerminologyCode[]> = of([]);
 
-  constructor(private conceptService: ConceptService) {}
+  constructor(private conceptProviderService: ConceptFilterProviderService) {}
 
   ngOnInit(): void {
-    this.conceptService.getSelectedConcepts().subscribe((selectedConcepts) => {
-      this.arrayOfSelectedConcepts = Array.from(selectedConcepts);
-    });
+    this.arrayOfSelectedConcepts$ = this.conceptProviderService.getSelectedConcepts();
   }
 
   public removeSelectedConcept(selectedConcept: TerminologyCode): void {
-    this.conceptService.removeConcept(selectedConcept.getCode());
+    this.conceptProviderService.removeConcept(selectedConcept);
   }
 }

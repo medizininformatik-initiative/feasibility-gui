@@ -1,10 +1,9 @@
-import { AbstractConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/AbstractConceptFilter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ConceptElasticSearchService } from '../../service/ConceptFilter/ConceptElasticSearchService.service';
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { ConceptService } from '../../service/ConceptFilter/ConceptFilter.service';
-import { Subscription } from 'rxjs';
+import { ConceptElasticSearchService } from '../../service/ConceptFilter/ConceptElasticSearch.service';
+import { ConceptFilterProviderService } from '../../service/ConceptFilter/ConceptFilterProvider.service';
+import { Observable, Subscription } from 'rxjs';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Component({
   selector: 'num-shared-concept-filter',
@@ -13,34 +12,31 @@ import { Subscription } from 'rxjs';
 })
 export class SharedConceptFilterComponent implements OnInit, OnDestroy {
   @Input()
-  conceptFilter: ConceptFilter;
+  allowedConceptUri: string[] = ['test'];
+
+  @Input()
+  preSelectedConcepts: TerminologyCode[] = [];
 
   @Output()
-  changedConceptFilter = new EventEmitter<AbstractConceptFilter>();
+  changedSelectedConcepts = new EventEmitter<TerminologyCode[]>();
 
-  testUri = ['test'];
+  searchResults$: Observable<CodeableConceptResultList>;
 
-  searchResults: CodeableConceptResultList;
   private subscription: Subscription;
 
   constructor(
-    private conceptService: ConceptService,
-    private conceptFiletrSearchService: ConceptElasticSearchService
+    private conceptService: ConceptFilterProviderService,
+    private conceptFilterSearchService: ConceptElasticSearchService
   ) {}
 
   ngOnInit() {
-    this.conceptService.initializeSelectedConcepts(this.conceptFilter);
-    this.conceptService.getSelectedConcepts().subscribe(() => {
-      this.updateAndEmitConceptFilter();
-    });
+    this.conceptService.initializeSelectedConcepts(this.preSelectedConcepts);
+    this.searchResults$ = this.conceptFilterSearchService.getCurrentSearchResults();
 
-    this.subscription = this.conceptFiletrSearchService
-      .getCurrentSearchResults()
-      .subscribe((searchTermResults: CodeableConceptResultList) => {
-        if (searchTermResults) {
-          console.log(searchTermResults);
-          this.searchResults = searchTermResults;
-        }
+    this.subscription = this.conceptService
+      .getSelectedConcepts()
+      .subscribe((selectedConcepts: TerminologyCode[]) => {
+        this.updateAndEmitConceptFilter(selectedConcepts);
       });
   }
 
@@ -50,10 +46,7 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updateAndEmitConceptFilter(): void {
-    this.conceptService.getSelectedConcepts().subscribe((selectedConcepts) => {
-      this.conceptFilter.setSelectedConcepts(selectedConcepts);
-      this.changedConceptFilter.emit(this.conceptFilter);
-    });
+  private updateAndEmitConceptFilter(selectedConcepts: TerminologyCode[]): void {
+    this.changedSelectedConcepts.emit(selectedConcepts);
   }
 }

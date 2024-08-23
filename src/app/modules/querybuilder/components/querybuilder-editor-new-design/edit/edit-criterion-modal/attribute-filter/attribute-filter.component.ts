@@ -1,8 +1,8 @@
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 
 @Component({
   selector: 'num-attribute-filter',
@@ -10,11 +10,15 @@ import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
   styleUrls: ['./attribute-filter.component.scss'],
 })
 export class AttributeFilterComponent implements OnInit {
-  @Input() attributeFilter: AttributeFilter
+  @Input() attributeFilter: AttributeFilter;
 
-  @Output() attributeFilterChange = new EventEmitter<AttributeFilter>()
+  @Output() attributeFilterChange = new EventEmitter<AttributeFilter>();
 
   ngOnInit(): void {}
+
+  public test(event) {
+    console.log(event);
+  }
 
   public updateConceptFilter(conceptFilter: ConceptFilter) {
     const newAttributeFilter = new AttributeFilter(
@@ -25,8 +29,8 @@ export class AttributeFilterComponent implements OnInit {
       undefined,
       undefined,
       this.attributeFilter.getOptional()
-    )
-    this.attributeFilterChange.emit(newAttributeFilter)
+    );
+    this.attributeFilterChange.emit(newAttributeFilter);
   }
 
   public updateQuantityFilter(quantityFilter: AbstractQuantityFilter) {
@@ -38,7 +42,7 @@ export class AttributeFilterComponent implements OnInit {
       quantityFilter,
       undefined,
       this.attributeFilter.getOptional()
-    )
-    this.attributeFilterChange.emit(newAttributeFilter)
+    );
+    this.attributeFilterChange.emit(newAttributeFilter);
   }
 }

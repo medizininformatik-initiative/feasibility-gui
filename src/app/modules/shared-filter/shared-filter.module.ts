@@ -8,7 +8,7 @@ import { SearchConceptComponent } from './components/shared-concept-filter/searc
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 import { mapToCodeableConceptResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
-import { ConceptElasticSearchService } from './service/ConceptFilter/ConceptElasticSearchService.service';
+import { ConceptElasticSearchService } from './service/ConceptFilter/ConceptElasticSearch.service';
 
 @NgModule({
   declarations: [
@@ -19,10 +19,5 @@ import { ConceptElasticSearchService } from './service/ConceptFilter/ConceptElas
   ],
   imports: [CommonModule, LayoutModule, SharedModule],
   exports: [SharedConceptFilterComponent],
-  providers: [
-    { provide: ElasticSearchService, useClass: ElasticSearchService },
-    { provide: 'ENTRY_MAPPER', useValue: mapToCodeableConceptResultList },
-    ConceptElasticSearchService,
-  ],
 })
 export class SharedFilterModule {}

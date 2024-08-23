@@ -1,7 +1,7 @@
-<div *ngIf="arrayOfSelectedConcepts.length > 0">
+<div *ngIf="(arrayOfSelectedConcepts$ | async).length > 0">
   <div class="filter-title">Filter selection</div>
   <div
-    *ngFor="let selectedConceptFilter of arrayOfSelectedConcepts"
+    *ngFor="let selectedConceptFilter of arrayOfSelectedConcepts$ | async"
     fxLayout="row"
     fxLayoutAlign="start center"
     class="selectedFilterBox"

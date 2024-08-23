@@ -1,71 +1,68 @@
-import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { ConceptService } from '../../../service/ConceptFilter/ConceptFilter.service';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ConceptElasticSearchService } from '../../../service/ConceptFilter/ConceptElasticSearch.service';
+import { ConceptFilterProviderService } from '../../../service/ConceptFilter/ConceptFilterProvider.service';
+import { InterfaceListEntry } from 'src/app/shared/models/ListEntries/InterfaceListEntry';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { Subscription } from 'rxjs';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { StagedConceptService } from '../../../service/ConceptFilter/StagedConceptService .service';
-import { ConceptElasticSearchService } from '../../../service/ConceptFilter/ConceptElasticSearchService.service';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 
 @Component({
   selector: 'num-concept-filter-table',
   templateUrl: './concept-filter-table.component.html',
   styleUrls: ['./concept-filter-table.component.scss'],
-  providers: [SelectedTableItemsService],
 })
-export class ConceptFilterTableComponent implements OnInit {
-  @ViewChild(TableComponent)
-  tableComponent: TableComponent;
+export class ConceptFilterTableComponent implements OnInit, OnDestroy {
+  @ViewChild(TableComponent) tableComponent: TableComponent;
 
   adaptedData: TableData;
   selectedRows: InterfaceTableDataRow[] = [];
 
+  selectedConcepts: TerminologyCode[] = [];
+
+  tableDataRowIds: string[] = [];
+
+  private subscription: Subscription = new Subscription();
+
   constructor(
-    private selectedTableItemsService: SelectedTableItemsService<CodeableConceptResultListEntry>,
     private conceptElasticSearchService: ConceptElasticSearchService,
-    private stagedConceptService: StagedConceptService,
-    private conceptService: ConceptService
+    private conceptService: ConceptFilterProviderService
   ) {}
 
   ngOnInit() {
-    this.adaptListEntriesToTableData();
+    this.subscription = this.conceptElasticSearchService
+      .getCurrentSearchResults()
+      .subscribe((entries: CodeableConceptResultList) => {
+        console.log(entries);
+        this.adaptedData = this.conceptElasticSearchService.adaptListItems(entries);
+      });
   }
 
-  public adaptListEntriesToTableData() {
-    this.conceptElasticSearchService.getCurrentSearchResults().subscribe((entries) => {
-      this.adaptedData = this.conceptElasticSearchService.adaptListItems(entries);
-    });
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   public setSelectedRow(item: InterfaceTableDataRow) {
-    const entry = item.originalEntry as CodeableConceptResultListEntry;
-    this.selectedTableItemsService.setSelectedTableItem(entry);
+    this.tableDataRowIds.push(item.id);
+    this.stageConcepts(item.originalEntry);
+  }
 
-    // Add the selected concept to the staging service
-    const terminologyCode = this.createTerminologyCode(entry);
-    this.stagedConceptService.addStagedConcept(terminologyCode);
+  private stageConcepts(originalEntry: InterfaceListEntry) {
+    const entry = originalEntry as CodeableConceptResultListEntry;
+    const terminologyCode = this.createTerminologyCode(entry.getTerminologyCode());
+    this.selectedConcepts.push(terminologyCode);
   }
 
   public toggleIsSelected() {
-    this.stagedConceptService.getStagedConcepts().subscribe((stagedConcepts) => {
-      stagedConcepts.forEach((concept) => {
-        this.conceptService.addConcept(concept);
-      });
-      this.stagedConceptService.clearStagedConcepts();
-    });
-
-    // Unselect all checkboxes in the table
-    const selectedIds = this.selectedTableItemsService.getSelectedIds();
-    this.tableComponent.unselectCheckbox(selectedIds);
-    this.selectedTableItemsService.clearSelection();
+    this.conceptService.addConcepts(this.selectedConcepts);
+    //this.tableComponent.unselectCheckbox(this.tableDataRowIds);
   }
 
-  private createTerminologyCode(codeableConcept: any): TerminologyCode {
+  private createTerminologyCode(codeableConcept: TerminologyCode): TerminologyCode {
     return new TerminologyCode(
       codeableConcept.getCode(),
       codeableConcept.getDisplay(),

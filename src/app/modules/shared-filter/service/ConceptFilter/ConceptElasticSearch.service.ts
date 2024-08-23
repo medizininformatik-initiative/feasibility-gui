@@ -1,11 +1,13 @@
+import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -14,25 +16,14 @@ export class ConceptElasticSearchService {
   private searchResultsSubject = new BehaviorSubject<CodeableConceptResultList | null>(null);
   searchResults$ = this.searchResultsSubject.asObservable();
 
-  constructor(
-    private elasticSearchService: ElasticSearchService<
-      CodeableConceptResultList,
-      CodeableConceptResultListEntry
-    >
-  ) {}
+  private i = 0;
+  constructor(private backendService: BackendService) {}
 
-  searchConcepts(searchText: string, allowedConceptUri: string[]): void {
-    this.elasticSearchService
-      .startElasticSearch(searchText, allowedConceptUri)
-      .pipe(map((response) => this.processElasticSearchResults(response)))
+  public searchConcepts(searchText: string, allowedConceptUri: string[]): void {
+    this.backendService
+      .getElasticSearchResultsForCriteria(searchText, [], [], [], [])
+      .pipe(map((response) => this.mapToCodeableConceptResultList(response)))
       .subscribe((results) => this.searchResultsSubject.next(results));
-  }
-
-  private processElasticSearchResults(
-    response: CodeableConceptResultList
-  ): CodeableConceptResultList {
-    // Optionally process the results here
-    return response;
   }
 
   public getCurrentSearchResults(): Observable<CodeableConceptResultList> {
@@ -41,5 +32,19 @@ export class ConceptElasticSearchService {
 
   public adaptListItems(results: CodeableConceptResultList): TableData {
     return CodeableConceptListEntryAdapter.adapt(results.getResults());
+  }
+
+  private mapToCodeableConceptResultList(item: any): CodeableConceptResultList {
+    const listItems: Array<CodeableConceptResultListEntry> = item.results.map((resultItem) => {
+      this.i++;
+      const terminologyCode = new TerminologyCode(
+        `test_${this.i}`, //resultItem.termCode.code,
+        `test_${this.i}`, //resultItem.termCode.display,
+        `test_${this.i}`, //resultItem.termCode.system,
+        `test_${this.i}` //resultItem.termCode.version
+      );
+      return new CodeableConceptResultListEntry(terminologyCode, uuidv4());
+    });
+    return new CodeableConceptResultList(item.totalHits, listItems);
   }
 }
