@@ -1,11 +1,8 @@
-<div fxLayout="column" fxLayoutAlign="start start" fxFlexFill>
-  <button mat-raised-button (click)="test()"></button>
+<div fxLayout="column" fxLayoutAlign="start start" style="overflow: auto; height: 500px">
   <num-searchbar class="searchbar-container"></num-searchbar>
-  <num-tree
-    class="tree-container"
-    (selectedCheckbox)="addItemsToStage($event)"
-    [treeData]="tree"
-  ></num-tree>
+  <div *ngFor="let tree of trees" class="tree-container">
+    <num-tree (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
+  </div>
   <num-action-bar class="bottom">
     <button
       class="background-color-button"
