@@ -2,8 +2,12 @@ import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Pro
 import { TreeNode } from '../TreeNodeInterface';
 
 export class FieldsTreeAdapter {
-  static fromTree(tree: DataSelectionProfileProfileNode): TreeNode {
-    return FieldsTreeAdapter.toTreeNode(tree);
+  static fromTree(trees: DataSelectionProfileProfileNode[]): TreeNode[] {
+    const result = [];
+    trees.forEach((tree) => {
+      result.push(FieldsTreeAdapter.toTreeNode(tree));
+    });
+    return result;
   }
 
   static toTreeNode(node: any): TreeNode {
