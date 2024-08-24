@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -19,7 +19,6 @@ export class ConceptElasticSearchService {
   private searchResultsSubject = new BehaviorSubject<CodeableConceptResultList | null>(null);
   searchResults$ = this.searchResultsSubject.asObservable();
 
-  private i = 0;
   constructor(private backendService: BackendService) {}
 
   public searchConcepts(searchText: string, allowedConceptUri: string[]): void {
@@ -39,15 +38,18 @@ export class ConceptElasticSearchService {
 
   private mapToCodeableConceptResultList(item: any): CodeableConceptResultList {
     const listItems: Array<CodeableConceptResultListEntry> = item.results.map((resultItem) => {
-      this.i++;
       const terminologyCode = new TerminologyCode(
-        `test_${this.i}`, //resultItem.termCode.code,
-        `test_${this.i}`, //resultItem.termCode.display,
-        `test_${this.i}`, //resultItem.termCode.system,
-        `test_${this.i}` //resultItem.termCode.version
+        resultItem.code,
+        resultItem.display,
+        resultItem.system,
+        resultItem.version
       );
       return new CodeableConceptResultListEntry(terminologyCode, uuidv4());
     });
     return new CodeableConceptResultList(item.totalHits, listItems);
+  }
+
+  public clearResultList() {
+    this.searchResultsSubject.next(null);
   }
 }

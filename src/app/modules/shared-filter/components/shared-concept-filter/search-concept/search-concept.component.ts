@@ -8,19 +8,13 @@ import { Component, Input } from '@angular/core';
 })
 export class SearchConceptComponent {
   @Input()
-  allowedConceptUri: string[];
+  allowedConceptUri: string[] = [];
 
-  constructor(private conceptFiletrSearchService: ConceptElasticSearchService) {}
-
-  searchtext = '';
+  constructor(private conceptFilterSearchService: ConceptElasticSearchService) {}
 
   public startElasticSearch(searchtext: string) {
-    this.performElasticSearch(searchtext);
-  }
-
-  private performElasticSearch(searchtext: string): void {
     if (this.allowedConceptUriExists())
-      {this.conceptFiletrSearchService.searchConcepts(searchtext, this.allowedConceptUri);}
+      {this.conceptFilterSearchService.searchConcepts(searchtext, this.allowedConceptUri);}
   }
 
   private allowedConceptUriExists(): boolean {

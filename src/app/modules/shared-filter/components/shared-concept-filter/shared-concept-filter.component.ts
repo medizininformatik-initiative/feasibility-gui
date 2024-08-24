@@ -1,8 +1,8 @@
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ConceptElasticSearchService } from '../../service/ConceptFilter/ConceptElasticSearch.service';
-import { ConceptFilterProviderService } from '../../service/ConceptFilter/ConceptFilterProvider.service';
 import { Observable, Subscription } from 'rxjs';
+import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Component({
@@ -12,7 +12,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 })
 export class SharedConceptFilterComponent implements OnInit, OnDestroy {
   @Input()
-  allowedConceptUri: string[] = ['test'];
+  allowedConceptUri: string[] = [];
 
   @Input()
   preSelectedConcepts: TerminologyCode[] = [];
@@ -25,15 +25,15 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
-    private conceptService: ConceptFilterProviderService,
+    private selectedConceptFilterService: SelectedConceptFilterProviderService,
     private conceptFilterSearchService: ConceptElasticSearchService
   ) {}
 
   ngOnInit() {
-    this.conceptService.initializeSelectedConcepts(this.preSelectedConcepts);
+    this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     this.searchResults$ = this.conceptFilterSearchService.getCurrentSearchResults();
 
-    this.subscription = this.conceptService
+    this.subscription = this.selectedConceptFilterService
       .getSelectedConcepts()
       .subscribe((selectedConcepts: TerminologyCode[]) => {
         this.updateAndEmitConceptFilter(selectedConcepts);
@@ -44,6 +44,8 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.conceptFilterSearchService.clearResultList();
+    this.selectedConceptFilterService.clearSelectedConceptFilter();
   }
 
   private updateAndEmitConceptFilter(selectedConcepts: TerminologyCode[]): void {

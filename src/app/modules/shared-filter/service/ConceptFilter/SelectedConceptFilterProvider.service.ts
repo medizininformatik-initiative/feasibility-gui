@@ -65,4 +65,8 @@ export class SelectedConceptFilterProviderService {
       .getValue()
       .find((tc) => tc.getCode() === terminologyCode.getCode());
   }
+
+  public clearSelectedConceptFilter() {
+    this.selectedConceptsSubject.next([]);
+  }
 }
