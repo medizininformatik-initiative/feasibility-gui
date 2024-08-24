@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConceptFilterProviderService } from '../../../service/ConceptFilter/ConceptFilterProvider.service';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { Observable, of } from 'rxjs';
-import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Component({
   selector: 'num-staged-concepts',
@@ -13,7 +11,7 @@ import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchT
 export class StagedConceptsComponent implements OnInit {
   arrayOfSelectedConcepts$: Observable<TerminologyCode[]> = of([]);
 
-  constructor(private conceptProviderService: ConceptFilterProviderService) {}
+  constructor(private conceptProviderService: SelectedConceptFilterProviderService) {}
 
   ngOnInit(): void {
     this.arrayOfSelectedConcepts$ = this.conceptProviderService.getSelectedConcepts();
