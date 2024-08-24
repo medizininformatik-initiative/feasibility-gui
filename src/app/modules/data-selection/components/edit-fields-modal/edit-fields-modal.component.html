@@ -1,6 +1,11 @@
-<div class="container">
+<num-modal-window (saveButtonSelected)="saveFields()" (cancelButtonSelected)="closeDialog()">
   <div class="tree-container">
-    <num-tree [treeData]="tree" (selectedCheckbox)="setSelectedFieldElement($event)"></num-tree>
+    <div *ngFor="let singleTree of tree">
+      <num-tree
+        [treeData]="singleTree"
+        (selectedCheckbox)="setSelectedFieldElement($event)"
+      ></num-tree>
+    </div>
   </div>
   <div *ngIf="arrayOfSelectedFields.length > 0">
     <div class="filter-title">Field selection</div>
@@ -26,8 +31,4 @@
       </div>
     </div>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <button mat-raised-button class="select-button" (click)="saveFields()">Auswählen</button>
-    <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>
-  </div>
-</div>
+</num-modal-window>
