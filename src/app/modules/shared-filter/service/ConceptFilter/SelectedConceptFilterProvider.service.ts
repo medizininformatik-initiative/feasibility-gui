@@ -20,7 +20,7 @@ export class SelectedConceptFilterProviderService {
 
   public initializeSelectedConcepts(terminologyCodes: TerminologyCode[]): void {
     this.selectedConceptsSubject.next(terminologyCodes);
-    terminologyCodes.forEach((tc) => this.terminologyCodeService.addTerminologyCode(tc));
+    //terminologyCodes.forEach((tc) => this.terminologyCodeService.addTerminologyCode(tc));
   }
 
   public isConceptSelected(terminologyCode: TerminologyCode): boolean {

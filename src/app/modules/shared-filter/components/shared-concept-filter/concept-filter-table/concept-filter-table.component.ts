@@ -41,7 +41,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   private updateCheckboxSelection(): void {
     this.adaptedData.body.rows.forEach((row) => {
       const listEntry = row.originalEntry as CodeableConceptResultListEntry;
-      const termCode = listEntry.getTerminologyCode();
+      const termCode = this.createTerminologyCode(listEntry.getTerminologyCode());
       row.isCheckboxSelected = this.selectedConceptProviderService.findConcept(termCode)
         ? true
         : false;

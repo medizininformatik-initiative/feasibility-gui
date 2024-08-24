@@ -1,5 +1,8 @@
 import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 
+/**
+ * We assume that the name of the filter is unique and therefore is used by us as an id to identifie a filter
+ */
 export abstract class AbstractProfileFilter {
   private type: string;
   private name: string;

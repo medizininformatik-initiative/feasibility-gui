@@ -6,6 +6,7 @@ import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelection
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { DataSelection2DataExtraction } from 'src/app/service/Translator/CRTDL/DataSelection2DataExtraction.service';
 import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
+import { DataSelectionProviderService } from '../services/DataSelectionProviderService';
 
 @Component({
   selector: 'num-data-selection',
@@ -13,20 +14,18 @@ import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.servic
   styleUrls: ['./data-selection.component.scss'],
 })
 export class DataSelectionComponent implements OnInit {
-  tree: TreeNode;
+  trees: TreeNode[];
 
   selectedDataSelectionProfileNodeIds: Set<string> = new Set();
 
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileProfile,
-    private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
-    private service: DataSelection2DataExtraction,
-    private crdtlService: CreateCRDTL
+    private dataSelectionProfileTreeService: DataSelectionProfileTreeService
   ) {}
 
   ngOnInit(): void {
     this.dataSelectionProfileTreeService.createProfileTree().subscribe((tree) => {
-      this.tree = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
+      this.trees = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
     });
   }
 
@@ -45,10 +44,5 @@ export class DataSelectionComponent implements OnInit {
     } else {
       this.selectedDataSelectionProfileNodeIds.add(originalEntry.url);
     }
-  }
-
-  test() {
-    this.crdtlService.createCRDTL().subscribe((test) => console.log(test));
-    this.service.translateToDataExtraction();
   }
 }

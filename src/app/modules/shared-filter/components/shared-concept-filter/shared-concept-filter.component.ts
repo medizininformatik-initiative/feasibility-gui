@@ -30,7 +30,9 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
+    if (this.preSelectedConcepts.length > 0) {
+      this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
+    }
     this.searchResults$ = this.conceptFilterSearchService.getCurrentSearchResults();
 
     this.subscription = this.selectedConceptFilterService
