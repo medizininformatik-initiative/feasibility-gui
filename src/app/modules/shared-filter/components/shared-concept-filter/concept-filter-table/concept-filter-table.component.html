@@ -2,7 +2,9 @@
   *ngIf="adaptedData?.body.rows.length > 0"
   class="result-list-container"
   [tableData]="adaptedData"
-  (selectedRow)="setSelectedRow($event)"
+  (selectedRow)="addSelectedRow($event)"
 >
 </num-table>
-<button (click)="toggleIsSelected()" mat-raised-button class="add-button" color="white">add</button>
+<button (click)="addSelectedConceptsToStage()" mat-raised-button class="add-button" color="white">
+  add
+</button>
