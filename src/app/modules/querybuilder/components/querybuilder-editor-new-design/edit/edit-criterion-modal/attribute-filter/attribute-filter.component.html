@@ -2,6 +2,7 @@
   <num-shared-concept-filter
     *ngIf="attributeFilter.isConceptSet()"
     [conceptFilter]="attributeFilter.getConcept()"
+    [allowedConceptUri]="attributeFilter.getConcept().getAllowedConceptUri()"
     (changedSelectedConcepts)="test($event)"
   >
   </num-shared-concept-filter>
