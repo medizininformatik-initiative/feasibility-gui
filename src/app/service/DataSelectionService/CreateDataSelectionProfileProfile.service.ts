@@ -34,7 +34,7 @@ export class CreateDataSelectionProfileProfile {
   }
 
   private createFilters(filters: any): AbstractProfileFilter[] {
-    const profileFilters = filters.map((filter: any) => {
+    const profileFilters = filters?.map((filter: any) => {
       switch (filter.ui_type) {
         case DataSelectionFilterTypes.TIMERESTRICTION:
           return this.createProfileTimeRestrictionFilter(filter);
@@ -64,7 +64,7 @@ export class CreateDataSelectionProfileProfile {
   }
 
   private mapNodes(nodes: any[]): DataSelectionProfileProfileNode[] {
-    return nodes.map((node) => this.mapNode(node));
+    return nodes?.map((node) => this.mapNode(node));
   }
 
   private mapNode(node: any): DataSelectionProfileProfileNode {

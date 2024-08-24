@@ -10,14 +10,16 @@ export class FieldsTreeAdapter {
     return result;
   }
 
-  static toTreeNode(node: any): TreeNode {
+  static toTreeNode(node: DataSelectionProfileProfileNode): TreeNode {
     return {
-      id: node?.id,
+      id: node?.getId(),
       data: {
-        name: node?.name,
-        display: node?.display,
+        name: node?.getName(),
+        display: node?.getDisplay(),
+        selectable: true,
+        isCheckboxSelected: node.getIsSelected(),
       },
-      children: node?.children?.map((child: any) => FieldsTreeAdapter.toTreeNode(child)),
+      children: node?.getChildren()?.map((child: any) => FieldsTreeAdapter.toTreeNode(child)),
       originalEntry: node,
     };
   }
