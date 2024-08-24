@@ -17,14 +17,14 @@ export class CreateCRDTL {
   ) {}
 
   public createCRDTL(): Observable<CRTDL> {
-    return this.feasibilityQueryProvider.getFeasibilityQueryByID('1').pipe(
-      map((feasibilityQuery) => this.buildCRDTL(feasibilityQuery))
-    );
+    return this.feasibilityQueryProvider
+      .getFeasibilityQueryByID('1')
+      .pipe(map((feasibilityQuery) => this.buildCRDTL(feasibilityQuery)));
   }
 
   private buildCRDTL(feasibilityQuery: Map<string, FeasibilityQuery>): CRTDL {
     const version = 'http://json-schema.org/to-be-done/schema#';
-      const display = '';
+    const display = '';
     const cohortDefinition = this.uiQueryTranslator.translateToStructuredQuery(
       feasibilityQuery.get('1')
     );

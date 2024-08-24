@@ -1,3 +1,4 @@
+import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
@@ -21,39 +22,49 @@ export class CreateDataSelectionProfileProfile {
   public getDataSelectionProfileProfileData(
     urls: string[]
   ): Observable<DataSelectionProfileProfile[]> {
-    urls = [
-      'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab',
-    ];
     return this.backend.getDataSelectionProfileData(urls).pipe(
       map((data: any[]) =>
         data.map((item: any) => {
           const fields = this.mapNodes(item.fields);
-          const filters = item.filters.map((filter: any) => {
-            switch (filter.ui_type) {
-              case DataSelectionFilterTypes.TIMERESTRICTION:
-                return new ProfileTimeRestrictionFilter(
-                  filter.name,
-                  filter.type,
-                  new BetweenFilter(null, null)
-                );
-              case DataSelectionFilterTypes.CODE:
-                return new ProfileCodeFilter(filter.name, filter.type, filter.valueSetUrls, []);
-            }
-          });
-          const dataSelectionProfileProfile: DataSelectionProfileProfile =
-            new DataSelectionProfileProfile(item.url, item.display, fields, filters);
-          this.dataSelectionProvider.setDataSelectionProfileByUID(
-            dataSelectionProfileProfile.getUrl(),
-            dataSelectionProfileProfile
-          );
-          return dataSelectionProfileProfile;
+          const filters = this.createFilters(item.filters);
+          return this.instanceOfDataSelectionProfileProfile(item, fields, filters);
         })
       )
     );
   }
 
+  private createFilters(filters: any): AbstractProfileFilter[] {
+    const profileFilters = filters?.map((filter: any) => {
+      switch (filter.ui_type) {
+        case DataSelectionFilterTypes.TIMERESTRICTION:
+          return this.createProfileTimeRestrictionFilter(filter);
+        case DataSelectionFilterTypes.CODE:
+          return new ProfileCodeFilter(filter.name, filter.type, filter.valueSetUrls, []);
+      }
+    });
+    return profileFilters;
+  }
+
+  private createProfileTimeRestrictionFilter(filter: any): ProfileTimeRestrictionFilter {
+    return new ProfileTimeRestrictionFilter(filter.name, filter.type, new BetweenFilter(null, null));
+  }
+
+  private instanceOfDataSelectionProfileProfile(
+    item: any,
+    fields: DataSelectionProfileProfileNode[],
+    filters: AbstractProfileFilter[]
+  ): DataSelectionProfileProfile {
+    const dataSelectionProfileProfile: DataSelectionProfileProfile =
+      new DataSelectionProfileProfile(item.url, item.display, fields, filters);
+    this.dataSelectionProvider.setDataSelectionProfileByUID(
+      dataSelectionProfileProfile.getUrl(),
+      dataSelectionProfileProfile
+    );
+    return dataSelectionProfileProfile;
+  }
+
   private mapNodes(nodes: any[]): DataSelectionProfileProfileNode[] {
-    return nodes.map((node) => this.mapNode(node));
+    return nodes?.map((node) => this.mapNode(node));
   }
 
   private mapNode(node: any): DataSelectionProfileProfileNode {

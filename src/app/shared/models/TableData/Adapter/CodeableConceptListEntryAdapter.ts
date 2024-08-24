@@ -11,20 +11,22 @@ export class CodeableConceptListEntryAdapter {
   };
 
   public static adapt(listEntries: CodeableConceptResultListEntry[]): TableData {
-    const rows: InterfaceTableDataRow[] = listEntries.map((entry) => ({
-      id: uuidv4(),
-      data: [
-        entry.getTerminologyCode().getDisplay(),
-        entry.getTerminologyCode().getSystem(),
-        entry.getTerminologyCode().getCode(),
-      ],
-      hasCheckbox: true,
-      isCheckboxSelected: entry.getIsSelected(),
-      isClickable: false,
-      isDisabled: true,
-      checkboxColumnIndex: 0,
-      originalEntry: entry,
-    }));
+    const rows: InterfaceTableDataRow[] = listEntries.map(
+      (entry: CodeableConceptResultListEntry) => ({
+        id: uuidv4(),
+        data: [
+          entry.getTerminologyCode().getDisplay(),
+          entry.getTerminologyCode().getSystem(),
+          entry.getTerminologyCode().getCode(),
+        ],
+        hasCheckbox: true,
+        isCheckboxSelected: entry.getIsSelected(),
+        isClickable: false,
+        isDisabled: true,
+        checkboxColumnIndex: 0,
+        originalEntry: entry,
+      })
+    );
 
     const body: InterfaceTableDataBody = { rows };
 

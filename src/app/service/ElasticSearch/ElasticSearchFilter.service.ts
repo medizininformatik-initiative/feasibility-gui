@@ -18,13 +18,15 @@ export class ElasticSearchFilterService {
    * @returns An Observable emitting the current list of filters.
    */
   public fetchElasticSearchFilters(): Observable<Array<SearchTermFilter>> {
-    return this.backendService.getElasticSearchFilter().pipe(
-      map((response) =>
-        response
-          .filter((filter) => filter.values && filter.values.length > 0)
-          .map((filter) => this.createSearchTermFilter(filter))
-      )
-    );
+    return this.backendService
+      .getElasticSearchFilter()
+      .pipe(
+        map((response) =>
+          response
+            .filter((filter) => filter.values && filter.values.length > 0)
+            .map((filter) => this.createSearchTermFilter(filter))
+        )
+      );
   }
 
   private createSearchTermFilter(filter: {

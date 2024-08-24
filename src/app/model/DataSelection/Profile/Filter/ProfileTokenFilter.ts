@@ -33,4 +33,20 @@ export class ProfileCodeFilter extends AbstractProfileFilter {
   public setSelectedTokens(selectedTokens: TerminologyCode[]) {
     this.selectedTokens = selectedTokens;
   }
+
+  public setSelectedToken(selectedToken: TerminologyCode): TerminologyCode[] {
+    if (this.selectedTokens.length > 0) {
+      const index = this.selectedTokens.findIndex(
+        (preSelectedToken) => preSelectedToken.getCode() === selectedToken.getCode()
+      );
+      if (index !== -1) {
+        this.selectedTokens[index] = selectedToken;
+      } else {
+        this.selectedTokens.push(selectedToken);
+      }
+    } else {
+      this.selectedTokens.push(selectedToken);
+    }
+    return this.selectedTokens;
+  }
 }

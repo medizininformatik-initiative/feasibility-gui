@@ -2,18 +2,24 @@ import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Pro
 import { TreeNode } from '../TreeNodeInterface';
 
 export class FieldsTreeAdapter {
-  static fromTree(tree: DataSelectionProfileProfileNode): TreeNode {
-    return FieldsTreeAdapter.toTreeNode(tree);
+  static fromTree(trees: DataSelectionProfileProfileNode[]): TreeNode[] {
+    const result = [];
+    trees.forEach((tree) => {
+      result.push(FieldsTreeAdapter.toTreeNode(tree));
+    });
+    return result;
   }
 
-  static toTreeNode(node: any): TreeNode {
+  static toTreeNode(node: DataSelectionProfileProfileNode): TreeNode {
     return {
-      id: node?.id,
+      id: node?.getId(),
       data: {
-        name: node?.name,
-        display: node?.display,
+        name: node?.getName(),
+        display: node?.getDisplay(),
+        selectable: true,
+        isCheckboxSelected: node.getIsSelected(),
       },
-      children: node?.children?.map((child: any) => FieldsTreeAdapter.toTreeNode(child)),
+      children: node?.getChildren()?.map((child: any) => FieldsTreeAdapter.toTreeNode(child)),
       originalEntry: node,
     };
   }

@@ -58,35 +58,35 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
 
     return this.backendService.getElasticSearchResultsForCriteria(
       searchTerm,
+      availabilityFilter,
       contextFilter,
-      terminologyFilters,
       kdsModuleFilter,
-      availabilityFilter
+      terminologyFilters
     );
   }
 
-  private getTerminologyFilter(): string[] {
-    return this.elasticSearchFilterProvider.getSelectedValuesOfType(
-      ElasticSearchFilterTypes.TERMINOLOGY
-    );
+  private getTerminologyFilter(): string {
+    return this.elasticSearchFilterProvider
+      .getSelectedValuesOfType(ElasticSearchFilterTypes.TERMINOLOGY)
+      .join(',');
   }
 
-  private getContextFilter(): string[] {
-    return this.elasticSearchFilterProvider.getSelectedValuesOfType(
-      ElasticSearchFilterTypes.CONTEXT
-    );
+  private getContextFilter(): string {
+    return this.elasticSearchFilterProvider
+      .getSelectedValuesOfType(ElasticSearchFilterTypes.CONTEXT)
+      .join(',');
   }
 
-  private getAvailabilityFilter(): string[] {
-    return this.elasticSearchFilterProvider.getSelectedValuesOfType(
-      ElasticSearchFilterTypes.AVAILABILITY
-    );
+  private getAvailabilityFilter(): string {
+    return this.elasticSearchFilterProvider
+      .getSelectedValuesOfType(ElasticSearchFilterTypes.AVAILABILITY)
+      .join(',');
   }
 
-  private getKdsModuleFilter(): string[] {
-    return this.elasticSearchFilterProvider.getSelectedValuesOfType(
-      ElasticSearchFilterTypes.KDSMODULE
-    );
+  private getKdsModuleFilter(): string {
+    return this.elasticSearchFilterProvider
+      .getSelectedValuesOfType(ElasticSearchFilterTypes.KDSMODULE)
+      .join(',');
   }
 
   public processElasticSearchResults(response: any): T {

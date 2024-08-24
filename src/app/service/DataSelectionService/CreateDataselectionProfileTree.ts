@@ -9,40 +9,43 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataSelectionProfileTreeService {
-  constructor(private backend: BackendService) {}
+  constructor(private backendservice: BackendService) {}
 
   public createProfileTree(profileTreeData?: any): Observable<DataSelectionProfileTree> {
-    return this.backend.getDataSelectionProfileTree().pipe(
+    return this.backendservice.getDataSelectionProfileTree().pipe(
       map((response) => {
-        const rootNode = this.createNode(response);
+        const rootNode = this.createNode(response.children);
         const treeRoot = this.createTreeRoot(profileTreeData, rootNode);
-        return new DataSelectionProfileTree(treeRoot, [rootNode]);
+        return new DataSelectionProfileTree(treeRoot, rootNode);
       })
     );
   }
 
   private createTreeRoot(
     data: any,
-    rootNode: DataSelectionProfileTreeNode
+    rootNode: DataSelectionProfileTreeNode[]
   ): DataSelectionProfileTreeRoot {
-    return new DataSelectionProfileTreeRoot(data?.name, data?.module, data?.url, [rootNode]);
+    return new DataSelectionProfileTreeRoot(data?.name, data?.module, data?.url, rootNode);
   }
 
-  private createNode(data: any): DataSelectionProfileTreeNode {
-    const childrenNodes = this.convertChildrenToNodes(data.children);
-    return new DataSelectionProfileTreeNode(
-      data.id,
-      data.name,
-      data.display,
-      data.module,
-      data.url,
-      data.leaf,
-      data.selectable,
-      childrenNodes
-    );
-  }
-
-  private convertChildrenToNodes(children: any[]): DataSelectionProfileTreeNode[] {
-    return children?.map((child) => this.createNode(child));
+  private createNode(data: any): DataSelectionProfileTreeNode[] {
+    const result = [];
+    if (data) {
+      data.forEach((child) => {
+        result.push(
+          new DataSelectionProfileTreeNode(
+            child.id,
+            child.name,
+            child.display,
+            child.module,
+            child.url,
+            child.leaf,
+            child.selectable,
+            this.createNode(child?.children)
+          )
+        );
+      });
+    }
+    return result;
   }
 }

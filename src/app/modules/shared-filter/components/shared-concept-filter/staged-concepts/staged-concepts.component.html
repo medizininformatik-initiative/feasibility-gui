@@ -1,0 +1,21 @@
+<div *ngIf="(arrayOfSelectedConcepts$ | async).length > 0">
+  <div class="filter-title">Filter selection</div>
+  <div
+    *ngFor="let selectedConceptFilter of arrayOfSelectedConcepts$ | async"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    class="selectedFilterBox"
+  >
+    <div fxFlex="30" class="display-part">
+      {{ selectedConceptFilter.display }}
+    </div>
+    <div fxFlex="30" class="display-part">
+      {{ selectedConceptFilter.code }} ({{ selectedConceptFilter.system }})
+    </div>
+    <div fxFlexAlign="end">
+      <button (click)="removeSelectedConcept(selectedConceptFilter)" class="delete-button">
+        entfernen
+      </button>
+    </div>
+  </div>
+</div>

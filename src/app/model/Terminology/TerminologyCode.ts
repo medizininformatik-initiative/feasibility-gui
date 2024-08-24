@@ -17,6 +17,16 @@ export class TerminologyCode {
   }
 
   /**
+   * Method to check wheather a Termonolgy Code already exists
+   *
+   * @param other
+   * @returns
+   */
+  equals(other: TerminologyCode): boolean {
+    return this.code === other.code && this.system === other.system;
+  }
+
+  /**
    * Getter for the 'code' property.
    *
    * @returns The code of the terminology code.

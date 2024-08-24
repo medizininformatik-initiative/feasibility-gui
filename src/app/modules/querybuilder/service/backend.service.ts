@@ -119,18 +119,15 @@ export class BackendService {
    */
   public getElasticSearchResultsForCriteria(
     searchString: string,
-    context: string[] = [],
-    terminologies: string[] = [],
-    kds: string[] = [],
-    availability: string[],
+    availability?: string,
+    context?: string,
+    kds?: string,
+    terminologies?: string,
     limit: number = 100,
     offset?: number
   ): Observable<{ totalHits: number; results: any[] }> {
     const contextParameter = context ? '&contexts=' + context : '';
-    const commaSeparatedTerminologyParameter: string = terminologies.join(',');
-    const terminologyParameter = commaSeparatedTerminologyParameter
-      ? '&terminologies=' + commaSeparatedTerminologyParameter
-      : '';
+    const terminologyParameter = terminologies ? '&terminologies=' + terminologies : '';
     const kdsParameter = kds ? '&kds-modules=' + kds : '';
     const availabilityParameter = availability ? '&availability=' + availability : '';
     const limitParameter = limit ? '&page-size=' + limit : '';

@@ -58,8 +58,8 @@ export class DataSelectionProfileProfileNode {
     return this.isSelected;
   }
 
-  public setIsSelected(value: boolean): void {
-    this.isSelected = value;
+  public setIsSelected(isSelected: boolean): void {
+    this.isSelected = isSelected;
   }
 
   public getIsRequired(): boolean {

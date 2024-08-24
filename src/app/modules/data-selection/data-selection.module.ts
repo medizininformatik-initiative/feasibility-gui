@@ -14,6 +14,7 @@ import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.c
 import { EditFieldsModalComponent } from './components/edit-fields-modal/edit-fields-modal.component';
 import { EditFilterModalComponent } from './components/edit-filter-modal/edit-filter-modal.component';
 import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
+import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
     FileSaverModule,
     SnackBarComponent,
     QuerybuilderModule,
+    SharedFilterModule,
   ],
 })
 export class DataSelectionModule {}

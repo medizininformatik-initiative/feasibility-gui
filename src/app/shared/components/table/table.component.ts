@@ -31,4 +31,13 @@ export class TableComponent implements OnInit {
     row.isCheckboxSelected = !row.isCheckboxSelected;
     this.selectedRow.emit(row);
   }
+
+  public unselectCheckbox(ids: string[]) {
+    ids.forEach((id) => {
+      const foundRow = this.tableData.body.rows.find((row) => row.id === id);
+      if (foundRow && foundRow.isCheckboxSelected) {
+        foundRow.isCheckboxSelected = false;
+      }
+    });
+  }
 }

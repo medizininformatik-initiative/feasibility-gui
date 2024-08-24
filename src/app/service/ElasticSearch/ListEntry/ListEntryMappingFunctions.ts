@@ -5,6 +5,7 @@ import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/Elastic
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { v4 as uuidv4 } from 'uuid';
 
 export const mapToCodeableConceptResultList = (item: any): CodeableConceptResultList => {
   const listItems: Array<CodeableConceptResultListEntry> = item.results.map((resultItem) => {
@@ -14,7 +15,7 @@ export const mapToCodeableConceptResultList = (item: any): CodeableConceptResult
       resultItem.system,
       resultItem.version
     );
-    return new CodeableConceptResultListEntry(terminologyCode, item.termCodecode);
+    return new CodeableConceptResultListEntry(terminologyCode, uuidv4());
   });
   return new CodeableConceptResultList(item.totalHits, listItems);
 };
