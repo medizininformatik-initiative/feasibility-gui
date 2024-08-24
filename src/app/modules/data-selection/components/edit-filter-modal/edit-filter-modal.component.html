@@ -1,11 +1,16 @@
-<div class="container">
-  hello
-  <num-edit-time-restriction
-    [timeRestriction]="timeRestriction"
-    (timeRestrictionChanged)="setTimeRestriction($event)"
-  ></num-edit-time-restriction>
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <button mat-raised-button class="select-button">Auswählen</button>
-    <button mat-raised-button class="select-button" (click)="closeDialog()">abrechen</button>
+<num-modal-window (cancelButtonSelected)="closeDialog()" (saveButtonSelected)="saveDataSelection()">
+  <div *ngFor="let profileTimeFilter of profileTimeFilters">
+    <num-edit-time-restriction
+      [timeRestriction]="profileTimeFilter.getTimeRestriction()"
+      (timeRestrictionChanged)="setTimeRestriction($event, profileTimeFilter)"
+    ></num-edit-time-restriction>
   </div>
-</div>
+  <div *ngFor="let profileCodeFilter of profileCodeFilters">
+    <num-shared-concept-filter
+      [allowedConceptUri]="profileCodeFilter?.getValueSetUrls()"
+      [preSelectedConcepts]="profileCodeFilter?.getSelectedTokens()"
+      (changedSelectedConcepts)="setProfileCodeFilter($event, profileCodeFilter)"
+    >
+    </num-shared-concept-filter>
+  </div>
+</num-modal-window>
