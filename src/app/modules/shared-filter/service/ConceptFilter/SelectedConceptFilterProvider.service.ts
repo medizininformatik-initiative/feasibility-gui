@@ -39,7 +39,15 @@ export class SelectedConceptFilterProviderService {
   }
 
   public addConcepts(terminologyCodes: TerminologyCode[]): void {
-    terminologyCodes.map((terminologyCode) => this.addConcept(terminologyCode));
+    const currentArray = this.selectedConceptsSubject.getValue();
+    const newConcepts = terminologyCodes.filter(
+      (terminologyCode) => !currentArray.some((tc) => tc.getCode() === terminologyCode.getCode())
+    );
+
+    if (newConcepts.length > 0) {
+      const updatedArray = [...currentArray, ...newConcepts];
+      this.selectedConceptsSubject.next(updatedArray);
+    }
   }
 
   public removeConcept(terminologyCode: TerminologyCode): void {
