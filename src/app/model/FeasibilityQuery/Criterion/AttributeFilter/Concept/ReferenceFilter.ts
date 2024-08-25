@@ -21,7 +21,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
   constructor(
     allowedReferenceUri: Array<string>,
     selectedReferences: ReferenceCriterion[] = [],
-    selectedConcepts: Set<TerminologyCode>
+    selectedConcepts: Array<TerminologyCode>
   ) {
     super(selectedConcepts);
     this.selectedReferences = selectedReferences;
@@ -93,7 +93,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
   static create(
     allowedReferenceUri: Array<string>,
     selectedReference: ReferenceCriterion[] = [],
-    selectedConcepts: Set<TerminologyCode>
+    selectedConcepts: Array<TerminologyCode>
   ): ReferenceFilter {
     return new ReferenceFilter(allowedReferenceUri, selectedReference, selectedConcepts);
   }

@@ -5,7 +5,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
  */
 export abstract class AbstractConceptFilter {
   // Needs to be tested if set works for handling unique elements??
-  protected selectedConcepts: Set<TerminologyCode> = new Set([]);
+  protected selectedConcepts: Array<TerminologyCode> = [];
 
   /**
    * Creates an instance of AbstractConceptFilter.
@@ -13,7 +13,7 @@ export abstract class AbstractConceptFilter {
    * @param selectedConcepts - The selected concepts.
    * @param allowedConcepts - The allowed concepts.
    */
-  constructor(selectedConcepts: Set<TerminologyCode>) {
+  constructor(selectedConcepts: Array<TerminologyCode>) {
     this.selectedConcepts = selectedConcepts;
   }
 
@@ -22,7 +22,7 @@ export abstract class AbstractConceptFilter {
    *
    * @returns A Set of selected concepts.
    */
-  getSelectedConcepts(): Set<TerminologyCode> {
+  getSelectedConcepts(): Array<TerminologyCode> {
     return this.selectedConcepts;
   }
 
@@ -31,7 +31,7 @@ export abstract class AbstractConceptFilter {
    *
    * @param selectedConcepts - A Set of selected concepts.
    */
-  setSelectedConcepts(selectedConcepts: Set<TerminologyCode>): void {
+  setSelectedConcepts(selectedConcepts: Array<TerminologyCode>): void {
     this.selectedConcepts = selectedConcepts;
   }
 
@@ -44,7 +44,7 @@ export abstract class AbstractConceptFilter {
     return (
       this.selectedConcepts !== undefined &&
       this.selectedConcepts !== null &&
-      this.selectedConcepts.size > 0
+      this.selectedConcepts.length > 0
     );
   }
 }

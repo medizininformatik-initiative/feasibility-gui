@@ -15,7 +15,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @param allowedConceptUri - The allowed concept URI.
    * @param selectedConcepts - The selected concepts.
    */
-  constructor(allowedConceptUri: Array<string> = [], selectedConcepts: Set<TerminologyCode>) {
+  constructor(allowedConceptUri: Array<string> = [], selectedConcepts: Array<TerminologyCode>) {
     super(selectedConcepts);
     this.allowedConceptUri = allowedConceptUri;
   }
@@ -65,7 +65,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    */
   static create(
     allowedConceptUri: Array<string>,
-    selectedConcepts: Set<TerminologyCode>
+    selectedConcepts: Array<TerminologyCode>
   ): ConceptFilter {
     return new ConceptFilter(allowedConceptUri, selectedConcepts);
   }

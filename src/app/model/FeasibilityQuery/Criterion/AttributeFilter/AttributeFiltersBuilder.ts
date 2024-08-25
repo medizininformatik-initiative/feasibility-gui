@@ -116,7 +116,7 @@ export class AttributeFiltersBuilder {
     return new QuantityNotSet(selectedUnit, allowedUnits, precision);
   }
 
-  buildConceptFilter(allowedConceptUri: Array<string>, selectedConcepts?: Set<TerminologyCode>) {
+  buildConceptFilter(allowedConceptUri: Array<string>, selectedConcepts?: Array<TerminologyCode>) {
     return new ConceptFilter(allowedConceptUri, selectedConcepts);
   }
 
@@ -128,7 +128,7 @@ export class AttributeFiltersBuilder {
   buildReferenceFilter(
     allowedReferenceUri: Array<string>,
     selectedReference?: ReferenceCriterion[],
-    selectedConcepts?: Set<TerminologyCode>
+    selectedConcepts?: Array<TerminologyCode>
   ): ReferenceFilter {
     return new ReferenceFilter(allowedReferenceUri, selectedReference, selectedConcepts);
   }
