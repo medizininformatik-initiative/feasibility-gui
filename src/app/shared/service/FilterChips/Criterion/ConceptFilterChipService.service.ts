@@ -88,6 +88,9 @@ export class ConceptFilterChipService {
     conceptFilter: ConceptFilter,
     attributeCode?: TerminologyCode
   ): InterfaceFilterChip[] {
-    return FilterChipConceptAdapter.adaptCodeableConcept(conceptFilter, attributeCode);
+    return FilterChipConceptAdapter.adaptCodeableConcept(
+      conceptFilter.getSelectedConcepts(),
+      attributeCode
+    );
   }
 }
