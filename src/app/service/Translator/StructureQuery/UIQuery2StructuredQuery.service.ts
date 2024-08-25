@@ -188,7 +188,7 @@ export class UIQuery2StructuredQueryService {
 
   private setConceptValueFilter(valueFilter: ValueFilter): ConceptValueFilter | undefined {
     const conceptFilter = new ConceptValueFilter();
-    if (valueFilter.getConcept()?.getSelectedConcepts().size > 0) {
+    if (valueFilter.getConcept()?.getSelectedConcepts().length > 0) {
       conceptFilter.selectedConcepts = Array.from(valueFilter.getConcept().getSelectedConcepts());
       return conceptFilter;
     } else {

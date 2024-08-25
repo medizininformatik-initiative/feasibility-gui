@@ -4,12 +4,12 @@
     *ngFor="let selectedConceptFilter of arrayOfSelectedConcepts$ | async"
     fxLayout="row"
     fxLayoutAlign="start center"
-    class="selectedFilterBox"
+    class="selected-filter-box"
   >
     <div fxFlex="30" class="display-part">
       {{ selectedConceptFilter.display }}
     </div>
-    <div fxFlex="30" class="display-part">
+    <div fxFlex="60" class="display-part">
       {{ selectedConceptFilter.code }} ({{ selectedConceptFilter.system }})
     </div>
     <div fxFlexAlign="end">
