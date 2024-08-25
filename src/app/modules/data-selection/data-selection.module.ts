@@ -15,6 +15,8 @@ import { EditFieldsModalComponent } from './components/edit-fields-modal/edit-fi
 import { EditFilterModalComponent } from './components/edit-filter-modal/edit-filter-modal.component';
 import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
+import { ProfileCodeComponent } from './components/edit-filter-modal/profile-code/profile-code.component';
+import { ProfileTimeRestrictionComponent } from './components/edit-filter-modal/profile-time-restriction/profile-time-restriction.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { SharedFilterModule } from '../shared-filter/shared-filter.module';
     EditFieldsModalComponent,
     DisplayProfilesComponent,
     EditFilterModalComponent,
+    ProfileCodeComponent,
+    ProfileTimeRestrictionComponent,
   ],
   imports: [
     CommonModule,

@@ -1,15 +1,12 @@
+import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
+import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { Component, Inject, OnInit } from '@angular/core';
+import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
+import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProviderService } from '../../services/DataSelectionProviderService';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
-import { TimeRestrictionChipService } from 'src/app/shared/service/FilterChips/Criterion/TimeRestrictionChipService.service';
-import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
-import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;
@@ -36,7 +33,6 @@ export class EditFilterModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
-    private timeRestrictionFilterChipService: TimeRestrictionChipService,
     private dataSelectionProviderService: DataSelectionProviderService
   ) {}
 
@@ -56,55 +52,27 @@ export class EditFilterModalComponent implements OnInit {
     }
   }
 
-  public setProfileCodeFilter(
-    selectedConcepts: TerminologyCode[],
-    existingFilter: ProfileCodeFilter
-  ) {
+  public setProfileCodeFilter(existingFilter: ProfileCodeFilter) {
     const index = this.dummyArrayCode.findIndex(
       (profile) => profile.getName() === existingFilter.getName()
     );
     if (index !== -1) {
-      this.dummyArrayCode[index] = this.createProfileCode(selectedConcepts, existingFilter);
+      this.dummyArrayCode[index] = existingFilter;
     } else {
-      this.dummyArrayCode.push(this.createProfileCode(selectedConcepts, existingFilter));
+      this.dummyArrayCode.push(existingFilter);
     }
   }
 
-  private createProfileCode(
-    selectedConcepts: TerminologyCode[],
-    existingFilter: ProfileCodeFilter
-  ) {
-    return new ProfileCodeFilter(
-      existingFilter.getName(),
-      existingFilter.getType(),
-      existingFilter.getValueSetUrls(),
-      selectedConcepts
-    );
-  }
-
-  public setTimeRestriction(
-    timeRestriction: AbstractTimeRestriction,
-    existingFilter: ProfileTimeRestrictionFilter
-  ) {
+  public setTimeRestriction(existingFilter: ProfileTimeRestrictionFilter) {
     const index = this.dummyArray.findIndex(
       (profile) => profile.getName() === existingFilter.getName()
     );
     if (index !== -1) {
-      this.dummyArray[index] = this.createProfileTimeRestriction(existingFilter, timeRestriction);
+      this.dummyArray[index] = existingFilter;
     } else {
-      this.dummyArray.push(this.createProfileTimeRestriction(existingFilter, timeRestriction));
+      this.dummyArray.push(existingFilter);
     }
-  }
-
-  private createProfileTimeRestriction(
-    foundElement: ProfileTimeRestrictionFilter,
-    timeRestriction: AbstractTimeRestriction
-  ) {
-    return new ProfileTimeRestrictionFilter(
-      foundElement.getName(),
-      foundElement.getType(),
-      timeRestriction
-    );
+    console.log(existingFilter);
   }
 
   public closeDialog() {
