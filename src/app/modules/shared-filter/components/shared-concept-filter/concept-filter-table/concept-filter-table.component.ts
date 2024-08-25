@@ -14,7 +14,6 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
   styleUrls: ['./concept-filter-table.component.scss'],
 })
 export class ConceptFilterTableComponent implements OnInit, OnDestroy {
-  @Input()
   codeableConceptResultList: CodeableConceptResultList;
 
   adaptedData: TableData;
@@ -29,9 +28,9 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.adaptedData = this.conceptElasticSearchService.adaptListItems(
-      this.codeableConceptResultList
-    );
+    this.conceptElasticSearchService.getCurrentSearchResults().subscribe((results) => {
+      this.adaptedData = this.conceptElasticSearchService.adaptListItems(results);
+    });
 
     this.subscription = this.selectedConceptProviderService.getSelectedConcepts().subscribe(() => {
       this.updateCheckboxSelection();

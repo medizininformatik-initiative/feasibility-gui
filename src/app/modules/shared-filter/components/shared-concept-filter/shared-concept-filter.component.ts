@@ -34,7 +34,7 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
       this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     }
     this.searchResults$ = this.conceptFilterSearchService.getCurrentSearchResults();
-
+    this.searchResults$.subscribe((test) => console.log(test));
     this.subscription = this.selectedConceptFilterService
       .getSelectedConcepts()
       .subscribe((selectedConcepts: TerminologyCode[]) => {

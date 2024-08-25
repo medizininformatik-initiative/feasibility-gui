@@ -3,7 +3,6 @@
   <num-search-concept [allowedConceptUri]="allowedConceptUri"> </num-search-concept>
   <num-concept-filter-table
     *ngIf="searchResults$ | async as searchResults"
-    [codeableConceptResultList]="searchResults$ | async"
   ></num-concept-filter-table>
   <num-staged-concepts></num-staged-concepts>
 </div>
