@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { DataSelectionProviderService } from './DataSelectionProvider.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DataSelectionProviderService {
+export class DataSelectionProfileProviderService {
   private dataSelectionProfileUIDMap: Map<string, DataSelectionProfileProfile> = new Map();
   private dataSelectionProfileUIDMapSubject: BehaviorSubject<
     Map<string, DataSelectionProfileProfile>
   > = new BehaviorSubject(new Map());
+
+  constructor(private dataSelectionProvider: DataSelectionProviderService) {}
 
   public getDataSelectionProfileUIDMap(): Observable<Map<string, DataSelectionProfileProfile>> {
     return this.dataSelectionProfileUIDMapSubject.asObservable();

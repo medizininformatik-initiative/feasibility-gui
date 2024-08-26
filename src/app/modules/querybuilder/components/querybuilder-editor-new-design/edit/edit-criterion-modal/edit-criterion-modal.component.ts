@@ -7,9 +7,10 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
 
 export class EnterCriterionListComponentData {
-  criterion: Criterion;
+  criterion: AbstractCriterion;
 }
 
 @Component({
@@ -23,7 +24,7 @@ export class EditCriterionModalComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
-    private dialogRef: MatDialogRef<EditCriterionModalComponent, Criterion>
+    private dialogRef: MatDialogRef<EditCriterionModalComponent, AbstractCriterion>
   ) {}
 
   ngOnInit() {
@@ -79,7 +80,7 @@ export class EditCriterionModalComponent implements OnInit {
     }
   }
 
-  private createMandatoryFields(criterion: Criterion): {
+  private createMandatoryFields(criterion: AbstractCriterion): {
     hasReference: boolean
     context: TerminologyCode
     criterionHash: string
@@ -112,11 +113,13 @@ export class EditCriterionModalComponent implements OnInit {
   }
 
   public updateTimeRestriction(timeRestriction: AbstractTimeRestriction) {
+    console.log(timeRestriction);
     this.criterionBuilder.withTimeRestriction(timeRestriction);
   }
 
   public saveCriterion() {
     const criterion = this.criterionBuilder.buildCriterion();
+    console.log(criterion);
     this.dialogRef.close(criterion);
   }
 
