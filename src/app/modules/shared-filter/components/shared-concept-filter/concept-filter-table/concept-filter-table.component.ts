@@ -22,15 +22,19 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
+  private subscription2: Subscription = new Subscription();
+
   constructor(
     private conceptElasticSearchService: ConceptElasticSearchService,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
   ) {}
 
   ngOnInit() {
-    this.conceptElasticSearchService.getCurrentSearchResults().subscribe((results) => {
-      this.adaptedData = this.conceptElasticSearchService.adaptListItems(results);
-    });
+    this.subscription2 = this.conceptElasticSearchService
+      .getCurrentSearchResults()
+      .subscribe((results) => {
+        this.adaptedData = this.conceptElasticSearchService.adaptListItems(results);
+      });
 
     this.subscription = this.selectedConceptProviderService.getSelectedConcepts().subscribe(() => {
       this.updateCheckboxSelection();
@@ -48,7 +52,8 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription2?.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   public addSelectedRow(item: InterfaceTableDataRow) {
