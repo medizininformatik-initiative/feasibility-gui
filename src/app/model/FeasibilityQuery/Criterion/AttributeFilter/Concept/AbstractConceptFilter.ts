@@ -13,7 +13,7 @@ export abstract class AbstractConceptFilter {
    * @param selectedConcepts - The selected concepts.
    * @param allowedConcepts - The allowed concepts.
    */
-  constructor(selectedConcepts: Array<TerminologyCode>) {
+  constructor(selectedConcepts: Array<TerminologyCode> = []) {
     this.selectedConcepts = selectedConcepts;
   }
 
