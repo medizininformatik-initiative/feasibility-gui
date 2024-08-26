@@ -1,6 +1,6 @@
 import { AbstractAttributeGroupFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/AbstractAttributeGroupFilter';
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
-import { AttributeGroups } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup';
+import { AttributeGroup } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup';
 import { Attributes } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Attributes/Attribute';
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
 import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
@@ -13,6 +13,7 @@ import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profil
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/TokenFilter ';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 
 @Injectable({
   providedIn: 'root',
@@ -23,15 +24,17 @@ export class DataSelection2DataExtraction {
     private terminologyCodeTranslator: TerminologyCodeTranslator
   ) {}
 
-  public translateToDataExtraction(profiles: DataSelectionProfileProfile[] = []): DataExtraction {
-    const attribuetGroups = profiles.map((profile) => this.translateAttributeGroups(profile));
+  public translateToDataExtraction(dataSelection: DataSelection): DataExtraction {
+    const attribuetGroups = dataSelection
+      .getDataSelection()
+      .map((profile) => this.translateAttributeGroups(profile));
     return attribuetGroups.length > 0 ? new DataExtraction(attribuetGroups) : undefined;
   }
 
-  private translateAttributeGroups(profile: DataSelectionProfileProfile): AttributeGroups {
+  private translateAttributeGroups(profile: DataSelectionProfileProfile): AttributeGroup {
     const attributes = this.translateAttributes(profile.getFields());
     const filters = this.translateFilters(profile.getFilters());
-    return new AttributeGroups(profile.getUrl(), attributes, filters);
+    return new AttributeGroup(profile.getUrl(), attributes, filters);
   }
 
   private translateAttributes(fields: DataSelectionProfileProfileNode[]): Attributes[] {
@@ -57,6 +60,7 @@ export class DataSelection2DataExtraction {
     const abstractProfileFilters: AbstractAttributeGroupFilter[] = [];
 
     filters.forEach((filter) => {
+      console.log(filter);
       const translatedFilter = this.getTranslatedFilter(filter);
       if (translatedFilter) {
         abstractProfileFilters.push(translatedFilter);
