@@ -1,7 +1,7 @@
 import { AbstractAttributeGroupFilter } from './AttributeGroup/AbstractAttributeGroupFilter';
 import { Attributes } from './AttributeGroup/Attributes/Attribute';
 
-export class AttributeGroups {
+export class AttributeGroup {
   groupReference: string;
   attributes: Attributes[];
   filter: AbstractAttributeGroupFilter[];

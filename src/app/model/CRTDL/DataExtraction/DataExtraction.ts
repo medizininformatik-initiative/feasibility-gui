@@ -1,9 +1,9 @@
-import { AttributeGroups } from './AttributeGrooups/AttributeGroup';
+import { AttributeGroup } from './AttributeGrooups/AttributeGroup';
 
 export class DataExtraction {
-  attributeGroups: AttributeGroups[];
+  attributeGroups: AttributeGroup[];
 
-  constructor(attributeGroups: AttributeGroups[]) {
+  constructor(attributeGroups: AttributeGroup[]) {
     this.attributeGroups = attributeGroups;
   }
 }
