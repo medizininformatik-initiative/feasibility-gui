@@ -27,9 +27,9 @@ export class BetweenFilterComponent implements OnChanges {
   @Output()
   betweenFilterChanged = new EventEmitter<BetweenFilter>();
 
-  beforeDate = '';
+  beforeDate: string;
 
-  afterDate = '';
+  afterDate: string;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.betweenFilter && this.betweenFilter) {
@@ -39,18 +39,20 @@ export class BetweenFilterComponent implements OnChanges {
   }
 
   onBeforeDateChange(event: any) {
-    if (this.beforeDate !== this.betweenFilter.getBeforeDate()) {
-      this.beforeDate = event.value;
-      this.betweenFilter.setBeforeDate(this.beforeDate);
-    }
-    this.betweenFilterChanged.emit(new BetweenFilter(this.afterDate, this.beforeDate));
+    this.beforeDate = event.value;
+    this.betweenFilter.setBeforeDate(this.beforeDate);
+    this.emitInstance();
   }
 
   onAfterDateChange(event: any) {
-    if (this.afterDate !== this.betweenFilter.getAfterDate()) {
-      this.afterDate = event.value;
-      this.betweenFilter.setAfterDate(this.afterDate);
+    this.afterDate = event.value;
+    this.betweenFilter.setAfterDate(this.afterDate);
+    this.emitInstance();
+  }
+
+  emitInstance() {
+    if (this.beforeDate && this.afterDate) {
+      this.betweenFilterChanged.emit(new BetweenFilter(this.afterDate, this.beforeDate));
     }
-    this.betweenFilterChanged.emit(new BetweenFilter(this.afterDate, this.beforeDate));
   }
 }
