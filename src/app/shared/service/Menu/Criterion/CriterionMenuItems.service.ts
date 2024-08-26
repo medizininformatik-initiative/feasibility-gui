@@ -5,7 +5,7 @@ import { MenuServiceCriterionFunctions } from './MenuServiceCriterionFunctions';
 @Injectable({
   providedIn: 'root',
 })
-export class MenuServiceCriterion {
+export class CriterionMenuItems {
   constructor(private menuServiceCriterionFunctions: MenuServiceCriterionFunctions) {}
 
   /**
@@ -15,24 +15,29 @@ export class MenuServiceCriterion {
   public getMenuItemsForCriterion(): MenuItemInterface[] {
     return [
       {
+        disabled: false,
         icon: 'trash',
         label: 'löschen',
         action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
       },
       {
+        disabled: false,
         icon: 'clone',
         label: 'dublizieren',
         action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
       },
       {
+        disabled: false,
         icon: 'link',
         label: 'kriterien verknüpfen',
         action: (id: string) => this.menuServiceCriterionFunctions.editLinkedCriteria(id),
       },
       {
+        disabled: false,
         icon: 'cog',
         label: 'Filter anwenden',
-        action: (id: string) => this.menuServiceCriterionFunctions.applyCriterionFilter(id),
+        action: (id: string, params) =>
+          this.menuServiceCriterionFunctions.applyCriterionFilter(id, params),
       },
     ];
   }

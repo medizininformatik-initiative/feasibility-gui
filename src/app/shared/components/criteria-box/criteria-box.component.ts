@@ -4,7 +4,8 @@ import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/
 import { Component, Input, OnInit } from '@angular/core';
 import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
 import { Observable, of } from 'rxjs';
-import { MenuServiceCriterion } from '../../service/Menu/Criterion/MenuServiceCriterion';
+import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 
 @Component({
   selector: 'num-criteria-box',
@@ -18,10 +19,12 @@ export class CriteriaBoxComponent implements OnInit {
 
   menuItems: MenuItemInterface[] = [];
 
+  referenceCriterion: ReferenceCriterion[] = [];
+
   $filterChips: Observable<InterfaceFilterChip[]> = of([]);
 
   constructor(
-    private menuService: MenuServiceCriterion,
+    private menuService: CriterionMenuItems,
     private filterChipsService: CriterionFilterChipService
   ) {}
 

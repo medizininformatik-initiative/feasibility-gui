@@ -1,5 +1,6 @@
 export interface MenuItemInterface {
+  disabled: boolean
   icon: string
   label: string
-  action: (id: string) => void
+  action: (id: string, ...args: any[]) => void
 }

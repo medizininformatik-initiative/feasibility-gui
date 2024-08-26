@@ -12,7 +12,8 @@
     <button
       [ngClass]="{ divider: !isLast, 'last-item': isLast }"
       mat-menu-item
-      (click)="item.action(id)"
+      [disabled]="item.disabled"
+      (click)="item.action(id, params)"
     >
       <fa-icon [icon]="item.icon" size="sm" class="icon-color"></fa-icon>
       {{ item.label }}

@@ -19,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { TableComponent } from './table/table.component';
 import { ModalWindowComponent } from './modal-window/modal-window.component';
+import { ReferenceCriteriaBoxComponent } from './reference-criteria-box/reference-criteria-box.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -45,6 +46,7 @@ const SHARED_DECLARATIONS = [
     ActionBarComponent,
     MenuComponent,
     ModalWindowComponent,
+    ReferenceCriteriaBoxComponent,
   ],
   imports: [
     CommonModule,

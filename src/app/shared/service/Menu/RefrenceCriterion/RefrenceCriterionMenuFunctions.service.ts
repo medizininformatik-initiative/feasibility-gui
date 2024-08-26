@@ -3,11 +3,12 @@ import { EditCriterionService } from 'src/app/service/CriterionService/EditCrite
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MenuServiceCriterionFunctions {
+export class RefrenceCriterionMenuFunctionsService {
   constructor(
     private criterionService: CriterionProviderService,
     private editCriterionService: EditCriterionService,
@@ -36,10 +37,7 @@ export class MenuServiceCriterionFunctions {
     }
   }
 
-  applyCriterionFilter(criterionUuid: string, params: any[]) {
-    const criterion = this.criterionService.getCriterionByUID(criterionUuid);
-    if (criterion) {
-      this.editCriterionService.editCriterionAttribute(criterion);
-    }
+  applyCriterionFilter(params: ReferenceCriterion[]) {
+    this.editCriterionService.editCriterionAttribute(params[0]);
   }
 }

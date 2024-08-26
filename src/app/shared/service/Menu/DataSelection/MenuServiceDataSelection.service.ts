@@ -15,23 +15,27 @@ export class MenuServiceDataSelection {
   public getMenuItemsForDataSelection(): MenuItemInterface[] {
     return [
       {
+        disabled: false,
         icon: 'trash',
         label: 'löschen',
         action: (id: string) =>
           this.menuServiceDataSelectionFunctions.deleteDataSelectionObject(id),
       },
       {
+        disabled: false,
         icon: 'clone',
         label: 'dublizieren',
         action: (id: string) => this.menuServiceDataSelectionFunctions.cloneDataSelectionObject(id),
       },
       {
+        disabled: false,
         icon: 'cog',
         label: 'Filter anwenden',
         action: (id: string) =>
           this.menuServiceDataSelectionFunctions.openDataSelectionFilterModal(id),
       },
       {
+        disabled: false,
         icon: 'cog',
         label: 'Felder definieren',
         action: (id: string) =>
