@@ -12,9 +12,7 @@ export class CriterionProviderService {
     new Map()
   );
 
-  constructor(private queryService: FeasibilityQueryProviderService) {
-    //this.initCriterionMap();
-  }
+  constructor() {}
 
   /**
    * Retrieves the observable of the criterion UID map.
@@ -54,41 +52,4 @@ export class CriterionProviderService {
     this.criterionUIDMap.delete(uid);
     this.criterionUIDMapSubject.next(new Map(this.criterionUIDMap));
   }
-
-  /**
-   * Initializes the criterion map from the current feasibility query.
-   */
-  /*private initCriterionMap(): void {
-    this.queryService
-      .getFeasibilityQuery()
-      .pipe(
-        tap({
-          next: () => {
-            // Clear the map before updating
-            this.criterionUIDMap.clear();
-          },
-        }),
-        switchMap((feasibilityQuery: FeasibilityQuery) => {
-          const inclusionCriteriaGroups = feasibilityQuery.getInclusionCriteria();
-          const exclusionCriteriaGroups = feasibilityQuery.getExclusionCriteria();
-          const allCriteriaGroups = [...inclusionCriteriaGroups, ...exclusionCriteriaGroups];
-          allCriteriaGroups.forEach((criteriaGroup: Criterion[]) => {
-            criteriaGroup.forEach((criteria) => {
-              if (criteria.getUniqueID()) {
-                this.criterionUIDMap.set(criteria.getUniqueID(), criteria);
-              }
-            });
-          });
-          return of(null);
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.criterionUIDMapSubject.next(this.criterionUIDMap);
-        },
-        error: (error) => {
-          console.error('Error updating criterion map:', error);
-        },
-      });
-  }*/
 }
