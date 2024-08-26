@@ -22,3 +22,13 @@
     <fa-icon class="icon drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
   </div>
 </div>
+<div style="padding-left: 50px" *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+  <div *ngIf="attributeFilter?.isReferenceSet()">
+    <div *ngFor="let reference of attributeFilter.getReference().getSelectedReferences()">
+      <num-reference-criteria-box
+        [criterionId]="criterion.getUniqueID()"
+        [referenceCriterion]="reference"
+      ></num-reference-criteria-box>
+    </div>
+  </div>
+</div>
