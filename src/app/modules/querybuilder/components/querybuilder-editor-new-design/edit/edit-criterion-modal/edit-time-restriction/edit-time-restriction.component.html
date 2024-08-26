@@ -9,7 +9,7 @@
     <mat-form-field appearance="outline" class="operator-part">
       <mat-select
         [(ngModel)]="selectedTimeRestrictionType"
-        (selectionChange)="onTimeRestrictionChange($event.value)"
+        (selectionChange)="onTimeRestrictionOptionChange($event.value)"
       >
         <mat-option *ngFor="let option of timeRestrictionOptions" [value]="option">
           {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.' + option | translate }}
@@ -27,7 +27,7 @@
     <ng-container *ngIf="selectedTimeRestrictionType !== 'BETWEEN'">
       <num-before-filter
         [selectedDate]="timeRestriction.getBeforeDate()"
-        (selectedDateChanged)="onTimeRestrictionChange($event)"
+        (selectedDateChanged)="onTimeRestrictionDateChange($event)"
       ></num-before-filter>
     </ng-container>
   </mat-expansion-panel>
