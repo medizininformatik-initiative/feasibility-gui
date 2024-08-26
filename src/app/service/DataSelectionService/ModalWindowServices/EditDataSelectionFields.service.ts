@@ -1,4 +1,4 @@
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProviderService';
+import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { EditFieldsModalComponent } from 'src/app/modules/data-selection/components/edit-fields-modal/edit-fields-modal.component';
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +12,7 @@ export class EditDataSelectionFields implements OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private dataSelectionProvider: DataSelectionProviderService
+    private dataSelectionProvider: DataSelectionProfileProviderService
   ) {}
 
   ngOnDestroy() {

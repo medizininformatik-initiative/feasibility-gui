@@ -3,7 +3,7 @@ import { BackendService } from 'src/app/modules/querybuilder/service/backend.ser
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProviderService';
+import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
@@ -16,7 +16,7 @@ import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profil
 export class CreateDataSelectionProfileProfile {
   constructor(
     private backend: BackendService,
-    private dataSelectionProvider: DataSelectionProviderService
+    private dataSelectionProvider: DataSelectionProfileProviderService
   ) {}
 
   public getDataSelectionProfileProfileData(
