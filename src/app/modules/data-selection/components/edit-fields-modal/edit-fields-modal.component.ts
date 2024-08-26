@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
-import { DataSelectionProviderService } from '../../services/DataSelectionProviderService';
+import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileProfileNodeAdapter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
@@ -25,7 +25,7 @@ export class EditFieldsModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
-    private dataSelectionProvider: DataSelectionProviderService
+    private dataSelectionProvider: DataSelectionProfileProviderService
   ) {}
 
   ngOnInit() {

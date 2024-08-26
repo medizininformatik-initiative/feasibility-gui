@@ -3,7 +3,7 @@ import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRest
 import { Component, Inject, OnInit } from '@angular/core';
 import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProviderService } from '../../services/DataSelectionProviderService';
+import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
@@ -33,11 +33,11 @@ export class EditFilterModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
-    private dataSelectionProviderService: DataSelectionProviderService
+    private dataSelectionProfileProviderService: DataSelectionProfileProviderService
   ) {}
 
   public ngOnInit(): void {
-    this.profile = this.dataSelectionProviderService.getDataSelectionProfileByUID(this.data);
+    this.profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUID(this.data);
     this.profile.getFilters().forEach((filter) => {
       this.setInitialFilterType(filter);
     });
@@ -92,7 +92,8 @@ export class EditFilterModalComponent implements OnInit {
 
   public saveDataSelection() {
     const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(this.profile);
-    this.dataSelectionProviderService.setDataSelectionProfileByUID(
+    console.log(dataSelectionProfile);
+    this.dataSelectionProfileProviderService.setDataSelectionProfileByUID(
       dataSelectionProfile.getUrl(),
       dataSelectionProfile
     );

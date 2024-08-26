@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProviderService } from '../../services/DataSelectionProviderService';
+import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { map, Observable } from 'rxjs';
 
 @Component({
@@ -11,7 +11,7 @@ import { map, Observable } from 'rxjs';
 export class DisplayProfilesComponent implements OnInit {
   $dataSelectionProfileArray: Observable<Array<DataSelectionProfileProfile>>;
 
-  constructor(private dataSelectionProvider: DataSelectionProviderService) {}
+  constructor(private dataSelectionProvider: DataSelectionProfileProviderService) {}
 
   ngOnInit(): void {
     this.getDataSelectionProfiles();
