@@ -50,8 +50,7 @@ export class CreateReferenceCriterionService {
       this.attributeDefinitionProcessorService.processValueFilters(criteriaProfileData)
     );
 
-    const criterion: ReferenceCriterion = criterionBuilder.buildReferenceCriterion();
-    console.log(criterion);
+    const criterion = criterionBuilder.buildReferenceCriterion();
     return criterion;
   }
 }

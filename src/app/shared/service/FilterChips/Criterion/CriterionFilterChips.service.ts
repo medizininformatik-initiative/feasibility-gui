@@ -5,6 +5,7 @@ import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilter
 import { QuantityFilterChipService } from './QuantityFilterChipService.service';
 import { TimeRestrictionChipService } from './TimeRestrictionChip.service';
 import { ConceptFilterChipService } from './ConceptFilterChipService.service';
+import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,9 @@ export class CriterionFilterChipService {
     private timeRestrictionChipService: TimeRestrictionChipService
   ) {}
 
-  public generateFilterChipsFromCriterion(criterion: Criterion): Observable<InterfaceFilterChip[]> {
+  public generateFilterChipsFromCriterion(
+    criterion: AbstractCriterion
+  ): Observable<InterfaceFilterChip[]> {
     this.filterChipsSubject.next([]);
 
     const conceptChips = this.generateConceptChips(criterion);
@@ -36,7 +39,7 @@ export class CriterionFilterChipService {
     return this.filterChipsSubject.asObservable();
   }
 
-  private generateConceptChips(criterion: Criterion): InterfaceFilterChip[] {
+  private generateConceptChips(criterion: AbstractCriterion): InterfaceFilterChip[] {
     const attributeFilters = criterion.getAttributeFilters();
     const valueFilters = criterion.getValueFilters();
 
@@ -48,7 +51,7 @@ export class CriterionFilterChipService {
     return [...attributeChips, ...valueChips];
   }
 
-  private generateQuantityChips(criterion: Criterion): InterfaceFilterChip[] {
+  private generateQuantityChips(criterion: AbstractCriterion): InterfaceFilterChip[] {
     const attributeFilters = criterion.getAttributeFilters();
     const valueFilters = criterion.getValueFilters();
 
