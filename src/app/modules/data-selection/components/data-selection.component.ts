@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
+import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
+import { DataSelection2DataExtraction } from 'src/app/service/Translator/CRTDL/DataSelection2DataExtraction.service';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
-import { DataSelection2DataExtraction } from 'src/app/service/Translator/CRTDL/DataSelection2DataExtraction.service';
-import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
-import { DataSelectionProviderService } from '../services/DataSelectionProviderService';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { DataSelectionProviderService } from '../services/DataSelectionProvider.service';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 
 @Component({
   selector: 'num-data-selection',
@@ -21,8 +22,8 @@ export class DataSelectionComponent implements OnInit {
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileProfile,
     private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
-    private service: DataSelection2DataExtraction,
-    private crdtlService: CreateCRDTL
+    private crdtlService: CreateCRDTL,
+    private dataSelectionProviderService: DataSelectionProviderService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +36,12 @@ export class DataSelectionComponent implements OnInit {
     const dataSelectionProfileUrls = Array.from(this.selectedDataSelectionProfileNodeIds);
     this.createDataSelectionProfileService
       .getDataSelectionProfileProfileData(dataSelectionProfileUrls)
-      .subscribe();
+      .subscribe((dataSelectionProfiles) => {
+        this.dataSelectionProviderService.setDataSelectionByUID(
+          '1',
+          new DataSelection(dataSelectionProfiles)
+        );
+      });
   }
 
   public addItemsToStage(node: TreeNode) {
@@ -48,8 +54,8 @@ export class DataSelectionComponent implements OnInit {
     }
   }
 
-  test() {
+  startTranslation() {
+    console.log('test');
     this.crdtlService.createCRDTL().subscribe((test) => console.log(test));
-    this.service.translateToDataExtraction();
   }
 }
