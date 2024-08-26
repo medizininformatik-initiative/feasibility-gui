@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from '../../ElasticSearch/SearchTermListItemService.service';
 import { StageProviderService } from '../../Provider/StageProvider.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,26 @@ export class NewCreateCriterionService {
           this.createCriterionFromProfileData(criteriaProfileData);
         });
       });
+  }
+
+  public createCriterionFromOtherCriterion(oldCriterion: Criterion): void {
+    const criterionBuilder = new CriterionBuilder({hasReference: false, context: oldCriterion.getContext(), criterionHash: oldCriterion.getCriterionHash(), display: oldCriterion.getDisplay(), isInvalid: oldCriterion.getIsInvalid(), uniqueID: uuidv4(), termCodes: oldCriterion.getTermCodes()});
+
+    const timeRestrictionAllowed: boolean = !!oldCriterion.getTimeRestriction()
+    if (timeRestrictionAllowed) {
+      criterionBuilder.withTimeRestriction(oldCriterion.getTimeRestriction());
+    }
+
+    if(oldCriterion.getAttributeFilters().length > 0) {
+      criterionBuilder.withAttributeFilters(oldCriterion.getAttributeFilters())
+    }
+    if(oldCriterion.getValueFilters().length > 0) {
+      criterionBuilder.withValueFilters(oldCriterion.getValueFilters())
+    }
+
+    const criterion: Criterion = criterionBuilder.buildCriterion();
+    this.criterionProviderService.setCriterionByUID(criterion);
+    this.stageProviderService.addCriterionToStage(criterion.getUniqueID());
   }
 
   public createCriterionFromProfileData(criteriaProfileData: CriteriaProfileData): void {

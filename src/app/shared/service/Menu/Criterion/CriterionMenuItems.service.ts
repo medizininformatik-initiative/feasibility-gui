@@ -24,7 +24,7 @@ export class CriterionMenuItems {
         disabled: false,
         icon: 'clone',
         label: 'dublizieren',
-        action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
+        action: (id: string) => this.menuServiceCriterionFunctions.duplicateCriterion(id),
       },
       {
         disabled: false,

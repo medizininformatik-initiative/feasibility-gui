@@ -3,6 +3,7 @@ import { EditCriterionService } from 'src/app/service/CriterionService/EditCrite
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
+import {NewCreateCriterionService} from "../../../../service/CriterionService/Builder/NewCreateCriterion.service";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,8 @@ export class MenuServiceCriterionFunctions {
     private criterionService: CriterionProviderService,
     private editCriterionService: EditCriterionService,
     private stageService: StageProviderService,
-    private queryProviderService: FeasibilityQueryProviderService
+    private queryProviderService: FeasibilityQueryProviderService,
+    private newCreateCriterionService: NewCreateCriterionService
   ) {}
 
   deleteCriterion(uid: string) {
@@ -23,10 +25,7 @@ export class MenuServiceCriterionFunctions {
   }
 
   duplicateCriterion(uid: string) {
-    const originalElement = this.criterionService.getCriterionByUID(uid);
-    if (originalElement) {
-      const duplicateElement = { ...originalElement };
-    }
+    this.newCreateCriterionService.createCriterionFromOtherCriterion(this.criterionService.getCriterionByUID(uid))
   }
 
   editLinkedCriteria(criterionUuid: string) {
