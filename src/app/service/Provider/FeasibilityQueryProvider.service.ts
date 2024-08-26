@@ -65,15 +65,6 @@ export class FeasibilityQueryProviderService {
     //this.feasibilityQueryMapSubject.next(defaultQuery);
   }
 
-  /**
-   * Updates the feasibility query with a new query object.
-   *
-   * @param updatedQuery The updated query object
-   */
-  public updateFeasibilityQuery(updatedQuery: FeasibilityQuery): void {
-    //this.setFeasibilityQuery(updatedQuery);
-  }
-
   public setInclusionCriteria(criteria: string[][]): void {
     const feasibilityQuery = this.feasibilityQueryMap.get('1');
     feasibilityQuery.setInclusionCriteria(criteria);

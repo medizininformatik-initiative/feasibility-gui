@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
@@ -22,9 +21,6 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // this.querySubscription = this.queryService
-    //   .getFeasibilityQueryByID()
-    //   .subscribe((query: Map<string,FeasibilityQuery>) => {
     if (this.groupType === 'Inclusion') {
       this.criteriaArray$ = this.queryService
         .getFeasibilityQueryByID()
@@ -35,11 +31,6 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
         .getFeasibilityQueryByID()
         .pipe(map((queryObject) => queryObject.get('1').getExclusionCriteria()));
     }
-    //   });
-  }
-
-  private flattenCriteria(criteria: string[][]): Criterion[] {
-    return Array.prototype.concat.apply([], criteria);
   }
 
   ngOnDestroy() {
@@ -55,8 +46,6 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   }
 
   splitInnerArray(i: number, j: number): void {
-    console.log('split');
-    console.log(this.groupType);
     let tempcrit: string[][] = [];
 
     this.queryService
@@ -68,7 +57,6 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
         if (this.groupType === 'Exclusion') {
           tempcrit = this.splitInnerArray2(query.get('1').getExclusionCriteria(), i, j);
         }
-        //this.switch.emit(this.critGroup);
       })
       .unsubscribe();
     if (this.groupType === 'Inclusion') {
@@ -80,8 +68,6 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   }
 
   joinInnerArrays(i: number): void {
-    console.log('join');
-    console.log(this.groupType);
     let tempcrit: string[][] = [];
 
     this.queryService
@@ -101,7 +87,6 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
     if (this.groupType === 'Exclusion') {
       this.queryService.setExclusionCriteria(tempcrit);
     }
-    //this.switch.emit(this.critGroup);
   }
 
   public splitInnerArray2(critGroup: string[][], i: number, j: number): string[][] {
@@ -139,36 +124,4 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
 
     return critGroupTemp;
   }
-
-  /*dropped(event: CdkDragDrop<Criterion[]>) {
-    const droppedCriterion: Criterion = event.item.data;
-
-    // Determine the source and destination group types
-    const sourceGroup = this.groupType;
-    const destinationGroup = event.container.id === 'inclusion-group' ? 'Inclusion' : 'Exclusion';
-
-    // Only proceed if the criterion is moved between different groups
-    if (sourceGroup !== destinationGroup) {
-      // Remove from source group
-      this.criteriaArray$.pipe(take(1)).subscribe((criteria) => {
-        const sourceIndex = criteria.findIndex(
-          (c) => c.getUniqueID() === droppedCriterion.getUniqueID()
-        );
-        if (sourceIndex !== -1) {
-          criteria.splice(sourceIndex, 1);
-        }
-      });
-
-      // Add to destination group
-      this.queryService
-        .getFeasibilityQuery()
-        .pipe(take(1))
-        .subscribe((query) => {
-          const destinationCriteria =
-            destinationGroup === 'Inclusion' ? 'inclusionCriteria' : 'exclusionCriteria';
-          //query.groups[0][destinationCriteria].push([droppedCriterion]);
-          this.queryService.setFeasibilityQuery(query);
-        });
-    }
-  }*/
 }

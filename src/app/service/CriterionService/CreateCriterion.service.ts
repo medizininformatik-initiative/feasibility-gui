@@ -147,7 +147,6 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion: Criterion = criterionBuilder.buildCriterion();
-    console.log(criterion);
     this.criterionProviderService.setCriterionByUID(criterion);
     this.stageProviderService.addCriterionToStage(criterion.getUniqueID());
   }
