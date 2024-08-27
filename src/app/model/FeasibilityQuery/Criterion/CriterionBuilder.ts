@@ -30,7 +30,7 @@ export class CriterionBuilder {
 
   constructor(
     private readonly mandatoryFields: {
-      hasReference: boolean
+      isReference: boolean
       context: TerminologyCode
       criterionHash: string
       display: string

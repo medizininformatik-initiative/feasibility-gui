@@ -1,14 +1,13 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
 import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
-import { DataSelection2DataExtraction } from 'src/app/service/Translator/CRTDL/DataSelection2DataExtraction.service';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
-import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { DataSelectionProviderService } from '../services/DataSelectionProvider.service';
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
+import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 
 @Component({
   selector: 'num-data-selection',

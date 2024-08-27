@@ -152,7 +152,7 @@ export class CreateCriterionService {
   }
 
   private createMandatoryFields(criteriaProfileData: CriteriaProfileData): {
-    hasReference: false
+    isReference: false
     context: TerminologyCode
     criterionHash: string
     display: string
@@ -166,7 +166,7 @@ export class CreateCriterionService {
     const criterionHash = this.criterionHashService.createHash(context, termCodes[0]);
 
     return {
-      hasReference: false,
+      isReference: false,
       context,
       criterionHash,
       display,

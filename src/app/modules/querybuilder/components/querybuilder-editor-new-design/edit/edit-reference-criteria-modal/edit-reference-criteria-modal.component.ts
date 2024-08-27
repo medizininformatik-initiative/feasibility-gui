@@ -62,7 +62,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
   }
 
   private createMandatoryFields(criterion: Criterion): {
-    hasReference: boolean
+    isReference: boolean
     context: TerminologyCode
     criterionHash: string
     display: string
@@ -76,7 +76,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
     const criterionHash = this.criterion.getCriterionHash();
 
     return {
-      hasReference: false,
+      isReference: false,
       context,
       criterionHash,
       display,

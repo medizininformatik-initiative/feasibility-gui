@@ -9,13 +9,13 @@ export abstract class AbstractAttributeFilters {
   private quantity?: AbstractQuantityFilter;
   private reference?: ReferenceFilter;
   private optional = false;
-  private filter: FilterTypes;
+  private filterType: FilterTypes;
 
   /**
    * Creates an instance of AbstractAttributeFilters.
    *
    * @param display - The display name for the filter.
-   * @param filter
+   * @param filterType
    * @param concept - Optional concept filter.
    * @param quantity - Optional quantity filter.
    * @param reference - Optional reference filter.
@@ -23,7 +23,7 @@ export abstract class AbstractAttributeFilters {
    */
   constructor(
     display: string,
-    filter: FilterTypes,
+    filterType: FilterTypes,
     concept?: ConceptFilter,
     quantity?: AbstractQuantityFilter,
     reference?: ReferenceFilter,
@@ -34,7 +34,7 @@ export abstract class AbstractAttributeFilters {
     this.quantity = quantity;
     this.reference = reference;
     this.optional = optional;
-    this.filter = filter;
+    this.filterType = filterType;
   }
 
   /**
@@ -152,5 +152,9 @@ export abstract class AbstractAttributeFilters {
    */
   isReferenceSet(): boolean {
     return this.reference !== undefined;
+  }
+
+  getFilterType(): FilterTypes {
+    return this.filterType;
   }
 }

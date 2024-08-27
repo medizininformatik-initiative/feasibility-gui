@@ -17,7 +17,7 @@ export class CriterionMetadataService {
    * @returns An object containing the mandatory fields for the criterion.
    */
   public createMandatoryFields(criteriaProfileData: CriteriaProfileData): {
-    hasReference: false
+    isReference: false
     context: TerminologyCode
     criterionHash: string
     display: string
@@ -31,7 +31,7 @@ export class CriterionMetadataService {
     const criterionHash = this.criterionHashService.createHash(context, termCodes[0]);
 
     return {
-      hasReference: false,
+      isReference: false,
       context,
       criterionHash,
       display,
