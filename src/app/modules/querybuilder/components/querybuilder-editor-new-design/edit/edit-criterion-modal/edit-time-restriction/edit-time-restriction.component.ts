@@ -5,7 +5,6 @@ import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestr
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
-import { after } from 'lodash';
 
 @Component({
   selector: 'num-edit-time-restriction',
@@ -36,7 +35,6 @@ export class EditTimeRestrictionComponent implements OnInit {
   onTimeRestrictionOptionChange(timeRestriction: string) {
     this.selectedTimeRestrictionType =
       TimeRestrictionType[timeRestriction as keyof typeof TimeRestrictionType];
-    console.log(this.selectedTimeRestrictionType);
     this.emitSelectedTimeRestriction();
   }
 
