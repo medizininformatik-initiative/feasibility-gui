@@ -112,7 +112,6 @@ export class EditCriterionModalComponent implements OnInit {
 
   public saveCriterion() {
     const criterion = this.criterionBuilder.buildCriterion();
-    console.log(criterion);
     this.dialogRef.close(criterion);
   }
 

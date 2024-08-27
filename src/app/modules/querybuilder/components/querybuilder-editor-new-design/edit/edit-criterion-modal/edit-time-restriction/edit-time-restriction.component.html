@@ -26,7 +26,7 @@
 
     <ng-container *ngIf="selectedTimeRestrictionType !== 'BETWEEN'">
       <num-before-filter
-        [selectedDate]="timeRestriction.getBeforeDate()"
+        [selectedDate]="timeRestriction.getAfterDate()"
         (selectedDateChanged)="onTimeRestrictionDateChange($event)"
       ></num-before-filter>
     </ng-container>
