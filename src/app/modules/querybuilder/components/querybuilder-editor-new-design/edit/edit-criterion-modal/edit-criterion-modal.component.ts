@@ -1,3 +1,5 @@
+import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
@@ -5,9 +7,6 @@ import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/Crite
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
-import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
 
 export class EnterCriterionListComponentData {
   criterion: AbstractCriterion;
@@ -34,7 +33,7 @@ export class EditCriterionModalComponent implements OnInit {
 
   /**
    * Need to create a copy of the criterion in order to avoid references
-   * which lead to unwanted change detection cyles
+   * which lead to unwanted change detection cycles
    *
    * @todo introduce Changedetection.OnPuSh
    */
@@ -71,13 +70,7 @@ export class EditCriterionModalComponent implements OnInit {
   }
 
   private setInitialTimeRestriction() {
-    if (this.criterion.getTimeRestriction()) {
-      const timeRestriction = new BetweenFilter(
-        this.criterion.getTimeRestriction().getAfterDate(),
-        this.criterion.getTimeRestriction().getBeforeDate()
-      );
-      this.criterionBuilder.withTimeRestriction(timeRestriction);
-    }
+    this.criterionBuilder.withTimeRestriction(this.criterion.getTimeRestriction());
   }
 
   private createMandatoryFields(criterion: AbstractCriterion): {

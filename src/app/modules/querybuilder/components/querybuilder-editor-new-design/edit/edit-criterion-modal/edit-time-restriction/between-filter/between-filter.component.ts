@@ -1,5 +1,13 @@
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 export const MY_DATE_FORMATS = {
@@ -20,7 +28,7 @@ export const MY_DATE_FORMATS = {
   styleUrls: ['./between-filter.component.scss'],
   providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }],
 })
-export class BetweenFilterComponent implements OnChanges {
+export class BetweenFilterComponent implements OnChanges, OnInit {
   @Input()
   betweenFilter: BetweenFilter;
 
@@ -30,6 +38,11 @@ export class BetweenFilterComponent implements OnChanges {
   beforeDate: string;
 
   afterDate: string;
+
+  ngOnInit(): void {
+    this.beforeDate = this.betweenFilter.getBeforeDate();
+    this.afterDate = this.betweenFilter.getAfterDate();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.betweenFilter && this.betweenFilter) {
