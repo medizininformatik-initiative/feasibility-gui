@@ -89,8 +89,6 @@ export class EditFilterModalComponent implements OnInit {
 
   private createInstanceOfDataSelectionProfile(profile: DataSelectionProfileProfile) {
     const result: AbstractProfileFilter[] = [];
-    console.log(this.dummyArray);
-
     result.push(...this.dummyArrayCode);
     if (this.dummyArray.length > 0) {
       result.push(...this.dummyArray);
