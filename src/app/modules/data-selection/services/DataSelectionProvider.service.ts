@@ -14,7 +14,7 @@ export class DataSelectionProviderService {
     return this.dataSelectionUIDMapSubject.asObservable();
   }
 
-  public getDataSelectionByUID(uid: string): Observable<Map<string, DataSelection>> | undefined {
+  public getDataSelectionMap(): Observable<Map<string, DataSelection>> | undefined {
     return this.dataSelectionUIDMapSubject.asObservable();
   }
 

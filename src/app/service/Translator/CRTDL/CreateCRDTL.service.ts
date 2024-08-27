@@ -46,8 +46,9 @@ export class CreateCRDTL {
   }
 
   private getDataExtraction(): Observable<DataExtraction> {
+    this.dataSelectionProvider.getDataSelectionMap().subscribe((test) => console.log(test));
     return this.dataSelectionProvider
-      .getDataSelectionByUID('1')
+      .getDataSelectionMap()
       .pipe(
         map((dataSelection) =>
           this.dataExtractionTranslator.translateToDataExtraction(dataSelection.get('1'))

@@ -20,6 +20,8 @@ export class DisplayProfilesComponent implements OnInit {
   private getDataSelectionProfiles() {
     this.$dataSelectionProfileArray = this.dataSelectionProvider
       .getDataSelectionProfileUIDMap()
-      .pipe(map((dataSelectionProfileMap) => Array.from(dataSelectionProfileMap.values())));
+      .pipe(
+        map((dataSelectionProfileMap) => Array.from(dataSelectionProfileMap.values()))
+      );
   }
 }
