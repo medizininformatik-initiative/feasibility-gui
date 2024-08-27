@@ -55,7 +55,6 @@ export class DataSelectionComponent implements OnInit {
   }
 
   startTranslation() {
-    console.log('test');
     this.crdtlService.createCRDTL().subscribe((test) => console.log(test));
   }
 }
