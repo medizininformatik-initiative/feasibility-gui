@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
 import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 import { DataSelection2DataExtraction } from 'src/app/service/Translator/CRTDL/DataSelection2DataExtraction.service';
@@ -8,13 +8,16 @@ import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { DataSelectionProviderService } from '../services/DataSelectionProvider.service';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
+import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 
 @Component({
   selector: 'num-data-selection',
   templateUrl: './data-selection.component.html',
   styleUrls: ['./data-selection.component.scss'],
 })
-export class DataSelectionComponent implements OnInit {
+export class DataSelectionComponent implements OnInit, AfterViewInit {
+  @ViewChildren(TreeComponent) numTrees!: QueryList<TreeComponent>;
+
   trees: TreeNode[];
 
   selectedDataSelectionProfileNodeIds: Set<string> = new Set();
@@ -30,6 +33,10 @@ export class DataSelectionComponent implements OnInit {
     this.dataSelectionProfileTreeService.createProfileTree().subscribe((tree) => {
       this.trees = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
     });
+  }
+
+  ngAfterViewInit() {
+    console.log(this.numTrees);
   }
 
   public getDataSelectionProfileData() {
