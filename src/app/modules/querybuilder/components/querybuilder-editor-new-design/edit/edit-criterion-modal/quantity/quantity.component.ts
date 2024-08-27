@@ -45,6 +45,7 @@ export class QuantityComponent implements OnInit {
       this.setSelectQuantityFilterUnit(this.quantityFilter.getSelectedUnit());
     }
     this.selectedQuantityFilterOption = this.quantityFilter.getComparator();
+    this.buildQuantityFilter();
   }
 
   private setQuantityFilterType() {
