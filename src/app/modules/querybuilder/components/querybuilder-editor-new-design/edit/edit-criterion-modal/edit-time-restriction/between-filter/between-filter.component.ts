@@ -42,6 +42,7 @@ export class BetweenFilterComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this.beforeDate = this.betweenFilter.getBeforeDate();
     this.afterDate = this.betweenFilter.getAfterDate();
+    this.emitInstance();
   }
 
   ngOnChanges(changes: SimpleChanges) {
