@@ -7,6 +7,9 @@ import { DataSelectionProfileProviderService } from '../../services/DataSelectio
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
+import { take } from 'rxjs';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;
@@ -33,7 +36,8 @@ export class EditFilterModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService
+    private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
+    private service: DataSelectionProviderService
   ) {}
 
   public ngOnInit(): void {
@@ -52,6 +56,11 @@ export class EditFilterModalComponent implements OnInit {
     }
   }
 
+  /**
+   * This function is being executed despite not being called implizit
+   *
+   * @param existingFilter
+   */
   public setProfileCodeFilter(existingFilter: ProfileCodeFilter) {
     const index = this.dummyArrayCode.findIndex(
       (profile) => profile.getName() === existingFilter.getName()
@@ -72,7 +81,6 @@ export class EditFilterModalComponent implements OnInit {
     } else {
       this.dummyArray.push(existingFilter);
     }
-    console.log(existingFilter);
   }
 
   public closeDialog() {
@@ -81,7 +89,14 @@ export class EditFilterModalComponent implements OnInit {
 
   private createInstanceOfDataSelectionProfile(profile: DataSelectionProfileProfile) {
     const result: AbstractProfileFilter[] = [];
-    result.push(...this.dummyArrayCode, ...this.dummyArray);
+    console.log(this.dummyArray);
+
+    result.push(...this.dummyArrayCode);
+    if (this.dummyArray.length > 0) {
+      result.push(...this.dummyArray);
+    } else {
+      result.push(...this.profileTimeFilters);
+    }
     return new DataSelectionProfileProfile(
       profile.getUrl(),
       profile.getDisplay(),
@@ -91,12 +106,41 @@ export class EditFilterModalComponent implements OnInit {
   }
 
   public saveDataSelection() {
-    const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(this.profile);
-    console.log(dataSelectionProfile);
+    const profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUID(this.data);
+
+    const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(profile);
     this.dataSelectionProfileProviderService.setDataSelectionProfileByUID(
-      dataSelectionProfile.getUrl(),
+      profile.getUrl(),
       dataSelectionProfile
     );
+    this.setDataSelectionProvider(dataSelectionProfile);
     this.dialogRef.close();
+  }
+
+  private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
+    let updatedDataSelection: DataSelection;
+
+    this.service
+      .getDataSelectionMap()
+      .pipe(take(1))
+      .subscribe(
+        (dataSelectionMap) => {
+          const dataSelectionList = dataSelectionMap.get('1').getDataSelection();
+          const existingProfileIndex = dataSelectionList.findIndex(
+            (profile: DataSelectionProfileProfile) => profile.getUrl() === newProfile.getUrl()
+          );
+
+          if (existingProfileIndex !== -1) {
+            dataSelectionList[existingProfileIndex] = newProfile;
+          } else {
+            dataSelectionList.push(newProfile);
+          }
+          updatedDataSelection = new DataSelection(dataSelectionList);
+        },
+        () => {},
+        () => {
+          this.service.setDataSelectionByUID('1', updatedDataSelection);
+        }
+      );
   }
 }
