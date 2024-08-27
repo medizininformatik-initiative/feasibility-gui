@@ -12,7 +12,7 @@ export class CriterionMenuItems {
    * @todo Labels need to be redefined for translation jsons
    * @returns Array of Menu functions for a criterion box
    */
-  public getMenuItemsForCriterion(): MenuItemInterface[] {
+  public getMenuItemsForCriterion(isReferenceEnabled: boolean): MenuItemInterface[] {
     return [
       {
         disabled: false,
@@ -27,7 +27,7 @@ export class CriterionMenuItems {
         action: (id: string) => this.menuServiceCriterionFunctions.duplicateCriterion(id),
       },
       {
-        disabled: false,
+        disabled: !isReferenceEnabled,
         icon: 'link',
         label: 'kriterien verknüpfen',
         action: (id: string) => this.menuServiceCriterionFunctions.editLinkedCriteria(id),

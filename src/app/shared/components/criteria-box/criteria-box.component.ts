@@ -6,6 +6,7 @@ import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChi
 import { Observable, of } from 'rxjs';
 import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { forEach } from 'lodash';
 
 @Component({
   selector: 'num-criteria-box',
@@ -34,10 +35,16 @@ export class CriteriaBoxComponent implements OnInit {
   }
 
   private getMenuItems() {
-    this.menuItems = this.menuService.getMenuItemsForCriterion();
+    this.menuItems = this.menuService.getMenuItemsForCriterion(this.isRefrenceSet());
   }
 
   private getFilterChips() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion);
+  }
+
+  private isRefrenceSet(): boolean {
+    return this.criterion
+      .getAttributeFilters()
+      .some((attributeFilter) => attributeFilter.isReferenceSet());
   }
 }
