@@ -1,4 +1,5 @@
 import { AttributeDefinitionProcessorService } from './AttributeDefinitionProcessor.service';
+import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriteriaProfileDataService } from '../../CriteriaProfileData.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
@@ -41,25 +42,9 @@ export class NewCreateCriterionService {
   }
 
   public createCriterionFromOtherCriterion(oldCriterion: Criterion): void {
-    const criterionBuilder = new CriterionBuilder({hasReference: false, context: oldCriterion.getContext(), criterionHash: oldCriterion.getCriterionHash(), display: oldCriterion.getDisplay(), isInvalid: oldCriterion.getIsInvalid(), uniqueID: uuidv4(), termCodes: oldCriterion.getTermCodes()});
-
-    const timeRestrictionAllowed: boolean = !!oldCriterion.getTimeRestriction()
-    if (timeRestrictionAllowed) {
-      criterionBuilder.withTimeRestriction(oldCriterion.getTimeRestriction());
-    }
-
-    if(oldCriterion.getAttributeFilters().length > 0) {
-
-      criterionBuilder.withAttributeFilters(oldCriterion.getAttributeFilters())
-    }
-
-    if(oldCriterion.getValueFilters().length > 0) {
-      criterionBuilder.withValueFilters(oldCriterion.getValueFilters())
-    }
-
-    const criterion: Criterion = criterionBuilder.buildCriterion();
-    this.criterionProviderService.setCriterionByUID(criterion);
-    this.stageProviderService.addCriterionToStage(criterion.getUniqueID());
+    const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(oldCriterion);
+    this.criterionProviderService.setCriterionByUID(clonedCriterion);
+    this.stageProviderService.addCriterionToStage(clonedCriterion.getUniqueID());
   }
 
   public createCriterionFromProfileData(criteriaProfileData: CriteriaProfileData): void {
@@ -70,12 +55,13 @@ export class NewCreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
 
-    criterionBuilder.withAttributeFilters(
-      this.attributeDefinitionProcessorService.processAttributeFilters(criteriaProfileData)
-    );
-    criterionBuilder.withValueFilters(
-      this.attributeDefinitionProcessorService.processValueFilters(criteriaProfileData)
-    );
+    criterionBuilder
+      .withAttributeFilters(
+        this.attributeDefinitionProcessorService.processAttributeFilters(criteriaProfileData)
+      )
+      .withValueFilters(
+        this.attributeDefinitionProcessorService.processValueFilters(criteriaProfileData)
+      );
 
     const criterion: Criterion = criterionBuilder.buildCriterion();
     this.criterionProviderService.setCriterionByUID(criterion);
