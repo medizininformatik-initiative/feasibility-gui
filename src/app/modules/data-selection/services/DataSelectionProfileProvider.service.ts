@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProviderService } from './DataSelectionProvider.service';
 
@@ -12,7 +12,7 @@ export class DataSelectionProfileProviderService {
     Map<string, DataSelectionProfileProfile>
   > = new BehaviorSubject(new Map());
 
-  constructor(private dataSelectionProvider: DataSelectionProviderService) {}
+  constructor() {}
 
   public getDataSelectionProfileUIDMap(): Observable<Map<string, DataSelectionProfileProfile>> {
     return this.dataSelectionProfileUIDMapSubject.asObservable();
@@ -25,5 +25,12 @@ export class DataSelectionProfileProviderService {
   public setDataSelectionProfileByUID(uid: string, profile: DataSelectionProfileProfile): void {
     this.dataSelectionProfileUIDMap.set(uid, profile);
     this.dataSelectionProfileUIDMapSubject.next(new Map(this.dataSelectionProfileUIDMap));
+  }
+
+  public removeDataSelectionProfileByUID(uid: string): void {
+    if (this.dataSelectionProfileUIDMap.has(uid)) {
+      this.dataSelectionProfileUIDMap.delete(uid);
+      this.dataSelectionProfileUIDMapSubject.next(new Map(this.dataSelectionProfileUIDMap));
+    }
   }
 }
