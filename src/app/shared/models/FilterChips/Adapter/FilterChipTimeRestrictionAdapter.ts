@@ -33,30 +33,43 @@ export class FilterChipTimeRestrictionAdapter {
   }
 
   private static createBetweenChip(timeRestriction: any): InterfaceFilterChip {
-    const betweenText = `From ${timeRestriction.getBeforeDate()} to ${timeRestriction.getAfterDate()}`;
+    const betweenText = `From ${this.formatDate(
+      timeRestriction.getBeforeDate()
+    )} to ${this.formatDate(timeRestriction.getAfterDate())}`;
     const builder = new FilterChipBuilder(TimeRestrictionType.BETWEEN);
     builder.addData(uuidv4(), betweenText);
     return builder.buildFilterChip();
   }
 
   private static createAtChip(timeRestriction: any): InterfaceFilterChip {
-    const atText = `At ${timeRestriction.getBeforeDate()}`;
+    const atText = `${this.formatDate(timeRestriction.getBeforeDate())}`;
     const builder = new FilterChipBuilder(TimeRestrictionType.AT);
     builder.addData(uuidv4(), atText);
     return builder.buildFilterChip();
   }
 
   private static createBeforeChip(timeRestriction: BeforeFilter): InterfaceFilterChip {
-    const beforeText = `Before ${timeRestriction.getAfterDate()}`;
+    const beforeText = `${this.formatDate(timeRestriction.getAfterDate())}`;
     const builder = new FilterChipBuilder(TimeRestrictionType.BEFORE);
     builder.addData(uuidv4(), beforeText);
     return builder.buildFilterChip();
   }
 
   private static createAfterChip(timeRestriction: any): InterfaceFilterChip {
-    const afterText = `After ${timeRestriction.getAfterDate()}`;
+    const afterText = `${this.formatDate(timeRestriction.getAfterDate())}`;
     const builder = new FilterChipBuilder(TimeRestrictionType.AFTER);
     builder.addData(uuidv4(), afterText);
     return builder.buildFilterChip();
+  }
+
+  public static formatDate(date: string) {
+    const dateFormat = new Date(date);
+
+    const day = String(dateFormat.getDate()).padStart(2, '0');
+    const month = String(dateFormat.getMonth() + 1).padStart(2, '0');
+    const year = dateFormat.getFullYear();
+
+    const dateStamp = `${day}.${month}.${year}`;
+    return dateStamp;
   }
 }
