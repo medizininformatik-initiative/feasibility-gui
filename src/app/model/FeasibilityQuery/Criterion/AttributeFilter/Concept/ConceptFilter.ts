@@ -78,4 +78,7 @@ export class ConceptFilter extends AbstractConceptFilter {
   isSelectedConceptSet(): boolean {
     return this.selectedConcepts !== undefined && this.selectedConcepts !== null;
   }
+  hasSelectedConcepts(): boolean {
+    return this.isSelectedConceptSet() && this.selectedConcepts.length > 0;
+  }
 }

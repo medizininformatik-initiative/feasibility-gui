@@ -12,6 +12,8 @@ import { map, Observable, Subscription } from 'rxjs';
 export class DisplayGroupComponent implements OnInit, OnDestroy {
   @Input() groupType: string;
 
+  @Input() isEditable: boolean;
+
   criteriaArray$: Observable<string[][]>;
   private querySubscription: Subscription;
 

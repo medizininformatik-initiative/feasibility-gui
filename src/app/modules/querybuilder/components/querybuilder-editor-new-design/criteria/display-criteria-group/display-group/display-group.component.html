@@ -1,4 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="start" class="criteria-container">
+  <div *ngIf="!isEditable" class="lock-div"></div>
   <div
     *ngFor="let criterionInnerArray of criteriaArray$ | async; let lastOuter = last; let i = index"
   >

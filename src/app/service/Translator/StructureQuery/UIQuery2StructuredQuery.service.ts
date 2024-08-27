@@ -139,7 +139,7 @@ export class UIQuery2StructuredQueryService {
     const translatedFilters: AbstractStructuredQueryFilters[] = [];
     criterion.getAttributeFilters().forEach((attributeFilter) => {
       const attributeCode = attributeFilter.getAttributeCode();
-      if (attributeFilter.isConceptSet() && attributeFilter.getConcept()?.isSelectedConceptSet()) {
+      if (attributeFilter.isConceptSet() && attributeFilter.getConcept()?.hasSelectedConcepts()) {
         const conceptFilter = this.createAttributeConceptFilter(attributeFilter.getConcept());
         conceptFilter.attributeCode = attributeCode;
         translatedFilters.push(conceptFilter);

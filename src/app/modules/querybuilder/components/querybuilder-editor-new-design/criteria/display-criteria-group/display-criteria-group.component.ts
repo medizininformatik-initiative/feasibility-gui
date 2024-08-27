@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../../../../../../service/Provider/CriterionProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../../../service/Provider/FeasibilityQueryProvider.service';
@@ -13,6 +13,8 @@ export class DisplayCriteriaGroupComponent implements OnInit {
   droppedItems: Criterion[] = [];
   groupType: 'Inclusion' | 'Exclusion';
   querySubscription: Subscription;
+
+  @Input() isEditable: boolean
 
   constructor(
     private queryProviderService: FeasibilityQueryProviderService,

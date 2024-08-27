@@ -1,5 +1,5 @@
 <num-modal-window (saveButtonSelected)="saveCriterion()" (cancelButtonSelected)="closeDialog()">
-  <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+  <div *ngFor="let attributeFilter of criterion.getAttributeFilters()" style="height:88%">
     <num-attribute-filter
       [attributeFilter]="attributeFilter"
       (attributeFilterChange)="updateAttributeFilter($event)"
