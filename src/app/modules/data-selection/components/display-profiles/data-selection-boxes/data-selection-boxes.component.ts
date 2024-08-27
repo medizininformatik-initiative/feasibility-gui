@@ -1,14 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionFilterChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFilterChips.service';
+import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
 import { Observable, of } from 'rxjs';
-import { FilterChipTimeRestrictionAdapter } from 'src/app/shared/models/FilterChips/Adapter/FilterChipTimeRestrictionAdapter';
-import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
-import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -38,13 +36,9 @@ export class DataSelectionBoxesComponent implements OnInit {
   }
 
   public getFilterChips(): void {
-    const profileNodes = this.getProfileNodes();
+    const profileNodes = this.profile.getFields();
     this.generateAndStoreFilterChips(profileNodes);
     this.getFilterChipsForProfileFilters();
-  }
-
-  private getProfileNodes(): DataSelectionProfileProfileNode[] {
-    return this.profile.getFields();
   }
 
   private generateAndStoreFilterChips(profileNodes: DataSelectionProfileProfileNode[]): void {
@@ -58,7 +52,6 @@ export class DataSelectionBoxesComponent implements OnInit {
         this.profile.getFilters()
       )
     );
-    console.log(this.filtersFilterChips);
   }
 
   private getMenuItems() {
