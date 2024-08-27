@@ -3,23 +3,38 @@
   height: 150px;
   background-color: rgba(90, 121, 175, 0.1);
   border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 .display-container {
-  border-right: 1px solid black;
+  border-right: 4px solid rgba(90, 121, 175, 0.1);
   height: 100%;
-  padding: 40px 10px 0px 10px;
-  width: 30%;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 3%;
+  font-size: larger;
+  width: 100%;
+  color: black;
 }
 
 .filter-container {
   height: 100%;
-  padding: 40px 10px 0px 10px;
-  width: 30%;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 3%;
+  font-size: larger;
+  width: 100%;
+  color: black;
 }
 
 .menu-container {
   align-self: self-start;
   padding-top: 20px;
   margin-left: 20px;
+}
+
+.filter-chips-container {
+  padding-right: 5%;
+  padding-left: 20px;
+  padding-top: 30px;
 }

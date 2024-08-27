@@ -1,8 +1,11 @@
-<div fxLayout="column" fxLayoutAlign="start start" style="overflow: auto; height: 500px">
+<div fxLayout="column" fxLayoutAlign="start start">
   <num-searchbar class="searchbar-container"></num-searchbar>
-  <div *ngFor="let tree of trees" class="tree-container">
-    <num-tree (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
+  <div class="tree-container">
+    <div *ngFor="let tree of trees">
+      <num-tree (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
+    </div>
   </div>
+  <num-display-profiles class="box-container"></num-display-profiles>
   <num-action-bar class="bottom">
     <button
       class="background-color-button"
@@ -15,5 +18,4 @@
       CRDTL
     </button>
   </num-action-bar>
-  <num-display-profiles class="box-container"></num-display-profiles>
 </div>

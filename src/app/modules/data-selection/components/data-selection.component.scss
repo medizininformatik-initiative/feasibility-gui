@@ -26,11 +26,13 @@
 }
 
 .tree-container {
-  height: 100%;
   width: 100%;
+  overflow: auto;
+  height: 500px;
 }
 
 .box-container {
   width: 100%;
   margin-top: 20px;
+  height: 100%;
 }

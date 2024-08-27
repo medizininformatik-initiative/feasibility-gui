@@ -6,11 +6,13 @@
     Selected Fields
     <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
   </div>
-  <div class="filter-container">
-    Applied Filters
-    <num-filter-chips [filterChips]="filtersFilterChips"> </num-filter-chips>
-  </div>
-  <div class="menu-container">
-    <num-menu [menuItems]="menuItems" [id]="profile.getUrl()"></num-menu>
+  <div fxLayout="column" class="filter-container">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      Applied Filters
+      <num-menu [menuItems]="menuItems" [id]="profile.getUrl()"></num-menu>
+    </div>
+    <div class="filter-chips-container">
+      <num-filter-chips [filterChips]="filtersFilterChips"> </num-filter-chips>
+    </div>
   </div>
 </div>
