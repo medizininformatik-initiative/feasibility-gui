@@ -3,6 +3,7 @@ import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filte
 import { AttributeGroup } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup';
 import { Attributes } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Attributes/Attribute';
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
@@ -13,7 +14,6 @@ import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profil
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/TokenFilter ';
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 
 @Injectable({
   providedIn: 'root',
@@ -93,8 +93,8 @@ export class DataSelection2DataExtraction {
       ? new DateFilter(
           profileDateFilter.getName(),
           profileDateFilter.getType(),
-          time.afterDate,
-          time.beforeDate
+          time.beforeDate,
+          time.afterDate
         )
       : undefined;
   }

@@ -1,4 +1,3 @@
-import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -10,10 +9,7 @@ import { EditFilterModalComponent } from 'src/app/modules/data-selection/compone
 export class EditDataSelectionFilter implements OnDestroy {
   dialogSubscription: Subscription;
 
-  constructor(
-    private dialog: MatDialog,
-    private dataSelectionProvider: DataSelectionProfileProviderService
-  ) {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnDestroy() {
     this.dialogSubscription.unsubscribe();
