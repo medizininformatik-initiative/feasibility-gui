@@ -1,6 +1,13 @@
 # Changelog
 
 
+## v5.0.1 (2024-08-28)
+
+### Bugfix
+* Fix send button check for invalid criteria
+* Add context to loaded criteria even if its invalid
+
+
 ## v5.0.0 (2024-06-25)
 
 
