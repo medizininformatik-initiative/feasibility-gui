@@ -8,8 +8,8 @@
       placeholder="{{ filter.name }}"
       multiple
     >
-      <mat-option *ngFor="let value of filter.getValues()" [value]="value.label">
-        {{ value.label }} ({{ value.count }})
+      <mat-option *ngFor="let value of translatedLabel" [value]="value.url">
+        {{ value.translatedSystem }} ({{ value.count }})
       </mat-option>
     </mat-select>
   </div>

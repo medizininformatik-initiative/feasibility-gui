@@ -43,13 +43,7 @@ export class ElasticSearchFilterService {
   private buildSearchTermValues(
     values: [{ count: number; label: string }]
   ): SearchTermFilterValues[] {
-    return values.map(
-      (value) =>
-        new SearchTermFilterValues(
-          value.count,
-          TerminologySystemDictionary.getNameByUrl(value.label)
-        )
-    );
+    return values.map((value) => new SearchTermFilterValues(value.count, value.label));
   }
 
   private setElasticSearchFilterType(name: string): ElasticSearchFilterTypes {
