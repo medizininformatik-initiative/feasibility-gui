@@ -15,7 +15,7 @@
     "roles": ["FEASIBILITY_USER"]
   },
   "legal": {
-    "version": "5.0.0",
+    "version": "5.0.1",
     "copyrightOwner": "FDPG+ Team"
   },
   "features": {

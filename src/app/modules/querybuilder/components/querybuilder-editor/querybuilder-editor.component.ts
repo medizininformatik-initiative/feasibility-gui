@@ -69,6 +69,8 @@ export class QuerybuilderEditorComponent implements OnInit, OnDestroy, AfterView
       //this.resultFromSavedQuery = false;
     }
 
+    this.checkForInvalidCriteria();
+
     this.gottenDetailedResult = false;
     this.getDetailedResultRateLimit();
 
