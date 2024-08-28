@@ -7,6 +7,7 @@ import { QueryResult } from '../model/Result/QueryResult';
 import { QueryResultLine } from '../model/Result/QueryResultLine';
 import { ResultProviderService } from './Provider/ResultProvider.service';
 import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
+import { SnackbarService } from '../core/components/snack-bar/snack-bar.component';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,8 @@ export class FeasibilityQueryResultService {
     private backend: BackendService,
     private featureService: FeatureService,
     private translator: UIQuery2StructuredQueryService,
-    private resultProvider: ResultProviderService
+    private resultProvider: ResultProviderService,
+    private snackbar: SnackbarService
   ) {}
 
   public getPollingUrl(query: FeasibilityQuery): Observable<string> {
@@ -59,17 +61,21 @@ export class FeasibilityQueryResultService {
         .getDetailedResult(url, false)
         .pipe(
           map((result) => {
-            const queryResult: QueryResult = new QueryResult(
-              queryID,
-              result.totalNumberOfPatients,
-              result.queryId,
-              result.resultLines.map(
-                (line) => new QueryResultLine(line.numberOfPatients, line.siteName)
-              ),
-              result.issues
-            );
-            this.resultProvider.setResultByID(queryResult);
-            return queryResult;
+            if (!result.issues) {
+              const queryResult: QueryResult = new QueryResult(
+                queryID,
+                result.totalNumberOfPatients,
+                result.queryId,
+                result.resultLines.map(
+                  (line) => new QueryResultLine(line?.numberOfPatients, line?.siteName)
+                ),
+                result.issues
+              );
+              this.resultProvider.setResultByID(queryResult);
+              return queryResult;
+            } else {
+              this.snackbar.displayErrorMessage(this.snackbar.errorCodes[result.issues[0].code]);
+            }
           })
         )
     );
