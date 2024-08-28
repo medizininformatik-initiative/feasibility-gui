@@ -20,7 +20,6 @@ export class TerminologySystemProvider {
       .pipe(
         tap((data: CodeSystemEntry[]) => {
           TerminologySystemDictionary.initialize(data);
-          console.log(TerminologySystemDictionary.getDictionary());
         })
       )
       .subscribe({
