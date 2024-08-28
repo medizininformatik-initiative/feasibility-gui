@@ -3,6 +3,7 @@ import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
 import { ReferenceCriteriaListEntry } from '../../ListEntries/ReferenceCriteriaListEntry';
 import { TableData } from '../InterfaceTableData';
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 export class ReferenceCriteriaListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
@@ -14,7 +15,7 @@ export class ReferenceCriteriaListEntryAdapter {
       id: listEntry.getId(),
       data: [
         listEntry.getTerminologyCode().getDisplay(),
-        listEntry.getTerminologyCode().getSystem(),
+        TerminologySystemDictionary.getNameByUrl(listEntry.getTerminologyCode().getSystem()),
       ],
       hasCheckbox: true,
       isCheckboxSelected: false,

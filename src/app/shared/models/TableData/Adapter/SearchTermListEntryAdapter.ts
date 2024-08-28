@@ -3,6 +3,8 @@ import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { TableData } from '../InterfaceTableData';
+import { TerminologyCodeTranslator } from 'src/app/service/Translator/Shared/TerminologyCodeTranslator.service';
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 export class SearchTermListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
@@ -15,7 +17,7 @@ export class SearchTermListEntryAdapter {
       data: [
         listEntry.getName(),
         listEntry.getAvailability().toString(),
-        listEntry.getTerminology(),
+        TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology()),
         listEntry.getTermcode(),
         listEntry.getKdsModule(),
       ],

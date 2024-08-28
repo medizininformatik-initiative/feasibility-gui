@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +43,13 @@ export class ElasticSearchFilterService {
   private buildSearchTermValues(
     values: [{ count: number; label: string }]
   ): SearchTermFilterValues[] {
-    return values.map((value) => new SearchTermFilterValues(value.count, value.label));
+    return values.map(
+      (value) =>
+        new SearchTermFilterValues(
+          value.count,
+          TerminologySystemDictionary.getNameByUrl(value.label)
+        )
+    );
   }
 
   private setElasticSearchFilterType(name: string): ElasticSearchFilterTypes {

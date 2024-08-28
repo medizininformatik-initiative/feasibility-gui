@@ -4,6 +4,7 @@ import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
 import { TableData } from '../InterfaceTableData';
 import { v4 as uuidv4 } from 'uuid';
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 export class CodeableConceptListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
@@ -16,7 +17,8 @@ export class CodeableConceptListEntryAdapter {
         id: uuidv4(),
         data: [
           entry.getTerminologyCode().getDisplay(),
-          entry.getTerminologyCode().getSystem(),
+          TerminologySystemDictionary.getNameByUrl(entry.getTerminologyCode().getSystem()) ??
+            entry.getTerminologyCode().getSystem(),
           entry.getTerminologyCode().getCode(),
         ],
         hasCheckbox: true,

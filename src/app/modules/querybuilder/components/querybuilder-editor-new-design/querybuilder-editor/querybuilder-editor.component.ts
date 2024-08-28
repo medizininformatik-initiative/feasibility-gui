@@ -3,6 +3,8 @@ import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuer
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { SearchComponent } from '../search/search.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
   selector: 'num-querybuilder-editor',
@@ -14,7 +16,10 @@ export class QuerybuilderEditorComponent implements OnInit {
   @ViewChild('search') search: SearchComponent;
 
   query: FeasibilityQuery;
-  constructor(public queryService: FeasibilityQueryProviderService) {}
+  constructor(
+    public queryService: FeasibilityQueryProviderService,
+    private test1: TerminologySystemProvider
+  ) {}
 
   ngOnInit(): void {
     this.queryService.getFeasibilityQueryByID().subscribe((query) => {

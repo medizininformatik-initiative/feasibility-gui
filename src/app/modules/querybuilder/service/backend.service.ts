@@ -38,6 +38,8 @@ export class BackendService {
   private static PATH_STORED_QUERY = 'query/template';
   private static PATH_QUERY_RESULT_LIMIT = 'query/detailed-obfuscated-result-rate-limit';
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345';
+  private static PATH_TERMINOLOGY_SYSTEMS = 'terminology/systems';
+
   private resultObservable = null;
 
   private static PATH_DATASELECTION_PROFILE_DATA = 'dse/profile-data';
@@ -49,24 +51,7 @@ export class BackendService {
   headers = new HttpHeaders()
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + this.token);
-  /*
-  public getCategories(): Observable<Array<CategoryEntry>> {
-    if (this.feature.mockTerminology()) {
-      return of();
-    }
-    return this.http.get<Array<CategoryEntry>>(this.createUrl(BackendService.PATH_ROOT_ENTRIES));
-  }
 
-  public getTerminolgyTree(id: string): Observable<TerminologyEntry> {
-    if (this.feature.mockTerminology()) {
-      return of();
-    }
-
-    return this.http.get<TerminologyEntry>(
-      this.createUrl(BackendService.PATH_TERMINOLOGY_SUBTREE + '/' + id)
-    );
-  }
-*/
   public getElasticSearchEntry(id: string): Observable<SearchTermListEntry> {
     return this.http.get<SearchTermListEntry>(this.createUrl(BackendService.PATH_ENTRY + '/' + id));
   }
@@ -198,30 +183,7 @@ export class BackendService {
   public getElasticSearchResultById(id: string): Observable<any> {
     return this.http.get<any>(this.createUrl(BackendService.PATH_ENTRY + id));
   }
-  /*
-  public getTerminolgyEntrySearchResult(
-    catId: string,
-    search: string
-  ): Observable<Array<TerminologyEntry>> {
-    if (this.feature.mockTerminology()) {
-      return of();
-    }
 
-    const queryParam = 'query=' + search.toUpperCase() + (catId ? '&categoryId=' + catId : '');
-    const url = this.createUrl(BackendService.PATH_SEARCH, queryParam);
-
-    return this.http.get<Array<TerminologyEntry>>(url);
-  }
-*/
-  /*
-  public postQuery(query: FeasibilityQuery): Observable<any> {
-    if (this.feature.getQueryVersion() === 'v2') {
-      const queryV2 = this.apiTranslator.translateToStructuredQuery(query);
-      return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), queryV2, {
-        observe: 'response',
-      });
-    }
-  }*/
   public postQueryNew(query: StructuredQuery): Observable<any> {
     return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), query, {
       observe: 'response',
@@ -247,6 +209,10 @@ export class BackendService {
     return this.http.get<any>(
       this.createUrl(BackendService.PATH_DATASELECTION_PROFILE_DATA + '?ids=' + commaSeparatedIds)
     );
+  }
+
+  public getTerminologySystems() {
+    return this.http.get<any>(this.createUrl(BackendService.PATH_TERMINOLOGY_SYSTEMS));
   }
 
   public getDataSelectionProfileTree() {

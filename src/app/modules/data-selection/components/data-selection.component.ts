@@ -8,6 +8,8 @@ import { DataSelectionProviderService } from '../services/DataSelectionProvider.
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
   selector: 'num-data-selection',
@@ -25,7 +27,9 @@ export class DataSelectionComponent implements OnInit, AfterViewInit {
     private createDataSelectionProfileService: CreateDataSelectionProfileProfile,
     private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
     private crdtlService: CreateCRDTL,
-    private dataSelectionProviderService: DataSelectionProviderService
+    private dataSelectionProviderService: DataSelectionProviderService,
+    private terminologyCodeSystemTranslator: TerminologySystemProvider,
+    private fileSaverService: FileSaverService
   ) {}
 
   ngOnInit(): void {
@@ -61,6 +65,10 @@ export class DataSelectionComponent implements OnInit, AfterViewInit {
   }
 
   startTranslation() {
-    this.crdtlService.createCRDTL().subscribe((test) => console.log(test));
+    this.crdtlService.createCRDTL().subscribe((crdtl) => {
+      const crdtlString = JSON.stringify(crdtl);
+      const fileData = new Blob([crdtlString], { type: 'text/plain;charset=utf-8' });
+      this.fileSaverService.save(fileData, 'crdtl.json');
+    });
   }
 }

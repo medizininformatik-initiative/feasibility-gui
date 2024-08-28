@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { forEach } from 'lodash';
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 @Component({
   selector: 'num-criteria-box',
@@ -24,12 +25,17 @@ export class CriteriaBoxComponent implements OnInit {
 
   $filterChips: Observable<InterfaceFilterChip[]> = of([]);
 
+  system: string;
+
   constructor(
     private menuService: CriterionMenuItems,
     private filterChipsService: CriterionFilterChipService
   ) {}
 
   ngOnInit() {
+    this.system = TerminologySystemDictionary.getNameByUrl(
+      this.criterion.getTermCodes()[0].getSystem()
+    );
     this.getMenuItems();
     this.getFilterChips();
   }
