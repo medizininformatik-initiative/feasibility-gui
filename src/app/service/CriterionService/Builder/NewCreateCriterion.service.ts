@@ -10,11 +10,6 @@ import { Injectable } from '@angular/core';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from '../../ElasticSearch/SearchTermListItemService.service';
 import { StageProviderService } from '../../Provider/StageProvider.service';
-import { v4 as uuidv4 } from 'uuid';
-import {AttributeFilter} from "../../../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter";
-import {ReferenceCriterion} from "../../../model/FeasibilityQuery/Criterion/ReferenceCriterion";
-import {ObjectHelper} from "../../../modules/querybuilder/controller/ObjectHelper";
-import {ReferenceFilter} from "../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter";
 
 @Injectable({
   providedIn: 'root',

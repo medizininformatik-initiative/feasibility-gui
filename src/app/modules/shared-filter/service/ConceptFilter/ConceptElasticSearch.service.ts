@@ -1,13 +1,14 @@
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
 import { Injectable, OnDestroy } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +25,19 @@ export class ConceptElasticSearchService {
   public searchConcepts(searchText: string, allowedConceptUri: string[]): void {
     this.backendService
       .getElasticSearchResultsForCodeableConcept(searchText, allowedConceptUri)
-      .pipe(map((response) => this.mapToCodeableConceptResultList(response)))
-      .subscribe((results) => this.searchResultsSubject.next(results));
+      .pipe(
+        map((response) => this.mapToCodeableConceptResultList(response)),
+        catchError((error) => {
+          console.error('Failed to fetch search results:', error);
+          return of(new CodeableConceptResultList(0, []));
+        })
+      )
+      .subscribe((results) => {
+        if (results.getTotalHits() === 0) {
+          console.warn('No results found for the search query.');
+        }
+        this.searchResultsSubject.next(results);
+      });
   }
 
   public getCurrentSearchResults(): Observable<CodeableConceptResultList> {

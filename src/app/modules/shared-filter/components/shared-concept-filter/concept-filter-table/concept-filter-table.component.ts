@@ -1,6 +1,7 @@
+import { CloneTerminologyCode } from 'src/app/model/Utilities/CriterionCloner/TerminologyCode/CloneTerminologyCode';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConceptElasticSearchService } from '../../../service/ConceptFilter/ConceptElasticSearch.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
@@ -42,37 +43,40 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   }
 
   private updateCheckboxSelection(): void {
-    this.adaptedData.body.rows.forEach((row) => {
+    this.adaptedData?.body.rows.forEach((row) => {
       const listEntry = row.originalEntry as CodeableConceptResultListEntry;
-      const termCode = this.createTerminologyCode(listEntry.getTerminologyCode());
-      row.isCheckboxSelected = this.selectedConceptProviderService.findConcept(termCode)
+      const terminologyCode = CloneTerminologyCode.deepCopyTerminologyCode(
+        listEntry.getTerminologyCode()
+      );
+      this.clearSelectedConceptArray();
+      row.isCheckboxSelected = this.selectedConceptProviderService.findConcept(terminologyCode)
         ? true
         : false;
     });
   }
 
   ngOnDestroy() {
-    this.subscription2?.unsubscribe();
     this.subscription?.unsubscribe();
+    this.subscription2?.unsubscribe();
   }
 
   public addSelectedRow(item: InterfaceTableDataRow) {
     const entry = item.originalEntry as CodeableConceptResultListEntry;
-    const terminologyCode = this.createTerminologyCode(entry.getTerminologyCode());
-    this.selectedConcepts.push(terminologyCode);
+    const terminologyCode = CloneTerminologyCode.deepCopyTerminologyCode(entry.getTerminologyCode());
+    if (this.selectedConceptProviderService.findConcept(terminologyCode)) {
+      this.selectedConceptProviderService.removeConcept(terminologyCode);
+      this.clearSelectedConceptArray();
+    } else {
+      this.selectedConcepts.push(terminologyCode);
+    }
   }
 
   public addSelectedConceptsToStage() {
     this.selectedConceptProviderService.addConcepts(this.selectedConcepts);
-    this.selectedConcepts = [];
+    this.clearSelectedConceptArray();
   }
 
-  private createTerminologyCode(codeableConcept: TerminologyCode): TerminologyCode {
-    return new TerminologyCode(
-      codeableConcept.getCode(),
-      codeableConcept.getDisplay(),
-      codeableConcept.getSystem(),
-      codeableConcept.getVersion()
-    );
+  private clearSelectedConceptArray() {
+    this.selectedConcepts = [];
   }
 }
