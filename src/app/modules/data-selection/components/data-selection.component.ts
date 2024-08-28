@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
 import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
@@ -10,16 +10,19 @@ import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { FileSaverService } from 'ngx-filesaver';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-data-selection',
   templateUrl: './data-selection.component.html',
   styleUrls: ['./data-selection.component.scss'],
 })
-export class DataSelectionComponent implements OnInit, AfterViewInit {
+export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren(TreeComponent) numTrees!: QueryList<TreeComponent>;
 
   trees: TreeNode[];
+
+  subscription: Subscription;
 
   selectedDataSelectionProfileNodeIds: Set<string> = new Set();
 
@@ -36,6 +39,12 @@ export class DataSelectionComponent implements OnInit, AfterViewInit {
     this.dataSelectionProfileTreeService.createProfileTree().subscribe((tree) => {
       this.trees = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
     });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   ngAfterViewInit() {
@@ -65,7 +74,7 @@ export class DataSelectionComponent implements OnInit, AfterViewInit {
   }
 
   startTranslation() {
-    this.crdtlService.createCRDTL().subscribe((crdtl) => {
+    this.subscription = this.crdtlService.createCRDTL().subscribe((crdtl) => {
       const crdtlString = JSON.stringify(crdtl);
       const fileData = new Blob([crdtlString], { type: 'text/plain;charset=utf-8' });
       this.fileSaverService.save(fileData, 'crdtl.json');
