@@ -46,8 +46,8 @@ export class CreateCriterionService {
     criterion.isInvalid = invalidCriteriaIssues.length > 0;
     criterion.uniqueID = localUID;
     criterion.position = new CritGroupPosition();
+    criterion.context = context;
     if (!criterion.isInvalid) {
-      criterion.context = context;
       this.applyUIProfileToCriterion(hash).subscribe((critFromProfile) => {
         Object.assign(criterion, critFromProfile);
         criterion.termCodes = this.copyTermCodes(termCodes, uid);
