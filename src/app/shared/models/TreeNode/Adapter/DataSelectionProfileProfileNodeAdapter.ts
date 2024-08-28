@@ -15,7 +15,7 @@ export class FieldsTreeAdapter {
       id: node?.getId(),
       data: {
         name: node?.getName(),
-        display: node?.getDisplay(),
+        display: node?.getName() + ' (' + node?.getDisplay() + ')',
         selectable: true,
         isCheckboxSelected: node.getIsSelected(),
       },
