@@ -2,9 +2,10 @@
 
 <ng-template #tree let-node="node" let-level="level">
   <div class="divider" [style.marginLeft]="calcMarginLeft(level)">
-    <div fxLayout="row" fxLayoutAlign="start center">
-      <div *ngIf="node.data.selectable">
+    <div fxLayout="row" fxLayoutAlign="start center" style="height: 50px">
+      <div>
         <mat-checkbox
+          [disabled]="!node.data.selectable"
           [checked]="node?.data.isCheckboxSelected"
           (change)="checkboxSelected(node)"
           class="tree-checkbox"

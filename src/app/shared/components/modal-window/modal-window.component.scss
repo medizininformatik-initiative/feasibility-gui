@@ -1,13 +1,15 @@
 .container {
   width: 60em;
   height: 85vh;
+  background-color: rgb(90, 121, 175, 0.1);
 }
 
 .content-container {
   overflow: auto;
   min-height: 90%;
   max-height: 90%;
-  height:90%;
+  height: 90%;
+  padding: 1rem;
 }
 
 .select-button {
@@ -15,4 +17,5 @@
   background: rgb(90, 121, 175, 1);
   margin-left: 2%;
   margin-top: 2%;
+  color: white;
 }
