@@ -62,7 +62,6 @@ export class TermEntry2CriterionTranslator {
     let contextVersion = '';
     let contextSystem = '';
     let contextCode = '';
-    let termcodeVersion = '';
 
     if (criterion.context) {
       contextSystem = criterion.context.system;
@@ -74,17 +73,8 @@ export class TermEntry2CriterionTranslator {
       criterion.isinvalid = true;
     }
 
-    if (termcode.version) {
-      termcodeVersion = termcode.version;
-    }
-
     const contextTermcodeHashInput =
-      contextSystem +
-      contextCode +
-      contextVersion +
-      termcode.system +
-      termcode.code +
-      termcodeVersion;
+      contextSystem + contextCode + contextVersion + termcode.system + termcode.code;
 
     return uuidv3(contextTermcodeHashInput, BackendService.BACKEND_UUID_NAMESPACE);
   }
