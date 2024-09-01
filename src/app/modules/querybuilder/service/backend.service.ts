@@ -203,9 +203,7 @@ export class BackendService {
     return this.http.get<any>(resultUrl);
   }
 
-  public getDataSelectionProfileData(ids: string[]) {
-    const commaSeparatedIds: string = ids.join(',');
-    const test = BackendService.PATH_DATASELECTION_PROFILE_DATA + '?ids=' + commaSeparatedIds;
+  public getDataSelectionProfileData(commaSeparatedIds: string) {
     return this.http.get<any>(
       this.createUrl(BackendService.PATH_DATASELECTION_PROFILE_DATA + '?ids=' + commaSeparatedIds)
     );

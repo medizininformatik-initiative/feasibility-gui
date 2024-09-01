@@ -22,7 +22,8 @@ export class CreateDataSelectionProfileProfile {
   public getDataSelectionProfileProfileData(
     urls: string[]
   ): Observable<DataSelectionProfileProfile[]> {
-    return this.backend.getDataSelectionProfileData(urls).pipe(
+    const commaSeparatedIds: string = urls.join(',');
+    return this.backend.getDataSelectionProfileData(commaSeparatedIds).pipe(
       map((data: any[]) =>
         data.map((item: any) => {
           const fields = this.mapNodes(item.fields);

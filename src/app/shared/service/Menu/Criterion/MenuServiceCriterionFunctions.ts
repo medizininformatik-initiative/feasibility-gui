@@ -1,44 +1,47 @@
-import { Injectable } from '@angular/core';
-import { EditCriterionService } from 'src/app/service/CriterionService/EditCriterionService.service';
+import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion';
+import { CriterionModalService } from 'src/app/service/CriterionService/CriterionModal.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
-import {NewCreateCriterionService} from "../../../../service/CriterionService/Builder/NewCreateCriterion.service";
+import { Injectable } from '@angular/core';
+import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuServiceCriterionFunctions {
   constructor(
-    private criterionService: CriterionProviderService,
-    private editCriterionService: EditCriterionService,
-    private stageService: StageProviderService,
-    private queryProviderService: FeasibilityQueryProviderService,
-    private newCreateCriterionService: NewCreateCriterionService
+    private criterionProviderService: CriterionProviderService,
+    private editCriterionService: CriterionModalService,
+    private stageProviderService: StageProviderService,
+    private queryProviderService: FeasibilityQueryProviderService
   ) {}
 
   deleteCriterion(uid: string) {
-    this.stageService.deleteCriterionByUID(uid);
+    this.stageProviderService.deleteCriterionByUID(uid);
     this.queryProviderService.deleteFromInclusion(uid);
     this.queryProviderService.deleteFromExclusion(uid);
-    this.criterionService.deleteCriterionFromMapByUID(uid);
+    this.criterionProviderService.deleteCriterionFromMapByUID(uid);
   }
 
   duplicateCriterion(uid: string) {
-    this.newCreateCriterionService.createCriterionFromOtherCriterion(this.criterionService.getCriterionByUID(uid))
+    const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(
+      this.criterionProviderService.getCriterionByUID(uid)
+    );
+    this.criterionProviderService.setCriterionByUID(clonedCriterion);
+    this.stageProviderService.addCriterionToStage(clonedCriterion.getUniqueID());
   }
 
   editLinkedCriteria(criterionUuid: string) {
-    const criterion = this.criterionService.getCriterionByUID(criterionUuid);
+    const criterion = this.criterionProviderService.getCriterionByUID(criterionUuid);
     if (criterion) {
-      this.editCriterionService.editCriterionReferenceCriteria(criterion);
+      this.editCriterionService.openReferenceCriteriaModal(criterion);
     }
   }
 
   applyCriterionFilter(criterionUuid: string, params: any[]) {
-    const criterion = this.criterionService.getCriterionByUID(criterionUuid);
+    const criterion = this.criterionProviderService.getCriterionByUID(criterionUuid);
     if (criterion) {
-      this.editCriterionService.editCriterionAttribute(criterion);
+      this.editCriterionService.openCriterionModal(criterion);
     }
   }
 }

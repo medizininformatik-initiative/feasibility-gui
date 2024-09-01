@@ -1,4 +1,7 @@
-import { ElasticSearchFilterService } from 'src/app/service/ElasticSearch/ElasticSearchFilter.service';
+import { ElasticSearchFilterProvider } from 'src/app/service/Provider/ElasticSearchFilterProvider.service';
+import { ElasticSearchFilterService } from 'src/app/service/ElasticSearch/Filter/ElasticSearchFilter.service';
+import { ElasticSearchSearchResultProviderService } from 'src/app/service/Provider/ElasticSearchSearchResultProviderService.service';
+import { ElasticSearchSearchTermDetailsService } from 'src/app/service/ElasticSearch/ElasticSearchSearchTermDetails.service';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { mapToSearchTermResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
@@ -20,9 +23,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ElasticSearchFilterProvider } from 'src/app/service/Provider/ElasticSearchFilterProvider.service';
-import { ElasticSearchSearchTermDetailsService } from 'src/app/service/ElasticSearch/ElasticSearchSearchTermDetails.service';
-import { ElasticSearchSearchResultProviderService } from 'src/app/service/Provider/ElasticSearchSearchResultProviderService.service';
 
 @Component({
   selector: 'num-search',

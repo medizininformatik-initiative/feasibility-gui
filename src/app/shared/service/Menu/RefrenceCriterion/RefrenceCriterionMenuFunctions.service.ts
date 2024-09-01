@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { EditCriterionService } from 'src/app/service/CriterionService/EditCriterionService.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { CriterionModalService } from 'src/app/service/CriterionService/CriterionModal.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/Ref
 export class RefrenceCriterionMenuFunctionsService {
   constructor(
     private criterionService: CriterionProviderService,
-    private editCriterionService: EditCriterionService,
+    private editCriterionService: CriterionModalService,
     private stageService: StageProviderService,
     private queryProviderService: FeasibilityQueryProviderService
   ) {}
@@ -33,11 +33,11 @@ export class RefrenceCriterionMenuFunctionsService {
   editLinkedCriteria(criterionUuid: string) {
     const criterion = this.criterionService.getCriterionByUID(criterionUuid);
     if (criterion) {
-      this.editCriterionService.editCriterionReferenceCriteria(criterion);
+      this.editCriterionService.openReferenceCriteriaModal(criterion);
     }
   }
 
   applyCriterionFilter(params: ReferenceCriterion[]) {
-    this.editCriterionService.editCriterionAttribute(params[0]);
+    this.editCriterionService.openCriterionModal(params[0]);
   }
 }
