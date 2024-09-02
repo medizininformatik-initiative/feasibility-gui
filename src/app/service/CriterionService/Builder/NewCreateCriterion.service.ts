@@ -1,5 +1,4 @@
 import { AttributeDefinitionProcessorService } from './AttributeDefinitionProcessor.service';
-import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriteriaProfileDataService } from '../../CriteriaProfileData.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
@@ -35,13 +34,6 @@ export class NewCreateCriterionService {
         });
       });
   }
-
-  public createCriterionFromOtherCriterion(oldCriterion: Criterion): void {
-    const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(oldCriterion);
-    this.criterionProviderService.setCriterionByUID(clonedCriterion);
-    this.stageProviderService.addCriterionToStage(clonedCriterion.getUniqueID());
-  }
-
   public createCriterionFromProfileData(criteriaProfileData: CriteriaProfileData): void {
     const mandatoryFields = this.criterionMetadataService.createMandatoryFields(criteriaProfileData);
     const criterionBuilder = new CriterionBuilder(mandatoryFields);

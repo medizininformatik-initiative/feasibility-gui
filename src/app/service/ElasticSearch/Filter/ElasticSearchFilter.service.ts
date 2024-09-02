@@ -1,11 +1,10 @@
-import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
-import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
+import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 
 @Injectable({
   providedIn: 'root',

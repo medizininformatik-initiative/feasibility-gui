@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class EditCriterionService implements OnDestroy {
+export class CriterionModalService implements OnDestroy {
   dialogSubscription: Subscription;
 
   constructor(
@@ -21,7 +21,7 @@ export class EditCriterionService implements OnDestroy {
     this.dialogSubscription.unsubscribe();
   }
 
-  public editCriterionAttribute(criterion: Criterion) {
+  public openCriterionModal(criterion: Criterion) {
     const dialogRef = this.dialog.open(EditCriterionModalComponent, {
       data: { criterion },
     });
@@ -32,7 +32,7 @@ export class EditCriterionService implements OnDestroy {
     });
   }
 
-  public editCriterionReferenceCriteria(criterion: Criterion) {
+  public openReferenceCriteriaModal(criterion: Criterion) {
     const dialogRef = this.dialog.open(EditReferenceCriteriaModalComponent, {
       data: { criterion },
     });
