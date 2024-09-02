@@ -22,7 +22,7 @@ interface selectedItem {
 })
 export class ReferenceComponent implements OnInit, OnDestroy {
   @Input()
-  referenceFilterUri: string[];
+  referenceFilterUri: string[] = [];
 
   listItems: ReferenceCriteriaListEntry[] = [];
 
@@ -95,12 +95,16 @@ export class ReferenceComponent implements OnInit, OnDestroy {
   }
 
   startElasticSearch(searchtext: string) {
-      this.searchtext = searchtext;
+    this.searchtext = searchtext;
+    if (this.referenceFilterUri?.length > 0) {
       this.elasticSearchService
         .startElasticSearch(searchtext, [], this.referenceFilterUri)
         .subscribe((test) => {
           this.listItems = test.results;
         });
+    } else {
+      console.warn('No referenceCriteriaUrl was provided');
+    }
   }
 
   setSelectedReferenceCriteria() {
