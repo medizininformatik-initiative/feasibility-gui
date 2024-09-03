@@ -7,7 +7,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SearchResultProcessorService } from '../SearchResultProcessor.service';
 import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder';
-
 @Injectable({
   providedIn: 'root',
 })

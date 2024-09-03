@@ -16,7 +16,7 @@ export class CodeableConceptResultMapper extends AbstractResultMapper<
   }
 
   public mapResponseToEntries(response: any): CodeableConceptResultListEntry[] {
-    return response.results.map((resultItem: any) => {
+    return response.results?.map((resultItem: any) => {
       const terminologyCode = new TerminologyCode(
         resultItem.code,
         resultItem.display,

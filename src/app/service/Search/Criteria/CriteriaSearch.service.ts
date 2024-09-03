@@ -32,7 +32,7 @@ export class CriteriaSearchService {
       .withSearchTerm(searchText)
       .withAvailability(this.getFilter(ElasticSearchFilterTypes.AVAILABILITY))
       .withContext(this.getFilter(ElasticSearchFilterTypes.CONTEXT))
-      .withKds(this.getFilter(ElasticSearchFilterTypes.KDSMODULE))
+      .withKds(this.getFilter(ElasticSearchFilterTypes.KDS_MODULE))
       .withTerminology(this.getFilter(ElasticSearchFilterTypes.TERMINOLOGY));
   }
 
