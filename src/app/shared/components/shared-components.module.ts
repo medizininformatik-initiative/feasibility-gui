@@ -13,13 +13,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MenuComponent } from './menu/menu.component';
 import { NgModule } from '@angular/core';
 import { SearchbarComponent } from './search/searchbar.component';
-import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { TableComponent } from './table/table.component';
 import { ModalWindowComponent } from './modal-window/modal-window.component';
 import { ReferenceCriteriaBoxComponent } from './reference-criteria-box/reference-criteria-box.component';
+import { SearchFilterComponent } from './search-filter/search-filter.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -27,12 +27,12 @@ const SHARED_DECLARATIONS = [
   FilterChipsComponent,
   ListItemDetailsComponent,
   TableComponent,
-  SearchFilterComponent,
   SearchbarComponent,
   SearchResultComponent,
   TreeComponent,
   MenuComponent,
   ModalWindowComponent,
+  SearchFilterComponent,
 ];
 
 @NgModule({

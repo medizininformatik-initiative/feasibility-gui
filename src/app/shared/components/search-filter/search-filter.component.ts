@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { values } from 'lodash';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
+import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter';
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 
 @Component({
   selector: 'num-search-filter',
@@ -10,31 +9,24 @@ import { TerminologySystemDictionary } from 'src/app/model/Utilities/Terminology
 })
 export class SearchFilterComponent implements OnInit {
   @Input()
-  filter: SearchTermFilter;
+  filter: SearchFilter;
 
   @Output()
-  filterChanged = new EventEmitter<SearchTermFilter>();
+  selectedFilterChanged = new EventEmitter<{ values: string[]; type: ElasticSearchFilterTypes }>();
+
+  selectedValues: string[];
 
   translatedLabel: { translatedSystem: string; count: number; url: string }[] = []; // Initialize as an empty array
 
   constructor() {}
 
-  ngOnInit(): void {
-    if (this.filter) {
-      this.filter.getValues().forEach((value) => {
-        this.translatedLabel.push({
-          translatedSystem: TerminologySystemDictionary.getNameByUrl(value.getlabel()),
-          count: value.getCount(),
-          url: value.getlabel(),
-        });
-      });
-    }
-  }
+  ngOnInit(): void {}
 
-  onSelectionChange(selectedValues: string[]): void {
-    if (this.filter) {
-      this.filter.setSelectedValues(selectedValues);
-      this.filterChanged.emit(this.filter);
-    }
+  onSelectionChange(): void {
+    const filterType =
+      ElasticSearchFilterTypes[
+        this.filter.filterType.toUpperCase() as keyof typeof ElasticSearchFilterTypes
+      ];
+    this.selectedFilterChanged.emit({ values: this.selectedValues, type: filterType });
   }
 }

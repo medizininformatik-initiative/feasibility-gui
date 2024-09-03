@@ -55,7 +55,6 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
     const contextFilter = this.getContextFilter();
     const kdsModuleFilter = this.getKdsModuleFilter();
     const terminologyFilters = this.getTerminologyFilter();
-
     return this.backendService.getElasticSearchResultsForCriteria(
       searchTerm,
       availabilityFilter,
@@ -85,7 +84,7 @@ export class ElasticSearchService<T extends InterfaceResultList<C>, C extends In
 
   private getKdsModuleFilter(): string {
     return this.elasticSearchFilterProvider
-      .getSelectedValuesOfType(ElasticSearchFilterTypes.KDSMODULE)
+      .getSelectedValuesOfType(ElasticSearchFilterTypes.KDS_MODULE)
       .join(',');
   }
 

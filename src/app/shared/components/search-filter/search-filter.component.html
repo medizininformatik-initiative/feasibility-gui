@@ -1,15 +1,15 @@
 <mat-form-field appearance="fill" style="padding-right: 20px">
-  <div fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayoutAlign="center center">
     <mat-select
       disableOptionCentering
-      [value]="filter.selectedValues"
-      (selectionChange)="onSelectionChange($event.value)"
+      (selectionChange)="onSelectionChange()"
       panelClass="example-panel"
-      placeholder="{{ filter.name }}"
+      [placeholder]="filter?.filterType || 'Select filter'"
+      [(value)]="selectedValues"
       multiple
     >
-      <mat-option *ngFor="let value of translatedLabel" [value]="value.url">
-        {{ value.translatedSystem }} ({{ value.count }})
+      <mat-option *ngFor="let value of filter.data" [value]="value.getlabel()">
+        {{ value.getlabel() }} ({{ value.getCount() }})
       </mat-option>
     </mat-select>
   </div>

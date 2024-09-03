@@ -1,6 +1,6 @@
 export enum ElasticSearchFilterTypes {
   CONTEXT = 'context',
   TERMINOLOGY = 'terminology',
-  KDSMODULE = 'kds_module',
+  KDS_MODULE = 'kds_module',
   AVAILABILITY = 'availability',
 }

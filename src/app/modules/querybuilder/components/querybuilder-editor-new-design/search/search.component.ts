@@ -6,7 +6,7 @@ import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearc
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { mapToSearchTermResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
 import { MatDrawer } from '@angular/material/sidenav';
-import { Observable, of, Subscription } from 'rxjs';
+import { concatAll, map, mergeMap, Observable, of, Subscription, toArray } from 'rxjs';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
@@ -23,6 +23,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { CrietriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
+import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
 
 @Component({
   selector: 'num-search',
@@ -48,7 +51,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   selectedDetails$: Observable<SearchTermDetails>;
 
-  searchFilters$: Observable<SearchTermFilter[]>;
+  searchFilters$: Observable<SearchFilter[]>;
 
   constructor(
     public elementRef: ElementRef,
@@ -163,12 +166,23 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public getElasticSearchFilter() {
-    this.searchFilters$ = this.filterService.fetchElasticSearchFilters();
+  public getElasticSearchFilter(): void {
+    this.searchFilters$ = this.filterService.fetchElasticSearchFilters().pipe(
+      map((searchFilters: SearchTermFilter[]) =>
+        // Convert each SearchTermFilter into a SearchFilter[]
+         searchFilters.map((searchFilter) =>
+          CrietriaSearchFilterAdapter.convertToFilterValues(searchFilter)
+        )
+      )
+    );
+
+    this.searchFilters$.subscribe((test) => console.log(test));
   }
 
-  public setElasticSearchFilter(filter: SearchTermFilter) {
-    this.elasticSearchFilterProvider.setFilter(filter);
+  public setElasticSearchFilter(filter: any) {
+    const newFilter = new SearchTermFilter(filter.type, []);
+    newFilter.setSelectedValues(filter.values);
+    this.elasticSearchFilterProvider.setFilter(newFilter);
     this.startElasticSearch(this.searchtext);
   }
 }
