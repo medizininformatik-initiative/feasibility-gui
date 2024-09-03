@@ -3,8 +3,8 @@
   <input
     matInput
     [matDatepicker]="dateStartPicker"
-    [(ngModel)]="beforeDate"
-    (dateChange)="onBeforeDateChange($event)"
+    [(ngModel)]="afterDate"
+    (dateChange)="onAfterDateChange($event)"
   />
   <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
   <mat-datepicker #dateStartPicker></mat-datepicker>
@@ -15,8 +15,8 @@
   <input
     matInput
     [matDatepicker]="dateEndPicker"
-    [(ngModel)]="afterDate"
-    (dateChange)="onAfterDateChange($event)"
+    [(ngModel)]="beforeDate"
+    (dateChange)="onBeforeDateChange($event)"
   />
   <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
   <mat-datepicker #dateEndPicker></mat-datepicker>

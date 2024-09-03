@@ -34,8 +34,8 @@ export class FilterChipTimeRestrictionAdapter {
 
   private static createBetweenChip(timeRestriction: any): InterfaceFilterChip {
     const betweenText = `From ${this.formatDate(
-      timeRestriction.getBeforeDate()
-    )} to ${this.formatDate(timeRestriction.getAfterDate())}`;
+      timeRestriction.getAfterDate()
+    )} to ${this.formatDate(timeRestriction.getBeforeDate())}`;
     const builder = new FilterChipBuilder(TimeRestrictionType.BETWEEN);
     builder.addData(uuidv4(), betweenText);
     return builder.buildFilterChip();

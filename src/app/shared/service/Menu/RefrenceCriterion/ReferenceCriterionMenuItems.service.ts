@@ -18,25 +18,25 @@ export class ReferenceCriterionMenuItems {
       {
         disabled: false,
         icon: 'trash',
-        label: 'löschen',
+        label: 'DELETE',
         action: (id: string) => this.referenceCriterionMenuFunctions.deleteCriterion(id),
       },
       {
         disabled: true,
         icon: 'clone',
-        label: 'dublizieren',
+        label: 'DUPLICATE',
         action: (id: string) => this.referenceCriterionMenuFunctions.deleteCriterion(id),
       },
       {
         disabled: true,
         icon: 'link',
-        label: 'kriterien verknüpfen',
+        label: 'REFERENCE',
         action: (id: string) => this.referenceCriterionMenuFunctions.editLinkedCriteria(id),
       },
       {
         disabled: false,
         icon: 'cog',
-        label: 'Filter anwenden',
+        label: 'APPLY_FILTERS',
         action: (id: string, params) =>
           this.referenceCriterionMenuFunctions.applyCriterionFilter(params),
       },

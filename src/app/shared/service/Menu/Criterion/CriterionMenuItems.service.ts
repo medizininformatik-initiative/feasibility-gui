@@ -17,25 +17,25 @@ export class CriterionMenuItems {
       {
         disabled: false,
         icon: 'trash',
-        label: 'löschen',
+        label: 'DELETE',
         action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
       },
       {
         disabled: false,
         icon: 'clone',
-        label: 'duplizieren',
+        label: 'DUPLICATE',
         action: (id: string) => this.menuServiceCriterionFunctions.duplicateCriterion(id),
       },
       {
         disabled: !isReferenceEnabled,
         icon: 'link',
-        label: 'kriterien verknüpfen',
+        label: 'REFERENCE',
         action: (id: string) => this.menuServiceCriterionFunctions.editLinkedCriteria(id),
       },
       {
         disabled: false,
         icon: 'cog',
-        label: 'Filter anwenden',
+        label: 'APPLY_FILTERS',
         action: (id: string, params) =>
           this.menuServiceCriterionFunctions.applyCriterionFilter(id, params),
       },

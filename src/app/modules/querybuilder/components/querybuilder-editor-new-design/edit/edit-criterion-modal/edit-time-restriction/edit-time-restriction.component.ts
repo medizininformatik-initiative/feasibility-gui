@@ -68,7 +68,7 @@ export class EditTimeRestrictionComponent implements OnInit {
    * @param betweenFilter The filter to apply for the date range.
    * @returns The filtered result.
    */
-  public updateTimeRestrictionBetweenFilter(beweenFilter: BetweenFilter) {
-    return this.timeRestrictionChanged.emit(beweenFilter);
+  public updateTimeRestrictionBetweenFilter(betweenFilter: BetweenFilter) {
+    return this.timeRestrictionChanged.emit(betweenFilter);
   }
 }

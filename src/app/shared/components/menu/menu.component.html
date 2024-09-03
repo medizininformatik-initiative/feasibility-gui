@@ -16,7 +16,7 @@
       (click)="item.action(id, params)"
     >
       <fa-icon [icon]="item.icon" size="sm" class="icon-color"></fa-icon>
-      {{ item.label }}
+      {{ 'SHAREDCOMPONENTS.MENU.'+item.label | translate}}
     </button>
   </div>
 </mat-menu>

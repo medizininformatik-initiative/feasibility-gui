@@ -8,7 +8,14 @@
     "site": "Standort",
     "patient_number": "Anzahl der Patienten",
     "Display": "Display",
-    "Terminology Code": "Term Code"
+    "Terminology Code": "Term Code",
+    "MENU": {
+      "DUPLICATE": "Duplizieren",
+      "DELETE": "Löschen",
+      "REFERENCE": "Kriterien verknüpfen",
+      "APPLY_FILTERS": "Filter anwenden",
+      "DEFINE_FIELDS": "Felder definieren"
+    }
   },
   "DASHBOARD": {
     "CODEXTHEME": {

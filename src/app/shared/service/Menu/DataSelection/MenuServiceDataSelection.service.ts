@@ -17,27 +17,27 @@ export class MenuServiceDataSelection {
       {
         disabled: false,
         icon: 'trash',
-        label: 'löschen',
+        label: 'DELETE',
         action: (id: string) =>
           this.menuServiceDataSelectionFunctions.deleteDataSelectionObject(id),
       },
       {
         disabled: false,
         icon: 'clone',
-        label: 'dublizieren',
+        label: 'DUPLICATE',
         action: (id: string) => this.menuServiceDataSelectionFunctions.cloneDataSelectionObject(id),
       },
       {
         disabled: false,
         icon: 'cog',
-        label: 'Filter anwenden',
+        label: 'APPLY_FILTERS',
         action: (id: string) =>
           this.menuServiceDataSelectionFunctions.openDataSelectionFilterModal(id),
       },
       {
         disabled: false,
         icon: 'cog',
-        label: 'Felder definieren',
+        label: 'DEFINE_FIELDS',
         action: (id: string) =>
           this.menuServiceDataSelectionFunctions.openDataSelectionFieldModal(id),
       },
