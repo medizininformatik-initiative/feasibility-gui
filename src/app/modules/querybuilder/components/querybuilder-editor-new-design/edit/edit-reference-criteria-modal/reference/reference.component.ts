@@ -24,6 +24,9 @@ export class ReferenceComponent implements OnInit, OnDestroy {
   @Input()
   referenceFilterUri: string[] = [];
 
+  @Input()
+  attributeCode: TerminologyCode;
+
   listItems: ReferenceCriteriaListEntry[] = [];
 
   @Output()
