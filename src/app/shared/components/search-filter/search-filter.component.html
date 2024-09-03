@@ -8,8 +8,8 @@
       [(value)]="selectedValues"
       multiple
     >
-      <mat-option *ngFor="let value of filter.data" [value]="value.getlabel()">
-        {{ value.getlabel() }} ({{ value.getCount() }})
+      <mat-option *ngFor="let value of filter.data" [value]="value.label">
+        {{ value.display }} ({{ value.count }})
       </mat-option>
     </mat-select>
   </div>

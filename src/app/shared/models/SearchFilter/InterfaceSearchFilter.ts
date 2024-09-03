@@ -1,6 +1,10 @@
-import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
-
 export interface SearchFilter {
   filterType: string
-  data: SearchTermFilterValues[]
+  data: SearchFilterValues[]
+}
+
+export interface SearchFilterValues {
+  count: number
+  label: string
+  display: string
 }

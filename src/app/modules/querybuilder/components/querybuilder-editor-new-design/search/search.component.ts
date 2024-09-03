@@ -23,9 +23,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CrietriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
+import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
 
 @Component({
   selector: 'num-search',
@@ -167,14 +167,15 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public getElasticSearchFilter(): void {
-    this.searchFilters$ = this.filterService.fetchElasticSearchFilters().pipe(
-      map((searchFilters: SearchTermFilter[]) =>
-        // Convert each SearchTermFilter into a SearchFilter[]
-         searchFilters.map((searchFilter) =>
-          CrietriaSearchFilterAdapter.convertToFilterValues(searchFilter)
+    this.searchFilters$ = this.filterService
+      .fetchElasticSearchFilters()
+      .pipe(
+        map((searchFilters: SearchTermFilter[]) =>
+          searchFilters.map((searchFilter) =>
+            CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
+          )
         )
-      )
-    );
+      );
 
     this.searchFilters$.subscribe((test) => console.log(test));
   }
@@ -183,6 +184,8 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     const newFilter = new SearchTermFilter(filter.type, []);
     newFilter.setSelectedValues(filter.values);
     this.elasticSearchFilterProvider.setFilter(newFilter);
-    this.startElasticSearch(this.searchtext);
+    if (this.searchtext) {
+      this.startElasticSearch(this.searchtext);
+    }
   }
 }
