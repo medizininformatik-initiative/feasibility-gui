@@ -4,8 +4,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { IAppConfig } from '../../../../config/app-config.model';
 import { FeatureProviderService } from '../../../querybuilder/service/feature-provider.service';
 import { MatRadioChange } from '@angular/material/radio';
-import { ApiTranslator } from '../../../querybuilder/controller/ApiTranslator';
-import { QueryOnlyV1, QueryOnlyV2 } from '../../../querybuilder/model/api/query/query';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -33,7 +31,6 @@ export class OptionsComponent implements OnInit {
   includeContext: boolean;
   query: FeasibilityQuery;
   stylesheet: string;
-  translatedQueryv1: QueryOnlyV1;
   translatedQueryv2: StructuredQuery;
   pollingTime: number;
   pollingIntervall: number;
@@ -47,7 +44,7 @@ export class OptionsComponent implements OnInit {
     public featureService: FeatureService,
     public featureProviderService: FeatureProviderService,
     private queryService: FeasibilityQueryProviderService,
-    private http: HttpClient //private apiTranslator: ApiTranslator, //private newTranslator: UIQuery2StructuredQueryTranslatorService
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -175,9 +172,6 @@ export class OptionsComponent implements OnInit {
       url = 'http://localhost:5000/query-sync';
     }
 
-    if (this.queryVersion === 'v1') {
-      return this.http.post(url, this.translatedQueryv1, httpOptions);
-    }
     if (this.queryVersion === 'v2') {
       return this.http.post(url, this.translatedQueryv2, httpOptions);
     }

@@ -6,12 +6,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, of } from 'rxjs';
-import { QueryResponse } from '../model/api/result/QueryResponse';
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
 import { SearchTermListEntry } from '../../../shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
+import { QueryResponse } from 'src/app/model/Result/QueryResponse';
 @Injectable({
   providedIn: 'root',
 })

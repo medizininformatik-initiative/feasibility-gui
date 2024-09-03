@@ -1,4 +1,4 @@
-import { CritType } from 'src/app/modules/querybuilder/model/api/query/group';
+import { CritType } from './CritType';
 
 export class CritGroupPosition {
   critType: CritType;
