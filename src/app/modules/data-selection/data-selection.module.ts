@@ -13,10 +13,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { EditFieldsModalComponent } from './components/edit-fields-modal/edit-fields-modal.component';
 import { EditFilterModalComponent } from './components/edit-filter-modal/edit-filter-modal.component';
-import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { ProfileCodeComponent } from './components/edit-filter-modal/profile-code/profile-code.component';
 import { ProfileTimeRestrictionComponent } from './components/edit-filter-modal/profile-time-restriction/profile-time-restriction.component';
+import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 
 @NgModule({
   declarations: [
