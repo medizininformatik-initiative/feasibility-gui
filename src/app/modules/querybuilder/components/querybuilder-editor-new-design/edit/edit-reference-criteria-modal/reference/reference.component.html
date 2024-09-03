@@ -1,4 +1,5 @@
 <div fxLayout="column" class="container">
+  <div class="attribute-code-display">{{ attributeCode.getDisplay() }}</div>
   <num-searchbar (searchTextChange)="startElasticSearch($event)"> </num-searchbar>
   <num-table
     *ngIf="listItems.length > 0 && adaptedData"

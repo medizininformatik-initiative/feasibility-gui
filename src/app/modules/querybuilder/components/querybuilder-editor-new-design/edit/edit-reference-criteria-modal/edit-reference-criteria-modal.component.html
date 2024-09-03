@@ -6,6 +6,7 @@
   <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
     <num-reference
       *ngIf="attributeFilter.getReference()"
+      [attributeCode]="attributeFilter.getAttributeCode()"
       [referenceFilterUri]="attributeFilter.getReference().getAllowedReferenceUri()"
       (selectedReferenceIds)="setSelectedReferenceIds($event, attributeFilter)"
     >
