@@ -1,12 +1,11 @@
-import { AbstractResultMapper } from '../AbstractResultMapper';
+import { MappingStrategy } from '../../../Strategy/InterfaceMappingStrategy';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
-export class CriteriaSetResultMapper extends AbstractResultMapper<
-  ReferenceCriteriaListEntry,
-  ReferenceCriteriaResultList
-> {
+export class CriteriaSetResultMapperStrategy
+  implements MappingStrategy<ReferenceCriteriaListEntry, ReferenceCriteriaResultList>
+{
   public mapResponseToResultList(response: any): ReferenceCriteriaResultList {
     const listItems: ReferenceCriteriaListEntry[] = this.mapResponseToEntries(response.results);
     return new ReferenceCriteriaResultList(response.totalHits, listItems);

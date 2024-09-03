@@ -1,4 +1,4 @@
-import { AbstractResultMapper } from '../AbstractResultMapper';
+import { AbstractResultMapper } from '../../Abstract/AbstractResultMapper';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 

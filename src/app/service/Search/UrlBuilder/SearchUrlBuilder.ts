@@ -39,7 +39,7 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
     return this;
   }
 
-  withCriteriaSetUrl(path: string, criteriaSetUrl: string): this {
+  withFiltertUrl(path: string, criteriaSetUrl: string): this {
     this.queryParams.set(path, encodeURI(criteriaSetUrl));
     return this;
   }

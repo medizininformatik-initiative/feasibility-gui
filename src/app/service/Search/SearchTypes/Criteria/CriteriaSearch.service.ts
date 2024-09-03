@@ -1,13 +1,13 @@
 import { CriteriaResultMapper } from './CriteriaResultMapper';
-import { ElasticSearchFilterProvider } from '../../Provider/ElasticSearchFilterProvider.service';
+import { ElasticSearchFilterProvider } from '../../../Provider/ElasticSearchFilterProvider.service';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { SearchResultProcessorService } from '../SearchResultProcessor.service';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder';
-import { TerminologyPaths } from '../../Backend/Paths/TerminologyPaths';
+import { SearchUrlBuilder } from '../../UrlBuilder/SearchUrlBuilder';
+import { TerminologyPaths } from '../../../Backend/Paths/TerminologyPaths';
 
 @Injectable({
   providedIn: 'root',
