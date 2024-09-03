@@ -106,7 +106,6 @@ export class EditCriterionModalComponent implements OnInit {
   }
 
   public updateTimeRestriction(timeRestriction: AbstractTimeRestriction) {
-    console.log(timeRestriction);
     this.criterionBuilder.withTimeRestriction(timeRestriction);
   }
 

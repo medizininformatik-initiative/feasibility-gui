@@ -41,6 +41,5 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(
       this.referenceCriterion
     );
-    this.$filterChips.subscribe((test) => console.log(test));
   }
 }

@@ -27,8 +27,6 @@ export class CreateCRDTL {
   }
 
   private buildCRDTL(structuredQuery: StructuredQuery, dataExtraction: DataExtraction): CRTDL {
-    console.log(structuredQuery);
-    console.log(dataExtraction);
     const version = 'http://json-schema.org/to-be-done/schema#';
     const display = '';
 
@@ -46,7 +44,6 @@ export class CreateCRDTL {
   }
 
   private getDataExtraction(): Observable<DataExtraction> {
-    this.dataSelectionProvider.getDataSelectionMap().subscribe((test) => console.log(test));
     return this.dataSelectionProvider
       .getDataSelectionMap()
       .pipe(

@@ -6,8 +6,8 @@ import { interval, map, Observable, share, switchMap, takeUntil, timer } from 'r
 import { QueryResult } from '../model/Result/QueryResult';
 import { QueryResultLine } from '../model/Result/QueryResultLine';
 import { ResultProviderService } from './Provider/ResultProvider.service';
-import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
 import { SnackbarService } from '../core/components/snack-bar/snack-bar.component';
+import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,12 +25,8 @@ export class FeasibilityQueryResultService {
   ) {}
 
   public getPollingUrl(query: FeasibilityQuery): Observable<string> {
-    console.log(query);
     return this.backend.postQueryNew(this.translator.translateToStructuredQuery(query)).pipe(
-      map((result) => {
-        console.log(result);
-        return result.headers.get('location'); // response.location)
-      })
+      map((result) => result.headers.get('location'))
     );
   }
   public getResultPolling(

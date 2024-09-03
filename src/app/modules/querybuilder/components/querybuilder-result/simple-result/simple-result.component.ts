@@ -156,7 +156,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   private handleError(error: any): void {
-    console.log('error!');
     this.showSpinner = false;
     // Optional: Handle error status codes
     if (error.status === 404) {

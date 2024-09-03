@@ -51,11 +51,6 @@ export class DropGroupDirective implements OnInit {
       }
     }
   }
-  /*@HostListener('cdkDropListExited', ['$event'])
-  onExit(event: CdkDragDrop<any[]>) {
-    console.log('exit')
-    console.log(event)
-  }*/
 
   ngOnInit() {
     this.queryProviderService.getFeasibilityQueryByID().subscribe((feasibilityQuery) => {

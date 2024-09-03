@@ -53,9 +53,7 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
-  ngAfterViewInit() {
-    console.log(this.numTrees);
-  }
+  ngAfterViewInit() {}
 
   public getDataSelectionProfileData() {
     const dataSelectionProfileUrls = Array.from(this.selectedDataSelectionProfileNodeIds);

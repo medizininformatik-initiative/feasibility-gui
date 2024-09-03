@@ -23,7 +23,7 @@ export class TerminologySystemProvider {
         })
       )
       .subscribe({
-        next: () => console.log('Terminology systems initialized successfully.'),
+        next: () => console.warn('Terminology systems initialized successfully.'),
         error: (error) => console.error('Failed to initialize terminology systems:', error),
       });
   }

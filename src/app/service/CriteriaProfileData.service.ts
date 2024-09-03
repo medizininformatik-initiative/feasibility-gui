@@ -81,7 +81,7 @@ export class CriteriaProfileDataService {
           attributeDefinition.max,
           attributeDefinition.min,
           attributeDefinition.precision,
-          attributeDefinition.referenceCriteriaSet,
+          attributeDefinition.referencedCriteriaSet,
           attributeDefinition.referencedValueSet
         )
     );
@@ -100,7 +100,7 @@ export class CriteriaProfileDataService {
       uiProfile.valueDefinition.max,
       uiProfile.valueDefinition.min,
       uiProfile.valueDefinition.precision,
-      uiProfile.valueDefinition.referenceCriteriaSet,
+      uiProfile.valueDefinition.referencedCriteriaSet,
       uiProfile.valueDefinition.referencedValueSet
     );
   }

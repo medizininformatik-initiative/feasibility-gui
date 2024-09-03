@@ -39,7 +39,6 @@ export class CriterionModalService implements OnDestroy {
     this.dialogSubscription = dialogRef.afterClosed().subscribe((updatedCriterion: Criterion) => {
       if (updatedCriterion) {
         this.criterionProviderService.setCriterionByUID(updatedCriterion);
-        this.criterionProviderService.getCriterionUIDMap().subscribe((test) => console.log(test));
       }
     });
   }

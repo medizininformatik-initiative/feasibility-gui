@@ -176,8 +176,6 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
           )
         )
       );
-
-    this.searchFilters$.subscribe((test) => console.log(test));
   }
 
   public setElasticSearchFilter(filter: any) {

@@ -13,7 +13,6 @@ export class CriterionHashService {
     let contextVersion = '';
     let contextSystem = '';
     let contextCode = '';
-    let termcodeVersion = '';
 
     if (context) {
       contextSystem = context.getSystem();
@@ -23,17 +22,8 @@ export class CriterionHashService {
       }
     }
 
-    if (termCode.getVersion()) {
-      termcodeVersion = termCode.getVersion();
-    }
-
     const hashCode =
-      contextSystem +
-      contextCode +
-      contextVersion +
-      termCode.getSystem() +
-      termCode.getCode() +
-      termcodeVersion;
+      contextSystem + contextCode + contextVersion + termCode.getSystem() + termCode.getCode();
 
     return uuidv3(hashCode, BackendService.BACKEND_UUID_NAMESPACE);
   }

@@ -60,7 +60,6 @@ export class DataSelection2DataExtraction {
     const abstractProfileFilters: AbstractAttributeGroupFilter[] = [];
 
     filters.forEach((filter) => {
-      console.log(filter);
       const translatedFilter = this.getTranslatedFilter(filter);
       if (translatedFilter) {
         abstractProfileFilters.push(translatedFilter);

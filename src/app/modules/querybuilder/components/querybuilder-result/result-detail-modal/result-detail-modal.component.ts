@@ -55,6 +55,5 @@ export class ResultDetailModalComponent implements OnInit {
   sortResult(resultTemp): void {
     this.result = resultTemp;
     this.result?.getResultLines()?.sort((a, b) => b.getNumberOfPatients() - a.getNumberOfPatients());
-    console.log(this.result);
   }
 }

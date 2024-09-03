@@ -10,7 +10,7 @@ export class AttributeDefinitions {
   private optional = false;
   private precision = 1;
   private type: FilterTypes;
-  private referenceCriteriaSet?: string;
+  private referencedCriteriaSet?: string;
   private referencedValueSet?: Array<string>;
   private name: string;
   private valueDefinition: boolean;
@@ -50,7 +50,7 @@ export class AttributeDefinitions {
     this.max = max;
     this.min = min;
     this.precision = precision;
-    this.referenceCriteriaSet = referenceCriteriaSet;
+    this.referencedCriteriaSet = referenceCriteriaSet;
     this.referencedValueSet = referencedValueSet;
     this.valueDefinition = valueDefinition;
   }
@@ -223,7 +223,7 @@ export class AttributeDefinitions {
    * @returns The reference criteria set
    */
   getReferenceCriteriaSet(): string {
-    return this.referenceCriteriaSet;
+    return this.referencedCriteriaSet;
   }
 
   /**
@@ -232,7 +232,7 @@ export class AttributeDefinitions {
    * @param referenceCriteriaSet - The reference criteria set
    */
   setReferenceCriteriaSet(referenceCriteriaSet: string | undefined): void {
-    this.referenceCriteriaSet = referenceCriteriaSet;
+    this.referencedCriteriaSet = referenceCriteriaSet;
   }
 
   /**

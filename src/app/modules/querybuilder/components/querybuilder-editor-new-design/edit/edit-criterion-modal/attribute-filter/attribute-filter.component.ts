@@ -14,10 +14,7 @@ export class AttributeFilterComponent implements OnInit {
 
   @Output() attributeFilterChange = new EventEmitter<AttributeFilter>();
 
-  ngOnInit(): void {
-    console.log('bla')
-    console.log(this.attributeFilter)
-  }
+  ngOnInit(): void {}
 
   public updateConceptFilter(conceptFilter: ConceptFilter) {
     const newAttributeFilter = new AttributeFilter(

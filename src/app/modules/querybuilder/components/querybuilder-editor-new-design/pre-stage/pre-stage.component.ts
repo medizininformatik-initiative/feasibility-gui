@@ -1,4 +1,3 @@
-import { CreateCriterionService } from 'src/app/service/CriterionService/CreateCriterion.service';
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { Observable, Subscription, take } from 'rxjs';
@@ -15,6 +14,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { CreateCriterionService } from 'src/app/service/CriterionService/Builder/CreateCriterion.service';
 
 @Component({
   selector: 'num-stage',
