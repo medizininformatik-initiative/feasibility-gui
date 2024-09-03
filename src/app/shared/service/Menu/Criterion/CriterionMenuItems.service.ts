@@ -23,7 +23,7 @@ export class CriterionMenuItems {
       {
         disabled: false,
         icon: 'clone',
-        label: 'dublizieren',
+        label: 'duplizieren',
         action: (id: string) => this.menuServiceCriterionFunctions.duplicateCriterion(id),
       },
       {
