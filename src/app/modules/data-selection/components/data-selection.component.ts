@@ -22,7 +22,9 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
 
   trees: TreeNode[];
 
-  subscription: Subscription;
+  crdtlSubscription: Subscription;
+
+  dataSelectionProfileSubscription: Subscription;
 
   selectedDataSelectionProfileNodeIds: Set<string> = new Set();
 
@@ -42,8 +44,12 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.crdtlSubscription) {
+      this.crdtlSubscription.unsubscribe();
+    }
+    if (this.dataSelectionProfileSubscription) {
+      // Unsubscribe if exists
+      this.dataSelectionProfileSubscription.unsubscribe();
     }
   }
 
@@ -53,7 +59,7 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
 
   public getDataSelectionProfileData() {
     const dataSelectionProfileUrls = Array.from(this.selectedDataSelectionProfileNodeIds);
-    this.createDataSelectionProfileService
+    this.dataSelectionProfileSubscription = this.createDataSelectionProfileService
       .getDataSelectionProfileProfileData(dataSelectionProfileUrls)
       .subscribe((dataSelectionProfiles) => {
         this.dataSelectionProviderService.setDataSelectionByUID(
@@ -74,7 +80,7 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   startTranslation() {
-    this.subscription = this.crdtlService.createCRDTL().subscribe((crdtl) => {
+    this.crdtlSubscription = this.crdtlService.createCRDTL().subscribe((crdtl) => {
       const crdtlString = JSON.stringify(crdtl);
       const fileData = new Blob([crdtlString], { type: 'text/plain;charset=utf-8' });
       this.fileSaverService.save(fileData, 'crdtl.json');
