@@ -5,7 +5,7 @@ import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testi
 import { TranslateModule } from '@ngx-translate/core';
 import { DisplayCritGroupComponent } from '../display-crit-group/display-crit-group.component';
 import { DisplayCriterionComponent } from '../display-criterion/display-criterion.component';
-import { BoolLogicSwitchComponent } from '../bool-logic-switch/bool-logic-switch.component';
+import { BoolLogicSwitchComponent } from '../../../querybuilder-editor-new-design/criteria/display-criteria-group/bool-logic-switch/bool-logic-switch.component';
 import { QueryProviderService } from '../../../../service/query-provider.service';
 import { MaterialModule } from '../../../../../../layout/material/material.module';
 import { Criterion } from '../../../../model/api/query/criterion';

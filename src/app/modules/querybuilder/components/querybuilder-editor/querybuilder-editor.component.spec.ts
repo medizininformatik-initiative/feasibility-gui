@@ -7,7 +7,7 @@ import { DisplayQueryComponent } from './display/display-query/display-query.com
 import { DisplayGroupComponent } from './display/display-group/display-group.component';
 import { DisplayCritGroupComponent } from './display/display-crit-group/display-crit-group.component';
 import { DisplayCriterionComponent } from './display/display-criterion/display-criterion.component';
-import { BoolLogicSwitchComponent } from './display/bool-logic-switch/bool-logic-switch.component';
+import { BoolLogicSwitchComponent } from '../querybuilder-editor-new-design/criteria/display-criteria-group/bool-logic-switch/bool-logic-switch.component';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { QueryProviderService } from '../../service/query-provider.service';
 import { SearchInputComponent } from './search/search-input/search-input.component';

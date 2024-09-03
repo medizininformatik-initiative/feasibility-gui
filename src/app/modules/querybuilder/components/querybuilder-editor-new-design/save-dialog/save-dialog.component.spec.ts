@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SaveDialogComponent, SaveDialogComponentData } from './save-dialog.component';
-import { MaterialModule } from '../../../../../../layout/material/material.module';
+import { MaterialModule } from '../../../../../layout/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { ButtonComponent } from '../../../../../../shared/components/button/button.component';
+import { ButtonComponent } from '../../../../../shared/components/button/button.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FeatureService } from '../../../../../../service/Feature.service';
+import { FeatureService } from '../../../../../service/Feature.service';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { MatTooltipModule } from '@angular/material/tooltip';
 

@@ -2,7 +2,7 @@ import { AllowedUnitsComponent } from './components/querybuilder-editor-new-desi
 import { AttributeFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/attribute-filter/attribute-filter.component';
 import { BeforeFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-time-restriction/before-filter/before-filter.component';
 import { BetweenFilterComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-time-restriction/between-filter/between-filter.component';
-import { BoolLogicSwitchComponent } from './components/querybuilder-editor/display/bool-logic-switch/bool-logic-switch.component';
+import { BoolLogicSwitchComponent } from './components/querybuilder-editor-new-design/criteria/display-criteria-group/bool-logic-switch/bool-logic-switch.component';
 import { CommonModule } from '@angular/common';
 import { ConceptComponent } from './components/querybuilder-editor-new-design/edit/edit-criterion-modal/concept/concept.component';
 import { CriteriaStageComponent } from './components/querybuilder-editor-new-design/stage/criteria-stage.component';

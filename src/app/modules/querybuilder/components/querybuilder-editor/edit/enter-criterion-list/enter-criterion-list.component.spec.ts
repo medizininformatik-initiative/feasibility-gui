@@ -21,7 +21,7 @@ import { FeatureService } from '../../../../../../service/Feature.service';
 import { EditTimeRestrictionComponent } from '../edit-time-restriction/edit-time-restriction.component';
 import { DisplayEntitiesComponent } from '../../display/display-entities/display-entities.component';
 import { DisplayCriterionComponent } from '../../display/display-criterion/display-criterion.component';
-import { BoolLogicSwitchComponent } from '../../display/bool-logic-switch/bool-logic-switch.component';
+import { BoolLogicSwitchComponent } from '../../../querybuilder-editor-new-design/criteria/display-criteria-group/bool-logic-switch/bool-logic-switch.component';
 import { DisplayValueFilterComponent } from '../../display/display-value-filter/display-value-filter.component';
 import { DisplayTimeRestrictionComponent } from '../../display/display-time-restriction/display-time-restriction.component';
 import { MatTooltipModule } from '@angular/material/tooltip';

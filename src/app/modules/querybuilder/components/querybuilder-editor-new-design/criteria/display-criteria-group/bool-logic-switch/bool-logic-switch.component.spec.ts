@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BoolLogicSwitchComponent } from './bool-logic-switch.component';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../../../../../layout/material/material.module';
+import { MaterialModule } from '../../../../../../../layout/material/material.module';
 
 describe('BoolLogicSwitchComponent', () => {
   let component: BoolLogicSwitchComponent;
