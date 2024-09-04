@@ -7,7 +7,7 @@ import { Component, EventEmitter, Output, Input } from '@angular/core';
 })
 export class ModalWindowComponent {
   @Input()
-  disabled: boolean = false;
+  disabled = false;
 
   @Output()
   cancelButtonSelected = new EventEmitter();
