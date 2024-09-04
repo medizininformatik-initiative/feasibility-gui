@@ -338,7 +338,7 @@ export class BackendService {
 
   public loadSavedQueries(validate?: boolean): Observable<any> {
     const headers = this.headers;
-    const url = validate === false ? '&skipValidation=true' : '';
+    const url = validate === false ? '&skip-validation=true' : '';
     return this.http.get<Array<any>>(
       this.createUrl(BackendService.PATH_RUN_QUERY, 'filter=saved' + url),
       {
@@ -352,7 +352,7 @@ export class BackendService {
       return of(this.queryProviderService.loadQueries());
     } else {
       const headers = this.headers;
-      const url = validate === false ? '?skipValidation=true' : '';
+      const url = validate === false ? '?skip-validation=true' : '';
       return this.http.get<Array<StructuredQueryTemplate>>(
         this.createUrl(BackendService.PATH_STORED_QUERY + url),
         {
