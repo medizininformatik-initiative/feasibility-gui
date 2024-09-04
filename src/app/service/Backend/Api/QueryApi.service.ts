@@ -102,7 +102,7 @@ export class QueryApiService {
 
   public loadSavedQueries(validate?: boolean): Observable<any> {
     const headers = this.backendService.getHeaders();
-    const url = validate === false ? '&skipValidation=true' : '';
+    const url = validate === false ? '&skip-validation=true' : '';
     return this.http.get<Array<any>>(
       this.backendService.createUrl(QueryPaths.EXECUTE_QUERY, 'filter=saved' + url),
       {
@@ -116,7 +116,7 @@ export class QueryApiService {
           return of(this.queryProviderService.loadQueries());
         } else {
           const headers = this.headers;
-          const url = validate === false ? '?skipValidation=true' : '';
+          const url = validate === false ? '?skip-validation=true' : '';
           return this.http.get<Array<StructuredQueryTemplate>>(
             this.createUrl(BackendService.PATH_STORED_QUERY + url),
             {
