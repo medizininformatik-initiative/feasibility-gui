@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../Provider/CriterionProvider.service';
-import { EditCriterionModalComponent } from 'src/app/modules/querybuilder/components/querybuilder-editor-new-design/edit/edit-criterion-modal/edit-criterion-modal.component';
-import { EditReferenceCriteriaModalComponent } from 'src/app/modules/querybuilder/components/querybuilder-editor-new-design/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
+import { EditCriterionModalComponent } from 'src/app/modules/querybuilder/components/querybuilder-editor/edit/edit-criterion-modal/edit-criterion-modal.component';
+import { EditReferenceCriteriaModalComponent } from 'src/app/modules/querybuilder/components/querybuilder-editor/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 

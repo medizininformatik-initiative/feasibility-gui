@@ -17,7 +17,6 @@ export class QuantityRangeComponent {
   @Output()
   quantityValues: EventEmitter<{ min: number; max: number }> = new EventEmitter();
 
-
   emitValues() {
     const values = { min: this.minValue, max: this.maxValue };
     this.quantityValues.emit(values);

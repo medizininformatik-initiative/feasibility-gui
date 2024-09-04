@@ -9,6 +9,12 @@
     "patient_number": "Anzahl der Patienten",
     "Display": "Display",
     "Terminology Code": "Term Code",
+    "FILTER": {
+      "CONTEXT": "Kontext",
+      "AVAILABILITY": "Verfügbarkeit",
+      "TERMINOLOGY": "Terminologie",
+      "KDS_MODULE": "KDS Module"
+    },
     "MENU": {
       "DUPLICATE": "Duplizieren",
       "DELETE": "Löschen",

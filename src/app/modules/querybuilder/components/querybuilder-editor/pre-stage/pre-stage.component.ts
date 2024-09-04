@@ -1,6 +1,6 @@
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
-import { Observable, Subscription, take } from 'rxjs';
+import { Observable, of, Subscription, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
@@ -34,6 +34,8 @@ export class PreStageComponent implements OnInit, OnDestroy {
   hasStageItems = false;
   hasListItems = false;
   atStage = false;
+
+  $stageArray: Observable<Array<string>> = of([]);
   query: FeasibilityQuery;
   constructor(
     private listItemSelectionService: SelectedTableItemsService<SearchTermListEntry>,
@@ -59,7 +61,9 @@ export class PreStageComponent implements OnInit, OnDestroy {
       this.hasQueryItems =
         this.query.getInclusionCriteria().length > 0 || this.query.getExclusionCriteria().length > 0;
     });
+    this.$stageArray = this.stageProviderService.getStageUIDArray();
     this.stageProviderService.getStageUIDArray().subscribe((stage) => {
+      console.log(stage);
       this.hasStageItems = stage.length > 0;
     });
   }

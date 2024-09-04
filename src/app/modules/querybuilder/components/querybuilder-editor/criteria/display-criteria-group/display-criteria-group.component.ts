@@ -14,7 +14,7 @@ export class DisplayCriteriaGroupComponent implements OnInit {
   groupType: 'Inclusion' | 'Exclusion';
   querySubscription: Subscription;
 
-  @Input() isEditable: boolean
+  @Input() isEditable: boolean;
 
   constructor(
     private queryProviderService: FeasibilityQueryProviderService,

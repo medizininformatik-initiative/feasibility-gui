@@ -78,3 +78,21 @@
   width: 80%;
   z-index: 100;
 }
+
+.display-selected {
+  width: 50%;
+  font-weight: 500;
+  font-size: medium;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}
