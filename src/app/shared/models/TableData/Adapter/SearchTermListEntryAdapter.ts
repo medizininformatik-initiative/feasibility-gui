@@ -8,7 +8,7 @@ import { TerminologySystemDictionary } from 'src/app/model/Utilities/Terminology
 
 export class SearchTermListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['Name', 'Availability', 'Terminology', 'Termcode', 'KDS Module'],
+    headers: ['Name', 'Availability', 'Terminology', 'Termcode', 'KDS_MODULE'],
   };
 
   public static adapt(listEntries: SearchTermListEntry[]): TableData {

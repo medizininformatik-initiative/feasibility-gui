@@ -1,8 +1,7 @@
+import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
 import { AbstractResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/AbstractResultList';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
 
 @Injectable({
   providedIn: 'root',

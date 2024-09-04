@@ -1,28 +1,17 @@
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
-import { CodeableConceptSearchService } from './CodeableConcept/CodeableConceptSearch.service';
-import { CriteriaSearchService } from './Criteria/CriteriaSearch.service';
-import { CriteriaSetSearchService } from './CriteriaSet/CriteriaSetSearch.service';
+import { CriteriaSearchService } from './SearchTypes/Criteria/CriteriaSearch.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { SearchResultProcessorService } from './SearchResultProcessor.service';
-import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { CodeableConceptSearch } from './test/CodeableConceptSearch';
+import { CodeableConceptSearchEngine } from './SearchTypes/CodeableConcept/CodeableConceptSearchEngine';
+import { CriteriaSetSearchEngine } from './SearchTypes/CriteriaSet/CriteriaSetSearchEngine';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  constructor(
-    private criteriaSearchService: CriteriaSearchService,
-    private criteriaSetSearchService: CriteriaSetSearchService,
-    private codeableConceptSearchService: CodeableConceptSearchService,
-    private test: SearchResultProcessorService<
-      CodeableConceptResultListEntry,
-      CodeableConceptResultList
-    >
-  ) {}
+  constructor(private criteriaSearchService: CriteriaSearchService) {}
 
   public searchCriteria(searchText: string): Observable<SearchTermResultList> {
     return this.criteriaSearchService.search(searchText);
@@ -32,14 +21,15 @@ export class SearchService {
     searchText: string,
     criteriaSetUrls: string[]
   ): Observable<ReferenceCriteriaResultList> {
-    return this.criteriaSetSearchService.search(searchText, criteriaSetUrls);
+    const criteriaSetSearch = new CriteriaSetSearchEngine(searchText, criteriaSetUrls);
+    return criteriaSetSearch.executeSearch();
   }
 
   public searchCodeableConcepts(
     searchText: string,
     valueSetUrls: string[]
   ): Observable<CodeableConceptResultList> {
-    //this.test.fetchAndMapSearchResults2(new CodeableConceptSearch(searchText, valueSetUrls)).subscribe((test) => console.log(test))
-    return this.codeableConceptSearchService.search(searchText, valueSetUrls);
+    const codeableConceptSearch = new CodeableConceptSearchEngine(searchText, valueSetUrls);
+    return codeableConceptSearch.executeSearch();
   }
 }

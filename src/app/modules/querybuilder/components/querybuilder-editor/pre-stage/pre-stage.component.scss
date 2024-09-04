@@ -1,0 +1,98 @@
+/* Button styles */
+.mat-button {
+  background-color: #5a79af;
+  color: #5a79af;
+  font-size: larger;
+  font-weight: 600;
+  height: 20px;
+  width: 20px;
+}
+
+.mat-green {
+  background-color: #9bb923;
+  height: 2rem;
+  margin-right: 10px;
+  font-size: smaller;
+}
+
+.mat-blue {
+  background-color: #5a79af;
+  height: 2rem;
+  font-size: smaller;
+  margin-right: 10px;
+}
+
+/* Box styles */
+.box {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  font-size: small;
+  font-weight: 400;
+}
+
+.dotted-box {
+  @extend .box;
+  background-color: #e8effc;
+  border: 2px dotted #5a79af;
+}
+
+.normal-box {
+  @extend .box;
+  background-color: #fff;
+  border: 2px solid transparent;
+}
+
+.green-box {
+  @extend .box;
+  background-color: #9bb923;
+  color: #fff;
+  border: 2px solid transparent;
+}
+
+/* Additional styles */
+.test:hover {
+  transform: scale(0.8, 0.8);
+}
+
+.absolute-test {
+  width: 2rem;
+  height: 2rem;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.background-color-button {
+  background-color: #5a79af;
+  margin-right: 10px;
+}
+
+.font-added-criteria {
+  padding-left: 10px;
+  font-size: smaller;
+  font-weight: 400;
+}
+.bottom {
+  position: fixed;
+  bottom: 20px;
+  width: 80%;
+  z-index: 100;
+}
+
+.display-selected {
+  width: 50%;
+  font-weight: 500;
+  font-size: medium;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}

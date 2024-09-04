@@ -1,6 +1,6 @@
 {
   "SHAREDCOMPONENTS": {
-    "KDS Module": "KDS Module",
+    "KDS_MODULE": "KDS Module",
     "Availability": "Anzahl",
     "Terminology": "Terminologie",
     "Termcode": "Term Code",
@@ -9,6 +9,23 @@
     "patient_number": "Anzahl der Patienten",
     "Display": "Display",
     "Terminology Code": "Term Code",
+    "ACTIONBAR": {
+        "SELECTED_CRITERIA": {
+          "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt",
+          "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt"
+      },
+          "ADDED_CRITERIA":{ 
+            "SINGULAR": "Sie haben {{amount}} Kriterium zur Bühne hinzugefügt",
+            "PLURAL": "Sie haben {{amount}} Kriterien zur Bühne hinzugefügt"
+          }
+
+    },
+    "FILTER": {
+      "CONTEXT": "Kontext",
+      "AVAILABILITY": "Verfügbarkeit",
+      "TERMINOLOGY": "Terminologie",
+      "KDS_MODULE": "KDS Module"
+    },
     "MENU": {
       "DUPLICATE": "Duplizieren",
       "DELETE": "Löschen",

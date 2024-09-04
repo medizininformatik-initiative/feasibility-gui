@@ -8,10 +8,12 @@ export class CriteriaSearchFilterAdapter {
   public static convertToFilterValues(filter: SearchTermFilter): SearchFilter {
     const searchFilterValues: SearchFilterValues[] = filter
       .getValues()
-      .map((filterValue: SearchTermFilterValues) => this.createSearchFilterValue(filterValue, filter.getName()));
+      .map((filterValue: SearchTermFilterValues) =>
+        this.createSearchFilterValue(filterValue, filter.getName())
+      );
 
     return {
-      filterType: filter.getName(),
+      filterType: filter.getName().toUpperCase(),
       data: searchFilterValues,
     };
   }
