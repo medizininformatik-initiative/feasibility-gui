@@ -1,9 +1,9 @@
-import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { FilterChipBuilder } from '../../FilterChipBuilder';
 import { InterfaceFilterChip } from '../../InterfaceFilterChip';
 
 export class FilterChipDataSelectionAdapter {
-  public static adaptFields(fields: DataSelectionProfileProfileNode[]): InterfaceFilterChip[] {
+  public static adaptFields(fields: ProfileFields[]): InterfaceFilterChip[] {
     const filterChips: InterfaceFilterChip[] = [];
 
     fields.forEach((field) => {

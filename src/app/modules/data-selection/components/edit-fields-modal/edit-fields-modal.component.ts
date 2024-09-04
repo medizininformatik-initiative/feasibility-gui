@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileProfileNodeAdapter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -16,11 +16,11 @@ export class EnterDataSelectionProfileProfileComponentData {
   styleUrls: ['./edit-fields-modal.component.scss'],
 })
 export class EditFieldsModalComponent implements OnInit {
-  dataSelectionProfileProfileNode: DataSelectionProfileProfileNode[];
+  dataSelectionProfileProfileNode: ProfileFields[];
 
   tree: TreeNode[];
 
-  arrayOfSelectedFields: DataSelectionProfileProfileNode[] = [];
+  arrayOfSelectedFields: ProfileFields[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string,
@@ -35,7 +35,7 @@ export class EditFieldsModalComponent implements OnInit {
     this.tree = FieldsTreeAdapter.fromTree(this.dataSelectionProfileProfileNode);
   }
 
-  private setInitialArrayOfSelectedFields(fields: DataSelectionProfileProfileNode[]) {
+  private setInitialArrayOfSelectedFields(fields: ProfileFields[]) {
     fields.forEach((field) => {
       if (field.getIsSelected()) {
         this.arrayOfSelectedFields.push(field);
@@ -54,15 +54,15 @@ export class EditFieldsModalComponent implements OnInit {
     }
   }
 
-  public setFieldAsRequired(field: DataSelectionProfileProfileNode) {
+  public setFieldAsRequired(field: ProfileFields) {
     field.setIsRequired(!field.getIsRequired());
   }
 
-  private getNodeFromElement(element): DataSelectionProfileProfileNode {
+  private getNodeFromElement(element): ProfileFields {
     return element.originalEntry;
   }
 
-  private getIndexInSelectedFields(node: DataSelectionProfileProfileNode): number {
+  private getIndexInSelectedFields(node: ProfileFields): number {
     return this.arrayOfSelectedFields.findIndex((field) => node.getId() === field.getId());
   }
 
@@ -70,11 +70,11 @@ export class EditFieldsModalComponent implements OnInit {
     return index !== -1;
   }
 
-  private addNodeToSelectedFields(node: DataSelectionProfileProfileNode): void {
+  private addNodeToSelectedFields(node: ProfileFields): void {
     this.arrayOfSelectedFields.push(node);
   }
 
-  private setFieldAsSeleced(field: DataSelectionProfileProfileNode) {
+  private setFieldAsSeleced(field: ProfileFields) {
     field.setIsSelected(!field.getIsSelected());
   }
 
@@ -93,12 +93,13 @@ export class EditFieldsModalComponent implements OnInit {
       field.setIsSelected(!!foundElement);
     });
     const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(profile);
-    this.dataSelectionProvider.setDataSelectionProfileByUID(profile.getUrl(), dataSelectionProfile);
-    this.dialogRef.close(profile.getUrl());
+    this.dataSelectionProvider.setDataSelectionProfileByUID(profile.getId(), dataSelectionProfile);
+    this.dialogRef.close();
   }
 
   private createInstanceOfDataSelectionProfile(profile: DataSelectionProfileProfile) {
     return new DataSelectionProfileProfile(
+      profile.getId(),
       profile.getUrl(),
       profile.getDisplay(),
       profile.getFields(),

@@ -22,7 +22,7 @@ export class MenuServiceDataSelection {
           this.menuServiceDataSelectionFunctions.deleteDataSelectionObject(id),
       },
       {
-        disabled: false,
+        disabled: true,
         icon: 'clone',
         label: 'DUPLICATE',
         action: (id: string) => this.menuServiceDataSelectionFunctions.cloneDataSelectionObject(id),

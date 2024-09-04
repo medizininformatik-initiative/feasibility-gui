@@ -96,6 +96,7 @@ export class EditFilterModalComponent implements OnInit {
       result.push(...this.profileTimeFilters);
     }
     return new DataSelectionProfileProfile(
+      profile.getId(),
       profile.getUrl(),
       profile.getDisplay(),
       profile.getFields(),
@@ -108,7 +109,7 @@ export class EditFilterModalComponent implements OnInit {
 
     const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(profile);
     this.dataSelectionProfileProviderService.setDataSelectionProfileByUID(
-      profile.getUrl(),
+      profile.getId(),
       dataSelectionProfile
     );
     this.setDataSelectionProvider(dataSelectionProfile);
@@ -116,29 +117,6 @@ export class EditFilterModalComponent implements OnInit {
   }
 
   private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
-    let updatedDataSelection: DataSelection;
-
-    this.service
-      .getDataSelectionMap()
-      .pipe(take(1))
-      .subscribe(
-        (dataSelectionMap) => {
-          const dataSelectionList = dataSelectionMap.get('1').getDataSelection();
-          const existingProfileIndex = dataSelectionList.findIndex(
-            (profile: DataSelectionProfileProfile) => profile.getUrl() === newProfile.getUrl()
-          );
-
-          if (existingProfileIndex !== -1) {
-            dataSelectionList[existingProfileIndex] = newProfile;
-          } else {
-            dataSelectionList.push(newProfile);
-          }
-          updatedDataSelection = new DataSelection(dataSelectionList);
-        },
-        () => {},
-        () => {
-          this.service.setDataSelectionByUID('1', updatedDataSelection);
-        }
-      );
+    this.service.setElementInDataSelectionMap('1', newProfile);
   }
 }
