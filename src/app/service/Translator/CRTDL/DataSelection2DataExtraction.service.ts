@@ -6,7 +6,7 @@ import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtractio
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { DateFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/DateFilter';
 import { Injectable } from '@angular/core';
 import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
@@ -37,7 +37,7 @@ export class DataSelection2DataExtraction {
     return new AttributeGroup(profile.getUrl(), attributes, filters);
   }
 
-  private translateAttributes(fields: DataSelectionProfileProfileNode[]): Attributes[] {
+  private translateAttributes(fields: ProfileFields[]): Attributes[] {
     const attributes = [];
     fields.forEach((field) => {
       if (field.getIsSelected()) {
@@ -50,7 +50,7 @@ export class DataSelection2DataExtraction {
     return attributes.length > 0 ? attributes : undefined;
   }
 
-  private translateAttribute(field: DataSelectionProfileProfileNode): Attributes {
+  private translateAttribute(field: ProfileFields): Attributes {
     return new Attributes(field.getId(), field.getIsRequired());
   }
 

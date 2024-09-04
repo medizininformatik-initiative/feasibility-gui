@@ -52,20 +52,24 @@ export class DataSelectionProviderService {
 
   public setElementInDataSelectionMap(uid: string, profile: DataSelectionProfileProfile): void {
     const dataSelection = this.dataSelectionUIDMap.get(uid);
-
     if (dataSelection) {
       const updatedElements = dataSelection
         .getDataSelection()
         .map((existingProfile: DataSelectionProfileProfile) =>
-          existingProfile.getUrl() === profile.getUrl() ? profile : existingProfile
+          existingProfile.getId() === profile.getId() ? profile : existingProfile
         );
       if (!updatedElements.includes(profile)) {
         updatedElements.push(profile);
       }
       const updatedDataSelection = new DataSelection(updatedElements);
       this.dataSelectionUIDMap.set(uid, updatedDataSelection);
-    }
+      this.dataSelectionUIDMapSubject.next(new Map(this.dataSelectionUIDMap));
+    } else {
+      const newDataSelection = new DataSelection([profile]);
+      const map = new Map([['1', newDataSelection]]);
+      this.dataSelectionUIDMap.set(uid, newDataSelection);
 
-    this.dataSelectionUIDMapSubject.next(new Map(this.dataSelectionUIDMap));
+      this.dataSelectionUIDMapSubject.next(new Map(map));
+    }
   }
 }

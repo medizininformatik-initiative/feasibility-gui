@@ -1,8 +1,8 @@
-export class DataSelectionProfileProfileNode {
+export class ProfileFields {
   private id: string;
   private display: string;
   private name: string;
-  private children: DataSelectionProfileProfileNode[] = [];
+  private children: ProfileFields[] = [];
   private isSelected = false;
   private isRequired = false;
 
@@ -10,7 +10,7 @@ export class DataSelectionProfileProfileNode {
     id: string,
     display: string,
     name: string,
-    children: DataSelectionProfileProfileNode[] = [],
+    children: ProfileFields[] = [],
     isSelected: boolean = false,
     isRequired: boolean = false
   ) {
@@ -46,11 +46,11 @@ export class DataSelectionProfileProfileNode {
     this.name = value;
   }
 
-  public getChildren(): DataSelectionProfileProfileNode[] {
+  public getChildren(): ProfileFields[] {
     return this.children;
   }
 
-  public setChildren(value: DataSelectionProfileProfileNode[]): void {
+  public setChildren(value: ProfileFields[]): void {
     this.children = value;
   }
 

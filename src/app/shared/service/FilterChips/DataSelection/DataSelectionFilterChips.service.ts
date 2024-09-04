@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipDataSelectionAdapter';
 import { Injectable } from '@angular/core';
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
@@ -16,7 +16,7 @@ export class DataSelectionFilterChipsService {
   constructor() {}
 
   public generateFilterChipsFromDataSelectionFields(
-    dataSelectionProfileProfileNode: DataSelectionProfileProfileNode[]
+    dataSelectionProfileProfileNode: ProfileFields[]
   ): Observable<InterfaceFilterChip[]> {
     const filterChips = FilterChipDataSelectionAdapter.adaptFields(dataSelectionProfileProfileNode);
     const squashedFilterChips = this.squashFilterChips(filterChips);

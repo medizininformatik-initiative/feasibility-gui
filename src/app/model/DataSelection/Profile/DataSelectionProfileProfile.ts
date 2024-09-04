@@ -1,22 +1,29 @@
 import { AbstractProfileFilter } from './Filter/AbstractProfileFilter';
-import { DataSelectionProfileProfileNode } from './DataSelectionProfileProfileNode';
+import { ProfileFields } from './Fields/ProfileFields';
 
 export class DataSelectionProfileProfile {
+  private id: string;
   private url: string;
   private display: string;
-  private fields: DataSelectionProfileProfileNode[] = [];
+  private fields: ProfileFields[] = [];
   private filters: AbstractProfileFilter[] = [];
 
   constructor(
+    id: string,
     url: string,
     display: string,
-    fields: DataSelectionProfileProfileNode[] = [],
+    fields: ProfileFields[] = [],
     filters: AbstractProfileFilter[] = []
   ) {
+    this.id = id;
     this.url = url;
     this.display = display;
     this.fields = fields;
     this.filters = filters;
+  }
+
+  public getId(): string {
+    return this.id;
   }
 
   public getUrl(): string {
@@ -35,11 +42,11 @@ export class DataSelectionProfileProfile {
     this.display = value;
   }
 
-  public getFields(): DataSelectionProfileProfileNode[] {
+  public getFields(): ProfileFields[] {
     return this.fields;
   }
 
-  public setFields(value: DataSelectionProfileProfileNode[]): void {
+  public setFields(value: ProfileFields[]): void {
     this.fields = value;
   }
 

@@ -1,14 +1,15 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
-import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
+import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -52,26 +53,26 @@ export class CreateDataSelectionProfileProfile {
 
   private instanceOfDataSelectionProfileProfile(
     item: any,
-    fields: DataSelectionProfileProfileNode[],
+    fields: ProfileFields[],
     filters: AbstractProfileFilter[]
   ): DataSelectionProfileProfile {
     const dataSelectionProfileProfile: DataSelectionProfileProfile =
-      new DataSelectionProfileProfile(item.url, item.display, fields, filters);
+      new DataSelectionProfileProfile(uuidv4(), item.url, item.display, fields, filters);
     this.dataSelectionProvider.setDataSelectionProfileByUID(
-      dataSelectionProfileProfile.getUrl(),
+      dataSelectionProfileProfile.getId(),
       dataSelectionProfileProfile
     );
     return dataSelectionProfileProfile;
   }
 
-  private mapNodes(nodes: any[]): DataSelectionProfileProfileNode[] {
+  private mapNodes(nodes: any[]): ProfileFields[] {
     return nodes?.map((node) => this.mapNode(node));
   }
 
-  private mapNode(node: any): DataSelectionProfileProfileNode {
+  private mapNode(node: any): ProfileFields {
     const children = node.children ? this.mapNodes(node.children) : [];
 
-    return new DataSelectionProfileProfileNode(
+    return new ProfileFields(
       node.id,
       node.display,
       node.name,

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionFilterChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFilterChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProfileNode } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfileNode';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
@@ -41,7 +41,7 @@ export class DataSelectionBoxesComponent implements OnInit {
     this.getFilterChipsForProfileFilters();
   }
 
-  private generateAndStoreFilterChips(profileNodes: DataSelectionProfileProfileNode[]): void {
+  private generateAndStoreFilterChips(profileNodes: ProfileFields[]): void {
     this.$fieldsFilterChips =
       this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(profileNodes);
   }

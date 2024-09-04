@@ -44,12 +44,8 @@ export class CreateCRDTL {
   }
 
   private getDataExtraction(): Observable<DataExtraction> {
-    return this.dataSelectionProvider
-      .getDataSelectionMap()
-      .pipe(
-        map((dataSelection) =>
-          this.dataExtractionTranslator.translateToDataExtraction(dataSelection.get('1'))
-        )
-      );
+    return this.dataSelectionProvider.getDataSelectionMap().pipe(
+      map((dataSelection) => this.dataExtractionTranslator.translateToDataExtraction(dataSelection.get('1')))
+    );
   }
 }
