@@ -1,6 +1,6 @@
 <num-modal-window
   [disabled]="ids.length === 0"
-  (saveButtonSelected)="saveCriterion()"
+  (saveButtonSelected)="saveReferenceCriterion()"
   (cancelButtonSelected)="closeDialog()"
 >
   <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">

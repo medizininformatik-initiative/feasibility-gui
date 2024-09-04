@@ -37,7 +37,7 @@ export class RefrenceCriterionMenuFunctionsService {
     }
   }
 
-  applyCriterionFilter(params: ReferenceCriterion[]) {
+  applyReferenceCriterionFilter(params: ReferenceCriterion[]) {
     this.editCriterionService.openCriterionModal(params[0]);
   }
 }

@@ -38,7 +38,7 @@ export class ReferenceCriterionMenuItems {
         icon: 'cog',
         label: 'APPLY_FILTERS',
         action: (id: string, params) =>
-          this.referenceCriterionMenuFunctions.applyCriterionFilter(params),
+          this.referenceCriterionMenuFunctions.applyReferenceCriterionFilter(params),
       },
     ];
   }

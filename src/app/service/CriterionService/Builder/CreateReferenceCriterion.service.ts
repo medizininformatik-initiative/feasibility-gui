@@ -19,14 +19,17 @@ export class CreateReferenceCriterionService {
     private attributeDefinitionProcessorService: AttributeDefinitionProcessorService
   ) {}
 
-  public fetchReferenceCriterions(ids: string[]): Observable<ReferenceCriterion[]> {
+  public fetchReferenceCriterions(
+    ids: string[],
+    parentId: string
+  ): Observable<ReferenceCriterion[]> {
     return this.criteriaProfileDataService
       .getCriteriaProfileData(ids)
       .pipe(
         switchMap((criteriaProfileDatas: CriteriaProfileData[]) =>
           of(
             criteriaProfileDatas.map((criteriaProfileData) =>
-              this.createCriterionFromProfileData(criteriaProfileData)
+              this.createCriterionFromProfileData(criteriaProfileData, parentId)
             )
           )
         )
@@ -34,7 +37,8 @@ export class CreateReferenceCriterionService {
   }
 
   public createCriterionFromProfileData(
-    criteriaProfileData: CriteriaProfileData
+    criteriaProfileData: CriteriaProfileData,
+    parentId: string
   ): ReferenceCriterion {
     const mandatoryFields = this.criterionMetadataService.createMandatoryFields(criteriaProfileData);
     const criterionBuilder = new CriterionBuilder(mandatoryFields);
@@ -49,7 +53,7 @@ export class CreateReferenceCriterionService {
     criterionBuilder.withValueFilters(
       this.attributeDefinitionProcessorService.processValueFilters(criteriaProfileData)
     );
-
+    criterionBuilder.withParentId(parentId);
     const criterion = criterionBuilder.buildReferenceCriterion();
     return criterion;
   }

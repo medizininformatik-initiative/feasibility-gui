@@ -7,6 +7,8 @@ import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/Crite
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 
 export class EnterCriterionListComponentData {
   criterion: AbstractCriterion;
@@ -18,16 +20,18 @@ export class EnterCriterionListComponentData {
   styleUrls: ['./edit-criterion-modal.component.scss'],
 })
 export class EditCriterionModalComponent implements OnInit {
-  criterion: Criterion;
+  criterion: AbstractCriterion;
   criterionBuilder: CriterionBuilder;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
-    private dialogRef: MatDialogRef<EditCriterionModalComponent, AbstractCriterion>
+    private dialogRef: MatDialogRef<EditCriterionModalComponent, AbstractCriterion>,
+    private criterionProvider: CriterionProviderService
   ) {}
 
   ngOnInit() {
     this.criterion = this.data.criterion;
+    console.log(this.criterion);
     this.instantiateCriterion();
   }
 
@@ -110,8 +114,25 @@ export class EditCriterionModalComponent implements OnInit {
   }
 
   public saveCriterion() {
-    const criterion = this.criterionBuilder.buildCriterion();
-    this.dialogRef.close(criterion);
+    if (this.criterion instanceof ReferenceCriterion) {
+      const criterion = this.criterionProvider.getCriterionByUID(this.criterion.getParentId());
+
+      criterion.getAttributeFilters().forEach((attributeFilter) => {
+        if (attributeFilter.isReferenceSet()) {
+          const selectedReferences = attributeFilter.getReference().getSelectedReferences();
+          const index = selectedReferences.findIndex((selectedReference) => selectedReference.getUniqueID() === this.criterion.getUniqueID());
+          if (index !== -1) {
+            const referenceCriterion = this.criterionBuilder
+              .withParentId(criterion.getUniqueID())
+              .buildReferenceCriterion();
+            selectedReferences[index] = referenceCriterion;
+          }
+        }
+      });
+      this.dialogRef.close(criterion);
+    } else {
+      this.dialogRef.close(this.criterionBuilder.buildCriterion());
+    }
   }
 
   public closeDialog() {

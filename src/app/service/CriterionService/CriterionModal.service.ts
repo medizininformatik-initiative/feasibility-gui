@@ -5,6 +5,7 @@ import { EditCriterionModalComponent } from 'src/app/modules/querybuilder/compon
 import { EditReferenceCriteriaModalComponent } from 'src/app/modules/querybuilder/components/querybuilder-editor/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
 
 @Injectable({
   providedIn: 'root',
@@ -25,11 +26,13 @@ export class CriterionModalService implements OnDestroy {
     const dialogRef = this.dialog.open(EditCriterionModalComponent, {
       data: { criterion },
     });
-    this.dialogSubscription = dialogRef.afterClosed().subscribe((updatedCriterion: Criterion) => {
-      if (updatedCriterion) {
-        this.criterionProviderService.setCriterionByUID(updatedCriterion);
-      }
-    });
+    this.dialogSubscription = dialogRef
+      .afterClosed()
+      .subscribe((updatedCriterion: AbstractCriterion) => {
+        if (updatedCriterion) {
+          this.criterionProviderService.setCriterionByUID(updatedCriterion);
+        }
+      });
   }
 
   public openReferenceCriteriaModal(criterion: Criterion) {

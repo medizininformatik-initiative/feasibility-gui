@@ -40,9 +40,9 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
     this.parentAttributeFilter = attributeFilter;
   }
 
-  public saveCriterion() {
+  public saveReferenceCriterion() {
     this.createReferenceService
-      .fetchReferenceCriterions(this.ids)
+      .fetchReferenceCriterions(this.ids, this.criterion.getUniqueID())
       .subscribe((referenceCriterions: ReferenceCriterion[]) => {
         const selectedReferenceFilter = this.parentAttributeFilter
           .getReference()

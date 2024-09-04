@@ -22,6 +22,7 @@ export class CriterionBuilder {
   private criterionHash?: string;
   private display?: string;
   private isInvalid?: boolean;
+  private parentId: string;
   private position?: CritGroupPosition;
   private termCodes?: Array<TerminologyCode>;
   private timeRestriction?: AbstractTimeRestriction;
@@ -120,8 +121,13 @@ export class CriterionBuilder {
     return this;
   }
 
-  witHasReference(hasReference: boolean): CriterionBuilder {
+  withHasReference(hasReference: boolean): CriterionBuilder {
     this.hasReference = hasReference;
+    return this;
+  }
+
+  withParentId(id: string): CriterionBuilder {
+    this.parentId = id;
     return this;
   }
 
@@ -151,8 +157,9 @@ export class CriterionBuilder {
    *
    * @returns ReferenceCriterion instance.
    */
-  buildReferenceCriterion(): AbstractCriterion {
+  buildReferenceCriterion(): ReferenceCriterion {
     return new ReferenceCriterion(
+      this.parentId,
       true,
       this.attributeFilters,
       this.context,
