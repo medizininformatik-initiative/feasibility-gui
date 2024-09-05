@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v6.0.0-alpha.2 (2024-09-05)
+
+### Bugfix
+* fixed display and css of the search filter ([#231](https://github.com/medizininformatik-initiative/feasibility-gui/issues/231))
+* fixed spelling issue ([#230](https://github.com/medizininformatik-initiative/feasibility-gui/issues/230))
+* fixed filter error in the linking criteria search ([#229](https://github.com/medizininformatik-initiative/feasibility-gui/issues/229))
+* fixed search param error in the linking criteria search ([#228](https://github.com/medizininformatik-initiative/feasibility-gui/issues/228))
+* show attribute display in the modal window ([#227](https://github.com/medizininformatik-initiative/feasibility-gui/issues/227))
+* fixed viewport for Drag&Drop ([#226](https://github.com/medizininformatik-initiative/feasibility-gui/issues/226))
+* exclude termcode version from hash ([#224](https://github.com/medizininformatik-initiative/feasibility-gui/issues/224))
+* fixed various css problems
+
+### Changed
+* update to new api endpoint version v4 ([#232](https://github.com/medizininformatik-initiative/feasibility-gui/issues/232))
+* setting uniqueID for each DataSelection profile
+
+
+
 ## v6.0.0-alpha.1 (2024-08-28)
 
 ### Changed
