@@ -9,7 +9,7 @@ table {
   text-align: left;
   padding: 8px;
   border-bottom: 1px solid #ddd;
-  color: #c5cacf;
+  color: rgba(197, 202, 207, 1);
   font-size: medium;
   font-family: 'Titillium Web';
 }
@@ -40,8 +40,9 @@ table {
 
 .header-column {
   padding-bottom: 20px;
-  font-size: small;
-  color: #c5cacf;
+  font-size: medium;
+  color: rgba(197, 202, 207, 1);
+  font-weight: 500;
 }
 
 .height-3-rem {

@@ -19,6 +19,14 @@
     <div *ngFor="let criterion of $criteriaArray | async" class="criteria-box">
       <num-criteria-box [criterion]="criterion"></num-criteria-box>
     </div>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      *ngIf="($criteriaArray | async).length === 0"
+      class="no-selected-criteria"
+    >
+      Keine Kriterien in der Auswahl
+    </div>
   </div>
   <num-display-criteria-group [isEditable]="true" style="height: 400px">
   </num-display-criteria-group>

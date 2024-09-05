@@ -25,4 +25,20 @@
       ></num-bool-logic-switch>
     </ng-container>
   </div>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    *ngIf="(criteriaArray$ | async).length === 0"
+    class="no-selected-criteria"
+  >
+    <div fxLayout="row" fxLayoutAlign="space-around center" class="wrapper">
+      <div fxLayout="row" fxLayoutAlign="center center" class="wrapper-solid-dashed-box">
+        <div class="solid-box">
+          <fa-icon class="icon drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
+        </div>
+        <div class="dashed-box"></div>
+      </div>
+      <div class="text-wrapper">Zum Sortieren “Drag & Drop” nutzen.</div>
+    </div>
+  </div>
 </div>
