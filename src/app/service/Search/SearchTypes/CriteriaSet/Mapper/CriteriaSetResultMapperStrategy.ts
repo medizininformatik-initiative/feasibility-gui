@@ -1,4 +1,4 @@
-import { MappingStrategy } from '../../../Strategy/InterfaceMappingStrategy';
+import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';

@@ -1,26 +1,22 @@
+import { AbstractSearchEngine } from '../../Abstract/AbstractSearchEngine';
 import { CriteriaSetResultMapperStrategy } from './Mapper/CriteriaSetResultMapperStrategy';
 import { CriteriaSetSearchUrlStrategy } from './Url/CriteriaSetSearchUrlStrategy';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
-import { SearchContext } from '../../Strategy/SearchContext';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class CriteriaSetSearchEngine {
+export class CriteriaSetSearchEngine extends AbstractSearchEngine {
   private searchText: string;
   private criteriaSetUrls: string[];
 
   constructor(searchText: string, criteriaSetUrls: string[]) {
+    super();
     this.searchText = searchText;
     this.criteriaSetUrls = criteriaSetUrls;
   }
 
-  public executeSearch(): Observable<ReferenceCriteriaResultList> {
-    const searchStrategy = new CriteriaSetSearchUrlStrategy(this.searchText, this.criteriaSetUrls);
-    const mappingStrategy = new CriteriaSetResultMapperStrategy();
-    const searchContext = new SearchContext(searchStrategy, mappingStrategy);
-    return searchContext.executeSearch();
+  public getUrl(): string {
+    return new CriteriaSetSearchUrlStrategy(this.searchText, this.criteriaSetUrls).getSearchUrl();
+  }
+
+  public getMapping(): CriteriaSetResultMapperStrategy {
+    return new CriteriaSetResultMapperStrategy();
   }
 }

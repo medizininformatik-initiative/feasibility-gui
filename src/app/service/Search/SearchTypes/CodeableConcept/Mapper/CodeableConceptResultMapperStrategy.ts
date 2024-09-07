@@ -1,6 +1,6 @@
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { MappingStrategy } from '../../../Strategy/InterfaceMappingStrategy';
+import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,7 +15,7 @@ export class CodeableConceptResultMapperStrategy
   }
 
   public mapResponseToEntries(response: any): CodeableConceptResultListEntry[] {
-    return response.results?.map((resultItem: any) => {
+    return response.map((resultItem: any) => {
       const terminologyCode = new TerminologyCode(
         resultItem.code,
         resultItem.display,

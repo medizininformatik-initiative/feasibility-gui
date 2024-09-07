@@ -1,11 +1,11 @@
-import { AbstractResultMapper } from '../../Abstract/AbstractResultMapper';
+import { AbstractResultMapper } from '../../../Abstract/AbstractResultMapper';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 
-export class CriteriaResultMapper extends AbstractResultMapper<
-  SearchTermListEntry,
-  SearchTermResultList
-> {
+export class CriteriaResultMapperStrategy
+  implements MappingStrategy<SearchTermListEntry, SearchTermResultList>
+{
   public mapResponseToResultList(response: any): SearchTermResultList {
     const listItems: SearchTermListEntry[] = this.mapResponseToEntries(response.results);
     return new SearchTermResultList(response.totalHits, listItems);

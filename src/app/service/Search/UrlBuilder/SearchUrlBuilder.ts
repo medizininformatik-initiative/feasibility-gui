@@ -54,6 +54,11 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
     return this;
   }
 
+  withId(id: string) {
+    this.queryParams.set('id', id);
+    return this;
+  }
+
   buildUrl(): string {
     const queryParamsArray = [];
     this.queryParams.forEach((value, key) => {

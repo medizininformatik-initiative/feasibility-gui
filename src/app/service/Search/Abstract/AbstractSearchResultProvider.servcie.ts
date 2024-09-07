@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class SearchResultProviderService<
+export abstract class AbstractSearchResultProviderService<
   C extends AbstractListEntry,
   T extends AbstractResultList<C>
 > {

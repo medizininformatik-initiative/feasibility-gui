@@ -1,6 +1,6 @@
 import { ElasticSearchFilterPaths } from '../../../../Backend/Paths/ElasticSearchFilterPaths';
 import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder';
-import { SearchUrlStrategy } from '../../../Strategy/InterfaceSearchUrlStrategy';
+import { SearchUrlStrategy } from '../../../Interface/InterfaceSearchUrlStrategy';
 import { TerminologyPaths } from '../../../../Backend/Paths/TerminologyPaths';
 
 export class CriteriaSetSearchUrlStrategy implements SearchUrlStrategy {
