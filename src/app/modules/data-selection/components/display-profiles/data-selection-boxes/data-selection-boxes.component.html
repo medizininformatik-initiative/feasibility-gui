@@ -4,7 +4,7 @@
   </div>
   <div class="display-container">
     {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
-    <div *ngIf="filterChipsSelected == false" class="filterChipsInfo">
+    <div *ngIf="filterChipsSelected === false" class="filterChipsInfo">
       {{ 'DATASELECTION.SELECTION_BOX.FIELDS_MISSING' | translate }}
     </div>
     <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
