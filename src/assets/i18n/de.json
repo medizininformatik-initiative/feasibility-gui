@@ -31,7 +31,9 @@
       "DELETE": "Löschen",
       "REFERENCE": "Kriterien verknüpfen",
       "APPLY_FILTERS": "Filter anwenden",
-      "DEFINE_FIELDS": "Felder definieren"
+      "DEFINE_FIELDS": "Felder definieren",
+      "SEARCH": "Zur Suche nutzen",
+      "ADD": "Zur Bühne hinzufügen"
     }
   },
   "DASHBOARD": {
