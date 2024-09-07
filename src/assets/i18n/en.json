@@ -96,6 +96,9 @@
       "SELECTED_FIELDS": "Selected Fields",
       "APPLIED_FILTER": "Applied Filters"
     },
+    "FIELD_SELECTION":{
+      "HEADER": "Select fields to extract for "
+    },
     "BUTTON": {
       "ADD": "Add to Dataselection",
       "DOWNLOAD": "Download Dataselection"

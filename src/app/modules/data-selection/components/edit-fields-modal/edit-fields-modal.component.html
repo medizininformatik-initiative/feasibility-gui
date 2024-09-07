@@ -1,4 +1,7 @@
 <num-modal-window (saveButtonSelected)="saveFields()" (cancelButtonSelected)="closeDialog()">
+  <div class="filter-header">
+    {{ 'DATASELECTION.FIELD_SELECTION.HEADER' | translate }} {{ profileName }}
+  </div>
   <div class="tree-container">
     <div *ngFor="let singleTree of tree">
       <num-tree
