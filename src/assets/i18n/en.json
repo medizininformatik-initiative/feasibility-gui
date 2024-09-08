@@ -94,10 +94,13 @@
     "SELECTION_BOX":{
       "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
       "SELECTED_FIELDS": "Selected Fields",
-      "APPLIED_FILTER": "Applied Filters"
+      "APPLIED_FILTER": "Applied Filters",
+      "REQUIRED": "required",
+      "OPTIONAL": "optional"
     },
     "FIELD_SELECTION":{
-      "HEADER": "Select fields to extract for "
+      "HEADER": "Select fields to extract for ",
+      "REQUIRED": "required"
     },
     "BUTTON": {
       "ADD": "Add to Dataselection",

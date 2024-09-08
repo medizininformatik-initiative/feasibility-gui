@@ -1,6 +1,11 @@
 <div *ngIf="filterChips.length > 0">
   <div *ngFor="let filterChip of filterChips" fxLayout="row" fxLayoutAlign="start start">
-    <div class="block">{{ filterChip.type }}</div>
+    <div *ngIf="filterChip.type == 'optional'" class="block">
+      {{ 'DATASELECTION.SELECTION_BOX.OPTIONAL' | translate }}
+    </div>
+    <div *ngIf="filterChip.type == 'required'" class="block">
+      {{ 'DATASELECTION.SELECTION_BOX.REQUIRED' | translate }}
+    </div>
     <div fxLayout="row wrap" class="padding-left-20">
       <div
         *ngFor="let chip of filterChip.data"

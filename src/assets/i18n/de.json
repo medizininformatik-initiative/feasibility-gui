@@ -105,10 +105,13 @@
     "SELECTION_BOX":{
       "FIELDS_MISSING": "Selektieren Sie mindestens ein Feld für die Extraktion durch Verwendung der ... Taste in der oberen rechten Ecke dieser Box.",
       "SELECTED_FIELDS": "Selektierte Felder",
-      "APPLIED_FILTER": "Angewandte Filter"
+      "APPLIED_FILTER": "Angewandte Filter",
+      "REQUIRED": "erforderlich",
+      "OPTIONAL": "optional"
     },
     "FIELD_SELECTION":{
-      "HEADER": "Selektieren Sie zu extrahierende Felder für "
+      "HEADER": "Selektieren Sie zu extrahierende Felder für ",
+      "REQUIRED": "erforderlich"
     },
     "BUTTON": {
       "DOWNLOAD": "Datenselektion herunterladen",
