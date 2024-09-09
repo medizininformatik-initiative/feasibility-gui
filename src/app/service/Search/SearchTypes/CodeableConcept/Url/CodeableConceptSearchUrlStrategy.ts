@@ -1,9 +1,9 @@
 import { CodeableConceptPaths } from 'src/app/service/Backend/Paths/CodeableConceptPaths';
-import { SearchUrlStrategy } from '../../../Interface/InterfaceSearchUrlStrategy';
-import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder';
 import { ElasticSearchFilterPaths } from 'src/app/service/Backend/Paths/ElasticSearchFilterPaths';
-
+import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder';
+import { SearchUrlStrategy } from '../../../Interface/InterfaceSearchUrlStrategy';
 export class CodeableConceptSearchUrlStrategy implements SearchUrlStrategy {
+  private readonly path: string = CodeableConceptPaths.SEARCH_CONCEPT_ENDPOINT;
   private searchText: string;
   private valueSetUrls: string;
 
@@ -12,10 +12,11 @@ export class CodeableConceptSearchUrlStrategy implements SearchUrlStrategy {
     this.valueSetUrls = valueSetUrls;
   }
 
-  getSearchUrl(): string {
-    const urlBuilder = new SearchUrlBuilder(CodeableConceptPaths.SEARCH_CONCEPT_ENDPOINT)
+  public getSearchUrl(): string {
+    const url = new SearchUrlBuilder(this.path)
       .withFiltertUrl(ElasticSearchFilterPaths.VALUESETS, this.valueSetUrls)
-      .withSearchTerm(this.searchText);
-    return urlBuilder.buildUrl();
+      .withSearchTerm(this.searchText)
+      .buildUrl();
+    return url;
   }
 }

@@ -1,8 +1,8 @@
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 
-export class CriteriaResulByIdtMapperStrategy
+export class CriteriaResulByIdMapperStrategy
   implements MappingStrategy<SearchTermListEntry, SearchTermResultList>
 {
   public mapResponseToResultList(response: any): SearchTermResultList {
