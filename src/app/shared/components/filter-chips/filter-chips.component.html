@@ -6,6 +6,9 @@
     <div *ngIf="filterChip.type === 'required'" class="block">
       {{ 'DATASELECTION.SELECTION_BOX.REQUIRED' | translate }}
     </div>
+    <div *ngIf="filterChip.type !== 'required' && filterChip.type !== 'optional'" class="block">
+      {{ filterChip.type }}
+    </div>
     <div fxLayout="row wrap" class="padding-left-20">
       <div
         *ngFor="let chip of filterChip.data"
