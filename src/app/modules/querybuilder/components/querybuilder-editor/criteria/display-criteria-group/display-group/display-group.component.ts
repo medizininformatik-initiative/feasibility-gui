@@ -1,4 +1,12 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef, TemplateRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
@@ -12,7 +20,6 @@ import { map, Observable, Subscription } from 'rxjs';
 export class DisplayGroupComponent implements OnInit, OnDestroy {
   @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;
-
 
   @Input() groupType: string;
 
@@ -29,9 +36,11 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.criteriaSubscription = this.criterionProvider.getCriterionUIDMap().subscribe(() => {
-      this.initialize()
-      setTimeout(() => { this.rerender() }, 50)
-    })
+      this.initialize();
+      setTimeout(() => {
+        this.rerender();
+      }, 50);
+    });
   }
 
   ngOnDestroy() {
