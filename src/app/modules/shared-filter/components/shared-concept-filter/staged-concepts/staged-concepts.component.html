@@ -1,5 +1,5 @@
 <div *ngIf="(arrayOfSelectedConcepts$ | async).length > 0">
-  <div class="filter-title">Filter selection</div>
+  <div class="filter-title">{{ 'SHAREDFILTER.FILTER_SELECTION' | translate }}</div>
   <div
     *ngFor="let selectedConceptFilter of arrayOfSelectedConcepts$ | async"
     fxLayout="row"
@@ -14,7 +14,7 @@
     </div>
     <div fxFlexAlign="end">
       <button (click)="removeSelectedConcept(selectedConceptFilter)" class="delete-button">
-        entfernen
+        {{ 'SHAREDFILTER.BUTTON.REMOVE' | translate }}
       </button>
     </div>
   </div>

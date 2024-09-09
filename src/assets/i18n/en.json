@@ -3,12 +3,12 @@
     "KDS Module": "KDS Module",
     "Availability": "Availability",
     "Terminology": "Terminology",
-    "Termcode": "Term Code",
+    "Termcode": "Terminology Code",
     "Name": "Citeria",
     "site": "Site",
     "patient_number": "Number of Patients",
     "Display": "Display",
-    "Terminology Code": "Term Code",
+    "Terminology Code": "Terminology Code",
     "FILTER": {
       "CONTEXT": "Context",
       "AVAILABILITY": "Availability",
@@ -21,6 +21,19 @@
       "REFERENCE": "Link criteria",
       "APPLY_FILTERS": "Apply filter",
       "DEFINE_FIELDS": "Define fields"
+    },
+    "MODAL": {
+      "BUTTON": {
+        "APPLY": "Apply",
+        "CANCEL": "Cancel"
+      }
+    }
+  },
+  "SHAREDFILTER": {
+    "FILTER_SELECTION": "Selected items",
+    "BUTTON": {
+      "ADD": "Add",
+      "REMOVE": "Remove"
     }
   },
   "DASHBOARD": {
@@ -151,6 +164,8 @@
   },
   "QUERYBUILDER": {
     "STAGE": {
+      "HEADER": "Criteria Editor",
+      "HEADER_INFO": "Edit your criteria here and build your request",
       "BUTTON": {
         "ADD_TO_STAGE": "Add to Stage",
         "BACK_TO_SEARCH":"Add Criteria",
@@ -161,7 +176,9 @@
         "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
       }
     },
+    "HEADER_TITLE": "Selected Criteria",
     "SEARCH": {
+      "HEADER": "Criteria Search",
       "HEADER_INFO": "Define your cohort based on criteria that you can select using the search field. For targeted searches, you can restrict your search to certain terminologies (e.g. ICD10, LOINC, OPS) or KDS modules. You can use the cohort selection directly to determine the number of cases across Germany.",
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",

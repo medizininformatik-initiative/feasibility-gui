@@ -3,18 +3,18 @@
     "KDS_MODULE": "KDS Module",
     "Availability": "Anzahl",
     "Terminology": "Terminologie",
-    "Termcode": "Term Code",
+    "Termcode": "Terminologie-Code",
     "Name": "Kriterium",
     "site": "Standort",
     "patient_number": "Anzahl der Patienten",
-    "Display": "Display",
-    "Terminology Code": "Term Code",
+    "Display": "Name",
+    "Terminology Code": "Terminologie-Code",
     "ACTIONBAR": {
         "SELECTED_CRITERIA": {
           "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt",
           "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt"
       },
-          "ADDED_CRITERIA":{ 
+          "ADDED_CRITERIA":{
             "SINGULAR": "Sie haben {{amount}} Kriterium zur Bühne hinzugefügt",
             "PLURAL": "Sie haben {{amount}} Kriterien zur Bühne hinzugefügt"
           }
@@ -34,6 +34,19 @@
       "DEFINE_FIELDS": "Felder definieren",
       "SEARCH": "Zur Suche nutzen",
       "ADD": "Zur Bühne hinzufügen"
+    },
+    "MODAL": {
+      "BUTTON": {
+        "APPLY": "Auswählen",
+        "CANCEL": "Abbrechen"
+      }
+    }
+  },
+  "SHAREDFILTER": {
+    "FILTER_SELECTION": "Ausgewählte Elemente",
+    "BUTTON": {
+      "ADD": "Hinzufügen",
+      "REMOVE": "entfernen"
     }
   },
   "DASHBOARD": {
@@ -164,6 +177,8 @@
   },
   "QUERYBUILDER": {
     "STAGE": {
+      "HEADER": "Kriterien Editor",
+      "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen sie Ihre Anfrage zusammen",
       "BUTTON": {
         "ADD_TO_STAGE": "Zur Bühne hinzufügen",
         "BACK_TO_SEARCH":"Kriterien hinzufügen",
@@ -174,7 +189,9 @@
         "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Bühne hinzugefügt"
       }
     },
+    "HEADER_TITLE": "Ausgewählte Kriterien",
     "SEARCH": {
+      "HEADER": "Kriterien Suche",
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden um die Fallzahl deutschlandweit zu ermitteln.",
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",

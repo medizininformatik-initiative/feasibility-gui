@@ -6,6 +6,7 @@ import { EditReferenceCriteriaModalComponent } from 'src/app/modules/querybuilde
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
+import {FeasibilityQueryProviderService} from "../Provider/FeasibilityQueryProvider.service";
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ export class CriterionModalService implements OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private criterionProviderService: CriterionProviderService
+    private criterionProviderService: CriterionProviderService,
+    private FeasibilityQueryProvider: FeasibilityQueryProviderService
   ) {}
 
   ngOnDestroy() {
@@ -31,6 +33,7 @@ export class CriterionModalService implements OnDestroy {
       .subscribe((updatedCriterion: AbstractCriterion) => {
         if (updatedCriterion) {
           this.criterionProviderService.setCriterionByUID(updatedCriterion);
+          //this.FeasibilityQueryProvider.test()
         }
       });
   }

@@ -7,10 +7,11 @@
 
 .criteria-container {
   padding: 2px;
-  width: 100%;
-  padding-bottom: 150px;
+  min-width: 550px;
+  padding-bottom: 200px;
   position: relative;
 }
+
 .lock-div {
   position: absolute;
   width: 100%;

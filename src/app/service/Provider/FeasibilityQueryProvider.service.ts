@@ -2,6 +2,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
+import {ObjectHelper} from "../../modules/querybuilder/controller/ObjectHelper";
 
 @Injectable({
   providedIn: 'root',
@@ -99,5 +100,14 @@ export class FeasibilityQueryProviderService {
     });
     inexclusion = inexclusion.filter((item) => item.length > 0);
     return inexclusion;
+  }
+  public test(): void {
+    console.log('trigger')
+    const feasibilityQuery = ObjectHelper.clone(this.feasibilityQueryMap.get('1'));
+    console.log(feasibilityQuery)
+    //this.setFeasibilityQueryByID(new FeasibilityQuery('1'), '1');
+    this.loadInitialQuery();
+    this.feasibilityQueryMap.set('1', feasibilityQuery);
+    this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
   }
 }

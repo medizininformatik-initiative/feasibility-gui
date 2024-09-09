@@ -1,4 +1,4 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from '../../../service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery';
@@ -20,7 +20,6 @@ export class DropGroupDirective implements OnInit {
 
   @HostListener('cdkDropListDropped', ['$event'])
   onDrop(event: CdkDragDrop<any[]>) {
-    console.log(event);
     const groupType = this.groupType || this.elementRef.nativeElement.getAttribute('groupType');
     const droppedCriterion: string = event.item.data;
     if (event.container.id !== event.previousContainer.id) {
@@ -46,6 +45,17 @@ export class DropGroupDirective implements OnInit {
           break;
         case 'Stage':
           this.stageProviderService.deleteCriterionByUID(droppedCriterion);
+          break;
+        default:
+          break;
+      }
+    } else {
+      switch (event.container.id) {
+        case 'Exclusion':
+          this.moveCriterionInExclusion(event.previousIndex, event.currentIndex);
+          break;
+        case 'Inclusion':
+          this.moveCriterionInInclusion(event.previousIndex, event.currentIndex);
           break;
         default:
           break;
@@ -93,5 +103,15 @@ export class DropGroupDirective implements OnInit {
     });
     inexclusion = inexclusion.filter((item) => item.length > 0);
     return inexclusion;
+  }
+  private moveCriterionInInclusion(previousIndex: number, currentIndex: number): void {
+    this.criteria = this.feasibilityQuery.getInclusionCriteria();
+    moveItemInArray(this.criteria, previousIndex, currentIndex);
+    this.queryProviderService.setInclusionCriteria(this.criteria);
+  }
+  private moveCriterionInExclusion(previousIndex: number, currentIndex: number): void {
+    this.criteria = this.feasibilityQuery.getExclusionCriteria();
+    moveItemInArray(this.criteria, previousIndex, currentIndex);
+    this.queryProviderService.setExclusionCriteria(this.criteria);
   }
 }
