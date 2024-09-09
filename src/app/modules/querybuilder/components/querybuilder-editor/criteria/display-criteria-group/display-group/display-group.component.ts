@@ -1,8 +1,17 @@
+import { combineLatest, map, Observable, Subscription } from 'rxjs';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
-import { map, Observable, Subscription } from 'rxjs';
+
+interface ProcessedCriteria {
+  criterion: Criterion | null
+  lastInner: boolean
+  lastOuter: boolean
+  innerIndex: number
+  outerIndex: number
+}
 
 @Component({
   selector: 'num-display-group',
@@ -11,10 +20,10 @@ import { map, Observable, Subscription } from 'rxjs';
 })
 export class DisplayGroupComponent implements OnInit, OnDestroy {
   @Input() groupType: string;
-
   @Input() isEditable: boolean;
 
   criteriaArray$: Observable<string[][]>;
+  processedCriteria$: Observable<ProcessedCriteria[]>;
   private querySubscription: Subscription;
 
   constructor(
@@ -23,20 +32,48 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this.groupType === 'Inclusion') {
-      this.criteriaArray$ = this.queryService
-        .getFeasibilityQueryByID()
-        .pipe(map((queryObject) => queryObject.get('1').getInclusionCriteria()));
-    }
-    if (this.groupType === 'Exclusion') {
-      this.criteriaArray$ = this.queryService
-        .getFeasibilityQueryByID()
-        .pipe(map((queryObject) => queryObject.get('1').getExclusionCriteria()));
-    }
+    this.criteriaArray$ = this.getCriteriaArray();
+
+    this.processedCriteria$ = combineLatest([
+      this.criteriaArray$,
+      this.criterionProvider.getCriterionUIDMap(),
+    ]).pipe(
+      map(([criteriaArray, criterionUIDMap]) => {
+        const processed: ProcessedCriteria[] = [];
+
+        criteriaArray.forEach((innerArray, outerIndex) => {
+          innerArray.forEach((criterion, innerIndex) => {
+            processed.push({
+              criterion: criterionUIDMap.get(criterion),
+              lastInner: innerIndex === innerArray.length - 1,
+              lastOuter: outerIndex === criteriaArray.length - 1,
+              innerIndex,
+              outerIndex,
+            });
+          });
+        });
+
+        return processed;
+      })
+    );
   }
 
   ngOnDestroy() {
     this.querySubscription?.unsubscribe();
+  }
+
+  getCriteriaArray(): Observable<string[][]> {
+    if (this.groupType === 'Inclusion') {
+      return this.queryService
+        .getFeasibilityQueryByID()
+        .pipe(map((queryObject) => queryObject.get('1').getInclusionCriteria()));
+    }
+    if (this.groupType === 'Exclusion') {
+      return this.queryService
+        .getFeasibilityQueryByID()
+        .pipe(map((queryObject) => queryObject.get('1').getExclusionCriteria()));
+    }
+    return new Observable<string[][]>();
   }
 
   getInnerLabelKey(): 'AND' | 'OR' {

@@ -1,34 +1,31 @@
 <div fxLayout="column" fxLayoutAlign="start" class="criteria-container">
   <div *ngIf="!isEditable" class="lock-div"></div>
-  <div
-    *ngFor="let criterionInnerArray of criteriaArray$ | async; let lastOuter = last; let i = index"
-  >
-    <div *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index">
-      <num-criteria-box
-        [criterion]="criterionProvider.getCriterionByUID(criterion)"
-      ></num-criteria-box>
-      <ng-container>
-        <num-bool-logic-switch
-          [position]="'inner'"
-          [label]="getInnerLabelKey()"
-          (switched)="splitInnerArray(i, j)"
-          *ngIf="!lastInner"
-        ></num-bool-logic-switch>
-      </ng-container>
-    </div>
-    <ng-container>
+  <div *ngFor="let item of processedCriteria$ | async">
+    <num-criteria-box [criterion]="item.criterion" cdkDrag></num-criteria-box>
+
+    <!-- Conditional rendering based on the lastInner property -->
+    <num-bool-logic-switch
+      *ngIf="!item.lastInner"
+      [position]="'inner'"
+      [label]="getInnerLabelKey()"
+      (switched)="splitInnerArray(item.outerIndex, item.innerIndex)"
+    ></num-bool-logic-switch>
+
+    <!-- Conditional rendering based on the lastOuter property -->
+    <ng-container *ngIf="item.lastInner && !item.lastOuter">
       <num-bool-logic-switch
         [position]="'outer'"
         [label]="getOuterLabelKey()"
-        (switched)="joinInnerArrays(i)"
-        *ngIf="!lastOuter"
+        (switched)="joinInnerArrays(item.outerIndex)"
       ></num-bool-logic-switch>
     </ng-container>
   </div>
+
+  <!-- Display message when criteriaArray$ is empty -->
   <div
     fxLayout="row"
     fxLayoutAlign="center center"
-    *ngIf="(criteriaArray$ | async).length === 0"
+    *ngIf="(criteriaArray$ | async)?.length === 0"
     class="no-selected-criteria"
   >
     <div fxLayout="row" fxLayoutAlign="space-around center" class="wrapper">
