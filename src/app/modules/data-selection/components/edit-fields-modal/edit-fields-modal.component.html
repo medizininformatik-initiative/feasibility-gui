@@ -1,5 +1,5 @@
 <num-modal-window (saveButtonSelected)="saveFields()" (cancelButtonSelected)="closeDialog()">
-  <div class="filter-header">
+  <div class="filter-title">
     {{ 'DATASELECTION.FIELD_SELECTION.HEADER' | translate }} {{ profileName }}
   </div>
   <div class="tree-container">
@@ -11,7 +11,9 @@
     </div>
   </div>
   <div *ngIf="arrayOfSelectedFields.length > 0">
-    <div class="filter-title">Field selection</div>
+    <div class="filter-title">
+      {{ 'DATASELECTION.FIELD_SELECTION.FIELD_SELECTION' | translate }}
+    </div>
     <div
       *ngFor="let selectedField of arrayOfSelectedFields"
       fxLayout="row"

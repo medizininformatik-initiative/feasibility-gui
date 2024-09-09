@@ -3,12 +3,12 @@
     "KDS Module": "KDS Module",
     "Availability": "Availability",
     "Terminology": "Terminology",
-    "Termcode": "Term Code",
+    "Termcode": "Terminology Code",
     "Name": "Citeria",
     "site": "Site",
     "patient_number": "Number of Patients",
     "Display": "Display",
-    "Terminology Code": "Term Code",
+    "Terminology Code": "Terminology Code",
     "FILTER": {
       "CONTEXT": "Context",
       "AVAILABILITY": "Availability",
@@ -21,6 +21,19 @@
       "REFERENCE": "Link criteria",
       "APPLY_FILTERS": "Apply filter",
       "DEFINE_FIELDS": "Define fields"
+    },
+    "MODAL": {
+      "BUTTON": {
+        "APPLY": "Apply",
+        "CANCEL": "Cancel"
+      }
+    }
+  },
+  "SHAREDFILTER": {
+    "FILTER_SELECTION": "Selected items",
+    "BUTTON": {
+      "ADD": "Add",
+      "REMOVE": "Remove"
     }
   },
   "DASHBOARD": {
@@ -89,7 +102,25 @@
     }
   },
   "DATASELECTION": {
+    "HEADER": "Dataselection",
+    "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values ​​are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
     "DATASELECTION": "Dataselection",
+    "SELECTION_BOX":{
+      "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
+      "SELECTED_FIELDS": "Selected Fields",
+      "APPLIED_FILTER": "Applied Filters",
+      "REQUIRED": "required",
+      "OPTIONAL": "optional"
+    },
+    "FIELD_SELECTION":{
+      "FIELD_SELECTION": "Selected items",
+      "HEADER": "Select fields to extract for ",
+      "REQUIRED": "required"
+    },
+    "BUTTON": {
+      "ADD": "Add to Dataselection",
+      "DOWNLOAD": "Download Dataselection"
+    },
     "SEARCH": {
       "LABEL": "Insert code or serach text",
       "CRITERIA": "Search Criteria"
@@ -97,6 +128,7 @@
     "DISPLAY": {
       "LABEL": "Selected Criteria"
     },
+    "INFOTEXT": "Please select the criteria you would like to export and download your dataselection. You can then either upload the dataselection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
     "REQUIRED":"required from all sites"
   },
   "LANGUAGE": {
@@ -117,7 +149,7 @@
     "QUERYBUILDER_EDITOR": "Cohort Selection",
     "QUERYBUILDER_OVERVIEW": "Saved Queries",
     "QUERYBUILDER_RESULT": "Feasibility",
-    "DATASELECTION_EDITOR": "Data Selection",
+    "DATASELECTION": "Data Selection",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
   },
@@ -133,17 +165,26 @@
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
+    "DRAG_AND_DROP": "Use drag and drop to sort",
     "STAGE": {
+      "NO_SELECTED_CRITERIA": "No criteria in the selection", 
+      "HEADER": "Criteria Editor",
+      "HEADER_INFO": "Edit your criteria here and build your request",
       "BUTTON": {
         "ADD_TO_STAGE": "Add to Stage",
         "BACK_TO_SEARCH":"Add Criteria",
-        "VIEW_STAGE": "View Stage"
+        "VIEW_STAGE": "View Stage",
+        "SEND_QUERY": "Send Query"
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
       }
     },
+    "HEADER_TITLE": "Selected Criteria",
     "SEARCH": {
+      "SEARCH_BUTTON": "Search",
+      "HEADER": "Criteria Search",
+      "HEADER_INFO": "Define your cohort based on criteria that you can select using the search field. For targeted searches, you can restrict your search to certain terminologies (e.g. ICD10, LOINC, OPS) or KDS modules. You can use the cohort selection directly to determine the number of cases across Germany.",
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
       "LABEL": "enter code or display",
@@ -305,7 +346,7 @@
     "FEAS-10002"  : "You sent too many queries, please wait {{RETRY_AFTER}} seconds and try again",
     "FEAS-10004"  : "The number of sites which answered is too small -> detailed results are not shown",
     "FEAS-10005"  : "The result size is too small -> result will not be shown",
-    "404"         :"Site not found",
+    "404" :        "Site not found",
     "VAL-20001"   :"The combination of context and termcode(s) is not found"
   },
   "INFO":{

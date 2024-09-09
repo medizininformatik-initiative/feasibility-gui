@@ -102,6 +102,7 @@
     }
   },
   "DATASELECTION": {
+    "HEADER": "Dataselection",
     "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values ​​are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
     "DATASELECTION": "Dataselection",
     "SELECTION_BOX":{
@@ -112,6 +113,7 @@
       "OPTIONAL": "optional"
     },
     "FIELD_SELECTION":{
+      "FIELD_SELECTION": "Selected items",
       "HEADER": "Select fields to extract for ",
       "REQUIRED": "required"
     },
@@ -163,7 +165,9 @@
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
+    "DRAG_AND_DROP": "Use drag and drop to sort",
     "STAGE": {
+      "NO_SELECTED_CRITERIA": "No criteria in the selection", 
       "HEADER": "Criteria Editor",
       "HEADER_INFO": "Edit your criteria here and build your request",
       "BUTTON": {
@@ -178,6 +182,7 @@
     },
     "HEADER_TITLE": "Selected Criteria",
     "SEARCH": {
+      "SEARCH_BUTTON": "Search",
       "HEADER": "Criteria Search",
       "HEADER_INFO": "Define your cohort based on criteria that you can select using the search field. For targeted searches, you can restrict your search to certain terminologies (e.g. ICD10, LOINC, OPS) or KDS modules. You can use the cohort selection directly to determine the number of cases across Germany.",
       "INCLUSION": "Inclusion criteria",

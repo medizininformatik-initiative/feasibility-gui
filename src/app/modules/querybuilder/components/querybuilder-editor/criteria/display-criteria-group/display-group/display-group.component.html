@@ -1,10 +1,13 @@
 <div fxLayout="column" fxLayoutAlign="start" class="criteria-container">
   <div *ngIf="!isEditable" class="lock-div"></div>
-  <ng-container #outlet [ngTemplateOutlet]="content">
-  </ng-container>
+  <ng-container #outlet [ngTemplateOutlet]="content"> </ng-container>
   <ng-template #content>
     <div
-      *ngFor="let criterionInnerArray of criteriaArray$ | async; let lastOuter = last; let i = index"
+      *ngFor="
+        let criterionInnerArray of criteriaArray$ | async;
+        let lastOuter = last;
+        let i = index
+      "
     >
       <div *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index">
         <num-criteria-box
@@ -42,7 +45,7 @@
         </div>
         <div class="dashed-box"></div>
       </div>
-      <div class="text-wrapper">Zum Sortieren “Drag & Drop” nutzen.</div>
+      <div class="text-wrapper">{{ 'QUERYBUILDER.DRAG_AND_DROP' | translate }}</div>
     </div>
   </div>
 </div>

@@ -24,7 +24,7 @@
       *ngIf="($criteriaArray | async).length === 0"
       class="no-selected-criteria"
     >
-      Keine Kriterien in der Auswahl
+      {{ 'QUERYBUILDER.STAGE.NO_SELECTED_CRITERIA' | translate }}
     </div>
   </div>
   <num-display-criteria-group [isEditable]="true" style="height: 400px">

@@ -115,6 +115,7 @@
     }
   },
   "DATASELECTION": {
+    "HEADER": "Datenselektion",
     "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Kerndatensatz (KDS) Module deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und haben die Möglichkeit anzugeben welche Datenpunkte zwingen erforderlich sind für Ihre Forschungsfrage.",
     "DATASELECTION": "Datenselektion",
     "SELECTION_BOX":{
@@ -125,12 +126,13 @@
       "OPTIONAL": "optional"
     },
     "FIELD_SELECTION":{
+      "FIELD_SELECTION": "Ausgewählte Elemente",
       "HEADER": "Selektieren Sie zu extrahierende Felder für ",
       "REQUIRED": "erforderlich"
     },
     "BUTTON": {
       "DOWNLOAD": "Datenselektion herunterladen",
-      "ADD": "zur Datenselektion hinzufügen"
+      "ADD": "Zur Datenselektion hinzufügen"
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -176,7 +178,10 @@
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
+    "DRAG_AND_DROP": "Zum Sortieren “Drag & Drop” nutzen",
+
     "STAGE": {
+      "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl", 
       "HEADER": "Kriterien Editor",
       "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen sie Ihre Anfrage zusammen",
       "BUTTON": {
@@ -191,6 +196,8 @@
     },
     "HEADER_TITLE": "Ausgewählte Kriterien",
     "SEARCH": {
+      "SEARCH_BUTTON": "Suchen",
+
       "HEADER": "Kriterien Suche",
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden um die Fallzahl deutschlandweit zu ermitteln.",
       "INCLUSION": "Einschlusskriterien",
