@@ -63,7 +63,6 @@ export class PreStageComponent implements OnInit, OnDestroy {
     });
     this.$stageArray = this.stageProviderService.getStageUIDArray();
     this.stageProviderService.getStageUIDArray().subscribe((stage) => {
-      console.log(stage);
       this.hasStageItems = stage.length > 0;
     });
   }
