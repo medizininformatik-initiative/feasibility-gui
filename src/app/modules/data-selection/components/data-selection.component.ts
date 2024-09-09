@@ -9,6 +9,7 @@ import { FileSaverService } from 'ngx-filesaver';
 import { Subscription } from 'rxjs';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -31,7 +32,8 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
     private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
     private crdtlService: CreateCRDTL,
     private dataSelectionProviderService: DataSelectionProviderService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private test1: TerminologySystemProvider
   ) {}
 
   ngOnInit(): void {
