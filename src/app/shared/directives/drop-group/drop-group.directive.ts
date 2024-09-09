@@ -20,15 +20,16 @@ export class DropGroupDirective implements OnInit {
 
   @HostListener('cdkDropListDropped', ['$event'])
   onDrop(event: CdkDragDrop<any[]>) {
+    console.log(event);
     const groupType = this.groupType || this.elementRef.nativeElement.getAttribute('groupType');
     const droppedCriterion: string = event.item.data;
     if (event.container.id !== event.previousContainer.id) {
       switch (event.container.id) {
         case 'Exclusion':
-          this.addToExclusion(droppedCriterion);
+          this.addToExclusion(droppedCriterion, event.currentIndex);
           break;
         case 'Inclusion':
-          this.addToInclusion(droppedCriterion);
+          this.addToInclusion(droppedCriterion, event.currentIndex);
           break;
         case 'Stage':
           this.stageProviderService.addCriterionToStage(droppedCriterion);
@@ -57,14 +58,14 @@ export class DropGroupDirective implements OnInit {
       this.feasibilityQuery = feasibilityQuery.get('1');
     });
   }
-  private addToInclusion(droppedCriterion: string): void {
+  private addToInclusion(droppedCriterion: string, currentIndex: number): void {
     this.criteria = this.feasibilityQuery.getInclusionCriteria();
-    this.criteria.push([droppedCriterion]);
+    this.criteria.splice(currentIndex, 0, [droppedCriterion]);
     this.queryProviderService.setInclusionCriteria(this.criteria);
   }
-  private addToExclusion(droppedCriterion: string): void {
+  private addToExclusion(droppedCriterion: string, currentIndex: number): void {
     this.criteria = this.feasibilityQuery.getExclusionCriteria();
-    this.criteria.push([droppedCriterion]);
+    this.criteria.splice(currentIndex, 0, [droppedCriterion]);
     this.queryProviderService.setExclusionCriteria(this.criteria);
   }
 
