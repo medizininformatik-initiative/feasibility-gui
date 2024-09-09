@@ -5,7 +5,7 @@ import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChi
 import { Observable, of } from 'rxjs';
 import { MenuItemInterface } from '../../models/Menu/MenuItemInterface';
 import { ReferenceCriterionMenuItems } from '../../service/Menu/RefrenceCriterion/ReferenceCriterionMenuItems.service';
-import {TerminologySystemDictionary} from "../../../model/Utilities/TerminologySystemDictionary";
+import { TerminologySystemDictionary } from '../../../model/Utilities/TerminologySystemDictionary';
 
 @Component({
   selector: 'num-reference-criteria-box',
@@ -34,7 +34,9 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
   ngOnInit() {
     this.getMenuItems();
     this.getFilterChips();
-    this.translatedSystem = TerminologySystemDictionary.getNameByUrl(this.referenceCriterion.getTermCodes()[0].getSystem())
+    this.translatedSystem = TerminologySystemDictionary.getNameByUrl(
+      this.referenceCriterion.getTermCodes()[0].getSystem()
+    );
   }
 
   private getMenuItems() {

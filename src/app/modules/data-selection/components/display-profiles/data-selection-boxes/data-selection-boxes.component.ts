@@ -20,6 +20,7 @@ export class DataSelectionBoxesComponent implements OnInit {
 
   menuItems: MenuItemInterface[] = [];
 
+  filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
 
   filtersFilterChips: InterfaceFilterChip[] = [];
@@ -37,6 +38,11 @@ export class DataSelectionBoxesComponent implements OnInit {
 
   public getFilterChips(): void {
     const profileNodes = this.profile.getFields();
+
+    if (profileNodes.some((item) => item.getIsSelected() === true)) {
+      this.filterChipsSelected = true;
+    }
+
     this.generateAndStoreFilterChips(profileNodes);
     this.getFilterChipsForProfileFilters();
   }

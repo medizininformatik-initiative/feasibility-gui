@@ -19,6 +19,7 @@ export class EditFieldsModalComponent implements OnInit {
   dataSelectionProfileProfileNode: ProfileFields[];
 
   tree: TreeNode[];
+  profileName: string;
 
   arrayOfSelectedFields: ProfileFields[] = [];
 
@@ -30,6 +31,7 @@ export class EditFieldsModalComponent implements OnInit {
 
   ngOnInit() {
     const dataSelectionProfile = this.dataSelectionProvider.getDataSelectionProfileByUID(this.data);
+    this.profileName = dataSelectionProfile.getDisplay();
     this.dataSelectionProfileProfileNode = dataSelectionProfile.getFields();
     this.setInitialArrayOfSelectedFields(dataSelectionProfile.getFields());
     this.tree = FieldsTreeAdapter.fromTree(this.dataSelectionProfileProfileNode);

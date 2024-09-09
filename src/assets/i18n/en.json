@@ -89,7 +89,23 @@
     }
   },
   "DATASELECTION": {
+    "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values ​​are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
     "DATASELECTION": "Dataselection",
+    "SELECTION_BOX":{
+      "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
+      "SELECTED_FIELDS": "Selected Fields",
+      "APPLIED_FILTER": "Applied Filters",
+      "REQUIRED": "required",
+      "OPTIONAL": "optional"
+    },
+    "FIELD_SELECTION":{
+      "HEADER": "Select fields to extract for ",
+      "REQUIRED": "required"
+    },
+    "BUTTON": {
+      "ADD": "Add to Dataselection",
+      "DOWNLOAD": "Download Dataselection"
+    },
     "SEARCH": {
       "LABEL": "Insert code or serach text",
       "CRITERIA": "Search Criteria"
@@ -115,10 +131,10 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Home",
-    "QUERYBUILDER_EDITOR": "Feasibility Query",
-    "QUERYBUILDER_OVERVIEW": "My Queries",
-    "QUERYBUILDER_RESULT": "Result",
-    "DATASELECTION": "Dataselection",
+    "QUERYBUILDER_EDITOR": "Cohort Selection",
+    "QUERYBUILDER_OVERVIEW": "Saved Queries",
+    "QUERYBUILDER_RESULT": "Feasibility",
+    "DATASELECTION": "Data Selection",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
   },
@@ -138,13 +154,15 @@
       "BUTTON": {
         "ADD_TO_STAGE": "Add to Stage",
         "BACK_TO_SEARCH":"Add Criteria",
-        "VIEW_STAGE": "View Stage"
+        "VIEW_STAGE": "View Stage",
+        "SEND_QUERY": "Send Query"
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
       }
     },
     "SEARCH": {
+      "HEADER_INFO": "Define your cohort based on criteria that you can select using the search field. For targeted searches, you can restrict your search to certain terminologies (e.g. ICD10, LOINC, OPS) or KDS modules. You can use the cohort selection directly to determine the number of cases across Germany.",
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
       "LABEL": "enter code or display",

@@ -102,7 +102,23 @@
     }
   },
   "DATASELECTION": {
+    "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Kerndatensatz (KDS) Module deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und haben die Möglichkeit anzugeben welche Datenpunkte zwingen erforderlich sind für Ihre Forschungsfrage.",
     "DATASELECTION": "Datenselektion",
+    "SELECTION_BOX":{
+      "FIELDS_MISSING": "Selektieren Sie mindestens ein Feld für die Extraktion durch Verwendung der ... Taste in der oberen rechten Ecke dieser Box.",
+      "SELECTED_FIELDS": "Selektierte Felder",
+      "APPLIED_FILTER": "Angewandte Filter",
+      "REQUIRED": "erforderlich",
+      "OPTIONAL": "optional"
+    },
+    "FIELD_SELECTION":{
+      "HEADER": "Selektieren Sie zu extrahierende Felder für ",
+      "REQUIRED": "erforderlich"
+    },
+    "BUTTON": {
+      "DOWNLOAD": "Datenselektion herunterladen",
+      "ADD": "zur Datenselektion hinzufügen"
+    },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
       "CRITERIA": "Suchkriterien"
@@ -112,7 +128,6 @@
     },
     "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an info@forschen-fuer-gesundheit.de schicken.",
     "REQUIRED":"Variable muss an allen Standorten vorliegen"
-
   },
   "LANGUAGE": {
     "GERMAN": "Deutsch",
@@ -129,9 +144,9 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Startseite",
-    "QUERYBUILDER_EDITOR": "Machbarkeitsabfrage",
-    "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
-    "QUERYBUILDER_RESULT": "Ergebnis",
+    "QUERYBUILDER_EDITOR": "Kohorten Selektion",
+    "QUERYBUILDER_OVERVIEW": "Gespeichert Abfragen",
+    "QUERYBUILDER_RESULT": "Machbarkeitsabfrage",
     "DATASELECTION": "Datenselektion",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
@@ -152,13 +167,15 @@
       "BUTTON": {
         "ADD_TO_STAGE": "Zur Bühne hinzufügen",
         "BACK_TO_SEARCH":"Kriterien hinzufügen",
-        "VIEW_STAGE": "Bühne anzeigen"
+        "VIEW_STAGE": "Bühne anzeigen",
+        "SEND_QUERY": "Anfrage senden"
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Bühne hinzugefügt"
       }
     },
     "SEARCH": {
+      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden um die Fallzahl deutschlandweit zu ermitteln.",
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
       "LABEL": "Code oder Suchbegriff eingeben",

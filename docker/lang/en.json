@@ -114,10 +114,10 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Home",
-    "QUERYBUILDER_EDITOR": "Feasibility Query",
-    "QUERYBUILDER_OVERVIEW": "My Queries",
-    "QUERYBUILDER_RESULT": "Result",
-    "DATASELECTION_EDITOR": "Dataselection",
+    "QUERYBUILDER_EDITOR": "Cohort Selection",
+    "QUERYBUILDER_OVERVIEW": "Saved Queries",
+    "QUERYBUILDER_RESULT": "Feasibility",
+    "DATASELECTION_EDITOR": "Data Selection",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
   },
