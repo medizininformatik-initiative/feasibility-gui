@@ -31,7 +31,6 @@ export class EditCriterionModalComponent implements OnInit {
 
   ngOnInit() {
     this.criterion = this.data.criterion;
-    console.log(this.criterion);
     this.instantiateCriterion();
   }
 
@@ -120,7 +119,9 @@ export class EditCriterionModalComponent implements OnInit {
       criterion.getAttributeFilters().forEach((attributeFilter) => {
         if (attributeFilter.isReferenceSet()) {
           const selectedReferences = attributeFilter.getReference().getSelectedReferences();
-          const index = selectedReferences.findIndex((selectedReference) => selectedReference.getUniqueID() === this.criterion.getUniqueID());
+          const index = selectedReferences.findIndex(
+            (selectedReference) => selectedReference.getUniqueID() === this.criterion.getUniqueID()
+          );
           if (index !== -1) {
             const referenceCriterion = this.criterionBuilder
               .withParentId(criterion.getUniqueID())
