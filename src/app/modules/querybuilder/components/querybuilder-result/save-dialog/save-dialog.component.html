@@ -1,0 +1,28 @@
+<h2>{{ 'QUERYBUILDER.OVERVIEW.SAVE_HEADER' | translate }}</h2>
+<div class="save-query-box">
+  <div fxLayout="column" fxLayoutAlign="space-around center">
+    <mat-form-field class="input-field">
+      <mat-label>{{ 'QUERYBUILDER.OVERVIEW.TITLE_LABEL' | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="title" />
+    </mat-form-field>
+    <mat-form-field class="input-field" appearance="fill">
+      <mat-label>{{ 'QUERYBUILDER.OVERVIEW.COMMENT_LABEL' | translate }}</mat-label>
+      <textarea matInput [(ngModel)]="comment"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
+  <div fxFlex="fill"></div>
+
+  <num-button
+    [type]="'primary'"
+    [isDisabled]="title.length === 0"
+    (click)="doSave()"
+    class="button-save"
+  >
+    {{ 'BUTTON.SAVE' | translate }}
+  </num-button>
+  <num-button [type]="'primary'" (click)="doDiscard()">
+    {{ 'BUTTON.CANCEL' | translate }}
+  </num-button>
+</div>
