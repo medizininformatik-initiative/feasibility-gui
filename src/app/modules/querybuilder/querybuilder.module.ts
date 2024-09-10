@@ -1,7 +1,5 @@
 import { AllowedUnitsComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/quantity/allowed-units/allowed-units.component';
 import { AttributeFilterComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/attribute-filter/attribute-filter.component';
-import { BeforeFilterComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/edit-time-restriction/before-filter/before-filter.component';
-import { BetweenFilterComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/edit-time-restriction/between-filter/between-filter.component';
 import { BoolLogicSwitchComponent } from './components/querybuilder-editor/criteria/display-criteria-group/bool-logic-switch/bool-logic-switch.component';
 import { CommonModule } from '@angular/common';
 import { ConceptComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/concept/concept.component';
@@ -11,7 +9,6 @@ import { DisplayCriteriaGroupComponent } from './components/querybuilder-editor/
 import { DisplayGroupComponent } from './components/querybuilder-editor/criteria/display-criteria-group/display-group/display-group.component';
 import { EditCriterionModalComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/edit-criterion-modal.component';
 import { EditReferenceCriteriaModalComponent } from './components/querybuilder-editor/edit/edit-reference-criteria-modal/edit-reference-criteria-modal.component';
-import { EditTimeRestrictionComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/edit-time-restriction/edit-time-restriction.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -29,6 +26,7 @@ import { QuerybuilderRoutingModule } from './querybuilder-routing.module';
 import { ReferenceComponent } from './components/querybuilder-editor/edit/edit-reference-criteria-modal/reference/reference.component';
 import { ResultComponent } from './components/querybuilder-result/result/result.component';
 import { ResultDetailModalComponent } from './components/querybuilder-result/result-detail-modal/result-detail-modal.component';
+import { SaveQueryModalComponent } from './components/querybuilder-result/save-dialog/save-dialog.component';
 import { SearchComponent } from './components/querybuilder-editor/search/search.component';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -40,6 +38,10 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
+import { TimerestrictionTypeSelectorComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/time-restriction/timerestriction-type-selector/timerestriction-type-selector.component';
+import { BeforeFilterComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/time-restriction/before-filter/before-filter.component';
+import { BetweenFilterComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/time-restriction/between-filter/between-filter.component';
+import { EditTimeRestrictionComponent } from './components/querybuilder-editor/edit/edit-criterion-modal/time-restriction/edit-time-restriction.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -82,6 +84,8 @@ export const FORMATS_GERMAN = {
     QuantityComponent,
     ResultDetailModalComponent,
     EditTimeRestrictionComponent,
+    SaveQueryModalComponent,
+    TimerestrictionTypeSelectorComponent,
   ],
   imports: [
     CommonModule,
