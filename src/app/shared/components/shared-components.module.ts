@@ -20,6 +20,7 @@ import { TableComponent } from './table/table.component';
 import { ModalWindowComponent } from './modal-window/modal-window.component';
 import { ReferenceCriteriaBoxComponent } from './reference-criteria-box/reference-criteria-box.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -33,6 +34,7 @@ const SHARED_DECLARATIONS = [
   MenuComponent,
   ModalWindowComponent,
   SearchFilterComponent,
+  DatePickerComponent,
 ];
 
 @NgModule({
@@ -47,6 +49,7 @@ const SHARED_DECLARATIONS = [
     MenuComponent,
     ModalWindowComponent,
     ReferenceCriteriaBoxComponent,
+    DatePickerComponent,
   ],
   imports: [
     CommonModule,
