@@ -126,7 +126,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.queryProviderService
       .getFeasibilityQueryByID(this.tempFeasQueryID)
       .pipe(
-        switchMap((query) => this.resultService.getPollingUrl(query.get(this.tempFeasQueryID))),
+        switchMap((query) => this.resultService.getPollingUrl(query)),
         switchMap((url) => {
           this.queryUrl = url;
           return this.resultService

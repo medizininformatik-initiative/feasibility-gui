@@ -1,8 +1,8 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import {ObjectHelper} from "../../modules/querybuilder/controller/ObjectHelper";
+import { ObjectHelper } from '../../modules/querybuilder/controller/ObjectHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -52,7 +52,18 @@ export class FeasibilityQueryProviderService {
    *
    * @returns Observable<Query>
    */
-  public getFeasibilityQueryByID(id?: string): Observable<Map<string, FeasibilityQuery>> {
+  public getFeasibilityQueryByID(id: string): Observable<FeasibilityQuery> {
+    return this.feasibilityQueryMapSubject.pipe(
+      map((feasibilityQueryMap) => feasibilityQueryMap.get(id))
+    );
+  }
+
+  /**
+   * Retrieves the current feasibility query map as an observable.
+   *
+   * @returns Observable<Query>
+   */
+  public getFeasibilityQueryMap(): Observable<Map<string, FeasibilityQuery>> {
     return this.feasibilityQueryMapSubject.asObservable();
   }
 
@@ -102,9 +113,9 @@ export class FeasibilityQueryProviderService {
     return inexclusion;
   }
   public test(): void {
-    console.log('trigger')
+    console.log('trigger');
     const feasibilityQuery = ObjectHelper.clone(this.feasibilityQueryMap.get('1'));
-    console.log(feasibilityQuery)
+    console.log(feasibilityQuery);
     //this.setFeasibilityQueryByID(new FeasibilityQuery('1'), '1');
     this.loadInitialQuery();
     this.feasibilityQueryMap.set('1', feasibilityQuery);

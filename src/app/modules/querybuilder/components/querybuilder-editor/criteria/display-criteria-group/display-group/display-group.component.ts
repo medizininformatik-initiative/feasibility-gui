@@ -1,4 +1,12 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef, TemplateRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  TemplateRef,
+} from '@angular/core';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
@@ -12,7 +20,6 @@ import { map, Observable, Subscription } from 'rxjs';
 export class DisplayGroupComponent implements OnInit, OnDestroy {
   @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;
-
 
   @Input() groupType: string;
 
@@ -29,9 +36,11 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.criteriaSubscription = this.criterionProvider.getCriterionUIDMap().subscribe(() => {
-      this.initialize()
-      setTimeout(() => { this.rerender() }, 50)
-    })
+      this.initialize();
+      setTimeout(() => {
+        this.rerender();
+      }, 50);
+    });
   }
 
   ngOnDestroy() {
@@ -47,13 +56,13 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   initialize(): void {
     if (this.groupType === 'Inclusion') {
       this.criteriaArray$ = this.queryService
-        .getFeasibilityQueryByID()
-        .pipe(map((queryObject) => queryObject.get('1').getInclusionCriteria()));
+        .getFeasibilityQueryByID('1')
+        .pipe(map((feasibilityQuery) => feasibilityQuery.getInclusionCriteria()));
     }
     if (this.groupType === 'Exclusion') {
       this.criteriaArray$ = this.queryService
-        .getFeasibilityQueryByID()
-        .pipe(map((queryObject) => queryObject.get('1').getExclusionCriteria()));
+        .getFeasibilityQueryByID('1')
+        .pipe(map((feasibilityQuery) => feasibilityQuery.getExclusionCriteria()));
     }
   }
 
@@ -69,13 +78,13 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
     let tempcrit: string[][] = [];
 
     this.queryService
-      .getFeasibilityQueryByID()
-      .subscribe((query: Map<string, FeasibilityQuery>) => {
+      .getFeasibilityQueryByID('1')
+      .subscribe((query: FeasibilityQuery) => {
         if (this.groupType === 'Inclusion') {
-          tempcrit = this.splitInnerArray2(query.get('1').getInclusionCriteria(), i, j);
+          tempcrit = this.splitInnerArray2(query.getInclusionCriteria(), i, j);
         }
         if (this.groupType === 'Exclusion') {
-          tempcrit = this.splitInnerArray2(query.get('1').getExclusionCriteria(), i, j);
+          tempcrit = this.splitInnerArray2(query.getExclusionCriteria(), i, j);
         }
       })
       .unsubscribe();
@@ -91,13 +100,13 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
     let tempcrit: string[][] = [];
 
     this.queryService
-      .getFeasibilityQueryByID()
-      .subscribe((query: Map<string, FeasibilityQuery>) => {
+      .getFeasibilityQueryByID('1')
+      .subscribe((query: FeasibilityQuery) => {
         if (this.groupType === 'Inclusion') {
-          tempcrit = this.joinInnerArrays2(query.get('1').getInclusionCriteria(), i);
+          tempcrit = this.joinInnerArrays2(query.getInclusionCriteria(), i);
         }
         if (this.groupType === 'Exclusion') {
-          tempcrit = this.joinInnerArrays2(query.get('1').getExclusionCriteria(), i);
+          tempcrit = this.joinInnerArrays2(query.getExclusionCriteria(), i);
         }
       })
       .unsubscribe();

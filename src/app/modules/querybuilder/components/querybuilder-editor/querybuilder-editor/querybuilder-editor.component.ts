@@ -22,8 +22,8 @@ export class QuerybuilderEditorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.queryService.getFeasibilityQueryByID().subscribe((query) => {
-      this.query = query.get('1');
+    this.queryService.getFeasibilityQueryByID('1').subscribe((query) => {
+      this.query = query;
     });
     setTimeout(() => {
       if (window.history.state.jumpToStage) {

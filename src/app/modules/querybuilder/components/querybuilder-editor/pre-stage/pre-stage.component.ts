@@ -56,8 +56,8 @@ export class PreStageComponent implements OnInit, OnDestroy {
         this.hasListItems = false;
       }
     });
-    this.queryProviderService.getFeasibilityQueryByID().subscribe((query) => {
-      this.query = query.get('1');
+    this.queryProviderService.getFeasibilityQueryByID('1').subscribe((query) => {
+      this.query = query;
       this.hasQueryItems =
         this.query.getInclusionCriteria().length > 0 || this.query.getExclusionCriteria().length > 0;
     });

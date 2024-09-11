@@ -64,8 +64,8 @@ export class DropGroupDirective implements OnInit {
   }
 
   ngOnInit() {
-    this.queryProviderService.getFeasibilityQueryByID().subscribe((feasibilityQuery) => {
-      this.feasibilityQuery = feasibilityQuery.get('1');
+    this.queryProviderService.getFeasibilityQueryByID('1').subscribe((feasibilityQuery) => {
+      this.feasibilityQuery = feasibilityQuery;
     });
   }
   private addToInclusion(droppedCriterion: string, currentIndex: number): void {

@@ -38,14 +38,18 @@ export class CreateCRDTL {
       .getFeasibilityQueryByID('1')
       .pipe(
         map((feasibilityQuery) =>
-          this.uiQueryTranslator.translateToStructuredQuery(feasibilityQuery.get('1'))
+          this.uiQueryTranslator.translateToStructuredQuery(feasibilityQuery)
         )
       );
   }
 
   private getDataExtraction(): Observable<DataExtraction> {
-    return this.dataSelectionProvider.getDataSelectionMap().pipe(
-      map((dataSelection) => this.dataExtractionTranslator.translateToDataExtraction(dataSelection.get('1')))
-    );
+    return this.dataSelectionProvider
+      .getDataSelectionMap()
+      .pipe(
+        map((dataSelection) =>
+          this.dataExtractionTranslator.translateToDataExtraction(dataSelection.get('1'))
+        )
+      );
   }
 }

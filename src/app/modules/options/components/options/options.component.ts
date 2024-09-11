@@ -50,8 +50,8 @@ export class OptionsComponent implements OnInit {
   ngOnInit(): void {
     this.features = this.featureProviderService.getFeatures();
     this.stylesheet = this.features.stylesheet;
-    this.queryService.getFeasibilityQueryByID().subscribe((query) => {
-      this.query = query.get('1');
+    this.queryService.getFeasibilityQueryByID('1').subscribe((query) => {
+      this.query = query;
     });
     this.pollingTime = this.features.options.pollingtimeinseconds;
     this.pollingIntervall = this.features.options.pollingintervallinseconds;
