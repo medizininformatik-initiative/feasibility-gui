@@ -14,9 +14,9 @@ export class ResultProviderService {
   constructor() {}
 
   /**
-   * Retrieves the observable of the criterion UID map.
+   * Retrieves the observable of the Result UID map.
    *
-   * @returns Observable<Map<string, Criterion>>
+   * @returns Observable<Map<string, QueryResult>>
    */
   public getResultMap(): Observable<Map<string, QueryResult>> {
     return this.resultMapSubject.asObservable();
