@@ -1,24 +1,51 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service';
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 
 @Component({
   selector: 'num-quantity-range',
   templateUrl: './quantity-range.component.html',
   styleUrls: ['./quantity-range.component.scss'],
 })
-export class QuantityRangeComponent {
-  FilterTypes: typeof FilterTypes = FilterTypes;
-
+export class QuantityRangeComponent implements OnChanges {
   @Input()
   minValue: number;
+
   @Input()
   maxValue: number;
 
-  @Output()
-  quantityValues: EventEmitter<{ min: number; max: number }> = new EventEmitter();
+  @Input()
+  quantityFilterUnit: QuantityUnit;
 
-  emitValues() {
-    const values = { min: this.minValue, max: this.maxValue };
-    this.quantityValues.emit(values);
+  @Output()
+  quantityRangeInstance: EventEmitter<QuantityRangeFilter> = new EventEmitter();
+
+  constructor(private quantityFilterFactoryService: QuantityFilterFactoryService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.minValue || changes.maxValue || changes.quantityFilterUnit) {
+      this.emitQuantityRangeFilter();
+    }
+  }
+
+  public setMaxValue(value: number): void {
+    this.maxValue = value;
+    this.emitQuantityRangeFilter();
+  }
+
+  public setMinValue(value: number): void {
+    this.minValue = value;
+    this.emitQuantityRangeFilter();
+  }
+
+  private emitQuantityRangeFilter(): void {
+    if (this.minValue != null && this.maxValue != null && this.quantityFilterUnit) {
+      const quantityRangeFilter = this.quantityFilterFactoryService.createQuantityRangeFilter(
+        this.minValue,
+        this.maxValue
+      );
+      this.quantityRangeInstance.emit(quantityRangeFilter);
+    }
   }
 }

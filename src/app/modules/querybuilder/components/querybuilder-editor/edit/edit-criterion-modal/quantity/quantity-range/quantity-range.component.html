@@ -1,13 +1,13 @@
 <div fxLayout="row">
-  <mat-form-field appearance="outline" class="min-part">
-    <mat-label>{{ 'QUERYBUILDER.EDIT.MIN' | translate }}</mat-label>
-    <input matInput type="number" [(ngModel)]="minValue" (ngModelChange)="emitValues()" />
-  </mat-form-field>
+  <!--Min Value-->
+  <num-value-select [value]="maxValue" (selectedValue)="setMaxValue($event)">
+    <mat-label>{{ 'QUERYBUILDER.EDIT.MAX' | translate }}</mat-label>
+  </num-value-select>
 
   <span>{{ 'QUERYBUILDER.EDIT.AND' | translate }}</span>
 
-  <mat-form-field appearance="outline" class="max-part">
-    <mat-label>{{ 'QUERYBUILDER.EDIT.MAX' | translate }}</mat-label>
-    <input matInput type="number" [(ngModel)]="maxValue" (ngModelChange)="emitValues()" />
-  </mat-form-field>
+  <!--Max Value-->
+  <num-value-select [value]="minValue" (selectedValue)="setMinValue($event)">
+    <mat-label>{{ 'QUERYBUILDER.EDIT.MIN' | translate }}</mat-label>
+  </num-value-select>
 </div>

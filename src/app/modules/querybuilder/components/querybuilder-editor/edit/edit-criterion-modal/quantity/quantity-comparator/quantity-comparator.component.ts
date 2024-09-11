@@ -1,20 +1,57 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
+import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service';
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 
 @Component({
   selector: 'num-quantity-comparator',
   templateUrl: './quantity-comparator.component.html',
   styleUrls: ['./quantity-comparator.component.scss'],
 })
-export class QuantityComparatorComponent implements OnInit {
+export class QuantityComparatorComponent implements OnChanges, OnInit {
   @Input()
   value: number;
 
+  @Input()
+  quantityComparatorType: QuantityComparisonOption;
+
+  @Input()
+  quantityFilterUnit: QuantityUnit;
+
   @Output()
-  quantityValue = new EventEmitter<number>();
+  quantityComparatorInstance = new EventEmitter<QuantityComparatorFilter>();
+
+  constructor(private quantityFilterFactoryService: QuantityFilterFactoryService) {}
 
   ngOnInit() {}
 
-  public onValueChange(value: number) {
-    this.quantityValue.emit(value);
+  ngOnChanges(changes: SimpleChanges): void {
+    if ((changes.value && this.value != null) || changes.quantityFilterUnit) {
+      this.emitComparatorInstance();
+    }
+  }
+
+  public setValue(newValue: number): void {
+    this.value = newValue;
+    this.emitComparatorInstance();
+  }
+
+  private emitComparatorInstance(): void {
+    if (this.value != null) {
+      const quantityComparator = this.quantityFilterFactoryService.createQuantityComparatorFilter(
+        this.value,
+        this.quantityComparatorType
+      );
+      this.quantityComparatorInstance.emit(quantityComparator);
+    }
   }
 }

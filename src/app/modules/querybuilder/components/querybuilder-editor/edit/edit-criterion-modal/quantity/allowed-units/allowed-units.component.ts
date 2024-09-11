@@ -8,6 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { CloneQuantityUnit } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Quantity/CloneQuantityUnit';
 
 @Component({
   selector: 'num-allowed-units',
@@ -27,34 +28,25 @@ export class AllowedUnitsComponent implements OnInit, OnChanges {
   selectedUnitDisplay: string;
 
   ngOnInit() {
-    this.updateSelectedUnit();
+    //this.updateSelectedUnit();
+    console.log(this.selectedUnit);
+    this.selectedUnitDisplay = this.selectedUnit.getDisplay();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.allowedUnits || changes.selectedUnit) {
-      this.updateSelectedUnit();
-    }
-  }
-
-  private updateSelectedUnit() {
-    if (
-      this.selectedUnit &&
-      this.allowedUnits.some((unit) => unit.getCode() === this.selectedUnit.getCode())
-    ) {
-      this.selectedUnitDisplay = this.selectedUnit.getDisplay();
-    } else if (this.allowedUnits.length > 0) {
-      this.selectedUnit = this.allowedUnits[0];
-      this.selectedUnitDisplay = this.selectedUnit.getDisplay();
-    } else {
-      this.selectedUnitDisplay = null;
+      this.emitQuantityUnitInstance();
     }
   }
 
   onSelectionChange(selectedValue: string) {
     this.selectedUnit = this.allowedUnits.find((unit) => unit.getDisplay() === selectedValue);
     if (this.selectedUnit) {
-      this.selectedUnitDisplay = this.selectedUnit.getDisplay();
-      this.selectionChange.emit(this.selectedUnit);
+      this.emitQuantityUnitInstance();
     }
+  }
+
+  private emitQuantityUnitInstance() {
+    this.selectionChange.emit(CloneQuantityUnit.deepCopyQuantityUnit(this.selectedUnit));
   }
 }

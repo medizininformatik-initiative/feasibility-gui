@@ -5,37 +5,50 @@
         {{ 'QUERYBUILDER.EDIT.VALUE' | translate }}
       </mat-panel-title>
     </mat-expansion-panel-header>
+
     <div fxLayout="row" fxLayoutAlign="start center">
+      <!-- Comparator Select-->
       <num-quantity-comparision-select
         [existingOption]="quantityFilter.getComparator()"
         (selectedOption)="setSelectedQuantityFilterOption($event)"
-      ></num-quantity-comparision-select>
-      <ng-container *ngIf="selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN">
+      >
+      </num-quantity-comparision-select>
+
+      <!-- Quantity Range-->
+      <ng-container *ngIf="isBetweenFilter">
         <num-quantity-range
           [minValue]="quantityRangeFilter?.getMinValue()"
           [maxValue]="quantityRangeFilter?.getMaxValue()"
-          (quantityValues)="setSelectedQuantityValues($event)"
-        ></num-quantity-range>
+          [quantityFilterUnit]="selectedQuantityFilterUnit"
+          (quantityRangeInstance)="emitQuantityFilterInstance($event)"
+        >
+        </num-quantity-range>
       </ng-container>
-      <ng-container
-        *ngIf="
-          selectedQuantityFilterOption !== QuantityComparisonOption.BETWEEN &&
-          selectedQuantityFilterOption !== QuantityComparisonOption.NONE
-        "
-      >
+
+      <!-- Quantity Comparator-->
+      <ng-container *ngIf="isComparatorFilter">
         <num-quantity-comparator
           [value]="quantityComparatorFilter?.getValue()"
-          (quantityValue)="setSelectedQuantityValue($event)"
+          [quantityFilterUnit]="selectedQuantityFilterUnit"
+          [quantityComparatorType]="selectedQuantityFilterComparator"
+          (quantityComparatorInstance)="emitQuantityFilterInstance($event)"
         >
         </num-quantity-comparator>
       </ng-container>
-      <num-allowed-units
-        *ngIf="selectedQuantityFilterOption !== QuantityComparisonOption.NONE"
-        [selectedUnit]="quantityFilter.getSelectedUnit()"
-        [allowedUnits]="quantityFilter.getAllowedUnits()"
-        (selectionChange)="setSelectQuantityFilterUnit($event)"
-      >
-      </num-allowed-units>
+
+      <!-- Quantity Units-->
+      <ng-container *ngIf="showAllowedUnits">
+        <num-allowed-units
+          [selectedUnit]="
+            quantityFilter.getSelectedUnit()
+              ? quantityFilter.getSelectedUnit()
+              : quantityFilter.getAllowedUnits()[0]
+          "
+          [allowedUnits]="quantityFilter.getAllowedUnits()"
+          (selectionChange)="setSelectQuantityFilterUnit($event)"
+        >
+        </num-allowed-units>
+      </ng-container>
     </div>
   </mat-expansion-panel>
 </div>

@@ -3,9 +3,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
-import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
+import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service';
 
 @Component({
   selector: 'num-quantity',
@@ -21,123 +21,82 @@ export class QuantityComponent implements OnInit {
   @Output()
   quantityFilterChange = new EventEmitter<AbstractQuantityFilter>();
 
-  quantityComparatorFilter: QuantityComparatorFilter;
+  /**
+   * UI conditions
+   */
+  isBetweenFilter: boolean;
+  isComparatorFilter: boolean;
+  showAllowedUnits: boolean;
 
+  /**
+   * QuantityFilter Instances
+   */
+  quantityComparatorFilter: QuantityComparatorFilter;
   quantityRangeFilter: QuantityRangeFilter;
 
-  selectedQuantityFilterOption: QuantityComparisonOption;
+  selectedQuantityFilterComparator: QuantityComparisonOption;
 
   selectedQuantityFilterUnit: QuantityUnit;
 
-  selectedQuantityValue: number;
-
-  selectedQuantityMinValue: number;
-
-  selectedQuantityMaxValue: number;
-
   QuantityComparisonOption: typeof QuantityComparisonOption = QuantityComparisonOption;
 
+  constructor(private quantityFilterFactoryService: QuantityFilterFactoryService) {}
+
   ngOnInit() {
-    this.setQuantityFilterType();
-    if (!this.quantityFilter.getSelectedUnit()) {
-      this.setSelectQuantityFilterUnit(this.quantityFilter.getAllowedUnits()[0]);
-    } else {
-      this.setSelectQuantityFilterUnit(this.quantityFilter.getSelectedUnit());
-    }
-    this.selectedQuantityFilterOption = this.quantityFilter.getComparator();
-    this.buildQuantityFilter();
+    this.setupFactoryService();
+    this.initializaFilterType();
+    this.initializeUnit();
+    this.updateConditions();
+    this.selectedQuantityFilterComparator = this.quantityFilter.getComparator();
   }
 
-  private setQuantityFilterType() {
+  private setupFactoryService() {
+    this.quantityFilterFactoryService.setAllowedUnits(this.quantityFilter.getAllowedUnits());
+    this.quantityFilterFactoryService.setPrecision(this.quantityFilter.getPrecision());
+  }
+
+  private initializaFilterType() {
     const type: FilterTypes = this.quantityFilter.getType();
     if (type === FilterTypes.QUANTITY_COMPARATOR) {
       this.quantityComparatorFilter = this.quantityFilter as QuantityComparatorFilter;
-      this.selectedQuantityValue = this.quantityComparatorFilter.getValue();
     }
     if (type === FilterTypes.QUANTITY_RANGE) {
       this.quantityRangeFilter = this.quantityFilter as QuantityRangeFilter;
-      this.selectedQuantityMinValue = this.quantityRangeFilter.getMinValue();
-      this.selectedQuantityMaxValue = this.quantityRangeFilter.getMaxValue();
     }
   }
 
+  private initializeUnit() {
+    if (this.quantityFilter.getSelectedUnit()) {
+      this.setSelectQuantityFilterUnit(this.quantityFilter.getSelectedUnit());
+    } else {
+      this.setSelectQuantityFilterUnit(this.quantityFilter.getAllowedUnits()[0]);
+    }
+  }
+
+  private updateConditions() {
+    this.isBetweenFilter =
+      this.selectedQuantityFilterComparator === QuantityComparisonOption.BETWEEN;
+    this.isComparatorFilter =
+      this.selectedQuantityFilterComparator !== QuantityComparisonOption.BETWEEN &&
+      this.selectedQuantityFilterComparator !== QuantityComparisonOption.NONE;
+    this.showAllowedUnits = this.selectedQuantityFilterComparator !== QuantityComparisonOption.NONE;
+  }
+
   public setSelectedQuantityFilterOption(option: QuantityComparisonOption): void {
-    this.selectedQuantityFilterOption =
+    this.selectedQuantityFilterComparator =
       QuantityComparisonOption[option as keyof typeof QuantityComparisonOption];
     if (option !== QuantityComparisonOption.NONE) {
-      this.setQuantityFilterType();
-      this.buildQuantityFilter();
-    } else {
-      this.quantityFilterChange.emit(new QuantityNotSet());
+      const emptyQuantityFilter = this.quantityFilterFactoryService.createEmptyQuantityFilter();
+      this.quantityFilterChange.emit(emptyQuantityFilter);
     }
   }
 
   public setSelectQuantityFilterUnit(selectedUnit: QuantityUnit) {
-    this.selectedQuantityFilterUnit = new QuantityUnit(
-      selectedUnit.getCode(),
-      selectedUnit.getDisplay(),
-      selectedUnit.getSystem()
-    );
-    this.buildQuantityFilter();
+    this.selectedQuantityFilterUnit = selectedUnit;
+    this.quantityFilterFactoryService.setQuantityUnit(selectedUnit);
   }
 
-  public setSelectedQuantityValue(value: number) {
-    this.selectedQuantityValue = value;
-    this.buildQuantityFilter();
-  }
-
-  public setSelectedQuantityValues(values: { min: number; max: number }) {
-    this.selectedQuantityMinValue = values.min;
-    this.selectedQuantityMaxValue = values.max;
-    this.buildQuantityFilter();
-  }
-
-  private buildQuantityFilter(): void {
-    if (
-      this.selectedQuantityFilterOption !== QuantityComparisonOption.BETWEEN &&
-      this.selectedQuantityFilterOption !== QuantityComparisonOption.NONE &&
-      this.isComparatorFilterValueSet()
-    ) {
-      this.emitQuantityComparatorFilter();
-    } else if (
-      this.selectedQuantityFilterOption === QuantityComparisonOption.BETWEEN &&
-      this.isRangeFilterValuesSet()
-    ) {
-      this.emitQuantityRangeFilter();
-    }
-  }
-
-  private isComparatorFilterValueSet(): boolean {
-    return this.selectedQuantityFilterUnit != null && this.selectedQuantityValue != null;
-  }
-
-  private isRangeFilterValuesSet(): boolean {
-    return (
-      this.selectedQuantityFilterUnit != null &&
-      this.selectedQuantityMinValue != null &&
-      this.selectedQuantityMaxValue != null
-    );
-  }
-
-  private emitQuantityComparatorFilter(): void {
-    const quantityFilter = new QuantityComparatorFilter(
-      this.selectedQuantityFilterUnit,
-      this.quantityFilter.getAllowedUnits(),
-      this.quantityFilter.getPrecision(),
-      this.selectedQuantityFilterOption,
-      this.selectedQuantityValue
-    );
-    this.quantityFilterChange.emit(quantityFilter);
-  }
-
-  private emitQuantityRangeFilter(): void {
-    const quantityFilter = new QuantityRangeFilter(
-      this.selectedQuantityFilterUnit,
-      this.quantityFilter.getAllowedUnits(),
-      this.quantityFilter.getPrecision(),
-      this.selectedQuantityMinValue,
-      this.selectedQuantityMaxValue
-    );
+  public emitQuantityFilterInstance(quantityFilter: AbstractQuantityFilter) {
     this.quantityFilterChange.emit(quantityFilter);
   }
 }
