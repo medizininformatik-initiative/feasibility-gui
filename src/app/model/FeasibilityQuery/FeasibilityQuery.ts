@@ -122,4 +122,16 @@ export class FeasibilityQuery {
   setExclusionCriteria(exclusionCriteria: string[][]): void {
     this.exclusionCriteria = exclusionCriteria;
   }
+
+  public getResultIds(): number[] {
+    return this.resultIDs;
+  }
+
+  public setResultIds(resultIds: number[]): void {
+    this.resultIDs = resultIds;
+  }
+
+  public addResultId(resultId: number): void {
+    this.resultIDs.push(resultId);
+  }
 }
