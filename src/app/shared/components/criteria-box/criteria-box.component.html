@@ -1,13 +1,13 @@
 <div
   cdkDrag
-  [cdkDragData]="criterion.getUniqueID()"
+  [cdkDragData]="criterion.getId()"
   fxLayout="column"
   fxLayoutAlign="start start"
   class="container"
 >
   <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="title-section">
     {{ criterion.getTermCodes()[0].getDisplay() }}
-    <num-menu [menuItems]="menuItems" [id]="criterion.getUniqueID()"></num-menu>
+    <num-menu [menuItems]="menuItems" [id]="criterion.getId()"></num-menu>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
     <div class="info-item">
