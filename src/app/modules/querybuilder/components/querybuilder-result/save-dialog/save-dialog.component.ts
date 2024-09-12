@@ -7,6 +7,11 @@ import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.s
 import { Subscription, switchMap, of } from 'rxjs';
 import { UIQuery2StructuredQueryService } from 'src/app/service/Translator/StructureQuery/UIQuery2StructuredQuery.service';
 import { ActiveFeasibilityQueryService } from '../../../../../service/Provider/ActiveFeasibilityQuery.service';
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
+import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
+import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
 //import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 
 @Component({
@@ -18,15 +23,6 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
   private subscriptionResult: Subscription;
   hasQuerySend: boolean | string;
 
-  constructor(
-    public feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    public backendService: BackendService,
-    private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
-    private sqTranslatorService: UIQuery2StructuredQueryService,
-    private resultProvider: ResultProviderService,
-    private activeFeasibilityQuery: ActiveFeasibilityQueryService
-  ) {}
-
   query: FeasibilityQuery;
   title = '';
   comment = '';
@@ -36,35 +32,52 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
   saveButtonDisabled = true;
   downloadQuery = false;
 
+  constructor(
+    public feasibilityQueryProviderService: FeasibilityQueryProviderService,
+    public backendService: BackendService,
+    private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
+    private resultProvider: ResultProviderService,
+    private activeFeasibilityQuery: ActiveFeasibilityQueryService,
+    private activeDataSelectionService: ActiveDataSelectionService,
+    private dataSelectionProvider: DataSelectionProviderService,
+    private createCRDTLService: CreateCRDTL
+  ) {}
+
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscriptionResult?.unsubscribe();
   }
 
-  doSave(): void {
-    let translatedQuery = '';
+  doSaveFeasibilityQuery(): void {
     this.activeFeasibilityQuery
       .getActiveFeasibilityQueryIDObservable()
       .pipe(
-      switchMap((id) => this.feasibilityQueryProviderService.getFeasibilityQueryByID(id)),
-      switchMap((feasibilityQuery: FeasibilityQuery) => {
-        console.log(feasibilityQuery)
-        translatedQuery =  JSON.stringify(this.sqTranslatorService.translateToStructuredQuery(feasibilityQuery));
-        console.log(translatedQuery)
-        console.log(feasibilityQuery.getResultIds())
-        console.log(feasibilityQuery.getResultIds()[feasibilityQuery.getResultIds().length - 1])
-        console.log(this.resultProvider.getResultByID(feasibilityQuery.getResultIds()[feasibilityQuery.getResultIds().length - 1]))
-        return of(this.resultProvider.getResultByID(feasibilityQuery.getResultIds()[feasibilityQuery.getResultIds().length - 1]));
-
-      })).subscribe((result) => {
-
-console.log(result)
-        // feasibilityQuery.
-        // this.resultProvider.getResultByID()
-        this.backendService.saveQuery(result, 'ee', 'sssws');
+        switchMap((id) => this.feasibilityQueryProviderService.getFeasibilityQueryByID(id)),
+        switchMap((feasibilityQuery: FeasibilityQuery) => {
+          const resultIds: string[] = feasibilityQuery.getResultIds();
+          return of(this.resultProvider.getResultByID(resultIds[resultIds.length - 1]));
+        })
+      )
+      .subscribe((result) => {
+        this.backendService
+          .saveQuery(result, this.title, this.comment)
+          .subscribe((test) => console.log(test));
+        this.doDiscard();
       });
   }
+
+  public doSaveDataSelection() {
+    this.createCRDTLService
+      .createCRDTL()
+      .subscribe((crdtl: CRTDL) => {
+        /**
+         * Send the crdtl to the backend
+         */
+      })
+      .unsubscribe();
+  }
+
   doDiscard(): void {
     this.dialogRef.close();
   }
