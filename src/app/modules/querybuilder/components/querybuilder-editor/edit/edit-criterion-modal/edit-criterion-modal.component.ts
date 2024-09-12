@@ -96,7 +96,7 @@ export class EditCriterionModalComponent implements OnInit {
       criterionHash,
       display,
       isInvalid: true,
-      uniqueID: criterion.getUniqueID(),
+      uniqueID: criterion.getId(),
       termCodes,
     };
   }
@@ -120,11 +120,11 @@ export class EditCriterionModalComponent implements OnInit {
         if (attributeFilter.isReferenceSet()) {
           const selectedReferences = attributeFilter.getReference().getSelectedReferences();
           const index = selectedReferences.findIndex(
-            (selectedReference) => selectedReference.getUniqueID() === this.criterion.getUniqueID()
+            (selectedReference) => selectedReference.getId() === this.criterion.getId()
           );
           if (index !== -1) {
             const referenceCriterion = this.criterionBuilder
-              .withParentId(criterion.getUniqueID())
+              .withParentId(criterion.getId())
               .buildReferenceCriterion();
             selectedReferences[index] = referenceCriterion;
           }

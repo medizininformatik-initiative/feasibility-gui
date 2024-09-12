@@ -27,8 +27,8 @@ export class MenuServiceCriterionFunctions {
     const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(
       this.criterionProviderService.getCriterionByUID(uid)
     );
-    this.criterionProviderService.setCriterionByUID(clonedCriterion);
-    this.stageProviderService.addCriterionToStage(clonedCriterion.getUniqueID());
+    this.criterionProviderService.setCriterionByUID(clonedCriterion, clonedCriterion.getId());
+    this.stageProviderService.addCriterionToStage(clonedCriterion.getId());
   }
 
   editLinkedCriteria(criterionUuid: string) {

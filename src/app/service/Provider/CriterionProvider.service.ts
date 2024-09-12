@@ -38,8 +38,8 @@ export class CriterionProviderService {
    *
    * @param criterion The criterion to set
    */
-  public setCriterionByUID(criterion: Criterion): void {
-    this.criterionUIDMap.set(criterion.getUniqueID(), criterion);
+  public setCriterionByUID(criterion: Criterion, id: string): void {
+    this.criterionUIDMap.set(id, criterion);
     this.criterionUIDMapSubject.next(new Map(this.criterionUIDMap));
   }
 

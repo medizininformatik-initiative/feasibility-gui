@@ -147,8 +147,8 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion: Criterion = criterionBuilder.buildCriterion();
-    this.criterionProviderService.setCriterionByUID(criterion);
-    this.stageProviderService.addCriterionToStage(criterion.getUniqueID());
+    this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
+    this.stageProviderService.addCriterionToStage(criterion.getId());
   }
 
   private createMandatoryFields(criteriaProfileData: CriteriaProfileData): {

@@ -6,7 +6,7 @@ import { EditReferenceCriteriaModalComponent } from 'src/app/modules/querybuilde
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
-import {FeasibilityQueryProviderService} from "../Provider/FeasibilityQueryProvider.service";
+import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -32,8 +32,10 @@ export class CriterionModalService implements OnDestroy {
       .afterClosed()
       .subscribe((updatedCriterion: AbstractCriterion) => {
         if (updatedCriterion) {
-          this.criterionProviderService.setCriterionByUID(updatedCriterion);
-          //this.FeasibilityQueryProvider.test()
+          this.criterionProviderService.setCriterionByUID(
+            updatedCriterion,
+            updatedCriterion.getId()
+          );
         }
       });
   }
@@ -44,7 +46,7 @@ export class CriterionModalService implements OnDestroy {
     });
     this.dialogSubscription = dialogRef.afterClosed().subscribe((updatedCriterion: Criterion) => {
       if (updatedCriterion) {
-        this.criterionProviderService.setCriterionByUID(updatedCriterion);
+        this.criterionProviderService.setCriterionByUID(updatedCriterion, updatedCriterion.getId());
       }
     });
   }

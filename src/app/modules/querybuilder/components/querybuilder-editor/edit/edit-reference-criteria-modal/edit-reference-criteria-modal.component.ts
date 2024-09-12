@@ -42,7 +42,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
 
   public saveReferenceCriterion() {
     this.createReferenceService
-      .fetchReferenceCriterions(this.ids, this.criterion.getUniqueID())
+      .fetchReferenceCriterions(this.ids, this.criterion.getId())
       .subscribe((referenceCriterions: ReferenceCriterion[]) => {
         const selectedReferenceFilter = this.parentAttributeFilter
           .getReference()
@@ -81,7 +81,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
       criterionHash,
       display,
       isInvalid: true,
-      uniqueID: criterion.getUniqueID(),
+      uniqueID: criterion.getId(),
       termCodes,
     };
   }

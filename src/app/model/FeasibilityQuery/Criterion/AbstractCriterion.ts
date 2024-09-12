@@ -17,7 +17,7 @@ export abstract class AbstractCriterion {
   private position?: CritGroupPosition;
   private termCodes?: Array<TerminologyCode> = [];
   private timeRestriction?: AbstractTimeRestriction;
-  private uniqueID?: string;
+  private id: string;
   private valueFilters?: Array<ValueFilter> = [];
 
   /**
@@ -30,7 +30,7 @@ export abstract class AbstractCriterion {
    * @param display - Display string for the criterion.
    * @param isInvalid - Boolean flag indicating if the criterion is invalid.
    * @param position - CritGroupPosition object representing the position.
-   * @param uniqueID - Unique identifier for the criterion.
+   * @param id - Unique identifier for the criterion.
    * @param termCodes - Array of TerminologyCode objects.
    * @param timeRestriction - AbstractTimeRestriction object.
    * @param valueFilters - Array of ValueFilter objects.
@@ -45,7 +45,7 @@ export abstract class AbstractCriterion {
     position?: CritGroupPosition,
     termCodes?: Array<TerminologyCode>,
     timeRestriction?: AbstractTimeRestriction,
-    uniqueID?: string,
+    id?: string,
     valueFilters?: Array<ValueFilter>
   ) {
     this.attributeFilters = attributeFilters;
@@ -57,7 +57,7 @@ export abstract class AbstractCriterion {
     this.position = position;
     this.termCodes = termCodes;
     this.timeRestriction = timeRestriction;
-    this.uniqueID = uniqueID;
+    this.id = id;
     this.valueFilters = valueFilters;
   }
 
@@ -236,17 +236,17 @@ export abstract class AbstractCriterion {
    *
    * @returns Unique identifier for the criterion.
    */
-  getUniqueID(): string | undefined {
-    return this.uniqueID;
+  getId(): string {
+    return this.id;
   }
 
   /**
    * Sets the unique ID.
    *
-   * @param uniqueID - Unique identifier for the criterion.
+   * @param id - Unique identifier for the criterion.
    */
-  setUniqueID(uniqueID: string): void {
-    this.uniqueID = uniqueID;
+  setId(id: string): void {
+    this.id = id;
   }
 
   /**
