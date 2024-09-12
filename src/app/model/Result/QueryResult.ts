@@ -1,9 +1,12 @@
 import { QueryResultLine } from './QueryResultLine';
 
 export class QueryResult {
-  private feasibilityQueryID: string;
+  /**
+   * A unique identifier for the QueryResult.
+   */
+  private id: string;
+  private feasibilityQueryId: string;
   private totalNumberOfPatients: number;
-  private queryId: string;
   private resultLines: QueryResultLine[] = [];
   private issues?: [
     {
@@ -15,9 +18,9 @@ export class QueryResult {
   ];
 
   constructor(
-    feasibilityQueryID: string,
+    feasibilityQueryId: string,
     totalNumberOfPatients: number,
-    queryId: string,
+    id: string,
     resultLines: QueryResultLine[] = [],
     issues?: [
       {
@@ -28,19 +31,19 @@ export class QueryResult {
       }
     ]
   ) {
-    this.feasibilityQueryID = feasibilityQueryID;
+    this.feasibilityQueryId = feasibilityQueryId;
     this.totalNumberOfPatients = totalNumberOfPatients;
-    this.queryId = queryId;
+    this.id = id;
     this.resultLines = resultLines;
     this.issues = issues;
   }
 
   // Getter and Setter for totalNumberOfPatients
-  getFeasibilityQueryID(): string {
-    return this.feasibilityQueryID;
+  getFeasibilityQueryId(): string {
+    return this.feasibilityQueryId;
   }
-  setFeasibilityQueryID(id: string): void {
-    this.feasibilityQueryID = id;
+  setFeasibilityQueryId(id: string): void {
+    this.feasibilityQueryId = id;
   }
   getTotalNumberOfPatients(): number {
     return this.totalNumberOfPatients;
@@ -52,11 +55,11 @@ export class QueryResult {
 
   // Getter and Setter for queryId
   getQueryId(): string {
-    return this.queryId;
+    return this.id;
   }
 
   setQueryId(value: string): void {
-    this.queryId = value;
+    this.id = value;
   }
 
   // Getter and Setter for resultLines

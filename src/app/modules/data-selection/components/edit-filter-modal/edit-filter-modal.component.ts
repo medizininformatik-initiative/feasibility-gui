@@ -1,15 +1,14 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { Component, Inject, OnInit } from '@angular/core';
 import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
+import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { take } from 'rxjs';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;
@@ -37,7 +36,8 @@ export class EditFilterModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
     private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
-    private service: DataSelectionProviderService
+    private service: DataSelectionProviderService,
+    private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
   public ngOnInit(): void {
@@ -117,6 +117,7 @@ export class EditFilterModalComponent implements OnInit {
   }
 
   private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
-    this.service.setElementInDataSelectionMap('1', newProfile);
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionID();
+    this.service.setProfileInDataSelection(dataSelectionId, newProfile);
   }
 }

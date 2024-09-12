@@ -23,22 +23,22 @@ export class ResultProviderService {
   }
 
   /**
-   * Retrieves a criterion by UID from the map.
+   * Retrieves a QueryResult by UID from the map.
    *
-   * @param id The unique ID of the criterion
-   * @returns Criterion | undefined
+   * @param id The unique ID of the QueryResult
+   * @returns QueryResult
    */
-  public getResultByID(id: string): QueryResult | undefined {
+  public getResultByID(id: string): QueryResult {
     return this.resultMap.get(id);
   }
 
   /**
-   * Sets a criterion by its unique ID and updates the map.
+   * Sets a QueryResult by its unique ID and updates the map.
    *
-   * @param criterion The criterion to set
+   * @param QueryResult The criterion to set
    */
-  public setResultByID(result: QueryResult): void {
-    this.resultMap.set(result.getQueryId(), result);
+  public setResultByID(result: QueryResult, id: string): void {
+    this.resultMap.set(id, result);
     this.resultMapSubject.next(new Map(this.resultMap));
   }
 

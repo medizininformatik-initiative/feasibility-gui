@@ -56,7 +56,7 @@ export class FeasibilityQueryResultService {
           map((result) => {
             if (!result.issues) {
               const queryResult: QueryResult = this.buildQueryResultInstance(result);
-              this.resultProvider.setResultByID(queryResult);
+              this.resultProvider.setResultByID(queryResult, queryResult.getQueryId());
               return queryResult;
             } else {
               this.snackbar.displayErrorMessage(this.snackbar.errorCodes[result.issues[0].code]);
@@ -70,7 +70,7 @@ export class FeasibilityQueryResultService {
     return new QueryResult(
       this.feasibilityQueryID,
       result.totalNumberOfPatients,
-      result.queryId,
+      result.queryId.toString(),
       result.resultLines.map((line) => new QueryResultLine(line?.numberOfPatients, line?.siteName)),
       result.issues
     );
