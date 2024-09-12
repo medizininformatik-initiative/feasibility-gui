@@ -7,6 +7,7 @@ import { UIQuery2StructuredQueryService } from 'src/app/service/Translator/Struc
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FileSaverService } from 'ngx-filesaver';
 import { BackendService } from '../../../service/backend.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 @Component({
   selector: 'num-result',
   templateUrl: './result.component.html',
@@ -45,17 +46,27 @@ export class ResultComponent implements OnInit {
     this.feasibilityQueryProviderService
       .getFeasibilityQueryByID('1')
       .subscribe((feasibilityQuery) => {
-        const filename =
-          'CCDL_' +
-          new Date().toLocaleDateString('de-DE') +
-          '_' +
-          new Date().toLocaleTimeString('de-DE');
-        const queryString = JSON.stringify(
-          this.sqTranslatorService.translateToStructuredQuery(feasibilityQuery)
+        this.fileSaverService.save(
+          this.createFileData(feasibilityQuery),
+          this.createFilename() + '.json'
         );
-        const fileData = new Blob([queryString], { type: 'text/plain;charset=utf-8' });
-        this.fileSaverService.save(fileData, filename + '.json');
       });
+  }
+
+  private createFilename(): string {
+    const filename =
+      'CCDL_' +
+      new Date().toLocaleDateString('de-DE') +
+      '_' +
+      new Date().toLocaleTimeString('de-DE');
+    return filename;
+  }
+
+  private createFileData(feasibilityQuery: FeasibilityQuery) {
+    const queryString = JSON.stringify(
+      this.sqTranslatorService.translateToStructuredQuery(feasibilityQuery)
+    );
+    return new Blob([queryString], { type: 'text/plain;charset=utf-8' });
   }
 
   public isQuerySlotAvailable(): void {
