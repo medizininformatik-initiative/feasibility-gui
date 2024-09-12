@@ -40,12 +40,18 @@ export class FeasibilityQuery {
    * @param display - The display name of the query.
    * @param consent - The consent status of the query.
    */
-  constructor(id: string, display: string = 'Ausgewählte Merkmale', consent: boolean = false) {
+  constructor(
+    id: string,
+    display: string = 'Ausgewählte Merkmale',
+    consent: boolean = false,
+    resultIDs: string[] = []
+  ) {
     this.id = id;
     this.consent = consent;
     this.display = display;
     this.inclusionCriteria = [];
     this.exclusionCriteria = [];
+    this.resultIDs = resultIDs;
   }
 
   getID(): string {
