@@ -66,6 +66,18 @@ export const routes: Routes = [
       ).then((m) => m.DataSelectionModule),
   },
   {
+    path: 'saved-queries',
+    canLoad: [RoleGuard],
+    data: {
+      navId: 'saved-queries',
+      roles: ['main'],
+    },
+    loadChildren: () =>
+      import(
+        /* webpackChunkName: "SavedQueries.Module" */ './modules/saved-queries/saved-queries.module'
+      ).then((m) => m.SavedQueriesModule),
+  },
+  {
     path: 'data-protection',
     component: DataProtectionComponent,
   },

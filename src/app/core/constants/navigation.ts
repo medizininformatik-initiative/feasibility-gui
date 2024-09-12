@@ -26,7 +26,7 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.DATASELECTION',
   },
   {
-    routeTo: 'querybuilder/overview',
+    routeTo: 'saved-queries',
     roles: ['main'],
     icon: 'bars',
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
