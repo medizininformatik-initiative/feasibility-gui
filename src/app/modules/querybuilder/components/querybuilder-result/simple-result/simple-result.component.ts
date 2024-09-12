@@ -10,6 +10,7 @@ import {
   ResultDetailModalComponent,
   ResultDetailsModalComponentData,
 } from '../result-detail-modal/result-detail-modal.component';
+import {FeasibilityQuery} from "../../../../../model/FeasibilityQuery/FeasibilityQuery";
 
 @Component({
   selector: 'num-simple-result',
@@ -50,6 +51,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   loadedResult = false;
   withDetails = false;
   queryUrl: string;
+  feasibilityQuery: FeasibilityQuery;
   constructor(
     public dialog: MatDialog,
     public backend: BackendService,
@@ -126,11 +128,14 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
       .getActiveFeasibilityQuery()
       .pipe(
         switchMap((query) => {
+          this.feasibilityQuery = query;
           this.resultService.setFeasibilityQueryID(query.getID());
           return this.resultService.getPollingUrl(query)
           }),
         switchMap((url) => {
           this.queryUrl = url;
+          const resultID = url.substring(url.lastIndexOf('/') + 1);
+          this.feasibilityQuery.addResultId(resultID);
           return this.resultService
             .getResultPolling(url, false)
             .pipe(endWith(null));

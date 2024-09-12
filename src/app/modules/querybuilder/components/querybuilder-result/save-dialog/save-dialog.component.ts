@@ -48,7 +48,12 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
       .pipe(
       switchMap((id) => this.feasibilityQueryProviderService.getFeasibilityQueryByID(id)),
       switchMap((feasibilityQuery: FeasibilityQuery) => {
+        console.log(feasibilityQuery)
         translatedQuery =  JSON.stringify(this.sqTranslatorService.translateToStructuredQuery(feasibilityQuery));
+        console.log(translatedQuery)
+        console.log(feasibilityQuery.getResultIds())
+        console.log(feasibilityQuery.getResultIds()[feasibilityQuery.getResultIds().length - 1])
+        console.log(this.resultProvider.getResultByID(feasibilityQuery.getResultIds()[feasibilityQuery.getResultIds().length - 1]))
         return of(this.resultProvider.getResultByID(feasibilityQuery.getResultIds()[feasibilityQuery.getResultIds().length - 1]));
 
       })).subscribe((result) => {
