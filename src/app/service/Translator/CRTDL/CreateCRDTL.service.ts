@@ -35,7 +35,7 @@ export class CreateCRDTL {
 
   private getStructuredQuery(): Observable<StructuredQuery> {
     return this.feasibilityQueryProvider
-      .getFeasibilityQueryByID('1')
+      .getActiveFeasibilityQuery()
       .pipe(
         map((feasibilityQuery) =>
           this.uiQueryTranslator.translateToStructuredQuery(feasibilityQuery)

@@ -10,32 +10,37 @@ export class ActiveFeasibilityQueryService {
    * BehaviorSubject that holds the state of the active FeasibilityQuery.
    * Initialized with `null` as the default value.
    */
-  private activeFeasibilityQuerySubject: BehaviorSubject<FeasibilityQuery | null> =
-    new BehaviorSubject<FeasibilityQuery | null>(null);
+  private activeFeasibilityQueryIDSubject: BehaviorSubject<string | null> =
+    new BehaviorSubject<string | null>(null);
 
   /**
-   * Observable of the active FeasibilityQuery.
-   * Use this to subscribe and get updates when the active FeasibilityQuery changes.
+   * Observable of the active FeasibilityQueryID.
+   * Use this to subscribe and get updates when the active FeasibilityQueryID changes.
    */
-  public activeFeasibilityQuery$ = this.activeFeasibilityQuerySubject.asObservable();
+  public activeFeasibilityIDQuery$ = this.activeFeasibilityQueryIDSubject.asObservable();
+  private activeFeasibilityQueryID: string;
 
   constructor() {}
 
   /**
-   * Getter method to retrieve the current value of the active FeasibilityQuery.
+   * Getter method to retrieve the current value of the active FeasibilityQueryID.
    *
-   * @returns The current active FeasibilityQuery or null if not set.
+   * @returns The current active FeasibilityQueryID or null if not set.
    */
-  public getActiveFeasibilityQuery(): Observable<FeasibilityQuery> | null {
-    return this.activeFeasibilityQuerySubject.asObservable();
+  public getActiveFeasibilityQueryIDObservable(): Observable<string> | null {
+    return this.activeFeasibilityQueryIDSubject.asObservable();
   }
 
+  public getActiveFeasibilityQueryID(): string | null {
+    return this.activeFeasibilityQueryID;
+  }
   /**
-   * Setter method to update the active FeasibilityQuery.
+   * Setter method to update the active FeasibilityQueryID.
    *
-   * @param query - The FeasibilityQuery instance to set as active.
+   * @param queryID - The FeasibilityQueryID instance to set as active.
    */
-  public setActiveFeasibilityQuery(query: FeasibilityQuery): void {
-    this.activeFeasibilityQuerySubject.next(query);
+  public setActiveFeasibilityQueryID(queryID: string): void {
+    this.activeFeasibilityQueryID = queryID;
+    this.activeFeasibilityQueryIDSubject.next(queryID);
   }
 }

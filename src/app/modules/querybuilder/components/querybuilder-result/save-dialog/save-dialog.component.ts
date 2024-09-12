@@ -4,8 +4,9 @@ import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuer
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap, of } from 'rxjs';
 import { UIQuery2StructuredQueryService } from 'src/app/service/Translator/StructureQuery/UIQuery2StructuredQuery.service';
+import {ActiveFeasibilityQueryService} from "../../../../../service/Provider/ActiveFeasibilityQuery.service";
 //import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
     public backendService: BackendService,
     private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
     private sqTranslatorService: UIQuery2StructuredQueryService,
-    private resultProvider: ResultProviderService
+    private resultProvider: ResultProviderService,
+    private activeFeasibilityQuery: ActiveFeasibilityQueryService
   ) {}
 
   query: FeasibilityQuery;
@@ -41,18 +43,24 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
   }
 
   doSave(): void {
-    this.feasibilityQueryProviderService
-      .getFeasibilityQueryByID('1')
-      .subscribe((feasibilityQuery) => {
-        const queryString = JSON.stringify(
-          this.sqTranslatorService.translateToStructuredQuery(feasibilityQuery)
-        );
+    let translatedQuery: string;
+    this.activeFeasibilityQuery.getActiveFeasibilityQueryIDObservable()
+      .pipe(
+      switchMap((id) => this.feasibilityQueryProviderService.getFeasibilityQueryByID(id)),
+      switchMap((feasibilityQuery: FeasibilityQuery) => {
+        translatedQuery =  JSON.stringify(this.sqTranslatorService.translateToStructuredQuery(feasibilityQuery));
+        return of(this.resultProvider.getResultByID(feasibilityQuery.getResultIds()[feasibilityQuery.getResultIds().length - 1]));
+
+      })).subscribe((result) => {
+
+console.log(result)
         // feasibilityQuery.
         // this.resultProvider.getResultByID()
         // this.backendService.saveQuery()
       });
-  }
 
+
+  }
   doDiscard(): void {
     this.dialogRef.close();
   }

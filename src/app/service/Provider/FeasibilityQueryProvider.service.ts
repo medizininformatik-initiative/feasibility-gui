@@ -1,8 +1,9 @@
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { ObjectHelper } from '../../modules/querybuilder/controller/ObjectHelper';
+import {ActiveFeasibilityQueryService} from "./ActiveFeasibilityQuery.service";
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class FeasibilityQueryProviderService {
     new BehaviorSubject(new Map());
 
   private feasibilityQueryIDToResultIDMap: Map<string, string> = new Map();
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private activeFeasibilityQuery: ActiveFeasibilityQueryService) {
     this.loadInitialQuery();
   }
 
@@ -24,15 +25,12 @@ export class FeasibilityQueryProviderService {
    */
   private loadInitialQuery(): void {
     const storedQuery = this.storage.get(this.STORAGE_QUERY_KEY);
-    const uid = '1'; //uuidv4();
+    const uid = uuidv4();
     if (storedQuery && storedQuery.groups) {
       this.storage.remove(this.STORAGE_QUERY_KEY);
-      this.setFeasibilityQueryByID(new FeasibilityQuery(uid), uid);
-    } else {
-      this.feasibilityQueryMap = new Map<string, FeasibilityQuery>();
-      this.feasibilityQueryMap.set(uid, new FeasibilityQuery(uid));
-      this.feasibilityQueryMapSubject = new BehaviorSubject(this.feasibilityQueryMap);
     }
+      this.setFeasibilityQueryByID(new FeasibilityQuery(uid), uid);
+      this.activeFeasibilityQuery.setActiveFeasibilityQueryID(uid);
   }
 
   /**
@@ -58,6 +56,14 @@ export class FeasibilityQueryProviderService {
     );
   }
 
+  public getActiveFeasibilityQuery(): Observable<FeasibilityQuery> {
+    return this.activeFeasibilityQuery.getActiveFeasibilityQueryIDObservable()
+      .pipe(
+        switchMap((id) => this.feasibilityQueryMapSubject.pipe(
+          map((feasibilityQueryMap) => feasibilityQueryMap.get(id))
+        ))
+      )
+  }
   /**
    * Retrieves the current feasibility query map as an observable.
    *
@@ -78,26 +84,26 @@ export class FeasibilityQueryProviderService {
   }
 
   public setInclusionCriteria(criteria: string[][]): void {
-    const feasibilityQuery = this.feasibilityQueryMap.get('1');
+    const feasibilityQuery = this.feasibilityQueryMap.get(this.activeFeasibilityQuery.getActiveFeasibilityQueryID());
     feasibilityQuery.setInclusionCriteria(criteria);
-    this.feasibilityQueryMap.set('1', feasibilityQuery);
+    this.feasibilityQueryMap.set(this.activeFeasibilityQuery.getActiveFeasibilityQueryID(), feasibilityQuery);
     this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
   }
 
   public setExclusionCriteria(criteria: string[][]): void {
-    const feasibilityQuery = this.feasibilityQueryMap.get('1');
+    const feasibilityQuery = this.feasibilityQueryMap.get(this.activeFeasibilityQuery.getActiveFeasibilityQueryID());
     feasibilityQuery.setExclusionCriteria(criteria);
-    this.feasibilityQueryMap.set('1', feasibilityQuery);
+    this.feasibilityQueryMap.set(this.activeFeasibilityQuery.getActiveFeasibilityQueryID(), feasibilityQuery);
     this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
   }
 
   public deleteFromInclusion(uid: string): void {
-    const feasibilityQuery = this.feasibilityQueryMap.get('1');
+    const feasibilityQuery = this.feasibilityQueryMap.get(this.activeFeasibilityQuery.getActiveFeasibilityQueryID());
     const criteria = this.deleteCriterion(feasibilityQuery.getInclusionCriteria(), uid);
     this.setInclusionCriteria(criteria);
   }
   public deleteFromExclusion(uid: string): void {
-    const feasibilityQuery = this.feasibilityQueryMap.get('1');
+    const feasibilityQuery = this.feasibilityQueryMap.get(this.activeFeasibilityQuery.getActiveFeasibilityQueryID());
     const criteria = this.deleteCriterion(feasibilityQuery.getExclusionCriteria(), uid);
     this.setExclusionCriteria(criteria);
   }
@@ -112,13 +118,5 @@ export class FeasibilityQueryProviderService {
     inexclusion = inexclusion.filter((item) => item.length > 0);
     return inexclusion;
   }
-  public test(): void {
-    console.log('trigger');
-    const feasibilityQuery = ObjectHelper.clone(this.feasibilityQueryMap.get('1'));
-    console.log(feasibilityQuery);
-    //this.setFeasibilityQueryByID(new FeasibilityQuery('1'), '1');
-    this.loadInitialQuery();
-    this.feasibilityQueryMap.set('1', feasibilityQuery);
-    this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
-  }
+
 }

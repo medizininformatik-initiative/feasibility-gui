@@ -55,13 +55,11 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
 
   initialize(): void {
     if (this.groupType === 'Inclusion') {
-      this.criteriaArray$ = this.queryService
-        .getFeasibilityQueryByID('1')
+      this.criteriaArray$ = this.queryService.getActiveFeasibilityQuery()
         .pipe(map((feasibilityQuery) => feasibilityQuery.getInclusionCriteria()));
     }
     if (this.groupType === 'Exclusion') {
-      this.criteriaArray$ = this.queryService
-        .getFeasibilityQueryByID('1')
+      this.criteriaArray$ = this.queryService.getActiveFeasibilityQuery()
         .pipe(map((feasibilityQuery) => feasibilityQuery.getExclusionCriteria()));
     }
   }
@@ -77,8 +75,7 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   splitInnerArray(i: number, j: number): void {
     let tempcrit: string[][] = [];
 
-    this.queryService
-      .getFeasibilityQueryByID('1')
+    this.queryService.getActiveFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
         if (this.groupType === 'Inclusion') {
           tempcrit = this.splitInnerArray2(query.getInclusionCriteria(), i, j);
@@ -99,8 +96,7 @@ export class DisplayGroupComponent implements OnInit, OnDestroy {
   joinInnerArrays(i: number): void {
     let tempcrit: string[][] = [];
 
-    this.queryService
-      .getFeasibilityQueryByID('1')
+    this.queryService.getActiveFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
         if (this.groupType === 'Inclusion') {
           tempcrit = this.joinInnerArrays2(query.getInclusionCriteria(), i);

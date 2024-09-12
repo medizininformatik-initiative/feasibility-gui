@@ -44,7 +44,7 @@ export class ResultComponent implements OnInit {
 
   public doDownloadQuery() {
     this.feasibilityQueryProviderService
-      .getFeasibilityQueryByID('1')
+      .getActiveFeasibilityQuery()
       .subscribe((feasibilityQuery) => {
         this.fileSaverService.save(
           this.createFileData(feasibilityQuery),

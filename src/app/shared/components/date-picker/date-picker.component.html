@@ -1,11 +1,16 @@
 <mat-form-field class="form-field-from" appearance="outline" class="container">
-  <ng-content></ng-content>
-  <input
-    matInput
-    [matDatepicker]="dateStartPicker"
-    [(ngModel)]="selectedDate"
-    (dateChange)="emitSelectedDate()"
-  />
+  <div fxLayout="row" fxLayoutAlign="start center">
+
+    <ng-content></ng-content>
+
+    <input
+      class="padding-left-10"
+      matInput
+      [matDatepicker]="dateStartPicker"
+      [(ngModel)]="selectedDate"
+      (dateChange)="emitSelectedDate()"
+    />
+  </div>
   <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
   <mat-datepicker #dateStartPicker></mat-datepicker>
 </mat-form-field>

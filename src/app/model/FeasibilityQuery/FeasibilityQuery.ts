@@ -26,7 +26,7 @@
  */
 export class FeasibilityQuery {
   private id: string;
-  private resultIDs: number[] = [];
+  private resultIDs: string[] = [];
   private consent = false;
   private display: string;
   private version = '';
@@ -123,15 +123,15 @@ export class FeasibilityQuery {
     this.exclusionCriteria = exclusionCriteria;
   }
 
-  public getResultIds(): number[] {
+  public getResultIds(): string[] {
     return this.resultIDs;
   }
 
-  public setResultIds(resultIds: number[]): void {
+  public setResultIds(resultIds: string[]): void {
     this.resultIDs = resultIds;
   }
 
-  public addResultId(resultId: number): void {
+  public addResultId(resultId: string): void {
     this.resultIDs.push(resultId);
   }
 }

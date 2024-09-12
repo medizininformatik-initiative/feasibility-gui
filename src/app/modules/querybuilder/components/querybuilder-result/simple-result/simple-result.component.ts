@@ -48,7 +48,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   pollingTime: number;
   interval;
   loadedResult = false;
-  tempFeasQueryID = '1';
   withDetails = false;
   queryUrl: string;
   constructor(
@@ -79,7 +78,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   openDialogResultDetails(): void {
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>();
 
-    this.resultService.getResult(this.queryUrl, this.result.getQueryId(), true).subscribe(() => {
+    this.resultService.getResult(this.queryUrl, true).subscribe(() => {
       const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig);
       modal
         .afterClosed()
@@ -124,13 +123,16 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
     this.getDetailedResultRateLimit();
     this.queryProviderService
-      .getFeasibilityQueryByID(this.tempFeasQueryID)
+      .getActiveFeasibilityQuery()
       .pipe(
-        switchMap((query) => this.resultService.getPollingUrl(query)),
+        switchMap((query) => {
+          this.resultService.setFeasibilityQueryID(query.getID());
+          return this.resultService.getPollingUrl(query)
+          }),
         switchMap((url) => {
           this.queryUrl = url;
           return this.resultService
-            .getResultPolling(url, this.tempFeasQueryID, false)
+            .getResultPolling(url, false)
             .pipe(endWith(null));
         }),
         takeWhile((x) => x != null)

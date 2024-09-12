@@ -64,7 +64,7 @@ export class DropGroupDirective implements OnInit {
   }
 
   ngOnInit() {
-    this.queryProviderService.getFeasibilityQueryByID('1').subscribe((feasibilityQuery) => {
+    this.queryProviderService.getActiveFeasibilityQuery().subscribe((feasibilityQuery) => {
       this.feasibilityQuery = feasibilityQuery;
     });
   }

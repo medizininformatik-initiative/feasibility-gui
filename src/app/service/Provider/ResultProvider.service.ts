@@ -25,7 +25,7 @@ export class ResultProviderService {
   /**
    * Retrieves a criterion by UID from the map.
    *
-   * @param uid The unique ID of the criterion
+   * @param id The unique ID of the criterion
    * @returns Criterion | undefined
    */
   public getResultByID(id: string): QueryResult | undefined {

@@ -16,6 +16,8 @@ export class FeasibilityQueryResultService {
   readonly POLLING_INTERVALL_MILLISECONDS = this.featureService.getPollingIntervall() * 1000;
   readonly POLLING_MAXL_MILLISECONDS = this.featureService.getPollingTime() * 1000;
   resultObservable$: Observable<QueryResult>;
+  private feasibilityQueryID: string;
+
   constructor(
     private backend: BackendService,
     private featureService: FeatureService,
@@ -31,19 +33,17 @@ export class FeasibilityQueryResultService {
   }
   public getResultPolling(
     resultUrl: string,
-    queryID: string,
     withDetails: boolean
   ): Observable<QueryResult> {
     return interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 100)),
-      switchMap(() => this.getResult(resultUrl, queryID, withDetails)),
+      switchMap(() => this.getResult(resultUrl, withDetails)),
       share()
     );
   }
 
   public getResult(
     resultUrl: string,
-    queryID: string,
     withDetails: boolean
   ): Observable<QueryResult> {
     let url: string;
@@ -59,7 +59,7 @@ export class FeasibilityQueryResultService {
           map((result) => {
             if (!result.issues) {
               const queryResult: QueryResult = new QueryResult(
-                queryID,
+                this.feasibilityQueryID,
                 result.totalNumberOfPatients,
                 result.queryId,
                 result.resultLines.map(
@@ -75,5 +75,8 @@ export class FeasibilityQueryResultService {
           })
         )
     );
+  }
+  public setFeasibilityQueryID(id: string): void {
+    this.feasibilityQueryID = id;
   }
 }
