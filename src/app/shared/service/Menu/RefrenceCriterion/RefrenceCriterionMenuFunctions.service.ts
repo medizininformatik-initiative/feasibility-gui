@@ -3,7 +3,7 @@ import { CriterionProviderService } from 'src/app/service/Provider/CriterionProv
 import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { CriterionModalService } from 'src/app/service/CriterionService/CriterionModal.service';
+import { CriterionModalService } from 'src/app/service/Criterion/CriterionModal.service';
 
 @Injectable({
   providedIn: 'root',

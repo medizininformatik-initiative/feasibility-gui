@@ -1,6 +1,6 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Component, Inject, OnInit } from '@angular/core';
-import { CreateReferenceCriterionService } from 'src/app/service/CriterionService/Builder/CreateReferenceCriterion.service';
+import { CreateReferenceCriterionService } from 'src/app/service/Criterion/Builder/CreateReferenceCriterion.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';

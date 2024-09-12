@@ -14,7 +14,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { CreateCriterionService } from 'src/app/service/CriterionService/Builder/CreateCriterion.service';
+import { CreateCriterionService } from 'src/app/service/Criterion/Builder/CreateCriterion.service';
 
 @Component({
   selector: 'num-stage',

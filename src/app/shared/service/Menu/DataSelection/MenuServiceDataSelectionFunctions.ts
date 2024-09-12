@@ -1,8 +1,8 @@
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { EditDataSelectionFields } from 'src/app/service/DataSelectionService/ModalWindowServices/EditDataSelectionFields.service';
-import { EditDataSelectionFilter } from 'src/app/service/DataSelectionService/ModalWindowServices/EditDataSelectionFilter.service';
+import { EditDataSelectionFields } from 'src/app/service/DataSelection/ModalWindowServices/EditDataSelectionFields.service';
+import { EditDataSelectionFilter } from 'src/app/service/DataSelection/ModalWindowServices/EditDataSelectionFilter.service';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';

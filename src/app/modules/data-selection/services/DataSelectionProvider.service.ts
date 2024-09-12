@@ -1,9 +1,9 @@
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
-import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 @Injectable({
   providedIn: 'root',
 })

@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProviderService } from './DataSelectionProvider.service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',

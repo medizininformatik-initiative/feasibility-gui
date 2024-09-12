@@ -1,9 +1,9 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
-import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
+import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelection/CreateDataSelectionProfileProfile.service';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
-import { DataSelectionProfileTreeService } from 'src/app/service/DataSelectionService/CreateDataselectionProfileTree';
+import { DataSelectionProfileTreeService } from 'src/app/service/DataSelection/CreateDataselectionProfileTree';
 import { DataSelectionProviderService } from '../services/DataSelectionProvider.service';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { FileSaverService } from 'ngx-filesaver';
