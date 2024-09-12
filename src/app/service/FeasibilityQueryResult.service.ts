@@ -26,15 +26,17 @@ export class FeasibilityQueryResultService {
     private snackbar: SnackbarService
   ) {}
 
-  public getPollingUrl(query: FeasibilityQuery): Observable<string> {
-    return this.backend.postQueryNew(this.translator.translateToStructuredQuery(query)).pipe(
-      map((result) => result.headers.get('location'))
-    );
+  public setFeasibilityQueryID(id: string): void {
+    this.feasibilityQueryID = id;
   }
-  public getResultPolling(
-    resultUrl: string,
-    withDetails: boolean
-  ): Observable<QueryResult> {
+
+  public getPollingUrl(query: FeasibilityQuery): Observable<string> {
+    return this.backend
+      .postQueryNew(this.translator.translateToStructuredQuery(query))
+      .pipe(map((result) => result.headers.get('location')));
+  }
+
+  public getResultPolling(resultUrl: string, withDetails: boolean): Observable<QueryResult> {
     return interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 100)),
       switchMap(() => this.getResult(resultUrl, withDetails)),
@@ -42,15 +44,10 @@ export class FeasibilityQueryResultService {
     );
   }
 
-  public getResult(
-    resultUrl: string,
-    withDetails: boolean
-  ): Observable<QueryResult> {
-    let url: string;
-    // eslint-disable-next-line
-    withDetails
-      ? (url = resultUrl + '/detailed-obfuscated-result')
-      : (url = resultUrl + '/summary-result');
+  public getResult(resultUrl: string, withDetails: boolean): Observable<QueryResult> {
+    const url: string = withDetails
+      ? resultUrl + '/detailed-obfuscated-result'
+      : resultUrl + '/summary-result';
     return (
       this.backend
         //.getSummaryResult(url)
@@ -58,15 +55,7 @@ export class FeasibilityQueryResultService {
         .pipe(
           map((result) => {
             if (!result.issues) {
-              const queryResult: QueryResult = new QueryResult(
-                this.feasibilityQueryID,
-                result.totalNumberOfPatients,
-                result.queryId,
-                result.resultLines.map(
-                  (line) => new QueryResultLine(line?.numberOfPatients, line?.siteName)
-                ),
-                result.issues
-              );
+              const queryResult: QueryResult = this.buildQueryResultInstance(result);
               this.resultProvider.setResultByID(queryResult);
               return queryResult;
             } else {
@@ -76,7 +65,14 @@ export class FeasibilityQueryResultService {
         )
     );
   }
-  public setFeasibilityQueryID(id: string): void {
-    this.feasibilityQueryID = id;
+
+  private buildQueryResultInstance(result: any): QueryResult {
+    return new QueryResult(
+      this.feasibilityQueryID,
+      result.totalNumberOfPatients,
+      result.queryId,
+      result.resultLines.map((line) => new QueryResultLine(line?.numberOfPatients, line?.siteName)),
+      result.issues
+    );
   }
 }

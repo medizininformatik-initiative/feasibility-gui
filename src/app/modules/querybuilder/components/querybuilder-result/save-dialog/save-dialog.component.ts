@@ -6,7 +6,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 import { Subscription, switchMap, of } from 'rxjs';
 import { UIQuery2StructuredQueryService } from 'src/app/service/Translator/StructureQuery/UIQuery2StructuredQuery.service';
-import {ActiveFeasibilityQueryService} from "../../../../../service/Provider/ActiveFeasibilityQuery.service";
+import { ActiveFeasibilityQueryService } from '../../../../../service/Provider/ActiveFeasibilityQuery.service';
 //import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 
 @Component({
@@ -43,8 +43,9 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
   }
 
   doSave(): void {
-    let translatedQuery: string;
-    this.activeFeasibilityQuery.getActiveFeasibilityQueryIDObservable()
+    let translatedQuery = '';
+    this.activeFeasibilityQuery
+      .getActiveFeasibilityQueryIDObservable()
       .pipe(
       switchMap((id) => this.feasibilityQueryProviderService.getFeasibilityQueryByID(id)),
       switchMap((feasibilityQuery: FeasibilityQuery) => {
@@ -61,10 +62,8 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
 console.log(result)
         // feasibilityQuery.
         // this.resultProvider.getResultByID()
-        // this.backendService.saveQuery()
+        this.backendService.saveQuery(result, 'ee', 'sssws');
       });
-
-
   }
   doDiscard(): void {
     this.dialogRef.close();
