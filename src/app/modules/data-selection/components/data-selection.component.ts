@@ -1,3 +1,4 @@
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
 import { CreateDataSelectionProfileProfile } from 'src/app/service/DataSelectionService/CreateDataSelectionProfileProfile.service';
@@ -7,9 +8,9 @@ import { DataSelectionProviderService } from '../services/DataSelectionProvider.
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { FileSaverService } from 'ngx-filesaver';
 import { Subscription } from 'rxjs';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -27,13 +28,26 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
 
   selectedDataSelectionProfileNodeIds: Set<string> = new Set();
 
+  /**
+   *
+   * @param createDataSelectionProfileService
+   * @param dataSelectionProfileTreeService
+   * @param crdtlService
+   * @param dataSelectionProviderService
+   * @param fileSaverService
+   * @param test1
+   * @param activeDataSelectionService
+   *
+   * @todo     private test1: TerminologySystemProvider, --> TerminologySystemProvider needs to be initial called in the app.moudle.ts
+   */
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileProfile,
     private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
     private crdtlService: CreateCRDTL,
     private dataSelectionProviderService: DataSelectionProviderService,
     private fileSaverService: FileSaverService,
-    private test1: TerminologySystemProvider
+    private test1: TerminologySystemProvider,
+    private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +73,11 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
       .getDataSelectionProfileProfileData(dataSelectionProfileUrls)
       .subscribe((dataSelectionProfiles) => {
         dataSelectionProfiles.forEach((dataSelectionProfile) => {
-          this.dataSelectionProviderService.setElementInDataSelectionMap('1', dataSelectionProfile);
+          const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionID();
+          this.dataSelectionProviderService.setProfileInDataSelection(
+            dataSelectionId,
+            dataSelectionProfile
+          );
         });
       });
   }

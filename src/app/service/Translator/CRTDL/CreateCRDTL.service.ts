@@ -8,6 +8,7 @@ import { UIQuery2StructuredQueryService } from '../StructureQuery/UIQuery2Struct
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
+import { ActiveDataSelectionService } from '../../Provider/ActiveDataSelection.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class CreateCRDTL {
     private dataExtractionTranslator: DataSelection2DataExtraction,
     private feasibilityQueryProvider: FeasibilityQueryProviderService,
     private uiQueryTranslator: UIQuery2StructuredQueryService,
-    private dataSelectionProvider: DataSelectionProviderService
+    private dataSelectionProvider: DataSelectionProviderService,
+    private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
   public createCRDTL(): Observable<CRTDL> {
@@ -44,11 +46,12 @@ export class CreateCRDTL {
   }
 
   private getDataExtraction(): Observable<DataExtraction> {
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionID();
     return this.dataSelectionProvider
-      .getDataSelectionMap()
+      .getDataSelectionByUID(dataSelectionId)
       .pipe(
         map((dataSelection) =>
-          this.dataExtractionTranslator.translateToDataExtraction(dataSelection.get('1'))
+          this.dataExtractionTranslator.translateToDataExtraction(dataSelection)
         )
       );
   }

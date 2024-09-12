@@ -5,6 +5,7 @@ import { EditDataSelectionFields } from 'src/app/service/DataSelectionService/Mo
 import { EditDataSelectionFilter } from 'src/app/service/DataSelectionService/ModalWindowServices/EditDataSelectionFilter.service';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,8 @@ export class MenuServiceDataSelectionFunctions {
     private dataSelectionFieldsModalService: EditDataSelectionFields,
     private dataSelectionFilterModalService: EditDataSelectionFilter,
     private dataSelectionProfileProvider: DataSelectionProfileProviderService,
-    private dataSelectionProvider: DataSelectionProviderService
+    private dataSelectionProvider: DataSelectionProviderService,
+    private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
   public openDataSelectionFieldModal(id: string) {
@@ -40,11 +42,13 @@ export class MenuServiceDataSelectionFunctions {
       profile.getFilters()
     );
     this.dataSelectionProfileProvider.setDataSelectionProfileByUID(copiedProfile.getId(), profile);
-    this.dataSelectionProvider.setElementInDataSelectionMap('1', copiedProfile);
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionID();
+    this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile);
   }
 
   public deleteDataSelectionObject(id: string) {
-    this.dataSelectionProvider.removeElementFromDataSelectionMap('1', id);
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionID();
+    this.dataSelectionProvider.removeProfileFromDataSelection(dataSelectionId, id);
     this.dataSelectionProfileProvider.removeDataSelectionProfileByUID(id);
   }
 }

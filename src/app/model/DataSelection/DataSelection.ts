@@ -1,10 +1,13 @@
 import { DataSelectionProfileProfile } from './Profile/DataSelectionProfileProfile';
 
 export class DataSelection {
+  private id: string;
+
   private dataSelection: DataSelectionProfileProfile[] = [];
 
-  constructor(dataSelection: DataSelectionProfileProfile[]) {
+  constructor(dataSelection: DataSelectionProfileProfile[], id: string) {
     this.dataSelection = dataSelection;
+    this.id = id;
   }
 
   public getDataSelection(): DataSelectionProfileProfile[] {
@@ -13,5 +16,9 @@ export class DataSelection {
 
   public setDataSelection(dataSelction: DataSelectionProfileProfile[]): void {
     this.dataSelection = dataSelction;
+  }
+
+  public getId(): string {
+    return this.id;
   }
 }
