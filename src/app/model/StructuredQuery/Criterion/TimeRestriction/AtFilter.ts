@@ -1,9 +1,7 @@
 import { AbstractTimeRestriction } from './AbstractTimeRestriction';
 
 export class AtFilter extends AbstractTimeRestriction {
-  /**
-   * afterDate has to be equal to beforeDate
-   */
-  afterDate: string;
-  beforeDate: string;
+  constructor(afterDate: string, beforeDate: string) {
+    super(afterDate, beforeDate);
+  }
 }

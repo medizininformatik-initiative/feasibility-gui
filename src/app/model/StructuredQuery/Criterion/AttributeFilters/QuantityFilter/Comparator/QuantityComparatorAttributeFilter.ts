@@ -1,11 +1,18 @@
-import { AbstractConceptFilter } from './AbstractConceptFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { AbstractQuantityComparatorFilter } from './AbstractQuantityComparatorFilter';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
+import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
 
-export class ConceptAttributeFilter extends AbstractConceptFilter {
+export class QuantityComparatorAttributeFilter extends AbstractQuantityComparatorFilter {
   private attributeCode: TerminologyCode;
 
-  constructor(attributeCode: TerminologyCode, selectedConcepts: TerminologyCode[] = []) {
-    super(selectedConcepts);
+  constructor(
+    attributeCode: TerminologyCode,
+    unit: QuantityUnit,
+    comparator: QuantityComparisonOption,
+    value: number
+  ) {
+    super(unit, comparator, value);
     this.attributeCode = attributeCode;
   }
 

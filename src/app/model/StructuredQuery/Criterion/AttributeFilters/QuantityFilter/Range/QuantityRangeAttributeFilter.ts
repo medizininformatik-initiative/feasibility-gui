@@ -1,11 +1,17 @@
-import { AbstractConceptFilter } from './AbstractConceptFilter';
+import { AbstractQuantityRangeFilter } from './AbstractQuantityRangeFilter';
+import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
-export class ConceptAttributeFilter extends AbstractConceptFilter {
+export class QuantityRangeAttributeFilter extends AbstractQuantityRangeFilter {
   private attributeCode: TerminologyCode;
 
-  constructor(attributeCode: TerminologyCode, selectedConcepts: TerminologyCode[] = []) {
-    super(selectedConcepts);
+  constructor(
+    attributeCode: TerminologyCode,
+    minValue: number,
+    maxValue: number,
+    unit: QuantityUnit
+  ) {
+    super(minValue, maxValue, unit);
     this.attributeCode = attributeCode;
   }
 
