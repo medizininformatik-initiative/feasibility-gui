@@ -1,5 +1,7 @@
 import { AbstractTimeRestriction } from './AbstractTimeRestriction';
 
 export class BeforeFilter extends AbstractTimeRestriction {
-  beforeDate: string;
+  constructor(beforeDate: string) {
+    super(undefined, beforeDate);
+  }
 }

@@ -13,7 +13,6 @@ import { ReferenceFilter as ReferenceFilterFQ } from '../../../model/Feasibility
 import { StructuredQuery } from '../../../model/StructuredQuery/StructuredQuery';
 import { StructuredQueryCriterion } from '../../../model/StructuredQuery/Criterion/StructuredQueryCriterion';
 import { TerminologyCode } from '../../../model/Terminology/TerminologyCode';
-import { ValueFilter } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { QuantityFilterTranslatorService } from './QuantityFilterTranslator.service';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
@@ -31,18 +30,16 @@ export class UIQuery2StructuredQueryService {
   ) {}
 
   public translateToStructuredQuery(feasibilityQuery: FeasibilityQuery): StructuredQuery {
-    const structuredQuery = new StructuredQuery();
-    if (feasibilityQuery.getDisplay()) {
-      structuredQuery.display = feasibilityQuery.getDisplay();
-    }
-    //const group: Group = feasibilityQuery.groups[0];
     const inclusionCriteria = feasibilityQuery.getInclusionCriteria();
     const exclusionCriteria = feasibilityQuery.getExclusionCriteria();
+    const structuredQuery = new StructuredQuery(
+      this.translateInclusionCriteria(inclusionCriteria),
+      this.translateExclusionCriteria(exclusionCriteria),
+      feasibilityQuery.getDisplay().length > 0 ? feasibilityQuery.getDisplay() : ''
+    );
 
-    structuredQuery.inclusionCriteria = this.translateInclusionCriteria(inclusionCriteria);
-    structuredQuery.exclusionCriteria = this.translateExclusionCriteria(exclusionCriteria);
     if (feasibilityQuery.getConsent()) {
-      structuredQuery.inclusionCriteria.push(this.getConsent());
+      structuredQuery.getInclusionCriteria().push(this.getConsent());
     }
     return structuredQuery;
   }
@@ -93,17 +90,15 @@ export class UIQuery2StructuredQueryService {
    * @returns
    */
   private assignStructuredQueryCriterionElements(criterion: Criterion): StructuredQueryCriterion {
-    const structuredQueryCriterion = new StructuredQueryCriterion();
-    structuredQueryCriterion.attributeFilters = this.translateAttributeFilters(criterion);
-    structuredQueryCriterion.context = this.addContextToStructuredQuery(criterion);
-    structuredQueryCriterion.termCodes = this.terminologyTranslator.translateTermCodes(
-      criterion.getTermCodes()
-    );
-    structuredQueryCriterion.timeRestriction =
+    const structuredQueryCriterion = new StructuredQueryCriterion(
+      this.terminologyTranslator.translateTermCodes(criterion.getTermCodes()),
+      this.translateAttributeFilters(criterion),
+      this.addContextToStructuredQuery(criterion),
       this.timeRestrictionTranslation.translateTimeRestrictionToStructuredQuery(
         criterion.getTimeRestriction()
-      );
-    structuredQueryCriterion.valueFilter = this.translateValueFilter(criterion);
+      ),
+      this.translateValueFilter(criterion)
+    );
     return structuredQueryCriterion;
   }
 
@@ -140,23 +135,24 @@ export class UIQuery2StructuredQueryService {
     criterion.getAttributeFilters().forEach((attributeFilter) => {
       const attributeCode = attributeFilter.getAttributeCode();
       if (attributeFilter.isConceptSet() && attributeFilter.getConcept()?.hasSelectedConcepts()) {
-        const conceptFilter = this.createAttributeConceptFilter(attributeFilter.getConcept());
-        conceptFilter.attributeCode = attributeCode;
+        const conceptFilter = this.createAttributeConceptFilter(
+          attributeCode,
+          attributeFilter.getConcept()
+        );
         translatedFilters.push(conceptFilter);
       }
       if (
         attributeFilter.isReferenceSet() &&
         attributeFilter.getReference()?.isSelectedReferenceSet()
       ) {
-        const referenceFilter = this.createReferences(attributeFilter.getReference());
-        referenceFilter.attributeCode = attributeCode;
+        const referenceFilter = this.createReferences(attributeCode, attributeFilter.getReference());
         translatedFilters.push(referenceFilter);
       }
       if (attributeFilter.isQuantitySet()) {
-        const quantityFilter = this.quantityFilterTranslator.translateQuantityFilter(
+        const quantityFilter = this.quantityFilterTranslator.translateQuantityAttributeFilter(
+          attributeCode,
           attributeFilter.getQuantity()
         );
-        quantityFilter.attributeCode = attributeCode;
         translatedFilters.push(quantityFilter);
       }
     });
@@ -168,38 +164,40 @@ export class UIQuery2StructuredQueryService {
   ): AbstractStructuredQueryFilters | undefined {
     const translatedFilters: AbstractStructuredQueryFilters[] = [];
     criterion.getValueFilters().forEach((valueFilter) => {
-      if (valueFilter.getConcept()?.getSelectedConcepts()) {
-        translatedFilters.push(this.createAttributeConceptFilter(valueFilter.getConcept()));
+      if (valueFilter.getConcept()?.getSelectedConcepts().length > 0) {
+        translatedFilters.push(this.createConceptValueFilter(valueFilter.getConcept()));
       }
       if (valueFilter.getQuantity()) {
         translatedFilters.push(
-          this.quantityFilterTranslator.translateQuantityFilter(valueFilter.getQuantity())
+          this.quantityFilterTranslator.translateQuantityValueFilter(valueFilter.getQuantity())
         );
       }
     });
     return translatedFilters[0];
   }
 
-  private createAttributeConceptFilter(conceptFilter: ConceptFilter): ConceptAttributeFilter {
-    const conceptAttributeFilter = new ConceptAttributeFilter();
-    conceptAttributeFilter.selectedConcepts = Array.from(conceptFilter.getSelectedConcepts());
+  private createAttributeConceptFilter(
+    attributeCode: TerminologyCode,
+    conceptFilter: ConceptFilter
+  ): ConceptAttributeFilter {
+    const conceptAttributeFilter = new ConceptAttributeFilter(
+      attributeCode,
+      Array.from(conceptFilter.getSelectedConcepts())
+    );
     return conceptAttributeFilter;
   }
 
-  private setConceptValueFilter(valueFilter: ValueFilter): ConceptValueFilter | undefined {
-    const conceptFilter = new ConceptValueFilter();
-    if (valueFilter.getConcept()?.getSelectedConcepts().length > 0) {
-      conceptFilter.selectedConcepts = Array.from(valueFilter.getConcept().getSelectedConcepts());
-      return conceptFilter;
-    } else {
-      return undefined;
-    }
+  private createConceptValueFilter(valueFilter: ConceptFilter): ConceptValueFilter | undefined {
+    return new ConceptValueFilter(Array.from(valueFilter.getSelectedConcepts()));
   }
 
-  private createReferences(referenceFilter: ReferenceFilterFQ): ReferenceFilterSQ {
-    const translatedRefrenceFilter: ReferenceFilterSQ = new ReferenceFilterSQ();
-    translatedRefrenceFilter.criteria = this.setEachLinkedCriteria(
-      referenceFilter.getSelectedReferences()
+  private createReferences(
+    attributeCode: TerminologyCode,
+    referenceFilter: ReferenceFilterFQ
+  ): ReferenceFilterSQ {
+    const translatedRefrenceFilter: ReferenceFilterSQ = new ReferenceFilterSQ(
+      attributeCode,
+      this.setEachLinkedCriteria(referenceFilter.getSelectedReferences())
     );
     return translatedRefrenceFilter;
   }
@@ -213,17 +211,17 @@ export class UIQuery2StructuredQueryService {
   }
 
   private getConsent(): StructuredQueryCriterion[] {
+    const termCode = new TerminologyCode(
+      '2.16.840.1.113883.3.1937.777.24.5.3.8',
+      'MDAT wissenschaftlich nutzen EU DSGVO NIVEAU',
+      'urn:oid:2.16.840.1.113883.3.1937.777.24.5.3'
+    );
     return [
-      {
-        termCodes: [
-          new TerminologyCode(
-            '2.16.840.1.113883.3.1937.777.24.5.3.8',
-            'MDAT wissenschaftlich nutzen EU DSGVO NIVEAU',
-            'urn:oid:2.16.840.1.113883.3.1937.777.24.5.3'
-          ),
-        ],
-        context: new TerminologyCode('Einwilligung', 'Einwilligung', 'fdpg.mii.cds', '1.0.0'),
-      },
+      new StructuredQueryCriterion(
+        [termCode],
+        undefined,
+        new TerminologyCode('Einwilligung', 'Einwilligung', 'fdpg.mii.cds', '1.0.0')
+      ),
     ];
   }
 }

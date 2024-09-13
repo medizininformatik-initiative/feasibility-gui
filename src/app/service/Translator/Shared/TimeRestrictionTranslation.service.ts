@@ -43,28 +43,23 @@ export class TimeRestrictionTranslationService {
   }
 
   private createAfterFilter(startDate: Date): AfterFilter {
-    const afterFilter = new AfterFilter();
-    afterFilter.afterDate = startDate.toISOString().split('T')[0];
-    return afterFilter;
+    return new AfterFilter(startDate.toISOString().split('T')[0]);
   }
 
   private createAtFilter(startDate: Date): AtFilter {
-    const atFilter = new AtFilter();
-    atFilter.afterDate = startDate.toISOString().split('T')[0];
-    atFilter.beforeDate = startDate.toISOString().split('T')[0];
-    return atFilter;
+    const afterDate = startDate.toISOString().split('T')[0];
+    const beforeDate = startDate.toISOString().split('T')[0];
+    return new AtFilter(afterDate, beforeDate);
   }
 
   private createBeforeFilter(startDate: Date): BeforeFilter {
-    const beforeFilter = new BeforeFilter();
-    beforeFilter.beforeDate = startDate.toISOString().split('T')[0];
-    return beforeFilter;
+    const beforeDate = startDate.toISOString().split('T')[0];
+    return new BeforeFilter(beforeDate);
   }
 
   private createBetweenFilter(startDate: Date, endDate: Date): BetweenFilter {
-    const betweenFilter = new BetweenFilter();
-    betweenFilter.afterDate = startDate.toISOString().split('T')[0];
-    betweenFilter.beforeDate = endDate.toISOString().split('T')[0];
-    return betweenFilter;
+    const afterDate = startDate.toISOString().split('T')[0];
+    const beforeDate = endDate.toISOString().split('T')[0];
+    return new BetweenFilter(afterDate, beforeDate);
   }
 }
