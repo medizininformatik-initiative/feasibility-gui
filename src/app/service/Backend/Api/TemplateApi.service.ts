@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StructuredQueryInquiry } from 'src/app/model/SavedInquiry/StructuredQueryInquiry';
+import { StructuredQueryInquiry } from 'src/app/model/SavedFeasibilityQuery/SavedAnnotatedFeasibilityQuery';
 import { FeatureService } from '../../Feature.service';
 import { HttpClient } from '@angular/common/http';
 import { NewBackendService } from '../NewBackend.service';

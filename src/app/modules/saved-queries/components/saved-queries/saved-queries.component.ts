@@ -8,26 +8,6 @@ import { BackendService } from 'src/app/modules/querybuilder/service/backend.ser
   styleUrls: ['./saved-queries.component.scss'],
 })
 export class SavedQueriesComponent implements OnInit {
-  queries = [
-    {
-      title: 'Abfrage-Titel 1',
-      description: 'Abfrage-Beschreibung',
-      date: new Date('2024-04-08'),
-      hasApplication: true,
-    },
-    {
-      title: 'Abfrage-Titel 2',
-      description: 'Abfrage-Beschreibung',
-      date: new Date('2024-04-08'),
-      hasApplication: false,
-    },
-    {
-      title: 'Abfrage-Titel 3',
-      description: 'Abfrage-Beschreibung',
-      date: new Date('2024-04-08'),
-      hasApplication: true,
-    },
-  ];
   savedQueries$: Observable<any>;
   constructor(private backendService: BackendService) {}
 
@@ -45,5 +25,9 @@ export class SavedQueriesComponent implements OnInit {
     this.backendService.deleteSavedQuery(id).subscribe(() => {
       this.loadSavedQueries();
     });
+  }
+
+  loadQueryIntoEditor(id: number) {
+    this.backendService.loadStructuredQuery(id).subscribe();
   }
 }

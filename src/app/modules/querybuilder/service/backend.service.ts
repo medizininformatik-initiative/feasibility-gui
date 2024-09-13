@@ -1,4 +1,4 @@
-import { AnnotatedStructuredQuery } from 'src/app/model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { AppConfigService } from '../../../config/app-config.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { FeatureService } from '../../../service/Feature.service';
@@ -10,12 +10,16 @@ import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit'
 import { SearchTermListEntry } from '../../../shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
-import { StructuredQueryInquiry } from '../../../model/SavedInquiry/StructuredQueryInquiry';
 import { QueryResponse } from 'src/app/model/Result/QueryResponse';
-import {QueryResult} from "../../../model/Result/QueryResult";
+import { QueryResult } from '../../../model/Result/QueryResult';
 @Injectable({
   providedIn: 'root',
 })
+/**
+ *
+ * @todo Create Interfaces for all HTTP Response Objects
+ *
+ */
 export class BackendService {
   constructor(
     private config: AppConfigService,
@@ -266,30 +270,26 @@ export class BackendService {
     );
   }
 
-
-  public saveQuery(
-    queryResult: QueryResult,
-    title: string,
-    comment: string
-  ): Observable<any> {
-
-      const headers = this.headers;
-      const savedQuery = {
-        label: title,
-        comment,
-        totalNumberOfPatients: queryResult.getTotalNumberOfPatients()
-      };
-      return this.http.post<any>(
-        this.createUrl(BackendService.PATH_RUN_QUERY) + '/' + queryResult.getQueryId() + '/' +
-          BackendService.PATH_SAVED,
-          savedQuery,
-        {
-          headers,
-          observe: 'response',
-        }
-      );
-    }
-
+  public saveQuery(queryResult: QueryResult, title: string, comment: string): Observable<any> {
+    const headers = this.headers;
+    const savedQuery = {
+      label: title,
+      comment,
+      totalNumberOfPatients: queryResult.getTotalNumberOfPatients(),
+    };
+    return this.http.post<any>(
+      this.createUrl(BackendService.PATH_RUN_QUERY) +
+        '/' +
+        queryResult.getQueryId() +
+        '/' +
+        BackendService.PATH_SAVED,
+      savedQuery,
+      {
+        headers,
+        observe: 'response',
+      }
+    );
+  }
 
   public validateStructuredQueryBackend(
     structuredQuery: StructuredQuery
@@ -334,10 +334,10 @@ export class BackendService {
     });
   }
 
-  public loadStructuredQuery(id: number): Observable<StructuredQueryInquiry> {
+  public loadStructuredQuery(id: number): Observable<any> {
     const headers = this.headers;
     const url = this.createUrl(BackendService.PATH_RUN_QUERY + '/' + id.toString());
-    return this.http.get<StructuredQueryInquiry>(url, {
+    return this.http.get<any>(url, {
       headers,
     });
   }
@@ -362,13 +362,13 @@ export class BackendService {
     });
   }
 
-  public loadTemplate(id: number): Observable<StructuredQueryInquiry> {
-    const headers = this.headers;
-    return this.http.get<StructuredQueryInquiry>(
-      this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
-      { headers }
-    );
-  }
+  // public loadTemplate(id: number): Observable<StructuredQueryInquiry> {
+  //   const headers = this.headers;
+  //   return this.http.get<SavedFea>(
+  //     this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id.toString()),
+  //     { headers }
+  //   );
+  // }
 
   public updateTemplate(id: number, updatedObject: object): Observable<any> {
     const headers = this.headers;

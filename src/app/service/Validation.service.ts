@@ -1,4 +1,4 @@
-import { AnnotatedStructuredQuery } from '../model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { AnnotatedStructuredQuery } from '../model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { BackendService } from '../modules/querybuilder/service/backend.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';

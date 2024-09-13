@@ -12,7 +12,13 @@
       {{ query.createdAt | date : 'dd.MM.yyyy' }}
     </div>
     <div>
-      <button class="background-color-button" mat-raised-button>query laden</button>
+      <button
+        class="background-color-button"
+        (click)="loadQueryIntoEditor(query.id)"
+        mat-raised-button
+      >
+        query laden
+      </button>
     </div>
     <button class="background-color-button" mat-raised-button (click)="deleteQuery(query.id)">
       entfernen

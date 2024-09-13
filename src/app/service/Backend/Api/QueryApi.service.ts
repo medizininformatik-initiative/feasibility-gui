@@ -1,4 +1,4 @@
-import { AnnotatedStructuredQuery } from 'src/app/model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NewBackendService } from '../NewBackend.service';
@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { QueryPaths } from '../Paths/QueryPaths';
 import { QueryResponse } from 'src/app/model/Result/QueryResponse';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
-import { StructuredQueryInquiry } from 'src/app/model/SavedInquiry/StructuredQueryInquiry';
+import { StructuredQueryInquiry } from 'src/app/model/SavedFeasibilityQuery/SavedAnnotatedFeasibilityQuery';
 
 @Injectable({
   providedIn: 'root',
