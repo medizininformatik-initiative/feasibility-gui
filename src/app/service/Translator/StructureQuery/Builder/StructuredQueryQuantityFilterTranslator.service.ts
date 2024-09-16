@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core';
-import { FilterTypesService } from '../../FilterTypes.service';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { AbstractQuantityComparatorFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/Comparator/AbstractQuantityComparatorFilter';
+import { AbstractQuantityComparatorFilter } from 'src/app/model/StructuredQuery/Criterion/Abstract/Quantity/Comparator/AbstractQuantityComparatorFilter';
 import { AbstractQuantityFilter as AbstractQuantityFilterFQ } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { AbstractQuantityFilter as AbstractQuantityFilterSQ } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/AbstractQuantityFilter';
-import { AbstractQuantityRangeFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/Range/AbstractQuantityRangeFilter';
-import { QuantityComparatorAttributeFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/Comparator/QuantityComparatorAttributeFilter';
+import { AbstractQuantityFilter as AbstractQuantityFilterSQ } from 'src/app/model/StructuredQuery/Criterion/Abstract/Quantity/AbstractQuantityFilter';
+import { AbstractQuantityRangeFilter } from 'src/app/model/StructuredQuery/Criterion/Abstract/Quantity/Range/AbstractQuantityRangeFilter';
+import { FilterTypesService } from '../../../FilterTypes.service';
+import { Injectable } from '@angular/core';
+import { QuantityComparatorAttributeFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/QuantityComparatorAttributeFilter';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { QuantityComparatorValueFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/Comparator/QuantityComparatorValueFilter';
-import { QuantityRangeAttributeFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/Range/QuantityRangeAttributeFilter';
+import { QuantityComparatorValueFilter } from 'src/app/model/StructuredQuery/Criterion/ValueFilter/Quantity/QuantityComparatorValueFilter';
+import { QuantityRangeAttributeFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/QuantityRangeAttributeFilter';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
-import { QuantityRangeValueFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/QuantityFilter/Range/QuantityRangeValueFilter';
-import { QuantityUnit as QuantityUnitSQ } from '../../../model/StructuredQuery/QuantityUnit';
-import { QuantityUnit as QuantityUnitFQ } from '../../../model/FeasibilityQuery/QuantityUnit';
+import { QuantityRangeValueFilter } from 'src/app/model/StructuredQuery/Criterion/ValueFilter/Quantity/QuantityRangeValueFilter';
+import { QuantityUnit as QuantityUnitSQ } from '../../../../model/StructuredQuery/QuantityUnit';
+import { QuantityUnit as QuantityUnitFQ } from '../../../../model/FeasibilityQuery/QuantityUnit';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Injectable({
   providedIn: 'root',
 })
-export class QuantityFilterTranslatorService {
+export class StructuredQueryQuantityFilterTranslatorService {
   constructor(private filter: FilterTypesService) {}
 
   /**
@@ -72,7 +72,7 @@ export class QuantityFilterTranslatorService {
     return undefined;
   }
 
-  private createQuantityRangeFilter(
+  public createQuantityRangeFilter(
     quantityRange: QuantityRangeFilter,
     attributeCode?: TerminologyCode
   ): AbstractQuantityRangeFilter {
@@ -87,7 +87,7 @@ export class QuantityFilterTranslatorService {
     }
   }
 
-  private setQuantityComparatorAttributes(
+  public setQuantityComparatorAttributes(
     quantityComparator: QuantityComparatorFilter,
     attributeCode?: TerminologyCode
   ): AbstractQuantityComparatorFilter {
