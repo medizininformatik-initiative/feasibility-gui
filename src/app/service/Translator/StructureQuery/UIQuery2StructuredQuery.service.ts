@@ -1,7 +1,5 @@
-import { AbstractStructuredQueryFilters } from '../../../model/StructuredQuery/Criterion/AttributeFilters/AbstractStructuredQueryFilters';
-import { ConceptAttributeFilter } from '../../../model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptAttributeFilter';
+import { AbstractStructuredQueryFilters } from '../../../model/StructuredQuery/Criterion/Abstract/AbstractStructuredQueryFilters';
 import { ConceptFilter } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { ConceptValueFilter } from '../../../model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptValueFilter';
 import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery';
@@ -14,8 +12,11 @@ import { StructuredQuery } from '../../../model/StructuredQuery/StructuredQuery'
 import { StructuredQueryCriterion } from '../../../model/StructuredQuery/Criterion/StructuredQueryCriterion';
 import { TerminologyCode } from '../../../model/Terminology/TerminologyCode';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
-import { QuantityFilterTranslatorService } from './QuantityFilterTranslator.service';
+import { StructuredQueryQuantityFilterTranslatorService } from './Builder/StructuredQueryQuantityFilterTranslator.service';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { ConceptAttributeFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptAttributeFilter';
+import { ConceptValueFilter } from 'src/app/model/StructuredQuery/Criterion/ValueFilter/ConceptFilter/ConceptValueFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class UIQuery2StructuredQueryService {
     private featureService: FeatureService,
     private criterionProvider: CriterionProviderService,
     private timeRestrictionTranslation: TimeRestrictionTranslationService,
-    private quantityFilterTranslator: QuantityFilterTranslatorService,
+    private quantityFilterTranslator: StructuredQueryQuantityFilterTranslatorService,
     private terminologyTranslator: TerminologyCodeTranslator
   ) {}
 
@@ -133,30 +134,31 @@ export class UIQuery2StructuredQueryService {
   ): AbstractStructuredQueryFilters[] | undefined {
     const translatedFilters: AbstractStructuredQueryFilters[] = [];
     criterion.getAttributeFilters().forEach((attributeFilter) => {
-      const attributeCode = attributeFilter.getAttributeCode();
-      if (attributeFilter.isConceptSet() && attributeFilter.getConcept()?.hasSelectedConcepts()) {
-        const conceptFilter = this.createAttributeConceptFilter(
-          attributeCode,
-          attributeFilter.getConcept()
-        );
-        translatedFilters.push(conceptFilter);
-      }
-      if (
-        attributeFilter.isReferenceSet() &&
-        attributeFilter.getReference()?.isSelectedReferenceSet()
-      ) {
-        const referenceFilter = this.createReferences(attributeCode, attributeFilter.getReference());
-        translatedFilters.push(referenceFilter);
-      }
-      if (attributeFilter.isQuantitySet()) {
-        const quantityFilter = this.quantityFilterTranslator.translateQuantityAttributeFilter(
-          attributeCode,
-          attributeFilter.getQuantity()
-        );
-        translatedFilters.push(quantityFilter);
+      const filter = this.createAttributeFilter(attributeFilter);
+      if (filter) {
+        translatedFilters.push(filter);
       }
     });
     return translatedFilters.length > 0 ? translatedFilters : undefined;
+  }
+
+  public createAttributeFilter(attributeFilter: AttributeFilter): AbstractStructuredQueryFilters {
+    const attributeCode = attributeFilter.getAttributeCode();
+    if (attributeFilter.isConceptSet() && attributeFilter.getConcept()?.hasSelectedConcepts()) {
+      return this.createAttributeConceptFilter(attributeCode, attributeFilter.getConcept());
+    }
+    if (
+      attributeFilter.isReferenceSet() &&
+      attributeFilter.getReference()?.isSelectedReferenceSet()
+    ) {
+      return this.createReferences(attributeCode, attributeFilter.getReference());
+    }
+    if (attributeFilter.isQuantitySet()) {
+      return this.quantityFilterTranslator.translateQuantityAttributeFilter(
+        attributeCode,
+        attributeFilter.getQuantity()
+      );
+    }
   }
 
   private createStructuredQueryValueFilters(
