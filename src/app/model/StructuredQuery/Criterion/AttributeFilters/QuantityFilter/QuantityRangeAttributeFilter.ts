@@ -1,18 +1,17 @@
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { AbstractQuantityComparatorFilter } from './AbstractQuantityComparatorFilter';
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
+import { AbstractQuantityRangeFilter } from '../../Abstract/Quantity/Range/AbstractQuantityRangeFilter';
 import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
-export class QuantityComparatorAttributeFilter extends AbstractQuantityComparatorFilter {
+export class QuantityRangeAttributeFilter extends AbstractQuantityRangeFilter {
   private attributeCode: TerminologyCode;
 
   constructor(
     attributeCode: TerminologyCode,
-    unit: QuantityUnit,
-    comparator: QuantityComparisonOption,
-    value: number
+    minValue: number,
+    maxValue: number,
+    unit: QuantityUnit
   ) {
-    super(unit, comparator, value);
+    super(minValue, maxValue, unit);
     this.attributeCode = attributeCode;
   }
 

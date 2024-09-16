@@ -8,7 +8,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
  */
 export class ReferenceFilter extends AbstractConceptFilter {
   private selectedReferences: ReferenceCriterion[] = [];
-  private allowedReferenceUri: Array<string> = []; // Renamed to allowedReferenceUri
+  private allowedReferenceUri: string;
   private type: FilterTypes = FilterTypes.REFERENCE;
 
   /**
@@ -19,7 +19,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    * @param selectedConcepts - The selected concepts (inherited from AbstractConceptFilter).
    */
   constructor(
-    allowedReferenceUri: Array<string>,
+    allowedReferenceUri: string,
     selectedReferences: ReferenceCriterion[] = [],
     selectedConcepts: Array<TerminologyCode>
   ) {
@@ -51,7 +51,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @returns The allowed reference URI.
    */
-  getAllowedReferenceUri(): string[] {
+  getAllowedReferenceUri(): string {
     return this.allowedReferenceUri;
   }
 
@@ -60,7 +60,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @param allowedReferenceUri - The allowed reference URI to set.
    */
-  setAllowedReferenceUri(allowedReferenceUri: Array<string>): void {
+  setAllowedReferenceUri(allowedReferenceUri: string): void {
     this.allowedReferenceUri = allowedReferenceUri;
   }
 
@@ -91,7 +91,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    * @returns The created ReferenceFilter instance.
    */
   static create(
-    allowedReferenceUri: Array<string>,
+    allowedReferenceUri: string,
     selectedReference: ReferenceCriterion[] = [],
     selectedConcepts: Array<TerminologyCode>
   ): ReferenceFilter {

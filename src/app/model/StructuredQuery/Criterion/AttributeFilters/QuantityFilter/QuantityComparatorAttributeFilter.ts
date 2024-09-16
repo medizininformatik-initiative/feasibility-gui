@@ -1,17 +1,18 @@
-import { AbstractQuantityRangeFilter } from './AbstractQuantityRangeFilter';
+import { AbstractQuantityComparatorFilter } from '../../Abstract/Quantity/Comparator/AbstractQuantityComparatorFilter';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
-export class QuantityRangeAttributeFilter extends AbstractQuantityRangeFilter {
+export class QuantityComparatorAttributeFilter extends AbstractQuantityComparatorFilter {
   private attributeCode: TerminologyCode;
 
   constructor(
     attributeCode: TerminologyCode,
-    minValue: number,
-    maxValue: number,
-    unit: QuantityUnit
+    unit: QuantityUnit,
+    comparator: QuantityComparisonOption,
+    value: number
   ) {
-    super(minValue, maxValue, unit);
+    super(unit, comparator, value);
     this.attributeCode = attributeCode;
   }
 
@@ -31,5 +32,14 @@ export class QuantityRangeAttributeFilter extends AbstractQuantityRangeFilter {
    */
   public setAttributeCode(attributeCode: TerminologyCode): void {
     this.attributeCode = attributeCode;
+  }
+
+  public static createFilter(
+    attributeCode: TerminologyCode,
+    unit: QuantityUnit,
+    comparator: QuantityComparisonOption,
+    value: number
+  ) {
+    return new QuantityComparatorAttributeFilter(attributeCode, unit, comparator, value);
   }
 }

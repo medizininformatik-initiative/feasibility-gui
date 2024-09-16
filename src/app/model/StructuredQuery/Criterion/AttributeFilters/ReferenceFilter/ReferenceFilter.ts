@@ -1,4 +1,4 @@
-import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters';
+import { AbstractStructuredQueryFilters } from '../../Abstract/AbstractStructuredQueryFilters';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { StructuredQueryCriterion } from '../../StructuredQueryCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -69,5 +69,12 @@ export class ReferenceFilter extends AbstractStructuredQueryFilters {
    */
   public setAttributeCode(attributeCode: TerminologyCode): void {
     this.attributeCode = attributeCode;
+  }
+
+  public static createFilter(
+    attributeCode: TerminologyCode,
+    structuredQueryCriterion: StructuredQueryCriterion[]
+  ): ReferenceFilter {
+    return new ReferenceFilter(attributeCode, structuredQueryCriterion);
   }
 }

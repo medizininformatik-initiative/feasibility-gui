@@ -1,4 +1,4 @@
-import { AbstractConceptFilter } from './AbstractConceptFilter';
+import { AbstractConceptFilter } from '../../Abstract/ConceptFilter/AbstractConceptFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 export class ConceptAttributeFilter extends AbstractConceptFilter {
@@ -25,5 +25,9 @@ export class ConceptAttributeFilter extends AbstractConceptFilter {
    */
   public setAttributeCode(attributeCode: TerminologyCode): void {
     this.attributeCode = attributeCode;
+  }
+
+  public static createFilter(attributeCode: TerminologyCode, selectedConcepts: TerminologyCode[]) {
+    return new ConceptAttributeFilter(attributeCode, Array.from(selectedConcepts));
   }
 }

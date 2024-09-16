@@ -1,7 +1,7 @@
-import { AbstractQuantityFilter } from '../AbstractQuantityFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
+import { AbstractQuantityFilter } from '../AbstractQuantityFilter';
 
 /**
  * Class for quantity comparator filters in a structured query.

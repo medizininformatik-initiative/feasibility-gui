@@ -1,6 +1,6 @@
 import { AbstractAttributeFilters } from './AttributeFilter/AbstractAttributeFilters';
 import { AbstractCriterion } from './AbstractCriterion';
-import { AttributeDefinitions } from '../../AttributeDefinitions';
+import { AttributeDefinitions } from '../../Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeFilter } from './AttributeFilter/AttributeFilter';
 import { AttributeFiltersBuilder } from './AttributeFilter/AttributeFiltersBuilder';
 import { Criterion } from './Criterion';
@@ -11,6 +11,7 @@ import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
 import { BetweenFilter } from './TimeRestriction/BetweenFilter';
 import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
+import { AbstractAttributeDefinition } from '../../Utilities/AttributeDefinition.ts/AbstractAttributeDefinition';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
@@ -185,9 +186,9 @@ export class CriterionBuilder {
    */
   buildAttributeFilter(
     display: string,
-    attributeCode: TerminologyCode,
     filterType: FilterTypes,
-    filterParams: AttributeDefinitions
+    filterParams: AbstractAttributeDefinition,
+    attributeCode?: TerminologyCode
   ): AbstractAttributeFilters {
     const attributeFilterBuilder = new AttributeFiltersBuilder(
       display,
@@ -212,8 +213,9 @@ export class CriterionBuilder {
         );
         break;
       case FilterTypes.REFERENCE:
+        const attributeDefinition = filterParams as AttributeDefinitions;
         attributeFilterBuilder.withReference(
-          attributeFilterBuilder.buildReferenceFilter([filterParams.getReferenceCriteriaSet()])
+          attributeFilterBuilder.buildReferenceFilter(attributeDefinition.getReferenceCriteriaSet())
         );
         break;
       default:

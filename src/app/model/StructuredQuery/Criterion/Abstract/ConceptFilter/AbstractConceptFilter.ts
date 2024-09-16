@@ -1,6 +1,6 @@
-import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters';
 
 /**
  * Abstract base class for concept filters in a structured query.

@@ -1,6 +1,6 @@
-import { AbstractQuantityFilter } from '../AbstractQuantityFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
+import { AbstractQuantityFilter } from '../AbstractQuantityFilter';
 
 export abstract class AbstractQuantityRangeFilter extends AbstractQuantityFilter {
   private minValue: number = null;

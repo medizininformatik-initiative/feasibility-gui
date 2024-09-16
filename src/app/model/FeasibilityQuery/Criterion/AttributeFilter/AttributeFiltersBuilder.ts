@@ -126,7 +126,7 @@ export class AttributeFiltersBuilder {
    * @returns An instance of ReferenceFilter.
    */
   buildReferenceFilter(
-    allowedReferenceUri: Array<string>,
+    allowedReferenceUri: string,
     selectedReference?: ReferenceCriterion[],
     selectedConcepts?: Array<TerminologyCode>
   ): ReferenceFilter {

@@ -1,4 +1,4 @@
-import { AbstractStructuredQueryFilters } from './AttributeFilters/AbstractStructuredQueryFilters';
+import { AbstractStructuredQueryFilters } from './Abstract/AbstractStructuredQueryFilters';
 import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 

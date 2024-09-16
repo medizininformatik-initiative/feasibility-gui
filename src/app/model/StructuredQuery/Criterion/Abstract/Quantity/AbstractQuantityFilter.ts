@@ -1,7 +1,6 @@
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 /**
  * Abstract base class for quantity filters in a structured query.

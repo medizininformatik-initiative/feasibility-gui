@@ -1,15 +1,17 @@
 import { TerminologyCode } from '../Terminology/TerminologyCode';
-import { AttributeDefinitions } from '../AttributeDefinitions';
+import { AttributeDefinitions } from '../Utilities/AttributeDefinition.ts/AttributeDefinitions';
+import { ValueDefinition } from '../Utilities/AttributeDefinition.ts/ValueDefnition';
 
 /**
  * Represents criteria profile data.
  */
 export class CriteriaProfileData {
-  private attributeDefinitions: Array<AttributeDefinitions>;
+  private attributeDefinitions: Array<AttributeDefinitions> = [];
   private context: TerminologyCode;
   private termCodes: TerminologyCode[];
   private id: string;
   private timeRestrictionAllowed = false;
+  private valueDefinitions: Array<ValueDefinition> = [];
 
   /**
    * Constructs a new CriteriaProfileData object.
@@ -23,13 +25,15 @@ export class CriteriaProfileData {
     timeRestrictionAllowed: boolean,
     attributeDefinitions: Array<AttributeDefinitions>,
     context: TerminologyCode,
-    termCodes: TerminologyCode[]
+    termCodes: TerminologyCode[],
+    valueDefinitions?: ValueDefinition[]
   ) {
     this.attributeDefinitions = attributeDefinitions;
     this.context = context;
     this.termCodes = termCodes;
     this.id = id;
     this.timeRestrictionAllowed = timeRestrictionAllowed;
+    this.valueDefinitions = valueDefinitions;
   }
 
   /**
@@ -119,5 +123,13 @@ export class CriteriaProfileData {
    */
   setTimeRestrictionAllowed(timeRestrictionAllowed: boolean): void {
     this.timeRestrictionAllowed = timeRestrictionAllowed;
+  }
+
+  public getValueDefinitions(): Array<ValueDefinition> {
+    return this.valueDefinitions;
+  }
+
+  public setValueDefinitions(valueDefinitions: Array<ValueDefinition>): void {
+    this.valueDefinitions = valueDefinitions;
   }
 }
