@@ -14,7 +14,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { CreateCriterionService } from 'src/app/service/Criterion/Builder/CreateCriterion.service';
+import { NewStructuredQuery2UIQueryTranslatorService } from 'src/app/service/Translator/StructureQuery/NewStructuredQuery2UIQueryTranslator.service';
+import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterion.service';
 
 @Component({
   selector: 'num-stage',
@@ -42,7 +43,8 @@ export class PreStageComponent implements OnInit, OnDestroy {
     private criterionService: CreateCriterionService,
     private queryProviderService: FeasibilityQueryProviderService,
     private router: Router,
-    private stageProviderService: StageProviderService
+    private stageProviderService: StageProviderService,
+    private testService: NewStructuredQuery2UIQueryTranslatorService
   ) {}
 
   ngOnInit() {
@@ -86,5 +88,9 @@ export class PreStageComponent implements OnInit, OnDestroy {
 
   isValidQuery(): boolean {
     return this.query.getInclusionCriteria().length > 0;
+  }
+
+  public test() {
+    this.testService.testFunction();
   }
 }
