@@ -1,19 +1,21 @@
-import { AttributeDefinitions } from 'src/app/model/AttributeDefinitions';
+import { AbstractAttributeDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/AbstractAttributeDefinition';
+import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { CriterionHashService } from '../CriterionHash.service';
-import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
+import { CriterionHashService } from '../../CriterionHash.service';
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { finalize, of, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SelectedTableItemsService } from '../../ElasticSearch/SearchTermListItemService.service';
-import { StageProviderService } from '../../Provider/StageProvider.service';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
+import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Injectable({
@@ -44,21 +46,16 @@ export class CreateCriterionService {
       .pipe(
         switchMap((responses: any[]) => {
           const criteriaProfileDataArray = responses.map((response) => {
-            const attributeDefinitions: AttributeDefinitions[] = this.mapAttributeDefinitions(
-              response.uiProfile
-            );
-            if (response.uiProfile.valueDefinition) {
-              attributeDefinitions.push(this.mapValueDefinition(response.uiProfile));
-            }
             const context = this.mapTerminologyCode(response.context);
             const termCodes = response.termCodes.map(this.mapTerminologyCode);
             const id = response.id;
             return new CriteriaProfileData(
               id,
               response.uiProfile.timeRestrictionAllowed,
-              attributeDefinitions,
+              this.mapAttributeDefinitions(response.uiProfile),
               context,
-              termCodes
+              termCodes,
+              this.mapValueDefinition(response.uiProfile)
             );
           });
           return of(criteriaProfileDataArray);
@@ -71,6 +68,7 @@ export class CreateCriterionService {
       .subscribe(
         (criteriaProfileDataArray: CriteriaProfileData[] | null) => {
           criteriaProfileDataArray.forEach((criteriaProfileData) => {
+            console.log(criteriaProfileData);
             this.createCriterionFromProfileData(criteriaProfileData);
           });
           this.ids.clear();
@@ -94,7 +92,6 @@ export class CreateCriterionService {
           attributeDefinition.allowedUnits?.map(
             (unit) => new QuantityUnit(unit.code, unit.display, unit.system)
           ) || [],
-          false,
           this.createNewTerminologyCode(attributeDefinition.attributeCode),
           attributeDefinition.max,
           attributeDefinition.min,
@@ -105,22 +102,26 @@ export class CreateCriterionService {
     );
   }
 
-  private mapValueDefinition(uiProfile: any): AttributeDefinitions {
-    return new AttributeDefinitions(
-      uiProfile.name,
-      uiProfile.valueDefinition.type,
-      uiProfile.valueDefinition.optional,
-      uiProfile.valueDefinition.allowedUnits?.map(
-        (unit) => new QuantityUnit(unit.code, unit.display, unit.system)
-      ) || [],
-      true,
-      undefined,
-      uiProfile.valueDefinition.max,
-      uiProfile.valueDefinition.min,
-      uiProfile.valueDefinition.precision,
-      uiProfile.valueDefinition.referencedCriteriaSet,
-      uiProfile.valueDefinition.referencedValueSet
-    );
+  private mapValueDefinition(uiProfile: any): ValueDefinition[] {
+    if (uiProfile.valueDefinition) {
+      return [
+        new ValueDefinition(
+          uiProfile.name,
+          uiProfile.valueDefinition.type,
+          uiProfile.valueDefinition.optional,
+          uiProfile.valueDefinition.allowedUnits?.map(
+            (unit) => new QuantityUnit(unit.code, unit.display, unit.system)
+          ) || [],
+          uiProfile.valueDefinition.max,
+          uiProfile.valueDefinition.min,
+          uiProfile.valueDefinition.precision,
+          uiProfile.valueDefinition.referencedValueSet
+        ),
+      ];
+    }
+
+    // Return an empty array if valueDefinition is undefined or null
+    return [];
   }
 
   private createNewTerminologyCode(terminologyCode) {
@@ -141,6 +142,9 @@ export class CreateCriterionService {
 
     criteriaProfileData.getAttributeDefinitions().forEach((attributeDefinition) => {
       this.processAttributeDefinition(criterionBuilder, attributeDefinition);
+    });
+    criteriaProfileData.getValueDefinitions().forEach((valueDefinition) => {
+      this.processValueDefinition(criterionBuilder, valueDefinition);
     });
 
     if (criteriaProfileData.getTimeRestrictionAllowed()) {
@@ -181,17 +185,27 @@ export class CreateCriterionService {
     attributeDefinition: AttributeDefinitions
   ): void {
     const name = attributeDefinition.getName();
-    const code = attributeDefinition.getAttributeCode();
+    const attributeCode = attributeDefinition.getAttributeCode();
     const type = attributeDefinition.getType();
     const attributeDef = attributeDefinition;
-    if (!attributeDefinition.getValueDefinition()) {
-      criterionBuilder.withAttributeFilter(
-        criterionBuilder.buildAttributeFilter(name, code, type, attributeDef) as AttributeFilter
-      );
-    } else {
-      criterionBuilder.withValueFilters([
-        criterionBuilder.buildAttributeFilter(name, code, type, attributeDef) as ValueFilter,
-      ]);
-    }
+    criterionBuilder.withAttributeFilter(
+      criterionBuilder.buildAttributeFilter(
+        name,
+        type,
+        attributeDef,
+        attributeCode
+      ) as AttributeFilter
+    );
+  }
+
+  private processValueDefinition(
+    criterionBuilder: CriterionBuilder,
+    valueDefinition: ValueDefinition
+  ): void {
+    const name = valueDefinition.getName();
+    const type = valueDefinition.getType();
+    criterionBuilder.withValueFilters([
+      criterionBuilder.buildAttributeFilter(name, type, valueDefinition) as ValueFilter,
+    ]);
   }
 }

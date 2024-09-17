@@ -35,7 +35,7 @@ export class CriterionMetadataService {
       context,
       criterionHash,
       display,
-      isInvalid: true,
+      isInvalid: false,
       uniqueID: uuidv4(),
       termCodes,
     };
