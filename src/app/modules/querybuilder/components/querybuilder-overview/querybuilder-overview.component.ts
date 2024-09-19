@@ -1,11 +1,11 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+/*import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FeatureProviderService } from '../../service/feature-provider.service';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { QueryProviderService } from '../../service/query-provider.service';
 import { Router } from '@angular/router';
 import { StructuredQuery } from '../../../../model/StructuredQuery/StructuredQuery';
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/StructuredQuery2UIQueryTranslator.service';
-import { AnnotatedStructuredQuery } from '../../../../model/result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { AnnotatedStructuredQuery } from '../../../../model/Result/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { ValidationService } from '../../../../service/Validation.service';
 import { QueryService } from '../../../../service/QueryService.service';
 
@@ -28,7 +28,7 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     private validationService: ValidationService
   ) {}
 
-  query: Query;
+  query: FeasibilityQuery;
 
   fileName: string;
 
@@ -79,3 +79,4 @@ export class QuerybuilderOverviewComponent implements OnInit, AfterViewChecked {
     this.router.navigate(['/querybuilder/editor'], { state: { preventReset: true } });
   }
 }
+*/

@@ -1,0 +1,10 @@
+<div fxLayout="column" class="container">
+  <div class="filter-title">{{ attributeCodeDisplay }}</div>
+  <num-shared-concept-filter
+    *ngIf="conceptFilter"
+    [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
+    [allowedConceptUri]="conceptFilter.getAllowedConceptUri()"
+    (changedSelectedConcepts)="emitConceptFilter($event)"
+  >
+  </num-shared-concept-filter>
+</div>

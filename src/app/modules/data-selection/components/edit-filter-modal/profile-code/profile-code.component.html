@@ -1,0 +1,8 @@
+<div class="concept-container">
+  <num-shared-concept-filter
+    [allowedConceptUri]="profileCodeFilter?.getValueSetUrls()"
+    [preSelectedConcepts]="profileCodeFilter?.getSelectedTokens()"
+    (changedSelectedConcepts)="emitProfileCode($event)"
+  >
+  </num-shared-concept-filter>
+</div>

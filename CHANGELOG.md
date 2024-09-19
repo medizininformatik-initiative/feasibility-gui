@@ -1,6 +1,53 @@
 # Changelog
 
 
+## v6.0.0-alpha.2 (2024-09-05)
+
+### Bugfix
+* fixed display and css of the search filter ([#231](https://github.com/medizininformatik-initiative/feasibility-gui/issues/231))
+* fixed spelling issue ([#230](https://github.com/medizininformatik-initiative/feasibility-gui/issues/230))
+* fixed filter error in the linking criteria search ([#229](https://github.com/medizininformatik-initiative/feasibility-gui/issues/229))
+* fixed search param error in the linking criteria search ([#228](https://github.com/medizininformatik-initiative/feasibility-gui/issues/228))
+* show attribute display in the modal window ([#227](https://github.com/medizininformatik-initiative/feasibility-gui/issues/227))
+* fixed viewport for Drag&Drop ([#226](https://github.com/medizininformatik-initiative/feasibility-gui/issues/226))
+* exclude termcode version from hash ([#224](https://github.com/medizininformatik-initiative/feasibility-gui/issues/224))
+* fixed various css problems
+
+### Changed
+* update to new api endpoint version v4 ([#232](https://github.com/medizininformatik-initiative/feasibility-gui/issues/232))
+* setting uniqueID for each DataSelection profile
+
+
+
+## v6.0.0-alpha.1 (2024-08-28)
+
+### Changed
+* New Design
+  - Introduced a completely redesigned user interface for an improved user experience.
+  - Updated visual elements, including color schemes, typography, and iconography, to create a modern and cohesive look.
+  
+* New Data Model
+  - Implemented a new data model to enhance data handling and processing capabilities.
+  
+* New Component Structure
+  - Reorganized the component structure for better modularity and maintainability.
+  
+* New Process Infrastructure
+  - Developed a new process infrastructure to optimize system performance and scalability.
+  - Redesigned the information architecture to make content more discoverable and ensure logical organization of information throughout the platform.
+  
+* New Backend Endpoints
+  - Added new backend endpoints to support additional functionalities and improve API interactions.
+  - Integrated Elastic Search feature that allows users to quickly find criteria and concepts within the application.
+
+* New Module: Data Selection
+  - Introduced a new data selection module to facilitate more efficient data management and retrieval.
+  
+* New translation services 
+  - Implemented new translation services for converting FeasibilityQueries and DataSelections to new CRDTL format.
+
+
+
 ## v5.0.0-alpha.1 (2024-04-01)
 
 ### Changed

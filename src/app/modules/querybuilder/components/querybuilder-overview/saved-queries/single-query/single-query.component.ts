@@ -1,3 +1,4 @@
+/*
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 @Component({
@@ -104,3 +105,4 @@ export class SingleQueryComponent implements OnInit {
     this.updateQuery();
   }
 }
+*/

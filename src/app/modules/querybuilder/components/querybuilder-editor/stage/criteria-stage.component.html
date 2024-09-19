@@ -1,0 +1,32 @@
+<div cdkDropListGroup fxFlexFill>
+  <div>
+    <p style="font-size: xx-large">{{ 'QUERYBUILDER.STAGE.HEADER' | translate }}</p>
+    <p style="width: 60%; color: #c5cacf">
+      {{ 'QUERYBUILDER.STAGE.HEADER_INFO' | translate }}
+    </p>
+    <br />
+    <p class="header-title">{{ 'QUERYBUILDER.HEADER_TITLE' | translate }}</p>
+  </div>
+  <div
+    id="Stage"
+    cdkDropList
+    numAppDropGroup
+    fxLayout="row wrap"
+    fxLayoutAlign="start"
+    class="criteria-container"
+  >
+    <div *ngFor="let criterion of $criteriaArray | async" class="criteria-box">
+      <num-criteria-box [criterion]="criterion"></num-criteria-box>
+    </div>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      *ngIf="($criteriaArray | async).length === 0"
+      class="no-selected-criteria"
+    >
+      {{ 'QUERYBUILDER.STAGE.NO_SELECTED_CRITERIA' | translate }}
+    </div>
+  </div>
+  <num-display-criteria-group [isEditable]="true" style="height: 400px">
+  </num-display-criteria-group>
+</div>

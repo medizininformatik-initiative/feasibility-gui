@@ -60,7 +60,7 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -77,8 +77,30 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
             }
-          }
+          },
+          "defaultConfiguration": "development"
+          
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -88,7 +110,10 @@
           },
           "configurations": {
             "deploy": {
-              "browserTarget": "num-portal-webapp:build:deploy"
+              "browserTarget": "num-portal-webapp:build:development"
+            },
+            "development": {
+              "browserTarget": "studio:build:development"
             }
           }
         },

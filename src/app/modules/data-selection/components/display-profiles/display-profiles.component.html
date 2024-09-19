@@ -1,0 +1,6 @@
+<ng-container *ngIf="($dataSelectionProfileArray | async)?.length > 0">
+  <div *ngFor="let profile of $dataSelectionProfileArray | async" class="container">
+    <div class="container"></div>
+    <num-data-selection-boxes [profile]="profile" class="box-container"> </num-data-selection-boxes>
+  </div>
+</ng-container>

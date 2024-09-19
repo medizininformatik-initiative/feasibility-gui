@@ -1,0 +1,22 @@
+<fa-icon
+  [matMenuTriggerFor]="menu"
+  #menuTrigger="matMenuTrigger"
+  class="menu-icon"
+  size="sm"
+  icon="ellipsis-h"
+>
+</fa-icon>
+<mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+  <button class="divider" mat-menu-item>Optionen</button>
+  <div *ngFor="let item of menuItems; let isLast = last">
+    <button
+      [ngClass]="{ divider: !isLast, 'last-item': isLast }"
+      mat-menu-item
+      [disabled]="item.disabled"
+      (click)="item.action(id, params)"
+    >
+      <fa-icon [icon]="item.icon" size="sm" class="icon-color"></fa-icon>
+      {{ 'SHAREDCOMPONENTS.MENU.' + item.label | translate }}
+    </button>
+  </div>
+</mat-menu>

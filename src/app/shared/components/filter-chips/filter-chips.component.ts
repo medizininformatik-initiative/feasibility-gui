@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IFilterChip } from '../../models/filter-chip.interface';
+import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
+import { Observable, of } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'num-filter-chips',
@@ -7,14 +8,16 @@ import { IFilterChip } from '../../models/filter-chip.interface';
   styleUrls: ['./filter-chips.component.scss'],
 })
 export class FilterChipsComponent implements OnInit {
+  chipData$: Observable<InterfaceFilterChip[]> = of([]);
+
+  @Input()
+  filterChips: InterfaceFilterChip[] = [];
+
   constructor() {}
-  @Input() filterChips: IFilterChip<string | number>[];
-  @Output() selectionChange = new EventEmitter();
 
   ngOnInit(): void {}
 
-  handleClickOnChip($event: any): void {
-    $event.isSelected = !$event.isSelected;
-    this.selectionChange.emit(this.filterChips);
+  public toggleExpanded(chip) {
+    chip.expanded = !chip.expanded;
   }
 }

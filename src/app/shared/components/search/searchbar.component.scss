@@ -1,0 +1,54 @@
+.show-above-overlay {
+  z-index: 2000;
+}
+
+.width-100 {
+  width: 100%;
+}
+.form-design {
+  border: 1px solid #c3c7ce;
+  border-radius: 4px;
+}
+.form-design:focus-within {
+  outline: none !important;
+  font-weight: 600;
+  border-width: 2px;
+  border-color: #5a79ae;
+  background-color: #eff2f7;
+  box-shadow: 0 0 10px -5px #5a79ae;
+  transition: 0.5s;
+  transition-property: background-color;
+}
+.input-design {
+  height: 42px;
+  color: #333;
+  padding: 0 20px;
+  font-size: 18px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: Titillium Web, serif;
+  border: none;
+  margin-right: 20px;
+}
+
+.input-design:focus {
+  outline: none !important;
+  padding: 0 20px;
+  font-weight: 600;
+  background-color: #eff2f7;
+  transition: 0.5s;
+  transition-property: background-color;
+}
+
+.icon-design {
+  padding-top: 12px;
+  padding-left: 10px;
+  min-width: 40px;
+  color: #c2c2c2;
+  font-size: medium;
+}
+
+.input-design:focus + fa-icon {
+  color: #828282;
+}

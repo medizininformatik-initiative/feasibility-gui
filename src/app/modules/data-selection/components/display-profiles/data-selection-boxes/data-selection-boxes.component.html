@@ -1,0 +1,21 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="selection-box">
+  <div class="display-container">
+    {{ profile.getDisplay() }}
+  </div>
+  <div class="display-container">
+    {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
+    <div *ngIf="filterChipsSelected === false" class="filterChipsInfo">
+      {{ 'DATASELECTION.SELECTION_BOX.FIELDS_MISSING' | translate }}
+    </div>
+    <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
+  </div>
+  <div fxLayout="column" class="filter-container">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
+      <num-menu [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
+    </div>
+    <div class="filter-chips-container">
+      <num-filter-chips [filterChips]="filtersFilterChips"> </num-filter-chips>
+    </div>
+  </div>
+</div>

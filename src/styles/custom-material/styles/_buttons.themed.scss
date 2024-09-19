@@ -7,7 +7,7 @@
   $name: map-get($theme, name);
 
   .mat-mdc-button-base {
-    text-transform: uppercase !important;
+    text-transform: none !important;
   }
   .mat-mdc-icon-button {
     width: 40px;

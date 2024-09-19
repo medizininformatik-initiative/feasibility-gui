@@ -1,0 +1,38 @@
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+.searchbar-container {
+  width: 70%;
+  padding-bottom: 20px;
+}
+
+.background-color-button {
+  color: white;
+  background-color: #5a79af;
+  margin-right: 10px;
+}
+
+.action-bar-layout {
+  width: 100%;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 20px;
+  width: 80%;
+  z-index: 100;
+}
+
+.tree-container {
+  width: 100%;
+  overflow: auto;
+  height: 500px;
+}
+
+.box-container {
+  width: 100%;
+  margin-top: 20px;
+  height: 100%;
+}

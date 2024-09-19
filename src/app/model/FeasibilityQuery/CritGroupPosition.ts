@@ -1,7 +1,6 @@
-import { CritType } from './Group';
+import { CritType } from './CritType';
 
 export class CritGroupPosition {
-  groupId: number;
   critType: CritType;
   row: number;
   column: number;

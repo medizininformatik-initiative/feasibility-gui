@@ -14,13 +14,19 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
   },
   {
-    routeTo: 'dataselection/editor',
+    routeTo: 'querybuilder/result',
     roles: ['main'],
     icon: 'dna',
-    translationKey: 'NAVIGATION.DATASELECTION_EDITOR',
+    translationKey: 'NAVIGATION.QUERYBUILDER_RESULT',
   },
   {
-    routeTo: 'querybuilder/overview',
+    routeTo: 'data-selection',
+    roles: ['main'],
+    icon: 'dna',
+    translationKey: 'NAVIGATION.DATASELECTION',
+  },
+  {
+    routeTo: 'saved-queries',
     roles: ['main'],
     icon: 'bars',
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',

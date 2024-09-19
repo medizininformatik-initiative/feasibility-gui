@@ -1,0 +1,50 @@
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ActiveDataSelectionService {
+  /**
+   * BehaviorSubject that holds the state of the active FeasibilityQuery.
+   * Initialized with `null` as the default value.
+   */
+  private activeDataSelectionIDSubject: BehaviorSubject<string | null> = new BehaviorSubject<
+    string | null
+  >(null);
+
+  /**
+   * Observable of the active FeasibilityQueryID.
+   * Use this to subscribe and get updates when the active FeasibilityQueryID changes.
+   */
+  public activeDataSelectionID$ = this.activeDataSelectionIDSubject.asObservable();
+  private activeDataSelectionId: string;
+
+  constructor() {}
+
+  /**
+   * Getter method to retrieve the current value of the active FeasibilityQueryID.
+   *
+   * @returns The current active FeasibilityQueryID or null if not set.
+   */
+  public getActiveDataSelectionIDObservable(): Observable<string> | null {
+    return this.activeDataSelectionIDSubject.asObservable();
+  }
+
+  public getActiveDataSelectionID(): string | null {
+    return this.activeDataSelectionId;
+  }
+  /**
+   * Setter method to update the active FeasibilityQueryID.
+   *
+   * @param id - The FeasibilityQueryID instance to set as active.
+   */
+  public setActiveDataSelectionID(id: string): void {
+    this.activeDataSelectionId = id;
+    this.activeDataSelectionIDSubject.next(id);
+  }
+
+  public getActiveDataSelectionId(): string {
+    return this.activeDataSelectionId;
+  }
+}

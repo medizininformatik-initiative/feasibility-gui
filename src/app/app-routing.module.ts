@@ -3,6 +3,7 @@ import { DataProtectionComponent } from './site/data-protection/data-protection.
 import { NgModule } from '@angular/core';
 import { RoleGuard } from './core/auth/guards/role.guard';
 import { RouterModule, Routes } from '@angular/router';
+import { DataSelectionComponent } from './modules/data-selection/components/data-selection.component';
 
 export const routes: Routes = [
   {
@@ -29,18 +30,6 @@ export const routes: Routes = [
       ).then((m) => m.QuerybuilderModule),
   },
   {
-    path: 'dataselection',
-    canLoad: [RoleGuard],
-    data: {
-      navId: 'dataselection',
-      roles: ['main'],
-    },
-    loadChildren: () =>
-      import(
-        /* webpackChunkName: "Dataselection.Module" */ './modules/dataselection/dataselection.module'
-      ).then((m) => m.DataselectionModule),
-  },
-  {
     path: 'options',
     canLoad: [RoleGuard],
     data: {
@@ -51,6 +40,42 @@ export const routes: Routes = [
       import(/* webpackChunkName: "Options.Module" */ './modules/options/options.module').then(
         (m) => m.OptionsModule
       ),
+  },
+  {
+    path: 'result',
+    canLoad: [RoleGuard],
+    data: {
+      navId: 'result',
+      roles: ['main'],
+    },
+    loadChildren: () =>
+      import(
+        /* webpackChunkName: "Result.Module" */ './modules/querybuilder/querybuilder.module'
+      ).then((m) => m.QuerybuilderModule),
+  },
+  {
+    path: 'data-selection',
+    canLoad: [RoleGuard],
+    data: {
+      navId: 'data-selection',
+      roles: ['main'],
+    },
+    loadChildren: () =>
+      import(
+        /* webpackChunkName: "DataSelection.Module" */ './modules/data-selection/data-selection.module'
+      ).then((m) => m.DataSelectionModule),
+  },
+  {
+    path: 'saved-queries',
+    canLoad: [RoleGuard],
+    data: {
+      navId: 'saved-queries',
+      roles: ['main'],
+    },
+    loadChildren: () =>
+      import(
+        /* webpackChunkName: "SavedQueries.Module" */ './modules/saved-queries/saved-queries.module'
+      ).then((m) => m.SavedQueriesModule),
   },
   {
     path: 'data-protection',

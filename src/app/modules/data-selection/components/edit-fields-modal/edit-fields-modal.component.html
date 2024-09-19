@@ -1,0 +1,44 @@
+<num-modal-window (saveButtonSelected)="saveFields()" (cancelButtonSelected)="closeDialog()">
+  <div class="filter-title">
+    {{ 'DATASELECTION.FIELD_SELECTION.HEADER' | translate }} {{ profileName }}
+  </div>
+  <div class="tree-container">
+    <div *ngFor="let singleTree of tree">
+      <num-tree
+        [treeData]="singleTree"
+        (selectedCheckbox)="setSelectedFieldElement($event)"
+      ></num-tree>
+    </div>
+  </div>
+  <div *ngIf="arrayOfSelectedFields.length > 0">
+    <div class="filter-title">
+      {{ 'DATASELECTION.FIELD_SELECTION.FIELD_SELECTION' | translate }}
+    </div>
+    <div
+      *ngFor="let selectedField of arrayOfSelectedFields"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="selectedFilterBox"
+    >
+      <div class="display-part">
+        {{ selectedField.display }}
+      </div>
+      <div>
+        <mat-checkbox
+          [checked]="selectedField.getIsRequired()"
+          (change)="setFieldAsRequired(selectedField)"
+        >
+          {{ 'DATASELECTION.FIELD_SELECTION.REQUIRED' | translate }}
+        </mat-checkbox>
+      </div>
+      <div fxLayout="row" fxFlex="10" fxLayoutAlign="end center" class="padding-right-10">
+        <fa-icon
+          [icon]="'times'"
+          size="1x"
+          (click)="removeSelectedConcept(selectedConceptFilter)"
+          class="delete-button"
+        ></fa-icon>
+      </div>
+    </div>
+  </div>
+</num-modal-window>

@@ -1,113 +1,17 @@
-<div class="header-line">
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxLayout="row" fxLayoutAlign="space-between center" class="result-header-line">
-      <num-result-simple
-        class="result-simple-box"
-        [resultObservable]="resultObservable$"
-        [result]="result"
-        [showSpinner]="showSpinningIcon"
-        [isResultLoaded]="loadedResult"
-        [resultFromSavedQuery]="resultFromSavedQuery"
-        [gottenDetailedResult]="gottenDetailedResult"
-        [resultUrl]="resultUrl"
-        [callsRemaining]="callsRemaining"
-        [callsLimit]="callsLimit"
-        (resultGotten)="updateResultGotten($event)"
-      ></num-result-simple>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="space-between" class="query-buttons-box">
-      <div fxLayout="row" fxLayoutAlign="end center">
-        <num-button
-          [type]="'primary'"
-          [isDisabled]="actionDisabledReset"
-          (click)="!actionDisabledReset && doReset()"
-          class="button-reset"
-        >
-          {{ 'BUTTON.RESET' | translate }}
-        </num-button>
-        <num-button
-          [type]="'primary'"
-          [isDisabled]="actionDisabledReset"
-          (click)="!actionDisabledReset && doSave()"
-          class="button-save"
-        >
-          {{ 'BUTTON.SAVEQUERY' | translate }}
-        </num-button>
-        <num-button
-          [type]="'primary'"
-          [isDisabled]="actionDisabledSend"
-          (click)="!actionDisabledSend && doSend()"
-          class="button-send"
-        >
-          {{ 'BUTTON.SEND' | translate }}
-        </num-button>
-      </div>
-      <div
-        *ngIf="actionDisabledSend && !actionDisabledReset && !hasInvalidCriteria"
-        class="send-button-alert-text"
-      >
-        {{ 'QUERYBUILDER.HINT.NO_CRITERIA_SELECTED' | translate }}
-      </div>
-    </div>
+<div class="container" fxLayout="column">
+  <num-stage (scrollClick)="scroll($event)"></num-stage>
+  <div fxFlexFill fxLayoutAlign="start" class="fullscreen">
+    <num-search fxFlexFill #search></num-search>
   </div>
 
-  <div class="container-consent">
-    <div class="consent-header">{{ 'QUERYBUILDER.SEARCH.CONSENT_HEADER' | translate }}</div>
-    <div>
-      <mat-radio-group
-        class="consent-radio-group"
-        (change)="setConsent($event)"
-        [(ngModel)]="query.consent"
-      >
-        <mat-radio-button class="consent-radio-button" [value]="true">
-          <a
-            target="_blank"
-            href="https://www.medizininformatik-initiative.de/de/mustertext-zur-patienteneinwilligung"
-          >
-            {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL_LINK' | translate }}
-          </a>
-          {{ 'QUERYBUILDER.SEARCH.CONSENT_CENTRAL' | translate }}
-          <fa-icon
-            size="1x"
-            [matTooltip]="'QUERYBUILDER.SEARCH.CONSENT_CENTRAL_TOOLTIP' | translate"
-            matTooltipPosition="right"
-            icon="question-circle"
-          ></fa-icon>
-        </mat-radio-button>
-        <mat-radio-button class="consent-radio-button" [value]="false"
-          >{{ 'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED' | translate }}
-          <fa-icon
-            size="1x"
-            [matTooltip]="'QUERYBUILDER.SEARCH.CONSENT_DISTRIBUTED_TOOLTIP' | translate"
-            matTooltipPosition="right"
-            icon="question-circle"
-          ></fa-icon>
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
+  <div fxFlexFill class="fullscreen">
+    <num-criteria-stage
+      fxFlexFill
+      fxLayout="row wrap"
+      fxLayoutAlign="start start"
+      style="padding-top: 50px"
+      #stage
+    >
+    </num-criteria-stage>
   </div>
-  <div fxLayout="row" fxLayoutAlign="space-between" class="container">
-    <num-search-input
-      [critType]="'inclusion'"
-      [query]="query"
-      fxFlex="48.5"
-      class="search-input-inclusion"
-    ></num-search-input>
-    <div fxFlex="1" class="search-input-spacer"></div>
-    <num-search-input
-      [critType]="'exclusion'"
-      [query]="query"
-      fxFlex="48.5"
-      class="search-input-exclusion"
-    ></num-search-input>
-  </div>
-</div>
-<div class="querybuilder-container">
-  <num-display-query [query]="query" (storeQuery)="storeQuery($event)"></num-display-query>
-</div>
-<div *ngIf="featureService.useFeatureMultipleGroups()">
-  <button class="button-add-group" type="button" mat-icon-button (click)="addGroup()">
-    <fa-icon icon="plus" size="lg"></fa-icon>
-  </button>
-  {{ 'QUERYBUILDER.DISPLAY.GROUPS.NEW_GROUP' | translate }}
 </div>

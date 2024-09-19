@@ -8,11 +8,11 @@
     display: flex;
   }
   .mdc-list-item.mdc-list-item--with-one-line {
-    height: 48px!important;
+    height: 48px !important;
   }
   @if ($name == 'fdpg') {
     .mat-mdc-nav-list {
-      background: mat.get-color-from-palette($primary, A400) !important;
+      background: mat.get-color-from-palette($primary, 100) !important;
       color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
     .num-logo-row a {

@@ -4,16 +4,13 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { IAppConfig } from '../../../../config/app-config.model';
 import { FeatureProviderService } from '../../../querybuilder/service/feature-provider.service';
 import { MatRadioChange } from '@angular/material/radio';
-import { ApiTranslator } from '../../../querybuilder/controller/ApiTranslator';
-import { QueryOnlyV1, QueryOnlyV2 } from '../../../querybuilder/model/api/query/query';
-import { QueryProviderService } from '../../../querybuilder/service/query-provider.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
+//import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
-import { Query } from 'src/app/model/FeasibilityQuery/Query';
-import { QueryService } from 'src/app/service/QueryService.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -32,9 +29,8 @@ export class SafePipe implements PipeTransform {
 export class OptionsComponent implements OnInit {
   public features: IAppConfig;
   includeContext: boolean;
-  query: Query;
+  query: FeasibilityQuery;
   stylesheet: string;
-  translatedQueryv1: QueryOnlyV1;
   translatedQueryv2: StructuredQuery;
   pollingTime: number;
   pollingIntervall: number;
@@ -47,17 +43,14 @@ export class OptionsComponent implements OnInit {
   constructor(
     public featureService: FeatureService,
     public featureProviderService: FeatureProviderService,
-    public queryProviderService: QueryProviderService,
-    private queryService: QueryService,
-    private http: HttpClient,
-    private apiTranslator: ApiTranslator,
-    private newTranslator: UIQuery2StructuredQueryTranslatorService
+    private queryService: FeasibilityQueryProviderService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
     this.features = this.featureProviderService.getFeatures();
     this.stylesheet = this.features.stylesheet;
-    this.queryService.getFeasibilityQuery().subscribe((query) => {
+    this.queryService.getActiveFeasibilityQuery().subscribe((query) => {
       this.query = query;
     });
     this.pollingTime = this.features.options.pollingtimeinseconds;
@@ -65,7 +58,7 @@ export class OptionsComponent implements OnInit {
     this.fhirport = this.features.fhirport;
     this.queryVersion = this.features.queryVersion;
     this.includeContext = this.features.options.sendsqcontexttobackend;
-    this.translatedQueryv2 = this.newTranslator.translateToStructuredQuery(this.query);
+    //this.translatedQueryv2 = this.newTranslator.translateToStructuredQuery(this.query);
     //this.translatedQueryv2 = this.apiTranslator.translateToV2(this.query);
 
     /*    this.postQuery('translate').subscribe(
@@ -160,7 +153,7 @@ export class OptionsComponent implements OnInit {
     }
     if (this.queryVersion === 'v2') {
       //this.translatedQueryv2 = this.apiTranslator.translateToV2(this.query);
-      this.translatedQueryv2 = this.newTranslator.translateToStructuredQuery(this.query);
+      //this.translatedQueryv2 = this.newTranslator.translateToStructuredQuery(this.query);
     }
   }
   postQuery(modus: string): Observable<any> {
@@ -179,9 +172,6 @@ export class OptionsComponent implements OnInit {
       url = 'http://localhost:5000/query-sync';
     }
 
-    if (this.queryVersion === 'v1') {
-      return this.http.post(url, this.translatedQueryv1, httpOptions);
-    }
     if (this.queryVersion === 'v2') {
       return this.http.post(url, this.translatedQueryv2, httpOptions);
     }

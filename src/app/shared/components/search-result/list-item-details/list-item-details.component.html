@@ -1,0 +1,48 @@
+<ng-container *ngIf="listItemDetails$ | async as listItemDetails">
+  <mat-list class="border-top">
+    <ng-container>
+      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 divider">
+        <div class="section-layout">Automatic Translations</div>
+        <div>
+          <num-list-item-details-sections [listItemDetails]="listItemDetails.translations">
+          </num-list-item-details-sections>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Parents -->
+    <ng-container>
+      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 divider">
+        <div class="section-layout">parents</div>
+        <div>
+          <num-list-item-details-sections [listItemDetails]="listItemDetails.parents">
+          </num-list-item-details-sections>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Children -->
+    <ng-container>
+      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 padding-top-5 divider">
+        <div class="section-layout">Children</div>
+        <div>
+          <num-list-item-details-sections
+            [listItemDetails]="listItemDetails.children"
+            (selectedRelative)="getSelectedRelative($event)"
+          >
+          </num-list-item-details-sections>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Siblings (Related Terms) -->
+    <ng-container>
+      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 padding-top-5 divider">
+        <div class="section-layout">Siblings</div>
+        <div>
+          <num-list-item-details-sections [listItemDetails]="listItemDetails.relatedTerms">
+          </num-list-item-details-sections>
+        </div>
+      </div>
+    </ng-container> </mat-list
+></ng-container>

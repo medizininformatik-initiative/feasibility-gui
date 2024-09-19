@@ -1,0 +1,34 @@
+<div
+  cdkDrag
+  [cdkDragData]="criterion.getId()"
+  fxLayout="column"
+  fxLayoutAlign="start start"
+  class="container"
+>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="title-section">
+    {{ criterion.getTermCodes()[0].getDisplay() }}
+    <num-menu [menuItems]="menuItems" [id]="criterion.getId()"></num-menu>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
+    <div class="info-item">
+      {{ criterion.getContext().getDisplay() }}, {{ criterion.getTermCodes()[0].getCode() }},
+      {{ system }}
+    </div>
+  </div>
+  <div class="filter-chips-container">
+    <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
+  </div>
+  <div fxFlexAlign="end" class="menu-icon" cdkDragHandle>
+    <fa-icon class="icon drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
+  </div>
+</div>
+<div style="padding-left: 50px" *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+  <div *ngIf="attributeFilter?.isReferenceSet()">
+    <div *ngFor="let reference of attributeFilter.getReference().getSelectedReferences()">
+      <num-reference-criteria-box
+        [criterionId]="criterion.getId()"
+        [referenceCriterion]="reference"
+      ></num-reference-criteria-box>
+    </div>
+  </div>
+</div>

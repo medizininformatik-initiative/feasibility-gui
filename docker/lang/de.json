@@ -1,4 +1,54 @@
 {
+  "SHAREDCOMPONENTS": {
+    "KDS_MODULE": "KDS Module",
+    "Availability": "Anzahl",
+    "Terminology": "Terminologie",
+    "Termcode": "Terminologie-Code",
+    "Name": "Kriterium",
+    "site": "Standort",
+    "patient_number": "Anzahl der Patienten",
+    "Display": "Name",
+    "Terminology Code": "Terminologie-Code",
+    "ACTIONBAR": {
+        "SELECTED_CRITERIA": {
+          "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt",
+          "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt"
+      },
+          "ADDED_CRITERIA":{
+            "SINGULAR": "Sie haben {{amount}} Kriterium zur Bühne hinzugefügt",
+            "PLURAL": "Sie haben {{amount}} Kriterien zur Bühne hinzugefügt"
+          }
+
+    },
+    "FILTER": {
+      "CONTEXT": "Kontext",
+      "AVAILABILITY": "Verfügbarkeit",
+      "TERMINOLOGY": "Terminologie",
+      "KDS_MODULE": "KDS Module"
+    },
+    "MENU": {
+      "DUPLICATE": "Duplizieren",
+      "DELETE": "Löschen",
+      "REFERENCE": "Kriterien verknüpfen",
+      "APPLY_FILTERS": "Filter anwenden",
+      "DEFINE_FIELDS": "Felder definieren",
+      "SEARCH": "Zur Suche nutzen",
+      "ADD": "Zur Bühne hinzufügen"
+    },
+    "MODAL": {
+      "BUTTON": {
+        "APPLY": "Auswählen",
+        "CANCEL": "Abbrechen"
+      }
+    }
+  },
+  "SHAREDFILTER": {
+    "FILTER_SELECTION": "Ausgewählte Elemente",
+    "BUTTON": {
+      "ADD": "Hinzufügen",
+      "REMOVE": "entfernen"
+    }
+  },
   "DASHBOARD": {
     "CODEXTHEME": {
       "HEADLINE": "Willkommen auf der CODEX Feasibility Plattform!",
@@ -65,7 +115,25 @@
     }
   },
   "DATASELECTION": {
+    "HEADER": "Datenselektion",
+    "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Kerndatensatz (KDS) Module deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und haben die Möglichkeit anzugeben welche Datenpunkte zwingen erforderlich sind für Ihre Forschungsfrage.",
     "DATASELECTION": "Datenselektion",
+    "SELECTION_BOX":{
+      "FIELDS_MISSING": "Selektieren Sie mindestens ein Feld für die Extraktion durch Verwendung der ... Taste in der oberen rechten Ecke dieser Box.",
+      "SELECTED_FIELDS": "Selektierte Felder",
+      "APPLIED_FILTER": "Angewandte Filter",
+      "REQUIRED": "erforderlich",
+      "OPTIONAL": "optional"
+    },
+    "FIELD_SELECTION":{
+      "FIELD_SELECTION": "Ausgewählte Elemente",
+      "HEADER": "Selektieren Sie zu extrahierende Felder für ",
+      "REQUIRED": "erforderlich"
+    },
+    "BUTTON": {
+      "DOWNLOAD": "Datenselektion herunterladen",
+      "ADD": "Zur Datenselektion hinzufügen"
+    },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
       "CRITERIA": "Suchkriterien"
@@ -73,9 +141,8 @@
     "DISPLAY": {
       "LABEL": "Ausgewählte Merkmale"
     },
-    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an Philip.Kleinert@tmf-ev.de schicken.",
+    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an info@forschen-fuer-gesundheit.de schicken.",
     "REQUIRED":"Variable muss an allen Standorten vorliegen"
-
   },
   "LANGUAGE": {
     "GERMAN": "Deutsch",
@@ -92,9 +159,10 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Startseite",
-    "QUERYBUILDER_EDITOR": "Machbarkeitsabfrage",
-    "QUERYBUILDER_OVERVIEW": "Meine Abfragen",
-    "DATASELECTION_EDITOR": "Datenselektion",
+    "QUERYBUILDER_EDITOR": "Kohorten Selektion",
+    "QUERYBUILDER_OVERVIEW": "Gespeichert Abfragen",
+    "QUERYBUILDER_RESULT": "Machbarkeitsabfrage",
+    "DATASELECTION": "Datenselektion",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
   },
@@ -110,7 +178,28 @@
     "FHIRPORT": "FHIR Port"
   },
   "QUERYBUILDER": {
+    "DRAG_AND_DROP": "Zum Sortieren “Drag & Drop” nutzen",
+
+    "STAGE": {
+      "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl", 
+      "HEADER": "Kriterien Editor",
+      "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen sie Ihre Anfrage zusammen",
+      "BUTTON": {
+        "ADD_TO_STAGE": "Zur Bühne hinzufügen",
+        "BACK_TO_SEARCH":"Kriterien hinzufügen",
+        "VIEW_STAGE": "Bühne anzeigen",
+        "SEND_QUERY": "Anfrage senden"
+      },
+      "MESSAGE": {
+        "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Bühne hinzugefügt"
+      }
+    },
+    "HEADER_TITLE": "Ausgewählte Kriterien",
     "SEARCH": {
+      "SEARCH_BUTTON": "Suchen",
+
+      "HEADER": "Kriterien Suche",
+      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden um die Fallzahl deutschlandweit zu ermitteln.",
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
       "LABEL": "Code oder Suchbegriff eingeben",

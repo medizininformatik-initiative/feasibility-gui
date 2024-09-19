@@ -1,0 +1,16 @@
+<div cdkDrag fxLayout="column" fxLayoutAlign="start start" class="container">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="title-section">
+    {{ referenceCriterion.getTermCodes()[0].getDisplay() }}
+    <num-menu [menuItems]="menuItems" [id]="criterionId" [params]="[referenceCriterion]"></num-menu>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
+    <div class="info-item">
+      {{ referenceCriterion.getContext().getDisplay() }},
+      {{ referenceCriterion.getTermCodes()[0].getCode() }},
+      {{ translatedSystem }}
+    </div>
+  </div>
+  <div class="filter-chips-container">
+    <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
+  </div>
+</div>

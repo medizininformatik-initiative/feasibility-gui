@@ -1,0 +1,22 @@
+.container {
+  min-width: 50em;
+  height: 75vh;
+  overflow: auto;
+  background-color: rgb(90, 121, 175, 0.1);
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+}
+
+.concept-container {
+  background-color: rgb(90, 121, 175, 0.1);
+  height: 90%;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+}
+num-profile-code {
+  height: 100%;
+  display: block;
+  overflow: auto;
+}

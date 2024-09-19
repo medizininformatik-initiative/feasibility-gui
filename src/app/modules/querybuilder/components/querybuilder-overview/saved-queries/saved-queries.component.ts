@@ -1,6 +1,6 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+/*import { AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BackendService } from '../../../service/backend.service';
-import { Query } from '../../../../../model/FeasibilityQuery/Query';
+import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { QueryProviderService } from '../../../service/query-provider.service';
 import { StructuredQueryTemplate2UITemplateTranslatorService } from 'src/app/service/StructuredQueryTemplate2UITemplateTranslator.service';
 import { UISavedQuery } from 'src/app/model/SavedInquiry/UI/UISavedQuery';
@@ -12,7 +12,7 @@ import { UITemplate } from 'src/app/model/SavedInquiry/UI/UITemplate';
   styleUrls: ['./saved-queries.component.scss'],
 })
 export class SavedQueriesComponent implements OnInit, AfterViewChecked {
-  importQuery: Query;
+  importQuery: FeasibilityQuery;
   actionDisabled: boolean;
   editModusQuery: Array<boolean> = [];
   editModusTemplate: Array<boolean> = [];
@@ -24,7 +24,7 @@ export class SavedQueriesComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef
   ) {}
 
-  query: Query;
+  query: FeasibilityQuery;
 
   savedQueries: UISavedQuery[];
 
@@ -71,7 +71,8 @@ export class SavedQueriesComponent implements OnInit, AfterViewChecked {
       });
     });
   }*/
-
+/*
+/*
   loadSavedQueries(): void {
     this.templateService.getSavedStructuredQuerySavedQueries().subscribe((uiSavedQueries) => {
       this.savedQueries = uiSavedQueries;
@@ -98,3 +99,4 @@ export class SavedQueriesComponent implements OnInit, AfterViewChecked {
     this.editModusQuery[index] = mode;
   }
 }
+*/

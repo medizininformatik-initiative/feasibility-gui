@@ -1,0 +1,4 @@
+<mat-form-field appearance="outline" class="min-part">
+  <ng-content></ng-content>
+  <input matInput type="number" [(ngModel)]="value" (ngModelChange)="emitValue()" />
+</mat-form-field>

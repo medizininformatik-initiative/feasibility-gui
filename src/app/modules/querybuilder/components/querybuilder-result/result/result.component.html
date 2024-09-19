@@ -1,0 +1,50 @@
+<div class="result-header-line">
+  <div style="margin-top: 5px">
+    <p style="font-size: xx-large">Machbarkeitsabfrage wird bearbeitet</p>
+    <p style="width: 30%; color: #c5cacf">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+      Aenean massa. Cum sociis natoque penatibus
+    </p>
+  </div>
+</div>
+<div class="simple-result">
+  <num-simple-result
+    class="result-simple-box"
+    [result]="result"
+    [isResultLoaded]="loadedResult"
+    [resultUrl]="resultUrl"
+    [callsRemaining]="callsRemaining"
+    [callsLimit]="callsLimit"
+  ></num-simple-result>
+</div>
+<num-display-criteria-group [isEditable]="false" style="height: 400px">
+</num-display-criteria-group>
+<num-action-bar class="bottom">
+  <button
+    class="background-color-button"
+    (click)="editStage()"
+    mat-raised-button
+    class="height-59"
+    [color]="true ? 'green' : 'blue'"
+  >
+    Edit Stage
+  </button>
+  <button
+    class="background-color-button"
+    (click)="saveQuery()"
+    mat-raised-button
+    class="height-59"
+    [color]="true ? 'green' : 'blue'"
+  >
+    Query Speichern
+  </button>
+  <button
+    class="background-color-button"
+    (click)="doDownloadQuery()"
+    mat-raised-button
+    class="height-59"
+    [color]="true ? 'green' : 'blue'"
+  >
+    Download
+  </button>
+</num-action-bar>

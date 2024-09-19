@@ -1,19 +1,59 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TranslateModule } from '@ngx-translate/core';
+import { ActionBarComponent } from './action-bar/action-bar.component';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
-import { MaterialModule } from 'src/app/layout/material/material.module';
+import { CommonModule } from '@angular/common';
+import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
 import { FilterChipsComponent } from './filter-chips/filter-chips.component';
-import { SearchComponent } from './search/search.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListItemDetailsComponent } from './search-result/list-item-details/list-item-details.component';
+import { ListItemDetailsSectionsComponent } from './search-result/list-item-details/list-item-details-sections/list-item-details-sections.component';
+import { MaterialModule } from 'src/app/layout/material/material.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-const SHARED_DECLARATIONS = [SearchComponent, FilterChipsComponent, ButtonComponent];
+import { MenuComponent } from './menu/menu.component';
+import { NgModule } from '@angular/core';
+import { SearchbarComponent } from './search/searchbar.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { TreeComponent } from './tree/tree.component';
+import { TableComponent } from './table/table.component';
+import { ModalWindowComponent } from './modal-window/modal-window.component';
+import { ReferenceCriteriaBoxComponent } from './reference-criteria-box/reference-criteria-box.component';
+import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { DatePickerComponent } from './date-picker/date-picker.component';
+import { ValueSelectComponent } from './value-select/value-select.component';
+const SHARED_DECLARATIONS = [
+  ActionBarComponent,
+  ButtonComponent,
+  CriteriaBoxComponent,
+  FilterChipsComponent,
+  ListItemDetailsComponent,
+  TableComponent,
+  SearchbarComponent,
+  SearchResultComponent,
+  TreeComponent,
+  MenuComponent,
+  ModalWindowComponent,
+  SearchFilterComponent,
+  DatePickerComponent,
+  ValueSelectComponent,
+];
 
 @NgModule({
-  declarations: [...SHARED_DECLARATIONS],
+  declarations: [
+    ...SHARED_DECLARATIONS,
+    ListItemDetailsSectionsComponent,
+    SearchFilterComponent,
+    CriteriaBoxComponent,
+    ActionBarComponent,
+    TreeComponent,
+    ActionBarComponent,
+    MenuComponent,
+    ModalWindowComponent,
+    ReferenceCriteriaBoxComponent,
+    DatePickerComponent,
+    ValueSelectComponent,
+  ],
   imports: [
     CommonModule,
     FontAwesomeModule,

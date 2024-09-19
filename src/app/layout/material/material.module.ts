@@ -28,6 +28,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
 
 const MATERIAL_MODULES = [
   MatSidenavModule,
@@ -57,6 +59,8 @@ const MATERIAL_MODULES = [
   MatNativeDateModule,
   MatRadioModule,
   MatSnackBarModule,
+  MatMenuModule,
+  MatBadgeModule,
 ];
 
 @NgModule({

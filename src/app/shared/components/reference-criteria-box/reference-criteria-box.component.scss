@@ -1,0 +1,54 @@
+.container {
+  width: 500px;
+  min-height: 130px;
+  background-color: rgba(197, 202, 207, 0.1);
+  border-radius: 10px;
+  position: relative;
+}
+
+.title-section {
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 3%;
+  font-size: larger;
+  width: 100%;
+  color: black;
+}
+
+.info-section {
+  height: 100%;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.info-item {
+  padding-right: 5%;
+  padding-left: 20px;
+  color: #6a7483;
+}
+
+.menu-icon {
+  color: rgba(90, 121, 175, 1);
+}
+
+.filter-chips-container {
+  padding-right: 5%;
+  padding-left: 20px;
+}
+
+.menu-icon:hover {
+  cursor: pointer;
+}
+
+::ng-deep.mat-mdc-menu-panel {
+  background-color: #fff;
+  width: 1000px;
+}
+
+.drag-handle {
+  position: absolute;
+  display: block;
+  transform: rotateZ(45deg);
+  bottom: 15px;
+  right: 20px;
+}

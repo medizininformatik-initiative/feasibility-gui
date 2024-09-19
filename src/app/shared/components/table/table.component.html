@@ -1,0 +1,44 @@
+<table *ngIf="tableData" class="table-collapse">
+  <thead class="table-header sticky-header">
+    <tr>
+      <th *ngFor="let headerItem of tableData.header.headers">
+        <div fxLayout="row" fxLayoutAlign="start center" class="header-column">
+          {{ 'SHAREDCOMPONENTS.' + headerItem | translate }}
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="overflow-control">
+    <tr
+      *ngFor="let row of tableData.body.rows; let i = index"
+      [ngClass]="{ 'clickable-row': row.isClickable }"
+      class="table-border height-3-rem table-row-hover"
+    >
+      <td
+        *ngFor="let cell of row.data; let j = index"
+        (click)="onRowClick(row)"
+        [ngClass]="{ 'table-row-text-color': columnsToDisplay[j] !== 'name' }"
+      >
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <mat-checkbox
+            *ngIf="row.hasCheckbox && row.checkboxColumnIndex === j"
+            color="primary"
+            disableRipple="true"
+            [disabled]="!row.isDisabled"
+            [checked]="row.isCheckboxSelected"
+            (change)="onCheckboxSelect(row)"
+            (click)="$event.stopPropagation()"
+          ></mat-checkbox>
+          <div
+            [ngClass]="{
+              'name-column': columnsToDisplay[j] === 'name',
+              'info-column': columnsToDisplay[j] !== 'name'
+            }"
+          >
+            {{ cell }}
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

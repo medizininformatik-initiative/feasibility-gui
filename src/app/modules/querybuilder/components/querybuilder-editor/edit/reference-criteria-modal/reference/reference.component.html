@@ -1,0 +1,39 @@
+<div fxLayout="column" class="container">
+  <div class="attribute-code-display">{{ attributeCode.getDisplay() }}</div>
+  <num-searchbar (searchTextChange)="startElasticSearch($event)"> </num-searchbar>
+  <num-table
+    *ngIf="listItems.length > 0 && adaptedData"
+    class="result-list-container"
+    [tableData]="adaptedData"
+    [searchTermResultList]="listItems"
+    (selectedRow)="setSelectedRowItem($event)"
+  ></num-table>
+  <button
+    *ngIf="isTableItemsSelected"
+    mat-raised-button
+    class="add-button"
+    color="white"
+    (click)="setSelectedReferenceCriteria()"
+  >
+    add
+  </button>
+  <div *ngIf="arrayOfSelectedReferences.length > 0">
+    <div class="filter-title">Filter selection</div>
+    <div
+      *ngFor="let selectedReferences of arrayOfSelectedReferences; let index = index"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="selectedFilterBox"
+    >
+      <div fxFlex="50" class="display-part">
+        {{ selectedReferences.termCode.getDisplay() }}
+      </div>
+      <div fxFlex="50" class="display-part">
+        {{ selectedReferences.termCode.getCode() }} ({{ selectedReferences.termCode.getSystem() }})
+      </div>
+      <div fxFlexAlign="end">
+        <button (click)="removeSelectedReference(index)" class="delete-button">entfernen</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div fxLayout="column" fxLayoutAlign="start" class="criteria-container">
+  <div *ngIf="!isEditable" class="lock-div"></div>
+  <ng-container #outlet [ngTemplateOutlet]="content"> </ng-container>
+  <ng-template #content>
+    <div
+      *ngFor="
+        let criterionInnerArray of criteriaArray$ | async;
+        let lastOuter = last;
+        let i = index
+      "
+    >
+      <div *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index">
+        <num-criteria-box
+          [criterion]="criterionProvider.getCriterionByUID(criterion)"
+        ></num-criteria-box>
+        <ng-container>
+          <num-bool-logic-switch
+            [position]="'inner'"
+            [label]="getInnerLabelKey()"
+            (switched)="splitInnerArray(i, j)"
+            *ngIf="!lastInner"
+          ></num-bool-logic-switch>
+        </ng-container>
+      </div>
+      <ng-container>
+        <num-bool-logic-switch
+          [position]="'outer'"
+          [label]="getOuterLabelKey()"
+          (switched)="joinInnerArrays(i)"
+          *ngIf="!lastOuter"
+        ></num-bool-logic-switch>
+      </ng-container>
+    </div>
+  </ng-template>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    *ngIf="(criteriaArray$ | async).length === 0"
+    class="no-selected-criteria"
+  >
+    <div fxLayout="row" fxLayoutAlign="space-around center" class="wrapper">
+      <div fxLayout="row" fxLayoutAlign="center center" class="wrapper-solid-dashed-box">
+        <div class="solid-box">
+          <fa-icon class="icon drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
+        </div>
+        <div class="dashed-box"></div>
+      </div>
+      <div class="text-wrapper">{{ 'QUERYBUILDER.DRAG_AND_DROP' | translate }}</div>
+    </div>
+  </div>
+</div>

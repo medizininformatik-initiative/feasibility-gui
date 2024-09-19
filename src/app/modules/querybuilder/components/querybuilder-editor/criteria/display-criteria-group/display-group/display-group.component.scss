@@ -1,0 +1,75 @@
+.dropped-item {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.criteria-container {
+  padding: 2px;
+  min-width: 550px;
+  padding-bottom: 200px;
+  position: relative;
+}
+
+.lock-div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.no-selected-criteria {
+  width: 100%;
+  height: 200px;
+  border: 2px dotted rgba(90, 121, 175, 1);
+  border-radius: 5px;
+  font-weight: 400;
+  font-size: large;
+  color: rgba(90, 121, 175, 1);
+}
+
+.solid-box {
+  width: 20%;
+  height: 20%;
+  background-color: rgba(90, 121, 175, 0.2); /* Light solid background */
+  border-radius: 10px;
+  position: absolute;
+  left: 10%;
+  z-index: 1; /* To place it below the dashed box */
+}
+
+.dashed-box {
+  width: 20%; /* Relative to the parent wrapper */
+  height: 20%; /* Relative to the parent wrapper */
+  border: 2px dashed rgba(90, 121, 175, 1); /* Dashed border */
+  border-radius: 10px;
+  position: absolute;
+  top: 25%;
+  left: 23%;
+  z-index: 2; /* To place it above the solid box */
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper-solid-dashed-box {
+  height: 80%;
+}
+
+.text-wrapper {
+  width: 40%;
+  font-size: large;
+}
+
+.drag-handle {
+  position: absolute;
+  display: block;
+  transform: rotateZ(45deg);
+  bottom: 30%;
+  right: 45%;
+  font-size: x-large;
+  font-weight: 300;
+}

@@ -1,0 +1,10 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+  <form [formGroup]="searchForm" fxLayout="row" class="width-100 form-design">
+    <fa-icon class="icon-design fa-icon" [icon]="'search'" size="lg" [fixedWidth]="true"> </fa-icon>
+    <input
+      placeholder="{{ label | translate }}"
+      formControlName="query"
+      class="width-100 input-design"
+    />
+  </form>
+</div>

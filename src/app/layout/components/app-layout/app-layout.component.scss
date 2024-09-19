@@ -1,9 +1,11 @@
 .safari-fix {
   min-height: fit-content;
+  overflow: auto;
 }
 
 .fix-overlay {
   z-index: unset;
+  overflow-y: auto;
 }
 
 .titlebar {
@@ -16,9 +18,21 @@
 }
 .mat-drawer-container {
   padding-top: 1em;
-  background-color: #f9f9f9;
+  background-color: #fff;
 }
 
 .mat-drawer-side {
   border-right: none !important;
+}
+
+.padding-left-4 {
+  padding-left: 4rem;
+}
+
+.padding-right-20 {
+  padding-right: 10rem;
+}
+
+.side-menu {
+  border-right: 2px solid #f1f2f3;
 }

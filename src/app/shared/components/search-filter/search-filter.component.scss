@@ -1,0 +1,33 @@
+::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field {
+  width: 100%;
+  padding: 0px;
+  background-color: white;
+}
+
+.padding-top-20 {
+  padding: 10px;
+}
+
+::ng-deep.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
+  border: 1px solid var(--num-color--primary-300);
+  padding: 0px 6px;
+  border-radius: 5px;
+  height: 42px;
+  align-items: center;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper .mdc-line-ripple {
+  display: none;
+  border: 0px;
+}
+
+::ng-deep .cdk-overlay-container .cdk-overlay-pane .example-panel {
+  background-color: #fff;
+  width: 1000px;
+  min-width: 100% !important;
+  width: 55%;
+  min-width: 20% !important;
+  position: fixed;
+  /* right: 27%; */
+  left: 19%;
+}

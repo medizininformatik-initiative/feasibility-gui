@@ -1,0 +1,36 @@
+.children-container {
+  display: flex;
+  align-items: flex-start; /* Align items to the start of the flex container */
+}
+
+.children-header {
+  flex: 0 0 auto; /* Prevent the header from growing */
+  margin-right: 20px; /* Add space between the header and the list */
+}
+
+.children-list {
+  flex: 1; /* Allow the list to grow and fill the remaining space */
+}
+
+.section-layout {
+  width: 50%;
+}
+
+.padding-20 {
+  padding: 10px 0px 10px 20px;
+}
+
+.padding-top-5 {
+  padding-top: 5px;
+}
+
+.border-top {
+  border-top: 1px solid rgba(0, 0, 0, 0.1215686275);
+}
+
+.divider {
+  border: 0;
+  border-bottom: 1px solid #0000001f;
+  width: 100%;
+  align-content: center;
+}

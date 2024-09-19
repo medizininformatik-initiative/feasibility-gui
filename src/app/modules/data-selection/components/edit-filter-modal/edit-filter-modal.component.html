@@ -1,0 +1,16 @@
+<num-modal-window (cancelButtonSelected)="closeDialog()" (saveButtonSelected)="saveDataSelection()">
+  <div class="concept-container" *ngFor="let profileCodeFilter of profileCodeFilters">
+    <num-profile-code
+      (changedProfileCode)="setProfileCodeFilter($event)"
+      [profileCodeFilter]="profileCodeFilter"
+    ></num-profile-code>
+  </div>
+
+  <div *ngFor="let profileTimeFilter of profileTimeFilters">
+    <num-profile-time-restriction
+      [profileTimeRestrictionFilter]="profileTimeFilter"
+      (changedProfileTimeRestrictionFilter)="setTimeRestriction($event)"
+    >
+    </num-profile-time-restriction>
+  </div>
+</num-modal-window>

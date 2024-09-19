@@ -1,0 +1,72 @@
+<num-action-bar class="bottom">
+  <div *ngIf="($listItemArray | async)?.length > 0" class="display-selected">
+    {{
+      ($listItemArray | async)?.length === 1
+        ? ('SHAREDCOMPONENTS.ACTIONBAR.SELECTED_CRITERIA.SINGULAR'
+          | translate : { amount: ($listItemArray | async)?.length })
+        : ('SHAREDCOMPONENTS.ACTIONBAR.SELECTED_CRITERIA.PLURAL'
+          | translate : { amount: ($listItemArray | async)?.length })
+    }}
+  </div>
+  <div *ngIf="$stageArray | async as stageArray" class="display-selected">
+    <div *ngIf="stageArray.length > 0">
+      {{
+        stageArray.length === 1
+          ? ('SHAREDCOMPONENTS.ACTIONBAR.ADDED_CRITERIA.SINGULAR'
+            | translate : { amount: stageArray.length })
+          : ('SHAREDCOMPONENTS.ACTIONBAR.ADDED_CRITERIA.PLURAL'
+            | translate : { amount: stageArray.length })
+      }}
+    </div>
+  </div>
+  <span *ngIf="addedToStage" class="font-added-criteria">
+    {{ 'QUERYBUILDER.STAGE.MESSAGE.ADDED_CRITERIA' | translate : { number: this.preservedLength } }}
+  </span>
+  <button
+    class="background-color-button"
+    (click)="addItemsToStage()"
+    [disabled]="!hasListItems"
+    mat-raised-button
+    [matBadge]="($listItemArray | async)?.length"
+    matBadgePosition="above after"
+    class="height-59"
+    [color]="hasListItems ? 'green' : 'blue'"
+  >
+    {{ 'QUERYBUILDER.STAGE.BUTTON.ADD_TO_STAGE' | translate }}
+  </button>
+  <button
+    class="background-color-button"
+    (click)="scroll()"
+    [disabled]="!atStage && !hasStageItems && !hasQueryItems"
+    [matBadge]="($stageArray | async)?.length"
+    matBadgePosition="above after"
+    mat-raised-button
+    class="height-59"
+    [color]="hasStageItems || hasQueryItems || atStage ? 'green' : 'blue'"
+  >
+    {{
+      atStage
+        ? ('QUERYBUILDER.STAGE.BUTTON.BACK_TO_SEARCH' | translate)
+        : ('QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate)
+    }}
+  </button>
+  <button
+    class="background-color-button"
+    (click)="translate()"
+    mat-raised-button
+    [disabled]="!isValidQuery()"
+    class="height-59"
+    [color]="isValidQuery() ? 'green' : 'blue'"
+  >
+    {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
+  </button>
+  <button
+    class="background-color-button"
+    (click)="test()"
+    mat-raised-button
+    class="height-59"
+    [color]="'blue'"
+  >
+    test
+  </button>
+</num-action-bar>
