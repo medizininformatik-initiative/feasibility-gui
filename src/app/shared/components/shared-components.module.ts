@@ -22,6 +22,7 @@ import { ReferenceCriteriaBoxComponent } from './reference-criteria-box/referenc
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
+import { SavedQueryTileComponent } from './saved-query-tile/saved-query-tile.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -37,6 +38,7 @@ const SHARED_DECLARATIONS = [
   SearchFilterComponent,
   DatePickerComponent,
   ValueSelectComponent,
+  SavedQueryTileComponent,
 ];
 
 @NgModule({
@@ -53,6 +55,7 @@ const SHARED_DECLARATIONS = [
     ReferenceCriteriaBoxComponent,
     DatePickerComponent,
     ValueSelectComponent,
+    SavedQueryTileComponent,
   ],
   imports: [
     CommonModule,
