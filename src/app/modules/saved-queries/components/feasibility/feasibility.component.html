@@ -1,0 +1,7 @@
+<div class="container" *ngFor="let query of savedQueries$ | async">
+  <num-saved-query-tile
+    class="width-100"
+    [savedQuery]="query"
+    (deleteQuery)="deleteSavedFeasibility($event)"
+  ></num-saved-query-tile>
+</div>
