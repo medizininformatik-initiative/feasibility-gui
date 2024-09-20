@@ -17,7 +17,7 @@ export class NewCreateCriterionService {
     private criterionBuilderHelperService: CriterionBuilderHelperService
   ) {}
 
-  public getCriterionFromHashes(hashes: string[]): Observable<Criterion[]> {
+  public createCriteriaFromHashes(hashes: string[]): Observable<Criterion[]> {
     return this.criteriaProfileDataService.getCriteriaProfileData(hashes).pipe(
       mergeMap((criteriaProfileDatas) => from(criteriaProfileDatas)),
       map((criteriaProfileData) => this.createCriterionFromProfileData(criteriaProfileData)),
