@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SavedQueriesComponent } from './components/saved-queries/saved-queries.component';
+import { SavedQueriesComponent } from './components/saved-queries.component';
 
 const routes: Routes = [{ path: '', component: SavedQueriesComponent }];
 

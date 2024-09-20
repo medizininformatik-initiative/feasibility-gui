@@ -3,14 +3,17 @@ import { FileSaverModule } from 'ngx-filesaver';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { SavedQueriesComponent } from './components/saved-queries/saved-queries.component';
+import { SavedQueriesComponent } from './components/saved-queries.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { SavedQueriesRoutingModule } from './saved-queries-routing.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
+import { MaterialModule } from 'src/app/layout/material/material.module';
+import { CohortComponent } from './components/cohort/cohort.component';
+import { FeasibilityComponent } from './components/feasibility/feasibility.component';
 
 @NgModule({
-  declarations: [SavedQueriesComponent],
+  declarations: [SavedQueriesComponent, CohortComponent, FeasibilityComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -20,6 +23,7 @@ import { SharedFilterModule } from '../shared-filter/shared-filter.module';
     SnackBarComponent,
     SavedQueriesRoutingModule,
     SharedFilterModule,
+    MaterialModule,
   ],
   exports: [SavedQueriesComponent],
 })
