@@ -1,6 +1,6 @@
 import { BackendService } from '../../querybuilder/service/backend.service';
+import { map, Observable, take } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { first, map, Observable } from 'rxjs';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
 import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTile/SavedFeasibilityQueryAdapter';
 
@@ -26,6 +26,6 @@ export class SavedFeasibilityQueryService {
   }
 
   public loadQueryIntoEditor(id: number) {
-    this.backendService.loadStructuredQuery(id).subscribe();
+    this.backendService.loadStructuredQuery(id).pipe(take(1)).subscribe();
   }
 }

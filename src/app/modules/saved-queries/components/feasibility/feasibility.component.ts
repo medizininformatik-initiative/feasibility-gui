@@ -28,4 +28,8 @@ export class FeasibilityComponent implements OnInit {
         this.loadSavedQueries();
       });
   }
+
+  loadQueryIntoEditor(id: string) {
+    this.savedFeasibilityQueryService.loadQueryIntoEditor(Number(id));
+  }
 }

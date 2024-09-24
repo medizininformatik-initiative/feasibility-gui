@@ -2,6 +2,7 @@
   <num-saved-query-tile
     class="width-100"
     [savedQuery]="query"
+    (navigate)="loadQueryIntoEditor($event)"
     (deleteQuery)="deleteSavedFeasibility($event)"
   ></num-saved-query-tile>
 </div>
