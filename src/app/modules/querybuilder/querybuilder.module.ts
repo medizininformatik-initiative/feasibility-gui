@@ -42,6 +42,7 @@ import { TimerestrictionTypeSelectorComponent } from './components/querybuilder-
 import { BeforeFilterComponent } from './components/querybuilder-editor/edit/criterion-modal/time-restriction/before-filter/before-filter.component';
 import { BetweenFilterComponent } from './components/querybuilder-editor/edit/criterion-modal/time-restriction/between-filter/between-filter.component';
 import { EditTimeRestrictionComponent } from './components/querybuilder-editor/edit/criterion-modal/time-restriction/edit-time-restriction.component';
+import { ConsentSwitchesComponent } from './components/querybuilder-editor/stage/consent-switches/consent-switches.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -86,6 +87,7 @@ export const FORMATS_GERMAN = {
     EditTimeRestrictionComponent,
     SaveQueryModalComponent,
     TimerestrictionTypeSelectorComponent,
+    ConsentSwitchesComponent,
   ],
   imports: [
     CommonModule,

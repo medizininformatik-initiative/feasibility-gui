@@ -1,0 +1,50 @@
+<div fxLayout="column" fxLayoutAlign="center start">
+  <!-- Analysis Type Toggle -->
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
+    <div class="width-30">{{ analysisType.Central }}</div>
+    <mat-slide-toggle
+      color="primary"
+      [checked]="distributedAnalysis"
+      (change)="onToggleChange('analysisType', $event)"
+    >
+    </mat-slide-toggle>
+    <div class="width-30">{{ analysisType.Distributed }}</div>
+  </div>
+
+  <!-- GDPR Compliance Toggle -->
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
+    <div class="width-30">{{ gdprCompliance.EuGdpr }}</div>
+    <mat-slide-toggle
+      color="primary"
+      [checked]="euGdpr"
+      (change)="onToggleChange('gdprCompliance', $event)"
+    >
+    </mat-slide-toggle>
+    <div class="width-30">{{ gdprCompliance.NonEuGdpr }}</div>
+  </div>
+
+  <!-- Insurance Data Toggle -->
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
+    <div class="width-30">{{ insuranceData.WithoutData }}</div>
+    <mat-slide-toggle
+      color="primary"
+      [checked]="insuranceDataBoolean"
+      (change)="onToggleChange('insuranceData', $event)"
+    >
+    </mat-slide-toggle>
+    <div class="width-30">{{ insuranceData.WithData }}</div>
+  </div>
+
+  <!-- Contact Option Toggle -->
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
+    <div class="width-30">{{ contactOption.WithoutContact }}</div>
+    <mat-slide-toggle
+      color="primary"
+      [checked]="contact"
+      (change)="onToggleChange('contactOption', $event)"
+    >
+    </mat-slide-toggle>
+    <div class="width-30">{{ contactOption.WithContact }}</div>
+  </div>
+  {{ provisionCodeDisplay }}
+</div>
