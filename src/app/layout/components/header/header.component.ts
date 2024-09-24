@@ -5,7 +5,7 @@ import { FeatureService } from '../../../service/Feature.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 
 @Component({
-  selector: 'num-header',
+  selector: 'num-dataportal-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
@@ -15,7 +15,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   urlSrc: string;
   urlAlt: string;
 
-  constructor(private oauthService: OAuthService, private featureProviderService: FeatureProviderService, public featureService: FeatureService) {}
+  constructor(
+    private oauthService: OAuthService,
+    private featureProviderService: FeatureProviderService,
+    public featureService: FeatureService
+  ) {}
 
   ngOnInit(): void {
     this.initProfile();
