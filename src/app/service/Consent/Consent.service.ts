@@ -1,6 +1,7 @@
+import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode';
 import { Injectable } from '@angular/core';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { StructuredQueryCriterion } from 'src/app/model/StructuredQuery/Criterion/StructuredQueryCriterion';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Injectable({
   providedIn: 'root',
@@ -109,8 +110,7 @@ export class ConsentService {
 
   private convertProvisionToConsentCriterion(provisionCode: TerminologyCode) {
     const criterion = new StructuredQueryCriterion();
-    const consentContext = new TerminologyCode('Einwilligung', 'Einwilligung', 'fdpg.mii.cds');
-    criterion.setContext(consentContext);
+    criterion.setContext(ContextTermCode.getContextTermCode());
     criterion.setTermCodes([provisionCode]);
     return criterion;
   }
