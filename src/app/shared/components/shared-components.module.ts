@@ -23,6 +23,9 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
 import { SavedQueryTileComponent } from './saved-query-tile/saved-query-tile.component';
+import { HeaderComponent } from './header/header.component';
+import { HeaderDescriptionComponent } from './header-description/header-description.component';
+import { SectionNameComponent } from './section-name/section-name.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -39,6 +42,9 @@ const SHARED_DECLARATIONS = [
   DatePickerComponent,
   ValueSelectComponent,
   SavedQueryTileComponent,
+  HeaderComponent,
+  HeaderDescriptionComponent,
+  SectionNameComponent,
 ];
 
 @NgModule({
@@ -56,6 +62,9 @@ const SHARED_DECLARATIONS = [
     DatePickerComponent,
     ValueSelectComponent,
     SavedQueryTileComponent,
+    HeaderComponent,
+    HeaderDescriptionComponent,
+    SectionNameComponent,
   ],
   imports: [
     CommonModule,
