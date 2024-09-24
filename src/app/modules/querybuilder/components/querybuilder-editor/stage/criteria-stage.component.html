@@ -1,11 +1,15 @@
 <div cdkDropListGroup fxFlexFill>
   <div>
-    <p style="font-size: xx-large">{{ 'QUERYBUILDER.STAGE.HEADER' | translate }}</p>
-    <p style="width: 60%; color: #c5cacf">
+    <num-header>
+      {{ 'QUERYBUILDER.STAGE.HEADER' | translate }}
+    </num-header>
+    <num-header-description>
       {{ 'QUERYBUILDER.STAGE.HEADER_INFO' | translate }}
-    </p>
+    </num-header-description>
     <br />
-    <p class="header-title">{{ 'QUERYBUILDER.HEADER_TITLE' | translate }}</p>
+    <num-section-name>
+      {{ 'QUERYBUILDER.HEADER_TITLE' | translate }}
+    </num-section-name>
   </div>
   <num-consent-switches></num-consent-switches>
   <div

@@ -1,6 +1,8 @@
 <div fxFlexFill fxlayout="row" fxLayoutAlign="start" style="width: 800px">
   <div fxlayout="column" fxFlex="50" class="inexclusion">
-    <div class="title-header">{{ 'QUERYBUILDER.SEARCH.INCLUSION' | translate }}</div>
+    <num-section-name>
+      {{ 'QUERYBUILDER.SEARCH.INCLUSION' | translate }}
+    </num-section-name>
     <num-display-group
       id="Inclusion"
       style="width: 600px"
@@ -12,7 +14,9 @@
     </num-display-group>
   </div>
   <div fxlayout="column" fxFlex="50" class="inexclusion">
-    <div class="title-header">{{ 'QUERYBUILDER.SEARCH.EXCLUSION' | translate }}</div>
+    <num-section-name>
+      {{ 'QUERYBUILDER.SEARCH.EXCLUSION' | translate }}
+    </num-section-name>
     <num-display-group
       id="Exclusion"
       style="width: 600px"
