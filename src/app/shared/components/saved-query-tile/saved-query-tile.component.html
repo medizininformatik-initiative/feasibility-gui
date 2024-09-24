@@ -11,7 +11,7 @@
     {{ savedQuery.date | date : 'dd.MM.yyyy' }}
   </div>
   <div>
-    <button class="background-color-button" (click)="onNavigate(savedQuery.id)" mat-raised-button>
+    <button class="background-color-button" (click)="onNavigate(savedQuery?.id)" mat-raised-button>
       query laden
     </button>
   </div>
