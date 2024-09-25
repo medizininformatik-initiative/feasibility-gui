@@ -1,4 +1,10 @@
-<div class="consent-container" fxLayout="column" fxLayoutAlign="center start">
+Ohne Einwilligung
+<num-switch [isChecked]="consent" (change)="toggleConsent()"></num-switch>
+Mit Einwilligung
+
+<!-- Build transition for consent box -->
+
+<div *ngIf="consent" class="consent-container" fxLayout="column" fxLayoutAlign="center start">
   <!-- Analysis Type Toggle -->
   <num-section-name>{{ 'QUERYBUILDER.STAGE.CONSENT.TITLE' | translate }}</num-section-name>
 
@@ -6,7 +12,10 @@
     <div class="width-30" [ngClass]="{ 'text-blue': !distributedAnalysis }">
       {{ 'QUERYBUILDER.STAGE.CONSENT.CENTRAL' | translate }}
     </div>
-    <num-switch (change)="onToggleChange('analysisType')"></num-switch>
+    <num-switch
+      [isChecked]="distributedAnalysis"
+      (change)="onToggleChange('analysisType')"
+    ></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': distributedAnalysis }">
       {{ 'QUERYBUILDER.STAGE.CONSENT.DISTRIBUTED' | translate }}
     </div>
@@ -17,7 +26,7 @@
     <div class="width-30" [ngClass]="{ 'text-blue': !euGdpr }">
       {{ 'QUERYBUILDER.STAGE.CONSENT.EU_GDPR' | translate }}
     </div>
-    <num-switch (change)="onToggleChange('gdprCompliance')"></num-switch>
+    <num-switch [isChecked]="euGdpr" (change)="onToggleChange('gdprCompliance')"></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': euGdpr }">
       {{ 'QUERYBUILDER.STAGE.CONSENT.NON_EU_GDPR' | translate }}
     </div>
@@ -28,7 +37,10 @@
     <div class="width-30" [ngClass]="{ 'text-blue': !insuranceDataBoolean }">
       {{ 'QUERYBUILDER.STAGE.CONSENT.WITHOUT_DATA' | translate }}
     </div>
-    <num-switch (change)="onToggleChange('insuranceData')"></num-switch>
+    <num-switch
+      [isChecked]="insuranceDataBoolean"
+      (change)="onToggleChange('insuranceData')"
+    ></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': insuranceDataBoolean }">
       {{ 'QUERYBUILDER.STAGE.CONSENT.WITH_DATA' | translate }}
     </div>
@@ -39,7 +51,7 @@
     <div class="width-30" [ngClass]="{ 'text-blue': !contact }">
       {{ 'QUERYBUILDER.STAGE.CONSENT.WITHOUT_CONTACT' | translate }}
     </div>
-    <num-switch (change)="onToggleChange('contactOption')"></num-switch>
+    <num-switch [isChecked]="contact" (change)="onToggleChange('contactOption')"></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': contact }">
       {{ 'QUERYBUILDER.STAGE.CONSENT.WITH_CONTACT' | translate }}
     </div>

@@ -26,10 +26,23 @@ export class ConsentSwitchesComponent implements OnInit {
 
   provisionCodeDisplay: string;
 
+  consent = true;
+
   constructor(private consentService: ConsentService) {}
 
   ngOnInit(): void {
     this.getProvisionCode();
+    this.consent = this.consentService.getConsent()
+    ;[this.distributedAnalysis, this.euGdpr, this.insuranceDataBoolean, this.contact] =
+      this.consentService
+        .getConsentLookUpTableKey()
+        .split(':')
+        .map((v) => v === 'true');
+  }
+
+  toggleConsent() {
+    this.consent = !this.consent;
+    this.consentService.setConsent(this.consent);
   }
 
   onToggleChange(toggleKey: string): void {
@@ -48,21 +61,16 @@ export class ConsentSwitchesComponent implements OnInit {
         this.contact = !this.contact; // Toggle the value
         break;
     }
-
-    this.getProvisionCode(); // Call the function after toggling
-  }
-
-  getProvisionCode(): void {
-    const criterion = this.consentService.getProvisionsCode(
+    this.consentService.setProvisionCode(
       this.distributedAnalysis,
       this.euGdpr,
       this.insuranceDataBoolean,
       this.contact
     );
+    this.getProvisionCode(); // Call the function after toggling
+  }
 
-    if (criterion) {
-      this.provisionCodeDisplay = criterion.getTermCodes()[0].getDisplay();
-      console.log('Provision criterion:', criterion.getTermCodes()[0]);
-    }
+  private getProvisionCode(): void {
+    this.provisionCodeDisplay = this.consentService.getConsentTermCode().getDisplay();
   }
 }

@@ -2,11 +2,19 @@ import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode';
 import { Injectable } from '@angular/core';
 import { StructuredQueryCriterion } from 'src/app/model/StructuredQuery/Criterion/StructuredQueryCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { ActiveFeasibilityQueryService } from '../Provider/ActiveFeasibilityQuery.service';
+import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { map, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConsentService {
+  private consent = false;
+  private consentTermcode: TerminologyCode;
+  private consentLookUpTableKey: string;
+
   private lookupTable: { [key: string]: { code: string; display: string; system: string } } = {
     'true:true:true:true': {
       code: 'yes-yes-yes-yes',
@@ -106,29 +114,62 @@ export class ConsentService {
     },
   };
 
-  constructor() {}
+  constructor(private feasibilityQueryProviderService: FeasibilityQueryProviderService) {
+    console.log(this.getBooleanFlags('yes-no-no-no'));
+    this.setProvisionCode(false, false, false, false);
+  }
 
-  private convertProvisionToConsentCriterion(provisionCode: TerminologyCode) {
+  public setFeasibilityQueryConsent() {
+    this.feasibilityQueryProviderService
+      .getActiveFeasibilityQuery()
+      .subscribe((feasibilityQuery) => {
+        feasibilityQuery.setConsent(this.consent);
+      })
+      .unsubscribe();
+  }
+
+  public getConsentLookUpTableKey(): string {
+    return this.consentLookUpTableKey;
+  }
+
+  public setConsentLookUpTableKey(key: string) {
+    this.consentLookUpTableKey = key;
+  }
+
+  public getConsentTermCode(): TerminologyCode {
+    return this.consentTermcode;
+  }
+
+  public getConsent() {
+    return this.consent;
+  }
+
+  public setConsent(consent: boolean) {
+    this.consent = consent;
+    this.setFeasibilityQueryConsent();
+  }
+
+  public getConsentStructuredQueryCriterion(): StructuredQueryCriterion {
     const criterion = new StructuredQueryCriterion();
     criterion.setContext(ContextTermCode.getContextTermCode());
-    criterion.setTermCodes([provisionCode]);
+    criterion.setTermCodes([this.getConsentTermCode()]);
     return criterion;
   }
 
-  public getProvisionsCode(
+  public setProvisionCode(
     distributedAnalysis: boolean,
     euGdpr: boolean,
     insuranceData: boolean,
     contact: boolean
-  ): StructuredQueryCriterion | null {
+  ) {
     const key = `${distributedAnalysis}:${euGdpr}:${insuranceData}:${contact}`;
+    this.consentLookUpTableKey = key;
+    this.consentTermcode = this.createTerminologyCode(key);
+  }
+
+  private createTerminologyCode(key: string) {
     const termCodeObject = this.lookupTable[key];
-    const provisionTermCode = new TerminologyCode(
-      termCodeObject.code,
-      termCodeObject.display,
-      termCodeObject.system
-    );
-    return this.convertProvisionToConsentCriterion(provisionTermCode);
+    return new TerminologyCode(termCodeObject.code, termCodeObject.display, termCodeObject.system);
   }
 
   public getBooleanFlags(provisionsCode: string): {

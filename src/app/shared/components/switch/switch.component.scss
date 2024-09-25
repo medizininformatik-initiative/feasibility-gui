@@ -1,3 +1,4 @@
+/* switch.component.css */
 .switch {
   position: relative;
   display: inline-block;
@@ -29,7 +30,7 @@
   content: '';
   height: 15.6px; /* Height of the knob */
   width: 15.6px; /* Width of the knob */
-  right: 2.4px; /* Position the knob on the right */
+  right: 2.4px; /* Default position for unchecked state */
   bottom: 2.4px; /* Position the knob */
   background-color: rgba(90, 121, 175, 1); /* Dark blue for the knob */
   border-radius: 50%; /* Make it round */
@@ -37,17 +38,14 @@
   transition: 0.4s;
 }
 
-input:checked + .slider {
-  /* Keep the background color the same when checked */
-  background-color: rgba(90, 121, 175, 0.1);
+/* Checked state moves the knob to the left */
+.move-left:before {
+  -webkit-transform: translateX(0); /* Default position on the right */
+  transform: translateX(0);
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px rgba(90, 121, 175, 0.1);
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(-15.6px); /* Move the knob to the left when checked */
-  -ms-transform: translateX(-15.6px);
+/* Unchecked state moves the knob to the right */
+.move-right:before {
+  -webkit-transform: translateX(-15.6px); /* Move knob to the left */
   transform: translateX(-15.6px);
 }
