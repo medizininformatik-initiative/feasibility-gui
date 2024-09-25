@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { QueryResult } from '../../../../../model/Result/QueryResult';
+import { QueryResult } from '../../../../model/Result/QueryResult';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SaveQueryModalComponent } from '../save-dialog/save-dialog.component';
+import { SaveQueryModalComponent } from './save-dialog/save-dialog.component';
 import { UIQuery2StructuredQueryService } from 'src/app/service/Translator/StructureQuery/UIQuery2StructuredQuery.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FileSaverService } from 'ngx-filesaver';
-import { BackendService } from '../../../service/backend.service';
+import { BackendService } from '../../service/backend.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 @Component({
   selector: 'num-result',
@@ -30,7 +30,11 @@ export class ResultComponent implements OnInit {
     private sqTranslatorService: UIQuery2StructuredQueryService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.feasibilityQueryProviderService
+      .getFeasibilityQueryMap()
+      .subscribe((test) => console.log(test));
+  }
 
   public editStage(): void {
     this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage: true } });
