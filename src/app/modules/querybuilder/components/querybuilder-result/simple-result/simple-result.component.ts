@@ -44,6 +44,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   @Output()
   resultGotten = new EventEmitter<boolean>();
 
+  obfuscatedPatientCountArray: string[] = [];
+
   clickEventsubscription: Subscription;
   spinnerValue: number;
   pollingTime: number;
@@ -77,6 +79,20 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.clickEventsubscription?.unsubscribe();
   }
 
+  /**
+   * If the result array has fewer than 10 digits, pad it with leading '0' digits until its length is 10
+   */
+  private setObfuscatedPatientCount(): void {
+    const obfuscatedPatientCount = this.backend.obfuscateResult(
+      this.result?.getTotalNumberOfPatients()
+    );
+    const obfuscatedPatientCountArray = obfuscatedPatientCount.toString().split(''); // Convert the result into an array of digits
+    while (obfuscatedPatientCountArray.length < 10) {
+      obfuscatedPatientCountArray.unshift('0');
+    }
+    this.obfuscatedPatientCountArray = obfuscatedPatientCountArray; // Store it in the component
+    console.log(this.obfuscatedPatientCountArray);
+  }
   openDialogResultDetails(): void {
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>();
 
@@ -158,6 +174,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private handleResult(result: any): void {
     this.result = result;
     this.loadedResult = false;
+    this.setObfuscatedPatientCount();
   }
 
   private handleError(error: any): void {
