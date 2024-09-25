@@ -24,7 +24,7 @@ import { QueryBoxFrontComponent } from './components/querybuilder-overview/saved
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor/querybuilder-editor.component';
 import { QuerybuilderRoutingModule } from './querybuilder-routing.module';
 import { ReferenceComponent } from './components/querybuilder-editor/edit/reference-criteria-modal/reference/reference.component';
-import { ResultComponent } from './components/querybuilder-result/result/result.component';
+import { ResultComponent } from './components/querybuilder-result/result.component';
 import { ResultDetailModalComponent } from './components/querybuilder-result/result-detail-modal/result-detail-modal.component';
 import { SaveQueryModalComponent } from './components/querybuilder-result/save-dialog/save-dialog.component';
 import { SearchComponent } from './components/querybuilder-editor/search/search.component';
