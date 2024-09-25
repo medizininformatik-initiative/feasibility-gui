@@ -176,6 +176,17 @@
         "VIEW_STAGE": "View Stage",
         "SEND_QUERY": "Send Query"
       },
+        "CONSENT": {
+          "TITLE": "Required Consents for Data Processing",
+          "CENTRAL": "Central",
+          "DISTRIBUTED": "Distributed",
+          "EU_GDPR": "EU GDPR",
+          "NON_EU_GDPR": "Non-EU GDPR",
+          "WITHOUT_DATA": "Without Data",
+          "WITH_DATA": "With Data",
+          "WITHOUT_CONTACT": "Without Contact",
+          "WITH_CONTACT": "With Contact"
+        },
       "MESSAGE": {
         "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
       }
