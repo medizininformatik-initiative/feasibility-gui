@@ -1,50 +1,51 @@
-<div fxLayout="column" fxLayoutAlign="center start">
+<div class="consent-container" fxLayout="column" fxLayoutAlign="center start">
   <!-- Analysis Type Toggle -->
+  <num-section-name>{{ 'QUERYBUILDER.STAGE.CONSENT.TITLE' | translate }}</num-section-name>
+
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
-    <div class="width-30">{{ analysisType.Central }}</div>
-    <mat-slide-toggle
-      color="primary"
-      [checked]="distributedAnalysis"
-      (change)="onToggleChange('analysisType', $event)"
-    >
-    </mat-slide-toggle>
-    <div class="width-30">{{ analysisType.Distributed }}</div>
+    <div class="width-30" [ngClass]="{ 'text-blue': !distributedAnalysis }">
+      {{ 'QUERYBUILDER.STAGE.CONSENT.CENTRAL' | translate }}
+    </div>
+    <num-switch (change)="onToggleChange('analysisType')"></num-switch>
+    <div class="width-30" [ngClass]="{ 'text-blue': distributedAnalysis }">
+      {{ 'QUERYBUILDER.STAGE.CONSENT.DISTRIBUTED' | translate }}
+    </div>
   </div>
 
   <!-- GDPR Compliance Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
-    <div class="width-30">{{ gdprCompliance.EuGdpr }}</div>
-    <mat-slide-toggle
-      color="primary"
-      [checked]="euGdpr"
-      (change)="onToggleChange('gdprCompliance', $event)"
-    >
-    </mat-slide-toggle>
-    <div class="width-30">{{ gdprCompliance.NonEuGdpr }}</div>
+    <div class="width-30" [ngClass]="{ 'text-blue': !euGdpr }">
+      {{ 'QUERYBUILDER.STAGE.CONSENT.EU_GDPR' | translate }}
+    </div>
+    <num-switch (change)="onToggleChange('gdprCompliance')"></num-switch>
+    <div class="width-30" [ngClass]="{ 'text-blue': euGdpr }">
+      {{ 'QUERYBUILDER.STAGE.CONSENT.NON_EU_GDPR' | translate }}
+    </div>
   </div>
 
   <!-- Insurance Data Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
-    <div class="width-30">{{ insuranceData.WithoutData }}</div>
-    <mat-slide-toggle
-      color="primary"
-      [checked]="insuranceDataBoolean"
-      (change)="onToggleChange('insuranceData', $event)"
-    >
-    </mat-slide-toggle>
-    <div class="width-30">{{ insuranceData.WithData }}</div>
+    <div class="width-30" [ngClass]="{ 'text-blue': !insuranceDataBoolean }">
+      {{ 'QUERYBUILDER.STAGE.CONSENT.WITHOUT_DATA' | translate }}
+    </div>
+    <num-switch (change)="onToggleChange('insuranceData')"></num-switch>
+    <div class="width-30" [ngClass]="{ 'text-blue': insuranceDataBoolean }">
+      {{ 'QUERYBUILDER.STAGE.CONSENT.WITH_DATA' | translate }}
+    </div>
   </div>
 
   <!-- Contact Option Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
-    <div class="width-30">{{ contactOption.WithoutContact }}</div>
-    <mat-slide-toggle
-      color="primary"
-      [checked]="contact"
-      (change)="onToggleChange('contactOption', $event)"
-    >
-    </mat-slide-toggle>
-    <div class="width-30">{{ contactOption.WithContact }}</div>
+    <div class="width-30" [ngClass]="{ 'text-blue': !contact }">
+      {{ 'QUERYBUILDER.STAGE.CONSENT.WITHOUT_CONTACT' | translate }}
+    </div>
+    <num-switch (change)="onToggleChange('contactOption')"></num-switch>
+    <div class="width-30" [ngClass]="{ 'text-blue': contact }">
+      {{ 'QUERYBUILDER.STAGE.CONSENT.WITH_CONTACT' | translate }}
+    </div>
   </div>
-  {{ provisionCodeDisplay }}
+
+  <div class="provisionCodeDisplay">
+    {{ provisionCodeDisplay }}
+  </div>
 </div>

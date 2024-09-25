@@ -32,26 +32,24 @@ export class ConsentSwitchesComponent implements OnInit {
     this.getProvisionCode();
   }
 
-  onToggleChange(toggleKey: string, event: any): void {
-    const value = event.checked;
-
+  onToggleChange(toggleKey: string): void {
     // Update the appropriate boolean based on the toggleKey
     switch (toggleKey) {
       case 'analysisType':
-        this.distributedAnalysis = value;
+        this.distributedAnalysis = !this.distributedAnalysis; // Toggle the value
         break;
       case 'gdprCompliance':
-        this.euGdpr = value;
+        this.euGdpr = !this.euGdpr; // Toggle the value
         break;
       case 'insuranceData':
-        this.insuranceDataBoolean = value;
+        this.insuranceDataBoolean = !this.insuranceDataBoolean; // Toggle the value
         break;
       case 'contactOption':
-        this.contact = value;
+        this.contact = !this.contact; // Toggle the value
         break;
     }
 
-    this.getProvisionCode();
+    this.getProvisionCode(); // Call the function after toggling
   }
 
   getProvisionCode(): void {
