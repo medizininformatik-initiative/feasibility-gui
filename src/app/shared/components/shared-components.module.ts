@@ -26,6 +26,7 @@ import { SavedQueryTileComponent } from './saved-query-tile/saved-query-tile.com
 import { HeaderComponent } from './header/header.component';
 import { HeaderDescriptionComponent } from './header-description/header-description.component';
 import { SectionNameComponent } from './section-name/section-name.component';
+import { SwitchComponent } from './switch/switch.component';
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
   ButtonComponent,
@@ -45,6 +46,7 @@ const SHARED_DECLARATIONS = [
   HeaderComponent,
   HeaderDescriptionComponent,
   SectionNameComponent,
+  SwitchComponent,
 ];
 
 @NgModule({
@@ -65,6 +67,7 @@ const SHARED_DECLARATIONS = [
     HeaderComponent,
     HeaderDescriptionComponent,
     SectionNameComponent,
+    SwitchComponent,
   ],
   imports: [
     CommonModule,
