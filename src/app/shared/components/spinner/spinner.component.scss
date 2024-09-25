@@ -1,0 +1,105 @@
+.loader {
+  width: 80px;
+  height: 80px;
+}
+
+/* Style for individual dots */
+.loader {
+  width: 80px;
+  height: 80px;
+  position: relative; /* Needed for absolute positioning of dots */
+  animation: rotate 2.5s infinite linear; /* Slowed down from 1.5s to 3s */
+}
+
+/* Style for individual dots */
+.dot {
+  width: 10.5px; /* Halved from 15px */
+  height: 10.5px; /* Halved from 15px */
+  background-color: #4c82c0; /* Default blue */
+  border-radius: 50%;
+  position: absolute;
+  animation: changeColor 2s infinite linear;
+}
+
+/* Positioning the dots in a circular layout */
+.dot:nth-child(1) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg) translate(30px) rotate(0deg);
+}
+.dot:nth-child(2) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg) translate(30px) rotate(-45deg);
+}
+.dot:nth-child(3) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg) translate(30px) rotate(-90deg);
+}
+.dot:nth-child(4) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(135deg) translate(30px) rotate(-135deg);
+}
+.dot:nth-child(5) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(180deg) translate(30px) rotate(-180deg);
+}
+.dot:nth-child(6) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(225deg) translate(30px) rotate(-225deg);
+}
+.dot:nth-child(7) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(270deg) translate(30px) rotate(-270deg);
+}
+.dot:nth-child(8) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(315deg) translate(30px) rotate(-315deg);
+}
+
+/* Animation for the rotating dots */
+@keyframes changeColor {
+  0% {
+    background-color: #4c82c0; /* Initial color */
+  }
+  12.5% {
+    background-color: #7ab8e6; /* First transition */
+  }
+  25% {
+    background-color: #b2c15c; /* Second transition */
+  }
+  37.5% {
+    background-color: #f5e04a; /* Third transition */
+  }
+  50% {
+    background-color: #f5b04a; /* Fourth transition */
+  }
+  62.5% {
+    background-color: #e07e2b; /* Fifth transition */
+  }
+  75% {
+    background-color: #b24c4c; /* Sixth transition */
+  }
+  87.5% {
+    background-color: #7a4c82; /* Seventh transition */
+  }
+  100% {
+    background-color: #4c82c0; /* Loop back to the initial color */
+  }
+}
+
+/* Rotating the whole loader */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
