@@ -1,4 +1,4 @@
 export enum GdprCompliance {
-  EuGdpr = 'EU-DSGVO',
-  NonEuGdpr = 'Non-EU-DSGVO',
+  EU_GDPR = 'EU-DSGVO',
+  NON_EU_GDPR = 'Non-EU-DSGVO',
 }

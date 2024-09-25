@@ -1,4 +1,4 @@
 export enum ContactOption {
-  WithContact = 'With Contact',
-  WithoutContact = 'Without Contact',
+  WITH_CONTACT = 'With Contact',
+  WITHOUT_CONTACT = 'Without Contact',
 }

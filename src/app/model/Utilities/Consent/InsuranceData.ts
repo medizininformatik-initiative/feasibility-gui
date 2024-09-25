@@ -1,4 +1,4 @@
 export enum InsuranceData {
-  WithData = 'With Insurance Data',
-  WithoutData = 'Without Insurance Data',
+  WITH_DATA = 'With Insurance Data',
+  WITHOUT_DATA = 'Without Insurance Data',
 }

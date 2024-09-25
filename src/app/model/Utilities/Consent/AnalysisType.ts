@@ -1,4 +1,4 @@
 export enum AnalysisType {
-  Distributed = 'Distributed',
-  Central = 'Central',
+  DISTRIBUTED = 'Distributed',
+  CENTRAL = 'Central',
 }
