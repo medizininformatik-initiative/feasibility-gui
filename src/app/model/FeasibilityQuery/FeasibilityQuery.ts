@@ -36,7 +36,7 @@ export class FeasibilityQuery {
   /**
    * Constructor to initialize the Query with display and consent.
    *
-   * @param id - The uid of the query.
+   * @param id - The id of the query.
    * @param display - The display name of the query.
    * @param consent - The consent status of the query.
    */
