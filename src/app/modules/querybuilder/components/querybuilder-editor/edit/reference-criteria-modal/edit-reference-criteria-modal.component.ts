@@ -8,6 +8,7 @@ import { mapToRefrenceCriteriaSetResultList } from 'src/app/service/ElasticSearc
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import {ReferenceCriterionProviderService} from "../../../../../../service/Provider/ReferenceCriterionProvider.service";
 
 @Component({
   selector: 'num-edit-reference-criteria',
@@ -28,7 +29,8 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EditReferenceCriteriaModalComponent,
     private dialogRef: MatDialogRef<EditReferenceCriteriaModalComponent, Criterion>,
-    private createReferenceService: CreateReferenceCriterionService
+    private createReferenceService: CreateReferenceCriterionService,
+    private referenceCriterionProvider: ReferenceCriterionProviderService
   ) {}
 
   ngOnInit() {
@@ -43,11 +45,12 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
   public saveReferenceCriterion() {
     this.createReferenceService
       .fetchReferenceCriterions(this.ids, this.criterion.getId())
-      .subscribe((referenceCriterions: ReferenceCriterion[]) => {
+      .subscribe((referenceCriteria: ReferenceCriterion[]) => {
+        referenceCriteria.forEach((referenceCriterion) => this.referenceCriterionProvider.setReferenceCriterionByUID(referenceCriterion.getId(), referenceCriterion));
         const selectedReferenceFilter = this.parentAttributeFilter
           .getReference()
           .getSelectedReferences();
-        selectedReferenceFilter.push(...referenceCriterions);
+        selectedReferenceFilter.push(...referenceCriteria);
         this.parentAttributeFilter.getReference().setSelectedReferences(selectedReferenceFilter);
       });
     const mandatoryFields = this.createMandatoryFields(this.criterion);

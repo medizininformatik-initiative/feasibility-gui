@@ -13,7 +13,7 @@
       [ngClass]="{ divider: !isLast, 'last-item': isLast }"
       mat-menu-item
       [disabled]="item.disabled"
-      (click)="item.action(id, params)"
+      (click)="item.action(id)"
     >
       <fa-icon [icon]="item.icon" size="sm" class="icon-color"></fa-icon>
       {{ 'SHAREDCOMPONENTS.MENU.' + item.label | translate }}

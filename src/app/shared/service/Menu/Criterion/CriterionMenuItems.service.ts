@@ -36,8 +36,8 @@ export class CriterionMenuItems {
         disabled: false,
         icon: 'cog',
         label: 'APPLY_FILTERS',
-        action: (id: string, params) =>
-          this.menuServiceCriterionFunctions.applyCriterionFilter(id, params),
+        action: (id: string) =>
+          this.menuServiceCriterionFunctions.applyCriterionFilter(id),
       },
     ];
   }

@@ -24,7 +24,7 @@ export class CriterionModalService implements OnDestroy {
     this.dialogSubscription.unsubscribe();
   }
 
-  public openCriterionModal(criterion: Criterion) {
+  public openCriterionModal(criterion: AbstractCriterion) {
     const dialogRef = this.dialog.open(EditCriterionModalComponent, {
       data: { criterion },
     });

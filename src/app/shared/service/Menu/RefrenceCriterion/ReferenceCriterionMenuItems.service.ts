@@ -28,17 +28,11 @@ export class ReferenceCriterionMenuItems {
         action: (id: string) => this.referenceCriterionMenuFunctions.deleteCriterion(id),
       },
       {
-        disabled: true,
-        icon: 'link',
-        label: 'REFERENCE',
-        action: (id: string) => this.referenceCriterionMenuFunctions.editLinkedCriteria(id),
-      },
-      {
         disabled: false,
         icon: 'cog',
         label: 'APPLY_FILTERS',
-        action: (id: string, params) =>
-          this.referenceCriterionMenuFunctions.applyReferenceCriterionFilter(params),
+        action: (id: string) =>
+          this.referenceCriterionMenuFunctions.applyReferenceCriterionFilter(id),
       },
     ];
   }

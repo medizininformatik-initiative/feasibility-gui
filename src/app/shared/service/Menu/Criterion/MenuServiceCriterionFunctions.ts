@@ -38,7 +38,7 @@ export class MenuServiceCriterionFunctions {
     }
   }
 
-  applyCriterionFilter(criterionUuid: string, params: any[]) {
+  applyCriterionFilter(criterionUuid: string) {
     const criterion = this.criterionProviderService.getCriterionByUID(criterionUuid);
     if (criterion) {
       this.editCriterionService.openCriterionModal(criterion);
