@@ -1,27 +1,25 @@
-.loader {
+.loader-container {
+  position: relative;
   width: 80px;
   height: 80px;
 }
 
-/* Style for individual dots */
 .loader {
   width: 80px;
   height: 80px;
-  position: relative; /* Needed for absolute positioning of dots */
-  animation: rotate 2.5s infinite linear; /* Slowed down from 1.5s to 3s */
+  position: relative;
+  animation: rotate 2.5s infinite linear; /* Makes the dots rotate */
 }
 
-/* Style for individual dots */
 .dot {
-  width: 10.5px; /* Halved from 15px */
-  height: 10.5px; /* Halved from 15px */
-  background-color: #4c82c0; /* Default blue */
+  width: 10.5px; /* Size of the dots */
+  height: 10.5px;
+  background-color: #4c82c0;
   border-radius: 50%;
   position: absolute;
   animation: changeColor 2s infinite linear;
 }
 
-/* Positioning the dots in a circular layout */
 .dot:nth-child(1) {
   top: 50%;
   left: 50%;
@@ -63,37 +61,6 @@
   transform: translate(-50%, -50%) rotate(315deg) translate(30px) rotate(-315deg);
 }
 
-/* Animation for the rotating dots */
-@keyframes changeColor {
-  0% {
-    background-color: #4c82c0; /* Initial color */
-  }
-  12.5% {
-    background-color: #7ab8e6; /* First transition */
-  }
-  25% {
-    background-color: #b2c15c; /* Second transition */
-  }
-  37.5% {
-    background-color: #f5e04a; /* Third transition */
-  }
-  50% {
-    background-color: #f5b04a; /* Fourth transition */
-  }
-  62.5% {
-    background-color: #e07e2b; /* Fifth transition */
-  }
-  75% {
-    background-color: #b24c4c; /* Sixth transition */
-  }
-  87.5% {
-    background-color: #7a4c82; /* Seventh transition */
-  }
-  100% {
-    background-color: #4c82c0; /* Loop back to the initial color */
-  }
-}
-
 /* Rotating the whole loader */
 @keyframes rotate {
   0% {
@@ -102,4 +69,47 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Animation for the rotating dots */
+@keyframes changeColor {
+  0% {
+    background-color: #4c82c0;
+  }
+  12.5% {
+    background-color: #7ab8e6;
+  }
+  25% {
+    background-color: #b2c15c;
+  }
+  37.5% {
+    background-color: #f5e04a;
+  }
+  50% {
+    background-color: #f5b04a;
+  }
+  62.5% {
+    background-color: #e07e2b;
+  }
+  75% {
+    background-color: #b24c4c;
+  }
+  87.5% {
+    background-color: #7a4c82;
+  }
+  100% {
+    background-color: #4c82c0;
+  }
+}
+
+/* Center the text in the middle of the loader without spinning */
+.center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: #000;
+  font-weight: bold;
+  z-index: 1; /* Ensure the text is on top of the dots */
 }
