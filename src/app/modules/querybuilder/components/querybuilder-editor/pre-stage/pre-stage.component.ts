@@ -91,6 +91,6 @@ export class PreStageComponent implements OnInit, OnDestroy {
   }
 
   public test() {
-    this.testService.start();
+    //this.testService.start();
   }
 }

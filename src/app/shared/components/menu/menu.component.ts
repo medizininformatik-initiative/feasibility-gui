@@ -11,9 +11,6 @@ export class MenuComponent implements OnInit {
   id: string;
 
   @Input()
-  params: any[];
-
-  @Input()
   menuItems: MenuItemInterface[] = [];
 
   constructor() {}

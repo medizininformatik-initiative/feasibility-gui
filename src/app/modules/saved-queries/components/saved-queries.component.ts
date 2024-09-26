@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TerminologySystemProvider} from "../../../service/Provider/TerminologySystemProvider.service";
 
 @Component({
   selector: 'num-saved-queries',
@@ -6,5 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./saved-queries.component.scss'],
 })
 export class SavedQueriesComponent implements OnInit {
+  constructor(private test1: TerminologySystemProvider) {}
   ngOnInit() {}
 }
+

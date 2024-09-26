@@ -6,8 +6,8 @@ import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/Ref
   providedIn: 'root',
 })
 export class ReferenceCriterionProviderService {
-  private referenceCriterionMap: Map<string, ReferenceCriterion[]> = new Map();
-  private referenceCriterionMapSubject: BehaviorSubject<Map<string, ReferenceCriterion[]>> =
+  private referenceCriterionMap: Map<string, ReferenceCriterion> = new Map();
+  private referenceCriterionMapSubject: BehaviorSubject<Map<string, ReferenceCriterion>> =
     new BehaviorSubject(new Map());
 
   constructor() {}
@@ -17,7 +17,7 @@ export class ReferenceCriterionProviderService {
    *
    * @returns Observable<Map<string, ReferenceCriterion[]>>
    */
-  public getReferenceCriterionMap(): Observable<Map<string, ReferenceCriterion[]>> {
+  public getReferenceCriterionMap(): Observable<Map<string, ReferenceCriterion>> {
     return this.referenceCriterionMapSubject.asObservable();
   }
 
@@ -27,7 +27,7 @@ export class ReferenceCriterionProviderService {
    * @param uid The unique ID of the reference criterion
    * @returns ReferenceCriterion[] | undefined
    */
-  public getReferenceCriterionByUID(uid: string): ReferenceCriterion[] | undefined {
+  public getReferenceCriterionByUID(uid: string): ReferenceCriterion | undefined {
     return this.referenceCriterionMap.get(uid);
   }
 
@@ -35,10 +35,10 @@ export class ReferenceCriterionProviderService {
    * Sets a reference criterion array by its unique ID and updates the map.
    *
    * @param uid The unique ID of the reference criterion
-   * @param referenceCriteria The array of reference criteria to set
+   * @param referenceCriterion The array of reference criteria to set
    */
-  public setReferenceCriterionByUID(uid: string, referenceCriteria: ReferenceCriterion[]): void {
-    this.referenceCriterionMap.set(uid, referenceCriteria);
+  public setReferenceCriterionByUID(uid: string, referenceCriterion: ReferenceCriterion): void {
+    this.referenceCriterionMap.set(uid, referenceCriterion);
     this.referenceCriterionMapSubject.next(new Map(this.referenceCriterionMap));
   }
 

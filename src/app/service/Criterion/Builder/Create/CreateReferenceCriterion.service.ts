@@ -29,14 +29,14 @@ export class CreateReferenceCriterionService {
         switchMap((criteriaProfileDatas: CriteriaProfileData[]) =>
           of(
             criteriaProfileDatas.map((criteriaProfileData) =>
-              this.createCriterionFromProfileData(criteriaProfileData, parentId)
+              this.createReferenceCriterionFromProfileData(criteriaProfileData, parentId)
             )
           )
         )
       );
   }
 
-  public createCriterionFromProfileData(
+  public createReferenceCriterionFromProfileData(
     criteriaProfileData: CriteriaProfileData,
     parentId: string
   ): ReferenceCriterion {
@@ -56,6 +56,7 @@ export class CreateReferenceCriterionService {
     );
     criterionBuilder.withParentId(parentId);
     const criterion = criterionBuilder.buildReferenceCriterion();
+
     return criterion;
   }
 }

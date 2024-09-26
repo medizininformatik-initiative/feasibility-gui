@@ -25,7 +25,7 @@ export class SavedFeasibilityQueryService {
     return this.backendService.deleteSavedQuery(id);
   }
 
-  public loadQueryIntoEditor(id: number) {
-    this.backendService.loadStructuredQuery(id).pipe(take(1)).subscribe();
+  public loadQueryIntoEditor(id: number): Observable<any> {
+    return this.backendService.loadStructuredQuery(id);
   }
 }
