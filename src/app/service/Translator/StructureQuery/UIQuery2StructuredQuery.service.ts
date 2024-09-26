@@ -1,5 +1,8 @@
 import { AbstractStructuredQueryFilters } from '../../../model/StructuredQuery/Criterion/Abstract/AbstractStructuredQueryFilters';
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { ConceptAttributeFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptAttributeFilter';
 import { ConceptFilter } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { ConceptValueFilter } from 'src/app/model/StructuredQuery/Criterion/ValueFilter/ConceptFilter/ConceptValueFilter';
 import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery';
@@ -10,13 +13,12 @@ import { ReferenceFilter as ReferenceFilterSQ } from '../../../model/StructuredQ
 import { ReferenceFilter as ReferenceFilterFQ } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 import { StructuredQuery } from '../../../model/StructuredQuery/StructuredQuery';
 import { StructuredQueryCriterion } from '../../../model/StructuredQuery/Criterion/StructuredQueryCriterion';
-import { TerminologyCode } from '../../../model/Terminology/TerminologyCode';
-import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { StructuredQueryQuantityFilterTranslatorService } from './Builder/StructuredQueryQuantityFilterTranslator.service';
+import { TerminologyCode } from '../../../model/Terminology/TerminologyCode';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { ConceptAttributeFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptAttributeFilter';
-import { ConceptValueFilter } from 'src/app/model/StructuredQuery/Criterion/ValueFilter/ConceptFilter/ConceptValueFilter';
+import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
+import { ConsentService } from '../../Consent/Consent.service';
+import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +29,8 @@ export class UIQuery2StructuredQueryService {
     private criterionProvider: CriterionProviderService,
     private timeRestrictionTranslation: TimeRestrictionTranslationService,
     private quantityFilterTranslator: StructuredQueryQuantityFilterTranslatorService,
-    private terminologyTranslator: TerminologyCodeTranslator
+    private terminologyTranslator: TerminologyCodeTranslator,
+    private consentService: ConsentService
   ) {}
 
   public translateToStructuredQuery(feasibilityQuery: FeasibilityQuery): StructuredQuery {
@@ -80,7 +83,6 @@ export class UIQuery2StructuredQueryService {
     const structuredQueryInnerArray: StructuredQueryCriterion[] = [];
     criterionArray.forEach((criterionID) => {
       const criterion = this.criterionProvider.getCriterionByUID(criterionID);
-      console.log(criterion)
       structuredQueryInnerArray.push(this.assignStructuredQueryCriterionElements(criterion));
     });
     return structuredQueryInnerArray;
@@ -214,17 +216,6 @@ export class UIQuery2StructuredQueryService {
   }
 
   private getConsent(): StructuredQueryCriterion[] {
-    const termCode = new TerminologyCode(
-      '2.16.840.1.113883.3.1937.777.24.5.3.8',
-      'MDAT wissenschaftlich nutzen EU DSGVO NIVEAU',
-      'urn:oid:2.16.840.1.113883.3.1937.777.24.5.3'
-    );
-    return [
-      new StructuredQueryCriterion(
-        [termCode],
-        undefined,
-        new TerminologyCode('Einwilligung', 'Einwilligung', 'fdpg.mii.cds', '1.0.0')
-      ),
-    ];
+    return [this.consentService.getConsentStructuredQueryCriterion()];
   }
 }
