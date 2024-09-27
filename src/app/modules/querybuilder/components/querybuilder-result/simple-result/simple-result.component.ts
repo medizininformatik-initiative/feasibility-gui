@@ -87,12 +87,12 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
       this.result?.getTotalNumberOfPatients()
     );
     const obfuscatedPatientCountArray = obfuscatedPatientCount.toString().split(''); // Convert the result into an array of digits
-    while (obfuscatedPatientCountArray.length < 10) {
+    while (obfuscatedPatientCountArray.length < 8) {
       obfuscatedPatientCountArray.unshift('0');
     }
     this.obfuscatedPatientCountArray = obfuscatedPatientCountArray; // Store it in the component
-    console.log(this.obfuscatedPatientCountArray);
   }
+
   openDialogResultDetails(): void {
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>();
 

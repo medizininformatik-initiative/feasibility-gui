@@ -1,35 +1,14 @@
-<div fxLayout="column">
-  <div fxLayout="row" fxLayoutAlign="none center">
-    <div class="result-text">
-      <div
-        fxLayout="row"
-        fxLayoutAlign="center center"
-        *ngIf="obfuscatedPatientCountArray?.length > 0; else showZeroPatients"
-      >
-        <div *ngFor="let digit of obfuscatedPatientCountArray" class="number-of-patients">
-          <div class="digit">
-            {{ digit }}
-          </div>
-        </div>
-        {{ 'RESULT.PATIENT_NUMBER' | translate }}
+<div fxLayout="column" class="container">
+  <div fxLayout="row" fxLayoutAlign="start center" *ngIf="obfuscatedPatientCountArray.length > 0">
+    <div *ngFor="let digit of obfuscatedPatientCountArray" class="number-of-patients">
+      <div class="digit">
+        {{ digit }}
       </div>
-      <ng-template #showZeroPatients>
-        <span class="number-of-patients">-</span>
-      </ng-template>
     </div>
-  </div>
-  <div class="spinner-box">
-    <mat-progress-spinner
-      *ngIf="showSpinner"
-      class="example-margin"
-      [mode]="'determinate'"
-      [value]="spinnerValue"
-    >
-    </mat-progress-spinner>
-    <div *ngIf="showSpinner" class="spinner-counter">{{ pollingTime }}</div>
+    {{ 'RESULT.PATIENT_NUMBER' | translate }}
   </div>
   <button
-    *ngIf="loadedResult; else showPlaceholder"
+    *ngIf="loadedResult"
     mat-raised-button
     fxFlexAlign="start"
     [matTooltip]="'RESULT.DETAILS_TOOLTIP' | translate"
@@ -39,8 +18,5 @@
   >
     {{ 'BUTTON.RESULTDETAILS' | translate }} ({{ callsLimit - callsRemaining }}/{{ callsLimit }})
   </button>
-  <num-spinner></num-spinner>
-  <ng-template #showPlaceholder>
-    <div class="button-placeholder"></div>
-  </ng-template>
+  <num-spinner *ngIf="showSpinner" [countdown]="spinnerValue"></num-spinner>
 </div>

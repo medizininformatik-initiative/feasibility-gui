@@ -1,3 +1,7 @@
+.container {
+  padding-bottom: 1em;
+}
+
 .number-of-patients {
   text-align: center;
 }
@@ -27,49 +31,11 @@
   letter-spacing: 0.5px !important;
 }
 
-.result-spinning-icon {
-  margin-left: 1em;
-  height: 2em;
-}
-
-::ng-deep .mat-mdc-progress-spinner {
-  right: -10px;
-  width: 40px !important;
-  height: 40px !important;
-}
-
-::ng-deep .mat-mdc-progress-spinner svg {
-  width: 40px !important;
-  height: 40px !important;
-}
-
-.spinner-counter {
-  position: relative;
-  right: -10px;
-  top: -28px;
-  text-align: center;
-}
-
-.spinner-box {
-  width: 40px;
-  height: 40px;
-  position: relative;
-}
-
-.button-placeholder {
-  width: 112px;
-  margin-right: 1em;
-}
-
-::ng-deep .mat-mdc-progress-spinner {
-  --mdc-circular-progress-active-indicator-color: var(--num-color--accent-600);
-}
-
 .number-of-patients {
   width: 40.77px;
   height: 55.09px;
   font-size: 24px;
-  margin: 0 5px; /* Add space between digits */
+  margin: 0 5px;
   background-color: rgba(241, 242, 243, 0.5);
   border-radius: 2px;
 }
