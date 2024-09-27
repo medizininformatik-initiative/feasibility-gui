@@ -30,11 +30,7 @@ export class ResultComponent implements OnInit {
     private sqTranslatorService: UIQuery2StructuredQueryService
   ) {}
 
-  ngOnInit() {
-    this.feasibilityQueryProviderService
-      .getFeasibilityQueryMap()
-      .subscribe((test) => console.log(test));
-  }
+  ngOnInit() {}
 
   public editStage(): void {
     this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage: true } });

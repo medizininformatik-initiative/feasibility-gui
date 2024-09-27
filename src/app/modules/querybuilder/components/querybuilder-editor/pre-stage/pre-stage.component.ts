@@ -16,6 +16,9 @@ import {
 } from '@angular/core';
 import { NewStructuredQuery2UIQueryTranslatorService } from 'src/app/service/Translator/StructureQuery/NewStructuredQuery2UIQueryTranslator.service';
 import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterion.service';
+import { DataExtraction2UiDataSelectionService } from 'src/app/service/Translator/DataExtraction/DataExtraction2UiDataSelection.service';
+import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 
 @Component({
   selector: 'num-stage',
@@ -44,7 +47,8 @@ export class PreStageComponent implements OnInit, OnDestroy {
     private queryProviderService: FeasibilityQueryProviderService,
     private router: Router,
     private stageProviderService: StageProviderService,
-    private testService: NewStructuredQuery2UIQueryTranslatorService
+    private testService: DataSelectionProviderService, //NewStructuredQuery2UIQueryTranslatorService,
+    private dataExtraction2UiDataSelectionService: DataExtraction2UiDataSelectionService
   ) {}
 
   ngOnInit() {
@@ -91,6 +95,9 @@ export class PreStageComponent implements OnInit, OnDestroy {
   }
 
   public test() {
-    //this.testService.start();
+    this.dataExtraction2UiDataSelectionService.translate();
+    this.testService.getDataSelectionUIDMap().subscribe((test) => {
+      console.log(test);
+    });
   }
 }

@@ -1,9 +1,16 @@
-import { Injectable } from '@angular/core';
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { CreateDataSelectionProfileProfile } from '../../DataSelection/CreateDataSelectionProfileProfile.service';
-import { map } from 'rxjs';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
+import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +18,16 @@ import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/Profil
 export class DataExtraction2UiDataSelectionService {
   constructor(
     private dataSelectionProvider: DataSelectionProviderService,
-    private createDataSelection: CreateDataSelectionProfileProfile
+    private createDataSelection: CreateDataSelectionProfileProfile,
+    private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService
   ) {}
 
+  /**
+   * @todo Check if version is part of the dataExtraction.attributeGroups.filter.codes
+   * @param dataExtraction
+   */
   public translate(dataExtraction?: any): void {
-    dataExtraction = this.test2;
+    dataExtraction = this.test;
     if (dataExtraction.dataExtraction.attributeGroups?.length > 0) {
       const urls = dataExtraction.dataExtraction.attributeGroups.map(
         (attributeGroup) => attributeGroup.groupReference
@@ -32,11 +44,49 @@ export class DataExtraction2UiDataSelectionService {
                 externDataSelectionProfile.attributes,
                 dataSelectionProfile.getFields()
               );
+              this.setDataSelectionFilter();
+
+              const profileTokenFilter = externDataSelectionProfile.filter?.map(
+                (externSingleFilter) => {
+                  if (externSingleFilter.type === DataSelectionFilterType.TOKEN) {
+                    const codeFilter = dataSelectionProfile
+                      .getFilters()
+                      .find(
+                        (singleFilter) => singleFilter.getName() === externSingleFilter.name
+                      ) as ProfileTokenFilter;
+                    return new ProfileTokenFilter(
+                      externSingleFilter.name,
+                      externSingleFilter.type,
+                      codeFilter.getValueSetUrls(),
+                      externSingleFilter.codes.map(
+                        (code) =>
+                          new TerminologyCode(code.code, code.display, code.system, code.version)
+                      )
+                    );
+                  }
+
+                  if (externSingleFilter.type === DataSelectionFilterType.DATE) {
+                    const timeRestriction =
+                      this.uITimeRestrictionFactoryService.createTimeRestrictionForDataSelection(
+                        externSingleFilter
+                      );
+                    return new ProfileTimeRestrictionFilter(
+                      externSingleFilter.name,
+                      externSingleFilter.type,
+                      timeRestriction
+                    );
+                  }
+                }
+              );
+              dataSelectionProfile.setFilters(profileTokenFilter);
             });
-            console.log(dataSelectionProfiles);
+            return dataSelectionProfiles;
           })
         )
-        .subscribe();
+        .subscribe((dataSelectionProfiles) => {
+          const dataSelection = new DataSelection(dataSelectionProfiles, uuidv4());
+          this.dataSelectionProvider.setDataSelectionByUID(dataSelection.getId(), dataSelection);
+        });
     }
   }
 
@@ -54,6 +104,8 @@ export class DataExtraction2UiDataSelectionService {
       }
     });
   }
+
+  private setDataSelectionFilter() {}
 
   test = {
     display: '',
@@ -95,6 +147,11 @@ export class DataExtraction2UiDataSelectionService {
                   version: '2099',
                 },
               ],
+            },
+            {
+              type: 'date',
+              name: 'date',
+              start: '2024-09-04',
             },
           ],
         },
