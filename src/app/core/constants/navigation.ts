@@ -37,6 +37,12 @@ export const mainNavItems: INavItem[] = [
     icon: 'wrench',
     translationKey: 'NAVIGATION.OPTIONS',
   },
+  {
+    routeTo: 'data-query',
+    roles: ['main'],
+    icon: 'wrench',
+    translationKey: 'NAVIGATION.DATAQUERY',
+  },
 ];
 
 export const secondaryNavItems: INavItem[] = [

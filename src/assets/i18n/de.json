@@ -163,6 +163,7 @@
     "QUERYBUILDER_OVERVIEW": "Gespeichert Abfragen",
     "QUERYBUILDER_RESULT": "Machbarkeitsabfrage",
     "DATASELECTION": "Datenselektion",
+    "DATAQUERY": "Datenabfrage",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
   },

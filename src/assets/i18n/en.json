@@ -150,6 +150,7 @@
     "QUERYBUILDER_OVERVIEW": "Saved Queries",
     "QUERYBUILDER_RESULT": "Feasibility",
     "DATASELECTION": "Data Selection",
+    "DATAQUERY": "Data request",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
   },
