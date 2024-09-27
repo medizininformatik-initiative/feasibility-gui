@@ -24,11 +24,11 @@ Mit Einwilligung
   <!-- GDPR Compliance Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
     <div class="width-30" [ngClass]="{ 'text-blue': !euGdpr }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.EU_GDPR' | translate }}
+      {{ 'QUERYBUILDER.STAGE.CONSENT.NON_EU_GDPR' | translate }}
     </div>
     <num-switch [isChecked]="euGdpr" (change)="onToggleChange('gdprCompliance')"></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': euGdpr }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.NON_EU_GDPR' | translate }}
+      {{ 'QUERYBUILDER.STAGE.CONSENT.EU_GDPR' | translate }}
     </div>
   </div>
 

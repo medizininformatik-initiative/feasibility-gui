@@ -31,13 +31,13 @@ export class ConsentService {
     'true:true:false:true': {
       code: 'yes-yes-no-yes',
       display:
-        'Verteilte, EU-DSGVO konforme Analyse, ohne Krankenassendaten, und mit Rekontaktierung',
+        'Verteilte, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und mit Rekontaktierung',
       system: 'fdpg.consent.combined',
     },
     'true:true:false:false': {
       code: 'yes-yes-no-no',
       display:
-        'Verteilte, EU-DSGVO konforme Analyse, ohne Krankenassendaten, und ohne Rekontaktierung',
+        'Verteilte, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung',
       system: 'fdpg.consent.combined',
     },
     'true:false:true:true': {
