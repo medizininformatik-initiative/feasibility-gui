@@ -198,12 +198,12 @@
           "TITLE": "Vorausgesetzte Einwilligungen zur Datenverarbeitung",
           "CENTRAL": "Zentral",
           "DISTRIBUTED": "Verteilt",
-          "EU_GDPR": "EU-DSGVO",
-          "NON_EU_GDPR": "Nicht-EU-DSGVO",
-          "WITHOUT_DATA": "Ohne Daten",
-          "WITH_DATA": "Mit Daten",
-          "WITHOUT_CONTACT": "Ohne Kontakt",
-          "WITH_CONTACT": "Mit Kontakt"
+          "EU_GDPR": "EU DSGVO konform",
+          "NON_EU_GDPR": "nicht EU DSGVO konform",
+          "WITHOUT_DATA": "ohne Krankenkassendaten",
+          "WITH_DATA": "mit Krankenkassendaten",
+          "WITHOUT_CONTACT": "ohne Rekontaktierung",
+          "WITH_CONTACT": "mit Rekontaktierung"
         }
     },
     "HEADER_TITLE": "Ausgewählte Kriterien",
