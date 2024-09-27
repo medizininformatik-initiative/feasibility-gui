@@ -4,5 +4,6 @@ import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestrict
 
 export interface InterfaceFilterChip {
   type: FilterTypes | TimeRestrictionType | string
+  typeExpanded?: boolean
   data: InterfaceFilterChipData[]
 }

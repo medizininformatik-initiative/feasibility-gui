@@ -17,23 +17,24 @@
   transition: width 0.3s ease; /* Transition for width change */
 }
 
-.chip-container.expanded {
+.chip-container.expanded, .block.expanded {
   width: auto; /* Expand to fit content */
+  min-width: auto;
   white-space: normal; /* Allow text to wrap if needed */
   overflow: visible; /* Show all content when expanded */
   text-overflow: clip; /* Clip text without ellipsis when expanded */
 }
 
-.block:after {
+.block-triangle {
   color: #5a79af;
   border-left: 13px solid;
   border-top: 13px solid transparent;
   border-bottom: 13px solid transparent;
   display: inline-block;
   content: '';
-  position: absolute;
+  /*position: absolute;
   right: -13px;
-  top: 0;
+  top: 0;*/
 }
 .block {
   border-top-left-radius: 5px;
@@ -42,11 +43,17 @@
   color: #fff;
   background-color: #5a79af;
   width: 100px;
+  min-width: 100px;
   height: 26px;
   display: inline-block;
   position: relative;
   padding-left: 4px;
   padding-top: 2px;
+  cursor: pointer;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Show ellipsis for overflow text */
+  transition: width 0.3s ease; /* Transition for width change */
 }
 
 .padding-left-20 {

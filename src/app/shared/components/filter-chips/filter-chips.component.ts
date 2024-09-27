@@ -20,4 +20,7 @@ export class FilterChipsComponent implements OnInit {
   public toggleExpanded(chip) {
     chip.expanded = !chip.expanded;
   }
+  public toggleTypeExpanded(chip) {
+    chip.typeExpanded = !chip.typeExpanded;
+  }
 }
