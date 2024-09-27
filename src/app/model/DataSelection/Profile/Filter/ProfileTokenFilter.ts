@@ -1,11 +1,11 @@
-import { AbstractConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/AbstractConceptFilter';
 import { AbstractProfileFilter } from './AbstractProfileFilter';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 
-export class ProfileCodeFilter extends AbstractProfileFilter {
+export class ProfileTokenFilter extends AbstractProfileFilter {
   selectedTokens: TerminologyCode[] = [];
   valueSetUrls: string[];
+  protected uiType: DataSelectionUIType = DataSelectionUIType.CODE;
 
   constructor(
     name: string,
@@ -13,7 +13,7 @@ export class ProfileCodeFilter extends AbstractProfileFilter {
     valueSetUrls: string[],
     selectedTokens: TerminologyCode[]
   ) {
-    super(type, name, DataSelectionFilterTypes.CODE);
+    super(type, name);
     this.selectedTokens = selectedTokens;
     this.valueSetUrls = valueSetUrls;
   }

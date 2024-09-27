@@ -1,4 +1,4 @@
-import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 
 /**
  * We assume that the name of the filter is unique and therefore is used by us as an id to identifie a filter
@@ -6,12 +6,11 @@ import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionF
 export abstract class AbstractProfileFilter {
   private type: string;
   private name: string;
-  private uiType: DataSelectionFilterTypes;
+  protected abstract readonly uiType: DataSelectionUIType;
 
-  constructor(type: string, name: string, uiType: DataSelectionFilterTypes) {
+  constructor(type: string, name: string) {
     this.type = type;
     this.name = name;
-    this.uiType = uiType;
   }
 
   public getName(): string {
@@ -22,12 +21,8 @@ export abstract class AbstractProfileFilter {
     this.name = name;
   }
 
-  public getUiType(): DataSelectionFilterTypes {
+  public getUiType(): DataSelectionUIType {
     return this.uiType;
-  }
-
-  public setUiType(uiType: DataSelectionFilterTypes): void {
-    this.uiType = uiType;
   }
 
   public getType(): string {

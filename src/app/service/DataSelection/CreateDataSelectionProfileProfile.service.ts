@@ -1,12 +1,12 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
-import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { v4 as uuidv4 } from 'uuid';
@@ -38,10 +38,10 @@ export class CreateDataSelectionProfileProfile {
   private createFilters(filters: any): AbstractProfileFilter[] {
     const profileFilters = filters?.map((filter: any) => {
       switch (filter.ui_type) {
-        case DataSelectionFilterTypes.TIMERESTRICTION:
+        case DataSelectionUIType.TIMERESTRICTION:
           return this.createProfileTimeRestrictionFilter(filter);
-        case DataSelectionFilterTypes.CODE:
-          return new ProfileCodeFilter(filter.name, filter.type, filter.valueSetUrls, []);
+        case DataSelectionUIType.CODE:
+          return new ProfileTokenFilter(filter.name, filter.type, filter.valueSetUrls, []);
       }
     });
     return profileFilters;

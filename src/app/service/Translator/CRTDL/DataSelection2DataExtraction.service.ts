@@ -4,13 +4,13 @@ import { AttributeGroup } from 'src/app/model/CRTDL/DataExtraction/AttributeGroo
 import { Attributes } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Attributes/Attribute';
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { DateFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/DateFilter';
 import { Injectable } from '@angular/core';
-import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/TokenFilter ';
@@ -75,10 +75,10 @@ export class DataSelection2DataExtraction {
     filter: AbstractProfileFilter
   ): AbstractAttributeGroupFilter | undefined {
     switch (filter.getUiType()) {
-      case DataSelectionFilterTypes.TIMERESTRICTION:
+      case DataSelectionUIType.TIMERESTRICTION:
         return this.translateDateFilter(filter as ProfileTimeRestrictionFilter);
-      case DataSelectionFilterTypes.CODE:
-        return this.translateTokenFilter(filter as ProfileCodeFilter);
+      case DataSelectionUIType.CODE:
+        return this.translateTokenFilter(filter as ProfileTokenFilter);
       default:
         return undefined;
     }
@@ -100,7 +100,7 @@ export class DataSelection2DataExtraction {
       : undefined;
   }
 
-  private translateTokenFilter(profileTokenFilter: ProfileCodeFilter): TokenFilter | undefined {
+  private translateTokenFilter(profileTokenFilter: ProfileTokenFilter): TokenFilter | undefined {
     const selectedTokens = profileTokenFilter.getSelectedTokens();
     if (selectedTokens.length > 0) {
       const terminologyCodes = this.terminologyCodeTranslator.translateTermCodes(selectedTokens);

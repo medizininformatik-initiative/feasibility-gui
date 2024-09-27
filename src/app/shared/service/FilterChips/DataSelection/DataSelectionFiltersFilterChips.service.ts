@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { TimeRestrictionChipService } from '../Criterion/TimeRestrictionChip.service';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { FilterChipConceptAdapter } from 'src/app/shared/models/FilterChips/Adapter/FilterChipConceptAdapter';
-import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -24,10 +24,10 @@ export class DataSelectionFiltersFilterChips {
 
   private getChipsForFilter(filter: AbstractProfileFilter): InterfaceFilterChip[] {
     switch (filter.getUiType()) {
-      case DataSelectionFilterTypes.TIMERESTRICTION:
+      case DataSelectionUIType.TIMERESTRICTION:
         return this.getTimeRestrictionChips(filter as ProfileTimeRestrictionFilter);
-      case DataSelectionFilterTypes.CODE:
-        return this.getCodeFilterChips(filter as ProfileCodeFilter);
+      case DataSelectionUIType.CODE:
+        return this.getCodeFilterChips(filter as ProfileTokenFilter);
       default:
         return [];
     }
@@ -39,7 +39,7 @@ export class DataSelectionFiltersFilterChips {
     );
   }
 
-  private getCodeFilterChips(filter: ProfileCodeFilter): InterfaceFilterChip[] {
+  private getCodeFilterChips(filter: ProfileTokenFilter): InterfaceFilterChip[] {
     return FilterChipConceptAdapter.adaptCodeableConcept(filter.getSelectedTokens());
   }
 }

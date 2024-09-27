@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Component({
@@ -9,13 +9,13 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 })
 export class ProfileCodeComponent {
   @Input()
-  profileCodeFilter: ProfileCodeFilter;
+  profileCodeFilter: ProfileTokenFilter;
 
   @Output()
-  changedProfileCode = new EventEmitter<ProfileCodeFilter>();
+  changedProfileCode = new EventEmitter<ProfileTokenFilter>();
 
   public emitProfileCode(selectedConcepts: TerminologyCode[]): void {
-    const updatedFilter = new ProfileCodeFilter(
+    const updatedFilter = new ProfileTokenFilter(
       this.profileCodeFilter.getName(),
       this.profileCodeFilter.getType(),
       this.profileCodeFilter.getValueSetUrls(),

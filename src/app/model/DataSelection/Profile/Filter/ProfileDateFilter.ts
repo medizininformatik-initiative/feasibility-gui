@@ -1,12 +1,13 @@
 import { AbstractProfileFilter } from './AbstractProfileFilter';
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
-import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 
 export class ProfileTimeRestrictionFilter extends AbstractProfileFilter {
   private timeRestriction: AbstractTimeRestriction;
+  protected uiType: DataSelectionUIType = DataSelectionUIType.TIMERESTRICTION;
 
   constructor(name: string, type: string, timeRestriction: AbstractTimeRestriction) {
-    super(type, name, DataSelectionFilterTypes.TIMERESTRICTION);
+    super(type, name);
     this.timeRestriction = timeRestriction;
   }
 

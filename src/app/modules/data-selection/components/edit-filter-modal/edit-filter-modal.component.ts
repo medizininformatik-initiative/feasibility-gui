@@ -2,12 +2,12 @@ import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filte
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { Component, Inject, OnInit } from '@angular/core';
-import { DataSelectionFilterTypes } from 'src/app/model/Utilities/DataSelectionFilterTypes';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProfileCodeFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 
 export class EnterDataSelectionProfileProfileComponentData {
@@ -24,13 +24,13 @@ export class EditFilterModalComponent implements OnInit {
 
   profile: DataSelectionProfileProfile;
 
-  profileCodeFilters: ProfileCodeFilter[] = [];
+  profileCodeFilters: ProfileTokenFilter[] = [];
 
   profileTimeFilters: ProfileTimeRestrictionFilter[] = [];
 
   dummyArray: ProfileTimeRestrictionFilter[] = [];
 
-  dummyArrayCode: ProfileCodeFilter[] = [];
+  dummyArrayCode: ProfileTokenFilter[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string,
@@ -48,10 +48,10 @@ export class EditFilterModalComponent implements OnInit {
   }
 
   private setInitialFilterType(filter: AbstractProfileFilter): void {
-    if (filter.getUiType() === DataSelectionFilterTypes.CODE) {
-      this.profileCodeFilters.push(filter as ProfileCodeFilter);
+    if (filter.getUiType() === DataSelectionUIType.CODE) {
+      this.profileCodeFilters.push(filter as ProfileTokenFilter);
     }
-    if (filter.getUiType() === DataSelectionFilterTypes.TIMERESTRICTION) {
+    if (filter.getUiType() === DataSelectionUIType.TIMERESTRICTION) {
       this.profileTimeFilters.push(filter as ProfileTimeRestrictionFilter);
     }
   }
@@ -61,7 +61,7 @@ export class EditFilterModalComponent implements OnInit {
    *
    * @param existingFilter
    */
-  public setProfileCodeFilter(existingFilter: ProfileCodeFilter) {
+  public setProfileCodeFilter(existingFilter: ProfileTokenFilter) {
     const index = this.dummyArrayCode.findIndex(
       (profile) => profile.getName() === existingFilter.getName()
     );
