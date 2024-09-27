@@ -19,12 +19,14 @@ import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups
   providedIn: 'root',
 })
 export class DataSelection2DataExtraction {
+  private attributes = [];
   constructor(
     private timeRestrictionTranslation: TimeRestrictionTranslationService,
     private terminologyCodeTranslator: TerminologyCodeTranslator
   ) {}
 
   public translateToDataExtraction(dataSelection: DataSelection): DataExtraction {
+    console.log(dataSelection);
     const attribuetGroups = dataSelection
       .getDataSelection()
       .map((profile) => this.translateAttributeGroups(profile));
@@ -33,21 +35,21 @@ export class DataSelection2DataExtraction {
 
   private translateAttributeGroups(profile: DataSelectionProfileProfile): AttributeGroup {
     const attributes = this.translateAttributes(profile.getFields());
+    this.attributes = [];
     const filters = this.translateFilters(profile.getFilters());
     return new AttributeGroup(profile.getUrl(), attributes, filters);
   }
 
   private translateAttributes(fields: ProfileFields[]): Attributes[] {
-    const attributes = [];
     fields.forEach((field) => {
       if (field.getIsSelected()) {
-        attributes.push(this.translateAttribute(field));
+        this.attributes.push(this.translateAttribute(field));
       }
       if (field.getChildren().length > 0) {
         this.translateAttributes(field.getChildren());
       }
     });
-    return attributes.length > 0 ? attributes : undefined;
+    return this.attributes.length > 0 ? this.attributes : undefined;
   }
 
   private translateAttribute(field: ProfileFields): Attributes {
