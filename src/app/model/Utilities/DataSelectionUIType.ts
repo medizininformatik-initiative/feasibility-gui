@@ -1,4 +1,4 @@
-export enum DataSelectionFilterTypes {
+export enum DataSelectionUIType {
   CODE = 'code',
   TIMERESTRICTION = 'timeRestriction',
 }
