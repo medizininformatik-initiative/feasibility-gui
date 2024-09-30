@@ -6,7 +6,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
  * Class representing a ConceptFilter.
  */
 export class ConceptFilter extends AbstractConceptFilter {
-  private allowedConceptUri: Array<string> = [];
+  private allowedConceptUri: string;
   private type: FilterTypes = FilterTypes.CONCEPT;
 
   /**
@@ -15,7 +15,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @param allowedConceptUri - The allowed concept URI.
    * @param selectedConcepts - The selected concepts.
    */
-  constructor(allowedConceptUri: Array<string> = [], selectedConcepts: Array<TerminologyCode>) {
+  constructor(allowedConceptUri: string, selectedConcepts: Array<TerminologyCode>) {
     super(selectedConcepts);
     this.allowedConceptUri = allowedConceptUri;
   }
@@ -25,7 +25,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    *
    * @returns The allowed concept URI.
    */
-  getAllowedConceptUri(): string[] {
+  getAllowedConceptUri(): string {
     return this.allowedConceptUri;
   }
 
@@ -34,7 +34,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    *
    * @param allowedConceptUri - The new allowed concept URI.
    */
-  setAllowedConceptUri(allowedConceptUri: Array<string>): void {
+  setAllowedConceptUri(allowedConceptUri: string): void {
     this.allowedConceptUri = allowedConceptUri;
   }
 
@@ -64,7 +64,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @returns The created ConceptFilter instance.
    */
   static create(
-    allowedConceptUri: Array<string>,
+    allowedConceptUri: string,
     selectedConcepts: Array<TerminologyCode>
   ): ConceptFilter {
     return new ConceptFilter(allowedConceptUri, selectedConcepts);

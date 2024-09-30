@@ -35,18 +35,9 @@
       "SEARCH": "Zur Suche nutzen",
       "ADD": "Zur Bühne hinzufügen"
     },
-    "MODAL": {
-      "BUTTON": {
-        "APPLY": "Auswählen",
-        "CANCEL": "Abbrechen"
-      }
-    }
-  },
-  "SHAREDFILTER": {
-    "FILTER_SELECTION": "Ausgewählte Elemente",
-    "BUTTON": {
-      "ADD": "Hinzufügen",
-      "REMOVE": "entfernen"
+    "LIST_ITEM_DETAILS":{
+      "PARENTS": "Elternknoten",
+      "CHILDREN": "Kinderknoten"
     }
   },
   "DASHBOARD": {

@@ -20,8 +20,8 @@
   color: var(--num-color--primary);
 }
 
-.padding-top-50 {
-  padding-top: 50px;
+::ng-deep.mdc-button__label {
+  color: white;
 }
 
 .mat-drawer {
@@ -109,4 +109,9 @@
 
 ::-webkit-scrollbar-track-piece {
   color: red;
+}
+
+.drawer-container {
+  height: 100%;
+  background-color: white;
 }

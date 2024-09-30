@@ -1,17 +1,16 @@
-import { ElasticSearchFilterProvider } from 'src/app/service/Provider/ElasticSearchFilterProvider.service';
+import { map, Observable, of, Subscription } from 'rxjs';
+import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
 import { ElasticSearchFilterService } from 'src/app/service/ElasticSearch/Filter/ElasticSearchFilter.service';
-import { ElasticSearchSearchResultProviderService } from 'src/app/service/Provider/ElasticSearchSearchResultProviderService.service';
 import { ElasticSearchSearchTermDetailsService } from 'src/app/service/ElasticSearch/ElasticSearchSearchTermDetails.service';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { mapToSearchTermResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
 import { MatDrawer } from '@angular/material/sidenav';
-import { concatAll, map, mergeMap, Observable, of, Subscription, toArray } from 'rxjs';
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
+import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
+import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import {
@@ -23,21 +22,15 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
-  TemplateRef
+  TemplateRef,
 } from '@angular/core';
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
-import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
-import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
+import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
+import { TableRowDetailsService } from 'src/app/shared/service/Table/TableRowDetails.service';
 
 @Component({
   selector: 'num-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
-  providers: [
-    { provide: 'ENTRY_MAPPER', useValue: mapToSearchTermResultList },
-    { provide: ElasticSearchService, useClass: ElasticSearchService },
-    { provide: ElasticSearchSearchResultProviderService },
-  ],
 })
 export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('drawer') sidenav: MatDrawer;
@@ -59,18 +52,15 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public elementRef: ElementRef,
     private filterService: ElasticSearchFilterService,
-    private elasticSearchService: ElasticSearchService<SearchTermResultList, SearchTermListEntry>,
+    private elasticSearchService: SearchService,
     private cdr: ChangeDetectorRef,
-    private elasticSearchFilterProvider: ElasticSearchFilterProvider,
+    private elasticSearchFilterProvider: FilterProvider,
     private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>,
-    private searchTermDetailsService: ElasticSearchSearchTermDetailsService,
-    private searchResultProviderService: ElasticSearchSearchResultProviderService<
-      SearchTermResultList,
-      SearchTermListEntry
-    >
+    private searchTermDetailsService: TableRowDetailsService,
+    private searchResultProviderService: SearchResultProvider
   ) {
     this.subscription = this.searchResultProviderService
-      .getSearchTermResultList()
+      .getCriteriaSearchResults()
       .subscribe((searchTermResults) => {
         if (searchTermResults) {
           this.listItems = searchTermResults.results;
@@ -107,7 +97,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private uncheckAllRows(): void {
-    this.adaptedData.body.rows.forEach((item) => {
+    this.adaptedData?.body.rows.forEach((item) => {
       if (item.isCheckboxSelected) {
         this.uncheckRow(item);
       }
@@ -129,7 +119,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public startElasticSearch(searchtext: string) {
     this.searchtext = searchtext;
-    this.elasticSearchService.startElasticSearch(searchtext).subscribe();
+    this.elasticSearchService.searchCriteria(searchtext).subscribe();
   }
 
   public setSelectedRowItem(item: InterfaceTableDataRow) {
@@ -150,10 +140,6 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selectedDetails$ = of(details);
         this.sidenav.open();
       });
-  }
-
-  public setSelectedRelative(entry: SearchTermListEntry) {
-    console.log(entry);
   }
 
   openSidenav() {

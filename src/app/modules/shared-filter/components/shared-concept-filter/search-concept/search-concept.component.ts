@@ -1,24 +1,47 @@
-import { ConceptElasticSearchService } from '../../../service/ConceptFilter/ConceptElasticSearch.service';
-import { Component, Input } from '@angular/core';
+import { SearchService } from 'src/app/service/Search/Search.service';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 
 @Component({
   selector: 'num-search-concept',
   templateUrl: './search-concept.component.html',
   styleUrls: ['./search-concept.component.scss'],
 })
-export class SearchConceptComponent {
+export class SearchConceptComponent implements OnDestroy {
   @Input()
-  allowedConceptUri: string[] = [];
+  allowedConceptUri: string;
 
-  constructor(private conceptFilterSearchService: ConceptElasticSearchService) {}
+  private searchSubscription: Subscription;
+  public searchResults: CodeableConceptResultList;
 
-  public startElasticSearch(searchtext: string) {
-    if (this.allowedConceptUriExists()) {
-      this.conceptFilterSearchService.searchConcepts(searchtext, this.allowedConceptUri);
+  constructor(private conceptFilterSearchService: SearchService) {}
+
+  /**
+   * Initiates a search and handles the results.
+   *
+   * @param searchtext The text to search for.
+   */
+  public startElasticSearch(searchtext: string): void {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
     }
+
+    this.searchSubscription = this.conceptFilterSearchService
+      .searchCodeableConcepts(searchtext, this.allowedConceptUri)
+      .subscribe(
+        (result) => {
+          this.searchResults = result;
+        },
+        (error) => {
+          console.error('Search error:', error);
+        }
+      );
   }
 
-  private allowedConceptUriExists(): boolean {
-    return this.allowedConceptUri.length > 0;
+  ngOnDestroy(): void {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
   }
 }

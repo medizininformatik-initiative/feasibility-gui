@@ -1,4 +1,4 @@
-<ng-container *ngIf="listItemDetails?.length">
+<ng-container *ngIf="listItemDetails?.length > 0">
   <div
     style="min-width: 0px"
     fxLayout="column"
@@ -6,13 +6,13 @@
     class="padding-left-20 padding-top-5"
   >
     <div
-      fxLayout="column"
-      fxLayoutAlign="start start"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
       *ngFor="let item of listItemDetails"
       class="mat-divider entry-layout"
-      (click)="getSelectedRelative(item)"
     >
       {{ item.name }}
+      <num-menu [menuItems]="menuItems" [id]="item.getId()"></num-menu>
     </div>
   </div>
 </ng-container>

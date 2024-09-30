@@ -1,14 +1,13 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
 import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter';
-import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
+import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
+import { SearchService } from 'src/app/service/Search/Search.service';
 import { SelectedTableItemsService } from '../../../../../../../service/ElasticSearch/SearchTermListItemService.service';
 import { Subscription } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from '../../../../../../../model/Terminology/TerminologyCode';
-import { ElasticSearchSearchResultProviderService } from 'src/app/service/Provider/ElasticSearchSearchResultProviderService.service';
 
 interface selectedItem {
   id: string
@@ -36,26 +35,19 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   adaptedData: TableData;
 
-  searchtext = '';
   isTableItemsSelected = false;
 
   arrayOfSelectedReferences: selectedItem[] = [];
 
   constructor(
-    private elasticSearchService: ElasticSearchService<
-      ReferenceCriteriaResultList,
-      ReferenceCriteriaListEntry
-    >,
-    private searchResultProviderService: ElasticSearchSearchResultProviderService<
-      ReferenceCriteriaResultList,
-      ReferenceCriteriaListEntry
-    >,
+    private elasticSearchService: SearchService,
+    private searchResultProviderService: SearchResultProvider,
     private selectedTableItemsService: SelectedTableItemsService<ReferenceCriteriaListEntry>
   ) {}
 
   ngOnInit() {
     this.subscription = this.searchResultProviderService
-      .getSearchTermResultList()
+      .getCriteriaSetSearchResults()
       .subscribe((searchTermResults) => {
         if (searchTermResults) {
           this.listItems = searchTermResults.results;
@@ -87,7 +79,7 @@ export class ReferenceComponent implements OnInit, OnDestroy {
   }
 
   private uncheckAllRows(): void {
-    this.adaptedData.body.rows.forEach((item) => {
+    this.adaptedData?.body.rows.forEach((item) => {
       if (item.isCheckboxSelected) {
         this.uncheckRow(item);
       }
@@ -98,11 +90,11 @@ export class ReferenceComponent implements OnInit, OnDestroy {
   }
 
   startElasticSearch(searchtext: string) {
-    this.searchtext = searchtext;
     if (this.referenceFilterUri?.length > 0) {
       this.elasticSearchService
-        .startElasticSearch(searchtext, [], this.referenceFilterUri)
+        .searchCriteriaSets(searchtext, this.referenceFilterUri)
         .subscribe((test) => {
+          console.log(test);
           this.listItems = test.results;
         });
     } else {
@@ -112,8 +104,6 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   setSelectedReferenceCriteria() {
     const ids = this.selectedTableItemsService.getSelectedIds();
-    //const ids = this.selectedListEntries.map((selectedListEntry) => selectedListEntry.id);
-    //this.selectedReferenceIds.emit(ids);
     this.selectedTableItemsService
       .getSelectedTableItems()
       .subscribe((items) => {

@@ -4,6 +4,8 @@ import { ConceptElasticSearchService } from '../../service/ConceptFilter/Concept
 import { Observable, Subscription } from 'rxjs';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { SearchService } from 'src/app/service/Search/Search.service';
+import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 
 @Component({
   selector: 'num-shared-concept-filter',
@@ -26,14 +28,14 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
 
   constructor(
     private selectedConceptFilterService: SelectedConceptFilterProviderService,
-    private conceptFilterSearchService: ConceptElasticSearchService
+    private conceptFilterSearchService: SearchResultProvider
   ) {}
 
   ngOnInit() {
     if (this.preSelectedConcepts.length > 0) {
       this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     }
-    this.searchResults$ = this.conceptFilterSearchService.getCurrentSearchResults();
+    this.searchResults$ = this.conceptFilterSearchService.getCodeableConceptSearchResults();
     this.subscription = this.selectedConceptFilterService
       .getSelectedConcepts()
       .subscribe((selectedConcepts: TerminologyCode[]) => {
@@ -45,7 +47,7 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.conceptFilterSearchService.clearResultList();
+    //this.conceptFilterSearchService.clearResultList();
     this.selectedConceptFilterService.clearSelectedConceptFilter();
   }
 

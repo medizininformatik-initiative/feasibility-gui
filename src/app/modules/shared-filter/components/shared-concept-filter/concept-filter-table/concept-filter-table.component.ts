@@ -2,12 +2,13 @@ import { CloneTerminologyCode } from 'src/app/model/Utilities/CriterionCloner/Te
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ConceptElasticSearchService } from '../../../service/ConceptFilter/ConceptElasticSearch.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { Subscription } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
+import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 
 @Component({
   selector: 'num-concept-filter-table',
@@ -26,15 +27,15 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   private subscription2: Subscription = new Subscription();
 
   constructor(
-    private conceptElasticSearchService: ConceptElasticSearchService,
+    private conceptElasticSearchService: SearchResultProvider,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
   ) {}
 
   ngOnInit() {
     this.subscription2 = this.conceptElasticSearchService
-      .getCurrentSearchResults()
+      .getCodeableConceptSearchResults()
       .subscribe((results) => {
-        this.adaptedData = this.conceptElasticSearchService.adaptListItems(results);
+        this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
       });
 
     this.subscription = this.selectedConceptProviderService.getSelectedConcepts().subscribe(() => {
