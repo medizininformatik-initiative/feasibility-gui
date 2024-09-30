@@ -31,8 +31,9 @@
           ></mat-checkbox>
           <div
             [ngClass]="{
-              'name-column': columnsToDisplay[j] === 'name',
-              'info-column': columnsToDisplay[j] !== 'name'
+              'name-column': j === 0,
+              'info-column': j > 0,
+              'highlight': row.isClickable && j === 0
             }"
           >
             {{ cell }}

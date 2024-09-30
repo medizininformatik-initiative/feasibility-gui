@@ -22,6 +22,10 @@
       "APPLY_FILTERS": "Apply filter",
       "DEFINE_FIELDS": "Define fields"
     },
+    "LIST_ITEM_DETAILS":{
+      "PARENTS": "Parent element",
+      "CHILDREN": "Child element"
+    },
     "MODAL": {
       "BUTTON": {
         "APPLY": "Apply",
@@ -168,7 +172,7 @@
   "QUERYBUILDER": {
     "DRAG_AND_DROP": "Use drag and drop to sort",
     "STAGE": {
-      "NO_SELECTED_CRITERIA": "No criteria in the selection", 
+      "NO_SELECTED_CRITERIA": "No criteria in the selection",
       "HEADER": "Criteria Editor",
       "HEADER_INFO": "Edit your criteria here and build your request",
       "BUTTON": {

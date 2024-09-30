@@ -1,7 +1,7 @@
-import { CreateCriterionService } from 'src/app/service/CriterionService/Builder/CreateCriterion.service';
 import { Injectable } from '@angular/core';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { take } from 'rxjs';
+import {CreateCriterionService} from "../../../../service/Criterion/Builder/Create/CreateCriterion.service";
 
 @Injectable({
   providedIn: 'root',

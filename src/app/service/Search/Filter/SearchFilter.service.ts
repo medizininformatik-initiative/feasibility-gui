@@ -10,7 +10,7 @@ import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service'
 @Injectable({
   providedIn: 'root',
 })
-export class FilterService {
+export class SearchFilterService {
   constructor(private backendService: TerminologyApiService) {}
 
   /**

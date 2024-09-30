@@ -26,6 +26,7 @@ import {
 } from '@angular/core';
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
 import { TableRowDetailsService } from 'src/app/shared/service/Table/TableRowDetails.service';
+import {SearchFilterService} from "../../../../../service/Search/Filter/SearchFilter.service";
 
 @Component({
   selector: 'num-search',
@@ -51,7 +52,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     public elementRef: ElementRef,
-    private filterService: ElasticSearchFilterService,
+    private filterService: SearchFilterService,
     private elasticSearchService: SearchService,
     private cdr: ChangeDetectorRef,
     private elasticSearchFilterProvider: FilterProvider,
@@ -158,7 +159,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public getElasticSearchFilter(): void {
     this.searchFilters$ = this.filterService
-      .fetchElasticSearchFilters()
+      .fetchFilters()
       .pipe(
         map((searchFilters: SearchTermFilter[]) =>
           searchFilters.map((searchFilter) =>

@@ -37,7 +37,11 @@ table {
 .info-column {
   font-size: small;
 }
-
+.highlight:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: black;
+}
 .header-column {
   padding-bottom: 20px;
   font-size: medium;

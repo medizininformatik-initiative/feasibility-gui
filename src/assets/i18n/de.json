@@ -36,8 +36,21 @@
       "ADD": "Zur Bühne hinzufügen"
     },
     "LIST_ITEM_DETAILS":{
-      "PARENTS": "Elternknoten",
-      "CHILDREN": "Kinderknoten"
+      "PARENTS": "Elternelement",
+      "CHILDREN": "Kinderelement"
+    },
+    "MODAL": {
+      "BUTTON": {
+        "APPLY": "Auswählen",
+        "CANCEL": "Abbrechen"
+      }
+    }
+  },
+  "SHAREDFILTER": {
+    "FILTER_SELECTION": "Ausgewählte Elemente",
+    "BUTTON": {
+      "ADD": "Hinzufügen",
+      "REMOVE": "entfernen"
     }
   },
   "DASHBOARD": {
@@ -173,7 +186,7 @@
     "DRAG_AND_DROP": "Zum Sortieren “Drag & Drop” nutzen",
 
     "STAGE": {
-      "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl", 
+      "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl",
       "HEADER": "Kriterien Editor",
       "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen sie Ihre Anfrage zusammen",
       "BUTTON": {
