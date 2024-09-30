@@ -22,6 +22,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  ViewContainerRef,
+  TemplateRef
 } from '@angular/core';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
@@ -39,7 +41,8 @@ import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/
 })
 export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('drawer') sidenav: MatDrawer;
-
+  @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
+  @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;
   listItems: Array<SearchTermListEntry> = [];
   searchtext = '';
   adaptedData: TableData;
@@ -80,7 +83,10 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleSelectedItemsSubscription();
     this.getElasticSearchFilter();
   }
-
+  public rerender() {
+    this.outletRef.clear();
+    this.outletRef.createEmbeddedView(this.contentRef);
+  }
   /**
    * If the checked table items get added to stage they will be removed from the SelectedTableItemsService
    * Behaviour Subject Array and therefore an empty Array will be returned. Therefore all checkboxes can be
@@ -118,9 +124,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription?.unsubscribe();
   }
 
   public startElasticSearch(searchtext: string) {
@@ -185,5 +189,10 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.searchtext) {
       this.startElasticSearch(this.searchtext);
     }
+  }
+
+  resetFilter(): void {
+    this.elasticSearchFilterProvider.resetSelectedValuesOfType();
+    this.rerender();
   }
 }

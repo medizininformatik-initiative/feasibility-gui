@@ -39,4 +39,11 @@ export class ElasticSearchFilterProvider {
     const filterMap = this.filtersSubject.value;
     return filterMap.get(name) || [];
   }
+
+  public resetSelectedValuesOfType(): void {
+    this.filterMap.forEach((value, key) => {
+      this.filterMap.set(key, [])
+    })
+    this.filtersSubject.next(this.filterMap)
+  }
 }
