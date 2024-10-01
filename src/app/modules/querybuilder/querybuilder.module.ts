@@ -106,6 +106,7 @@ export const FORMATS_GERMAN = {
     SearchComponent,
     DisplayGroupComponent,
     DisplayGroupComponent,
+    DisplayCriteriaGroupComponent,
   ],
   providers: [
     {
