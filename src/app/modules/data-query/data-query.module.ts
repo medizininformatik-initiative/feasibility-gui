@@ -8,9 +8,11 @@ import { FileSaverModule } from 'ngx-filesaver';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { DataQueryRoutingModule } from './data-query-routing.module';
 import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
+import { CohortDefinitionComponent } from './data-query/cohort-definition/cohort-definition.component';
+import { DataSelectionComponent } from './data-query/data-selection/data-selection.component';
 
 @NgModule({
-  declarations: [DataQueryComponent],
+  declarations: [DataQueryComponent, CohortDefinitionComponent, DataSelectionComponent],
   exports: [DataQueryComponent],
   imports: [
     DataQueryRoutingModule,
