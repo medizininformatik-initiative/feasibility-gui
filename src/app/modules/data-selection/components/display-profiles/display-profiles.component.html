@@ -1,4 +1,9 @@
+<num-header style="margin-top: 5px">{{ 'DATASELECTION.EDIT.HEADER' | translate }}</num-header>
+<num-header-description>{{
+  'DATASELECTION.EDIT.HEADER_DESCRIPTION' | translate
+}}</num-header-description>
 <ng-container *ngIf="($dataSelectionProfileArray | async)?.length > 0">
+  <num-section-name>{{ 'DATASELECTION.EDIT.SECTION' | translate }}</num-section-name>
   <div *ngFor="let profile of $dataSelectionProfileArray | async" class="container">
     <div class="container"></div>
     <num-data-selection-boxes [profile]="profile" class="box-container"> </num-data-selection-boxes>
