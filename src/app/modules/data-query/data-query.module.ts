@@ -7,6 +7,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { FileSaverModule } from 'ngx-filesaver';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { DataQueryRoutingModule } from './data-query-routing.module';
+import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 
 @NgModule({
   declarations: [DataQueryComponent],
@@ -19,6 +20,7 @@ import { DataQueryRoutingModule } from './data-query-routing.module';
     OverlayModule,
     FileSaverModule,
     SharedFilterModule,
+    QuerybuilderModule,
   ],
 })
 export class DataQueryModule {}
