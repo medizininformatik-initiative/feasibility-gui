@@ -1,7 +1,6 @@
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { Observable, of, Subscription, take } from 'rxjs';
-import { Router } from '@angular/router';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
@@ -14,12 +13,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { NewStructuredQuery2UIQueryTranslatorService } from 'src/app/service/Translator/StructureQuery/NewStructuredQuery2UIQueryTranslator.service';
 import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterion.service';
-import { DataExtraction2UiDataSelectionService } from 'src/app/service/Translator/DataExtraction/DataExtraction2UiDataSelection.service';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQueryResult.service';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 
 @Component({
   selector: 'num-stage',
@@ -46,9 +41,8 @@ export class PreStageComponent implements OnInit, OnDestroy {
     private listItemSelectionService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionService: CreateCriterionService,
     private queryProviderService: FeasibilityQueryProviderService,
-    private router: Router,
     private stageProviderService: StageProviderService,
-    private feasibilityQueryResultService: FeasibilityQueryResultService
+    private routerHelperService: NavigationHelperService
   ) {}
 
   ngOnInit() {
@@ -88,8 +82,7 @@ export class PreStageComponent implements OnInit, OnDestroy {
   }
 
   doSendRequest(): void {
-    this.feasibilityQueryResultService.doSendQueryReuqest().subscribe((test) => console.log(test));
-    //this.router.navigate(['/querybuilder/result'], { state: { preventReset: true } });
+    this.routerHelperService.navigateToQueryBuilderResult();
   }
 
   isValidQuery(): boolean {

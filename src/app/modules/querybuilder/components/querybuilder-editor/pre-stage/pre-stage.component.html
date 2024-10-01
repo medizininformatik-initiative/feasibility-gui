@@ -52,21 +52,12 @@
   </button>
   <button
     class="background-color-button"
-    (click)="translate()"
+    (click)="doSendRequest()"
     mat-raised-button
     [disabled]="!isValidQuery()"
     class="height-59"
     [color]="isValidQuery() ? 'green' : 'blue'"
   >
     {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
-  </button>
-  <button
-    class="background-color-button"
-    (click)="test()"
-    mat-raised-button
-    class="height-59"
-    [color]="'blue'"
-  >
-    test
   </button>
 </num-action-bar>

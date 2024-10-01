@@ -58,7 +58,7 @@ export class FeasibilityQueryResultService {
    * The feasibility query being sent is retrieved from the Active Feasibility Query Service.
    * This ensures that the results are always based on the current active feasibility query
    */
-  public doSendQueryReuqest(): Observable<QueryResult> {
+  public doSendQueryRequest(): Observable<QueryResult> {
     let feasibilityQuery: FeasibilityQuery;
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
     this.getDetailedResultRateLimit();
