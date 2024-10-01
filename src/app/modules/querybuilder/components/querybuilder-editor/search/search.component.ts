@@ -1,10 +1,10 @@
-import { map, Observable, of, Subscription } from 'rxjs';
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
-import { ElasticSearchFilterService } from 'src/app/service/ElasticSearch/Filter/ElasticSearchFilter.service';
-import { ElasticSearchSearchTermDetailsService } from 'src/app/service/ElasticSearch/ElasticSearchSearchTermDetails.service';
+import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
+import { map, Observable, of, Subscription, take } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
+import { SearchFilterService } from '../../../../../service/Search/Filter/SearchFilter.service';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
@@ -23,10 +23,12 @@ import {
   ViewChild,
   ViewContainerRef,
   TemplateRef,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
-import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
-import { TableRowDetailsService } from 'src/app/shared/service/Table/TableRowDetails.service';
-import {SearchFilterService} from "../../../../../service/Search/Filter/SearchFilter.service";
+import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
+import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
+import { ObjectHelper } from '../../../controller/ObjectHelper';
 
 @Component({
   selector: 'num-search',
@@ -50,6 +52,8 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   searchFilters$: Observable<SearchFilter[]>;
 
+  searchText: Observable<string>;
+
   constructor(
     public elementRef: ElementRef,
     private filterService: SearchFilterService,
@@ -57,8 +61,9 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private elasticSearchFilterProvider: FilterProvider,
     private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>,
-    private searchTermDetailsService: TableRowDetailsService,
-    private searchResultProviderService: SearchResultProvider
+    private searchTermDetailsService: SearchTermDetailsService,
+    private searchResultProviderService: SearchResultProvider,
+    private searchTermDetailsProviderService: SearchTermDetailsProviderService
   ) {
     this.subscription = this.searchResultProviderService
       .getCriteriaSearchResults()
@@ -71,9 +76,22 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    this.selectedDetails$ = this.searchTermDetailsProviderService.getSearchTermDetails$();
     this.handleSelectedItemsSubscription();
     this.getElasticSearchFilter();
+    this.searchText = this.elasticSearchService.getActiveSearchTerm();
+    this.elasticSearchService.searchCriteria(' ').subscribe();
   }
+
+  ngAfterViewInit() {
+    this.isInitialized = true;
+    this.cdr.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
+  }
+
   public rerender() {
     this.outletRef.clear();
     this.outletRef.createEmbeddedView(this.contentRef);
@@ -109,15 +127,6 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     item.isCheckboxSelected = false;
   }
 
-  ngAfterViewInit() {
-    this.isInitialized = true;
-    this.cdr.detectChanges();
-  }
-
-  ngOnDestroy() {
-    this.subscription?.unsubscribe();
-  }
-
   public startElasticSearch(searchtext: string) {
     this.searchtext = searchtext;
     this.elasticSearchService.searchCriteria(searchtext).subscribe();
@@ -137,10 +146,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     const originalEntry = row.originalEntry as SearchTermListEntry;
     this.searchTermDetailsService
       .getDetailsForListItem(originalEntry.id)
-      .subscribe((details: SearchTermDetails) => {
-        this.selectedDetails$ = of(details);
-        this.sidenav.open();
-      });
+      .subscribe(() => this.openSidenav());
   }
 
   openSidenav() {
@@ -173,13 +179,16 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     const newFilter = new SearchTermFilter(filter.type, []);
     newFilter.setSelectedValues(filter.values);
     this.elasticSearchFilterProvider.setFilter(newFilter);
-    if (this.searchtext) {
-      this.startElasticSearch(this.searchtext);
-    }
+    this.startElasticSearch(this.searchtext);
   }
 
-  resetFilter(): void {
-    this.elasticSearchFilterProvider.resetSelectedValuesOfType();
-    this.rerender();
+  public resetFilter(): void {
+    this.searchText.pipe(take(1)).subscribe((searchText: string) => {
+      this.elasticSearchFilterProvider.resetSelectedValuesOfType();
+      this.elasticSearchService.searchCriteria(searchText).subscribe({
+        next: () => this.rerender(),
+        error: (err) => console.error('Search failed', err),
+      });
+    });
   }
 }

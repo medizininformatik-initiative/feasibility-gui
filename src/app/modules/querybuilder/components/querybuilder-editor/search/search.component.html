@@ -8,6 +8,7 @@
   <div fxLayout="row" fxLayoutAlign="start center" class="searchbar-div">
     <num-searchbar
       fxFlex="50"
+      [searchText]="searchText | async"
       [label]="'QUERYBUILDER.SEARCH.LABEL' | translate"
       class="padding-right-1 width-100"
       (searchTextChange)="startElasticSearch($event)"
@@ -37,7 +38,7 @@
       class="reset-button"
       fxLayoutAlign="center center"
     >
-      Reset
+      {{ 'QUERYBUILDER.SEARCH.BUTTON.RESET' | translate }}
     </button>
   </div>
 

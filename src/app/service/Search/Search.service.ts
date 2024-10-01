@@ -4,7 +4,7 @@ import { CriteriaSearchEngineService } from './SearchTypes/Criteria/CriteriaSear
 import { CriteriaSearchSigleEntryEngineService } from './SearchTypes/CriteriaById/CriteriaSearchSingleEntryEngine.service';
 import { CriteriaSetSearchEngineService } from './SearchTypes/CriteriaSet/CriteriaSetSearchEngine';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 
@@ -12,6 +12,8 @@ import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchR
   providedIn: 'root',
 })
 export class SearchService {
+  private activeSearchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   constructor(
     private criteriaSearchService: CriteriaSearchEngineService,
     private criteriaSetSearchService: CriteriaSetSearchEngineService,
@@ -19,13 +21,22 @@ export class SearchService {
     private criteriaSearchSigleEntryEngineService: CriteriaSearchSigleEntryEngineService
   ) {}
 
+  public getActiveSearchTerm(): Observable<string> {
+    return this.activeSearchTermSubject.asObservable();
+  }
+
+  public setActiveSearchTerm(newSearchTerm: string): void {
+    this.activeSearchTermSubject.next(newSearchTerm);
+  }
+
   public searchCriteria(searchText: string): Observable<SearchTermResultList> {
+    this.setActiveSearchTerm(searchText);
     return this.criteriaSearchService.search(searchText);
   }
 
   public searchCriteriaSets(
     searchText: string,
-    criteriaSetUrls: string[]
+    criteriaSetUrls: string
   ): Observable<ReferenceCriteriaResultList> {
     return this.criteriaSetSearchService.search(searchText, criteriaSetUrls);
   }
