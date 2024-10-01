@@ -25,7 +25,7 @@ export class CriteriaSetSearchEngineService {
 
   public search(
     searchText: string,
-    criteriaSetUrls: string[]
+    criteriaSetUrls: string
   ): Observable<ReferenceCriteriaResultList> {
     const resultMapper = this.getMapping();
     const url = this.createUrl(searchText, criteriaSetUrls);
@@ -37,10 +37,10 @@ export class CriteriaSetSearchEngineService {
     );
   }
 
-  private createUrl(searchText: string, criteriaSetUrls: string[]): string {
+  private createUrl(searchText: string, criteriaSetUrls: string): string {
     return new SearchUrlBuilder(this.path)
       .withSearchTerm(searchText)
-      .withFiltertUrl(ElasticSearchFilterPaths.CRITERIASETS, criteriaSetUrls.join(','))
+      .withFiltertUrl(ElasticSearchFilterPaths.CRITERIASETS, criteriaSetUrls)
       .buildUrl();
   }
 
