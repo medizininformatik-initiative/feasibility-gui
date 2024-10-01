@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
+import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter';
 
 @Component({
   selector: 'num-search-filter',
@@ -16,8 +16,7 @@ export class SearchFilterComponent implements OnInit {
 
   selectedValues: string[];
 
-  translatedLabel: { translatedSystem: string; count: number; url: string }[] = []; // Initialize as an empty array
-
+  translatedLabel: { translatedSystem: string; count: number; url: string }[] = [];
   constructor() {}
 
   ngOnInit(): void {}
