@@ -10,6 +10,7 @@ import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemSe
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
+import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ export class CriteriaProfileDataService {
   constructor(
     private backend: BackendService,
     private listItemService: SelectedTableItemsService<SearchTermListEntry>
-  ) {}
+  ) //private snackbar: SnackbarService
+  {}
 
   /**
    * Translate selected list items to CriteriaProfileData objects and return them as an Observable.
@@ -38,9 +40,10 @@ export class CriteriaProfileDataService {
   public getCriteriaProfileData(ids: Array<string>): Observable<CriteriaProfileData[]> {
     return this.backend.getCriteriaProfileData(ids).pipe(
       switchMap((responses: any[]) => {
-        const criteriaProfileDataArray = responses.map((response) =>
-          this.createCriteriaProfileData(response)
-        );
+        const criteriaProfileDataArray = responses
+          .map((response) => this.createCriteriaProfileData(response))
+          .filter((data) => data !== undefined);
+
         return of(criteriaProfileDataArray);
       }),
       finalize(() => {
@@ -50,18 +53,29 @@ export class CriteriaProfileDataService {
     );
   }
 
-  private createCriteriaProfileData(response: any) {
-    const context = this.mapTerminologyCode(response.context);
-    const termCodes = response.termCodes.map(this.mapTerminologyCode);
-    const id = response.id;
-    return new CriteriaProfileData(
-      id,
-      response.uiProfile.timeRestrictionAllowed,
-      this.mapAttributeDefinitions(response.uiProfile),
-      context,
-      termCodes,
-      this.mapValueDefinition(response.uiProfile)
-    );
+  private createCriteriaProfileData(response: any): CriteriaProfileData | undefined {
+    try {
+      if (response.uiProfile) {
+        const context = this.mapTerminologyCode(response.context);
+        const termCodes = response.termCodes.map(this.mapTerminologyCode);
+        const id = response.id;
+
+        return new CriteriaProfileData(
+          id,
+          response.uiProfile.timeRestrictionAllowed,
+          this.mapAttributeDefinitions(response.uiProfile),
+          context,
+          termCodes,
+          this.mapValueDefinition(response.uiProfile)
+        );
+      } else {
+        const id = response.id ? response.id : 'Unknown ID';
+        throw new Error(`No UI Profile was provided for ID: ${id}`);
+      }
+    } catch (error) {
+      console.error('Error creating CriteriaProfileData:', error.message);
+      return undefined;
+    }
   }
 
   private mapAttributeDefinitions(uiProfile: any): AttributeDefinitions[] {
