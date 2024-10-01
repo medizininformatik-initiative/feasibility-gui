@@ -1,10 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="start start">
-  <!-- <num-searchbar class="searchbar-container"></num-searchbar> -->
   <div style="margin-top: 5px">
-    <p style="font-size: xx-large">{{ 'DATASELECTION.HEADER' | translate }}</p>
-    <p style="width: 100%; color: #5a7aaf; margin-top: 25px; text-align: justify">
+    <num-header>{{ 'DATASELECTION.HEADER' | translate }}</num-header>
+    <num-header-description>
       {{ 'DATASELECTION.HEADER_INFO' | translate }}
-    </p>
+    </num-header-description>
   </div>
   <div class="tree-container">
     <div *ngFor="let tree of trees">
