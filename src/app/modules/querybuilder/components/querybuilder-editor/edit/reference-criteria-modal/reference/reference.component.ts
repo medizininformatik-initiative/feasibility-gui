@@ -21,7 +21,7 @@ interface selectedItem {
 })
 export class ReferenceComponent implements OnInit, OnDestroy {
   @Input()
-  referenceFilterUri: string[] = [];
+  referenceFilterUri: string;
 
   @Input()
   attributeCode: TerminologyCode;
