@@ -35,17 +35,13 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   @Input()
   gottenDetailedResult: boolean;
 
-  @Input()
-  callsRemaining: number;
-
-  @Input()
-  callsLimit: number;
-
   @Output()
   resultGotten = new EventEmitter<boolean>();
 
   obfuscatedPatientCountArray: string[] = [];
 
+  resultCallsRemaining: number;
+  resultCallsLimit: number;
   clickEventsubscription: Subscription;
   spinnerValue: number;
   pollingTime: number;
@@ -53,6 +49,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   loadedResult = false;
   withDetails = false;
   queryUrl: string;
+
   feasibilityQuery: FeasibilityQuery;
   constructor(
     public dialog: MatDialog,
@@ -71,8 +68,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getDetailedResultRateLimit();
-    this.doSend();
+    //this.doSend();
   }
 
   ngOnDestroy(): void {
@@ -139,7 +135,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   doSend(): void {
     this.initializeState();
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
-    this.getDetailedResultRateLimit();
+    this.getRemainingCalls();
     this.queryProviderService
       .getActiveFeasibilityQuery()
       .pipe(
@@ -193,19 +189,9 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.showSpinner = false;
   }
 
-  getDetailedResultRateLimit(): void {
-    this.backend.getDetailedResultRateLimit().subscribe(
-      (result) => {
-        this.callsLimit = result.limit;
-        this.callsRemaining = result.remaining;
-      },
-      (error) => {
-        if (error.error.issues !== undefined) {
-          if (error.error.issues[0].code !== undefined) {
-            //this.snackbar.displayErrorMessage(error.error.issues[0].code);
-          }
-        }
-      }
-    );
+  public getRemainingCalls() {
+    this.resultCallsLimit = this.resultService.getCallsLimit();
+    const callsRemaining = this.resultService.getCallsRemaining();
+    this.resultCallsRemaining = this.resultCallsLimit - callsRemaining;
   }
 }

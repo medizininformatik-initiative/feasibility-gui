@@ -19,7 +19,6 @@ export class ResultComponent implements OnInit {
   result: QueryResult;
   resultUrl: string;
   loadedResult = false;
-  callsLimit: number;
   callsRemaining: number;
   constructor(
     private router: Router,

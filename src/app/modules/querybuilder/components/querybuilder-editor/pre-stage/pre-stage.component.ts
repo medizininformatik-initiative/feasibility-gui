@@ -19,6 +19,7 @@ import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create
 import { DataExtraction2UiDataSelectionService } from 'src/app/service/Translator/DataExtraction/DataExtraction2UiDataSelection.service';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
+import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQueryResult.service';
 
 @Component({
   selector: 'num-stage',
@@ -47,8 +48,7 @@ export class PreStageComponent implements OnInit, OnDestroy {
     private queryProviderService: FeasibilityQueryProviderService,
     private router: Router,
     private stageProviderService: StageProviderService,
-    private testService: DataSelectionProviderService, //NewStructuredQuery2UIQueryTranslatorService,
-    private dataExtraction2UiDataSelectionService: DataExtraction2UiDataSelectionService
+    private feasibilityQueryResultService: FeasibilityQueryResultService
   ) {}
 
   ngOnInit() {
@@ -86,18 +86,13 @@ export class PreStageComponent implements OnInit, OnDestroy {
     this.atStage = !this.atStage;
     this.scrollClick.emit(this.atStage);
   }
-  translate(): void {
-    this.router.navigate(['/querybuilder/result'], { state: { preventReset: true } });
+
+  doSendRequest(): void {
+    this.feasibilityQueryResultService.doSendQueryReuqest().subscribe((test) => console.log(test));
+    //this.router.navigate(['/querybuilder/result'], { state: { preventReset: true } });
   }
 
   isValidQuery(): boolean {
     return this.query.getInclusionCriteria().length > 0;
-  }
-
-  public test() {
-    this.dataExtraction2UiDataSelectionService.translate();
-    this.testService.getDataSelectionUIDMap().subscribe((test) => {
-      console.log(test);
-    });
   }
 }

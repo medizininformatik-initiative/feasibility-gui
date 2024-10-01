@@ -2,12 +2,23 @@ import { BackendService } from '../modules/querybuilder/service/backend.service'
 import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
 import { FeatureService } from './Feature.service';
 import { Injectable } from '@angular/core';
-import { interval, map, Observable, share, switchMap, takeUntil, timer } from 'rxjs';
+import {
+  endWith,
+  interval,
+  map,
+  Observable,
+  share,
+  switchMap,
+  takeUntil,
+  takeWhile,
+  timer,
+} from 'rxjs';
 import { QueryResult } from '../model/Result/QueryResult';
 import { QueryResultLine } from '../model/Result/QueryResultLine';
 import { ResultProviderService } from './Provider/ResultProvider.service';
 import { SnackbarService } from '../core/components/snack-bar/snack-bar.component';
 import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
+import { FeasibilityQueryProviderService } from './Provider/FeasibilityQueryProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,13 +29,69 @@ export class FeasibilityQueryResultService {
   resultObservable$: Observable<QueryResult>;
   private feasibilityQueryID: string;
 
+  private callsLimit: number;
+  private callsRemaining: number;
+  private queryId: string;
+
+  public getCallsLimit(): number {
+    return this.callsLimit;
+  }
+
+  public getCallsRemaining(): number {
+    return this.callsRemaining;
+  }
+
+  public getQueryId(): string {
+    return this.queryId;
+  }
+
   constructor(
     private backend: BackendService,
     private featureService: FeatureService,
     private translator: UIQuery2StructuredQueryService,
     private resultProvider: ResultProviderService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private queryProviderService: FeasibilityQueryProviderService
   ) {}
+
+  /**
+   * The feasibility query being sent is retrieved from the Active Feasibility Query Service.
+   * This ensures that the results are always based on the current active feasibility query
+   */
+  public doSendQueryReuqest(): Observable<QueryResult> {
+    let feasibilityQuery: FeasibilityQuery;
+    this.featureService.sendClickEvent(this.featureService.getPollingTime());
+    this.getDetailedResultRateLimit();
+    return this.queryProviderService.getActiveFeasibilityQuery().pipe(
+      switchMap((query) => {
+        feasibilityQuery = query;
+        this.setFeasibilityQueryID(query.getID());
+        return this.getPollingUrl(query);
+      }),
+      switchMap((url) => {
+        this.queryId = url.substring(url.lastIndexOf('/') + 1);
+        feasibilityQuery.addResultId(this.queryId);
+        return this.getResultPolling(url, false).pipe(endWith(null));
+      }),
+      takeWhile((x) => x != null)
+    );
+  }
+
+  private getDetailedResultRateLimit(): void {
+    this.backend.getDetailedResultRateLimit().subscribe(
+      (result) => {
+        this.callsLimit = result.limit;
+        this.callsRemaining = result.remaining;
+      },
+      (error) => {
+        if (error.error.issues !== undefined) {
+          if (error.error.issues[0].code !== undefined) {
+            //this.snackbar.displayErrorMessage(error.error.issues[0].code);
+          }
+        }
+      }
+    );
+  }
 
   public setFeasibilityQueryID(id: string): void {
     this.feasibilityQueryID = id;

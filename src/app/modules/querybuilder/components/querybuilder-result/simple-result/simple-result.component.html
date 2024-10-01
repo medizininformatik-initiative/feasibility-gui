@@ -16,7 +16,7 @@
     (click)="openDialogResultDetails()"
     class="button-dialog-result-details"
   >
-    {{ 'BUTTON.RESULTDETAILS' | translate }} ({{ callsLimit - callsRemaining }}/{{ callsLimit }})
+    {{ 'BUTTON.RESULTDETAILS' | translate }} ({{ resultCallsRemaining }}/{{ resultCallsLimit }})
   </button>
   <num-spinner *ngIf="showSpinner" [countdown]="spinnerValue"></num-spinner>
 </div>
