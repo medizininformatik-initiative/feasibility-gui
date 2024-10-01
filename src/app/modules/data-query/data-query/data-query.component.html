@@ -1,29 +1,7 @@
 <div fxFlexFill fxLayout="column" fxLayoutAlign="start">
   <!--Cohort Overview-->
-  <div style="margin-top: 5px">
-    <num-header>{{ 'QUERYBUILDER.HEADER' | translate }}</num-header>
-    <num-header-description>
-      {{ 'QUERYBUILDER.SEARCH.HEADER_INFO' | translate }}
-    </num-header-description>
-  </div>
-  <num-display-criteria-group [isEditable]="false" style="height: 400px">
-  </num-display-criteria-group>
-  <num-action-bar>
-    <button class="background-color-button" mat-raised-button class="height-59" class="green">
-      {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
-    </button>
-  </num-action-bar>
+  <num-cohort-definition></num-cohort-definition>
 
   <!--Dataselection-->
-  <div style="margin-top: 5px">
-    <num-header>{{ 'DATASELECTION.HEADER' | translate }}</num-header>
-    <num-header-description>
-      {{ 'DATASELECTION.HEADER_INFO' | translate }}
-    </num-header-description>
-  </div>
-  <num-action-bar>
-    <button class="background-color-button" mat-raised-button class="height-59" class="green">
-      {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
-    </button>
-  </num-action-bar>
+  <num-data-selection></num-data-selection>
 </div>
