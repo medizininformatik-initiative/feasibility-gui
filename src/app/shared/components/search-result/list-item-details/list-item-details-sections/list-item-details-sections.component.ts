@@ -1,24 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
+import { ListItemDetailService } from 'src/app/shared/service/Menu/ListItemDetails/ListItemDetails.service';
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
+import { SearchService } from 'src/app/service/Search/Search.service';
+import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
-import { ListItemDetailService } from 'src/app/shared/service/Menu/ListItemDetails/ListItemDetails.service';
-import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
-import { mapToSearchTermResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
-import { ElasticSearchSearchResultProviderService } from 'src/app/service/Provider/ElasticSearchSearchResultProviderService.service';
-import { SearchService } from 'src/app/service/Search/Search.service';
 
 @Component({
   selector: 'num-list-item-details-sections',
   templateUrl: './list-item-details-sections.component.html',
   styleUrls: ['./list-item-details-sections.component.scss'],
-  providers: [
-    { provide: 'ENTRY_MAPPER', useValue: mapToSearchTermResultList },
-    { provide: ElasticSearchService, useClass: ElasticSearchService },
-    { provide: ElasticSearchSearchResultProviderService },
-  ],
 })
 export class ListItemDetailsSectionsComponent implements OnInit {
   @Input()
@@ -31,7 +22,9 @@ export class ListItemDetailsSectionsComponent implements OnInit {
 
   constructor(
     private menuService: ListItemDetailService,
-    private elasticSearchService: SearchService //ElasticSearchService<SearchTermResultList, SearchTermListEntry>
+    private elasticSearchService: SearchService,
+    private searchService: SearchService,
+    private test: SearchTermDetailsService
   ) {}
 
   public ngOnInit() {
@@ -42,6 +35,9 @@ export class ListItemDetailsSectionsComponent implements OnInit {
     this.elasticSearchService.searchCriteriaById(item.getId()).subscribe((resultList) => {
       this.selectedRelative.emit(resultList.getResults()[0]);
     });
+
+    this.searchService.searchCriteriaById(item.getId()).subscribe();
+    this.test.getDetailsForListItem(item.getId()).subscribe();
   }
 
   private getMenuItems() {

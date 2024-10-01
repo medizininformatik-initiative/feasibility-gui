@@ -9,10 +9,15 @@
       fxLayout="row"
       fxLayoutAlign="space-between center"
       *ngFor="let item of listItemDetails"
-      class="mat-divider entry-layout"
+      class="mat-divider entry-layout highlight"
+      (click)="getSelectedRelative(item)"
     >
       {{ item.name }}
-      <num-menu [menuItems]="menuItems" [id]="item.getId()"></num-menu>
+      <num-menu
+        (click)="$event.stopPropagation()"
+        [menuItems]="menuItems"
+        [id]="item.getId()"
+      ></num-menu>
     </div>
   </div>
 </ng-container>

@@ -22,6 +22,12 @@ export class ListItemDetailService {
       },
       {
         disabled: false,
+        icon: 'eye',
+        label: 'SHOW_CRITERIA',
+        action: (id: string) => this.listItemDetailsFunctionService.showCriteriaInResultList(id),
+      },
+      {
+        disabled: false,
         icon: 'plus',
         label: 'ADD',
         action: (id: string) => this.listItemDetailsFunctionService.addToStage(id),
