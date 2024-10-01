@@ -26,14 +26,7 @@ export class TableRowDetailsService {
         const children = this.mapToSearchTermRelatives(response.children);
         const relatedTerms = this.mapToSearchTermRelatives(response.relatedTerms);
 
-        return new SearchTermDetails(
-          children,
-          parents,
-          relatedTerms,
-          translations,
-          response.name,
-          response.id
-        );
+        return new SearchTermDetails(children, parents, relatedTerms, translations);
       })
     );
   }

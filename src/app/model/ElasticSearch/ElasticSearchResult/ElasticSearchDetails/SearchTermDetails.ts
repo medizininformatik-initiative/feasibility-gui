@@ -8,7 +8,7 @@ import { SearchTermTranslation } from './SearchTermTranslation';
  *
  * @see AbstractSearchResult
  */
-export class SearchTermDetails extends AbstractTermHashContext {
+export class SearchTermDetails {
   translations: Array<SearchTermTranslation>;
   parents: SearchTermRelatives[];
   children: SearchTermRelatives[];
@@ -20,18 +20,13 @@ export class SearchTermDetails extends AbstractTermHashContext {
    * @param parents
    * @param relatedTerms
    * @param translations
-   * @param name
-   * @param id
    */
   constructor(
     children: Array<SearchTermRelatives>,
     parents: Array<SearchTermRelatives>,
     relatedTerms: Array<SearchTermRelatives>,
-    translations: Array<SearchTermTranslation>,
-    name: string,
-    id: string
+    translations: Array<SearchTermTranslation>
   ) {
-    super(name, id);
     this.translations = translations;
     this.parents = parents;
     this.children = children;
