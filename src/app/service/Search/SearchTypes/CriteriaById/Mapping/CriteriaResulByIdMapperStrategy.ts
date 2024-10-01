@@ -7,7 +7,7 @@ export class CriteriaResulByIdMapperStrategy
 {
   public mapResponseToResultList(response: any): SearchTermResultList {
     const listItems: SearchTermListEntry[] = this.mapResponseToEntries(response);
-    return new SearchTermResultList(response.totalHits, listItems);
+    return new SearchTermResultList(1, listItems);
   }
   p;
   public mapResponseToEntries(results: any): SearchTermListEntry[] {
