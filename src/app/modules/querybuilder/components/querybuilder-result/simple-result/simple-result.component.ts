@@ -36,8 +36,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   gottenDetailedResult: boolean;
 
   @Output()
-  resultGotten = new EventEmitter<boolean>();
-
   obfuscatedPatientCountArray: string[] = [];
 
   resultCallsRemaining: number;
@@ -55,7 +53,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     public backend: BackendService,
     private featureService: FeatureService,
-    private queryProviderService: FeasibilityQueryProviderService,
     private resultService: FeasibilityQueryResultService
   ) {
     this.clickEventsubscription?.unsubscribe();
@@ -68,7 +65,9 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //this.doSend();
+    if (window.history.state.startPolling) {
+      this.doSend();
+    }
   }
 
   ngOnDestroy(): void {
@@ -109,10 +108,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
       resultUrl: this.resultUrl,
       gottenDetailedResult: this.gottenDetailedResult,
     };
-
-    //modal.componentInstance.resultGotten.subscribe((resultGotten: boolean) => {
-    //this.resultGotten.emit(resultGotten);
-    //});
   }
 
   startProgressSpinner(pollingTime: number): void {
@@ -134,29 +129,12 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
    */
   doSend(): void {
     this.initializeState();
-    this.featureService.sendClickEvent(this.featureService.getPollingTime());
     this.getRemainingCalls();
-    this.queryProviderService
-      .getActiveFeasibilityQuery()
-      .pipe(
-        switchMap((query) => {
-          this.feasibilityQuery = query;
-          this.resultService.setFeasibilityQueryID(query.getID());
-          return this.resultService.getPollingUrl(query);
-        }),
-        switchMap((url) => {
-          this.queryUrl = url;
-          const resultID = url.substring(url.lastIndexOf('/') + 1);
-          this.feasibilityQuery.addResultId(resultID);
-          return this.resultService.getResultPolling(url, false).pipe(endWith(null));
-        }),
-        takeWhile((x) => x != null)
-      )
-      .subscribe(
-        (result) => this.handleResult(result),
-        (error) => this.handleError(error),
-        () => this.finalize()
-      );
+    this.resultService.doSendQueryRequest().subscribe(
+      (result) => this.handleResult(result),
+      (error) => this.handleError(error),
+      () => this.finalize()
+    );
   }
 
   private initializeState(): void {

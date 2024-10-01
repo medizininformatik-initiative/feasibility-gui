@@ -1,18 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActiveFeasibilityQueryService } from '../../../../../service/Provider/ActiveFeasibilityQuery.service';
 import { BackendService } from '../../../service/backend.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
+import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { of, Subscription, switchMap } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
-import { Subscription, switchMap, of } from 'rxjs';
-import { UIQuery2StructuredQueryService } from 'src/app/service/Translator/StructureQuery/UIQuery2StructuredQuery.service';
-import { ActiveFeasibilityQueryService } from '../../../../../service/Provider/ActiveFeasibilityQuery.service';
-import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
-import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
-//import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 
 @Component({
   selector: 'num-save-dialog',
@@ -38,8 +33,6 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
     private resultProvider: ResultProviderService,
     private activeFeasibilityQuery: ActiveFeasibilityQueryService,
-    private activeDataSelectionService: ActiveDataSelectionService,
-    private dataSelectionProvider: DataSelectionProviderService,
     private createCRDTLService: CreateCRDTL
   ) {}
 
