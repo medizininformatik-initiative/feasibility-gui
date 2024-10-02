@@ -1,6 +1,5 @@
 import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
 import { DataSelection2DataExtraction } from './DataSelection2DataExtraction.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
@@ -13,7 +12,7 @@ import { ActiveDataSelectionService } from '../../Provider/ActiveDataSelection.s
 @Injectable({
   providedIn: 'root',
 })
-export class CreateCRDTL {
+export class CreateCRDTLService {
   constructor(
     private dataExtractionTranslator: DataSelection2DataExtraction,
     private feasibilityQueryProvider: FeasibilityQueryProviderService,
