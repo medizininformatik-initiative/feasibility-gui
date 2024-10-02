@@ -1,29 +1,23 @@
 import { AbstractCriterion } from '../../../model/FeasibilityQuery/Criterion/AbstractCriterion';
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
-import { AfterFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AfterFilter';
-import { AtFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AtFilter';
 import { Attribute, Injectable } from '@angular/core';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter';
-import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
+import { ConsentService } from '../../Consent/Consent.service';
 import { ConsentTermCode } from 'src/app/model/Utilities/ConsentTermCode';
 import { CreateReferenceCriterionService } from '../../Criterion/Builder/Create/CreateReferenceCriterion.service';
 import { CriterionHashService } from '../../Criterion/CriterionHash.service';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
-import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { map, Observable } from 'rxjs';
 import { NewCreateCriterionService } from '../../Criterion/Builder/Create/NewCreateCriterion.service';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { ReferenceCriterion } from '../../../model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { ConsentService } from '../../Consent/Consent.service';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NewStructuredQuery2UIQueryTranslatorService {
+export class StructuredQuery2UIQueryTranslatorService {
   private hashMap: Map<string, AbstractCriterion> = new Map();
 
   constructor(

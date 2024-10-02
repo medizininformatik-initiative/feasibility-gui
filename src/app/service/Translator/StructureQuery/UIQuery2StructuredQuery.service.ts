@@ -3,6 +3,7 @@ import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/Attrib
 import { ConceptAttributeFilter } from 'src/app/model/StructuredQuery/Criterion/AttributeFilters/ConceptFilter/ConceptAttributeFilter';
 import { ConceptFilter } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { ConceptValueFilter } from 'src/app/model/StructuredQuery/Criterion/ValueFilter/ConceptFilter/ConceptValueFilter';
+import { ConsentService } from '../../Consent/Consent.service';
 import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery';
@@ -17,8 +18,6 @@ import { StructuredQueryQuantityFilterTranslatorService } from './Builder/Struct
 import { TerminologyCode } from '../../../model/Terminology/TerminologyCode';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
-import { ConsentService } from '../../Consent/Consent.service';
-import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode';
 
 @Injectable({
   providedIn: 'root',
