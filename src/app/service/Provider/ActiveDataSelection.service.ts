@@ -27,7 +27,7 @@ export class ActiveDataSelectionService {
    *
    * @returns The current active FeasibilityQueryID or null if not set.
    */
-  public getActiveDataSelectionIDObservable(): Observable<string> | null {
+  public getActiveDataSelectionIdObservable(): Observable<string> | null {
     return this.activeDataSelectionIDSubject.asObservable();
   }
 
