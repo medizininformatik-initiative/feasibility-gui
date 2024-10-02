@@ -3,19 +3,19 @@ import { DataSelectionProfileProfile } from './Profile/DataSelectionProfileProfi
 export class DataSelection {
   private id: string;
 
-  private dataSelection: DataSelectionProfileProfile[] = [];
+  private profiles: DataSelectionProfileProfile[] = [];
 
-  constructor(dataSelection: DataSelectionProfileProfile[], id: string) {
-    this.dataSelection = dataSelection;
+  constructor(profiles: DataSelectionProfileProfile[], id: string) {
+    this.profiles = profiles;
     this.id = id;
   }
 
-  public getDataSelection(): DataSelectionProfileProfile[] {
-    return this.dataSelection;
+  public getProfiles(): DataSelectionProfileProfile[] {
+    return this.profiles;
   }
 
-  public setDataSelection(dataSelction: DataSelectionProfileProfile[]): void {
-    this.dataSelection = dataSelction;
+  public setProfiles(profiles: DataSelectionProfileProfile[]): void {
+    this.profiles = profiles;
   }
 
   public getId(): string {
