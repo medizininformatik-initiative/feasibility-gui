@@ -41,5 +41,6 @@ import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
     QuerybuilderModule,
     SharedFilterModule,
   ],
+  exports: [DisplayProfilesComponent],
 })
 export class DataSelectionModule {}
