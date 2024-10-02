@@ -29,7 +29,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService
   ) {}
 
-  public testFunction(inexclusion: any[]): Observable<string[][]> {
+  public translateInExclusion(inexclusion: any[]): Observable<string[][]> {
     const hashes = [];
 
     inexclusion.forEach((criterionArray) => {

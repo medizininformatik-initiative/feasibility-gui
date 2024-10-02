@@ -1,33 +1,33 @@
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { Injectable } from '@angular/core';
-import {FeasibilityQuery} from "../../../model/FeasibilityQuery/FeasibilityQuery";
-import {NewStructuredQuery2UIQueryTranslatorService} from "./NewStructuredQuery2UIQueryTranslator.service";
 import { map, Observable } from 'rxjs';
-import {FeasibilityQueryProviderService} from "../../Provider/FeasibilityQueryProvider.service";
+import { StructuredQuery2UIQueryTranslatorService } from './StructuredQuery2UIQueryTranslator.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2FeasibilityQueryService {
+  constructor(private translator: StructuredQuery2UIQueryTranslatorService) {}
 
-  constructor(private translator: NewStructuredQuery2UIQueryTranslatorService, private feasibilityQueryProvider: FeasibilityQueryProviderService) {
-  }
-
-  public translate(structuredQuery: any): Observable<void> {
+  public translate(structuredQuery: any): Observable<FeasibilityQuery> {
+    const feasibilityQuery = new FeasibilityQuery(uuidv4(), structuredQuery.display);
     if (structuredQuery.inclusionCriteria) {
-      return this.translator.testFunction(structuredQuery.inclusionCriteria).pipe(
+      return this.translator.translateInExclusion(structuredQuery.inclusionCriteria).pipe(
         map((inclusion) => {
-          this.feasibilityQueryProvider.setInclusionCriteria(inclusion)
+          feasibilityQuery.setInclusionCriteria(inclusion);
           if (structuredQuery.exclusionCriteria) {
-            this.translator.testFunction(structuredQuery.exclusionCriteria).pipe(
+            this.translator.translateInExclusion(structuredQuery.exclusionCriteria).pipe(
               map((exclusion) => {
-                this.feasibilityQueryProvider.setExclusionCriteria(exclusion)
+                feasibilityQuery.setExclusionCriteria(exclusion);
               })
-            )
+            );
           }
+          return feasibilityQuery;
         })
-      )
+      );
     } else {
-      console.warn('ERROR')
+      console.warn('ERROR no inclusion criteria');
     }
   }
 }
