@@ -1,7 +1,7 @@
 import { ActiveFeasibilityQueryService } from '../../../../../service/Provider/ActiveFeasibilityQuery.service';
 import { BackendService } from '../../../service/backend.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CreateCRDTL } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
+import { CreateCRDTLService } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
 import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
@@ -33,7 +33,7 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
     private resultProvider: ResultProviderService,
     private activeFeasibilityQuery: ActiveFeasibilityQueryService,
-    private createCRDTLService: CreateCRDTL
+    private createCRDTLService: CreateCRDTLService
   ) {}
 
   ngOnInit(): void {}

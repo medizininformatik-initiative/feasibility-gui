@@ -33,9 +33,9 @@
     </div>
   </ng-template>
   <div
+    *ngIf="(criteriaArray$ | async).length === 0 && isEditable"
     fxLayout="row"
     fxLayoutAlign="center center"
-    *ngIf="(criteriaArray$ | async).length === 0"
     class="no-selected-criteria"
   >
     <div fxLayout="row" fxLayoutAlign="space-around center" class="wrapper">
