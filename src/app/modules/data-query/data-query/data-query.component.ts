@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DownloadFeasibilityQueryService } from 'src/app/service/DownloadFeasibilityQuery.service';
+import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
   selector: 'num-data-query',
@@ -12,7 +13,8 @@ export class DataQueryComponent {
 
   constructor(
     private router: Router,
-    private downloadFeasibilityQueryService: DownloadFeasibilityQueryService
+    private downloadCCDLService: DownloadCCDLService,
+    private terminologySytstem: TerminologySystemProvider
   ) {}
 
   sendQuery() {
@@ -32,7 +34,7 @@ export class DataQueryComponent {
   }
 
   public doDownloadQuery() {
-    this.downloadFeasibilityQueryService.downloadActiveFeasibilityQueryAsFile();
+    this.downloadCCDLService.downloadActiveFeasibilityQueryAsFile();
   }
 
   public editFeasibilityQuery() {}
