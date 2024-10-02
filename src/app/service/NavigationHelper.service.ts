@@ -20,4 +20,8 @@ export class NavigationHelperService {
   public navigateToQueryBuilderEditor(): void {
     this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage: true } });
   }
+
+  public navigateToDataSelectionEditor(): void {
+    this.router.navigate(['/data-selection'], { state: { jumpToStage: true } });
+  }
 }
