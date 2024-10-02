@@ -44,9 +44,16 @@ export class DataSelectionProviderService {
       );
   }
 
-  public setDataSelectionByUID(uid: string, dataSelection: DataSelection): void {
-    this.dataSelectionUIDMap.set(uid, dataSelection);
+  public setDataSelectionByUID(
+    id: string,
+    dataSelection: DataSelection,
+    setAsActive: boolean = false
+  ): void {
+    this.dataSelectionUIDMap.set(id, dataSelection);
     this.dataSelectionUIDMapSubject.next(new Map(this.dataSelectionUIDMap));
+    if (setAsActive) {
+      this.activeDataSelection.setActiveDataSelectionID(id);
+    }
   }
 
   public removeDataSelectionByUID(uid: string): void {
@@ -61,7 +68,7 @@ export class DataSelectionProviderService {
 
     if (dataSelection) {
       const updatedElements = dataSelection
-        .getDataSelection()
+        .getProfiles()
         .filter((profile: DataSelectionProfileProfile) => profile.getId() !== profileId);
       this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
     }
@@ -74,7 +81,7 @@ export class DataSelectionProviderService {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
     if (dataSelection) {
       const updatedElements = dataSelection
-        .getDataSelection()
+        .getProfiles()
         .map((existingProfile: DataSelectionProfileProfile) =>
           existingProfile.getId() === profile.getId() ? profile : existingProfile
         );
