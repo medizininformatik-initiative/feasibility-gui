@@ -124,7 +124,22 @@
   },
   "DATAQUERY": {
     "COHORT": {
-      "UPLOAD": "Kohorte hochladen"
+      "HEADER":"Kohorten Definition",
+      "BUTTON": {
+        "UPLOAD": "Kohorte hochladen",
+        "DOWNLOAD": "Kohorte herunterladen",
+        "EDIT":"Kohorte bearbeiten",
+        "NEW_COHORT":"Neue Kohorte"
+      },
+      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder Kreieren Sie eine neue Kohorte"
+    },
+    "DATASELECTION": {
+      "BUTTON":{
+        "EDIT":"Datenselektion bearbeiten",
+        "DOWNLOAD":"Dataselektion herunterladen",
+        "UPLOAD": "Datenselektion hochladen",
+        "NEW_DATASELECTION":"Neue Dataselektion"
+      }
     }
   },
   "LANGUAGE": {

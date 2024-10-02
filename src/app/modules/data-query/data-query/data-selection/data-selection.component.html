@@ -4,8 +4,20 @@
     {{ 'DATASELECTION.HEADER_INFO' | translate }}
   </num-header-description>
 </div>
+<num-display-profiles></num-display-profiles>
 <num-action-bar>
-  <button class="background-color-button" mat-raised-button class="height-59" class="green">
-    {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
+  <button
+    (click)="editDataSelection()"
+    mat-raised-button
+    class="green"
+    [disabled]="!isDataSelectionExistent"
+  >
+    {{ 'DATAQUERY.DATASELECTION.BUTTON.EDIT' | translate }}
+  </button>
+  <button (click)="createNewDataSelection()" mat-raised-button class="green">
+    {{ 'DATAQUERY.DATASELECTION.BUTTON.NEW_DATASELECTION' | translate }}
+  </button>
+  <button (click)="downloadDataSelection()" mat-raised-button class="green">
+    {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
   </button>
 </num-action-bar>
