@@ -1,18 +1,19 @@
-import { FeasibilityQueryProviderService } from './Provider/FeasibilityQueryProvider.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
 import { FileSaverService } from 'ngx-filesaver';
 import { Injectable } from '@angular/core';
-import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
-import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
+import { UIQuery2StructuredQueryService } from '../Translator/StructureQuery/UIQuery2StructuredQuery.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DownloadFeasibilityQueryService {
+export class DownloadCCDLService {
   constructor(
     private sqTranslatorService: UIQuery2StructuredQueryService,
     private fileSaverService: FileSaverService,
     private feasibilityQueryProviderService: FeasibilityQueryProviderService
   ) {}
+
   public downloadActiveFeasibilityQueryAsFile() {
     this.feasibilityQueryProviderService
       .getActiveFeasibilityQuery()
