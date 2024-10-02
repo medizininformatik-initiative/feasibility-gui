@@ -42,10 +42,17 @@ export class FeasibilityQueryProviderService {
    * @param id the uid to set
    * @param feasibilityQuery The new feasibility query to set
    */
-  public setFeasibilityQueryByID(feasibilityQuery: FeasibilityQuery, id: string): void {
+  public setFeasibilityQueryByID(
+    feasibilityQuery: FeasibilityQuery,
+    id: string,
+    setAsActive: boolean = false
+  ): void {
     this.storage.set(this.STORAGE_QUERY_KEY, feasibilityQuery);
     this.feasibilityQueryMap.set(id, feasibilityQuery);
     this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
+    if (setAsActive) {
+      this.activeFeasibilityQuery.setActiveFeasibilityQueryID(id);
+    }
   }
 
   /**
