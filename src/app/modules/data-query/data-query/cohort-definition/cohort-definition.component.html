@@ -1,59 +1,68 @@
-<div style="margin-top: 5px">
-  <num-header>{{ 'QUERYBUILDER.HEADER' | translate }}</num-header>
-  <num-header-description>
-    {{ 'QUERYBUILDER.SEARCH.HEADER_INFO' | translate }}
-  </num-header-description>
-</div>
-<num-display-criteria-group [isEditable]="false" style="height: 400px">
-</num-display-criteria-group>
-<num-action-bar>
-  <button
-    [disabled]="!isFeasibilityInclusionSet"
-    (click)="sendQuery()"
-    mat-raised-button
-    class="height-59"
-    class="green"
+<div class="container">
+  <div style="margin-top: 5px">
+    <num-header>{{ 'DATAQUERY.COHORT.HEADER' | translate }}</num-header>
+    <num-header-description>
+      {{ 'QUERYBUILDER.SEARCH.HEADER_INFO' | translate }}
+    </num-header-description>
+  </div>
+  <num-display-criteria-group
+    *ngIf="isFeasibilityExistent"
+    [isEditable]="false"
+    style="height: 400px"
   >
-    {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
-  </button>
-
-  <div>
-    <input type="file" class="file-input" (change)="uploadCohort($event)" #fileUpload />
+  </num-display-criteria-group>
+  <div *ngIf="!isFeasibilityExistent" class="empty-cohort-box">
+    <div class="empty-text-align">
+      {{ 'DATAQUERY.COHORT.EMPTY' | translate }}
+    </div>
+  </div>
+  <num-action-bar>
     <button
+      [disabled]="!isFeasibilityInclusionSet"
+      (click)="sendQuery()"
+      mat-raised-button
+      [ngClass]="{ green: isFeasibilityInclusionSet, 'disabled-green': !isFeasibilityInclusionSet }"
+    >
+      {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
+    </button>
+    <div>
+      <input
+        type="file"
+        class="file-input"
+        (change)="onFileSelected($event)"
+        #fileUpload
+        style="display: none"
+      />
+      <button class="green" type="button" mat-raised-button (click)="fileUpload.click()">
+        {{ 'DATAQUERY.COHORT.BUTTON.UPLOAD' | translate }}
+      </button>
+    </div>
+
+    <button
+      [disabled]="!isFeasibilityExistent"
+      class="background-color-button"
+      (click)="doDownloadQuery()"
+      mat-raised-button
+      [ngClass]="{ green: isFeasibilityExistent, 'disabled-green': !isFeasibilityExistent }"
+    >
+      {{ 'DATAQUERY.COHORT.BUTTON.DOWNLOAD' | translate }}
+    </button>
+    <button
+      [disabled]="!isFeasibilityExistent"
+      class="background-color-button"
+      (click)="editFeasibilityQuery()"
+      mat-raised-button
+      [ngClass]="{ green: isFeasibilityExistent, 'disabled-green': !isFeasibilityExistent }"
+    >
+      {{ 'DATAQUERY.COHORT.BUTTON.EDIT' | translate }}
+    </button>
+    <button
+      class="background-color-button"
+      (click)="createNewCohort()"
       mat-raised-button
       class="green"
-      type="button"
-      mat-icon-button
-      (click)="fileUpload.click()"
     >
-      {{ 'DATAQUERY.COHORT.UPLOAD' | translate }}
+      {{ 'DATAQUERY.COHORT.BUTTON.NEW_COHORT' | translate }}
     </button>
-  </div>
-  <button
-    [disabled]="isFeasibilityExistent"
-    class="background-color-button"
-    (click)="doDownloadQuery()"
-    mat-raised-button
-    class="green"
-  >
-    Download
-  </button>
-  <button
-    [disabled]="isFeasibilityExistent"
-    class="background-color-button"
-    (click)="editFeasibilityQuery()"
-    mat-raised-button
-    class="green"
-  >
-    Edit stage
-  </button>
-  <button
-    [disabled]="isFeasibilityExistent"
-    class="background-color-button"
-    (click)="editFeasibilityQuery()"
-    mat-raised-button
-    class="green"
-  >
-    create COHORT
-  </button>
-</num-action-bar>
+  </num-action-bar>
+</div>

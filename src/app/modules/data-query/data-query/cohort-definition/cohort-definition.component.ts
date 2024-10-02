@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DownloadFeasibilityQueryService } from 'src/app/service/DownloadFeasibilityQuery.service';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { ActiveFeasibilityQueryService } from 'src/app/service/Provider/ActiveFeasibilityQuery.service';
+import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { StructuredQuery2FeasibilityQueryService } from 'src/app/service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
+import { v4 as uuidv4 } from 'uuid';
+import { ValidationService } from 'src/app/service/Validation.service';
 
 @Component({
   selector: 'num-cohort-definition',
@@ -13,11 +16,14 @@ export class CohortDefinitionComponent implements OnInit {
   fileName: string;
   isFeasibilityInclusionSet = false;
   isFeasibilityExistent = false;
+  importQuery;
 
   constructor(
     private routerHelperService: NavigationHelperService,
-    private downloadFeasibilityQueryService: DownloadFeasibilityQueryService,
-    private feasibilityQueryService: FeasibilityQueryProviderService
+    private downloadCCDLService: DownloadCCDLService,
+    private feasibilityQueryService: FeasibilityQueryProviderService,
+    private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
+    private validationService: ValidationService
   ) {}
 
   ngOnInit() {
@@ -42,23 +48,62 @@ export class CohortDefinitionComponent implements OnInit {
     this.routerHelperService.navigateToQueryBuilderResult();
   }
 
-  public uploadCohort(event: Event) {
+  public onFileSelected(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];
-    const reader = new FileReader();
-    reader.onload = this.onReaderLoad.bind(this);
-    reader.readAsText(file);
-    this.fileName = file.name;
+
+    if (file) {
+      this.fileName = file.name;
+      const reader = new FileReader();
+      reader.onload = this.onReaderLoad.bind(this);
+      reader.readAsText(file);
+    }
   }
 
-  public onReaderLoad(event): void {
-    const importQuery = JSON.parse(event.target.result);
+  public onReaderLoad(event: ProgressEvent<FileReader>): void {
+    try {
+      const importedQuery = JSON.parse(event.target?.result as string);
+      this.doValidate(importedQuery);
+    } catch (error) {
+      console.error('Error parsing the file:', error);
+    }
+  }
+
+  doValidate(importedQuery): void {
+    this.validationService.validateStructuredQuery(importedQuery).subscribe(
+      (validatedStructuredQuery) => {
+        this.structuredQuery2FeasibilityQueryService
+          .translate(validatedStructuredQuery)
+          .subscribe((feasibilityQuery) => {
+            this.feasibilityQueryService.setFeasibilityQueryByID(
+              feasibilityQuery,
+              feasibilityQuery.getID(),
+              true
+            );
+          });
+      },
+      (error) => {
+        console.error('Validation error:', error);
+      }
+    );
   }
 
   public doDownloadQuery() {
-    this.downloadFeasibilityQueryService.downloadActiveFeasibilityQueryAsFile();
+    this.downloadCCDLService.downloadActiveFeasibilityQueryAsFile();
   }
 
   public editFeasibilityQuery() {
+    this.routerHelperService.navigateToQueryBuilderEditor();
+  }
+
+  public createNewCohort() {
+    if (this.isFeasibilityExistent) {
+      const feasibilityQuery = new FeasibilityQuery(uuidv4());
+      this.feasibilityQueryService.setFeasibilityQueryByID(
+        feasibilityQuery,
+        feasibilityQuery.getID(),
+        true
+      );
+    }
     this.routerHelperService.navigateToQueryBuilderEditor();
   }
 }
