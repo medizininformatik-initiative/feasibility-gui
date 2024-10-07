@@ -2,7 +2,13 @@
   width: 100%;
   height: 100%;
 }
-
+.pr4 {
+  padding-right: 4rem;
+}
+.height-90 {
+  height: 90%;
+  overflow: auto;
+}
 .searchbar-container {
   width: 70%;
   padding-bottom: 20px;
@@ -21,18 +27,18 @@
 .bottom {
   position: fixed;
   bottom: 20px;
-  width: 80%;
+  width: 81%;
   z-index: 100;
 }
 
 .tree-container {
   width: 100%;
   overflow: auto;
-  height: 500px;
+  height: 35%;
 }
 
 .box-container {
   width: 100%;
-  margin-top: 20px;
-  height: 100%;
+  margin-top: 30px;
+  height: 50%;
 }

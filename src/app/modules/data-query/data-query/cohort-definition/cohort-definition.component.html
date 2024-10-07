@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pr4">
   <div style="margin-top: 5px">
     <num-header>{{ 'DATAQUERY.COHORT.HEADER' | translate }}</num-header>
     <num-header-description>
@@ -16,7 +16,7 @@
       {{ 'DATAQUERY.COHORT.EMPTY' | translate }}
     </div>
   </div>
-  <num-action-bar>
+  <num-action-bar *ngIf="showActionBar" class="bottom">
     <button
       [disabled]="!isFeasibilityInclusionSet"
       (click)="sendQuery()"
@@ -63,6 +63,14 @@
       class="green"
     >
       {{ 'DATAQUERY.COHORT.BUTTON.NEW_COHORT' | translate }}
+    </button>
+    <button
+      class="background-color-button"
+      (click)="scroll()"
+      mat-raised-button
+      class="green"
+    >
+      down
     </button>
   </num-action-bar>
 </div>

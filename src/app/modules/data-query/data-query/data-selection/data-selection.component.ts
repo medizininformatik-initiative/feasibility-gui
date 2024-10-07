@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, ElementRef } from '@angular/core';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
@@ -10,8 +10,11 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./data-selection.component.scss'],
 })
 export class DataSelectionComponent implements OnInit {
+  @Input() showActionBar
+  @Output() scrollClick = new EventEmitter();
   isDataSelectionExistent = false;
   constructor(
+    public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService
   ) {}
@@ -41,4 +44,9 @@ export class DataSelectionComponent implements OnInit {
   }
 
   public downloadDataSelection() {}
+
+  scroll() {
+    this.showActionBar = false;
+    this.scrollClick.emit(true);
+  }
 }

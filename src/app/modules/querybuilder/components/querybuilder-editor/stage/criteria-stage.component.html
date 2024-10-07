@@ -1,4 +1,4 @@
-<div cdkDropListGroup fxFlexFill>
+<div cdkDropListGroup fxFlexFill fxLayout="column" fxLayoutAlign="start" class="overflow-auto pr4">
   <div>
     <num-header>
       {{ 'QUERYBUILDER.STAGE.HEADER' | translate }}
@@ -32,6 +32,6 @@
       {{ 'QUERYBUILDER.STAGE.NO_SELECTED_CRITERIA' | translate }}
     </div>
   </div>
-  <num-display-criteria-group [isEditable]="true" style="height: 400px">
+  <num-display-criteria-group [isEditable]="true">
   </num-display-criteria-group>
 </div>

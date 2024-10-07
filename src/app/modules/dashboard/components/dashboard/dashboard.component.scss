@@ -1,7 +1,10 @@
 .test {
   color: var(--num-color--accent);
 }
-
+.fullscreen {
+  height: 100%;
+  padding-right: 4rem;
+}
 .infoMessage {
   font-size: 15pt;
   border: 2px red solid;

@@ -3,7 +3,6 @@ import { DataProtectionComponent } from './site/data-protection/data-protection.
 import { NgModule } from '@angular/core';
 import { RoleGuard } from './core/auth/guards/role.guard';
 import { RouterModule, Routes } from '@angular/router';
-import { DataSelectionComponent } from './modules/data-selection/components/data-selection.component';
 
 export const routes: Routes = [
   {

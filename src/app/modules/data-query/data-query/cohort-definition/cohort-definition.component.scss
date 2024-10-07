@@ -1,10 +1,18 @@
-.container {
+:host {
+  width: 100%;
   height: 100%;
+  display: block;
+}
+.container {
+  height: 90%;
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
-
+.pr4 {
+  padding-right: 4rem;
+}
 .green {
   background-color: #9bb923;
   box-shadow: none;
@@ -76,4 +84,10 @@
   height: 100%; /* Ensure the container has height */
   text-align: center; /* Optional: for centering inline text inside the container */
   font-size: x-large;
+}
+.bottom {
+  position: fixed;
+  width: 81%;
+  z-index: 100;
+  bottom: 20px;
 }

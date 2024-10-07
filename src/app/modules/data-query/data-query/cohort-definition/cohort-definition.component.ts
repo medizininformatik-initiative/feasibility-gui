@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,EventEmitter, Input, Output, ElementRef } from '@angular/core';
 import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
@@ -13,12 +13,14 @@ import { ValidationService } from 'src/app/service/Validation.service';
   styleUrls: ['./cohort-definition.component.scss'],
 })
 export class CohortDefinitionComponent implements OnInit {
+  @Input() showActionBar
+  @Output() scrollClick = new EventEmitter();
   fileName: string;
   isFeasibilityInclusionSet = false;
   isFeasibilityExistent = false;
-  importQuery;
 
   constructor(
+    public elementRef: ElementRef,
     private routerHelperService: NavigationHelperService,
     private downloadCCDLService: DownloadCCDLService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
@@ -105,5 +107,10 @@ export class CohortDefinitionComponent implements OnInit {
       );
     }
     this.routerHelperService.navigateToQueryBuilderEditor();
+  }
+
+  scroll() {
+    this.showActionBar = false;
+    this.scrollClick.emit(false);
   }
 }

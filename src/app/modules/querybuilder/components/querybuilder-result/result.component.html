@@ -1,46 +1,48 @@
-<div class="result-header-line">
-  <num-header>Machbarkeitsabfrage wird bearbeitet</num-header>
-  <num-header-description>
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-    Aenean massa. Cum sociis natoque penatibus
-  </num-header-description>
+<div class="height-90 pr4">
+  <div class="result-header-line">
+    <num-header>Machbarkeitsabfrage wird bearbeitet</num-header>
+    <num-header-description>
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+      Aenean massa. Cum sociis natoque penatibus
+    </num-header-description>
+  </div>
+  <div class="simple-result">
+    <num-simple-result
+      class="result-simple-box"
+      [result]="result"
+      [isResultLoaded]="loadedResult"
+      [resultUrl]="resultUrl"
+    ></num-simple-result>
+  </div>
+  <num-display-criteria-group [isEditable]="false" style="height: 400px">
+  </num-display-criteria-group>
+  <num-action-bar class="bottom">
+    <button
+      class="background-color-button"
+      (click)="editStage()"
+      mat-raised-button
+      class="height-59"
+      [color]="true ? 'green' : 'blue'"
+    >
+      Edit Stage
+    </button>
+    <button
+      class="background-color-button"
+      (click)="saveQuery()"
+      mat-raised-button
+      class="height-59"
+      [color]="true ? 'green' : 'blue'"
+    >
+      Query Speichern
+    </button>
+    <button
+      class="background-color-button"
+      (click)="doDownloadQuery()"
+      mat-raised-button
+      class="height-59"
+      [color]="true ? 'green' : 'blue'"
+    >
+      Download
+    </button>
+  </num-action-bar>
 </div>
-<div class="simple-result">
-  <num-simple-result
-    class="result-simple-box"
-    [result]="result"
-    [isResultLoaded]="loadedResult"
-    [resultUrl]="resultUrl"
-  ></num-simple-result>
-</div>
-<num-display-criteria-group [isEditable]="false" style="height: 400px">
-</num-display-criteria-group>
-<num-action-bar class="bottom">
-  <button
-    class="background-color-button"
-    (click)="editStage()"
-    mat-raised-button
-    class="height-59"
-    [color]="true ? 'green' : 'blue'"
-  >
-    Edit Stage
-  </button>
-  <button
-    class="background-color-button"
-    (click)="saveQuery()"
-    mat-raised-button
-    class="height-59"
-    [color]="true ? 'green' : 'blue'"
-  >
-    Query Speichern
-  </button>
-  <button
-    class="background-color-button"
-    (click)="doDownloadQuery()"
-    mat-raised-button
-    class="height-59"
-    [color]="true ? 'green' : 'blue'"
-  >
-    Download
-  </button>
-</num-action-bar>

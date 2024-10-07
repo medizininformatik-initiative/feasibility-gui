@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import {CohortDefinitionComponent} from "./cohort-definition/cohort-definition.component";
+import {DataSelectionComponent} from "./data-selection/data-selection.component";
 
 @Component({
   selector: 'num-data-query',
@@ -9,7 +11,10 @@ import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologyS
   styleUrls: ['./data-query.component.scss'],
 })
 export class DataQueryComponent {
+  @ViewChild('cohort') cohort: CohortDefinitionComponent;
+  @ViewChild('dataselection') dataselection: DataSelectionComponent;
   fileName: string;
+  showActionBar: boolean = true;
 
   constructor(
     private router: Router,
@@ -38,4 +43,19 @@ export class DataQueryComponent {
   }
 
   public editFeasibilityQuery() {}
+
+  scroll(event: boolean) {
+    this.showActionBar = event;
+    if (event) {
+      if (this.cohort) {
+        const element = this.cohort.elementRef.nativeElement;
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      if (this.dataselection) {
+        const element = this.dataselection.elementRef.nativeElement;
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }
 }

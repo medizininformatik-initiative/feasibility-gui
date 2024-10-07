@@ -1,23 +1,33 @@
-<div style="margin-top: 5px">
-  <num-header>{{ 'DATASELECTION.HEADER' | translate }}</num-header>
-  <num-header-description>
-    {{ 'DATASELECTION.HEADER_INFO' | translate }}
-  </num-header-description>
+<div class="container pr4">
+  <div style="margin-top: 5px">
+    <num-header>{{ 'DATASELECTION.HEADER' | translate }}</num-header>
+    <num-header-description>
+      {{ 'DATASELECTION.HEADER_INFO' | translate }}
+    </num-header-description>
+  </div>
+  <num-display-profiles></num-display-profiles>
+  <num-action-bar *ngIf="showActionBar" class="bottom">
+    <button
+      (click)="editDataSelection()"
+      mat-raised-button
+      class="green"
+      [disabled]="!isDataSelectionExistent"
+    >
+      {{ 'DATAQUERY.DATASELECTION.BUTTON.EDIT' | translate }}
+    </button>
+    <button (click)="createNewDataSelection()" mat-raised-button class="green">
+      {{ 'DATAQUERY.DATASELECTION.BUTTON.NEW_DATASELECTION' | translate }}
+    </button>
+    <button (click)="downloadDataSelection()" mat-raised-button class="green">
+      {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
+    </button>
+    <button
+      class="background-color-button"
+      (click)="scroll()"
+      mat-raised-button
+      class="green"
+    >
+      up
+    </button>
+  </num-action-bar>
 </div>
-<num-display-profiles></num-display-profiles>
-<num-action-bar>
-  <button
-    (click)="editDataSelection()"
-    mat-raised-button
-    class="green"
-    [disabled]="!isDataSelectionExistent"
-  >
-    {{ 'DATAQUERY.DATASELECTION.BUTTON.EDIT' | translate }}
-  </button>
-  <button (click)="createNewDataSelection()" mat-raised-button class="green">
-    {{ 'DATAQUERY.DATASELECTION.BUTTON.NEW_DATASELECTION' | translate }}
-  </button>
-  <button (click)="downloadDataSelection()" mat-raised-button class="green">
-    {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
-  </button>
-</num-action-bar>
