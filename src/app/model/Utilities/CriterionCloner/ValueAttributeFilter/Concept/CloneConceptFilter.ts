@@ -1,5 +1,6 @@
 import { CloneTerminologyCode } from '../../TerminologyCode/CloneTerminologyCode';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { v4 as uuidv4 } from 'uuid';
 
 export class CloneConceptFilter {
   /**
@@ -12,6 +13,6 @@ export class CloneConceptFilter {
     const copiedSelectedConcepts = CloneTerminologyCode.deepCopyTerminologyCodes(
       conceptFilter.getSelectedConcepts()
     );
-    return new ConceptFilter(conceptFilter.getAllowedConceptUri(), copiedSelectedConcepts);
+    return new ConceptFilter(uuidv4(), conceptFilter.getAllowedConceptUri(), copiedSelectedConcepts);
   }
 }

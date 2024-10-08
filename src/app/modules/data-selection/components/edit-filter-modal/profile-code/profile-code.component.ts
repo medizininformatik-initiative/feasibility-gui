@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'num-profile-code',
@@ -16,6 +17,7 @@ export class ProfileCodeComponent {
 
   public emitProfileCode(selectedConcepts: TerminologyCode[]): void {
     const updatedFilter = new ProfileTokenFilter(
+      uuidv4(),
       this.profileCodeFilter.getName(),
       this.profileCodeFilter.getType(),
       this.profileCodeFilter.getValueSetUrls(),

@@ -7,14 +7,21 @@ export abstract class AbstractConceptFilter {
   // Needs to be tested if set works for handling unique elements??
   protected selectedConcepts: Array<TerminologyCode> = [];
 
+  protected readonly id: string;
+
   /**
    * Creates an instance of AbstractConceptFilter.
    *
    * @param selectedConcepts - The selected concepts.
    * @param allowedConcepts - The allowed concepts.
    */
-  constructor(selectedConcepts: Array<TerminologyCode> = []) {
+  constructor(id: string, selectedConcepts: Array<TerminologyCode> = []) {
     this.selectedConcepts = selectedConcepts;
+    this.id = id;
+  }
+
+  public getId(): string {
+    return this.id;
   }
 
   /**

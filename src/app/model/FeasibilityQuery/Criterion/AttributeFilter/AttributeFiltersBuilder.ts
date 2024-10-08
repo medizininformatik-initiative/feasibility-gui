@@ -116,8 +116,12 @@ export class AttributeFiltersBuilder {
     return new QuantityNotSet(selectedUnit, allowedUnits, precision);
   }
 
-  buildConceptFilter(allowedConceptUri: string, selectedConcepts?: Array<TerminologyCode>) {
-    return new ConceptFilter(allowedConceptUri, selectedConcepts);
+  buildConceptFilter(
+    id: string,
+    allowedConceptUri: string,
+    selectedConcepts?: Array<TerminologyCode>
+  ) {
+    return new ConceptFilter(id, allowedConceptUri, selectedConcepts);
   }
 
   /**
@@ -126,10 +130,11 @@ export class AttributeFiltersBuilder {
    * @returns An instance of ReferenceFilter.
    */
   buildReferenceFilter(
+    id: string,
     allowedReferenceUri: string,
     selectedReference?: ReferenceCriterion[],
     selectedConcepts?: Array<TerminologyCode>
   ): ReferenceFilter {
-    return new ReferenceFilter(allowedReferenceUri, selectedReference, selectedConcepts);
+    return new ReferenceFilter(id, allowedReferenceUri, selectedReference, selectedConcepts);
   }
 }

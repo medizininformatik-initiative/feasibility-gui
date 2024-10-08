@@ -5,6 +5,7 @@ import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { FilterTypesService } from 'src/app/service/FilterTypes.service';
 import { Injectable } from '@angular/core';
 import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +58,9 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
     abstractAttributeDefinition: AbstractAttributeDefinition,
     builder: AttributeFiltersBuilder
   ): void {
-    builder.withConcept(new ConceptFilter(abstractAttributeDefinition.getReferencedValueSet(), []));
+    builder.withConcept(
+      new ConceptFilter(uuidv4(), abstractAttributeDefinition.getReferencedValueSet(), [])
+    );
   }
 
   private addQuantityFilter(

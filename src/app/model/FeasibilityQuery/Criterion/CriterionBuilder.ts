@@ -1,17 +1,17 @@
+import { AbstractAttributeDefinition } from '../../Utilities/AttributeDefinition.ts/AbstractAttributeDefinition';
 import { AbstractAttributeFilters } from './AttributeFilter/AbstractAttributeFilters';
-import { AbstractCriterion } from './AbstractCriterion';
+import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
 import { AttributeDefinitions } from '../../Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeFilter } from './AttributeFilter/AttributeFilter';
 import { AttributeFiltersBuilder } from './AttributeFilter/AttributeFiltersBuilder';
+import { BetweenFilter } from './TimeRestriction/BetweenFilter';
 import { Criterion } from './Criterion';
 import { CritGroupPosition } from '../CritGroupPosition';
 import { FilterTypes } from '../../Utilities/FilterTypes';
 import { ReferenceCriterion } from './ReferenceCriterion';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
+import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
-import { BetweenFilter } from './TimeRestriction/BetweenFilter';
-import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
-import { AbstractAttributeDefinition } from '../../Utilities/AttributeDefinition.ts/AbstractAttributeDefinition';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
@@ -199,7 +199,7 @@ export class CriterionBuilder {
     switch (filterType) {
       case FilterTypes.CONCEPT:
         attributeFilterBuilder.withConcept(
-          attributeFilterBuilder.buildConceptFilter(filterParams.getReferencedValueSet())
+          attributeFilterBuilder.buildConceptFilter(uuidv4(), filterParams.getReferencedValueSet())
         );
         break;
       case FilterTypes.QUANTITY:
@@ -215,7 +215,10 @@ export class CriterionBuilder {
       case FilterTypes.REFERENCE:
         const attributeDefinition = filterParams as AttributeDefinitions;
         attributeFilterBuilder.withReference(
-          attributeFilterBuilder.buildReferenceFilter(attributeDefinition.getReferenceCriteriaSet())
+          attributeFilterBuilder.buildReferenceFilter(
+            uuidv4(),
+            attributeDefinition.getReferenceCriteriaSet()
+          )
         );
         break;
       default:

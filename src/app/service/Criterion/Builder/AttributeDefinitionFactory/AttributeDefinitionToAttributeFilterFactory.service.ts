@@ -4,6 +4,7 @@ import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/Attrib
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,6 @@ export class AttributeDefinitionToAttributeFilterFactoryService {
   }
 
   private referenceFilterInstance(attributeDefinition): ReferenceFilter {
-    return new ReferenceFilter(attributeDefinition.getReferenceCriteriaSet(), [], []);
+    return new ReferenceFilter(uuidv4(), attributeDefinition.getReferenceCriteriaSet(), [], []);
   }
 }

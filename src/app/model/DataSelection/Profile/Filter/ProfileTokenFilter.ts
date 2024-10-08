@@ -3,11 +3,13 @@ import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 export class ProfileTokenFilter extends AbstractProfileFilter {
+  private readonly id: string;
   selectedTokens: TerminologyCode[] = [];
   valueSetUrls: string[];
   protected uiType: DataSelectionUIType = DataSelectionUIType.CODE;
 
   constructor(
+    id: string,
     name: string,
     type: string,
     valueSetUrls: string[],
@@ -48,5 +50,9 @@ export class ProfileTokenFilter extends AbstractProfileFilter {
       this.selectedTokens.push(selectedToken);
     }
     return this.selectedTokens;
+  }
+
+  public getId(): string {
+    return this.id;
   }
 }

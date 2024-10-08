@@ -2,6 +2,7 @@ import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/Ref
 import { CloneAbstractCriterion } from '../../CloneReferenceCriterion';
 import { CloneTerminologyCode } from '../../TerminologyCode/CloneTerminologyCode';
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
+import { v4 as uuidv4 } from 'uuid';
 
 export class CloneReferenceFilter {
   /**
@@ -23,6 +24,7 @@ export class CloneReferenceFilter {
     );
 
     return new ReferenceFilter(
+      uuidv4(),
       referenceFilter.getAllowedReferenceUri(),
       copiedSelectedReferences,
       copiedSelectedConcepts
