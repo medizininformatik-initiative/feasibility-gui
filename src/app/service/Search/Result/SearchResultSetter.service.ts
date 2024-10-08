@@ -41,8 +41,8 @@ export class SearchResultSetterService {
    */
   public setCodeableConceptSearchResults(
     result: CodeableConceptResultList,
-    attributeCodeCode: string
+    conceptFilterId: string
   ): void {
-    this.codeableConceptResultProvider.setSearchResults(attributeCodeCode, result);
+    this.codeableConceptResultProvider.setSearchResults(conceptFilterId, result);
   }
 }

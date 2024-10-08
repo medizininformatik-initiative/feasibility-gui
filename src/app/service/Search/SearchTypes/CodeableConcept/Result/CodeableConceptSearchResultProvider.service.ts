@@ -27,10 +27,10 @@ export class CodeableConceptSearchResultProviderService {
    *
    * @returns An Observable of the map containing search results.
    */
-  public getSearchResults(attributeCodeCode: string): Observable<CodeableConceptResultList> {
+  public getSearchResults(conceptFilterId: string): Observable<CodeableConceptResultList> {
     return this.searchResultSubject
       .asObservable()
-      .pipe(map((resultMap) => resultMap.get(attributeCodeCode) || null));
+      .pipe(map((resultMap) => resultMap.get(conceptFilterId) || null));
   }
 
   /**

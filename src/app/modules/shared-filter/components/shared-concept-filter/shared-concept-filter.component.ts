@@ -9,13 +9,14 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
   selector: 'num-shared-concept-filter',
   templateUrl: './shared-concept-filter.component.html',
   styleUrls: ['./shared-concept-filter.component.scss'],
+  providers: [SelectedConceptFilterProviderService],
 })
 export class SharedConceptFilterComponent implements OnInit, OnDestroy {
   @Input()
   valueSetUrl: string;
 
   @Input()
-  attributeCode: TerminologyCode;
+  conceptFilterId: string;
 
   @Input()
   preSelectedConcepts: TerminologyCode[] = [];
@@ -37,7 +38,7 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
       this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     }
     this.searchResults$ = this.searchResultProvider.getCodeableConceptSearchResults(
-      this.attributeCode.getCode()
+      this.conceptFilterId
     );
     this.subscription = this.selectedConceptFilterService
       .getSelectedConcepts()

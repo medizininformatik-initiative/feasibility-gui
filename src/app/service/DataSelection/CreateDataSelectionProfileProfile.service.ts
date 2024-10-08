@@ -14,15 +14,13 @@ import { v4 as uuidv4 } from 'uuid';
 @Injectable({
   providedIn: 'root',
 })
-export class CreateDataSelectionProfileProfile {
+export class CreateDataSelectionProfileService {
   constructor(
     private backend: BackendService,
     private dataSelectionProvider: DataSelectionProfileProviderService
   ) {}
 
-  public getDataSelectionProfileProfileData(
-    urls: string[]
-  ): Observable<DataSelectionProfileProfile[]> {
+  public fetchDataSelectionProfileData(urls: string[]): Observable<DataSelectionProfileProfile[]> {
     const commaSeparatedIds: string = urls.join(',');
     return this.backend.getDataSelectionProfileData(commaSeparatedIds).pipe(
       map((data: any[]) =>
@@ -41,7 +39,7 @@ export class CreateDataSelectionProfileProfile {
         case DataSelectionUIType.TIMERESTRICTION:
           return this.createProfileTimeRestrictionFilter(filter);
         case DataSelectionUIType.CODE:
-          return new ProfileTokenFilter(filter.name, filter.type, filter.valueSetUrls, []);
+          return new ProfileTokenFilter(uuidv4(), filter.name, filter.type, filter.valueSetUrls, []);
       }
     });
     return profileFilters;

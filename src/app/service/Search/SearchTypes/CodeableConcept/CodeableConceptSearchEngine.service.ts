@@ -22,13 +22,13 @@ export class CodeableConceptSearchEngineService {
   public search(
     searchText: string,
     valueSetUrl: string,
-    attributeCodeCode: string
+    conceptFilterId: string
   ): Observable<CodeableConceptResultList> {
     const resultMapper = this.getMapping();
     const url = this.createUrl(searchText, valueSetUrl);
     return this.searchResultProcessorService.fetchAndMapSearchResults(url, resultMapper).pipe(
       map((result) => {
-        this.searchResultSetter.setCodeableConceptSearchResults(result, attributeCodeCode);
+        this.searchResultSetter.setCodeableConceptSearchResults(result, conceptFilterId);
         return result;
       })
     );

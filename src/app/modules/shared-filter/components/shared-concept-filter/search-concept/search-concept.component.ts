@@ -14,7 +14,7 @@ export class SearchConceptComponent implements OnDestroy {
   valueSetUrl: string;
 
   @Input()
-  attributeCode: TerminologyCode;
+  conceptFilterId: string;
 
   private searchSubscription: Subscription;
   public searchResults: CodeableConceptResultList;
@@ -32,7 +32,7 @@ export class SearchConceptComponent implements OnDestroy {
     }
 
     this.searchSubscription = this.conceptFilterSearchService
-      .searchCodeableConcepts(searchtext, this.valueSetUrl, this.attributeCode.getCode())
+      .searchCodeableConcepts(searchtext, this.valueSetUrl, this.conceptFilterId)
       .subscribe(
         (result) => {
           this.searchResults = result;
