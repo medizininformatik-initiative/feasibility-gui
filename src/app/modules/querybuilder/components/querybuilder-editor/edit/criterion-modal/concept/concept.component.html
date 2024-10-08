@@ -3,7 +3,7 @@
   <num-shared-concept-filter
     *ngIf="conceptFilter"
     [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
-    [allowedConceptUri]="conceptFilter.getAllowedConceptUri()"
+    [valueSetUrl]="conceptFilter.getAllowedConceptUri()"
     (changedSelectedConcepts)="emitConceptFilter($event)"
   >
   </num-shared-concept-filter>

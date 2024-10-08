@@ -10,7 +10,7 @@ import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSe
 })
 export class SearchConceptComponent implements OnDestroy {
   @Input()
-  allowedConceptUri: string;
+  valueSetUrl: string;
 
   private searchSubscription: Subscription;
   public searchResults: CodeableConceptResultList;
@@ -28,7 +28,7 @@ export class SearchConceptComponent implements OnDestroy {
     }
 
     this.searchSubscription = this.conceptFilterSearchService
-      .searchCodeableConcepts(searchtext, this.allowedConceptUri)
+      .searchCodeableConcepts(searchtext, this.valueSetUrl)
       .subscribe(
         (result) => {
           this.searchResults = result;

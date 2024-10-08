@@ -1,8 +1,9 @@
 <div fxLayout="column" class="container">
   <div class="attribute-code-display"></div>
-  <num-search-concept [allowedConceptUri]="allowedConceptUri"> </num-search-concept>
+  <num-search-concept [valueSetUrl]="valueSetUrl"> </num-search-concept>
   <num-concept-filter-table
     *ngIf="searchResults$ | async as searchResults"
+    [valueSetUrl]="valueSetUrl"
   ></num-concept-filter-table>
   <num-staged-concepts></num-staged-concepts>
 </div>

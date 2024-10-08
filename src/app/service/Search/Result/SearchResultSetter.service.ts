@@ -39,7 +39,10 @@ export class SearchResultSetterService {
    *
    * @param result The CodeableConceptResultList to set.
    */
-  public setCodeableConceptSearchResults(result: CodeableConceptResultList): void {
-    this.codeableConceptResultProvider.setSearchResults(result);
+  public setCodeableConceptSearchResults(
+    result: CodeableConceptResultList,
+    valueSetUrl: string
+  ): void {
+    this.codeableConceptResultProvider.setSearchResults(valueSetUrl, result);
   }
 }

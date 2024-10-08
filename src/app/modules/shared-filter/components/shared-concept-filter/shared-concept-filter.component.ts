@@ -1,11 +1,9 @@
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ConceptElasticSearchService } from '../../service/ConceptFilter/ConceptElasticSearch.service';
 import { Observable, Subscription } from 'rxjs';
+import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { SearchService } from 'src/app/service/Search/Search.service';
-import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 
 @Component({
   selector: 'num-shared-concept-filter',
@@ -14,7 +12,7 @@ import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResult
 })
 export class SharedConceptFilterComponent implements OnInit, OnDestroy {
   @Input()
-  allowedConceptUri: string[] = [];
+  valueSetUrl: string;
 
   @Input()
   preSelectedConcepts: TerminologyCode[] = [];
@@ -28,14 +26,16 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
 
   constructor(
     private selectedConceptFilterService: SelectedConceptFilterProviderService,
-    private conceptFilterSearchService: SearchResultProvider
+    private searchResultProvider: SearchResultProvider
   ) {}
 
   ngOnInit() {
     if (this.preSelectedConcepts.length > 0) {
       this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     }
-    this.searchResults$ = this.conceptFilterSearchService.getCodeableConceptSearchResults();
+    this.searchResults$ = this.searchResultProvider.getCodeableConceptSearchResults(
+      this.valueSetUrl
+    );
     this.subscription = this.selectedConceptFilterService
       .getSelectedConcepts()
       .subscribe((selectedConcepts: TerminologyCode[]) => {

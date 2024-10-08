@@ -1,14 +1,14 @@
 import { CloneTerminologyCode } from 'src/app/model/Utilities/CriterionCloner/TerminologyCode/CloneTerminologyCode';
+import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
+import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { Subscription } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
-import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 
 @Component({
   selector: 'num-concept-filter-table',
@@ -17,6 +17,9 @@ import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData
 })
 export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   codeableConceptResultList: CodeableConceptResultList;
+
+  @Input()
+  valueSetUrl: string;
 
   adaptedData: TableData;
 
@@ -33,8 +36,9 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription2 = this.conceptElasticSearchService
-      .getCodeableConceptSearchResults()
+      .getCodeableConceptSearchResults(this.valueSetUrl)
       .subscribe((results) => {
+        console.log(results);
         this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
       });
 

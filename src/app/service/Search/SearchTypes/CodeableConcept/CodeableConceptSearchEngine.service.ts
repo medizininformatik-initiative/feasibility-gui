@@ -24,7 +24,7 @@ export class CodeableConceptSearchEngineService {
     const url = this.createUrl(searchText, valueSetUrl);
     return this.searchResultProcessorService.fetchAndMapSearchResults(url, resultMapper).pipe(
       map((result) => {
-        this.searchResultSetter.setCodeableConceptSearchResults(result);
+        this.searchResultSetter.setCodeableConceptSearchResults(result, valueSetUrl);
         return result;
       })
     );

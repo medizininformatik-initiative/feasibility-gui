@@ -25,7 +25,9 @@ export class SearchResultProvider {
     return this.criteriaSetResultProvider.getSearchResults();
   }
 
-  public getCodeableConceptSearchResults(): Observable<CodeableConceptResultList | null> {
-    return this.codeableConceptResultProvider.getSearchResults();
+  public getCodeableConceptSearchResults(
+    valueSetUrl: string
+  ): Observable<CodeableConceptResultList | null> {
+    return this.codeableConceptResultProvider.getSearchResults(valueSetUrl);
   }
 }
