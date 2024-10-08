@@ -7,6 +7,19 @@
   </div>
   <num-display-profiles></num-display-profiles>
   <num-action-bar *ngIf="showActionBar" class="bottom">
+    <div>
+      <input
+        type="file"
+        class="file-input"
+        (change)="onFileSelected($event)"
+        #fileUpload
+        style="display: none"
+      />
+      <button class="green" type="button" mat-raised-button (click)="fileUpload.click()">
+        {{ 'DATAQUERY.COHORT.BUTTON.UPLOAD' | translate }}
+      </button>
+    </div>
+
     <button
       (click)="editDataSelection()"
       mat-raised-button
@@ -21,12 +34,7 @@
     <button (click)="downloadDataSelection()" mat-raised-button class="green">
       {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
     </button>
-    <button
-      class="background-color-button"
-      (click)="scroll()"
-      mat-raised-button
-      class="green"
-    >
+    <button class="background-color-button" (click)="scroll()" mat-raised-button class="green">
       up
     </button>
   </num-action-bar>

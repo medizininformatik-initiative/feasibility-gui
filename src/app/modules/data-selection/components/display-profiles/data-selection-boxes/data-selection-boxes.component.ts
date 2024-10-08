@@ -53,11 +53,13 @@ export class DataSelectionBoxesComponent implements OnInit {
   }
 
   private getFilterChipsForProfileFilters() {
-    this.filtersFilterChips.push(
-      ...this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(
-        this.profile.getFilters()
-      )
-    );
+    if (this.profile.getFilters()) {
+      this.filtersFilterChips.push(
+        ...this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(
+          this.profile.getFilters()
+        )
+      );
+    }
   }
 
   private getMenuItems() {

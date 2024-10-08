@@ -1,8 +1,6 @@
-import { CreateDataSelectionProfileProfile } from '../../DataSelection/CreateDataSelectionProfileProfile.service';
+import { CreateDataSelectionProfileService } from '../../DataSelection/CreateDataSelectionProfileProfile.service';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
@@ -17,8 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class DataExtraction2UiDataSelectionService {
   constructor(
-    private dataSelectionProvider: DataSelectionProviderService,
-    private createDataSelection: CreateDataSelectionProfileProfile,
+    private createDataSelection: CreateDataSelectionProfileService,
     private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService
   ) {}
 
@@ -26,67 +23,60 @@ export class DataExtraction2UiDataSelectionService {
    * @todo Check if version is part of the dataExtraction.attributeGroups.filter.codes
    * @param dataExtraction
    */
-  public translate(dataExtraction?: any): void {
-    dataExtraction = this.test;
-    if (dataExtraction.dataExtraction.attributeGroups?.length > 0) {
-      const urls = dataExtraction.dataExtraction.attributeGroups.map(
+  public translate(dataExtraction: any): Observable<DataSelection> {
+    console.log(dataExtraction);
+    if (dataExtraction.attributeGroups?.length > 0) {
+      const urls = dataExtraction.attributeGroups.map(
         (attributeGroup) => attributeGroup.groupReference
       );
-      this.createDataSelection
-        .getDataSelectionProfileProfileData(urls)
-        .pipe(
-          map((dataSelectionProfiles) => {
-            dataSelectionProfiles.forEach((dataSelectionProfile) => {
-              const externDataSelectionProfile = dataExtraction.dataExtraction.attributeGroups.find(
-                (attributeGroup) => attributeGroup.groupReference === dataSelectionProfile.getUrl()
-              );
-              this.setDataSectionProfileFields(
-                externDataSelectionProfile.attributes,
-                dataSelectionProfile.getFields()
-              );
-              this.setDataSelectionFilter();
-
-              const profileTokenFilter = externDataSelectionProfile.filter?.map(
-                (externSingleFilter) => {
-                  if (externSingleFilter.type === DataSelectionFilterType.TOKEN) {
-                    const codeFilter = dataSelectionProfile
-                      .getFilters()
-                      .find(
-                        (singleFilter) => singleFilter.getName() === externSingleFilter.name
-                      ) as ProfileTokenFilter;
-                    return new ProfileTokenFilter(
-                      externSingleFilter.name,
-                      externSingleFilter.type,
-                      codeFilter.getValueSetUrls(),
-                      externSingleFilter.codes.map(
-                        (code) =>
-                          new TerminologyCode(code.code, code.display, code.system, code.version)
-                      )
-                    );
-                  }
-
-                  if (externSingleFilter.type === DataSelectionFilterType.DATE) {
-                    const timeRestriction =
-                      this.uITimeRestrictionFactoryService.createTimeRestrictionForDataSelection(
-                        externSingleFilter
-                      );
-                    return new ProfileTimeRestrictionFilter(
-                      externSingleFilter.name,
-                      externSingleFilter.type,
-                      timeRestriction
-                    );
-                  }
+      return this.createDataSelection.fetchDataSelectionProfileData(urls).pipe(
+        map((dataSelectionProfiles) => {
+          dataSelectionProfiles.forEach((dataSelectionProfile) => {
+            const externDataSelectionProfile = dataExtraction.attributeGroups.find(
+              (attributeGroup) => attributeGroup.groupReference === dataSelectionProfile.getUrl()
+            );
+            this.setDataSectionProfileFields(
+              externDataSelectionProfile.attributes,
+              dataSelectionProfile.getFields()
+            );
+            const profileTokenFilter = externDataSelectionProfile.filter?.map(
+              (externSingleFilter) => {
+                if (externSingleFilter.type === DataSelectionFilterType.TOKEN) {
+                  const codeFilter = dataSelectionProfile
+                    .getFilters()
+                    .find(
+                      (singleFilter) => singleFilter.getName() === externSingleFilter.name
+                    ) as ProfileTokenFilter;
+                  return new ProfileTokenFilter(
+                    uuidv4(),
+                    externSingleFilter.name,
+                    externSingleFilter.type,
+                    codeFilter.getValueSetUrls(),
+                    externSingleFilter.codes.map(
+                      (code) =>
+                        new TerminologyCode(code.code, code.display, code.system, code.version)
+                    )
+                  );
                 }
-              );
-              dataSelectionProfile.setFilters(profileTokenFilter);
-            });
-            return dataSelectionProfiles;
-          })
-        )
-        .subscribe((dataSelectionProfiles) => {
-          const dataSelection = new DataSelection(dataSelectionProfiles, uuidv4());
-          this.dataSelectionProvider.setDataSelectionByUID(dataSelection.getId(), dataSelection);
-        });
+
+                if (externSingleFilter.type === DataSelectionFilterType.DATE) {
+                  const timeRestriction =
+                    this.uITimeRestrictionFactoryService.createTimeRestrictionForDataSelection(
+                      externSingleFilter
+                    );
+                  return new ProfileTimeRestrictionFilter(
+                    externSingleFilter.name,
+                    externSingleFilter.type,
+                    timeRestriction
+                  );
+                }
+              }
+            );
+            dataSelectionProfile.setFilters(profileTokenFilter);
+          });
+          return new DataSelection(dataSelectionProfiles, uuidv4());
+        })
+      );
     }
   }
 
@@ -104,8 +94,6 @@ export class DataExtraction2UiDataSelectionService {
       }
     });
   }
-
-  private setDataSelectionFilter() {}
 
   test = {
     display: '',
@@ -169,45 +157,6 @@ export class DataExtraction2UiDataSelectionService {
               type: 'date',
               name: 'date',
               start: '2024-09-04',
-            },
-          ],
-        },
-      ],
-    },
-  };
-
-  test2 = {
-    display: '',
-    version: 'http://json-schema.org/to-be-done/schema#',
-    cohortDefinition: {
-      version: 'http://to_be_decided.com/draft-1/schema#',
-      display: 'Ausgewählte Merkmale',
-    },
-    dataExtraction: {
-      attributeGroups: [
-        {
-          groupReference:
-            'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/DiagnosticReportLab',
-          attributes: [
-            {
-              attributeRef: 'DiagnosticReport.identifier',
-              mustHave: false,
-            },
-            {
-              attributeRef: 'DiagnosticReport.basedOn',
-              mustHave: false,
-            },
-            {
-              attributeRef: 'DiagnosticReport.status',
-              mustHave: false,
-            },
-            {
-              attributeRef: 'DiagnosticReport.category.coding:loinc-lab',
-              mustHave: false,
-            },
-            {
-              attributeRef: 'DiagnosticReport.category.coding:diagnostic-service-sections',
-              mustHave: false,
             },
           ],
         },
