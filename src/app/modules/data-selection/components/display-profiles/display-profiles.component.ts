@@ -21,6 +21,9 @@ export class DisplayProfilesComponent implements OnInit {
     this.getDataSelectionProfiles();
   }
 
+  /**
+   * @todo add rerender of ui component
+   */
   private getDataSelectionProfiles() {
     this.$dataSelectionProfileArray = this.dataSelectionProvider
       .getActiveDataSelection()

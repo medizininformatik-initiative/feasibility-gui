@@ -11,7 +11,7 @@ import { map, Observable } from 'rxjs';
 export class DataSelectionProfileTreeService {
   constructor(private backendservice: BackendService) {}
 
-  public createProfileTree(profileTreeData?: any): Observable<DataSelectionProfileTree> {
+  public fetchProfileTree(profileTreeData?: any): Observable<DataSelectionProfileTree> {
     return this.backendservice.getDataSelectionProfileTree().pipe(
       map((response) => {
         const rootNode = this.createNode(response.children);

@@ -45,7 +45,7 @@ export class CreateCRDTLService {
   }
 
   private getDataExtraction(): Observable<DataExtraction> {
-    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionID();
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     return this.dataSelectionProvider
       .getDataSelectionByUID(dataSelectionId)
       .pipe(

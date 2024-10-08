@@ -117,7 +117,7 @@ export class EditFilterModalComponent implements OnInit {
   }
 
   private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
-    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionID();
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.service.setProfileInDataSelection(dataSelectionId, newProfile);
   }
 }

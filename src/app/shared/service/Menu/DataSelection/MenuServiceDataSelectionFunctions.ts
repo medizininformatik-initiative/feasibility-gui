@@ -42,12 +42,12 @@ export class MenuServiceDataSelectionFunctions {
       profile.getFilters()
     );
     this.dataSelectionProfileProvider.setDataSelectionProfileByUID(copiedProfile.getId(), profile);
-    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionID();
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile);
   }
 
   public deleteDataSelectionObject(id: string) {
-    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionID();
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProvider.removeProfileFromDataSelection(dataSelectionId, id);
     this.dataSelectionProfileProvider.removeDataSelectionProfileByUID(id);
   }

@@ -31,9 +31,6 @@ export class ActiveDataSelectionService {
     return this.activeDataSelectionIDSubject.asObservable();
   }
 
-  public getActiveDataSelectionID(): string | null {
-    return this.activeDataSelectionId;
-  }
   /**
    * Setter method to update the active FeasibilityQueryID.
    *
