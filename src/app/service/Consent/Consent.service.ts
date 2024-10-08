@@ -115,7 +115,6 @@ export class ConsentService {
   };
 
   constructor(private feasibilityQueryProviderService: FeasibilityQueryProviderService) {
-    console.log(this.getBooleanFlags('yes-no-no-no'));
     this.setProvisionCode(false, false, false, false);
   }
 
