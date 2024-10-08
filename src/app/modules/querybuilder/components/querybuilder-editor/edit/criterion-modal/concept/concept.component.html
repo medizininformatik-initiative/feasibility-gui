@@ -2,7 +2,7 @@
   <div class="filter-title">{{ attributeCode.getDisplay() }}</div>
   <num-shared-concept-filter
     *ngIf="conceptFilter"
-    [attributeCode]="attributeCode"
+    [conceptFilterId]="conceptFilter.getId()"
     [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
     [valueSetUrl]="conceptFilter.getAllowedConceptUri()"
     (changedSelectedConcepts)="emitConceptFilter($event)"

@@ -1,11 +1,11 @@
 <div fxLayout="column" class="container">
   <div class="attribute-code-display"></div>
-  <num-search-concept [valueSetUrl]="valueSetUrl" [attributeCode]="attributeCode">
+  <num-search-concept [valueSetUrl]="valueSetUrl" [conceptFilterId]="conceptFilterId">
   </num-search-concept>
   <num-concept-filter-table
     *ngIf="searchResults$ | async as searchResults"
     [valueSetUrl]="valueSetUrl"
-    [attributeCode]="attributeCode"
+    [conceptFilterId]="conceptFilterId"
   ></num-concept-filter-table>
   <num-staged-concepts></num-staged-concepts>
 </div>
