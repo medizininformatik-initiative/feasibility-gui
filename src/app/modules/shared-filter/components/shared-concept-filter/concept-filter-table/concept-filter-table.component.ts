@@ -21,6 +21,9 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   @Input()
   valueSetUrl: string;
 
+  @Input()
+  attributeCode: TerminologyCode;
+
   adaptedData: TableData;
 
   selectedConcepts: TerminologyCode[] = [];
@@ -35,10 +38,10 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log(this.attributeCode);
     this.subscription2 = this.conceptElasticSearchService
-      .getCodeableConceptSearchResults(this.valueSetUrl)
+      .getCodeableConceptSearchResults(this.attributeCode.getCode())
       .subscribe((results) => {
-        console.log(results);
         this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
       });
 

@@ -1,7 +1,7 @@
 <div style="height: 100%">
   <num-concept
     *ngIf="attributeFilter.isConceptSet()"
-    [attributeCodeDisplay]="attributeFilter.getAttributeCode().getDisplay()"
+    [attributeCode]="attributeFilter.getAttributeCode()"
     [conceptFilter]="attributeFilter.getConcept()"
     (changedConceptFilter)="updateConceptFilter($event)"
   ></num-concept>

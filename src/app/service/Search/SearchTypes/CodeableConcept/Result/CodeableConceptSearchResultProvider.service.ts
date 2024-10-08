@@ -27,11 +27,10 @@ export class CodeableConceptSearchResultProviderService {
    *
    * @returns An Observable of the map containing search results.
    */
-  public getSearchResults(valueSetUrl: string): Observable<CodeableConceptResultList> {
-    console.log(valueSetUrl);
+  public getSearchResults(attributeCodeCode: string): Observable<CodeableConceptResultList> {
     return this.searchResultSubject
       .asObservable()
-      .pipe(map((resultMap) => resultMap.get(valueSetUrl) || null));
+      .pipe(map((resultMap) => resultMap.get(attributeCodeCode) || null));
   }
 
   /**

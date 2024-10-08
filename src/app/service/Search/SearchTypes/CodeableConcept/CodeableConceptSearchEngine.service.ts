@@ -19,12 +19,16 @@ export class CodeableConceptSearchEngineService {
     >
   ) {}
 
-  public search(searchText: string, valueSetUrl: string): Observable<CodeableConceptResultList> {
+  public search(
+    searchText: string,
+    valueSetUrl: string,
+    attributeCodeCode: string
+  ): Observable<CodeableConceptResultList> {
     const resultMapper = this.getMapping();
     const url = this.createUrl(searchText, valueSetUrl);
     return this.searchResultProcessorService.fetchAndMapSearchResults(url, resultMapper).pipe(
       map((result) => {
-        this.searchResultSetter.setCodeableConceptSearchResults(result, valueSetUrl);
+        this.searchResultSetter.setCodeableConceptSearchResults(result, attributeCodeCode);
         return result;
       })
     );

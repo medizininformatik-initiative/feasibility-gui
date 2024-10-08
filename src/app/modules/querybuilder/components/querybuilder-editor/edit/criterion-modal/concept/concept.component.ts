@@ -15,7 +15,7 @@ export class ConceptComponent implements OnInit {
   changedConceptFilter = new EventEmitter<ConceptFilter>();
 
   @Input()
-  attributeCodeDisplay: string;
+  attributeCode: TerminologyCode;
 
   constructor() {}
 

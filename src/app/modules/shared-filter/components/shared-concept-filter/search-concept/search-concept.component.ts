@@ -2,6 +2,7 @@ import { SearchService } from 'src/app/service/Search/Search.service';
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Component({
   selector: 'num-search-concept',
@@ -11,6 +12,9 @@ import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSe
 export class SearchConceptComponent implements OnDestroy {
   @Input()
   valueSetUrl: string;
+
+  @Input()
+  attributeCode: TerminologyCode;
 
   private searchSubscription: Subscription;
   public searchResults: CodeableConceptResultList;
@@ -28,7 +32,7 @@ export class SearchConceptComponent implements OnDestroy {
     }
 
     this.searchSubscription = this.conceptFilterSearchService
-      .searchCodeableConcepts(searchtext, this.valueSetUrl)
+      .searchCodeableConcepts(searchtext, this.valueSetUrl, this.attributeCode.getCode())
       .subscribe(
         (result) => {
           this.searchResults = result;

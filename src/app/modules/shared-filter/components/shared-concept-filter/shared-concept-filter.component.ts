@@ -15,6 +15,9 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
   valueSetUrl: string;
 
   @Input()
+  attributeCode: TerminologyCode;
+
+  @Input()
   preSelectedConcepts: TerminologyCode[] = [];
 
   @Output()
@@ -34,7 +37,7 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
       this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     }
     this.searchResults$ = this.searchResultProvider.getCodeableConceptSearchResults(
-      this.valueSetUrl
+      this.attributeCode.getCode()
     );
     this.subscription = this.selectedConceptFilterService
       .getSelectedConcepts()
@@ -47,7 +50,6 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    //this.conceptFilterSearchService.clearResultList();
     this.selectedConceptFilterService.clearSelectedConceptFilter();
   }
 
