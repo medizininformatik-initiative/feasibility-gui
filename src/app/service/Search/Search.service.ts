@@ -43,9 +43,10 @@ export class SearchService {
 
   public searchCodeableConcepts(
     searchText: string,
-    valueSetUrl: string
+    valueSetUrl: string,
+    attributeCodeCode: string
   ): Observable<CodeableConceptResultList> {
-    return this.codeableConceptSearchService.search(searchText, valueSetUrl);
+    return this.codeableConceptSearchService.search(searchText, valueSetUrl, attributeCodeCode);
   }
 
   public searchCriteriaById(id: string): Observable<SearchTermResultList> {
