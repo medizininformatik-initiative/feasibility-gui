@@ -18,5 +18,5 @@
   >
     {{ 'BUTTON.RESULTDETAILS' | translate }} ({{ resultCallsRemaining }}/{{ resultCallsLimit }})
   </button>
-  <num-spinner *ngIf="showSpinner" [countdown]="spinnerValue"></num-spinner>
+  <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
 </div>

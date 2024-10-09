@@ -7,10 +7,10 @@ span:hover {
   text-decoration: underline;
 }
 
-.tree-checkbox {
-  margin-right: 10px;
+.checkbox-placeholder {
+  width: 50px;
+  height: 40px;
 }
-
 .chevron {
   margin-right: 5px;
 }
@@ -27,10 +27,11 @@ li {
 
 .node-display-container {
   padding-right: 10px;
+  padding-left: 10px;
 }
 
 .tree-node {
-  width: 5%;
+  margin-right: 10px;
 }
 
 .divider {

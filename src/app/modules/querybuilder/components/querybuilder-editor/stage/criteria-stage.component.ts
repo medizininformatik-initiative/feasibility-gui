@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, Input } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { map, Observable, of, Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { StageProviderService } from '../../../../../service/Provider/StageProvi
   styleUrls: ['./criteria-stage.component.scss'],
 })
 export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
+  @Input() isEditable: boolean;
   public $criterionUIDMap: Observable<Map<string, Criterion>>;
 
   public $stageUIDMap: Observable<Array<string>>;

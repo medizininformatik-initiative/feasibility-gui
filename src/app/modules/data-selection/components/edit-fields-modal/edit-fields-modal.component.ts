@@ -5,6 +5,8 @@ import { DataSelectionProfileProviderService } from '../../services/DataSelectio
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileProfileNodeAdapter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import {DataSelectionProviderService} from "../../services/DataSelectionProvider.service";
+import {ActiveDataSelectionService} from "../../../../service/Provider/ActiveDataSelection.service";
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;
@@ -26,7 +28,9 @@ export class EditFieldsModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
-    private dataSelectionProvider: DataSelectionProfileProviderService
+    private dataSelectionProvider: DataSelectionProfileProviderService,
+    private service: DataSelectionProviderService,
+    private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
   ngOnInit() {
@@ -96,7 +100,12 @@ export class EditFieldsModalComponent implements OnInit {
     });
     const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(profile);
     this.dataSelectionProvider.setDataSelectionProfileByUID(profile.getId(), dataSelectionProfile);
+    this.setDataSelectionProvider(dataSelectionProfile);
     this.dialogRef.close();
+  }
+  private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
+    this.service.setProfileInDataSelection(dataSelectionId, newProfile);
   }
 
   private createInstanceOfDataSelectionProfile(profile: DataSelectionProfileProfile) {

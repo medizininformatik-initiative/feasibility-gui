@@ -10,7 +10,8 @@
       <num-tree (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
     </div>
   </div>
-  <num-display-profiles class="box-container"></num-display-profiles>
+  <num-display-profiles [isEditable]="true" class="box-container"></num-display-profiles>
+  <!--<div style="width: 100%; height: 100px; display: block"></div>-->
   <num-action-bar class="bottom">
     <button
       class="background-color-button"

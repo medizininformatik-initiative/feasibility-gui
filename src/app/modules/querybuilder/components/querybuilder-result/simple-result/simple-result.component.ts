@@ -1,9 +1,6 @@
 import { BackendService } from '../../../service/backend.service';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { endWith, Subscription, switchMap, takeWhile } from 'rxjs';
-import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
-import { FeatureService } from '../../../../../service/Feature.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { QueryResult } from '../../../../../model/Result/QueryResult';
 import {
@@ -11,13 +8,14 @@ import {
   ResultDetailsModalComponentData,
 } from '../result-detail-modal/result-detail-modal.component';
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
+import {FeatureProviderService} from "../../../service/feature-provider.service";
 
 @Component({
   selector: 'num-simple-result',
   templateUrl: './simple-result.component.html',
   styleUrls: ['./simple-result.component.scss'],
 })
-export class SimpleResultComponent implements OnInit, OnDestroy {
+export class SimpleResultComponent implements OnInit {
   @Input()
   result: QueryResult;
 
@@ -40,10 +38,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   resultCallsRemaining: number;
   resultCallsLimit: number;
-  clickEventsubscription: Subscription;
-  spinnerValue: number;
   pollingTime: number;
-  interval;
   loadedResult = false;
   withDetails = false;
   queryUrl: string;
@@ -52,26 +47,17 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     public backend: BackendService,
-    private featureService: FeatureService,
+    private featureProviderService: FeatureProviderService,
     private resultService: FeasibilityQueryResultService
   ) {
-    this.clickEventsubscription?.unsubscribe();
-    this.clickEventsubscription = this.featureService.getClickEvent().subscribe((pollingTime) => {
-      clearInterval(this.interval);
-      this.spinnerValue = 100;
-      this.pollingTime = pollingTime;
-      this.startProgressSpinner(pollingTime);
-    });
+    this.pollingTime = this.featureProviderService.getFeatures().options.pollingtimeinseconds;
   }
 
   ngOnInit(): void {
+
     if (window.history.state.startPolling) {
       this.doSend();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.clickEventsubscription?.unsubscribe();
   }
 
   /**
@@ -108,19 +94,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
       resultUrl: this.resultUrl,
       gottenDetailedResult: this.gottenDetailedResult,
     };
-  }
-
-  startProgressSpinner(pollingTime: number): void {
-    this.interval = setInterval(() => {
-      if (this.pollingTime > 0) {
-        this.pollingTime--;
-        this.spinnerValue = this.spinnerValue - 100 / pollingTime;
-      } else {
-        this.pollingTime = pollingTime;
-        this.spinnerValue = 100;
-        clearInterval(this.interval);
-      }
-    }, 1000);
   }
 
   /**

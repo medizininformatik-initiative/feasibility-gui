@@ -1,7 +1,7 @@
 <div class="concept-container">
   <num-shared-concept-filter
     [conceptFilterId]="profileCodeFilter?.getId()"
-    [valueSetUrl]="profileCodeFilter?.getValueSetUrls()"
+    [valueSetUrl]="profileCodeFilter?.getValueSetUrls()[0]"
     [preSelectedConcepts]="profileCodeFilter?.getSelectedTokens()"
     (changedSelectedConcepts)="emitProfileCode($event)"
   >

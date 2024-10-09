@@ -15,8 +15,8 @@ import { Observable, of } from 'rxjs';
   providers: [DataSelectionFilterChipsService],
 })
 export class DataSelectionBoxesComponent implements OnInit {
-  @Input()
-  profile: DataSelectionProfileProfile;
+  @Input() profile: DataSelectionProfileProfile;
+  @Input() isEditable: boolean;
 
   menuItems: MenuItemInterface[] = [];
 

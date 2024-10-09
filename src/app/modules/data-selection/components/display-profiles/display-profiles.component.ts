@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { map, Observable } from 'rxjs';
@@ -10,6 +10,7 @@ import { DataSelectionProviderService } from '../../services/DataSelectionProvid
   styleUrls: ['./display-profiles.component.scss'],
 })
 export class DisplayProfilesComponent implements OnInit {
+  @Input() isEditable: boolean;
   $dataSelectionProfileArray: Observable<Array<DataSelectionProfileProfile>>;
 
   constructor(

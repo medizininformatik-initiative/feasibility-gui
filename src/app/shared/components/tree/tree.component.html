@@ -5,17 +5,19 @@
     <div fxLayout="row" fxLayoutAlign="start center" style="height: 50px">
       <div>
         <mat-checkbox
+          *ngIf="node.data.selectable"
           [disabled]="!node.data.selectable"
           [checked]="node?.data.isCheckboxSelected"
           (change)="checkboxSelected(node)"
           class="tree-checkbox"
+          [style.marginLeft]="calcMarginLeftCheckbox(level)"
         ></mat-checkbox>
+        <div *ngIf="!node.data.selectable" class="checkbox-placeholder"></div>
       </div>
-      <div class="tree-node" [style.marginLeft]="calcMarginLeftDisplay(level)">
+      <div *ngIf="node?.children && node.children.length > 0" class="tree-node" [style.marginLeft]="calcMarginLeftTreeNode(level, node.data.selectable)">
         <div
           fxLayout="row"
           fxLayoutAlign="center center"
-          *ngIf="node?.children && node.children.length > 0"
           (click)="toggleExpand(node)"
           class="icon-container"
           style="cursor: pointer"

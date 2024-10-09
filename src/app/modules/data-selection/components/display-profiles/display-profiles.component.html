@@ -6,6 +6,9 @@
   <num-section-name>{{ 'DATASELECTION.EDIT.SECTION' | translate }}</num-section-name>
   <div *ngFor="let profile of $dataSelectionProfileArray | async" class="container">
     <div class="container"></div>
-    <num-data-selection-boxes [profile]="profile" class="box-container"> </num-data-selection-boxes>
+    <num-data-selection-boxes
+      [profile]="profile"
+      [isEditable]="isEditable"
+      class="box-container"> </num-data-selection-boxes>
   </div>
 </ng-container>

@@ -16,8 +16,8 @@ import { TerminologySystemDictionary } from 'src/app/model/Utilities/Terminology
   providers: [CriterionFilterChipService],
 })
 export class CriteriaBoxComponent implements OnInit {
-  @Input()
-  criterion: Criterion;
+  @Input() criterion: Criterion;
+  @Input() isEditable: boolean;
 
   menuItems: MenuItemInterface[] = [];
 
