@@ -37,19 +37,20 @@ export class TreeComponent implements OnInit {
 
   calcMarginLeftCheckbox(level: number): string {
     if (level === 0) {
-      return "10px";
+      return '10px';
     } else {
       return `calc(${level} * 40px)`;
     }
   }
   calcMarginLeftTreeNode(level: number, isCheckbox: boolean): string {
     if (isCheckbox) {
-      return "10px";
+      return '10px';
     } else {
       return `calc(${level} * 40px)`;
     }
   }
   checkboxSelected(node: TreeNode): void {
+    node.data.isCheckboxSelected = !node.data.isCheckboxSelected;
     this.selectedCheckbox.emit(node);
   }
 }
