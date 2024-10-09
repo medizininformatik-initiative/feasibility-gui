@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {FeatureService} from "../../../service/Feature.service";
-import {FeatureProviderService} from "../../../modules/querybuilder/service/feature-provider.service";
 
 @Component({
   selector: 'num-spinner',
@@ -17,7 +15,6 @@ export class SpinnerComponent implements OnInit {
 
   startCountdown(): void {
     const interval = setInterval(() => {
-
       if (this.countdown > 0) {
         this.countdown--;
       } else {
