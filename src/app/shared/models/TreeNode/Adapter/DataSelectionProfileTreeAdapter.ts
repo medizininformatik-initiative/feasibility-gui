@@ -11,16 +11,17 @@ export class DataSelectionTreeAdapter {
     if (nodes) {
       nodes.forEach((node) => {
         result.push({
-          id: node.id,
+          id: node.getId(),
           data: {
-            name: node.name,
-            display: node.display,
-            module: node.module,
-            url: node.url,
-            leaf: node.leaf,
-            selectable: node.selectable,
+            name: node.getName(),
+            display: node.getDisplay(),
+            module: node.getModule(),
+            url: node.getUrl(),
+            leaf: node.getLeaf(),
+            selectable: node.getSelectable(),
+            isCheckboxSelected: false,
           },
-          children: DataSelectionTreeAdapter.toTreeNode(node?.children),
+          children: DataSelectionTreeAdapter.toTreeNode(node.getChildren()),
           originalEntry: node,
         });
       });
