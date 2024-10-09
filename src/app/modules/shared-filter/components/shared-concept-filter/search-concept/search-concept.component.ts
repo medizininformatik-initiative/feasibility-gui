@@ -1,5 +1,5 @@
 import { SearchService } from 'src/app/service/Search/Search.service';
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -9,7 +9,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
   templateUrl: './search-concept.component.html',
   styleUrls: ['./search-concept.component.scss'],
 })
-export class SearchConceptComponent implements OnDestroy {
+export class SearchConceptComponent implements OnDestroy, OnInit {
   @Input()
   valueSetUrl: string;
 
@@ -21,6 +21,9 @@ export class SearchConceptComponent implements OnDestroy {
 
   constructor(private conceptFilterSearchService: SearchService) {}
 
+  ngOnInit(): void {
+    this.startElasticSearch('');
+  }
   /**
    * Initiates a search and handles the results.
    *
