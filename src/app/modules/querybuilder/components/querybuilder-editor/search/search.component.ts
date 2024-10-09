@@ -23,12 +23,9 @@ import {
   ViewChild,
   ViewContainerRef,
   TemplateRef,
-  OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { ObjectHelper } from '../../../controller/ObjectHelper';
 
 @Component({
   selector: 'num-search',
