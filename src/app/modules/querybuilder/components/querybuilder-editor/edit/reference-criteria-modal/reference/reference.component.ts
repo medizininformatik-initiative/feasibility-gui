@@ -46,6 +46,7 @@ export class ReferenceComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.startElasticSearch('');
     this.subscription = this.searchResultProviderService
       .getCriteriaSetSearchResults()
       .subscribe((searchTermResults) => {
