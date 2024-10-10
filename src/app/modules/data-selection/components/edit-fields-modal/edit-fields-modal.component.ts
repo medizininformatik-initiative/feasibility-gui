@@ -5,8 +5,8 @@ import { DataSelectionProfileProviderService } from '../../services/DataSelectio
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileProfileNodeAdapter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import {DataSelectionProviderService} from "../../services/DataSelectionProvider.service";
-import {ActiveDataSelectionService} from "../../../../service/Provider/ActiveDataSelection.service";
+import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
+import { ActiveDataSelectionService } from '../../../../service/Provider/ActiveDataSelection.service';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;

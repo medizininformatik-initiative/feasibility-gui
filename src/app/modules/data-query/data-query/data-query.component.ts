@@ -2,8 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
-import {CohortDefinitionComponent} from "./cohort-definition/cohort-definition.component";
-import {DataSelectionComponent} from "./data-selection/data-selection.component";
+import { CohortDefinitionComponent } from './cohort-definition/cohort-definition.component';
+import { DataSelectionComponent } from './data-selection/data-selection.component';
 
 @Component({
   selector: 'num-data-query',
@@ -14,12 +14,12 @@ export class DataQueryComponent {
   @ViewChild('cohort') cohort: CohortDefinitionComponent;
   @ViewChild('dataselection') dataselection: DataSelectionComponent;
   fileName: string;
-  showActionBar: boolean = true;
+  showActionBar = true;
 
   constructor(
     private router: Router,
     private downloadCCDLService: DownloadCCDLService,
-    private terminologySytstem: TerminologySystemProvider
+    private test1: TerminologySystemProvider
   ) {}
 
   sendQuery() {

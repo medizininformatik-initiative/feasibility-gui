@@ -17,8 +17,8 @@ export class NavigationHelperService {
     this.router.navigate(['/saved-queries'], { state: { preventReset: true } });
   }
 
-  public navigateToQueryBuilderEditor(): void {
-    this.router.navigate(['/querybuilder/editor']);
+  public navigateToQueryBuilderEditor(jumpToStage: boolean): void {
+    this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage: jumpToStage } });
   }
 
   public navigateToDataSelectionEditor(): void {

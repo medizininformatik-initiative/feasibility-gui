@@ -8,7 +8,7 @@ import {
   ResultDetailsModalComponentData,
 } from '../result-detail-modal/result-detail-modal.component';
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
-import {FeatureProviderService} from "../../../service/feature-provider.service";
+import { FeatureProviderService } from '../../../service/feature-provider.service';
 
 @Component({
   selector: 'num-simple-result',
@@ -54,7 +54,6 @@ export class SimpleResultComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     if (window.history.state.startPolling) {
       this.doSend();
     }
