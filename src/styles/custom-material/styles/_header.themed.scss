@@ -5,20 +5,8 @@
   $name: map-get($theme, name);
 
   @if ($name == 'fdpg') {
-    num-header mat-toolbar {
+    num-dataportal-header mat-toolbar {
       background: mat.get-color-from-palette($primary, 100) !important;
-      color: mat.get-contrast-color-from-palette($primary, 200) !important;
-    }
-  }
-  @if ($name == 'codex') {
-    num-header mat-toolbar {
-      background: mat.get-color-from-palette($primary, 200) !important;
-      color: mat.get-contrast-color-from-palette($primary, 200) !important;
-    }
-  }
-  @if ($name == 'abide') {
-    num-header mat-toolbar {
-      background: mat.get-color-from-palette($primary, A400) !important;
       color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
   }
