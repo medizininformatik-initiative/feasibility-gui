@@ -8,16 +8,16 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.DASHBOARD',
   },
   {
-    routeTo: 'querybuilder/editor',
+    routeTo: 'data-query',
     roles: ['main'],
-    icon: 'dna',
-    translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
+    icon: 'database',
+    translationKey: 'NAVIGATION.DATAQUERY',
   },
   {
-    routeTo: 'querybuilder/result',
+    routeTo: 'querybuilder/editor',
     roles: ['main'],
-    icon: 'dna',
-    translationKey: 'NAVIGATION.QUERYBUILDER_RESULT',
+    icon: 'file',
+    translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
   },
   {
     routeTo: 'data-selection',
@@ -28,7 +28,7 @@ export const mainNavItems: INavItem[] = [
   {
     routeTo: 'saved-queries',
     roles: ['main'],
-    icon: 'bars',
+    icon: 'folder',
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
   {
@@ -36,12 +36,6 @@ export const mainNavItems: INavItem[] = [
     roles: ['option'],
     icon: 'wrench',
     translationKey: 'NAVIGATION.OPTIONS',
-  },
-  {
-    routeTo: 'data-query',
-    roles: ['main'],
-    icon: 'wrench',
-    translationKey: 'NAVIGATION.DATAQUERY',
   },
 ];
 
