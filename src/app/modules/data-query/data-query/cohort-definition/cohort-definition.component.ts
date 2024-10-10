@@ -94,7 +94,7 @@ export class CohortDefinitionComponent implements OnInit {
   }
 
   public editFeasibilityQuery() {
-    this.routerHelperService.navigateToQueryBuilderEditor();
+    this.routerHelperService.navigateToQueryBuilderEditor(true);
   }
 
   public createNewCohort() {
@@ -106,7 +106,7 @@ export class CohortDefinitionComponent implements OnInit {
         true
       );
     }
-    this.routerHelperService.navigateToQueryBuilderEditor();
+    this.routerHelperService.navigateToQueryBuilderEditor(false);
   }
 
   scroll() {

@@ -19,7 +19,7 @@ export class DataQueryComponent {
   constructor(
     private router: Router,
     private downloadCCDLService: DownloadCCDLService,
-    private terminologySytstem: TerminologySystemProvider
+    private test1: TerminologySystemProvider
   ) {}
 
   sendQuery() {

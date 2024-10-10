@@ -4,6 +4,7 @@ import { first, Observable } from 'rxjs';
 import { SavedFeasibilityQueryService } from '../../services/SavedFeasibilityQuery.service';
 import { StructuredQuery2FeasibilityQueryService } from '../../../../service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { Router } from '@angular/router';
+import {FeasibilityQueryProviderService} from "../../../../service/Provider/FeasibilityQueryProvider.service";
 @Component({
   selector: 'num-feasibility',
   templateUrl: './feasibility.component.html',
@@ -14,6 +15,7 @@ export class FeasibilityComponent implements OnInit {
   constructor(
     private savedFeasibilityQueryService: SavedFeasibilityQueryService,
     private translator: StructuredQuery2FeasibilityQueryService,
+    private feasibilityQueryService: FeasibilityQueryProviderService,
     private router: Router
   ) {}
 
@@ -38,9 +40,14 @@ export class FeasibilityComponent implements OnInit {
     this.savedFeasibilityQueryService
       .loadQueryIntoEditor(Number(id))
       .subscribe((structuredQuery) => {
-        console.log(structuredQuery);
-        this.translator.translate(structuredQuery.content).subscribe();
-        this.router.navigate(['/querybuilder/result'], { state: { preventReset: true } });
+        this.translator.translate(structuredQuery.content).subscribe((feasibilityQuery) => {
+          this.feasibilityQueryService.setFeasibilityQueryByID(
+            feasibilityQuery,
+            feasibilityQuery.getID(),
+            true
+          );
+        });
+        this.router.navigate(['/data-query']);
       });
   }
 }
