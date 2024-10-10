@@ -15,9 +15,9 @@
     color="white"
     (click)="setSelectedReferenceCriteria()"
   >
-    add
+    {{ 'SHAREDFILTER.BUTTON.ADD' | translate }}
   </button>
-  <div *ngIf="arrayOfSelectedReferences.length > 0">
+  <div *ngIf="arrayOfSelectedReferences.length > 0" class="filter-selection">
     <div class="filter-title">Filter selection</div>
     <div
       *ngFor="let selectedReferences of arrayOfSelectedReferences; let index = index"

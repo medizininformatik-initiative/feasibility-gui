@@ -3,16 +3,16 @@
 }
 
 .result-list-container {
-  height: auto;
+  height: 60%;
   overflow: auto;
 }
 
 .add-button {
   margin-top: 10px;
   background-color: #5a79af;
-  color: #5a79af;
-  height: 30px;
-  width: 30px;
+  color: white;
+  width: fit-content;
+  padding: 10px 18px;
 }
 
 .selectedFilterBox {
@@ -47,4 +47,7 @@
 .attribute-code-display {
   color: #6a7483;
   padding-bottom: 5px;
+}
+.filter-selection {
+  height: 30%;
 }

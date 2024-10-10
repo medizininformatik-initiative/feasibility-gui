@@ -3,7 +3,7 @@
   (saveButtonSelected)="saveReferenceCriterion()"
   (cancelButtonSelected)="closeDialog()"
 >
-  <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+  <div *ngFor="let attributeFilter of criterion.getAttributeFilters()" style="height: 100%">
     <num-reference
       *ngIf="attributeFilter.getReference()"
       [attributeCode]="attributeFilter.getAttributeCode()"
