@@ -7,7 +7,7 @@ import { DataSelectionProviderService } from '../services/DataSelectionProvider.
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
 import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelection/SelectedDataSelectionProfile.service';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
@@ -128,6 +128,7 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
     const selectedIds = this.selectedDataSelectionProfileService.getSelectedIds();
     const originalEntryId = node.originalEntry.id;
     if (selectedIds.includes(originalEntryId)) {
+      this.selectedDataSelectionProfileUrls.delete(originalEntry.getUrl());
       this.selectedDataSelectionProfileService.removeFromSelection(originalEntry);
     } else {
       this.selectedDataSelectionProfileService.addToSelection(originalEntry);

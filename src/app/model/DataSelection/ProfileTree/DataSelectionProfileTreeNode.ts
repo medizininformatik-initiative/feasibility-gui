@@ -1,12 +1,12 @@
 export class DataSelectionProfileTreeNode {
-  private idValue: string;
-  private nameValue: string;
-  private displayValue: string;
-  private moduleValue: string;
-  private urlValue: string;
-  private leafValue: boolean;
-  private selectableValue: boolean;
-  private childrenValue: DataSelectionProfileTreeNode[] = [];
+  private id: string;
+  private name: string;
+  private display: string;
+  private module: string;
+  private url: string;
+  private leaf: boolean;
+  private selectable: boolean;
+  private children: DataSelectionProfileTreeNode[] = [];
 
   constructor(
     id: string,
@@ -18,85 +18,78 @@ export class DataSelectionProfileTreeNode {
     selectable: boolean,
     children: DataSelectionProfileTreeNode[]
   ) {
-    this.idValue = id;
-    this.nameValue = name;
-    this.displayValue = display;
-    this.moduleValue = module;
-    this.urlValue = url;
-    this.leafValue = leaf;
-    this.selectableValue = selectable;
-    this.childrenValue = children;
+    this.id = id;
+    this.name = name;
+    this.display = display;
+    this.module = module;
+    this.url = url;
+    this.leaf = leaf;
+    this.selectable = selectable;
+    this.children = children;
   }
 
-  // Getter and setter for `id`
   public getId(): string {
-    return this.idValue;
+    return this.id;
   }
 
   public setId(id: string): void {
-    this.idValue = id;
+    this.id = id;
   }
 
-  // Getter and setter for `name`
   public getName(): string {
-    return this.nameValue;
+    return this.name;
   }
 
   public setName(name: string): void {
-    this.nameValue = name;
+    this.name = name;
   }
 
-  // Getter and setter for `display`
   public getDisplay(): string {
-    return this.displayValue;
+    return this.display;
   }
 
   public setDisplay(display: string): void {
-    this.displayValue = display;
+    this.display = display;
   }
 
   // Getter and setter for `module`
   public getModule(): string {
-    return this.moduleValue;
+    return this.module;
   }
 
   public setModule(module: string): void {
-    this.moduleValue = module;
+    this.module = module;
   }
 
-  // Getter and setter for `url`
   public getUrl(): string {
-    return this.urlValue;
+    return this.url;
   }
 
   public setUrl(url: string): void {
-    this.urlValue = url;
+    this.url = url;
   }
 
-  // Getter and setter for `leaf`
   public getLeaf(): boolean {
-    return this.leafValue;
+    return this.leaf;
   }
 
   public setLeaf(leaf: boolean): void {
-    this.leafValue = leaf;
+    this.leaf = leaf;
   }
 
-  // Getter and setter for `selectable`
   public getSelectable(): boolean {
-    return this.selectableValue;
+    return this.selectable;
   }
 
   public setSelectable(selectable: boolean): void {
-    this.selectableValue = selectable;
+    this.selectable = selectable;
   }
 
-  // Getter and setter for `children`
   public getChildren(): DataSelectionProfileTreeNode[] {
-    return this.childrenValue;
+    return this.children;
   }
 
   public setChildren(children: DataSelectionProfileTreeNode[]): void {
-    this.childrenValue = children;
+    this.children = children;
   }
 }
