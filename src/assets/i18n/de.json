@@ -105,7 +105,7 @@
     },
     "EDIT": {
       "HEADER": "Ausgewählte Gesundheitsdaten zum Extrahieren",
-      "HEADER_DESCRIPTION":"Hier muss nch ein Text hinzukommen",
+      "HEADER_DESCRIPTION":"Hier muss noch ein Text hinzukommen",
       "SECTION": "Ausgewählte Kriterien"
     },
     "BUTTON": {
@@ -131,7 +131,7 @@
         "EDIT":"Kohorte bearbeiten",
         "NEW_COHORT":"Neue Kohorte"
       },
-      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder Kreieren Sie eine neue Kohorte"
+      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
     },
     "DATASELECTION": {
       "BUTTON":{
@@ -313,6 +313,10 @@
     "DISCLOSURE": "Impressum",
     "DATAPROTECTION": "Datenschutz",
     "CONTACT": "Kontakt"
+  },
+  "SAVED_QUERIES": {
+    "HEADER": "Gespeicherte Abfragen",
+    "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen"
   },
   "BUTTON": {
     "ADD": "Hinzufügen",
