@@ -84,7 +84,7 @@ export class EditFieldsModalComponent implements OnInit {
     field.setIsSelected(!field.getIsSelected());
   }
 
-  private removeNodeFromSelectedFields(index: number): void {
+  public removeNodeFromSelectedFields(index: number): void {
     this.arrayOfSelectedFields.splice(index, 1);
   }
 

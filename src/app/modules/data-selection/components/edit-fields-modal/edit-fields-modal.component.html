@@ -15,7 +15,7 @@
       {{ 'DATASELECTION.FIELD_SELECTION.FIELD_SELECTION' | translate }}
     </div>
     <div
-      *ngFor="let selectedField of arrayOfSelectedFields"
+      *ngFor="let selectedField of arrayOfSelectedFields; let index = index"
       fxLayout="row"
       fxLayoutAlign="start center"
       class="selectedFilterBox"
@@ -35,7 +35,7 @@
         <fa-icon
           [icon]="'times'"
           size="1x"
-          (click)="removeSelectedConcept(selectedConceptFilter)"
+          (click)="removeNodeFromSelectedFields(index)"
           class="delete-button"
         ></fa-icon>
       </div>
