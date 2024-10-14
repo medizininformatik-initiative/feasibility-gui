@@ -1,8 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="start start" fxFill>
-  saved Queries
-  <mat-tab-group animationDuration="0ms">
-    <mat-tab label="Feasibility">
-      <num-feasibility></num-feasibility>
-    </mat-tab>
-  </mat-tab-group>
+  <num-header>
+    {{ 'SAVED_QUERIES.HEADER' | translate }}
+  </num-header>
+  <num-section-name>
+    {{ 'SAVED_QUERIES.SAVED_FEASIBILITY' | translate }}
+  </num-section-name>
+  <num-feasibility></num-feasibility>
 </div>

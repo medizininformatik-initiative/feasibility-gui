@@ -1,9 +1,8 @@
 <div class="height-90 pr4">
   <div class="result-header-line">
-    <num-header>Machbarkeitsabfrage wird bearbeitet</num-header>
+    <num-header>{{ 'QUERYBUILDER.RESULT.HEADER' | translate }}</num-header>
     <num-header-description>
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-      Aenean massa. Cum sociis natoque penatibus
+      {{ 'QUERYBUILDER.RESULT.HEADER_DESCRIPTION' | translate }}
     </num-header-description>
   </div>
   <div class="simple-result">
@@ -24,7 +23,7 @@
       class="height-59"
       [color]="true ? 'green' : 'blue'"
     >
-      Edit Stage
+      {{ 'QUERYBUILDER.RESULT.BUTTON.EDIT_STAGE' | translate }}
     </button>
     <button
       class="background-color-button"
@@ -33,7 +32,7 @@
       class="height-59"
       [color]="true ? 'green' : 'blue'"
     >
-      Query Speichern
+      {{ 'QUERYBUILDER.RESULT.BUTTON.SAVE_QUERY' | translate }}
     </button>
     <button
       class="background-color-button"
@@ -42,7 +41,7 @@
       class="height-59"
       [color]="true ? 'green' : 'blue'"
     >
-      Download
+      {{ 'QUERYBUILDER.RESULT.BUTTON.DOWNLOAD' | translate }}
     </button>
   </num-action-bar>
 </div>

@@ -13,15 +13,6 @@
   @include mat.core-theme($num-portal-webapp-theme-fdpg);
   @include custom-material_themed($num-portal-webapp-theme-fdpg);
 }
-.codexTheme {
-  @include mat.core-theme($num-portal-webapp-theme-codex);
-  @include custom-material_themed($num-portal-webapp-theme-codex);
-}
-
-.abideTheme {
-  @include mat.core-theme($num-portal-webapp-theme-abide);
-  @include custom-material_themed($num-portal-webapp-theme-abide);
-}
 
 html,
 body {

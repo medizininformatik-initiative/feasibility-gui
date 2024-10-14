@@ -105,7 +105,7 @@
     },
     "EDIT": {
       "HEADER": "Ausgewählte Gesundheitsdaten zum Extrahieren",
-      "HEADER_DESCRIPTION":"Hier muss nch ein Text hinzukommen",
+      "HEADER_DESCRIPTION":"Hier muss noch ein Text hinzukommen",
       "SECTION": "Ausgewählte Kriterien"
     },
     "BUTTON": {
@@ -131,7 +131,7 @@
         "EDIT":"Kohorte bearbeiten",
         "NEW_COHORT":"Neue Kohorte"
       },
-      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder Kreieren Sie eine neue Kohorte"
+      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
     },
     "DATASELECTION": {
       "BUTTON":{
@@ -302,6 +302,13 @@
     }
   },
   "RESULT": {
+    "Button": {
+      "EDIT_STAGE": "Bühne bearbeiten",
+      "SAVE_QUERY":"Kohorte speichern",
+      "DOWNLOAD": "Kohorte herunterladen"
+    },
+    "HEADER": "Machbarkeitsabfrage wird bearbeitet",
+    "HEADER_DESCRIPTION": "Hier muss nch ein Text hinzukommen",
     "PATIENT_NUMBER": "Anzahl der Patienten",
     "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsanfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Anfrage werden anonymisiert. In dem Prozess werden Abweichungen zum exakten Ergebnis bewusst eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts, sie sollten aber nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
     "TOTAL": "Gesamt",
@@ -313,6 +320,10 @@
     "DISCLOSURE": "Impressum",
     "DATAPROTECTION": "Datenschutz",
     "CONTACT": "Kontakt"
+  },
+  "SAVED_QUERIES": {
+    "HEADER": "Gespeicherte Abfragen",
+    "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen"
   },
   "BUTTON": {
     "ADD": "Hinzufügen",
