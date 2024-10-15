@@ -9,12 +9,15 @@
           [disabled]="!node.data.selectable"
           [checked]="node?.data.isCheckboxSelected"
           (change)="checkboxSelected(node)"
-          class="tree-checkbox"
           [style.marginLeft]="calcMarginLeftCheckbox(level)"
         ></mat-checkbox>
         <div *ngIf="!node.data.selectable" class="checkbox-placeholder"></div>
       </div>
-      <div *ngIf="node?.children && node.children.length > 0" class="tree-node" [style.marginLeft]="calcMarginLeftTreeNode(level, node.data.selectable)">
+      <div
+        *ngIf="node?.children && node.children.length > 0"
+        class="tree-node"
+        [style.marginLeft]="calcMarginLeftTreeNode(level, node.data.selectable)"
+      >
         <div
           fxLayout="row"
           fxLayoutAlign="center center"
