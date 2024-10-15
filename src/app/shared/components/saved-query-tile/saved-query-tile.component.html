@@ -11,9 +11,9 @@
     {{ savedQuery.date | date : 'dd.MM.yyyy' }}
   </div>
   <div>
-    <button class="background-color-button" (click)="onNavigate(savedQuery?.id)" mat-raised-button>
-      query laden
-    </button>
+    <num-button type="blue" (click)="onNavigate(savedQuery?.id)">
+      {{ 'QUERYBUILDER.OVERVIEW.COHORT.LOAD' | translate }}
+    </num-button>
   </div>
   <div class="height-100" fxFlex="row" fxLayoutAlign="end start" fxFlex="4">
     <fa-icon
