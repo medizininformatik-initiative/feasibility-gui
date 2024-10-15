@@ -11,17 +11,22 @@
     </div>
   </div>
   <num-display-profiles [isEditable]="true" class="box-container"></num-display-profiles>
-  <!--<div style="width: 100%; height: 100px; display: block"></div>-->
   <num-action-bar class="bottom">
-    <button
-      class="background-color-button"
-      mat-raised-button
+    <num-button
+      [isDisabled]="($dataSelectionProfileTreeNodeArray | async)?.length === 0"
+      class="margin-right-10"
+      type="green"
       (click)="getDataSelectionProfileData()"
     >
       {{ 'DATASELECTION.BUTTON.ADD' | translate }}
-    </button>
-    <button class="background-color-button" mat-raised-button (click)="downloadCRDTL()">
+    </num-button>
+    <num-button
+      class="margin-right-10"
+      [isDisabled]="($dataSelectionProfileArray | async)?.length === 0"
+      type="green"
+      (click)="downloadCRDTL()"
+    >
       {{ 'DATASELECTION.BUTTON.DOWNLOAD' | translate }}
-    </button>
+    </num-button>
   </num-action-bar>
 </div>

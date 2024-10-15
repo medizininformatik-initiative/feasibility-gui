@@ -7,10 +7,12 @@ import { DataSelectionProviderService } from '../services/DataSelectionProvider.
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
 import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
 import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelection/SelectedDataSelectionProfile.service';
-import { Subscription, take } from 'rxjs';
+import { map, Observable, Subscription, take } from 'rxjs';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
+import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 
 @Component({
   selector: 'num-data-selection',
@@ -27,6 +29,12 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
   dataSelectionProfileSubscription: Subscription;
 
   selectedDataSelectionProfileUrls: Set<string> = new Set();
+
+  $dataSelectionProfileArray: Observable<DataSelectionProfileProfile[]>;
+
+  $dataSelectionProfileTreeNodeArray: Observable<DataSelectionProfileTreeNode[]>;
+
+  downloadDisabled = true;
 
   /**
    *
@@ -51,6 +59,12 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
   ) {}
 
   ngOnInit(): void {
+    this.$dataSelectionProfileArray = this.dataSelectionProviderService
+      .getActiveDataSelection()
+      .pipe(map((dataSelection) => dataSelection.getProfiles()));
+    this.$dataSelectionProfileTreeNodeArray =
+      this.selectedDataSelectionProfileService.getSelectedProfiles();
+
     this.handleSelectedItemsSubscription();
     this.dataSelectionProfileTreeService.fetchProfileTree().subscribe((tree) => {
       this.trees = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
@@ -117,6 +131,7 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
             dataSelectionId,
             dataSelectionProfile
           );
+          this.downloadDisabled = false;
         });
       });
   }

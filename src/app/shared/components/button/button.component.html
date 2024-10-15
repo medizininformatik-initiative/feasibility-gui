@@ -1,9 +1,9 @@
 <button
-  mat-flat-button
-  class="num-button"
+  class="num-button blue"
+  [ngClass]="isDisabled ? 'disabled' : ''"
   color="primary"
   [disabled]="isDisabled"
-  *ngIf="type === 'primary'"
+  *ngIf="type === 'blue'"
   [matTooltip]="tooltip"
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
@@ -13,25 +13,11 @@
 </button>
 
 <button
-  mat-stroked-button
-  class="num-button"
+  class="num-button green"
   color="primary"
+  [ngClass]="isDisabled ? 'disabled' : ''"
   [disabled]="isDisabled"
-  *ngIf="type === 'secondary'"
-  [matTooltip]="tooltip"
-  [matTooltipPosition]="'above'"
-  [matTooltipShowDelay]="300"
->
-  <fa-icon *ngIf="icon" [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
-  <ng-container *ngTemplateOutlet="content"></ng-container>
-</button>
-
-<button
-  class="num-button"
-  mat-button
-  color="primary"
-  [disabled]="isDisabled"
-  *ngIf="type === 'basic'"
+  *ngIf="type === 'green'"
   [matTooltip]="tooltip"
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"

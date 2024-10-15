@@ -14,17 +14,12 @@
       (searchTextChange)="startElasticSearch($event)"
     >
     </num-searchbar>
-    <button
-      mat-raised-button
-      class="height-59"
-      color="white"
-      (click)="startElasticSearch(searchtext)"
-    >
+    <num-button type="blue" (click)="startElasticSearch(searchtext)">
       {{ 'QUERYBUILDER.SEARCH.SEARCH_BUTTON' | translate }}
-    </button>
+    </num-button>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <ng-container #outlet [ngTemplateOutlet]="content"> </ng-container>
+  <div fxLayout="row" fxLayoutAlign="start start">
+    <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
     <ng-template #content>
       <num-search-filter
         *ngFor="let searchFilter of searchFilters$ | async"
@@ -32,14 +27,9 @@
         (selectedFilterChanged)="setElasticSearchFilter($event)"
       ></num-search-filter>
     </ng-template>
-    <button
-      mat-raised-button
-      (click)="resetFilter()"
-      class="reset-button"
-      fxLayoutAlign="center center"
-    >
+    <num-button type="blue" (click)="resetFilter()">
       {{ 'QUERYBUILDER.SEARCH.BUTTON.RESET' | translate }}
-    </button>
+    </num-button>
   </div>
 
   <mat-drawer-container>

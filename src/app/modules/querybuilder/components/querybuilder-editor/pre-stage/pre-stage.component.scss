@@ -1,25 +1,7 @@
 /* Button styles */
-.mat-button {
-  background-color: #5a79af;
-  color: #5a79af;
-  font-size: larger;
-  font-weight: 600;
-  height: 20px;
-  width: 20px;
-}
 
-.mat-green {
-  background-color: #9bb923;
-  margin-right: 10px;
-  font-size: medium;
-  color: #fff;
-}
-
-.mat-blue {
-  background-color: #5a79af;
-  font-size: medium;
-  margin-right: 10px;
-  color: #fff;
+.margin-right-10 {
+  margin-right: 20px;
 }
 
 /* Box styles */
@@ -50,21 +32,11 @@
   border: 2px solid transparent;
 }
 
-/* Additional styles */
-.test:hover {
-  transform: scale(0.8, 0.8);
-}
-
 .absolute-test {
   width: 2rem;
   height: 2rem;
   background-color: white;
   border-radius: 5px;
-}
-
-.background-color-button {
-  background-color: #5a79af;
-  margin-right: 10px;
 }
 
 .font-added-criteria {
@@ -95,4 +67,13 @@
   visibility: visible;
   opacity: 1;
   transition: opacity 2s linear;
+}
+
+::ng-deep.mat-badge-content {
+  border: 2px solid var(--num-color--primary-green);
+  color: var(--num-color--primary-green);
+  background-color: white;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 25%;
 }
