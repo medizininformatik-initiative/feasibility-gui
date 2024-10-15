@@ -13,26 +13,6 @@
 .pr4 {
   padding-right: 4rem;
 }
-.green {
-  background-color: #9bb923;
-  box-shadow: none;
-  color: white;
-  height: 42px;
-  margin-right: 10px;
-  font-size: medium;
-  border: 2px solid rgba(155, 184, 35, 1);
-  border-radius: 5px;
-}
-
-.disabled-green {
-  background-color: white;
-  box-shadow: none;
-  height: 42px;
-  margin-right: 10px;
-  font-size: medium;
-  border: 2px solid rgba(155, 184, 35, 1);
-  border-radius: 5px;
-}
 
 .file-input {
   display: none;
@@ -40,6 +20,7 @@
 .button-import {
   margin: 0 1em 0 2em;
 }
+
 .div-import-from-file {
   margin-top: 1em;
   margin-bottom: 5em;
@@ -72,22 +53,35 @@
   width: 100%;
   height: 50%;
   margin-top: 10px;
-  border: 1px dotted black;
+  border: 2px dotted black;
   border-radius: 5px;
   margin-bottom: 10px;
 }
 
 .empty-text-align {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100%; /* Ensure the container has height */
-  text-align: center; /* Optional: for centering inline text inside the container */
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
   font-size: x-large;
 }
+
 .bottom {
   position: fixed;
   width: 81%;
   z-index: 100;
   bottom: 20px;
+}
+
+num-button {
+  margin-right: 10px;
+}
+
+.margin-top-5 {
+  margin-top: 5px;
+}
+
+.height-400 {
+  height: 400px;
 }

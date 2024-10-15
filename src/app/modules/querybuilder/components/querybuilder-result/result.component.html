@@ -16,32 +16,14 @@
   <num-display-criteria-group [isEditable]="false" style="height: 400px">
   </num-display-criteria-group>
   <num-action-bar class="bottom">
-    <button
-      class="background-color-button"
-      (click)="editStage()"
-      mat-raised-button
-      class="height-59"
-      [color]="true ? 'green' : 'blue'"
-    >
+    <num-button class="margin-right-10" type="green" (click)="editStage()" mat-raised-button>
       {{ 'QUERYBUILDER.RESULT.BUTTON.EDIT_STAGE' | translate }}
-    </button>
-    <button
-      class="background-color-button"
-      (click)="saveQuery()"
-      mat-raised-button
-      class="height-59"
-      [color]="true ? 'green' : 'blue'"
-    >
+    </num-button>
+    <num-button (click)="saveQuery()" class="margin-right-10" type="green">
       {{ 'QUERYBUILDER.RESULT.BUTTON.SAVE_QUERY' | translate }}
-    </button>
-    <button
-      class="background-color-button"
-      (click)="doDownloadQuery()"
-      mat-raised-button
-      class="height-59"
-      [color]="true ? 'green' : 'blue'"
-    >
+    </num-button>
+    <num-button class="margin-right-10" (click)="doDownloadQuery()" type="green">
       {{ 'QUERYBUILDER.RESULT.BUTTON.DOWNLOAD' | translate }}
-    </button>
+    </num-button>
   </num-action-bar>
 </div>
