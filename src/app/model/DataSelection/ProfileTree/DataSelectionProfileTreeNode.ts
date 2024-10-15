@@ -1,7 +1,9 @@
+import { DisplayData } from '../Profile/DisplayData';
+
 export class DataSelectionProfileTreeNode {
   private id: string;
   private name: string;
-  private display: string;
+  private display: DisplayData;
   private module: string;
   private url: string;
   private leaf: boolean;
@@ -11,7 +13,7 @@ export class DataSelectionProfileTreeNode {
   constructor(
     id: string,
     name: string,
-    display: string,
+    display: DisplayData,
     module: string,
     url: string,
     leaf: boolean,
@@ -44,11 +46,11 @@ export class DataSelectionProfileTreeNode {
     this.name = name;
   }
 
-  public getDisplay(): string {
+  public getDisplay(): DisplayData {
     return this.display;
   }
 
-  public setDisplay(display: string): void {
+  public setDisplay(display: DisplayData): void {
     this.display = display;
   }
 

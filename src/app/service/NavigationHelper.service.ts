@@ -18,7 +18,7 @@ export class NavigationHelperService {
   }
 
   public navigateToQueryBuilderEditor(jumpToStage: boolean): void {
-    this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage: jumpToStage } });
+    this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage } });
   }
 
   public navigateToDataSelectionEditor(): void {

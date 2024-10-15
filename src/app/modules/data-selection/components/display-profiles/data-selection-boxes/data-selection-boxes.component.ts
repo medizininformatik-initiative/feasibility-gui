@@ -7,6 +7,8 @@ import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/Interface
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
 import { Observable, of } from 'rxjs';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -20,6 +22,8 @@ export class DataSelectionBoxesComponent implements OnInit {
 
   menuItems: MenuItemInterface[] = [];
 
+  display: string;
+
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
 
@@ -28,12 +32,17 @@ export class DataSelectionBoxesComponent implements OnInit {
   constructor(
     private fieldsFilterChipsService: DataSelectionFilterChipsService,
     private menuService: MenuServiceDataSelection,
-    private filtersFilterChipsService: DataSelectionFiltersFilterChips
+    private filtersFilterChipsService: DataSelectionFiltersFilterChips,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.getFilterChips();
     this.getMenuItems();
+    this.display = new DisplayData(
+      this.profile.getDisplay().original,
+      this.profile.getDisplay().translations
+    ).getTranslation(this.translate.currentLang);
   }
 
   public getFilterChips(): void {

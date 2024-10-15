@@ -11,8 +11,8 @@ import { map, Observable, Subscription, take } from 'rxjs';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'num-data-selection',
@@ -55,7 +55,8 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
     private dataSelectionProviderService: DataSelectionProviderService,
     private test1: TerminologySystemProvider,
     private activeDataSelectionService: ActiveDataSelectionService,
-    private selectedDataSelectionProfileService: SelectedDataSelectionProfileService
+    private selectedDataSelectionProfileService: SelectedDataSelectionProfileService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +68,7 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
 
     this.handleSelectedItemsSubscription();
     this.dataSelectionProfileTreeService.fetchProfileTree().subscribe((tree) => {
-      this.trees = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
+      this.trees = DataSelectionTreeAdapter.fromTree(tree.getTreeNode(), this.translate.currentLang);
     });
   }
 

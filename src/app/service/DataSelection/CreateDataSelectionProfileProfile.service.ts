@@ -73,7 +73,7 @@ export class CreateDataSelectionProfileService {
     return new ProfileFields(
       node.id,
       node.display,
-      node.name,
+      node.description,
       children,
       node.isSelected || false,
       node.isRequired || false
