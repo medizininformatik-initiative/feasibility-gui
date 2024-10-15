@@ -1,7 +1,8 @@
 @use 'node_modules/@angular/material' as mat;
 
 @mixin buttons($theme) {
-  $raised-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  $raised-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
   $accent: map-get($theme, accent);
   $primary: map-get($theme, primary);
   $additional: map-get($theme, additional);
@@ -27,6 +28,14 @@
     &.mat-mdc-unelevated-button .mat-button-wrapper > * {
       vertical-align: baseline !important;
     }
+    font-size: medium;
+    box-shadow: $raised-shadow;
+    height: 42px;
+    white-space: nowrap;
+    padding: 0px 15px;
+    &.green {
+      background-color: mat.get-color-from-palette($primary, 'green');
+    }
 
     fa-icon {
       margin: 0 4px 0 0;
@@ -37,15 +46,18 @@
       display: none;
     }
 
-    // Primaray Button
-    &.mat-mdc-unelevated-button.mat-primary {
-      min-width: 8em !important;
+    /**
+    * Blue Button
+    */
+    &.blue {
+      min-width: 7em !important;
       line-height: 34px;
       border-width: 1px;
       border-style: solid;
+      border-radius: 5px;
 
       color: mat.get-contrast-color-from-palette($primary, 900);
-      background-color: mat.get-color-from-palette($primary, 1000);
+      background-color: mat.get-color-from-palette($primary, 'blue');
       border-color: mat.get-color-from-palette($primary, 500);
 
       fa-icon {
@@ -53,22 +65,20 @@
       }
 
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-      &:hover:not(.mat-button-disabled) {
+      &:hover:not(.disabled) {
         color: white !important;
-        background: mat.get-color-from-palette($primary, 700) !important;
+        background: mat.get-color-from-palette($primary, 'blue-hover') !important;
         box-shadow: $raised-shadow;
       }
 
       &.cdk-keyboard-focused {
-        background: mat.get-color-from-palette($primary, 700);
-        border-color: mat.get-color-from-palette($accent, 500);
+        background: mat.get-color-from-palette($primary, 'blue-hover');
       }
 
-      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-      &.mat-button-disabled {
-        background: mat.get-color-from-palette($primary, 100);
-        border-color: mat.get-color-from-palette($primary, 500);
-        color: mat.get-color-from-palette($primary, 500);
+      &.disabled {
+        background-color: mat.get-color-from-palette($primary, 50);
+        color: mat.get-color-from-palette($primary, 'blue');
+        box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'blue');
 
         fa-icon {
           color: mat.get-color-from-palette($accent, 200);
@@ -76,69 +86,42 @@
       }
     }
 
-    // Secondary Button
-    &.mat-mdc-unelevated-button.mat-primary {
-      border-color: mat.get-color-from-palette($primary, 500);
+    /**
+    * Green Button
+    */
+    &.green {
       min-width: 8em !important;
+      line-height: 34px;
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 5px;
+
+      color: mat.get-contrast-color-from-palette($primary, 900);
+      background-color: mat.get-color-from-palette($primary, 'green');
+      border-color: mat.get-color-from-palette($primary, 500);
 
       fa-icon {
-        color: mat.get-color-from-palette($accent, 500);
+        color: mat.get-contrast-color-from-palette($primary, 900);
       }
 
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-      &:hover:not(.mat-button-disabled) {
-        @if ($name == 'fdpg') {
-          background: mat.get-color-from-palette($primary, 200);
-          border-color: mat.get-color-from-palette($primary, 500);
-          color: mat.get-color-from-palette($primary, 500);
-        }
-
-        @if ($name == 'codex') {
-          box-shadow: $raised-shadow;
-        }
-
-        &.cdk-keyboard-focused {
-          background: mat.get-color-from-palette($accent, 200);
-        }
-
-        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-        &.mdc-button[disabled] {
-          background: mat.get-color-from-palette($primary, 1100);
-          border-color: mat.get-color-from-palette($primary, 500);
-          color: mat.get-color-from-palette($primary, 500);
-          fa-icon {
-            color: mat.get-color-from-palette($accent, 200);
-          }
-        }
+      &:hover:not(.disabled) {
+        color: white !important;
+        background: mat.get-color-from-palette($primary, 'green-hover') !important;
+        box-shadow: $raised-shadow;
       }
 
-      // Basic Button
-      &.mat-mdc-button.mat-primary {
-        color: mat.get-color-from-palette($additional, mid-grey);
-        min-width: 8em !important;
+      &.cdk-keyboard-focused {
+        background: mat.get-color-from-palette($primary, 'green-hover');
+      }
+
+      &.disabled {
+        background-color: mat.get-color-from-palette($primary, 50);
+        color: mat.get-color-from-palette($primary, 'green');
+        box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'green');
 
         fa-icon {
-          color: mat.get-color-from-palette($accent, 500);
-        }
-
-        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-        &:hover:not(.mat-button-disabled) {
-          background: mat.get-color-from-palette($accent, 100);
-          box-shadow: $raised-shadow;
-        }
-
-        &.cdk-keyboard-focused {
-          background: mat.get-color-from-palette($accent, 200);
-          border-color: mat.get-color-from-palette($accent, 500);
-        }
-
-        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-        &.mat-button-disabled {
-          fa-icon {
-            color: mat.get-color-from-palette($accent, 200);
-          }
-
-          color: mat.get-color-from-palette($additional, mid-grey);
+          color: mat.get-color-from-palette($accent, 200);
         }
       }
     }

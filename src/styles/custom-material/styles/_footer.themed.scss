@@ -12,20 +12,6 @@
       border-top: 1px rgba(0, 0, 0, 0.2) solid;
     }
   }
-  @if ($name == 'codex') {
-    .num-footer {
-      background: mat.get-color-from-palette($background, white);
-      color: mat.get-contrast-color-from-palette($primary, 200);
-      border-top: 1px rgba(0, 0, 0, 0.2) solid;
-    }
-  }
-  @if ($name == 'abide') {
-    .num-footer {
-      background: mat.get-color-from-palette($background, white);
-      color: mat.get-contrast-color-from-palette($primary, 200);
-      border-top: 1px rgba(0, 0, 0, 0.2) solid;
-    }
-  }
   .mat-toolbar-multiple-rows {
     box-sizing: content-box;
   }
