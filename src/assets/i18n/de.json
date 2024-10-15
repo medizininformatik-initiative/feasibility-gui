@@ -238,6 +238,9 @@
       }
     },
     "OVERVIEW": {
+      "COHORT": {
+        "LOAD": "Kohorte laden"
+      },
       "TITLE_LABEL": "Titel",
       "COMMENT_LABEL": "Kommentar",
       "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
