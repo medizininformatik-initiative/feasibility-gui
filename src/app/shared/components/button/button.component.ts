@@ -8,7 +8,7 @@ export class ButtonComponent {
   constructor() {}
 
   @Input() icon?: string;
-  @Input() type?: 'primary' | 'secondary' | 'basic' = 'primary';
+  @Input() type?: 'blue' | 'green';
   @Input() isDisabled?: boolean;
   @Input() tooltip?: string;
 }
