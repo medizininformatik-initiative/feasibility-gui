@@ -64,13 +64,13 @@
       letter-spacing: 0.25px !important;
 
       &--active {
-        background: mat.get-color-from-palette($accent, 100) !important;
+        background: mat.get-color-from-palette($accent, 'grey-hover') !important;
         color: mat.get-color-from-palette($primary, A200) !important;
         font-weight: 500 !important;
       }
 
       &:hover {
-        background: mat.get-color-from-palette($accent, 100) !important;
+        background: mat.get-color-from-palette($accent, 'grey-hover') !important;
         color: mat.get-contrast-color-from-palette($accent, 100) !important;
       }
 
