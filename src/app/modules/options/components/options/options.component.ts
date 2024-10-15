@@ -1,16 +1,14 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { FeatureService } from '../../../../service/Feature.service';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { IAppConfig } from '../../../../config/app-config.model';
-import { FeatureProviderService } from '../../../querybuilder/service/feature-provider.service';
-import { MatRadioChange } from '@angular/material/radio';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-//import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
-import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { FeatureProviderService } from '../../../querybuilder/service/feature-provider.service';
+import { FeatureService } from '../../../../service/Feature.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { IAppConfig } from '../../../../config/app-config.model';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
+//import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -58,31 +56,6 @@ export class OptionsComponent implements OnInit {
     this.fhirport = this.features.fhirport;
     this.queryVersion = this.features.queryVersion;
     this.includeContext = this.features.options.sendsqcontexttobackend;
-    //this.translatedQueryv2 = this.newTranslator.translateToStructuredQuery(this.query);
-    //this.translatedQueryv2 = this.apiTranslator.translateToV2(this.query);
-
-    /*    this.postQuery('translate').subscribe(
-      (response) => {
-        this.postmanTranslate = response;
-        this.getResponse =
-          'http://localhost:' +
-          this.fhirport +
-          '/fhir/' +
-          this.postmanTranslate[0][0][0].replace(/\|/g, '%7c');
-      },
-      (error) => {
-        console.log(error);
-        this.getResponse = '';
-      }
-    );
-    this.postQuery('sync').subscribe(
-      (response) => {
-        this.postmanSync = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );*/
   }
 
   setFeature(checked: MatCheckboxChange): void {
@@ -113,13 +86,6 @@ export class OptionsComponent implements OnInit {
     this.featureProviderService.storeFeatures(this.features);
   }
 
-  setStylesheet(style: MatRadioChange): void {
-    const currentTheme = this.features.stylesheet;
-    this.features.stylesheet = style.value;
-    this.featureProviderService.storeFeatures(this.features);
-    this.featureProviderService.setTheme(currentTheme, style.value);
-  }
-
   setPollingTimes(): void {
     this.features.options.pollingtimeinseconds = this.pollingTime;
     this.features.options.pollingintervallinseconds = this.pollingIntervall;
@@ -138,42 +104,5 @@ export class OptionsComponent implements OnInit {
 
   updateContextInSQ() {
     this.setSqContextBackend();
-    this.translateQueryVersion();
-  }
-
-  setQueryVersion(version: MatRadioChange): void {
-    this.features.queryVersion = version.value;
-    this.featureProviderService.storeFeatures(this.features);
-    this.translateQueryVersion();
-  }
-
-  translateQueryVersion() {
-    if (this.queryVersion === 'v1') {
-      //this.translatedQueryv1 = this.apiTranslator.translateToV1(this.query);
-    }
-    if (this.queryVersion === 'v2') {
-      //this.translatedQueryv2 = this.apiTranslator.translateToV2(this.query);
-      //this.translatedQueryv2 = this.newTranslator.translateToStructuredQuery(this.query);
-    }
-  }
-  postQuery(modus: string): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'codex/json',
-        Accept: 'internal/json',
-        'Access-Control-Allow-Origin': '*',
-      }),
-    };
-    let url: string;
-    if (modus === 'translate') {
-      url = 'http://localhost:5000/query-translate';
-    }
-    if (modus === 'sync') {
-      url = 'http://localhost:5000/query-sync';
-    }
-
-    if (this.queryVersion === 'v2') {
-      return this.http.post(url, this.translatedQueryv2, httpOptions);
-    }
   }
 }

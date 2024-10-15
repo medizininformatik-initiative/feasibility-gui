@@ -48,20 +48,6 @@ export class FeatureProviderService {
     this.renderer.addClass(document.getElementById('header-logo'), newTheme);
     this.renderer.removeClass(document.getElementById('footer-logo'), oldTheme);
     this.renderer.addClass(document.getElementById('footer-logo'), newTheme);
-    if (newTheme === 'codexTheme') {
-      document
-        .getElementById('header-logo')
-        .setAttribute('src', 'assets/img/Logo_CODEX_rgb_cropped.png');
-      document.getElementById('header-logo').setAttribute('alt', 'CODEX Logo');
-      document.getElementById('footer-logo').setAttribute('src', 'assets/img/NUM_Logo.png');
-      document.getElementById('footer-logo').setAttribute('alt', 'NUM Logo');
-    }
-    if (newTheme === 'abideTheme') {
-      document.getElementById('header-logo').setAttribute('src', 'assets/img/Abide_MI_cropped.jpg');
-      document.getElementById('header-logo').setAttribute('alt', 'ABIDE Logo');
-      document.getElementById('footer-logo').setAttribute('src', 'assets/img/Abide_MI_cropped.jpg');
-      document.getElementById('footer-logo').setAttribute('alt', 'MII Logo');
-    }
     if (newTheme === 'FDPGTheme') {
       document.getElementById('header-logo').setAttribute('src', 'assets/img/FDPG-Logo.svg');
       document.getElementById('header-logo').setAttribute('alt', 'FDPG Logo');

@@ -1,13 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="space-around start" class="maingroup">
   <div fxLayout="row" fxLayoutAlign="space-around" class="maingroup">
-    <mat-radio-group
-      class="example-radio-group"
-      (change)="setQueryVersion($event)"
-      [(ngModel)]="queryVersion"
-    >
-      <mat-radio-button class="example-radio-button" value="v1">Codex - SQv1</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="v2">ABIDE - SQv2</mat-radio-button>
-    </mat-radio-group>
     <div class="alignSlider">
       <mat-slide-toggle (change)="updateContextInSQ()" [(ngModel)]="includeContext">
         {{ 'OPTIONSPAGE.CONTEXT_IN_SQ' | translate }}
@@ -67,21 +59,6 @@
     </div>
   </div>
   <div fxLayout="column" fxLayoutAlign="space-around" class="maingroup">
-    <mat-radio-group
-      class="example-radio-group"
-      (change)="setStylesheet($event)"
-      [(ngModel)]="stylesheet"
-    >
-      <mat-radio-button class="example-radio-button" value="FDPGTheme">FDPG Style</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="codexTheme"
-        >Codex Style</mat-radio-button
-      >
-      <mat-radio-button class="example-radio-button" value="abideTheme"
-        >Abide Style</mat-radio-button
-      >
-    </mat-radio-group>
-  </div>
-  <div fxLayout="column" fxLayoutAlign="space-around" class="maingroup">
     <mat-form-field appearance="outline" class="pollingtime">
       <mat-label>{{ 'OPTIONSPAGE.POLLINGTIME' | translate }}</mat-label>
       <input
@@ -129,27 +106,5 @@
       cols="100"
       >{{ translatedQueryv2 | json }}</textarea
     >
-  </div>
-  <div class="maingroup">
-    <div>localhost:5000/query-translate</div>
-    <textarea id="postman-query-translate" name="query-textfield" rows="2" cols="100">{{
-      postmanTranslate | json
-    }}</textarea>
-  </div>
-  <div class="maingroup">
-    <div>localhost:5000/query-sync</div>
-    <textarea id="postman-query-sync" name="query-textfield" rows="2" cols="100">{{
-      postmanSync | json
-    }}</textarea>
-  </div>
-  <div class="maingroup">
-    <div>URL encode</div>
-    <textarea id="response-textfield" name="query-textfield" rows="2" cols="100">{{
-      getResponse
-    }}</textarea>
-  </div>
-  <div class="maingroup">
-    <div>URL Ergebnis</div>
-    <iframe width="823" height="800" [src]="getResponse | safe"></iframe>
   </div>
 </div>
