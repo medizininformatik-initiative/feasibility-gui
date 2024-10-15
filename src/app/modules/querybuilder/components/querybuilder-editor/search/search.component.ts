@@ -68,6 +68,19 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
         if (searchTermResults) {
           this.listItems = searchTermResults.results;
           this.adaptedData = SearchTermListEntryAdapter.adapt(searchTermResults.results);
+          this.selectedTableItemsService
+            .getSelectedTableItems()
+            .pipe(
+              map((tableItems) => {
+                this.adaptedData.body.rows.forEach((row) => {
+                  const found = tableItems.find((item) => item.getId() === row.id);
+                  if (found) {
+                    row.isCheckboxSelected = true;
+                  }
+                });
+              })
+            )
+            .subscribe();
         }
       });
   }
@@ -183,7 +196,9 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.searchText.pipe(take(1)).subscribe((searchText: string) => {
       this.elasticSearchFilterProvider.resetSelectedValuesOfType();
       this.elasticSearchService.searchCriteria(searchText).subscribe({
-        next: () => this.rerender(),
+        next: () => {
+          this.rerender();
+        },
         error: (err) => console.error('Search failed', err),
       });
     });

@@ -207,6 +207,7 @@
     "SEARCH": {
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden um die Fallzahl deutschlandweit zu ermitteln.",
       "SEARCH_BUTTON": "Suchen",
+      "SEARCHBAR":"Suchen nach Begriff oder Terminologiecode",
       "HEADER": "Kriterien Suche",
       "BUTTON": {
         "RESET": "Filter zurücksetzen"
@@ -302,22 +303,22 @@
       "MAXIMUM_EXCEEDED": "Wert darf höchstens {{ max }} sein",
       "SEARCH_TEXT_NO_INPUT": "Geben Sie ein Suchkriterium ein oder öffnen sie die Übersicht der Kategorien",
       "NO_CRITERIA_SELECTED": "es muss mindestens ein Einschlusskriterium ausgewählt sein"
-    }
-  },
-  "RESULT": {
-    "Button": {
-      "EDIT_STAGE": "Bühne bearbeiten",
-      "SAVE_QUERY":"Kohorte speichern",
-      "DOWNLOAD": "Kohorte herunterladen"
     },
-    "HEADER": "Machbarkeitsabfrage wird bearbeitet",
-    "HEADER_DESCRIPTION": "Hier muss nch ein Text hinzukommen",
-    "PATIENT_NUMBER": "Anzahl der Patienten",
-    "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsanfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Anfrage werden anonymisiert. In dem Prozess werden Abweichungen zum exakten Ergebnis bewusst eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts, sie sollten aber nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
-    "TOTAL": "Gesamt",
-    "SITE": "Standort",
-    "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
-    "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
+    "RESULT": {
+      "BUTTON": {
+        "EDIT_STAGE": "Bühne bearbeiten",
+        "SAVE_QUERY":"Kohorte speichern",
+        "DOWNLOAD": "Kohorte herunterladen"
+      },
+      "HEADER": "Machbarkeitsabfrage wird bearbeitet",
+      "HEADER_DESCRIPTION": "Hier muss nch ein Text hinzukommen",
+      "PATIENT_NUMBER": "Anzahl der Patienten",
+      "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsanfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Anfrage werden anonymisiert. In dem Prozess werden Abweichungen zum exakten Ergebnis bewusst eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts, sie sollten aber nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
+      "TOTAL": "Gesamt",
+      "SITE": "Standort",
+      "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
+      "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
+    }
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",
