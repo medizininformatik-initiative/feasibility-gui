@@ -306,6 +306,7 @@
     },
     "RESULT": {
       "BUTTON": {
+        "DETAILS": "Details",
         "EDIT_STAGE": "Bühne bearbeiten",
         "SAVE_QUERY":"Kohorte speichern",
         "DOWNLOAD": "Kohorte herunterladen"

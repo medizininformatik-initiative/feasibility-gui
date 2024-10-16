@@ -5,7 +5,7 @@
         {{ digit }}
       </div>
     </div>
-    {{ 'RESULT.PATIENT_NUMBER' | translate }}
+    {{ 'QUERYBUILDER.RESULT.PATIENT_NUMBER' | translate }}
   </div>
   <button
     *ngIf="loadedResult"
@@ -16,7 +16,9 @@
     (click)="openDialogResultDetails()"
     class="button-dialog-result-details"
   >
-    {{ 'BUTTON.RESULTDETAILS' | translate }} ({{ resultCallsRemaining }}/{{ resultCallsLimit }})
+    {{ 'QUERYBUILDER.RESULT.BUTTON.DETAILS' | translate }} ({{ resultCallsRemaining }}/{{
+      resultCallsLimit
+    }})
   </button>
   <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
 </div>
