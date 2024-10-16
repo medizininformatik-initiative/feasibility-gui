@@ -18,10 +18,14 @@ export class NavigationHelperService {
   }
 
   public navigateToQueryBuilderEditor(jumpToStage: boolean): void {
-    this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage: jumpToStage } });
+    this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage } });
   }
 
   public navigateToDataSelectionEditor(): void {
     this.router.navigate(['/data-selection'], { state: { jumpToStage: true } });
+  }
+
+  public navigateToDataQueryEditor() {
+    this.router.navigate(['/data-query'], { state: { preventReset: true } });
   }
 }

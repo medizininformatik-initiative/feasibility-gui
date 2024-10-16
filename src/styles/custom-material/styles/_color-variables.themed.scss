@@ -10,8 +10,11 @@
   --num-color--primary-300: #{mat.get-color-from-palette($primary, 300)};
   --num-color--primary-400: #{mat.get-color-from-palette($primary, 400)};
   --num-color--primary-900: #{mat.get-color-from-palette($primary, 900)};
+  --num-color--primary-blue: #{mat.get-color-from-palette($primary, 'blue')};
+
   --num-color--primary-light-green: #{mat.get-color-from-palette($primary, 'green-hover')};
   --num-color--primary-green: #{mat.get-color-from-palette($primary, 'green')};
+  --num-color--primary-white: #{mat.get-color-from-palette($primary, 'white')};
 
   --num-color--primary-blue: #{mat.get-color-from-palette($primary, 'blue')};
 

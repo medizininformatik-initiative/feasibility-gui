@@ -2,9 +2,10 @@ import { AppConfigService } from '../../../../config/app-config.service';
 import { Component, OnInit } from '@angular/core';
 import { FeatureService } from '../../../../service/Feature.service';
 import { IUserProfile } from '../../../../shared/models/user/user-profile.interface';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { TranslateService } from '@ngx-translate/core';
 import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'num-dashboard',
@@ -17,12 +18,12 @@ export class DashboardComponent implements OnInit {
     private oauthService: OAuthService,
     private featureService: FeatureService,
     public translate: TranslateService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private navigationHelperService: NavigationHelperService
   ) {}
 
   config = this.appConfig.config;
   authTest: string;
-  stylesheet: string;
   roles: string[];
   displayInfoMessage: boolean;
   proposalPortalLink: string;
@@ -30,7 +31,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.roles = this.featureService.getRoles('main');
     this.init();
-    this.stylesheet = this.featureService.getStylesheet();
     this.displayInfoMessage = this.featureService.showInfoPage();
     this.proposalPortalLink = this.featureService.getproposalPortalLink();
 
@@ -51,5 +51,25 @@ export class DashboardComponent implements OnInit {
     } else {
       this.authTest = 'Not logged in';
     }
+  }
+
+  public navigateToDataQueryEditor() {
+    this.navigationHelperService.navigateToDataQueryEditor();
+  }
+
+  public navigateToQueryBuilderEditor() {
+    this.navigationHelperService.navigateToQueryBuilderEditor(false);
+  }
+
+  public navigateToDataSelectionEditor() {
+    this.navigationHelperService.navigateToDataSelectionEditor();
+  }
+
+  public navigateToSavedQueries() {
+    this.navigationHelperService.navigateToSavedQueries();
+  }
+
+  public openProposalPortalLink(): void {
+    window.open(this.proposalPortalLink, '_blank', 'noopener');
   }
 }

@@ -55,36 +55,39 @@
     }
   },
   "DASHBOARD": {
-    "FDPGTHEME": {
-      "HEADLINE": "Willkommen im Bereich „Daten und Bioproben finden“ des Forschungsdatenportals für Gesundheit",
-      "PARAGRAPH1": "Hier finden Sie ein Unterstützungsangebot für Wissenschaftlerinnen und Wissenschaftler zur Umsetzung Ihres Forschungsvorhabens.",
-      "PARAGRAPH2": "Mit einer Machbarkeitsanfrage erfahren Sie, wie viele Datensätze für Ihre Suchkriterien in den Universitätskliniken bundesweit vorhanden sind. Anhand von Ein- und Ausschlusskriterien kann die Verfügbarkeit von Gesundheitsdaten für medizinische Forschungszwecke abgeschätzt werden.",
-      "PARAGRAPH3_1": "Über ",
-      "PARAGRAPH3_2": "Neue Abfrage",
-      "PARAGRAPH3_3": " haben Sie die Möglichkeit, eine neue Suchanfrage auf Basis des ",
-      "PARAGRAPH3_4": " zu formulieren und abzuschicken, um einen Überblick über die verfügbaren Datensätze zu erhalten.",
-      "PARAGRAPH3_LINK": "Kerndatensatzes der MII",
-      "PARAGRAPH4_1":"Gespeicherte Abfragen oder gespeicherte Entwürfe können Sie über ",
-      "PARAGRAPH4_2":"Meine Abfragen",
-      "PARAGRAPH4_3": " einsehen und weiter bearbeiten.",
-      "PARAGRAPH5_1": "Sobald Ihnen alle relevanten Informationen für Ihr Forschungsvorhaben zur Verfügung stehen, können Sie über ",
-      "PARAGRAPH5_2": "Antrag stellen",
-      "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen."
-    },
+    "HEADER": "Willkommen im Bereich „Daten und Bioproben finden“ des Forschungsdatenportals für Gesundheit",
+    "PARAGRAPH1": "Hier finden Sie ein Unterstützungsangebot für Wissenschaftlerinnen und Wissenschaftler zur Umsetzung Ihres Forschungsvorhabens.",
+    "PARAGRAPH2": "Mit einer Machbarkeitsanfrage erfahren Sie, wie viele Datensätze für Ihre Suchkriterien in den Universitätskliniken bundesweit vorhanden sind. Anhand von Ein- und Ausschlusskriterien kann die Verfügbarkeit von Gesundheitsdaten für medizinische Forschungszwecke abgeschätzt werden.",
+    "PARAGRAPH3_1": "Über ",
+    "PARAGRAPH3_2": "Neue Abfrage",
+    "PARAGRAPH3_3": " haben Sie die Möglichkeit, eine neue Suchanfrage auf Basis des ",
+    "PARAGRAPH3_4": " zu formulieren und abzuschicken, um einen Überblick über die verfügbaren Datensätze zu erhalten.",
+    "PARAGRAPH3_LINK": "Kerndatensatzes der MII",
+    "PARAGRAPH4_1":"Gespeicherte Abfragen oder gespeicherte Entwürfe können Sie über ",
+    "PARAGRAPH4_2":"Meine Abfragen",
+    "PARAGRAPH4_3": " einsehen und weiter bearbeiten.",
+    "PARAGRAPH5_1": "Sobald Ihnen alle relevanten Informationen für Ihr Forschungsvorhaben zur Verfügung stehen, können Sie über ",
+    "PARAGRAPH5_2": "Antrag stellen",
+    "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen.",
     "INFO":{
       "TEXT": " Wir arbeiten gerade am Machbarkeitsportal, sodass es bei manchen Anfragen zu Verzögerungen und abweichenden Ergebnissen kommen kann."
     },
-    "NEWQUERY": {
-      "HEADLINE": "Neue Abfrage",
-      "TEXT": "Führen Sie eine Suche anhand Ihrer Ein- und Ausschlusskriterien durch"
+    "DATAQUERY": {
+      "HEADER": "Datenabfrage zusammenstellen",
+      "BUTTON": "Zur Datenabfrage"
     },
-    "MYQUERY": {
-      "HEADLINE": "Meine Abfragen",
-      "TEXT": "Erhalten Sie eine Übersicht über Ihre bereits durchgeführten Suchanfragen"
+    "DATASELECTION": {
+      "HEADER": "Datenselektion zusammenstellen"
+    },
+    "NEWQUERY": {
+      "HEADER": "Machbarkeitsanfrage stellen"
+    },
+    "SAVED_QUERIES": {
+      "HEADER": "Meine Abfragen",
+      "BUTTON": "Zur Übersicht"
     },
     "PREPOSALPORTAL": {
-      "HEADLINE": "Antrag stellen",
-      "TEXT": "Stellen Sie einen Antrag zur Datennutzung im Antragsportal"
+      "HEADER": "Forschungsantrag stellen"
     }
   },
   "DATASELECTION": {
