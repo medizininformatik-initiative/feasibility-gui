@@ -22,7 +22,7 @@ export class DataSelectionBoxesComponent implements OnInit {
 
   menuItems: MenuItemInterface[] = [];
 
-  display: string;
+  display: DisplayData;
 
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
@@ -39,10 +39,7 @@ export class DataSelectionBoxesComponent implements OnInit {
   ngOnInit(): void {
     this.getFilterChips();
     this.getMenuItems();
-    this.display = new DisplayData(
-      this.profile.getDisplay().original,
-      this.profile.getDisplay().translations
-    ).getTranslation(this.translate.currentLang);
+    this.display = this.profile.getDisplay();
   }
 
   public getFilterChips(): void {

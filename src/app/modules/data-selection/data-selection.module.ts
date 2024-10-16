@@ -17,6 +17,7 @@ import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { ProfileCodeComponent } from './components/edit-filter-modal/profile-code/profile-code.component';
 import { ProfileTimeRestrictionComponent } from './components/edit-filter-modal/profile-time-restriction/profile-time-restriction.component';
 import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
+import { DisplayTranslationPipe } from 'src/app/shared/pipes/DisplayTranslationPipe ';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
     SnackBarComponent,
     QuerybuilderModule,
     SharedFilterModule,
+    DisplayTranslationPipe,
   ],
   exports: [DisplayProfilesComponent],
 })

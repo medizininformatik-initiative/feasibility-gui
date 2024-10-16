@@ -10,6 +10,7 @@ import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/P
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { v4 as uuidv4 } from 'uuid';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +56,13 @@ export class CreateDataSelectionProfileService {
     filters: AbstractProfileFilter[]
   ): DataSelectionProfileProfile {
     const dataSelectionProfileProfile: DataSelectionProfileProfile =
-      new DataSelectionProfileProfile(uuidv4(), item.url, item.display, fields, filters);
+      new DataSelectionProfileProfile(
+        uuidv4(),
+        item.url,
+        new DisplayData(item.display.original, item.display.translations),
+        fields,
+        filters
+      );
     this.dataSelectionProvider.setDataSelectionProfileByUID(
       dataSelectionProfileProfile.getId(),
       dataSelectionProfileProfile
@@ -72,8 +79,8 @@ export class CreateDataSelectionProfileService {
 
     return new ProfileFields(
       node.id,
-      node.display,
-      node.description,
+      new DisplayData(node.display.original, node.display.translations),
+      new DisplayData(node.description.original, node.description.translations),
       children,
       node.isSelected || false,
       node.isRequired || false

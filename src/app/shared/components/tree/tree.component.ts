@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TreeNode } from '../../models/TreeNode/TreeNodeInterface';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'num-tree',
@@ -16,13 +15,9 @@ export class TreeComponent implements OnInit {
 
   expandedNodes: Set<any> = new Set();
 
-  constructor(public translate: TranslateService) {}
+  constructor() {}
 
   ngOnInit() {}
-
-  getDisplay() {
-    return this.treeData.data.display;
-  }
 
   toggleExpand(node: any) {
     if (this.expandedNodes.has(node)) {

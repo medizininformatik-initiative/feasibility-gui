@@ -30,7 +30,11 @@
         </div>
       </div>
       <div class="node-display-container">
-        {{ getDisplay() }}
+        {{ node.data.display | displayTranslation }}
+
+        <div *ngIf="node.data.description" class="field-description">
+          ({{ node.data.description | displayTranslation }})
+        </div>
       </div>
     </div>
   </div>

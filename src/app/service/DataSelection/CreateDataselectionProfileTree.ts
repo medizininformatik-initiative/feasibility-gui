@@ -4,6 +4,7 @@ import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/Profil
 import { DataSelectionProfileTreeRoot } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeRoot';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +37,7 @@ export class DataSelectionProfileTreeService {
           new DataSelectionProfileTreeNode(
             child.id,
             child.name,
-            child.display,
+            new DisplayData(child.display.original, child.display.translations),
             child.module,
             child.url,
             child.leaf,

@@ -4,6 +4,7 @@ export class DataSelectionProfileTreeNode {
   private id: string;
   private name: string;
   private display: DisplayData;
+  private description: DisplayData;
   private module: string;
   private url: string;
   private leaf: boolean;

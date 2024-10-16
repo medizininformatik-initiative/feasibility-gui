@@ -9,7 +9,6 @@ import { DataSelectionProviderService } from '../../services/DataSelectionProvid
 import { ActiveDataSelectionService } from '../../../../service/Provider/ActiveDataSelection.service';
 import { SelectedDataSelectionProfileFieldsService } from 'src/app/service/DataSelection/SelectedDataSelectionProfileFields.service';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
-import { TranslateService } from '@ngx-translate/core';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;
@@ -24,7 +23,7 @@ export class EditFieldsModalComponent implements OnInit {
   dataSelectionProfileProfileNode: ProfileFields[];
 
   tree: TreeNode[];
-  profileName: string;
+  profileName: DisplayData;
 
   arrayOfSelectedFields: ProfileFields[] = [];
 
@@ -34,31 +33,19 @@ export class EditFieldsModalComponent implements OnInit {
     private dataSelectionProvider: DataSelectionProfileProviderService,
     private service: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
-    private selectedDataSelectionProfileFieldsService: SelectedDataSelectionProfileFieldsService,
-    private translate: TranslateService
+    private selectedDataSelectionProfileFieldsService: SelectedDataSelectionProfileFieldsService
   ) {}
 
   ngOnInit() {
     const dataSelectionProfile = this.dataSelectionProvider.getDataSelectionProfileByUID(this.data);
-    const display = dataSelectionProfile.getDisplay();
-    this.profileName = new DisplayData(display.original, display.translations).getTranslation(
-      this.translate.currentLang
-    );
+    this.profileName = dataSelectionProfile.getDisplay();
     this.dataSelectionProfileProfileNode = dataSelectionProfile.getFields();
     this.setInitialArrayOfSelectedFields(dataSelectionProfile.getFields());
-    this.tree = FieldsTreeAdapter.fromTree(
-      this.dataSelectionProfileProfileNode,
-      this.translate.currentLang
-    );
+    this.tree = FieldsTreeAdapter.fromTree(this.dataSelectionProfileProfileNode);
+
     this.selectedDataSelectionProfileFieldsService.getSelectedFields().subscribe((fields) => {
       this.arrayOfSelectedFields = fields;
     });
-  }
-
-  getDisplay(display) {
-    return new DisplayData(display.original, display.translations).getTranslation(
-      this.translate.currentLang
-    );
   }
 
   private setInitialArrayOfSelectedFields(fields: ProfileFields[]) {
@@ -101,10 +88,7 @@ export class EditFieldsModalComponent implements OnInit {
     if (fieldToUpdate) {
       fieldToUpdate.setIsSelected(false);
     }
-    this.tree = FieldsTreeAdapter.fromTree(
-      this.dataSelectionProfileProfileNode,
-      this.translate.currentLang
-    );
+    this.tree = FieldsTreeAdapter.fromTree(this.dataSelectionProfileProfileNode);
   }
 
   public saveFields() {
