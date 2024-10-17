@@ -66,9 +66,18 @@ export class FeatureService {
   }
   public getPollingIntervall(): number {
     if (this.showOptionsPage) {
+      const pollingIntervallinSeconds =
+        this.featureProviderService.getFeatures().options.pollingintervallinseconds;
+      if (pollingIntervallinSeconds > this.getPollingTime()) {
+        return this.getPollingTime();
+      }
       return this.featureProviderService.getFeatures().options.pollingintervallinseconds;
     } else {
-      return this.appConfig.getConfig().options.pollingintervallinseconds;
+      const pollingIntervallinSeconds = this.appConfig.getConfig().options.pollingintervallinseconds;
+      if (pollingIntervallinSeconds > this.getPollingTime()) {
+        return this.getPollingTime();
+      }
+      return pollingIntervallinSeconds;
     }
   }
   public getPatientResultLowerBoundary(): number {
