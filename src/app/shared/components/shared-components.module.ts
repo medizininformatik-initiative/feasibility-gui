@@ -29,6 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
 import { LogicSwitchComponent } from './logic-switch/logic-switch.component';
+import { DisplayTranslationPipe } from '../pipes/DisplayTranslationPipe ';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -76,6 +77,7 @@ const SHARED_DECLARATIONS = [
     LogicSwitchComponent,
   ],
   imports: [
+    DisplayTranslationPipe,
     CommonModule,
     FontAwesomeModule,
     MaterialModule,

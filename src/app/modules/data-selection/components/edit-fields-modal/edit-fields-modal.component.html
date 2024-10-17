@@ -1,6 +1,6 @@
 <num-modal-window (saveButtonSelected)="saveFields()" (cancelButtonSelected)="closeDialog()">
   <div class="filter-title">
-    {{ 'DATASELECTION.FIELD_SELECTION.HEADER' | translate }} {{ profileName }}
+    {{ 'DATASELECTION.FIELD_SELECTION.HEADER' | translate }} {{ profileName | displayTranslation }}
   </div>
   <div class="tree-container">
     <div *ngFor="let singleTree of tree">
@@ -21,7 +21,7 @@
       class="selectedFilterBox"
     >
       <div class="display-part">
-        {{ selectedField.display }}
+        {{ selectedField.display | displayTranslation }}
       </div>
       <div>
         <mat-checkbox

@@ -1,5 +1,6 @@
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { TreeNode } from '../TreeNodeInterface';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 export class DataSelectionTreeAdapter {
   static fromTree(tree: DataSelectionProfileTreeNode[]): TreeNode[] {

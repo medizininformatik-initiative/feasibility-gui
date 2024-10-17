@@ -10,6 +10,8 @@ import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/P
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { v4 as uuidv4 } from 'uuid';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +57,13 @@ export class CreateDataSelectionProfileService {
     filters: AbstractProfileFilter[]
   ): DataSelectionProfileProfile {
     const dataSelectionProfileProfile: DataSelectionProfileProfile =
-      new DataSelectionProfileProfile(uuidv4(), item.url, item.display, fields, filters);
+      new DataSelectionProfileProfile(
+        uuidv4(),
+        item.url,
+        this.instantiateDisplayData(item.display),
+        fields,
+        filters
+      );
     this.dataSelectionProvider.setDataSelectionProfileByUID(
       dataSelectionProfileProfile.getId(),
       dataSelectionProfileProfile
@@ -69,14 +77,22 @@ export class CreateDataSelectionProfileService {
 
   private mapNode(node: any): ProfileFields {
     const children = node.children ? this.mapNodes(node.children) : [];
-
     return new ProfileFields(
       node.id,
-      node.display,
-      node.name,
+      this.instantiateDisplayData(node.display),
+      this.instantiateDisplayData(node.description),
       children,
       node.isSelected || false,
       node.isRequired || false
+    );
+  }
+
+  private instantiateDisplayData(data: any) {
+    return new DisplayData(
+      data.original,
+      data.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      )
     );
   }
 }

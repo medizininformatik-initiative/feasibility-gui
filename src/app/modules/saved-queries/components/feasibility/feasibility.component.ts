@@ -4,7 +4,7 @@ import { first, Observable } from 'rxjs';
 import { SavedFeasibilityQueryService } from '../../services/SavedFeasibilityQuery.service';
 import { StructuredQuery2FeasibilityQueryService } from '../../../../service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { Router } from '@angular/router';
-import {FeasibilityQueryProviderService} from "../../../../service/Provider/FeasibilityQueryProvider.service";
+import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 @Component({
   selector: 'num-feasibility',
   templateUrl: './feasibility.component.html',

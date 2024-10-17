@@ -3,6 +3,7 @@ import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/Profil
 import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipDataSelectionAdapter';
 import { Injectable } from '@angular/core';
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +14,15 @@ export class DataSelectionFilterChipsService {
   >([]);
   filterChips$: Observable<InterfaceFilterChip[]> = this.filterChipsSubject.asObservable();
 
-  constructor() {}
+  constructor(public translate: TranslateService) {}
 
   public generateFilterChipsFromDataSelectionFields(
     dataSelectionProfileProfileNode: ProfileFields[]
   ): Observable<InterfaceFilterChip[]> {
-    const filterChips = FilterChipDataSelectionAdapter.adaptFields(dataSelectionProfileProfileNode);
+    const filterChips = FilterChipDataSelectionAdapter.adaptFields(
+      dataSelectionProfileProfileNode,
+      this.translate.currentLang
+    );
     const squashedFilterChips = this.squashFilterChips(filterChips);
     this.filterChipsSubject.next(squashedFilterChips);
     return this.filterChipsSubject.asObservable();

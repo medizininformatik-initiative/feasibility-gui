@@ -1,22 +1,24 @@
+import { DisplayData } from '../DisplayData';
+
 export class ProfileFields {
   private id: string;
-  private display: string;
-  private name: string;
+  private display: DisplayData;
+  private description: DisplayData;
   private children: ProfileFields[] = [];
   private isSelected = false;
   private isRequired = false;
 
   constructor(
     id: string,
-    display: string,
-    name: string,
+    display: DisplayData,
+    description: DisplayData,
     children: ProfileFields[] = [],
     isSelected: boolean = false,
     isRequired: boolean = false
   ) {
     this.id = id;
     this.display = display;
-    this.name = name;
+    this.description = description;
     this.children = children;
     this.isSelected = isSelected;
     this.isRequired = isRequired;
@@ -30,20 +32,20 @@ export class ProfileFields {
     this.id = value;
   }
 
-  public getDisplay(): string {
+  public getDisplay(): DisplayData {
     return this.display;
   }
 
-  public setDisplay(value: string): void {
+  public setDisplay(value: DisplayData): void {
     this.display = value;
   }
 
-  public getName(): string {
-    return this.name;
+  public getDescription(): DisplayData {
+    return this.description;
   }
 
-  public setName(value: string): void {
-    this.name = value;
+  public setDescription(value: DisplayData): void {
+    this.description = value;
   }
 
   public getChildren(): ProfileFields[] {
