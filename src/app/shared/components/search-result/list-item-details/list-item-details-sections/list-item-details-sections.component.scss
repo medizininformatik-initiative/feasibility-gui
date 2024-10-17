@@ -6,10 +6,6 @@
   align-content: center;
 }
 
-.padding-left-20 {
-  padding-left: 20px;
-}
-
 .entry-layout {
   padding: 3%;
   height: 40px;
@@ -27,4 +23,16 @@
   text-decoration: underline;
   cursor: pointer;
   color: black;
+}
+
+.text-overflow {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 80%;
+}
+
+.container {
+  padding-left: 20px;
+  width: 85%;
 }

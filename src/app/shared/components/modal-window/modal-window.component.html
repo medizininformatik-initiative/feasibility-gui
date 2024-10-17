@@ -3,11 +3,11 @@
     <ng-content></ng-content>
   </div>
   <div fxLayout="row" fxLayoutAlign="start center">
-    <button mat-raised-button class="select-button" [disabled]="disabled" (click)="save()">
+    <num-button type="blue" class="select-button" [isDisabled]="disabled" (click)="save()">
       {{ 'SHAREDCOMPONENTS.MODAL.BUTTON.APPLY' | translate }}
-    </button>
-    <button mat-raised-button class="select-button" (click)="cancel()">
+    </num-button>
+    <num-button type="blue" class="select-button" (click)="cancel()">
       {{ 'SHAREDCOMPONENTS.MODAL.BUTTON.CANCEL' | translate }}
-    </button>
+    </num-button>
   </div>
 </div>

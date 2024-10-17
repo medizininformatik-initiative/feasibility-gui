@@ -1,10 +1,5 @@
 <ng-container *ngIf="listItemDetails?.length > 0">
-  <div
-    style="min-width: 0px"
-    fxLayout="column"
-    fxLayoutAlign="start start"
-    class="padding-left-20 padding-top-5"
-  >
+  <div fxLayout="column" fxLayoutAlign="start start" class="container">
     <div
       fxLayout="row"
       fxLayoutAlign="space-between center"
@@ -12,8 +7,11 @@
       class="mat-divider entry-layout highlight"
       (click)="getSelectedRelative(item)"
     >
-      {{ item.name }}
+      <div class="text-overflow" [matTooltip]="item.name">
+        {{ item.name }}
+      </div>
       <num-menu
+        fxFlex="10"
         (click)="$event.stopPropagation()"
         [menuItems]="menuItems"
         [id]="item.getId()"

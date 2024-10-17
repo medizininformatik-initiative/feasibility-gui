@@ -1,19 +1,15 @@
 .children-container {
   display: flex;
-  align-items: flex-start; /* Align items to the start of the flex container */
+  align-items: flex-start;
 }
 
 .children-header {
-  flex: 0 0 auto; /* Prevent the header from growing */
-  margin-right: 20px; /* Add space between the header and the list */
+  flex: 0 0 auto;
+  margin-right: 20px;
 }
 
 .children-list {
-  flex: 1; /* Allow the list to grow and fill the remaining space */
-}
-
-.section-layout {
-  width: 10%;
+  flex: 1;
 }
 
 .padding-20 {
