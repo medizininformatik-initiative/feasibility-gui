@@ -47,6 +47,7 @@
     }}
   </num-button>
   <num-button
+    *ngIf="atStage"
     type="green"
     (click)="doSendRequest()"
     [isDisabled]="!isValidQuery()"

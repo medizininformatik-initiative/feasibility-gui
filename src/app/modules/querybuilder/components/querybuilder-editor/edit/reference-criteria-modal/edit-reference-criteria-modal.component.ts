@@ -3,8 +3,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { CreateReferenceCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateReferenceCriterion.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { ElasticSearchService } from 'src/app/service/ElasticSearch/ElasticSearch.service';
-import { mapToRefrenceCriteriaSetResultList } from 'src/app/service/ElasticSearch/ListEntry/ListEntryMappingFunctions';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -14,10 +12,6 @@ import { ReferenceCriterionProviderService } from '../../../../../../service/Pro
   selector: 'num-edit-reference-criteria',
   templateUrl: './edit-reference-criteria-modal.component.html',
   styleUrls: ['./edit-reference-criteria-modal.component.scss'],
-  providers: [
-    { provide: 'ENTRY_MAPPER', useValue: mapToRefrenceCriteriaSetResultList },
-    { provide: ElasticSearchService, useClass: ElasticSearchService },
-  ],
 })
 export class EditReferenceCriteriaModalComponent implements OnInit {
   criterion: Criterion;
