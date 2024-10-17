@@ -3,6 +3,7 @@ import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryPro
 import { FileSaverService } from 'ngx-filesaver';
 import { Injectable } from '@angular/core';
 import { UIQuery2StructuredQueryService } from '../Translator/StructureQuery/UIQuery2StructuredQuery.service';
+import { UnsubscriptionError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,8 @@ export class DownloadCCDLService {
             this.createFilename() + '.json'
           );
         }
-      });
+      })
+      .unsubscribe();
   }
 
   private createFilename(): string {
