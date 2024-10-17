@@ -47,6 +47,19 @@ li {
   border-radius: 3px;
   font-size: small;
 }
+.mat-mdc-checkbox.mat-accent {
+  --mdc-checkbox-selected-checkmark-color: #fff;
+  --mdc-checkbox-selected-focus-icon-color: #69ff40;
+  --mdc-checkbox-selected-hover-icon-color: #40ffe9;
+  --mdc-checkbox-selected-icon-color: #4050ff;
+  --mdc-checkbox-selected-pressed-icon-color: #ffd940;
+  --mdc-checkbox-unselected-focus-icon-color: #212121;
+  --mdc-checkbox-unselected-hover-icon-color: #212121;
+  --mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
+  --mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
+  --mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
+  --mdc-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
+}
 
 .tree-checkbox {
   color: black !important;

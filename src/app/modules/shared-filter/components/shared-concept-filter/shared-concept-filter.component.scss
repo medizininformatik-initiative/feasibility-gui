@@ -1,6 +1,13 @@
+:host {
+  display: block;
+  height: 100%;
+}
 .container {
   height: 100%;
 }
 num-concept-filter-table {
   /*height: 100%;*/
+}
+num-staged-concepts {
+  height: 40%;
 }

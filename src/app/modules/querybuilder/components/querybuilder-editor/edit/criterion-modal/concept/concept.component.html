@@ -1,5 +1,5 @@
-<div *ngIf="conceptFilter" fxLayout="column" class="container" [@.disabled]="disableAnimation">
-  <mat-expansion-panel togglePosition="before" [expanded]="false" class="width-100">
+<div *ngIf="conceptFilter" class="container" [@.disabled]="disableAnimation">
+  <mat-expansion-panel togglePosition="before" [expanded]="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{ attributeCode.getDisplay() }}

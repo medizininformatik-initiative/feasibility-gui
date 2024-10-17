@@ -4,5 +4,9 @@ num-attribute-filter {
   overflow: auto;
 }
 .full-height {
-  height: 95%;
+  max-height: 92%;
+  margin-bottom: 1em;
+}
+::ng-deep .mdc-dialog__surface {
+  overflow: unset;
 }

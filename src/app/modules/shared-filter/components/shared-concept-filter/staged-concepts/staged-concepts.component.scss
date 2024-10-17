@@ -12,16 +12,24 @@
   padding-top: 20px;
 }
 
-.selected-filter-box {
+.selected-filter-element {
   width: 100%;
   height: 40px;
   background-color: white;
   border-radius: 5px;
   margin-bottom: 10px;
 }
-
+.selected-filter-box {
+  overflow: auto;
+  height: 100%;
+}
 .display-part {
   padding-left: 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .delete-button {
@@ -44,4 +52,7 @@
 .attribute-code-display {
   color: #6a7483;
   padding-bottom: 5px;
+}
+.height-100 {
+  height: 100%;
 }
