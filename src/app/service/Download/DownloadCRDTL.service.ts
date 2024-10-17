@@ -13,9 +13,12 @@ export class DownloadCRDTLService {
   ) {}
 
   public downloadActiveFeasibilityQueryAsFile(filename?: string) {
-    this.createCRDTLService.createCRDTL().subscribe((crdtl) => {
-      this.fileSaverService.save(this.createFileData(crdtl), this.createFilename() + '.json');
-    });
+    this.createCRDTLService
+      .createCRDTL()
+      .subscribe((crdtl) => {
+        this.fileSaverService.save(this.createFileData(crdtl), this.createFilename() + '.json');
+      })
+      .unsubscribe();
   }
 
   private createFilename(): string {
