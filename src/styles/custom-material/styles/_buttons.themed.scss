@@ -33,6 +33,7 @@
     height: 42px;
     white-space: nowrap;
     padding: 0px 15px;
+    letter-spacing: inherit;
     &.green {
       background-color: mat.get-color-from-palette($primary, 'green');
     }
