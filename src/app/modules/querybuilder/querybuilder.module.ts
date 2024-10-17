@@ -20,7 +20,6 @@ import { QuantityComparatorComponent } from './components/querybuilder-editor/ed
 import { QuantityComparisionSelectComponent } from './components/querybuilder-editor/edit/criterion-modal/quantity/quantity-comparision-select/quantity-comparision-select.component';
 import { QuantityComponent } from './components/querybuilder-editor/edit/criterion-modal/quantity/quantity.component';
 import { QuantityRangeComponent } from './components/querybuilder-editor/edit/criterion-modal/quantity/quantity-range/quantity-range.component';
-import { QueryBoxFrontComponent } from './components/querybuilder-overview/saved-queries/query-box-front/query-box-front.component';
 import { QuerybuilderEditorComponent } from './components/querybuilder-editor/querybuilder-editor.component';
 import { QuerybuilderRoutingModule } from './querybuilder-routing.module';
 import { ReferenceComponent } from './components/querybuilder-editor/edit/reference-criteria-modal/reference/reference.component';
@@ -31,7 +30,6 @@ import { SearchComponent } from './components/querybuilder-editor/search/search.
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SimpleResultComponent } from './components/querybuilder-result/simple-result/simple-result.component';
-import { SingleTemplateComponent } from './components/querybuilder-overview/saved-queries/single-template/single-template.component';
 import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { ValueFilterComponent } from './components/querybuilder-editor/edit/criterion-modal/value-filter/value-filter.component';
 import {
@@ -62,8 +60,6 @@ export const FORMATS_GERMAN = {
     QuerybuilderEditorComponent,
     BoolLogicSwitchComponent,
     DisplayGroupComponent,
-    SingleTemplateComponent,
-    QueryBoxFrontComponent,
     SearchComponent,
     PreStageComponent,
     CriteriaStageComponent,
