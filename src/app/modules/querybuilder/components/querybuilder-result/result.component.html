@@ -6,17 +6,12 @@
     </num-header-description>
   </div>
   <div class="simple-result">
-    <num-simple-result
-      class="result-simple-box"
-      [result]="result"
-      [isResultLoaded]="loadedResult"
-      [resultUrl]="resultUrl"
-    ></num-simple-result>
+    <num-simple-result class="result-simple-box"></num-simple-result>
   </div>
   <num-display-criteria-group [isEditable]="false" style="height: 400px">
   </num-display-criteria-group>
   <num-action-bar class="bottom">
-    <num-button class="margin-right-10" type="green" (click)="editStage()" mat-raised-button>
+    <num-button class="margin-right-10" type="green" (click)="editStage()">
       {{ 'QUERYBUILDER.RESULT.BUTTON.EDIT_STAGE' | translate }}
     </num-button>
     <num-button (click)="saveQuery()" class="margin-right-10" type="green">

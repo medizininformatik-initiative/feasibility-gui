@@ -1,9 +1,5 @@
 import { QueryResultLine } from './QueryResultLine';
-
 export class QueryResult {
-  /**
-   * A unique identifier for the QueryResult.
-   */
   private id: string;
   private feasibilityQueryId: string;
   private totalNumberOfPatients: number;
@@ -53,7 +49,6 @@ export class QueryResult {
     this.totalNumberOfPatients = value;
   }
 
-  // Getter and Setter for queryId
   getQueryId(): string {
     return this.id;
   }
@@ -62,7 +57,6 @@ export class QueryResult {
     this.id = value;
   }
 
-  // Getter and Setter for resultLines
   getResultLines(): QueryResultLine[] {
     return this.resultLines;
   }
@@ -71,7 +65,6 @@ export class QueryResult {
     this.resultLines = value;
   }
 
-  // Getter and Setter for issues
   getIssues():
     | [
         {
