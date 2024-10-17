@@ -132,7 +132,8 @@
         "UPLOAD": "Kohorte hochladen",
         "DOWNLOAD": "Kohorte herunterladen",
         "EDIT":"Kohorte bearbeiten",
-        "NEW_COHORT":"Neue Kohorte"
+        "NEW_COHORT":"Neue Kohorte",
+        "JUMP_TO_DATASELECTION": "zur Datenselektion"
       },
       "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
     },
@@ -141,7 +142,8 @@
         "EDIT":"Datenselektion bearbeiten",
         "DOWNLOAD":"Dataselektion herunterladen",
         "UPLOAD": "Datenselektion hochladen",
-        "NEW_DATASELECTION":"Neue Dataselektion"
+        "NEW_DATASELECTION":"Neue Dataselektion",
+        "JUMP_TO_COHORT_SELECTION": "zur Kohortenselektion"
       }
     }
   },

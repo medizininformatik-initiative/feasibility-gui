@@ -7,6 +7,17 @@
   </div>
   <num-display-profiles [isEditable]="false"></num-display-profiles>
   <num-action-bar *ngIf="showActionBar" class="bottom">
+    <num-button class="margin-right-10" (click)="createNewDataSelection()" type="green">
+      {{ 'DATAQUERY.DATASELECTION.BUTTON.NEW_DATASELECTION' | translate }}
+    </num-button>
+    <num-button
+      type="green"
+      (click)="editDataSelection()"
+      class="margin-right-10"
+      [isDisabled]="!isDataSelectionExistent"
+    >
+      {{ 'DATAQUERY.DATASELECTION.BUTTON.EDIT' | translate }}
+    </num-button>
     <div>
       <input
         type="file"
@@ -20,19 +31,18 @@
       </num-button>
     </div>
 
+
+
     <num-button
-      (click)="editDataSelection()"
       class="margin-right-10"
+      (click)="downloadDataSelection()"
       [isDisabled]="!isDataSelectionExistent"
+      type="green"
     >
-      {{ 'DATAQUERY.DATASELECTION.BUTTON.EDIT' | translate }}
-    </num-button>
-    <num-button class="margin-right-10" (click)="createNewDataSelection()" type="green">
-      {{ 'DATAQUERY.DATASELECTION.BUTTON.NEW_DATASELECTION' | translate }}
-    </num-button>
-    <num-button class="margin-right-10" (click)="downloadDataSelection()" type="green">
       {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
     </num-button>
-    <num-button class="margin-right-10" (click)="scroll()" type="green"> up </num-button>
+    <num-button [icon]="'arrow-up'" class="margin-right-10" (click)="scroll()" type="green">
+      {{ 'DATAQUERY.DATASELECTION.BUTTON.JUMP_TO_COHORT_SELECTION' | translate }}
+    </num-button>
   </num-action-bar>
 </div>

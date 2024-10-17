@@ -13,8 +13,11 @@
     </div>
   </div>
   <num-action-bar *ngIf="showActionBar" class="bottom">
-    <num-button type="green" [isDisabled]="!isFeasibilityInclusionSet" (click)="sendQuery()">
-      {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
+    <num-button (click)="createNewCohort()" type="green">
+      {{ 'DATAQUERY.COHORT.BUTTON.NEW_COHORT' | translate }}
+    </num-button>
+    <num-button [isDisabled]="!isFeasibilityExistent" type="green" (click)="editFeasibilityQuery()">
+      {{ 'DATAQUERY.COHORT.BUTTON.EDIT' | translate }}
     </num-button>
     <div>
       <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
@@ -25,12 +28,11 @@
     <num-button type="green" [isDisabled]="!isFeasibilityExistent" (click)="doDownloadQuery()">
       {{ 'DATAQUERY.COHORT.BUTTON.DOWNLOAD' | translate }}
     </num-button>
-    <num-button [isDisabled]="!isFeasibilityExistent" type="green" (click)="editFeasibilityQuery()">
-      {{ 'DATAQUERY.COHORT.BUTTON.EDIT' | translate }}
+    <num-button type="green" [isDisabled]="!isFeasibilityInclusionSet" (click)="sendQuery()">
+      {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
     </num-button>
-    <num-button (click)="createNewCohort()" type="green">
-      {{ 'DATAQUERY.COHORT.BUTTON.NEW_COHORT' | translate }}
+    <num-button [icon]="'arrow-down'" (click)="scroll()" type="green">
+      {{ 'DATAQUERY.COHORT.BUTTON.JUMP_TO_DATASELECTION' | translate }}
     </num-button>
-    <num-button (click)="scroll()" type="green"> down </num-button>
   </num-action-bar>
 </div>
