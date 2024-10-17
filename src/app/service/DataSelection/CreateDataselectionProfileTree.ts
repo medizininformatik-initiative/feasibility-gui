@@ -5,6 +5,7 @@ import { DataSelectionProfileTreeRoot } from 'src/app/model/DataSelection/Profil
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,7 @@ export class DataSelectionProfileTreeService {
           new DataSelectionProfileTreeNode(
             child.id,
             child.name,
-            new DisplayData(child.display.original, child.display.translations),
+            this.instantiateDisplayData(child.display),
             child.module,
             child.url,
             child.leaf,
@@ -48,5 +49,14 @@ export class DataSelectionProfileTreeService {
       });
     }
     return result;
+  }
+
+  private instantiateDisplayData(data: any) {
+    return new DisplayData(
+      data.original,
+      data.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      )
+    );
   }
 }

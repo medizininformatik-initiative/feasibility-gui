@@ -15,9 +15,9 @@ export class FilterChipDataSelectionAdapter {
         builder.addData(
           field.getId(),
           new DisplayData(
-            field.getDisplay().original,
-            field.getDisplay().translations
-          ).getTranslation(currentLang)
+            field.getDisplay().getOriginnal(),
+            field.getDisplay().getTranslations()
+          ).translate(currentLang)
         );
         filterChips.push(builder.buildFilterChip());
       }

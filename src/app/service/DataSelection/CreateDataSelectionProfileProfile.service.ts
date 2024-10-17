@@ -11,6 +11,7 @@ import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/Profil
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { v4 as uuidv4 } from 'uuid';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,7 @@ export class CreateDataSelectionProfileService {
       new DataSelectionProfileProfile(
         uuidv4(),
         item.url,
-        new DisplayData(item.display.original, item.display.translations),
+        this.instantiateDisplayData(item.display),
         fields,
         filters
       );
@@ -76,14 +77,22 @@ export class CreateDataSelectionProfileService {
 
   private mapNode(node: any): ProfileFields {
     const children = node.children ? this.mapNodes(node.children) : [];
-
     return new ProfileFields(
       node.id,
-      new DisplayData(node.display.original, node.display.translations),
-      new DisplayData(node.description.original, node.description.translations),
+      this.instantiateDisplayData(node.display),
+      this.instantiateDisplayData(node.description),
       children,
       node.isSelected || false,
       node.isRequired || false
+    );
+  }
+
+  private instantiateDisplayData(data: any) {
+    return new DisplayData(
+      data.original,
+      data.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      )
     );
   }
 }

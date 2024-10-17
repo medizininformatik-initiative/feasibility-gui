@@ -1,10 +1,23 @@
 import { Translation } from './Translation';
 
 export class DisplayData {
-  constructor(public original: string, public translations: Translation[]) {}
+  private original: string;
+  private translations: Translation[];
+  constructor(original: string, translations: Translation[]) {
+    this.original = original;
+    this.translations = translations;
+  }
 
-  public getTranslation(language: string): string {
-    const translation = this.translations.find((t) => t.language.split('-')[0] === language);
-    return translation && translation.value ? translation.value : this.original;
+  public getOriginnal(): string {
+    return this.original;
+  }
+
+  public getTranslations(): Translation[] {
+    return this.translations;
+  }
+
+  public translate(language: string): string {
+    const translation = this.translations.find((t) => t.getLanguage().split('-')[0] === language);
+    return translation && translation.getValue() ? translation.getValue() : this.original;
   }
 }
