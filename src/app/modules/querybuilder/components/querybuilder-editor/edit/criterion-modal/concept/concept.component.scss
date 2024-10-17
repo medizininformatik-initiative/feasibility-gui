@@ -1,6 +1,6 @@
 .container {
-  border-radius: 5px;
   height: 100%;
+  width: 100%;
 }
 
 .result-list-container {
@@ -19,6 +19,11 @@
 
 .display-part {
   padding-left: 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .delete-button {
@@ -44,6 +49,8 @@ num-shared-concept-filter {
 
 mat-expansion-panel {
   background-color: rgb(90, 121, 175, 0.1);
+  width: 100%;
+  height: 100%;
 }
 
 .mat-expansion-panel-header-title {
@@ -60,4 +67,10 @@ mat-expansion-panel {
 }
 ::ng-deep num-concept .mat-form-field-wrapper {
   padding-bottom: 0px !important;
+}
+::ng-deep .mat-expansion-panel-content {
+  height: 100%;
+}
+::ng-deep .mat-expansion-panel-body {
+  height: 100%;
 }

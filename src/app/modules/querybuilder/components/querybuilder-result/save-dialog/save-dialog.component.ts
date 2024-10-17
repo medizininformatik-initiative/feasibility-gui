@@ -57,7 +57,8 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
           .saveQuery(result, this.title, this.comment)
           .subscribe((test) => console.log(test));
         this.doDiscard();
-      });
+      })
+      .unsubscribe();
   }
 
   public doSaveDataSelection() {

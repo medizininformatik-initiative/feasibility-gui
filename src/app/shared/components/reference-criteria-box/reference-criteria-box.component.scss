@@ -4,15 +4,18 @@
   background-color: rgba(197, 202, 207, 0.1);
   border-radius: 10px;
   position: relative;
+  padding: 20px;
 }
 
 .title-section {
-  padding-left: 20px;
-  padding-top: 20px;
-  padding-right: 3%;
   font-size: larger;
   width: 100%;
   color: black;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .info-section {
@@ -51,4 +54,7 @@
   transform: rotateZ(45deg);
   bottom: 15px;
   right: 20px;
+}
+.content {
+  width: 98%;
 }
