@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
   <div class="display-container">
-    {{ profile.getDisplay() }}
+    {{ display | displayTranslation }}
   </div>
   <div class="display-container">
     {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}

@@ -8,6 +8,7 @@ import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
 import { ActiveDataSelectionService } from '../../../../service/Provider/ActiveDataSelection.service';
 import { SelectedDataSelectionProfileFieldsService } from 'src/app/service/DataSelection/SelectedDataSelectionProfileFields.service';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;
@@ -22,7 +23,7 @@ export class EditFieldsModalComponent implements OnInit {
   dataSelectionProfileProfileNode: ProfileFields[];
 
   tree: TreeNode[];
-  profileName: string;
+  profileName: DisplayData;
 
   arrayOfSelectedFields: ProfileFields[] = [];
 
@@ -41,6 +42,7 @@ export class EditFieldsModalComponent implements OnInit {
     this.dataSelectionProfileProfileNode = dataSelectionProfile.getFields();
     this.setInitialArrayOfSelectedFields(dataSelectionProfile.getFields());
     this.tree = FieldsTreeAdapter.fromTree(this.dataSelectionProfileProfileNode);
+
     this.selectedDataSelectionProfileFieldsService.getSelectedFields().subscribe((fields) => {
       this.arrayOfSelectedFields = fields;
     });

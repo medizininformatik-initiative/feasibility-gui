@@ -1,17 +1,19 @@
 import { AbstractProfileFilter } from './Filter/AbstractProfileFilter';
 import { ProfileFields } from './Fields/ProfileFields';
+import { DisplayData } from './DisplayData';
+import { TranslateService } from '@ngx-translate/core';
 
 export class DataSelectionProfileProfile {
   private id: string;
   private url: string;
-  private display: string;
+  private display: DisplayData;
   private fields: ProfileFields[] = [];
   private filters: AbstractProfileFilter[] = [];
 
   constructor(
     id: string,
     url: string,
-    display: string,
+    display: DisplayData,
     fields: ProfileFields[] = [],
     filters: AbstractProfileFilter[] = []
   ) {
@@ -34,11 +36,11 @@ export class DataSelectionProfileProfile {
     this.url = value;
   }
 
-  public getDisplay(): string {
+  public getDisplay(): DisplayData {
     return this.display;
   }
 
-  public setDisplay(value: string): void {
+  public setDisplay(value: DisplayData): void {
     this.display = value;
   }
 

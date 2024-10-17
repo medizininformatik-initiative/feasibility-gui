@@ -1,5 +1,6 @@
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { TreeNode } from '../TreeNodeInterface';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 export class FieldsTreeAdapter {
   static fromTree(trees: ProfileFields[]): TreeNode[] {
@@ -14,8 +15,9 @@ export class FieldsTreeAdapter {
     return {
       id: node?.getId(),
       data: {
-        name: node?.getName(),
-        display: node?.getName() + ' (' + node?.getDisplay() + ')',
+        name: node.getDisplay(),
+        display: node.getDisplay(),
+        description: node.getDescription(),
         selectable: true,
         isCheckboxSelected: node.getIsSelected(),
       },
