@@ -61,21 +61,31 @@
   border-radius: 5px;
   margin-right: 10px;
   margin-top: 10px;
-  background-image: radial-gradient(circle, rgb(216 216 216) 0.8px, transparent 0.5px);
+  background-image: radial-gradient(
+    circle,
+    var(--num-color--primary-blue) 0.4px,
+    transparent 0.78px
+  );
   background-size: 10px 10px;
+  font-family: 'Titillium Web';
 }
 
 .linkBox:hover {
   background: rgba(241, 242, 243, 1);
-  background-image: radial-gradient(circle, rgb(216 216 216) 0.8px, transparent 0.5px);
+  background-image: radial-gradient(
+    circle,
+    var(--num-color--primary-blue) 0.4px,
+    transparent 0.78px
+  );
   background-size: 10px 10px;
+  font-family: 'Titillium Web';
 }
 
 .queryBoxHeader {
   padding-bottom: 8%;
-  font-size: 0.6em;
+  font-size: 0.5em;
   font-weight: bold;
-  color: rgba(106, 116, 131, 1);
+  color: rgb(27, 27, 27);
 }
 
 .queryBoxText {

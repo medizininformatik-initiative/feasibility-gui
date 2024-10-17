@@ -5,7 +5,6 @@
 
     <span fxFlex></span>
     <num-language></num-language>
-    {{ profile?.info.name }}
-    <fa-icon [icon]="'user'" size="2x" [fixedWidth]="true"></fa-icon>
+    <button mat-raised-button class="user-button">{{ profile?.info.preferred_username }}</button>
   </div>
 </mat-toolbar>

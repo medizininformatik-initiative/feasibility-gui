@@ -7,13 +7,6 @@
   padding: 0 0 0 1em;
 }
 
-.abideTheme {
-  /*margin-top: 60px;
-  max-height: 175px;
-  padding-left: 10px;*/
-  width: 210px;
-  height: 105px;
-}
 .FDPGTheme {
   width: 250px;
   max-width: 210px;
@@ -25,4 +18,11 @@
 }
 .mat-toolbar-single-row {
   padding-left: 0px !important;
+}
+
+.user-button {
+  background-color: var(--num-color--primary-blue) !important;
+  border-radius: 20px;
+  min-width: 100px;
+  color: white !important;
 }
