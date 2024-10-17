@@ -3,6 +3,7 @@ import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
 import { FeatureService } from './Feature.service';
 import { Injectable } from '@angular/core';
 import {
+  BehaviorSubject,
   endWith,
   interval,
   map,
@@ -32,6 +33,12 @@ export class FeasibilityQueryResultService {
   private callsLimit: number;
   private callsRemaining: number;
   private queryId: string;
+
+  private callsLimitSubject = new BehaviorSubject<number>(0);
+  private callsRemainingSubject = new BehaviorSubject<number>(0);
+
+  public callsLimit$: Observable<number> = this.callsLimitSubject.asObservable();
+  public callsRemaining$: Observable<number> = this.callsRemainingSubject.asObservable();
 
   public getCallsLimit(): number {
     return this.callsLimit;
@@ -69,9 +76,10 @@ export class FeasibilityQueryResultService {
         return this.getPollingUrl(query);
       }),
       switchMap((url) => {
+        console.log(url);
         this.queryId = url.substring(url.lastIndexOf('/') + 1);
         feasibilityQuery.addResultId(this.queryId);
-        return this.getResultPolling(url, false).pipe(endWith(null));
+        return this.getResultPolling(this.queryId, false).pipe(endWith(null));
       }),
       takeWhile((x) => x != null)
     );
@@ -80,16 +88,23 @@ export class FeasibilityQueryResultService {
   private getDetailedResultRateLimit(): void {
     this.backend.getDetailedResultRateLimit().subscribe(
       (result) => {
-        this.callsLimit = result.limit;
-        this.callsRemaining = result.remaining;
+        // Update the subjects with new values
+        this.callsLimitSubject.next(result.limit);
+        this.callsRemainingSubject.next(result.remaining);
       },
       (error) => {
         if (error.error.issues !== undefined) {
           if (error.error.issues[0].code !== undefined) {
-            //this.snackbar.displayErrorMessage(error.error.issues[0].code);
+            // this.snackbar.displayErrorMessage(error.error.issues[0].code);
           }
         }
       }
+    );
+  }
+
+  public getResultCallsRemaining(): Observable<number> {
+    return this.callsLimit$.pipe(
+      switchMap((limit) => this.callsRemaining$.pipe(map((remaining) => limit - remaining)))
     );
   }
 
@@ -103,33 +118,46 @@ export class FeasibilityQueryResultService {
       .pipe(map((result) => result.headers.get('location')));
   }
 
-  public getResultPolling(resultUrl: string, withDetails: boolean): Observable<QueryResult> {
+  public getResultPolling(
+    feasibilityQueryResultId: string,
+    withDetails: boolean
+  ): Observable<QueryResult> {
     return interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 100)),
-      switchMap(() => this.getResult(resultUrl, withDetails)),
+      switchMap(() =>
+        withDetails
+          ? this.getDetailedObfuscatedResult(feasibilityQueryResultId)
+          : this.getSummaryResult(feasibilityQueryResultId)
+      ),
       share()
     );
   }
 
-  public getResult(resultUrl: string, withDetails: boolean): Observable<QueryResult> {
-    const url: string = withDetails
-      ? resultUrl + '/detailed-obfuscated-result'
-      : resultUrl + '/summary-result';
-    return (
-      this.backend
-        //.getSummaryResult(url)
-        .getDetailedResult(url, false)
-        .pipe(
-          map((result) => {
-            if (!result.issues) {
-              const queryResult: QueryResult = this.buildQueryResultInstance(result);
-              this.resultProvider.setResultByID(queryResult, queryResult.getQueryId());
-              return queryResult;
-            } else {
-              this.snackbar.displayErrorMessage(this.snackbar.errorCodes[result.issues[0].code]);
-            }
-          })
-        )
+  public getSummaryResult(feasibilityQueryResultId: string): Observable<QueryResult> {
+    return this.backend.getSummaryResult(feasibilityQueryResultId, false).pipe(
+      map((result) => {
+        if (!result.issues) {
+          const queryResult: QueryResult = this.buildQueryResultInstance(result);
+          this.resultProvider.setResultByID(queryResult, queryResult.getQueryId());
+          return queryResult;
+        } else {
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes[result.issues[0].code]);
+        }
+      })
+    );
+  }
+
+  public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<QueryResult> {
+    return this.backend.getDetailedObfuscatedResult(feasibilityQueryResultId, false).pipe(
+      map((result) => {
+        if (!result.issues) {
+          const queryResult: QueryResult = this.buildQueryResultInstance(result);
+          this.resultProvider.setResultByID(queryResult, queryResult.getQueryId());
+          return queryResult;
+        } else {
+          this.snackbar.displayErrorMessage(this.snackbar.errorCodes[result.issues[0].code]);
+        }
+      })
     );
   }
 

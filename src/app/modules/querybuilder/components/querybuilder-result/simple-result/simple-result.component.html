@@ -7,18 +7,17 @@
     </div>
     {{ 'QUERYBUILDER.RESULT.PATIENT_NUMBER' | translate }}
   </div>
-  <button
+  <num-button
+    type="green"
     *ngIf="loadedResult"
-    mat-raised-button
     fxFlexAlign="start"
-    [matTooltip]="'RESULT.DETAILS_TOOLTIP' | translate"
+    [matTooltip]="'QUERYBUILDER.RESULT.DETAILS_TOOLTIP' | translate"
     matTooltipPosition="right"
     (click)="openDialogResultDetails()"
     class="button-dialog-result-details"
   >
-    {{ 'QUERYBUILDER.RESULT.BUTTON.DETAILS' | translate }} ({{ resultCallsRemaining }}/{{
-      resultCallsLimit
-    }})
-  </button>
+    {{ 'QUERYBUILDER.RESULT.BUTTON.DETAILS' | translate }}
+    ({{ resultCallsRemaining$ | async }}/{{ resultCallsLimit$ | async }})
+  </num-button>
   <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
 </div>

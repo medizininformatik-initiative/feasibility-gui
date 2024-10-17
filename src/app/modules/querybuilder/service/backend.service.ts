@@ -45,6 +45,9 @@ export class BackendService {
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345';
   private static PATH_TERMINOLOGY_SYSTEMS = 'terminology/systems';
 
+  private static PATH_SUMMARY_RESULT = 'summary-result';
+  private static DETAILED_OBFUSCATED_RESULT = 'detailed-obfuscated-result';
+
   private resultObservable = null;
 
   private static PATH_DATASELECTION_PROFILE_DATA = 'dse/profile-data';
@@ -194,19 +197,6 @@ export class BackendService {
       observe: 'response',
     });
   }
-  public getSummaryResult(resultUrl: string): Observable<any> {
-    if (this.feature.mockResult()) {
-      const result = {
-        totalNumberOfPatients: Math.floor(Math.random() * 10000000),
-        queryId: '12345',
-        resultLines: [],
-      };
-
-      return of(result);
-    }
-
-    return this.http.get<any>(resultUrl);
-  }
 
   public getDataSelectionProfileData(commaSeparatedIds: string) {
     return this.http.get<any>(
@@ -222,25 +212,57 @@ export class BackendService {
     return this.http.get<any>(this.createUrl(BackendService.PATH_DATASELECTION_PROFILE_TREE));
   }
 
-  public getDetailedResult(resultUrl: string, gottenDetailedResult: boolean): Observable<any> {
-    /*if (this.feature.mockResult()) {
-      const mockResult = {
-        totalNumberOfPatients: Math.floor(Math.random() * 10000000),
-        queryId: '12345',
-        resultLines: [
-          { siteName: 'Standort 1', numberOfPatients: 351 },
-          { siteName: 'Standort 2', numberOfPatients: 1277 },
-          { siteName: 'Standort 3', numberOfPatients: 63000000 },
-          { siteName: 'Standort 4', numberOfPatients: 0 },
-        ],
-      };
-      return of(mockResult);
-    }*/
+  public getSummaryResult(
+    feasibilityQueryResultId: string,
+    gottenDetailedResult: boolean
+  ): Observable<any> {
     if (gottenDetailedResult) {
       return this.resultObservable;
     }
+    const url =
+      BackendService.PATH_RUN_QUERY +
+      '/' +
+      feasibilityQueryResultId +
+      '/' +
+      BackendService.PATH_SUMMARY_RESULT;
+    const result = this.http.get<any>(this.createUrl(url));
 
-    const result = this.http.get<any>(resultUrl);
+    return Observable.create((obs: any) => {
+      result.subscribe(
+        (queryResult) => {
+          this.resultObservable = Observable.create((queryResultObs: any) => {
+            queryResultObs.next(queryResult);
+            queryResultObs.complete();
+          });
+          obs.next(queryResult);
+          obs.complete();
+        },
+        (error) => {
+          this.resultObservable = Observable.create((innerObs: any) => {
+            innerObs.error(error);
+            innerObs.complete();
+          });
+          obs.error(error);
+          obs.complete();
+        }
+      );
+    });
+  }
+
+  public getDetailedObfuscatedResult(
+    feasibilityQueryResultId: string,
+    gottenDetailedResult: boolean
+  ): Observable<any> {
+    if (gottenDetailedResult) {
+      return this.resultObservable;
+    }
+    const url =
+      BackendService.PATH_RUN_QUERY +
+      '/' +
+      feasibilityQueryResultId +
+      '/' +
+      BackendService.DETAILED_OBFUSCATED_RESULT;
+    const result = this.http.get<any>(this.createUrl(url));
 
     return Observable.create((obs: any) => {
       result.subscribe(

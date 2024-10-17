@@ -1,59 +1,67 @@
 import { BackendService } from '../../../service/backend.service';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter';
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../shared/models/ListEntries/FeasibilityQueryResultDetailstListEntry';
+import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQueryResult.service';
 import { FeatureService } from '../../../../../service/Feature.service';
+import { map } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { QueryResult } from '../../../../../model/Result/QueryResult';
-import { ResultProviderService } from '../../../../../service/Provider/ResultProvider.service';
 import { TableData } from '../../../../../shared/models/TableData/InterfaceTableData';
 
-export class ResultDetailsModalComponentData {
-  resultID: string;
-  isResultLoaded: boolean;
-  gottenDetailedResult: boolean;
-  resultUrl: string;
-}
+export class ResultDetailsModalComponentData {}
 @Component({
   selector: 'num-result-detail-modal',
   templateUrl: './result-detail-modal.component.html',
   styleUrls: ['./result-detail-modal.component.scss'],
 })
 export class ResultDetailModalComponent implements OnInit {
-  @Output() resultGotten = new EventEmitter<boolean>();
-
-  result: QueryResult;
-  resultStatus: string;
   adaptedData: TableData;
+
   constructor(
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsModalComponentData,
     public dialogRef: MatDialogRef<ResultDetailModalComponent>,
     public backend: BackendService,
     private featureService: FeatureService,
-    private resultProvider: ResultProviderService
-  ) {
-    /*if (this.data.isResultLoaded) {
-      this.result = this.resultProvider.getResultByID(this.data.resultID)
-    }*/
-  }
+    private feasibilityQueryResultService: FeasibilityQueryResultService
+  ) {}
   lowerBoundaryLocation: number = this.featureService.getLocationResultLowerBoundary();
 
+  /**
+   * We read the last elment of the feasibilityQuery resultIds Array as this one contains the latest Result from the backend
+   */
   ngOnInit(): void {
-    const detailedResultUrl = this.data.resultUrl + '/detailed-obfuscated-result';
-    this.resultStatus = '';
-
-    this.sortResult(this.resultProvider.getResultByID(this.data.resultID));
-    this.adaptedData = FeasibilityQueryResultDetailsListAdapter.adapt(
-      this.result.getResultLines() as unknown as FeasibilityQueryResultDetailstListEntry[]
-    );
+    this.feasibilityQueryProviderService
+      .getActiveFeasibilityQuery()
+      .pipe(
+        map((feasibilityQuery) => {
+          const resultIdsArray = feasibilityQuery.getResultIds();
+          const latestResultId = resultIdsArray[resultIdsArray.length - 1];
+          this.feasibilityQueryResultService
+            .getDetailedObfuscatedResult(latestResultId)
+            .subscribe((result) => {
+              this.adaptedData = FeasibilityQueryResultDetailsListAdapter.adapt(
+                this.sortResult(result)
+              );
+            });
+        })
+      )
+      .subscribe();
   }
 
   doClose(): void {
     this.dialogRef.close();
   }
 
-  sortResult(resultTemp): void {
-    this.result = resultTemp;
-    this.result?.getResultLines()?.sort((a, b) => b.getNumberOfPatients() - a.getNumberOfPatients());
+  private sortResult(queryResult: QueryResult): FeasibilityQueryResultDetailstListEntry[] {
+    return queryResult
+      ?.getResultLines()
+      ?.sort((a, b) => b.getNumberOfPatients() - a.getNumberOfPatients())
+      .map((resultLine) => new FeasibilityQueryResultDetailstListEntry(
+          resultLine.getNumberOfPatients(),
+          resultLine.getSiteName()
+        ));
   }
 }
