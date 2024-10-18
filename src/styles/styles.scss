@@ -5,6 +5,7 @@
 @import './custom-material';
 @import './general-styles/_margin-bottom-classes';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '/node_modules/flag-icons/css/flag-icons.min.css';
 
 //@include mat-core();
 @include mat.core();

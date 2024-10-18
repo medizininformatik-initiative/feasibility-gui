@@ -7,13 +7,19 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./language.component.scss'],
 })
 export class LanguageComponent implements OnInit {
+  languages: string[] = ['de', 'en'];
+
   constructor(public translate: TranslateService) {
-    translate.addLangs(['de', 'en']);
+    translate.addLangs(this.languages);
     translate.setDefaultLang('de');
 
     const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/de|en/) ? browserLang : 'de');
+    translate.use(this.languages.includes(browserLang) ? browserLang : 'de');
   }
 
   ngOnInit(): void {}
+
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+  }
 }

@@ -1,11 +1,15 @@
-<fa-icon class="num-fc--a" icon="globe-europe" size="lg" [fixedWidth]="true"></fa-icon>
-<mat-button-toggle-group
-  class="num-mat-lang-toggle-button"
-  #group="matButtonToggleGroup"
-  [attr.aria-label]="'LANGUAGE.LABEL' | translate"
-  (change)="translate.use(group.value)"
-  [value]="translate.currentLang"
->
-  <mat-button-toggle value="de">{{ 'LANGUAGE.GERMAN' | translate }}</mat-button-toggle>
-  <mat-button-toggle value="en">{{ 'LANGUAGE.ENGLISH' | translate }}</mat-button-toggle>
-</mat-button-toggle-group>
+<mat-form-field>
+  <span *ngIf="translate.currentLang === 'de'" class="fi fi-de" matPrefix> </span>
+  <span *ngIf="translate.currentLang === 'en'" class="fi fi-gb" matPrefix> </span>
+
+  <mat-select (selectionChange)="changeLanguage($event.value)">
+    <mat-option value="de">
+      <span class="fi fi-de"></span>
+      {{ 'LANGUAGE.GERMAN' | translate }}
+    </mat-option>
+    <mat-option value="en">
+      <span class="fi fi-gb"></span>
+      {{ 'LANGUAGE.ENGLISH' | translate }}</mat-option
+    >
+  </mat-select>
+</mat-form-field>
