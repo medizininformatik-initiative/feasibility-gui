@@ -1,32 +1,5 @@
-<div fxLayout="column" fxLayoutAlign="start start" class="height-90 pr4">
-  <div style="margin-top: 5px">
-    <num-header>{{ 'DATASELECTION.HEADER' | translate }}</num-header>
-    <num-header-description>
-      {{ 'DATASELECTION.HEADER_INFO' | translate }}
-    </num-header-description>
-  </div>
-  <div class="tree-container">
-    <div *ngFor="let tree of trees">
-      <num-tree (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
-    </div>
-  </div>
-  <num-display-profiles [isEditable]="true" class="box-container"></num-display-profiles>
-  <num-action-bar class="bottom">
-    <num-button
-      [isDisabled]="($dataSelectionProfileTreeNodeArray | async)?.length === 0"
-      class="margin-right-10"
-      type="green"
-      (click)="getDataSelectionProfileData()"
-    >
-      {{ 'DATASELECTION.BUTTON.ADD' | translate }}
-    </num-button>
-    <num-button
-      class="margin-right-10"
-      [isDisabled]="($dataSelectionProfileArray | async)?.length === 0"
-      type="green"
-      (click)="downloadCRDTL()"
-    >
-      {{ 'DATASELECTION.BUTTON.DOWNLOAD' | translate }}
-    </num-button>
-  </num-action-bar>
+<div class="container">
+  <num-display-searchtree [showActionBar]="showActionBar" (scrollClick)="scroll($event)" #ds_tree></num-display-searchtree>
+  <num-display-profiles [showActionBar]="!showActionBar" (scrollClick)="scroll($event)" #profiles [isEditable]="true"></num-display-profiles>
+
 </div>

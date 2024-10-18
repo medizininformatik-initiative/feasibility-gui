@@ -90,7 +90,7 @@ export class CreateDataSelectionProfileService {
   private instantiateDisplayData(data: any) {
     return new DisplayData(
       data.original,
-      data.translations.map(
+      data.translations?.map(
         (translation) => new Translation(translation.language, translation.value)
       )
     );

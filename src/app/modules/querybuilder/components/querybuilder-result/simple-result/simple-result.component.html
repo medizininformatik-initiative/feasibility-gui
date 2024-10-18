@@ -1,5 +1,5 @@
 <div fxLayout="column" class="container">
-  <div fxLayout="row" fxLayoutAlign="start center" *ngIf="obfuscatedPatientCountArray.length > 0">
+  <div fxLayout="row" fxLayoutAlign="start center" *ngIf="obfuscatedPatientCountArray.length > 0" class="margin-bottom-20">
     <div *ngFor="let digit of obfuscatedPatientCountArray" class="number-of-patients">
       <div class="digit">
         {{ digit }}
