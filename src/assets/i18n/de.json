@@ -200,6 +200,8 @@
         "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Bühne hinzugefügt"
       },
       "CONSENT": {
+        "WITH_CONSENT": "Mit Einwilligung",
+        "WITHOUT_CONSENT": "Ohne Einweilligung",
         "TITLE": "Vorausgesetzte Einwilligungen zur Datenverarbeitung",
         "CENTRAL": "Zentral",
         "DISTRIBUTED": "Verteilt",
