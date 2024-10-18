@@ -333,7 +333,8 @@
   },
   "SAVED_QUERIES": {
     "HEADER": "Gespeicherte Abfragen",
-    "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen"
+    "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen",
+    "CREATED_AT": "Erstellt am"
   },
   "BUTTON": {
     "ADD": "Hinzufügen",

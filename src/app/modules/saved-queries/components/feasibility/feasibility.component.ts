@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
+import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { first, Observable } from 'rxjs';
+import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SavedFeasibilityQueryService } from '../../services/SavedFeasibilityQuery.service';
 import { StructuredQuery2FeasibilityQueryService } from '../../../../service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
-import { Router } from '@angular/router';
-import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 @Component({
   selector: 'num-feasibility',
   templateUrl: './feasibility.component.html',
@@ -16,7 +16,7 @@ export class FeasibilityComponent implements OnInit {
     private savedFeasibilityQueryService: SavedFeasibilityQueryService,
     private translator: StructuredQuery2FeasibilityQueryService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
-    private router: Router
+    private navigationHelperService: NavigationHelperService
   ) {}
 
   ngOnInit() {
@@ -47,7 +47,7 @@ export class FeasibilityComponent implements OnInit {
             true
           );
         });
-        this.router.navigate(['/data-query']);
+        this.navigationHelperService.navigateToDataQueryEditor();
       });
   }
 }

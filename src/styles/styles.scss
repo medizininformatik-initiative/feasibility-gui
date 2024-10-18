@@ -39,3 +39,11 @@ body {
 .mat-chip-ripple {
   display: none;
 }
+
+.text-overflow {
+  display: block;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  width: 100%;
+  overflow: hidden;
+}
