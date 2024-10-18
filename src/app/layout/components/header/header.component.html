@@ -1,10 +1,7 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="center center" color="light" fxLayoutGap="0px">
+<mat-toolbar fxLayout="row" fxLayoutAlign="start center" color="light" fxLayoutGap="0px">
   <img id="header-logo" src="{{ urlSrc }}" alt="{{ urlAlt }}" class="{{ stylesheet }}" />
-  <div fxFlex="100%">
-    <ng-content></ng-content>
-
-    <span fxFlex></span>
-    <num-language></num-language>
+  <div fxFlex="100" fxLayoutAlign="end" class="margin-right">
+    <num-language class="margin-right-20"></num-language>
     <button mat-raised-button class="user-button">{{ profile?.info.preferred_username }}</button>
   </div>
 </mat-toolbar>
