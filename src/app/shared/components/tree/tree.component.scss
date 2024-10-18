@@ -40,6 +40,7 @@ li {
 }
 
 .icon-container {
+  cursor: pointer;
   background-color: #5a79af;
   color: white;
   height: 20px;
@@ -88,4 +89,36 @@ li {
   color: grey;
   font-size: 13px;
   font-style: italic;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.width-80 {
+  width: 80%;
+}
+
+.text-oveflow {
+  width: 80%;
+}
+
+.description-text {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-height: 1.5em; /* Height for one line, adjust as needed */
+  transition: max-height 0.3s ease;
+
+  &.expanded {
+    white-space: normal; /* Allow text wrapping */
+    overflow: visible;
+    max-height: none; /* Remove height limit */
+  }
+
+  &.collapsed {
+    white-space: nowrap; /* Keep text in one line when collapsed */
+    max-height: 1.5em; /* Height for collapsed version */
+  }
 }

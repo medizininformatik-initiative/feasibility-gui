@@ -15,6 +15,8 @@ export class TreeComponent implements OnInit {
 
   expandedNodes: Set<any> = new Set();
 
+  showFullDescription = false;
+
   constructor() {}
 
   ngOnInit() {}
@@ -52,5 +54,9 @@ export class TreeComponent implements OnInit {
   checkboxSelected(node: TreeNode): void {
     node.data.isCheckboxSelected = !node.data.isCheckboxSelected;
     this.selectedCheckbox.emit(node);
+  }
+
+  public toggleDescription() {
+    this.showFullDescription = !this.showFullDescription; // toggles the state
   }
 }

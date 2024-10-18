@@ -2,7 +2,7 @@
 
 <ng-template #tree let-node="node" let-level="level">
   <div class="divider" [style.marginLeft]="calcMarginLeft(level)">
-    <div fxLayout="row" fxLayoutAlign="start center" style="height: 50px">
+    <div fxLayout="row" fxLayoutAlign="start center" style="height: 50px" class="width-100">
       <div>
         <mat-checkbox
           *ngIf="node.data.selectable"
@@ -23,17 +23,17 @@
           fxLayoutAlign="center center"
           (click)="toggleExpand(node)"
           class="icon-container"
-          style="cursor: pointer"
         >
           <fa-icon *ngIf="!isExpanded(node)" icon="chevron-right"></fa-icon>
           <fa-icon *ngIf="isExpanded(node)" icon="chevron-down"></fa-icon>
         </div>
       </div>
-      <div class="node-display-container">
+      <div class="node-display-container width-80">
         {{ node.data.display | displayTranslation }}
-
         <div *ngIf="node.data.description" class="field-description">
-          ({{ node.data.description | displayTranslation }})
+          <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
+            ({{ node.data.description | displayTranslation }})
+          </span>
         </div>
       </div>
     </div>
