@@ -12,19 +12,23 @@
       class="linkBox newQueryBox dotted-background"
     >
       <div class="queryBoxHeader content">{{ 'DASHBOARD.DATAQUERY.HEADER' | translate }}</div>
-      <num-button class="content" (click)="navigateToDataQueryEditor()" type="blue"
-        >Zum Editor</num-button
-      >
+      <num-button class="content" (click)="navigateToDataQueryEditor()" type="blue">{{
+        'DASHBOARD.DATAQUERY.BUTTON' | translate
+      }}</num-button>
     </div>
 
     <div fxFlex="30" fxLayout="column" fxLayoutAlign="start start" class="linkBox newQueryBox">
       <div class="queryBoxHeader">{{ 'DASHBOARD.NEWQUERY.HEADER' | translate }}</div>
-      <num-button (click)="navigateToQueryBuilderEditor()" type="blue">Zum Editor</num-button>
+      <num-button (click)="navigateToQueryBuilderEditor()" type="blue">
+        {{ 'DASHBOARD.NEWQUERY.BUTTON' | translate }}
+      </num-button>
     </div>
 
     <div fxFlex="30" fxLayout="column" fxLayoutAlign="start start" class="linkBox myQueryBox">
       <div class="queryBoxHeader">{{ 'DASHBOARD.DATASELECTION.HEADER' | translate }}</div>
-      <num-button (click)="navigateToDataSelectionEditor()" type="blue">Zum Editor</num-button>
+      <num-button (click)="navigateToDataSelectionEditor()" type="blue">
+        {{ 'DASHBOARD.DATASELECTION.BUTTON' | translate }}
+      </num-button>
     </div>
 
     <div fxFlex="30" fxLayout="column" fxLayoutAlign="start start" class="linkBox myQueryBox">

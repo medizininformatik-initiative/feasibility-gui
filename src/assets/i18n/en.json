@@ -41,8 +41,7 @@
     }
   },
   "DASHBOARD": {
-    "FDPGTHEME": {
-      "HEADLINE": "Welcome to the „Find data and biospecimens“ service of the German Research Data Portal for Health",
+      "HEADER": "Welcome to the „Find data and biospecimens“ service of the German Research Data Portal for Health",
       "PARAGRAPH1": "This is a support service for scientists to assist you in realizing your research project. By submitting a feasibility request, you can find out how many data sets for your search criteria are available at university hospitals nationwide. Based on inclusion and exclusion criteria, the availability of health data for medical research purposes can be estimated.",
       "PARAGRAPH2": "",
       "PARAGRAPH3_1": "With ",
@@ -55,54 +54,67 @@
       "PARAGRAPH4_3": ".",
       "PARAGRAPH5_1": "Once you have all the relevant information for your research project, you can submit an application for data use in the proposal portal of the German Research Data Portal for Health via",
       "PARAGRAPH5_2": "Submit Application",
-      "PARAGRAPH5_3": "."
-    },
+      "PARAGRAPH5_3": ".",
     "INFO":{
       "TEXT": " We are currently working on the feasibility portal. This can lead to slow responses and deviating results for some queries."
     },
-    "NEWQUERY": {
-      "HEADLINE": "New Query",
-      "TEXT": "Perform a request based on your inclusion and exclusion criteria"
-    },
-    "MYQUERY": {
-      "HEADLINE": "My Queries",
-      "TEXT": "Get an overview of the requests you have already performed"
-    },
-    "PREPOSALPORTAL": {
-      "HEADLINE": "Submit Application",
-      "TEXT": "Make a request for data use in the proposal portal"
-    }
+      "DATAQUERY": {
+        "HEADER": "Compose Data Query",
+        "BUTTON": "Go to Data Query"
+      },
+      "DATASELECTION": {
+        "HEADER": "Compose Data Selection",
+        "BUTTON": "New Dataselection"
+
+      },
+      "NEWQUERY": {
+        "HEADER": "Create Feasibility Request",
+        "BUTTON": "New Feasibility Query"
+      },
+      "SAVED_QUERIES": {
+        "HEADER": "My Queries",
+        "BUTTON": "Go to Overview"
+      },
+      "PREPOSALPORTAL": {
+        "HEADER": "Submit Research Proposal",
+        "BUTTON": "New Proposal"
+      }
   },
-  "DATASELECTION": {
-    "HEADER": "Dataselection",
-    "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values ​​are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
-    "DATASELECTION": "Dataselection",
-    "SELECTION_BOX":{
-      "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
-      "SELECTED_FIELDS": "Selected Fields",
-      "APPLIED_FILTER": "Applied Filters",
-      "REQUIRED": "required",
-      "OPTIONAL": "optional"
-    },
-    "FIELD_SELECTION":{
-      "FIELD_SELECTION": "Selected items",
-      "HEADER": "Select fields to extract for ",
-      "REQUIRED": "required"
-    },
-    "BUTTON": {
-      "ADD": "Add to Dataselection",
-      "DOWNLOAD": "Download Dataselection"
-    },
-    "SEARCH": {
-      "LABEL": "Insert code or serach text",
-      "CRITERIA": "Search Criteria"
-    },
-    "DISPLAY": {
-      "LABEL": "Selected Criteria"
-    },
-    "INFOTEXT": "Please select the criteria you would like to export and download your dataselection. You can then either upload the dataselection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
-    "REQUIRED":"required from all sites"
-  },
+    "DATASELECTION": {
+      "HEADER": "Data Selection",
+      "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
+      "DATASELECTION": "Data Selection",
+      "SELECTION_BOX": {
+        "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
+        "SELECTED_FIELDS": "Selected Fields",
+        "APPLIED_FILTER": "Applied Filters",
+        "REQUIRED": "required",
+        "OPTIONAL": "optional"
+      },
+      "FIELD_SELECTION": {
+        "FIELD_SELECTION": "Selected items",
+        "HEADER": "Select fields to extract for ",
+        "REQUIRED": "required"
+      },
+      "EDIT": {
+        "HEADER": "Selected Health Data for Extraction", 
+        "HEADER_DESCRIPTION": "Text needs to be added here",
+        "SECTION": "Selected Criteria"  
+      },
+      "BUTTON": {
+        "ADD": "Add to Data Selection",
+        "DOWNLOAD": "Download Data Selection"
+      },
+      "SEARCH": {
+        "LABEL": "Insert code or search text",
+        "CRITERIA": "Search Criteria"
+      },
+      "DISPLAY": {
+        "LABEL": "Selected Criteria"
+      },
+      "INFOTEXT": "Please select the criteria you would like to export and download your data selection. You can then either upload the data selection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
+      "REQUIRED": "required from all sites"
+  },  
   "LANGUAGE": {
     "GERMAN": "German",
     "ENGLISH": "English",

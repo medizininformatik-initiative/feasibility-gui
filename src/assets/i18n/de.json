@@ -77,17 +77,20 @@
       "BUTTON": "Zur Datenabfrage"
     },
     "DATASELECTION": {
-      "HEADER": "Datenselektion zusammenstellen"
+      "HEADER": "Datenselektion zusammenstellen",
+      "BUTTON": "Zur Dataselektion"
     },
     "NEWQUERY": {
-      "HEADER": "Machbarkeitsanfrage stellen"
+      "HEADER": "Machbarkeitsanfrage stellen",
+      "BUTTON": "Zur Machbarkeitsabfrage"
     },
     "SAVED_QUERIES": {
       "HEADER": "Meine Abfragen",
       "BUTTON": "Zur Übersicht"
     },
     "PREPOSALPORTAL": {
-      "HEADER": "Forschungsantrag stellen"
+      "HEADER": "Forschungsantrag stellen",
+      "BUTTON": "Zum Antragsportal"
     }
   },
   "DATASELECTION": {
