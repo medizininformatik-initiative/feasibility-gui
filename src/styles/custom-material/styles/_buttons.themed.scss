@@ -61,9 +61,6 @@
       background-color: mat.get-color-from-palette($primary, 'blue');
       border-color: mat.get-color-from-palette($primary, 500);
 
-      fa-icon {
-        color: mat.get-contrast-color-from-palette($primary, 900);
-      }
 
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.disabled) {
@@ -80,10 +77,6 @@
         background-color: mat.get-color-from-palette($primary, 50);
         color: mat.get-color-from-palette($primary, 'blue');
         box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'blue');
-
-        fa-icon {
-          color: mat.get-color-from-palette($accent, 200);
-        }
       }
     }
 
@@ -101,9 +94,6 @@
       background-color: mat.get-color-from-palette($primary, 'green');
       border-color: mat.get-color-from-palette($primary, 500);
 
-      fa-icon {
-        color: mat.get-contrast-color-from-palette($primary, 900);
-      }
 
       /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.disabled) {
@@ -121,9 +111,6 @@
         color: mat.get-color-from-palette($primary, 'green');
         box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'green');
 
-        fa-icon {
-          color: mat.get-color-from-palette($accent, 200);
-        }
       }
     }
   }

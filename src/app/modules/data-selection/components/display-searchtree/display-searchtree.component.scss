@@ -1,12 +1,17 @@
 :host {
   width: 100%;
   height: 100%;
+  display: block;
 }
 .container {
+  height: 90%;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.pr4 {
+  padding-right: 4rem;
 }
 
 .searchbar-container {

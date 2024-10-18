@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { map, Observable } from 'rxjs';
@@ -11,9 +11,12 @@ import { DataSelectionProviderService } from '../../services/DataSelectionProvid
 })
 export class DisplayProfilesComponent implements OnInit {
   @Input() isEditable: boolean;
+  @Input() showActionBar;
+  @Output() scrollClick = new EventEmitter();
   $dataSelectionProfileArray: Observable<Array<DataSelectionProfileProfile>>;
 
   constructor(
+    public elementRef: ElementRef,
     private dataSelectionProfileProvider: DataSelectionProfileProviderService,
     private dataSelectionProvider: DataSelectionProviderService
   ) {}
@@ -37,5 +40,9 @@ export class DisplayProfilesComponent implements OnInit {
             )
         )
       );
+  }
+  scroll() {
+    this.showActionBar = false;
+    this.scrollClick.emit(true);
   }
 }

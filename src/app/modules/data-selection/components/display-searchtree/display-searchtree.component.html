@@ -1,0 +1,35 @@
+  <div class="container pr4">{{showActionBar}}
+    <div style="margin-top: 5px">
+      <num-header>{{ 'DATASELECTION.HEADER' | translate }}</num-header>
+      <num-header-description>
+        {{ 'DATASELECTION.HEADER_INFO' | translate }}
+      </num-header-description>
+    </div>
+    <div class="tree-container">
+      <div *ngFor="let tree of trees">
+        <num-tree (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
+      </div>
+    </div>
+
+  <num-action-bar *ngIf="showActionBar" class="bottom">
+   <!-- <num-button
+      [isDisabled]="($dataSelectionProfileTreeNodeArray | async)?.length === 0"
+      class="margin-right-10"
+      type="green"
+      (click)="getDataSelectionProfileData()"
+    >
+      {{ 'DATASELECTION.BUTTON.ADD' | translate }}
+    </num-button>
+    <num-button
+      class="margin-right-10"
+      [isDisabled]="($dataSelectionProfileArray | async)?.length === 0"
+      type="green"
+      (click)="downloadCRDTL()"
+    >
+      {{ 'DATASELECTION.BUTTON.DOWNLOAD' | translate }}
+    </num-button>-->
+    <num-button [icon]="'arrow-down'" class="margin-right-10" (click)="scroll()" type="green">
+      {{ 'DATAQUERY.DATASELECTION.BUTTON.JUMP_TO_COHORT_SELECTION' | translate }}
+    </num-button>
+  </num-action-bar>
+  </div>

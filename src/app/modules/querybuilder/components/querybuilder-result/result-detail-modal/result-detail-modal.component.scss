@@ -4,6 +4,7 @@
 .result-details-box {
   font-size: 16px;
   padding: 2em;
+  width: 800px;
 }
 .result-header {
   /*border-bottom: 1px rgba(0, 0, 0, 0.2) solid;*/
@@ -45,4 +46,7 @@ thead td {
 }
 .error-message {
   margin-top: 2em;
+}
+::ng-deep .name-column {
+  width: 400px;
 }
