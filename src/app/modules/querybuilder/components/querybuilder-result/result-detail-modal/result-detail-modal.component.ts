@@ -1,5 +1,5 @@
 import { BackendService } from '../../../service/backend.service';
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter';
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../shared/models/ListEntries/FeasibilityQueryResultDetailstListEntry';
@@ -59,9 +59,12 @@ export class ResultDetailModalComponent implements OnInit {
     return queryResult
       ?.getResultLines()
       ?.sort((a, b) => b.getNumberOfPatients() - a.getNumberOfPatients())
-      .map((resultLine) => new FeasibilityQueryResultDetailstListEntry(
-          resultLine.getNumberOfPatients(),
-          resultLine.getSiteName()
-        ));
+      .map(
+        (resultLine) =>
+          new FeasibilityQueryResultDetailstListEntry(
+            resultLine.getNumberOfPatients(),
+            resultLine.getSiteName()
+          )
+      );
   }
 }

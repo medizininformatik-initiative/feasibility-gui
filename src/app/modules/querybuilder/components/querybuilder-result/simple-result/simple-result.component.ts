@@ -1,5 +1,5 @@
 import { BackendService } from '../../../service/backend.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
 import { FeatureProviderService } from '../../../service/feature-provider.service';
@@ -25,6 +25,9 @@ export class SimpleResultComponent implements OnInit {
 
   pollingTime: number;
   loadedResult = false;
+
+  @Output()
+  resultLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   feasibilityQuery: FeasibilityQuery;
   constructor(
@@ -67,8 +70,9 @@ export class SimpleResultComponent implements OnInit {
   }
 
   private handleResult(result: any): void {
-    this.loadedResult = false;
+    this.loadedResult = true;
     this.setObfuscatedPatientCount(result.getTotalNumberOfPatients());
+    this.resultLoaded.emit(this.loadedResult);
   }
 
   /**

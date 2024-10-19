@@ -9,6 +9,7 @@ import { SaveQueryModalComponent } from './save-dialog/save-dialog.component';
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent implements OnInit {
+  resultLoaded = false;
   constructor(
     private navigationHelperService: NavigationHelperService,
     private dialog: MatDialog,
@@ -29,5 +30,9 @@ export class ResultComponent implements OnInit {
 
   public doDownloadQuery() {
     this.downloadCCDLService.downloadActiveFeasibilityQueryAsFile();
+  }
+
+  public setResultLoaded(value: boolean) {
+    this.resultLoaded = value;
   }
 }

@@ -1,16 +1,20 @@
 <div class="result-details-box">
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxFlex="80" class="result-header"></div>
-    <button class="close-button" type="button" mat-icon-button (click)="doClose()">
+    <button
+      fxLayoutAlign="end"
+      class="close-button"
+      type="button"
+      mat-icon-button
+      (click)="doClose()"
+    >
       <fa-icon size="2x" icon="window-close"></fa-icon>
     </button>
   </div>
   <div>
-    <p style="font-size: xx-large">Anzahl Patienten</p>
-    <p style="width: 50%; color: #c5cacf">
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-      Aenean massa. Cum sociis natoque penatibus
-    </p>
+    <num-header>{{ 'QUERYBUILDER.RESULT.SAVE_DIALOG.HEADER' | translate }}</num-header>
+    <num-header-description>
+      {{ 'QUERYBUILDER.RESULT.SAVE_DIALOG.HEADER_DESCRIPTION' | translate }}
+    </num-header-description>
   </div>
   <br />
   <num-table class="result-list-container" [tableData]="adaptedData"> </num-table>

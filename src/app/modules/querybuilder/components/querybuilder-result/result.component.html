@@ -1,12 +1,20 @@
 <div class="height-90 pr4">
   <div class="result-header-line">
-    <num-header>{{ 'QUERYBUILDER.RESULT.HEADER' | translate }}</num-header>
+    <num-header *ngIf="!resultLoaded">{{
+      'QUERYBUILDER.RESULT.HEADER.RESULT_NOT_LOADED' | translate
+    }}</num-header>
+    <num-header *ngIf="resultLoaded">{{
+      'QUERYBUILDER.RESULT.HEADER.RESULT_LOADED' | translate
+    }}</num-header>
     <num-header-description>
       {{ 'QUERYBUILDER.RESULT.HEADER_DESCRIPTION' | translate }}
     </num-header-description>
   </div>
   <div class="simple-result">
-    <num-simple-result class="result-simple-box"></num-simple-result>
+    <num-simple-result
+      (resultLoaded)="setResultLoaded($event)"
+      class="result-simple-box"
+    ></num-simple-result>
   </div>
   <num-display-criteria-group [isEditable]="false" style="height: 400px">
   </num-display-criteria-group>

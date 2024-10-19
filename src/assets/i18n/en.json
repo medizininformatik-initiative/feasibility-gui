@@ -299,15 +299,30 @@
       "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}",
       "SEARCH_TEXT_NO_INPUT": "Enter a search criteria or open the category tree view",
       "NO_CRITERIA_SELECTED": "Choose at least one inclusion criteria"
+    },
+    "RESULT": {
+      "HEADER": {
+          "RESULT_NOT_LOADED": "Feasibility query is being processed",
+          "RESULT_LOADED": "Query completed"
+      },
+        "BUTTON": {
+          "DETAILS": "Details",
+          "EDIT_STAGE": "Edit stage",
+          "SAVE_QUERY": "Save cohort",
+          "DOWNLOAD": "Download cohort"
+      },
+      "SAVE_DIALOG": {
+        "HEADER": "Amount of Patients",
+        "HEADER_DESCRIPTION": "Lorem ipsum"
+      },
+      "HEADER_DESCRIPTION": "Lorem ipsum",
+      "PATIENT_NUMBER": "Number of patients",
+      "PATIENT_NUMBER_TOOLTIP": "The feasibility queries return approximate results. The results of the query are anaonymised. In this process, deviations from the exact result are deliberately introduced. Therefore, the results are only suitable for the first evaluation of the feasibility of your project and should not be used for scientific work. The publication of the results is generally not permitted. The actual number of patients can only be quantified once your project has been requested via a data use application and reviewed by the relevant Use & Access Committees.",
+      "TOTAL": "Total",
+      "SITE": "Site",
+      "MESSAGE429": "You reached your maximum request limit.",
+      "DETAILS_TOOLTIP": "The number shows how many views of the detailed result view you have already used - will be reset daily"
     }
-  },
-  "RESULT": {
-    "PATIENT_NUMBER": "Number of patients",
-    "PATIENT_NUMBER_TOOLTIP": "The feasibility queries return approximate results. The results of the query are anaonymised. In this process, deviations from the exact result are deliberately introduced. Therefore, the results are only suitable for the first evaluation of the feasibility of your project and should not be used for scientific work. The publication of the results is generally not permitted. The actual number of patients can only be quantified once your project has been requested via a data use application and reviewed by the relevant Use & Access Committees.",
-    "TOTAL": "Total",
-    "SITE": "Site",
-    "MESSAGE429": "You reached your maximum request limit.",
-    "DETAILS_TOOLTIP": "The number shows how many views of the detailed result view you have already used - will be reset daily"
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",
