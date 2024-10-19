@@ -68,7 +68,6 @@ export class CreateCriterionService {
       .subscribe(
         (criteriaProfileDataArray: CriteriaProfileData[] | null) => {
           criteriaProfileDataArray.forEach((criteriaProfileData) => {
-            console.log(criteriaProfileData);
             this.createCriterionFromProfileData(criteriaProfileData);
           });
           this.ids.clear();

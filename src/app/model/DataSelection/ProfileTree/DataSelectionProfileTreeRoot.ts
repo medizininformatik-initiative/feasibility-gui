@@ -18,43 +18,35 @@ export class DataSelectionProfileTreeRoot {
     this.children = children;
   }
 
-  // Getter for name
-  getName(): string {
+  public getName(): string {
     return this.name;
   }
 
-  // Setter for name with optional validation or transformation
-  setName(name: string) {
+  public setName(name: string) {
     this.name = name;
   }
 
-  // Getter for module
-  getModule(): string {
+  public getModule(): string {
     return this.module;
   }
 
-  // Setter for module
-  setModule(value: string) {
+  public setModule(value: string) {
     this.module = value;
   }
 
-  // Getter for URL
-  getUrl(): string {
+  public getUrl(): string {
     return this.url;
   }
 
-  // Setter for URL
-  setUrl(value: string) {
+  public setUrl(value: string) {
     this.url = value;
   }
 
-  // Getter for children
-  getChildren(): DataSelectionProfileTreeNode[] {
+  public getChildren(): DataSelectionProfileTreeNode[] {
     return this.children;
   }
 
-  // Setter for children with optional logic
-  setChildren(nodes: DataSelectionProfileTreeNode[]) {
+  public setChildren(nodes: DataSelectionProfileTreeNode[]) {
     if (Array.isArray(nodes)) {
       this.children = nodes;
     } else {
@@ -62,7 +54,7 @@ export class DataSelectionProfileTreeRoot {
     }
   }
 
-  addChild(node: DataSelectionProfileTreeNode): void {
+  public addChild(node: DataSelectionProfileTreeNode): void {
     this.children.push(node);
   }
 }

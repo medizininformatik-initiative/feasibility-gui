@@ -76,7 +76,6 @@ export class FeasibilityQueryResultService {
         return this.getPollingUrl(query);
       }),
       switchMap((url) => {
-        console.log(url);
         this.queryId = url.substring(url.lastIndexOf('/') + 1);
         feasibilityQuery.addResultId(this.queryId);
         return this.getResultPolling(this.queryId, false).pipe(endWith(null));
@@ -88,7 +87,6 @@ export class FeasibilityQueryResultService {
   private getDetailedResultRateLimit(): void {
     this.backend.getDetailedResultRateLimit().subscribe(
       (result) => {
-        // Update the subjects with new values
         this.callsLimitSubject.next(result.limit);
         this.callsRemainingSubject.next(result.remaining);
       },

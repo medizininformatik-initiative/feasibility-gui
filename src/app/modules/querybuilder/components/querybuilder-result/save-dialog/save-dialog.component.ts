@@ -53,23 +53,14 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((result) => {
-        this.backendService
-          .saveQuery(result, this.title, this.comment)
-          .subscribe((test) => console.log(test));
+        this.backendService.saveQuery(result, this.title, this.comment).subscribe();
         this.doDiscard();
       })
       .unsubscribe();
   }
 
   public doSaveDataSelection() {
-    this.createCRDTLService
-      .createCRDTL()
-      .subscribe((crdtl: CRTDL) => {
-        /**
-         * Send the crdtl to the backend
-         */
-      })
-      .unsubscribe();
+    this.createCRDTLService.createCRDTL().subscribe().unsubscribe();
   }
 
   doDiscard(): void {

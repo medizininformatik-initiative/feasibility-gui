@@ -20,9 +20,7 @@ export class ConceptComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.conceptFilter);
-  }
+  ngOnInit() {}
 
   public emitConceptFilter(selectedConcepts: TerminologyCode[]) {
     const newConceptFilter = new ConceptFilter(

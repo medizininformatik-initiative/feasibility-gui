@@ -26,7 +26,6 @@ export class DataSelection2DataExtraction {
   ) {}
 
   public translateToDataExtraction(dataSelection: DataSelection): DataExtraction {
-    console.log(dataSelection);
     const attribuetGroups = dataSelection
       .getProfiles()
       .map((profile) => this.translateAttributeGroups(profile));

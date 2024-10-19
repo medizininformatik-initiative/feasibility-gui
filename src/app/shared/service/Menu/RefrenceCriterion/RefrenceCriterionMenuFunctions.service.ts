@@ -28,7 +28,6 @@ export class RefrenceCriterionMenuFunctionsService {
       .getCriterionByUID(parentID)
       .getAttributeFilters()
       .forEach((attributeFilter) => {
-        console.log(attributeFilter);
         if (attributeFilter.isReferenceSet()) {
           const updatedReferences = attributeFilter
             .getReference()
