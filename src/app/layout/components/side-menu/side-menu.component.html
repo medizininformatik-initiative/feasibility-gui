@@ -32,15 +32,4 @@
         </a>
       </div>-->
   </div>
-  <a
-    class="num-mat-list-item"
-    [routerLinkActive]="'num-mat-list-item--active'"
-    *ngFor="let item of secondaryNavItems"
-    mat-list-item
-    [routerLink]="item.routeTo"
-    (click)="menuItemClicked($event, item)"
-  >
-    <fa-icon size="lg" [fixedWidth]="true" [icon]="item.icon" routerLinkActive="active"></fa-icon>
-    <div *ngIf="isSideMenuExpanded">{{ item.translationKey | translate }}</div>
-  </a>
-</mat-nav-list>
+ </mat-nav-list>

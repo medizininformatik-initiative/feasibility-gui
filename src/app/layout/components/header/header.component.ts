@@ -35,4 +35,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.profile = (await this.oauthService.loadUserProfile()) as IUserProfile;
     }
   }
+  public logout() {
+    this.oauthService.logOut()
+  }
 }

@@ -2,6 +2,16 @@
   <img id="header-logo" src="{{ urlSrc }}" alt="{{ urlAlt }}" class="{{ stylesheet }}" />
   <div fxFlex="100" fxLayoutAlign="end" class="margin-right">
     <num-language class="margin-right-20"></num-language>
-    <button mat-raised-button class="user-button">{{ profile?.info.preferred_username }}</button>
+    <mat-form-field class="language-select">
+      <span matPrefix>{{ profile?.info.name }}</span>
+      <mat-select
+        (selectionChange)="logout()"
+      >
+        <mat-option value="de">
+          <fa-icon size="lg" [fixedWidth]="true" [icon]="'sign-out-alt'"></fa-icon>
+          Logout
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 </mat-toolbar>
