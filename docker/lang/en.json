@@ -4,11 +4,21 @@
     "Availability": "Availability",
     "Terminology": "Terminology",
     "Termcode": "Terminology Code",
-    "Name": "Citeria",
+    "Name": "Criteria",
     "site": "Site",
     "patient_number": "Number of Patients",
     "Display": "Display",
     "Terminology Code": "Terminology Code",
+    "ACTIONBAR": {
+      "SELECTED_CRITERIA": {
+        "SINGULAR": "You have selected {{amount}} criterion",
+        "PLURAL": "You have selected {{amount}} criteria"
+      },
+      "ADDED_CRITERIA": {
+        "SINGULAR": "You have added {{amount}} criterion to the stage",
+        "PLURAL": "You have added {{amount}} criteria to the stage"
+      }
+    },
     "FILTER": {
       "CONTEXT": "Context",
       "AVAILABILITY": "Availability",
@@ -20,7 +30,14 @@
       "DELETE": "Delete",
       "REFERENCE": "Link criteria",
       "APPLY_FILTERS": "Apply filter",
-      "DEFINE_FIELDS": "Define fields"
+      "DEFINE_FIELDS": "Define fields",
+      "SEARCH": "Use as searchterm",
+      "SHOW_CRITERIA":"Show criteria",
+      "ADD": "Add to stage"
+    },
+    "LIST_ITEM_DETAILS":{
+      "PARENTS": "Parent element",
+      "CHILDREN": "Child element"
     },
     "MODAL": {
       "BUTTON": {
@@ -37,40 +54,7 @@
     }
   },
   "DASHBOARD": {
-    "CODEXTHEME": {
-      "HEADLINE": "Welcome to the CODEX Feasibility Platform!",
-      "PARAGRAPH1": "Die CODEX Feasibility Plattform ist ein Angebot für Wissenschaftler:innen, die für ihre Forschung nach COVID-19 spezifischen Daten suchen.",
-      "PARAGRAPH2": "Auf dieser Plattform steht hierfür ein frei zugängliches Suchtool zur Verfügung, das eine erste, unverbindliche Machbarkeitsabfrage ermöglicht. Auf diesem Weg kann festgestellt werden, wie viele Daten an den angeschlossenen CODEX-Standorten zur Verfügung stehen.",
-      "PARAGRAPH3_1": "Anhand dieser Information können dann in einem nächsten Schritt konkrete Anfragen an die entsprechenden Standorte gestellt werden.",
-      "PARAGRAPH3_2":"",
-      "PARAGRAPH3_3": "",
-      "PARAGRAPH3_4": "",
-      "PARAGRAPH3_LINK":"",
-      "PARAGRAPH4_1":"",
-      "PARAGRAPH4_2":"",
-      "PARAGRAPH4_3": "",
-      "PARAGRAPH5_1": "",
-      "PARAGRAPH5_2": "",
-      "PARAGRAPH5_3": ""
-    },
-    "ABIDETHEME": {
-      "HEADLINE": "Welcome to the ABIDE Feasibility Platform!",
-      "PARAGRAPH1": "Die ABIDE Feasibility Plattform ist ein Unterstützungsangebot für Wissenschaftler und Wissenschaftlerinnen bei der Umsetzung ihrer Forschungsvorhaben.",
-      "PARAGRAPH2": "Mit einer Machbarkeitsanfrage (Feasibility) erfahren Forschende, wie viele Fälle für ihre Suchkriterien (Ein- und Ausschlusskriterien) in den Datenintegrationszentren der universitätsmedizinischen Standorte bundesweit vorhanden sind und für medizinische Forschungszwecke beantragt werden können.",
-      "PARAGRAPH3_1": "Zur Formulierung der Abfrage stehen aktuell der Kerndatensatz der Medizininformatikinitiative und der COVID-19 spezifische Datensatz GECCO zur Verfügung.",
-      "PARAGRAPH3_2":"",
-      "PARAGRAPH3_3": "",
-      "PARAGRAPH3_4": "",
-      "PARAGRAPH3_LINK":"",
-      "PARAGRAPH4_1":"",
-      "PARAGRAPH4_2":"",
-      "PARAGRAPH4_3": "",
-      "PARAGRAPH5_1": "",
-      "PARAGRAPH5_2": "",
-      "PARAGRAPH5_3": ""
-    },
-    "FDPGTHEME": {
-      "HEADLINE": "Welcome to the „Find data and biospecimens“ service of the German Research Data Portal for Health",
+      "HEADER": "Welcome to the „Find data and biospecimens“ service of the German Research Data Portal for Health",
       "PARAGRAPH1": "This is a support service for scientists to assist you in realizing your research project. By submitting a feasibility request, you can find out how many data sets for your search criteria are available at university hospitals nationwide. Based on inclusion and exclusion criteria, the availability of health data for medical research purposes can be estimated.",
       "PARAGRAPH2": "",
       "PARAGRAPH3_1": "With ",
@@ -83,53 +67,89 @@
       "PARAGRAPH4_3": ".",
       "PARAGRAPH5_1": "Once you have all the relevant information for your research project, you can submit an application for data use in the proposal portal of the German Research Data Portal for Health via",
       "PARAGRAPH5_2": "Submit Application",
-      "PARAGRAPH5_3": "."
-    },
+      "PARAGRAPH5_3": ".",
     "INFO":{
       "TEXT": " We are currently working on the feasibility portal. This can lead to slow responses and deviating results for some queries."
     },
-    "NEWQUERY": {
-      "HEADLINE": "New Query",
-      "TEXT": "Perform a request based on your inclusion and exclusion criteria"
-    },
-    "MYQUERY": {
-      "HEADLINE": "My Queries",
-      "TEXT": "Get an overview of the requests you have already performed"
-    },
-    "PREPOSALPORTAL": {
-      "HEADLINE": "Submit Application",
-      "TEXT": "Make a request for data use in the proposal portal"
-    }
+      "DATAQUERY": {
+        "HEADER": "Compose Data Query",
+        "BUTTON": "Go to Data Query"
+      },
+      "DATASELECTION": {
+        "HEADER": "Compose Data Selection",
+        "BUTTON": "New Dataselection"
+      },
+      "NEWQUERY": {
+        "HEADER": "Create Feasibility Request",
+        "BUTTON": "New Feasibility Query"
+      },
+      "SAVED_QUERIES": {
+        "HEADER": "My Queries",
+        "BUTTON": "Go to Overview"
+      },
+      "PREPOSALPORTAL": {
+        "HEADER": "Submit Research Proposal",
+        "BUTTON": "New Proposal"
+      }
   },
-  "DATASELECTION": {
-    "HEADER": "Dataselection",
-    "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values ​​are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
-    "DATASELECTION": "Dataselection",
-    "SELECTION_BOX":{
-      "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
-      "SELECTED_FIELDS": "Selected Fields",
-      "APPLIED_FILTER": "Applied Filters",
-      "REQUIRED": "required",
-      "OPTIONAL": "optional"
+    "DATASELECTION": {
+      "HEADER": "Data Selection",
+      "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
+      "DATASELECTION": "Data Selection",
+      "SELECTION_BOX": {
+        "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
+        "SELECTED_FIELDS": "Selected Fields",
+        "APPLIED_FILTER": "Applied Filters",
+        "REQUIRED": "required",
+        "OPTIONAL": "optional"
+      },
+      "FIELD_SELECTION": {
+        "FIELD_SELECTION": "Selected items",
+        "HEADER": "Select fields to extract for ",
+        "REQUIRED": "required"
+      },
+      "EDIT": {
+        "HEADER": "Selected Health Data for Extraction",
+        "HEADER_DESCRIPTION": "Text needs to be added here",
+        "SECTION": "Selected Criteria"
+      },
+      "BUTTON": {
+        "ADD": "Add to Data Selection",
+        "DOWNLOAD": "Download Data Selection",
+        "JUMP_TO_DATASELECTION_TREE": "Add data element",
+        "JUMP_TO_DATASELECTION": "Show selection"
+      },
+      "SEARCH": {
+        "LABEL": "Insert code or search text",
+        "CRITERIA": "Search criteria"
+      },
+      "DISPLAY": {
+        "LABEL": "Selected criteria"
+      },
+      "INFOTEXT": "Please select the criteria you would like to export and download your data selection. You can then either upload the data selection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
+      "REQUIRED": "required from all sites"
+  },
+  "DATAQUERY": {
+    "COHORT": {
+      "HEADER": "Cohort definition",
+      "BUTTON": {
+        "UPLOAD": "Upload cohort",
+        "DOWNLOAD": "Download cohort",
+        "EDIT": "Edit cohort",
+        "NEW_COHORT": "New cohort",
+        "JUMP_TO_DATASELECTION": "To data selection"
+      },
+      "EMPTY": "You have not defined a cohort yet. Upload an existing cohort or create a new one."
     },
-    "FIELD_SELECTION":{
-      "FIELD_SELECTION": "Selected items",
-      "HEADER": "Select fields to extract for ",
-      "REQUIRED": "required"
-    },
-    "BUTTON": {
-      "ADD": "Add to Dataselection",
-      "DOWNLOAD": "Download Dataselection"
-    },
-    "SEARCH": {
-      "LABEL": "Insert code or serach text",
-      "CRITERIA": "Search Criteria"
-    },
-    "DISPLAY": {
-      "LABEL": "Selected Criteria"
-    },
-    "INFOTEXT": "Please select the criteria you would like to export and download your dataselection. You can then either upload the dataselection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
-    "REQUIRED":"required from all sites"
+    "DATASELECTION": {
+      "BUTTON": {
+        "EDIT": "Edit data selection",
+        "DOWNLOAD": "Download data selection",
+        "UPLOAD": "Upload data selection",
+        "NEW_DATASELECTION": "New data selection",
+        "JUMP_TO_COHORT_SELECTION": "to cohort selection"
+      }
+    }
   },
   "LANGUAGE": {
     "GERMAN": "German",
@@ -150,6 +170,7 @@
     "QUERYBUILDER_OVERVIEW": "Saved Queries",
     "QUERYBUILDER_RESULT": "Feasibility",
     "DATASELECTION": "Data Selection",
+    "DATAQUERY": "Data request",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
   },
@@ -167,7 +188,7 @@
   "QUERYBUILDER": {
     "DRAG_AND_DROP": "Use drag and drop to sort",
     "STAGE": {
-      "NO_SELECTED_CRITERIA": "No criteria in the selection", 
+      "NO_SELECTED_CRITERIA": "No criteria in the selection",
       "HEADER": "Criteria Editor",
       "HEADER_INFO": "Edit your criteria here and build your request",
       "BUTTON": {
@@ -178,12 +199,29 @@
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
-      }
+      },
+        "CONSENT": {
+          "WITH_CONSENT": "With Consent",
+          "WITHOUT_CONSENT": "Without Consent",
+          "TITLE": "Required Consents for Data Processing",
+          "CENTRAL": "Central",
+          "DISTRIBUTED": "Distributed",
+          "EU_GDPR": "EU GDPR",
+          "NON_EU_GDPR": "Non-EU GDPR",
+          "WITHOUT_DATA": "Without Data",
+          "WITH_DATA": "With Data",
+          "WITHOUT_CONTACT": "Without Contact",
+          "WITH_CONTACT": "With Contact"
+        }
     },
     "HEADER_TITLE": "Selected Criteria",
     "SEARCH": {
+      "BUTTON":{
+        "RESET": "Reset filter"
+      },
       "SEARCH_BUTTON": "Search",
       "HEADER": "Criteria Search",
+      "SEARCHBAR":"Search by term or terminology code",
       "HEADER_INFO": "Define your cohort based on criteria that you can select using the search field. For targeted searches, you can restrict your search to certain terminologies (e.g. ICD10, LOINC, OPS) or KDS modules. You can use the cohort selection directly to determine the number of cases across Germany.",
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
@@ -202,6 +240,7 @@
       "LABEL_OR": "OR"
     },
     "DISPLAY": {
+      "REFERENCED_CRITERIA": "referenced criteria:",
       "LABEL": "Selected criteria",
       "ONE_OF": "",
       "MORE": "more",
@@ -213,17 +252,12 @@
         "FROM": "later than {{ from }}",
         "TO": "before {{ to }}",
         "NONE": "no time restriction"
-      },
-      "REFERENCED_CRITERIA": "referenced criteria:",
-      "GROUPS": {
-        "LINKEDGROUPS": "groups are linked",
-        "SHOW_CONNECTION": "show connection",
-        "NEW_GROUP": "New Group",
-        "HINT_NOT_MOVED": "Could not move group",
-        "HINT_NOT_DELETABLE_LINKED_GROUP": "Groups linked with subgroups cannot be deleted"
       }
     },
     "OVERVIEW": {
+      "COHORT": {
+        "LOAD": "Load cohort"
+      },
       "TITLE_LABEL": "Title",
       "COMMENT_LABEL": "Comment",
       "SAVE_HEADER": "Save the current query",
@@ -276,29 +310,6 @@
         "AFTER_OR_AT": "after or at",
         "BETWEEN": "between",
         "TITLE": "Time constraint (optional)"
-      },
-      "GROUPS": {
-        "HEADER_LINKED_GROUPS": "Relation between linked groups",
-        "OPTION_PARENT_EVER": "all occurrences",
-        "OPTION_PARENT_FIRST": "first occurrence",
-        "OPTION_PARENT_LATEST": "latest occurrence",
-        "GROUP_PARENT_1": "of group",
-        "GROUP_PARENT_2": "occurred",
-        "OPTION_DEPENDENT_EVER": "all occurrences",
-        "OPTION_DEPENDENT_FIRST": "first occurrence",
-        "OPTION_DEPENDENT_LATEST": "latest occurrence",
-        "GROUP_DEPENDENT_1": "of group",
-        "GROUP_DEPENDENT_2": "",
-        "TILL": "till",
-        "FROM": "from",
-        "BEFORE": "before",
-        "AFTER": "after",
-        "DAY": "day(s)",
-        "MONTH": "month(s)",
-        "YEAR": "year(s)",
-        "LABEL_UNIT": "Unit",
-        "LABEL_VALUE": "Value",
-        "LABEL_PREPOSITION": "Preposition"
       }
     },
     "HINT": {
@@ -308,20 +319,40 @@
       "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}",
       "SEARCH_TEXT_NO_INPUT": "Enter a search criteria or open the category tree view",
       "NO_CRITERIA_SELECTED": "Choose at least one inclusion criteria"
+    },
+    "RESULT": {
+      "HEADER": {
+          "RESULT_NOT_LOADED": "Feasibility query is being processed",
+          "RESULT_LOADED": "Query completed"
+      },
+        "BUTTON": {
+          "DETAILS": "Details",
+          "EDIT_STAGE": "Edit stage",
+          "SAVE_QUERY": "Save cohort",
+          "DOWNLOAD": "Download cohort"
+      },
+      "SAVE_DIALOG": {
+        "HEADER": "Amount of Patients",
+        "HEADER_DESCRIPTION": "Lorem ipsum"
+      },
+      "HEADER_DESCRIPTION": "Lorem ipsum",
+      "PATIENT_NUMBER": "Number of patients",
+      "PATIENT_NUMBER_TOOLTIP": "The feasibility queries return approximate results. The results of the query are anaonymised. In this process, deviations from the exact result are deliberately introduced. Therefore, the results are only suitable for the first evaluation of the feasibility of your project and should not be used for scientific work. The publication of the results is generally not permitted. The actual number of patients can only be quantified once your project has been requested via a data use application and reviewed by the relevant Use & Access Committees.",
+      "TOTAL": "Total",
+      "SITE": "Site",
+      "MESSAGE429": "You reached your maximum request limit.",
+      "DETAILS_TOOLTIP": "The number shows how many views of the detailed result view you have already used - will be reset daily"
     }
-  },
-  "RESULT": {
-    "PATIENT_NUMBER": "Number of patients",
-    "PATIENT_NUMBER_TOOLTIP": "The feasibility queries return approximate results. The results of the query are anaonymised. In this process, deviations from the exact result are deliberately introduced. Therefore, the results are only suitable for the first evaluation of the feasibility of your project and should not be used for scientific work. The publication of the results is generally not permitted. The actual number of patients can only be quantified once your project has been requested via a data use application and reviewed by the relevant Use & Access Committees.",
-    "TOTAL": "Total",
-    "SITE": "Site",
-    "MESSAGE429": "You reached your maximum request limit.",
-    "DETAILS_TOOLTIP": "The number shows how many views of the detailed result view you have already used - will be reset daily"
   },
   "LEGAL": {
     "DISCLOSURE": "Disclosure",
     "DATAPROTECTION": "Data Protection",
     "CONTACT": "Contact"
+  },
+  "SAVED_QUERIES": {
+    "HEADER": "Saved Queries",
+    "SAVED_FEASIBILITY": "Saved Feasibility Queries",
+    "CREATED_AT": "Created at"
   },
   "BUTTON": {
     "ADD": "Add",
@@ -350,6 +381,6 @@
     "VAL-20001"   :"The combination of context and termcode(s) is not found"
   },
   "INFO":{
-    "UPDATE_NOTE": " Due to updates centrally and at the sites, the portal will presumably be of limited use between 10.11 and 13.11. Feasibility requests for the application of the NUM-MII funding can also be submitted without site results or until 17.11. We thank you for your understanding."
+    "UPDATE_NOTE": "Due to updates centrally and at the sites, the portal will presumably be of limited use between 10.11 and 13.11. Feasibility requests for the application of the NUM-MII funding can also be submitted without site results or until 17.11. We thank you for your understanding."
   }
 }

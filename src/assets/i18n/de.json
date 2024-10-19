@@ -18,7 +18,6 @@
             "SINGULAR": "Sie haben {{amount}} Kriterium zur Bühne hinzugefügt",
             "PLURAL": "Sie haben {{amount}} Kriterien zur Bühne hinzugefügt"
           }
-
     },
     "FILTER": {
       "CONTEXT": "Kontext",
@@ -116,7 +115,9 @@
     },
     "BUTTON": {
       "DOWNLOAD": "Datenselektion herunterladen",
-      "ADD": "Zur Datenselektion hinzufügen"
+      "ADD": "Zur Datenselektion hinzufügen",
+      "JUMP_TO_DATASELECTION_TREE": "Datenelement hinzufügen",
+      "JUMP_TO_DATASELECTION": "Selektion anzeigen"
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -227,7 +228,12 @@
       "LABEL": "Code oder Suchbegriff eingeben",
       "ALL": "Alle",
       "CATEGORY_FILTER": "Filtern nach",
-      "CONSENT_HEADER": "Art der Datennutzung"
+      "CONSENT_HEADER": "Art der Datennutzung",
+      "CONSENT_CENTRAL_TOOLTIP": "For the central analysis you will recieve patient data pseudonymised by the MII, which fit your research project proposal. Pseudonymised data can only be used, if patients have consented to their use.The researches will recieve the pseudonymised data in form of a Download. They will then be able to conduct their analysis with greater flexibility and depths as well as faster speed compared to decentral analyis. The collection of the consent is currently underway across all sites. However it can be expected, that for most queries less patients will be found for central than de-central analysis.",
+      "CONSENT_DISTRIBUTED_TOOLTIP": "  For distributed analyses the analysis is carried out at the sites. The researchers recieve anonymous result data. For many sites a de-central analysis can be based on a different legal other than a consent. This often leads to larger numbers of patients found, which fulfill the requirements for your research proposal. Some sites also require the consent of a patient for feasibility queries. These sites will answer feasibility queries with comparatively lower number. The actual number of patients available from these site for distributed analyses might be higher. The actual number of available patients will not be clear until after the research proposal has been processed..",
+      "CONSENT_CENTRAL": " is assumed (Data consolidated centrally)",
+      "CONSENT_CENTRAL_LINK": "„Broad Consent“ (MII or compatible with MII)",
+      "CONSENT_DISTRIBUTED": "No „Broad Consent“ requested (data available for „federated analysis“)"
     },
     "SWITCH": {
       "LABEL_AND": "UND",

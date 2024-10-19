@@ -4,19 +4,20 @@
     "Availability": "Availability",
     "Terminology": "Terminology",
     "Termcode": "Terminology Code",
-    "Name": "Citeria",
+    "Name": "Criteria",
     "site": "Site",
     "patient_number": "Number of Patients",
     "Display": "Display",
     "Terminology Code": "Terminology Code",
     "ACTIONBAR": {
-    "SELECTED_CRITERIA": {
-      "SINGULAR": "You have selected {{amount}} criterion",
-      "PLURAL": "You have selected {{amount}} criteria"
-    },
-    "ADDED_CRITERIA": {
-      "SINGULAR": "You have added {{amount}} criterion to the stage",
-      "PLURAL": "You have added {{amount}} criteria to the stage"
+      "SELECTED_CRITERIA": {
+        "SINGULAR": "You have selected {{amount}} criterion",
+        "PLURAL": "You have selected {{amount}} criteria"
+      },
+      "ADDED_CRITERIA": {
+        "SINGULAR": "You have added {{amount}} criterion to the stage",
+        "PLURAL": "You have added {{amount}} criteria to the stage"
+      }
     },
     "FILTER": {
       "CONTEXT": "Context",
@@ -29,7 +30,10 @@
       "DELETE": "Delete",
       "REFERENCE": "Link criteria",
       "APPLY_FILTERS": "Apply filter",
-      "DEFINE_FIELDS": "Define fields"
+      "DEFINE_FIELDS": "Define fields",
+      "SEARCH": "Use as searchterm",
+      "SHOW_CRITERIA":"Show criteria",
+      "ADD": "Add to stage"
     },
     "LIST_ITEM_DETAILS":{
       "PARENTS": "Parent element",
@@ -41,8 +45,7 @@
         "CANCEL": "Cancel"
       }
     }
-  }
-},
+  },
   "SHAREDFILTER": {
     "FILTER_SELECTION": "Selected items",
     "BUTTON": {
@@ -75,7 +78,6 @@
       "DATASELECTION": {
         "HEADER": "Compose Data Selection",
         "BUTTON": "New Dataselection"
-
       },
       "NEWQUERY": {
         "HEADER": "Create Feasibility Request",
@@ -107,24 +109,48 @@
         "REQUIRED": "required"
       },
       "EDIT": {
-        "HEADER": "Selected Health Data for Extraction", 
+        "HEADER": "Selected Health Data for Extraction",
         "HEADER_DESCRIPTION": "Text needs to be added here",
-        "SECTION": "Selected Criteria"  
+        "SECTION": "Selected Criteria"
       },
       "BUTTON": {
         "ADD": "Add to Data Selection",
-        "DOWNLOAD": "Download Data Selection"
+        "DOWNLOAD": "Download Data Selection",
+        "JUMP_TO_DATASELECTION_TREE": "Add data element",
+        "JUMP_TO_DATASELECTION": "Show selection"
       },
       "SEARCH": {
         "LABEL": "Insert code or search text",
-        "CRITERIA": "Search Criteria"
+        "CRITERIA": "Search criteria"
       },
       "DISPLAY": {
-        "LABEL": "Selected Criteria"
+        "LABEL": "Selected criteria"
       },
       "INFOTEXT": "Please select the criteria you would like to export and download your data selection. You can then either upload the data selection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
       "REQUIRED": "required from all sites"
-  },  
+  },
+  "DATAQUERY": {
+    "COHORT": {
+      "HEADER": "Cohort definition",
+      "BUTTON": {
+        "UPLOAD": "Upload cohort",
+        "DOWNLOAD": "Download cohort",
+        "EDIT": "Edit cohort",
+        "NEW_COHORT": "New cohort",
+        "JUMP_TO_DATASELECTION": "To data selection"
+      },
+      "EMPTY": "You have not defined a cohort yet. Upload an existing cohort or create a new one."
+    },
+    "DATASELECTION": {
+      "BUTTON": {
+        "EDIT": "Edit data selection",
+        "DOWNLOAD": "Download data selection",
+        "UPLOAD": "Upload data selection",
+        "NEW_DATASELECTION": "New data selection",
+        "JUMP_TO_COHORT_SELECTION": "to cohort selection"
+      }
+    }
+  },
   "LANGUAGE": {
     "GERMAN": "German",
     "ENGLISH": "English",
@@ -171,6 +197,9 @@
         "VIEW_STAGE": "View Stage",
         "SEND_QUERY": "Send Query"
       },
+      "MESSAGE": {
+        "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
+      },
         "CONSENT": {
           "WITH_CONSENT": "With Consent",
           "WITHOUT_CONSENT": "Without Consent",
@@ -183,10 +212,7 @@
           "WITH_DATA": "With Data",
           "WITHOUT_CONTACT": "Without Contact",
           "WITH_CONTACT": "With Contact"
-        },
-      "MESSAGE": {
-        "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
-      }
+        }
     },
     "HEADER_TITLE": "Selected Criteria",
     "SEARCH": {
@@ -195,6 +221,7 @@
       },
       "SEARCH_BUTTON": "Search",
       "HEADER": "Criteria Search",
+      "SEARCHBAR":"Search by term or terminology code",
       "HEADER_INFO": "Define your cohort based on criteria that you can select using the search field. For targeted searches, you can restrict your search to certain terminologies (e.g. ICD10, LOINC, OPS) or KDS modules. You can use the cohort selection directly to determine the number of cases across Germany.",
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
@@ -213,6 +240,7 @@
       "LABEL_OR": "OR"
     },
     "DISPLAY": {
+      "REFERENCED_CRITERIA": "referenced criteria:",
       "LABEL": "Selected criteria",
       "ONE_OF": "",
       "MORE": "more",
@@ -224,14 +252,6 @@
         "FROM": "later than {{ from }}",
         "TO": "before {{ to }}",
         "NONE": "no time restriction"
-      },
-      "REFERENCED_CRITERIA": "referenced criteria:",
-      "GROUPS": {
-        "LINKEDGROUPS": "groups are linked",
-        "SHOW_CONNECTION": "show connection",
-        "NEW_GROUP": "New Group",
-        "HINT_NOT_MOVED": "Could not move group",
-        "HINT_NOT_DELETABLE_LINKED_GROUP": "Groups linked with subgroups cannot be deleted"
       }
     },
     "OVERVIEW": {
@@ -329,6 +349,11 @@
     "DATAPROTECTION": "Data Protection",
     "CONTACT": "Contact"
   },
+  "SAVED_QUERIES": {
+    "HEADER": "Saved Queries",
+    "SAVED_FEASIBILITY": "Saved Feasibility Queries",
+    "CREATED_AT": "Created at"
+  },
   "BUTTON": {
     "ADD": "Add",
     "ADDALL": "Add all",
@@ -346,12 +371,6 @@
     "SEND": "Send query",
     "VALIDATE": "Validate",
     "IMPORT": "Load query"
-  },
-  "SAVED_QUERIES": {
-    "HEADER": "Saved Queries",
-    "SAVED_FEASIBILITY": "Saved Feasibility Queries",
-    "CREATED_AT": "Created at"
-
   },
   "ERROR": {
     "FEAS-10001"  : "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",

@@ -18,7 +18,6 @@
             "SINGULAR": "Sie haben {{amount}} Kriterium zur Bühne hinzugefügt",
             "PLURAL": "Sie haben {{amount}} Kriterien zur Bühne hinzugefügt"
           }
-
     },
     "FILTER": {
       "CONTEXT": "Kontext",
@@ -32,8 +31,13 @@
       "REFERENCE": "Kriterien verknüpfen",
       "APPLY_FILTERS": "Filter anwenden",
       "DEFINE_FIELDS": "Felder definieren",
-      "SEARCH": "Zur Suche nutzen",
+      "SEARCH": "Als Suchbegriff nutzen",
+      "SHOW_CRITERIA":"Kriterium anzeigen",
       "ADD": "Zur Bühne hinzufügen"
+    },
+    "LIST_ITEM_DETAILS":{
+      "PARENTS": "Elternelement",
+      "CHILDREN": "Kinderelement"
     },
     "MODAL": {
       "BUTTON": {
@@ -50,68 +54,42 @@
     }
   },
   "DASHBOARD": {
-    "CODEXTHEME": {
-      "HEADLINE": "Willkommen auf der CODEX Feasibility Plattform!",
-      "PARAGRAPH1": "Die CODEX Feasibility Plattform ist ein Angebot für Wissenschaftler:innen, die für ihre Forschung nach COVID-19 spezifischen Daten suchen.",
-      "PARAGRAPH2": "Auf dieser Plattform steht hierfür ein frei zugängliches Suchtool zur Verfügung, das eine erste, unverbindliche Machbarkeitsabfrage ermöglicht. Auf diesem Weg kann festgestellt werden, wie viele Daten an den angeschlossenen CODEX-Standorten zur Verfügung stehen.",
-      "PARAGRAPH3_1": "Anhand dieser Information können dann in einem nächsten Schritt konkrete Anfragen an die entsprechenden Standorte gestellt werden.",
-      "PARAGRAPH3_2":"",
-      "PARAGRAPH3_3":"",
-      "PARAGRAPH3_4":"",
-      "PARAGRAPH3_LINK":"",
-      "PARAGRAPH4_1":"",
-      "PARAGRAPH4_2":"",
-      "PARAGRAPH4_3":"",
-      "PARAGRAPH5_1": "",
-      "PARAGRAPH5_2": "",
-      "PARAGRAPH5_3":""
-    },
-    "ABIDETHEME": {
-      "HEADLINE": "Willkommen auf der ABIDE Feasibility Plattform!",
-      "PARAGRAPH1": "Die ABIDE Feasibility Plattform ist ein Unterstützungsangebot für Wissenschaftler und Wissenschaftlerinnen bei der Umsetzung ihrer Forschungsvorhaben.",
-      "PARAGRAPH2": "Mit einer Machbarkeitsanfrage (Feasibility) erfahren Forschende, wie viele Fälle für ihre Suchkriterien (Ein- und Ausschlusskriterien) in den Datenintegrationszentren der universitätsmedizinischen Standorte bundesweit vorhanden sind und für medizinische Forschungszwecke beantragt werden können.",
-      "PARAGRAPH3_1": "Zur Formulierung der Abfrage stehen aktuell der Kerndatensatz der Medizininformatikinitiative und der COVID-19 spezifische Datensatz GECCO zur Verfügung.",
-      "PARAGRAPH3_2":"",
-      "PARAGRAPH3_3":"",
-      "PARAGRAPH3_4":"",
-      "PARAGRAPH3_LINK":"",
-      "PARAGRAPH4_1":"",
-      "PARAGRAPH4_2":"",
-      "PARAGRAPH4_3":"",
-      "PARAGRAPH5_1": "",
-      "PARAGRAPH5_2": "",
-      "PARAGRAPH5_3":""
-    },
-    "FDPGTHEME": {
-      "HEADLINE": "Willkommen im Bereich „Daten und Bioproben finden“ des Forschungsdatenportals für Gesundheit",
-      "PARAGRAPH1": "Hier finden Sie ein Unterstützungsangebot für Wissenschaftlerinnen und Wissenschaftler zur Umsetzung Ihres Forschungsvorhabens.",
-      "PARAGRAPH2": "Mit einer Machbarkeitsanfrage erfahren Sie, wie viele Datensätze für Ihre Suchkriterien in den Universitätskliniken bundesweit vorhanden sind. Anhand von Ein- und Ausschlusskriterien kann die Verfügbarkeit von Gesundheitsdaten für medizinische Forschungszwecke abgeschätzt werden.",
-      "PARAGRAPH3_1": "Über ",
-      "PARAGRAPH3_2": "Neue Abfrage",
-      "PARAGRAPH3_3": " haben Sie die Möglichkeit, eine neue Suchanfrage auf Basis des ",
-      "PARAGRAPH3_4": " zu formulieren und abzuschicken, um einen Überblick über die verfügbaren Datensätze zu erhalten.",
-      "PARAGRAPH3_LINK": "Kerndatensatzes der MII",
-      "PARAGRAPH4_1":"Gespeicherte Abfragen oder gespeicherte Entwürfe können Sie über ",
-      "PARAGRAPH4_2":"Meine Abfragen",
-      "PARAGRAPH4_3": " einsehen und weiter bearbeiten.",
-      "PARAGRAPH5_1": "Sobald Ihnen alle relevanten Informationen für Ihr Forschungsvorhaben zur Verfügung stehen, können Sie über ",
-      "PARAGRAPH5_2": "Antrag stellen",
-      "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen."
-    },
+    "HEADER": "Willkommen im Bereich „Daten und Bioproben finden“ des Forschungsdatenportals für Gesundheit",
+    "PARAGRAPH1": "Hier finden Sie ein Unterstützungsangebot für Wissenschaftlerinnen und Wissenschaftler zur Umsetzung Ihres Forschungsvorhabens.",
+    "PARAGRAPH2": "Mit einer Machbarkeitsanfrage erfahren Sie, wie viele Datensätze für Ihre Suchkriterien in den Universitätskliniken bundesweit vorhanden sind. Anhand von Ein- und Ausschlusskriterien kann die Verfügbarkeit von Gesundheitsdaten für medizinische Forschungszwecke abgeschätzt werden.",
+    "PARAGRAPH3_1": "Über ",
+    "PARAGRAPH3_2": "Neue Abfrage",
+    "PARAGRAPH3_3": " haben Sie die Möglichkeit, eine neue Suchanfrage auf Basis des ",
+    "PARAGRAPH3_4": " zu formulieren und abzuschicken, um einen Überblick über die verfügbaren Datensätze zu erhalten.",
+    "PARAGRAPH3_LINK": "Kerndatensatzes der MII",
+    "PARAGRAPH4_1":"Gespeicherte Abfragen oder gespeicherte Entwürfe können Sie über ",
+    "PARAGRAPH4_2":"Meine Abfragen",
+    "PARAGRAPH4_3": " einsehen und weiter bearbeiten.",
+    "PARAGRAPH5_1": "Sobald Ihnen alle relevanten Informationen für Ihr Forschungsvorhaben zur Verfügung stehen, können Sie über ",
+    "PARAGRAPH5_2": "Antrag stellen",
+    "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen.",
     "INFO":{
       "TEXT": " Wir arbeiten gerade am Machbarkeitsportal, sodass es bei manchen Anfragen zu Verzögerungen und abweichenden Ergebnissen kommen kann."
     },
-    "NEWQUERY": {
-      "HEADLINE": "Neue Abfrage",
-      "TEXT": "Führen Sie eine Suche anhand Ihrer Ein- und Ausschlusskriterien durch"
+    "DATAQUERY": {
+      "HEADER": "Datenabfrage zusammenstellen",
+      "BUTTON": "Zur Datenabfrage"
     },
-    "MYQUERY": {
-      "HEADLINE": "Meine Abfragen",
-      "TEXT": "Erhalten Sie eine Übersicht über Ihre bereits durchgeführten Suchanfragen"
+    "DATASELECTION": {
+      "HEADER": "Datenselektion zusammenstellen",
+      "BUTTON": "Zur Dataselektion"
+    },
+    "NEWQUERY": {
+      "HEADER": "Machbarkeitsanfrage stellen",
+      "BUTTON": "Zur Machbarkeitsabfrage"
+    },
+    "SAVED_QUERIES": {
+      "HEADER": "Meine Abfragen",
+      "BUTTON": "Zur Übersicht"
     },
     "PREPOSALPORTAL": {
-      "HEADLINE": "Antrag stellen",
-      "TEXT": "Stellen Sie einen Antrag zur Datennutzung im Antragsportal"
+      "HEADER": "Forschungsantrag stellen",
+      "BUTTON": "Zum Antragsportal"
     }
   },
   "DATASELECTION": {
@@ -130,9 +108,16 @@
       "HEADER": "Selektieren Sie zu extrahierende Felder für ",
       "REQUIRED": "erforderlich"
     },
+    "EDIT": {
+      "HEADER": "Ausgewählte Gesundheitsdaten zum Extrahieren",
+      "HEADER_DESCRIPTION":"Hier muss noch ein Text hinzukommen",
+      "SECTION": "Ausgewählte Kriterien"
+    },
     "BUTTON": {
       "DOWNLOAD": "Datenselektion herunterladen",
-      "ADD": "Zur Datenselektion hinzufügen"
+      "ADD": "Zur Datenselektion hinzufügen",
+      "JUMP_TO_DATASELECTION_TREE": "Datenelement hinzufügen",
+      "JUMP_TO_DATASELECTION": "Selektion anzeigen"
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -143,6 +128,28 @@
     },
     "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an info@forschen-fuer-gesundheit.de schicken.",
     "REQUIRED":"Variable muss an allen Standorten vorliegen"
+  },
+  "DATAQUERY": {
+    "COHORT": {
+      "HEADER":"Kohorten Definition",
+      "BUTTON": {
+        "UPLOAD": "Kohorte hochladen",
+        "DOWNLOAD": "Kohorte herunterladen",
+        "EDIT":"Kohorte bearbeiten",
+        "NEW_COHORT":"Neue Kohorte",
+        "JUMP_TO_DATASELECTION": "zur Datenselektion"
+      },
+      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
+    },
+    "DATASELECTION": {
+      "BUTTON":{
+        "EDIT":"Datenselektion bearbeiten",
+        "DOWNLOAD":"Dataselektion herunterladen",
+        "UPLOAD": "Datenselektion hochladen",
+        "NEW_DATASELECTION":"Neue Dataselektion",
+        "JUMP_TO_COHORT_SELECTION": "zur Kohortenselektion"
+      }
+    }
   },
   "LANGUAGE": {
     "GERMAN": "Deutsch",
@@ -163,6 +170,7 @@
     "QUERYBUILDER_OVERVIEW": "Gespeichert Abfragen",
     "QUERYBUILDER_RESULT": "Machbarkeitsabfrage",
     "DATASELECTION": "Datenselektion",
+    "DATAQUERY": "Datenabfrage",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
   },
@@ -179,9 +187,8 @@
   },
   "QUERYBUILDER": {
     "DRAG_AND_DROP": "Zum Sortieren “Drag & Drop” nutzen",
-
     "STAGE": {
-      "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl", 
+      "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl",
       "HEADER": "Kriterien Editor",
       "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen sie Ihre Anfrage zusammen",
       "BUTTON": {
@@ -192,25 +199,41 @@
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Bühne hinzugefügt"
+      },
+      "CONSENT": {
+        "WITH_CONSENT": "Mit Einwilligung",
+        "WITHOUT_CONSENT": "Ohne Einweilligung",
+        "TITLE": "Vorausgesetzte Einwilligungen zur Datenverarbeitung",
+        "CENTRAL": "Zentral",
+        "DISTRIBUTED": "Verteilt",
+        "EU_GDPR": "EU DSGVO konform",
+        "NON_EU_GDPR": "nicht EU DSGVO konform",
+        "WITHOUT_DATA": "ohne Krankenkassendaten",
+        "WITH_DATA": "mit Krankenkassendaten",
+        "WITHOUT_CONTACT": "ohne Rekontaktierung",
+        "WITH_CONTACT": "mit Rekontaktierung"
       }
     },
     "HEADER_TITLE": "Ausgewählte Kriterien",
     "SEARCH": {
-      "SEARCH_BUTTON": "Suchen",
-
-      "HEADER": "Kriterien Suche",
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden um die Fallzahl deutschlandweit zu ermitteln.",
+      "SEARCH_BUTTON": "Suchen",
+      "SEARCHBAR":"Suchen nach Begriff oder Terminologiecode",
+      "HEADER": "Kriterien Suche",
+      "BUTTON": {
+        "RESET": "Filter zurücksetzen"
+      },
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
       "LABEL": "Code oder Suchbegriff eingeben",
       "ALL": "Alle",
       "CATEGORY_FILTER": "Filtern nach",
       "CONSENT_HEADER": "Art der Datennutzung",
-      "CONSENT_CENTRAL_TOOLTIP": "Bei der zentralen Analyse erhalten Sie von der MII pseudonymisierte Daten zu den Patienten, die zu Ihrem Forschungsprojekt passen. Pseudonyme Daten (die durch die Pseudonyme automatisch einen Bezug zu den Patienten ermöglichen) können aber nur genutzt werden, wenn die Patienten ihre Einwilligung in die Nutzung erteilt haben. Die Forschenden bekommen die pseudonymisierten Daten zum Download zur Verfügung gestellt und können darin ihre Analysen mit großer Flexibilität und Tiefe sowie häufig mit größerem Tempo ausführen, als es bei verteilten Analysen der Fall ist. Die Erhebung der Einwilligungen ist an den Standorten in vollem Gange, dennoch ist erwartbar, dass zu den meisten Anfragen weniger Patienten angezeigt werden als bei verteilten Analysen.",
-      "CONSENT_DISTRIBUTED_TOOLTIP": "Bei verteilten Analysen findet die Analyse auf den Daten an den Standorten statt. Die Forschenden erhalten anonyme Ergebnisdaten. An vielen Standorten kann bei verteilten Analysen auf einer anderen Rechtsgrundlage als der Einwilligung der Patienten gerechnet werden. Dadurch wird häufig eine größere Menge an Patienten gefunden, die zu Ihrer Forschungsfrage passen. Bei manchen Standorten erfolgen Machbarkeitsanfragen auch auf Basis der Patienteneinwilligung. Diese Standorte antworten auf Machbarkeitsanfragen mit vergleichsweise geringen Anzahlen. Möglicherweise stehen an diesen Standorten für verteilte Analysen aber höhere Patientenzahlen zur Verfügung. Die tatsächliche Anzahl wird erst nach dem Antragsprozess deutlich.",
-      "CONSENT_CENTRAL": " voraussetzen (Daten können zentral zusammengeführt werden)",
-      "CONSENT_CENTRAL_LINK": "„Broad Consent (der MII oder MII-kompatibel)",
-      "CONSENT_DISTRIBUTED": "Kein „Broad Consent“ voraussetzen (Daten stehen nur für „Verteilte Analysen“ zur Verfügung)"
+      "CONSENT_CENTRAL_TOOLTIP": "For the central analysis you will recieve patient data pseudonymised by the MII, which fit your research project proposal. Pseudonymised data can only be used, if patients have consented to their use.The researches will recieve the pseudonymised data in form of a Download. They will then be able to conduct their analysis with greater flexibility and depths as well as faster speed compared to decentral analyis. The collection of the consent is currently underway across all sites. However it can be expected, that for most queries less patients will be found for central than de-central analysis.",
+      "CONSENT_DISTRIBUTED_TOOLTIP": "  For distributed analyses the analysis is carried out at the sites. The researchers recieve anonymous result data. For many sites a de-central analysis can be based on a different legal other than a consent. This often leads to larger numbers of patients found, which fulfill the requirements for your research proposal. Some sites also require the consent of a patient for feasibility queries. These sites will answer feasibility queries with comparatively lower number. The actual number of patients available from these site for distributed analyses might be higher. The actual number of available patients will not be clear until after the research proposal has been processed..",
+      "CONSENT_CENTRAL": " is assumed (Data consolidated centrally)",
+      "CONSENT_CENTRAL_LINK": "„Broad Consent“ (MII or compatible with MII)",
+      "CONSENT_DISTRIBUTED": "No „Broad Consent“ requested (data available for „federated analysis“)"
     },
     "SWITCH": {
       "LABEL_AND": "UND",
@@ -229,16 +252,12 @@
         "FROM": "nach {{ from }}",
         "TO": "vor {{ to }}",
         "NONE": "keine zeitliche Einschränkung"
-      },
-      "GROUPS": {
-        "LINKEDGROUPS": "Gruppen sind verbunden",
-        "SHOW_CONNECTION": "Beziehung anzeigen",
-        "NEW_GROUP": "Neue Gruppe",
-        "HINT_NOT_MOVED": "Gruppe konnte nicht verschoben werden",
-        "HINT_NOT_DELETABLE_LINKED_GROUP": "Gruppen mit verbundener Untergruppe können nicht gelöscht werden"
       }
     },
     "OVERVIEW": {
+      "COHORT": {
+        "LOAD": "Kohorte laden"
+      },
       "TITLE_LABEL": "Titel",
       "COMMENT_LABEL": "Kommentar",
       "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
@@ -291,29 +310,6 @@
         "AFTER_OR_AT": "nach oder am",
         "BETWEEN": "zwischen",
         "TITLE": "Zeitraum (optional)"
-      },
-      "GROUPS": {
-        "HEADER_LINKED_GROUPS": "Beziehung zwischen Gruppen",
-        "OPTION_PARENT_EVER": "Jedes Merkmal",
-        "OPTION_PARENT_FIRST": "Erstes Merkmal",
-        "OPTION_PARENT_LATEST": "Aktuellstes Merkmal",
-        "GROUP_PARENT_1": "der Gruppe",
-        "GROUP_PARENT_2": "fand",
-        "OPTION_DEPENDENT_EVER": "jedem Merkmal",
-        "OPTION_DEPENDENT_FIRST": "dem ersten Merkmal",
-        "OPTION_DEPENDENT_LATEST": "dem aktuellsten Merkmal",
-        "GROUP_DEPENDENT_1": "der Gruppe",
-        "GROUP_DEPENDENT_2": "statt",
-        "TILL": "bis",
-        "FROM": "von",
-        "BEFORE": "vor",
-        "AFTER": "nach",
-        "DAY": "Tag(e)",
-        "MONTH": "Monat(e)",
-        "YEAR": "Jahr(e)",
-        "LABEL_UNIT": "Einheit",
-        "LABEL_VALUE": "Wert",
-        "LABEL_PREPOSITION": "Präposition"
       }
     },
     "HINT": {
@@ -323,20 +319,40 @@
       "MAXIMUM_EXCEEDED": "Wert darf höchstens {{ max }} sein",
       "SEARCH_TEXT_NO_INPUT": "Geben Sie ein Suchkriterium ein oder öffnen sie die Übersicht der Kategorien",
       "NO_CRITERIA_SELECTED": "es muss mindestens ein Einschlusskriterium ausgewählt sein"
+    },
+    "RESULT": {
+      "BUTTON": {
+        "DETAILS": "Details",
+        "EDIT_STAGE": "Bühne bearbeiten",
+        "SAVE_QUERY":"Kohorte speichern",
+        "DOWNLOAD": "Kohorte herunterladen"
+      },
+      "HEADER": {
+        "RESULT_NOT_LOADED": "Machbarkeitsabfrage wird bearbeitet",
+        "RESULT_LOADED": "Abfrage abgeschlossen"
+      },
+      "SAVE_DIALOG": {
+        "HEADER": "Anzahl der Patienten",
+        "HEADER_DESCRIPTION":"Hier muss noch ein Text hinzukommen"
+      },
+      "HEADER_DESCRIPTION": "Hier muss noch ein Text hinzukommen",
+      "PATIENT_NUMBER": "Anzahl der Patienten",
+      "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsanfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Anfrage werden anonymisiert. In dem Prozess werden Abweichungen zum exakten Ergebnis bewusst eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts, sie sollten aber nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
+      "TOTAL": "Gesamt",
+      "SITE": "Standort",
+      "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
+      "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
     }
-  },
-  "RESULT": {
-    "PATIENT_NUMBER": "Anzahl der Patienten",
-    "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsanfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Anfrage werden anonymisiert. In dem Prozess werden Abweichungen zum exakten Ergebnis bewusst eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts, sie sollten aber nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
-    "TOTAL": "Gesamt",
-    "SITE": "Standort",
-    "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
-    "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
   },
   "LEGAL": {
     "DISCLOSURE": "Impressum",
     "DATAPROTECTION": "Datenschutz",
     "CONTACT": "Kontakt"
+  },
+  "SAVED_QUERIES": {
+    "HEADER": "Gespeicherte Abfragen",
+    "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen",
+    "CREATED_AT": "Erstellt am"
   },
   "BUTTON": {
     "ADD": "Hinzufügen",
