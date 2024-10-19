@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
-import { first, Observable } from 'rxjs';
+import { first, Observable, Subscription } from 'rxjs';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SavedFeasibilityQueryService } from '../../services/SavedFeasibilityQuery.service';
@@ -10,8 +10,9 @@ import { StructuredQuery2FeasibilityQueryService } from '../../../../service/Tra
   templateUrl: './feasibility.component.html',
   styleUrls: ['./feasibility.component.scss'],
 })
-export class FeasibilityComponent implements OnInit {
+export class FeasibilityComponent implements OnInit, OnDestroy {
   savedQueries$: Observable<InterfaceSavedQueryTile[]>;
+  loadSubscription: Subscription;
   constructor(
     private savedFeasibilityQueryService: SavedFeasibilityQueryService,
     private translator: StructuredQuery2FeasibilityQueryService,
@@ -23,6 +24,9 @@ export class FeasibilityComponent implements OnInit {
     this.loadSavedQueries();
   }
 
+  ngOnDestroy() {
+    this.loadSubscription?.unsubscribe();
+  }
   private loadSavedQueries() {
     this.savedQueries$ = this.savedFeasibilityQueryService.loadSavedQueries();
   }
@@ -37,7 +41,7 @@ export class FeasibilityComponent implements OnInit {
   }
 
   loadQueryIntoEditor(id: string) {
-    this.savedFeasibilityQueryService
+    this.loadSubscription = this.savedFeasibilityQueryService
       .loadQueryIntoEditor(Number(id))
       .subscribe((structuredQuery) => {
         this.translator.translate(structuredQuery.content).subscribe((feasibilityQuery) => {
