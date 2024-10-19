@@ -8,7 +8,7 @@
       class="selected-filter-element"
     >
       <div fxFlex="60" class="display-part">
-        {{ selectedConceptFilter.display }}
+        <span matTooltipPosition="below" [matTooltip]="selectedConceptFilter.display">{{ selectedConceptFilter.display }}</span>
       </div>
       <div fxFlex="30" class="display-part">
         {{ selectedConceptFilter.code }}

@@ -3,6 +3,7 @@ import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile
 import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { map, Observable } from 'rxjs';
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
+import {DownloadCRDTLService} from "../../../../service/Download/DownloadCRDTL.service";
 
 @Component({
   selector: 'num-display-profiles',
@@ -18,7 +19,8 @@ export class DisplayProfilesComponent implements OnInit {
   constructor(
     public elementRef: ElementRef,
     private dataSelectionProfileProvider: DataSelectionProfileProviderService,
-    private dataSelectionProvider: DataSelectionProviderService
+    private dataSelectionProvider: DataSelectionProviderService,
+    private downloadCRDTLService: DownloadCRDTLService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,10 @@ export class DisplayProfilesComponent implements OnInit {
             )
         )
       );
+  }
+
+  public downloadCRDTL() {
+    this.downloadCRDTLService.downloadActiveFeasibilityQueryAsFile();
   }
   scroll() {
     this.showActionBar = false;

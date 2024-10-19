@@ -39,7 +39,7 @@
 .tree-container {
   width: 100%;
   overflow: auto;
-  height: 35%;
+  height: 100%;
 }
 
 .box-container {
@@ -50,4 +50,15 @@
 
 .margin-right-10 {
   margin-right: 10px;
+}
+.margin-right-20 {
+  margin-right: 20px;
+}
+::ng-deep.mat-badge-content {
+  border: 2px solid var(--num-color--primary-green);
+  color: var(--num-color--primary-green);
+  background-color: white;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 25%;
 }

@@ -13,7 +13,20 @@
   width: 100%;
   color: black;
 }
-
+.display-container > span {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 6; /* number of lines to show */
+  line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+.display-selected-fields-container {
+  border-right: 4px solid rgba(90, 121, 175, 0.1);
+  padding: 20px;
+  font-size: larger;
+  width: 100%;
+  color: black;
+}
 .filter-container {
   padding: 20px;
   font-size: larger;

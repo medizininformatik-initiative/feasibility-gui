@@ -1,4 +1,4 @@
-  <div class="container pr4">{{showActionBar}}
+  <div class="container pr4">
     <div style="margin-top: 5px">
       <num-header>{{ 'DATASELECTION.HEADER' | translate }}</num-header>
       <num-header-description>
@@ -12,24 +12,26 @@
     </div>
 
   <num-action-bar *ngIf="showActionBar" class="bottom">
-   <!-- <num-button
+    <num-button
       [isDisabled]="($dataSelectionProfileTreeNodeArray | async)?.length === 0"
-      class="margin-right-10"
+      class="margin-right-20"
       type="green"
       (click)="getDataSelectionProfileData()"
+      [matBadge]="($dataSelectionProfileTreeNodeArray | async)?.length"
+      matBadgePosition="above after"
     >
       {{ 'DATASELECTION.BUTTON.ADD' | translate }}
     </num-button>
     <num-button
-      class="margin-right-10"
       [isDisabled]="($dataSelectionProfileArray | async)?.length === 0"
+      [icon]="'arrow-down'"
+      class="margin-right-10"
+      (click)="scroll()"
       type="green"
-      (click)="downloadCRDTL()"
+      [matBadge]="($dataSelectionProfileArray | async)?.length"
+      matBadgePosition="above after"
     >
-      {{ 'DATASELECTION.BUTTON.DOWNLOAD' | translate }}
-    </num-button>-->
-    <num-button [icon]="'arrow-down'" class="margin-right-10" (click)="scroll()" type="green">
-      {{ 'DATAQUERY.DATASELECTION.BUTTON.JUMP_TO_COHORT_SELECTION' | translate }}
+      {{ 'DATASELECTION.BUTTON.JUMP_TO_DATASELECTION' | translate }}
     </num-button>
   </num-action-bar>
   </div>

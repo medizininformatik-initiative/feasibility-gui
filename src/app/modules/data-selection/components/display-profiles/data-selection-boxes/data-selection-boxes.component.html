@@ -1,8 +1,8 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
   <div class="display-container">
-    {{ display | displayTranslation }}
+    <span matTooltipPosition="below" [matTooltip]="display | displayTranslation">{{ display | displayTranslation }}</span>
   </div>
-  <div class="display-container">
+  <div class="display-selected-fields-container">
     {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
     <div *ngIf="filterChipsSelected === false" class="filterChipsInfo">
       {{ 'DATASELECTION.SELECTION_BOX.FIELDS_MISSING' | translate }}

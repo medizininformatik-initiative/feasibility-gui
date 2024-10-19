@@ -42,7 +42,6 @@ export class DisplaySearchtreeComponent implements OnInit, AfterViewInit, OnDest
     public elementRef: ElementRef,
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
     private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
-    private downloadCRDTLService: DownloadCRDTLService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
     private selectedDataSelectionProfileService: SelectedDataSelectionProfileService
@@ -134,10 +133,6 @@ export class DisplaySearchtreeComponent implements OnInit, AfterViewInit, OnDest
     } else {
       this.selectedDataSelectionProfileService.addToSelection(originalEntry);
     }
-  }
-
-  public downloadCRDTL() {
-    this.downloadCRDTLService.downloadActiveFeasibilityQueryAsFile();
   }
 
   scroll() {

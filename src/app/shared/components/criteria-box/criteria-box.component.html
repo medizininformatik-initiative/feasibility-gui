@@ -6,9 +6,9 @@
   class="container"
 >
   <div class="content">
-    <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="title-section">
+    <div matTooltipPosition="below" [matTooltip]="criterion.getTermCodes()[0].getDisplay()" class="title-section">
       {{ criterion.getTermCodes()[0].getDisplay() }}
-    </div>
+      </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
       <div class="info-item">
         {{ criterion.getContext().getDisplay() }}, {{ criterion.getTermCodes()[0].getCode() }},

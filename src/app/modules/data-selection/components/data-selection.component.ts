@@ -31,7 +31,6 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
 
 
   scroll(event: boolean) {
-    console.log(event)
     this.showActionBar = event;
     if (event) {
       if (this.ds_tree) {

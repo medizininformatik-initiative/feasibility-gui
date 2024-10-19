@@ -24,34 +24,7 @@
       color: mat.get-contrast-color-from-palette($primary, 200) !important;
     }
   }
-  @if ($name == 'codex') {
-    .mat-mdc-nav-list {
-      background: mat.get-color-from-palette($primary, 200) !important;
-      color: mat.get-contrast-color-from-palette($primary, 200) !important;
-    }
-    .num-logo-row a {
-      /*background: mat.get-color-from-palette($accent, 500) !important;*/
-      color: mat.get-contrast-color-from-palette($primary, 200) !important;
-    }
-    .num-mat-list-item {
-      /*background: mat.get-color-from-palette($accent, 500) !important;*/
-      color: mat.get-contrast-color-from-palette($primary, 200) !important;
-    }
-  }
-  @if ($name == 'abide') {
-    .mat-mdc-nav-list {
-      background: mat.get-color-from-palette($primary, A400) !important;
-      color: mat.get-contrast-color-from-palette($primary, 200) !important;
-    }
-    .num-logo-row a {
-      /*background: mat.get-color-from-palette($accent, 500) !important;*/
-      color: mat.get-contrast-color-from-palette($primary, 200) !important;
-    }
-    .num-mat-list-item {
-      /*background: mat.get-color-from-palette($accent, 500) !important;*/
-      color: mat.get-contrast-color-from-palette($primary, 200) !important;
-    }
-  }
+
   .num-logo-row button:hover {
     background: mat.get-color-from-palette($accent, 200) !important;
     color: mat.get-contrast-color-from-palette($accent, 200) !important;
@@ -64,8 +37,8 @@
       letter-spacing: 0.25px !important;
 
       &--active {
-        background: mat.get-color-from-palette($accent, 'grey-hover') !important;
-        color: mat.get-color-from-palette($primary, A200) !important;
+        background: mat.get-color-from-palette($primary, 'blue') !important;
+        color: mat.get-color-from-palette($primary, 50) !important;
         font-weight: 500 !important;
       }
 

@@ -25,7 +25,7 @@
       fxLayoutAlign="start center"
       class="selectedFilterBox"
     >
-      <div fxFlex="50" class="display-part">
+      <div matTooltipPosition="below" [matTooltip]="selectedReferences.termCode.getDisplay()" fxFlex="50" class="display-part">
         {{ selectedReferences.termCode.getDisplay() }}
       </div>
       <div fxFlex="50" class="display-part">

@@ -16,13 +16,14 @@
 .display-part {
   padding-left: 10px;
   width: 90%;
+}
+.display-part > span {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* number of lines to show */
   line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-
 .filter-title {
   margin-bottom: 20px;
   margin-top: 20px;
