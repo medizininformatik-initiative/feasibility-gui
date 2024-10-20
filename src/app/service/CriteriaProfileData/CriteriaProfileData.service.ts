@@ -2,7 +2,7 @@ import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinitio
 import { AttributeDefinitionsResultMapper } from './Mapper/AttributeDefinitionsResultMapper';
 import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
-import { finalize, switchMap } from 'rxjs/operators';
+import { finalize, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
@@ -39,7 +39,7 @@ export class CriteriaProfileDataService {
    */
   public getCriteriaProfileData(ids: Array<string>): Observable<CriteriaProfileData[]> {
     return this.backend.getCriteriaProfileData(ids).pipe(
-      switchMap((responses: any[]) => {
+      mergeMap((responses: any[]) => {
         const criteriaProfileDataArray = responses
           .map((response) => this.createCriteriaProfileData(response))
           .filter((data) => data !== undefined);
