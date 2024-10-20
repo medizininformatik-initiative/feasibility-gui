@@ -1,12 +1,10 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="start center" color="light" fxLayoutGap="0px">
   <img id="header-logo" src="{{ urlSrc }}" alt="{{ urlAlt }}" class="{{ stylesheet }}" />
   <div fxFlex="100" fxLayoutAlign="end" class="margin-right">
-    <num-language class="margin-right-20"></num-language>
-    <mat-form-field class="language-select">
+    <num-language></num-language>
+    <mat-form-field class="language-select" style="width: fit-content">
       <span matPrefix>{{ profile?.info.name }}</span>
-      <mat-select
-        (selectionChange)="logout()"
-      >
+      <mat-select (selectionChange)="logout()">
         <mat-option value="de">
           <fa-icon size="lg" [fixedWidth]="true" [icon]="'sign-out-alt'"></fa-icon>
           Logout

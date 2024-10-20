@@ -35,7 +35,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     inexclusion.forEach((criterionArray) => {
       hashes.push(...this.innerCriterion(criterionArray));
     });
-    hashes.filter(hash => hash !== undefined)
+
     return this.createCriterionInstanceFromHashes(hashes).pipe(
       map(() => {
         const idArray: string[][] = [];
@@ -46,7 +46,7 @@ export class StructuredQuery2UIQueryTranslatorService {
           criterionArray?.forEach((structuredQueryCriterion, innerIndex) => {
             const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
 
-            if (this.isNotConsent(termCode)) {
+            if (this.consentService.getBooleanFlags(termCode.getCode()) === null) {
               this.setStructuredQueryCriterionFilter(structuredQueryCriterion);
               const structuredQueryCriterionHash = this.createSQHash(structuredQueryCriterion);
               const criterion = this.hashMap.get(structuredQueryCriterionHash);
@@ -75,7 +75,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   public innerCriterion(structuredQueryCriterionInnerArray: any[]) {
     return structuredQueryCriterionInnerArray.map((structuredQueryCriterion) => {
       const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
-      if (this.isNotConsent(termCode)) {
+      if (this.isNotConsent([termCode])) {
         return this.createSQHash(structuredQueryCriterion);
       }
     });
@@ -233,14 +233,12 @@ export class StructuredQuery2UIQueryTranslatorService {
     return this.criterionHashService.createHash(context, termCode);
   }
 
-  /*private isNotConsent(termCodes: TerminologyCode[]) {
+  private isNotConsent(termCodes: TerminologyCode[]) {
     const consentCode = ConsentTermCode.getConsentTermCode().getCode();
     const consentSystem = ConsentTermCode.getConsentTermCode().getSystem();
     return !(termCodes[0].getCode() === consentCode && termCodes[0].getSystem() === consentSystem);
-  }*/
-  private isNotConsent(termCode: TerminologyCode) {
-    return this.consentService.getBooleanFlags(termCode.getCode()) === null
   }
+
   public createTermCode(termCode: any) {
     return new TerminologyCode(termCode.code, termCode.display, termCode.system, termCode.version);
   }
