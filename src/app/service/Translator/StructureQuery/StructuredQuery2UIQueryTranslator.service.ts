@@ -38,7 +38,7 @@ export class StructuredQuery2UIQueryTranslatorService {
 
     return this.createCriterionInstanceFromHashes(hashes).pipe(
       map(() => {
-        const idArray: string[][] = [];
+        let idArray: string[][] = [];
         inexclusion.forEach((criterionArray, index) => {
           if (!idArray[index]) {
             idArray[index] = [];
@@ -67,6 +67,7 @@ export class StructuredQuery2UIQueryTranslatorService {
         this.hashMap.forEach((criterion) => {
           this.criterionProvider.setCriterionByUID(criterion, criterion.getId());
         });
+        idArray = idArray.filter((id) => id.length > 0)
         return idArray;
       })
     );
