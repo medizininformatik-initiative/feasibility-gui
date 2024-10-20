@@ -18,7 +18,7 @@ import { ProfileCodeComponent } from './components/edit-filter-modal/profile-cod
 import { ProfileTimeRestrictionComponent } from './components/edit-filter-modal/profile-time-restriction/profile-time-restriction.component';
 import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 import { DisplayTranslationPipe } from 'src/app/shared/pipes/DisplayTranslationPipe ';
-import {DisplaySearchtreeComponent} from "./components/display-searchtree/display-searchtree.component";
+import { DisplaySearchtreeComponent } from './components/display-searchtree/display-searchtree.component';
 
 @NgModule({
   declarations: [

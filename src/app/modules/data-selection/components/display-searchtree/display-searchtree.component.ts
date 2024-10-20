@@ -1,5 +1,16 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren, Input, Output, ElementRef, EventEmitter } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren,
+  Input,
+  Output,
+  ElementRef,
+  EventEmitter,
+} from '@angular/core';
 import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfileProfile.service';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelection/CreateDataselectionProfileTree';
@@ -10,7 +21,7 @@ import { map, Observable, Subscription, take } from 'rxjs';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import {DataSelectionProviderService} from "../../services/DataSelectionProvider.service";
+import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
 
 @Component({
   selector: 'num-display-searchtree',

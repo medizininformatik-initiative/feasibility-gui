@@ -1,7 +1,15 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren,
+  ViewChild,
+} from '@angular/core';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
-import {DisplaySearchtreeComponent} from "./display-searchtree/display-searchtree.component";
-import {DisplayProfilesComponent} from "./display-profiles/display-profiles.component";
+import { DisplaySearchtreeComponent } from './display-searchtree/display-searchtree.component';
+import { DisplayProfilesComponent } from './display-profiles/display-profiles.component';
 
 @Component({
   selector: 'num-data-selection',
@@ -17,18 +25,13 @@ export class DataSelectionComponent implements OnInit, AfterViewInit, OnDestroy 
   /**
    * @todo     private test1: TerminologySystemProvider, --> TerminologySystemProvider needs to be initial called in the app.moudle.ts
    */
-  constructor(
-    private test1: TerminologySystemProvider
-  ) {}
+  constructor(private test1: TerminologySystemProvider) {}
 
   ngOnInit(): void {}
 
-  ngOnDestroy() {
-
-  }
+  ngOnDestroy() {}
 
   ngAfterViewInit() {}
-
 
   scroll(event: boolean) {
     this.showActionBar = event;

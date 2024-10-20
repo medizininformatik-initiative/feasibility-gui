@@ -18,9 +18,15 @@ export class ConceptComponent implements OnInit {
   @Input()
   attributeCode: TerminologyCode;
 
+  expanded = false;
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.attributeCode) {
+      this.expanded = true;
+    }
+  }
 
   public emitConceptFilter(selectedConcepts: TerminologyCode[]) {
     const newConceptFilter = new ConceptFilter(

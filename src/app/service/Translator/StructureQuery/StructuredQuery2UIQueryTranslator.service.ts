@@ -67,7 +67,7 @@ export class StructuredQuery2UIQueryTranslatorService {
         this.hashMap.forEach((criterion) => {
           this.criterionProvider.setCriterionByUID(criterion, criterion.getId());
         });
-        idArray = idArray.filter((id) => id.length > 0)
+        idArray = idArray.filter((id) => id.length > 0);
         return idArray;
       })
     );
