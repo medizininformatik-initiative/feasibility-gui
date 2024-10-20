@@ -19,20 +19,22 @@
   </button>
   <div *ngIf="arrayOfSelectedReferences.length > 0" class="filter-selection">
     <div class="filter-title">Filter selection</div>
-    <div
-      *ngFor="let selectedReferences of arrayOfSelectedReferences; let index = index"
-      fxLayout="row"
-      fxLayoutAlign="start center"
-      class="selectedFilterBox"
-    >
-      <div matTooltipPosition="below" [matTooltip]="selectedReferences.termCode.getDisplay()" fxFlex="50" class="display-part">
-        {{ selectedReferences.termCode.getDisplay() }}
-      </div>
-      <div fxFlex="50" class="display-part">
-        {{ selectedReferences.termCode.getCode() }} ({{ selectedReferences.termCode.getSystem() }})
-      </div>
-      <div fxFlexAlign="end">
-        <button (click)="removeSelectedReference(index)" class="delete-button">entfernen</button>
+    <div class="selectedFilterBox">
+      <div
+        *ngFor="let selectedReferences of arrayOfSelectedReferences; let index = index"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        class="selectedFilter"
+      >
+        <div matTooltipPosition="below" [matTooltip]="selectedReferences.termCode.getDisplay()" fxFlex="50" class="display-part">
+          {{ selectedReferences.termCode.getDisplay() }}
+        </div>
+        <div fxFlex="50" class="display-part">
+          {{ selectedReferences.termCode.getCode() }} ({{ selectedReferences.termCode.getSystem() }})
+        </div>
+        <div fxFlexAlign="end">
+          <button (click)="removeSelectedReference(index)" class="delete-button">entfernen</button>
+        </div>
       </div>
     </div>
   </div>

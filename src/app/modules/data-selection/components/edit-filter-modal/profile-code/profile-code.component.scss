@@ -1,6 +1,9 @@
 num-shared-concept-filter {
   height: 100%;
 }
+::ng-deep num-shared-concept-filter num-staged-concepts {
+  height: 35% !important;
+}
 .concept-container {
   height: 100%;
   overflow: auto;

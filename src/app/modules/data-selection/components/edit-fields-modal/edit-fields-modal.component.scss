@@ -46,7 +46,13 @@
   margin-bottom: 18px;
   font-weight: 500;
 }
-
+.selected-fields {
+  height: 38%;
+}
+.selected-fields-box {
+  height: 90%;
+  overflow: auto;
+}
 .padding-right-10 {
   padding-right: 10px;
 }

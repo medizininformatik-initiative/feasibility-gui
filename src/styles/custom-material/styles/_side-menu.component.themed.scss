@@ -41,7 +41,13 @@
         color: mat.get-color-from-palette($primary, 50) !important;
         font-weight: 500 !important;
       }
-
+      &--active div {
+        color: mat.get-color-from-palette($primary, 50) !important;
+        font-weight: 500 !important;
+      }
+      &--active fa-icon {
+        color: mat.get-color-from-palette($primary, 50) !important;
+      }
       &:hover {
         background: mat.get-color-from-palette($accent, 'grey-hover') !important;
         color: mat.get-contrast-color-from-palette($accent, 100) !important;
