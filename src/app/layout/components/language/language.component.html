@@ -3,15 +3,16 @@
   <span *ngIf="translate.currentLang === 'en'" class="fi fi-gb" matPrefix></span>
 
   <mat-select
+    hideSingleSelectionIndicator
     placeholder="{{ 'LANGUAGE.GERMAN' | translate }}"
     (selectionChange)="changeLanguage($event.value)"
   >
     <mat-option value="de">
-      <span class="fi fi-de option-layout"></span>
+      <span style="margin-right: 10px" class="fi fi-de option-layout"></span>
       {{ 'LANGUAGE.GERMAN' | translate }}
     </mat-option>
     <mat-option value="en">
-      <span class="fi fi-gb option-layout"></span>
+      <span style="margin-right: 10px" class="fi fi-gb option-layout"></span>
       {{ 'LANGUAGE.ENGLISH' | translate }}
     </mat-option>
   </mat-select>

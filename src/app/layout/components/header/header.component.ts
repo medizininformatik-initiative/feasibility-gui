@@ -33,9 +33,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     const isLoggedIn = this.oauthService.hasValidAccessToken();
     if (isLoggedIn) {
       this.profile = (await this.oauthService.loadUserProfile()) as IUserProfile;
+      console.log(this.profile);
     }
   }
   public logout() {
-    this.oauthService.logOut()
+    this.oauthService.logOut();
   }
 }
