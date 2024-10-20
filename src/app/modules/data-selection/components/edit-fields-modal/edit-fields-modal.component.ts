@@ -18,6 +18,7 @@ export class EnterDataSelectionProfileProfileComponentData {
   selector: 'num-edit-fields-modal',
   templateUrl: './edit-fields-modal.component.html',
   styleUrls: ['./edit-fields-modal.component.scss'],
+  providers: [SelectedDataSelectionProfileFieldsService],
 })
 export class EditFieldsModalComponent implements OnInit {
   dataSelectionProfileProfileNode: ProfileFields[];
