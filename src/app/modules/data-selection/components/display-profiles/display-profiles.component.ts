@@ -3,7 +3,7 @@ import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile
 import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { map, Observable } from 'rxjs';
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
-import {DownloadCRDTLService} from "../../../../service/Download/DownloadCRDTL.service";
+import { DownloadCRDTLService } from '../../../../service/Download/DownloadCRDTL.service';
 
 @Component({
   selector: 'num-display-profiles',
