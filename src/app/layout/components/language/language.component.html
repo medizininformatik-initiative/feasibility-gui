@@ -4,7 +4,11 @@
 
   <mat-select
     hideSingleSelectionIndicator
-    placeholder="{{ 'LANGUAGE.GERMAN' | translate }}"
+    [placeholder]="
+      translate.currentLang === 'de'
+        ? ('LANGUAGE.GERMAN' | translate)
+        : ('LANGUAGE.ENGLISH' | translate)
+    "
     (selectionChange)="changeLanguage($event.value)"
   >
     <mat-option value="de">
