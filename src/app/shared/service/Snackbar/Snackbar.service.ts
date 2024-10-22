@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
-import { SnackbarComponent } from '../../components/snack-bar/snackbar.component';
-import { SnackbarData } from '../../models/Snackbar/SnackbarData';
+import { Subject } from 'rxjs';
 
 export enum ErrorCodes {
   FEAS_10001 = 'FEAS-10001',
@@ -21,63 +15,50 @@ export enum MessageType {
   INFO = 'INFO',
 }
 
+export enum SnackbarColor {
+  ERROR = 'red',
+  INFO = 'green',
+}
 @Injectable({
   providedIn: 'root',
 })
 export class SnackbarService {
-  private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  private verticalPosition: MatSnackBarVerticalPosition = 'top';
+  private visibilitySubject = new Subject<boolean>();
+  public visibility$ = this.visibilitySubject.asObservable();
 
-  constructor(private snackBar: MatSnackBar) {}
+  private messageSubject = new Subject<string>();
+  public message$ = this.messageSubject.asObservable();
+
+  private colorSubject = new Subject<string>();
+  public color$ = this.colorSubject.asObservable();
+
+  constructor() {}
 
   public displayErrorMessage(errorCode: string, retryAfter: number = 0) {
     const validErrorCode = this.getErrorCodeEnum(errorCode);
     const message = `${MessageType.ERROR}.${validErrorCode}`;
-    const data: SnackbarData = {
-      message,
-      retryAfter,
-      invalidQuery: false,
-    };
-    this.openSnackbar(data, 1000000);
+    this.activateSnackbar(message, SnackbarColor.ERROR);
   }
 
   public displayInfoMessage(infoMessage: string, retryAfter: number = 0) {
     const validInfoMessage = this.getErrorCodeEnum(infoMessage);
-
     const message = `${MessageType.INFO}.${validInfoMessage}`;
-    const data: SnackbarData = {
-      message,
-      retryAfter,
-      invalidQuery: false,
-    };
-    this.openSnackbar(data, 5000);
+    this.activateSnackbar(message, SnackbarColor.INFO);
   }
 
-  public displayInvalidQueryMessage() {
-    const data: SnackbarData = {
-      message: 'QUERYBUILDER.OVERVIEW.INVALID_WARNING',
-      retryAfter: 0,
-      invalidQuery: true,
-    };
-    this.openSnackbar(data, 15000); // Invalid query snackbar
+  public activateSnackbar(message: string, color: string) {
+    this.visibilitySubject.next(true);
+    this.messageSubject.next(message);
+    this.colorSubject.next(color);
+    //setTimeout(() => this.deactivateSnackbar(), 5000);
   }
 
-  private openSnackbar(data: SnackbarData, duration: number) {
-    this.snackBar.openFromComponent(SnackbarComponent, {
-      data,
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration,
-      panelClass: ['snackbar-container'],
-    });
+  public deactivateSnackbar() {
+    this.visibilitySubject.next(false);
   }
 
   private getErrorCodeEnum(errorCode: string): ErrorCodes | undefined {
     const normalizedCode = errorCode.replace(/-/g, '_') as keyof typeof ErrorCodes;
     return ErrorCodes[normalizedCode];
-  }
-
-  public closeSnackbar() {
-    this.snackBar.dismiss();
   }
 }

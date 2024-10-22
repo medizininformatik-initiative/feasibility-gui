@@ -14,7 +14,7 @@
 
 .mat-drawer-container,
 .mat-sidenav {
-  top: 108px !important;
+  top: 14% !important;
 }
 .mat-drawer-container {
   padding-top: 1em;
@@ -35,5 +35,6 @@
 
 .side-menu {
   border-right: 2px solid #f1f2f3;
-  height: 99%;
+  height: 100%;
+  overflow: hidden;
 }

@@ -1,49 +1,28 @@
-::ng-deep .snackbar-container {
-  border-radius: 2px;
-  background-color: white;
-}
-
-::ng-deep .mat-mdc-snack-bar-container .mdc-snackbar__surface {
-  background-color: white;
+.snackbar {
   width: 100%;
-}
-
-.snackbarAlignment {
+  height: 50px;
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  background-color: white;
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  padding: 0 10px;
+  color: white;
 }
 
-::ng-deep .mat-snack-bar-container {
-  max-width: 800px;
+.error-snackbar {
+  background-color: rgb(255 172 172 / 50%);
 }
 
-.textAlignment {
-  padding: 25px 20px;
+.info-snackbar {
+  background-color: green; /* Info color */
+}
+
+.close-icon {
+  margin-left: auto; /* Pushes the close button to the right */
   color: black;
 }
 
-.buttonColor:hover {
-  background: #da190b;
-}
-
-.padding-right-snackbar {
-  padding-right: 0px;
-}
-
-::ng-deep .mat-mdc-snack-bar-container {
-  margin: 5px;
-}
-
-::ng-deep .mdc-snackbar__label {
-  padding: 0px;
-}
-
-.invalid-warning {
-  font-size: 14px;
-  margin-bottom: 15px;
-}
-.invalid-warning img {
-  width: 16px;
+.message-display {
+  padding-left: 13%;
+  font-size: larger;
+  color: rgba(171, 42, 42, 1);
 }

@@ -1,22 +1,12 @@
-<div fxLayout="column" fxLayoutAlign="start center" class="snackbarAlignment">
-  <div class="textAlignment">
-    <span *ngIf="!data.invalidQuery">
-      {{ data.message | translate : { RETRY_AFTER: data.retryAfter } }}
-    </span>
-
-    <span class="invalid-warning" *ngIf="data.invalidQuery">
-      {{ 'QUERYBUILDER.OVERVIEW.INVALID_WARNING1' | translate }}
-      <img src="assets/img/alert.png" alt="Validation Alert" />
-      {{ 'QUERYBUILDER.OVERVIEW.INVALID_WARNING2' | translate : { RETRY_AFTER: data.retryAfter } }}
-      <a target="_blank" href="mailto:info@forschen-fuer-gesundheit.de">
-        info@forschen-fuer-gesundheit.de
-      </a>
-    </span>
-  </div>
-
-  <div fxLayoutAlign="start">
-    <num-button type="red" (click)="snackbarService.closeSnackbar()">
-      {{ 'BUTTON.CLOSE' | translate }}
-    </num-button>
+<div
+  *ngIf="isVisible"
+  fxLayout="row"
+  fxLayoutAlign="start center"
+  [ngClass]="{ 'error-snackbar': color === 'red', 'info-snackbar': color === 'green' }"
+  class="snackbar"
+>
+  <div fxFlex="95" class="message-display">{{ message | translate }}</div>
+  <div fxFlex="5">
+    <fa-icon (click)="closeSnackbar()" class="close-icon" size="lg" icon="times"> </fa-icon>
   </div>
 </div>
