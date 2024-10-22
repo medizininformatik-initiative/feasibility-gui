@@ -30,6 +30,7 @@ import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
 import { LogicSwitchComponent } from './logic-switch/logic-switch.component';
 import { DisplayTranslationPipe } from '../pipes/DisplayTranslationPipe ';
+import { SnackbarComponent } from './snack-bar/snackbar.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -49,6 +50,7 @@ const SHARED_DECLARATIONS = [
   SearchResultComponent,
   SectionNameComponent,
   SpinnerComponent,
+  SnackbarComponent,
   SwitchComponent,
   TableComponent,
   TreeComponent,
@@ -71,6 +73,7 @@ const SHARED_DECLARATIONS = [
     SearchFilterComponent,
     SectionNameComponent,
     SpinnerComponent,
+    SnackbarComponent,
     SwitchComponent,
     TreeComponent,
     ValueSelectComponent,

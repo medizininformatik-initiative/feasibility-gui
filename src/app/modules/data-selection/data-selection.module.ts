@@ -10,7 +10,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { EditFieldsModalComponent } from './components/edit-fields-modal/edit-fields-modal.component';
 import { EditFilterModalComponent } from './components/edit-filter-modal/edit-filter-modal.component';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
@@ -40,7 +39,6 @@ import { DisplaySearchtreeComponent } from './components/display-searchtree/disp
     MatProgressSpinnerModule,
     MatTooltipModule,
     FileSaverModule,
-    SnackBarComponent,
     QuerybuilderModule,
     SharedFilterModule,
     DisplayTranslationPipe,

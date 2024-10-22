@@ -30,7 +30,6 @@ import { SearchComponent } from './components/querybuilder-editor/search/search.
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SimpleResultComponent } from './components/querybuilder-result/simple-result/simple-result.component';
-import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { ValueFilterComponent } from './components/querybuilder-editor/edit/criterion-modal/value-filter/value-filter.component';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -94,7 +93,6 @@ export const FORMATS_GERMAN = {
     MatProgressSpinnerModule,
     MatTooltipModule,
     FileSaverModule,
-    SnackBarComponent,
     SharedFilterModule,
   ],
   exports: [

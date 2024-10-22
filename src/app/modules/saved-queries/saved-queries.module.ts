@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { SavedQueriesComponent } from './components/saved-queries.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SnackBarComponent } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { SavedQueriesRoutingModule } from './saved-queries-routing.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { MaterialModule } from 'src/app/layout/material/material.module';
@@ -20,7 +19,6 @@ import { FeasibilityComponent } from './components/feasibility/feasibility.compo
     LayoutModule,
     OverlayModule,
     FileSaverModule,
-    SnackBarComponent,
     SavedQueriesRoutingModule,
     SharedFilterModule,
     MaterialModule,

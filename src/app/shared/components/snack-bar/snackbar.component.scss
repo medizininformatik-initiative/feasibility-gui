@@ -1,12 +1,18 @@
 ::ng-deep .snackbar-container {
-  background-color: white;
   border-radius: 2px;
+  background-color: white;
+}
+
+::ng-deep .mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background-color: white;
+  width: 100%;
 }
 
 .snackbarAlignment {
-  background-color: white;
   display: flex;
   flex-direction: row;
+  width: 100%;
+  background-color: white;
 }
 
 ::ng-deep .mat-snack-bar-container {
@@ -15,12 +21,7 @@
 
 .textAlignment {
   padding: 25px 20px;
-}
-
-.buttonColor {
-  color: white;
-  font-size: small;
-  background-color: #f44336;
+  color: black;
 }
 
 .buttonColor:hover {
@@ -39,13 +40,6 @@
   padding: 0px;
 }
 
-.buttoAlignment {
-  justify-content: space-between;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  padding: 10px;
-}
 .invalid-warning {
   font-size: 14px;
   margin-bottom: 15px;

@@ -4,8 +4,8 @@ import { FeatureService } from '../../../../service/Feature.service';
 import { IUserProfile } from '../../../../shared/models/user/user-profile.interface';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorCodes, SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Component({
   selector: 'num-dashboard',
@@ -19,7 +19,8 @@ export class DashboardComponent implements OnInit {
     private featureService: FeatureService,
     public translate: TranslateService,
     private snackbar: SnackbarService,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private test: SnackbarService
   ) {}
 
   config = this.appConfig.config;
@@ -54,7 +55,8 @@ export class DashboardComponent implements OnInit {
   }
 
   public navigateToDataQueryEditor() {
-    this.navigationHelperService.navigateToDataQueryEditor();
+    this.test.displayErrorMessage(ErrorCodes.SITE_NOT_FOUND);
+    //this.navigationHelperService.navigateToDataQueryEditor();
   }
 
   public navigateToQueryBuilderEditor() {

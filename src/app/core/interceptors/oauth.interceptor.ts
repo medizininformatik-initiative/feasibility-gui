@@ -2,7 +2,6 @@ import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, throwError } from 'rxjs';
-import { SnackbarService } from '../components/snack-bar/snack-bar.component';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -10,6 +9,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
+import { ErrorCodes, SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Injectable()
 export class OAuthInterceptor implements HttpInterceptor {
@@ -55,6 +55,6 @@ export class OAuthInterceptor implements HttpInterceptor {
   }
 
   public handleErrorCodes(issue, retryAfter?) {
-    this.snackbar.displayErrorMessage(this.snackbar.errorCodes[issue], retryAfter);
+    this.snackbar.displayErrorMessage(ErrorCodes[issue], retryAfter);
   }
 }

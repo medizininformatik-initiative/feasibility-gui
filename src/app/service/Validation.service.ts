@@ -3,7 +3,7 @@ import { BackendService } from '../modules/querybuilder/service/backend.service'
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
-import { SnackbarService } from '../core/components/snack-bar/snack-bar.component';
+import { ErrorCodes, SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class ValidationService {
               criterion.issues.forEach((issue) => {
                 console.warn(issue);
               });
-              this.snackbar.displayErrorMessage(this.snackbar.errorCodes[criterion.issues[0].code]);
+              this.snackbar.displayErrorMessage(ErrorCodes[criterion.issues[0].code]);
             }
           });
         });

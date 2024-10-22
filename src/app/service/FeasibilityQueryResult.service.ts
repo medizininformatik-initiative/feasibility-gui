@@ -17,9 +17,9 @@ import {
 import { QueryResult } from '../model/Result/QueryResult';
 import { QueryResultLine } from '../model/Result/QueryResultLine';
 import { ResultProviderService } from './Provider/ResultProvider.service';
-import { SnackbarService } from '../core/components/snack-bar/snack-bar.component';
 import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
 import { FeasibilityQueryProviderService } from './Provider/FeasibilityQueryProvider.service';
+import { ErrorCodes, SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -139,7 +139,7 @@ export class FeasibilityQueryResultService {
           this.resultProvider.setResultByID(queryResult, queryResult.getQueryId());
           return queryResult;
         } else {
-          this.snackbar.displayErrorMessage(this.snackbar.errorCodes[result.issues[0].code]);
+          this.snackbar.displayErrorMessage(ErrorCodes[result.issues[0].code]);
         }
       })
     );
@@ -153,7 +153,7 @@ export class FeasibilityQueryResultService {
           this.resultProvider.setResultByID(queryResult, queryResult.getQueryId());
           return queryResult;
         } else {
-          this.snackbar.displayErrorMessage(this.snackbar.errorCodes[result.issues[0].code]);
+          this.snackbar.displayErrorMessage(ErrorCodes[result.issues[0].code]);
         }
       })
     );

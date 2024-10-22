@@ -10,7 +10,6 @@ import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemSe
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
-import { SnackbarService } from 'src/app/core/components/snack-bar/snack-bar.component';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +19,8 @@ export class CriteriaProfileDataService {
 
   constructor(
     private backend: BackendService,
-    private listItemService: SelectedTableItemsService<SearchTermListEntry>
-  ) //private snackbar: SnackbarService
-  {}
+    private listItemService: SelectedTableItemsService<SearchTermListEntry> //private snackbar: SnackbarService
+  ) {}
 
   /**
    * Translate selected list items to CriteriaProfileData objects and return them as an Observable.
