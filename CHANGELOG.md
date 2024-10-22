@@ -1,5 +1,26 @@
 # Changelog
 
+## v6.0.0-alpha.4 (2024-10-20)
+
+### Changed
+* added new translators for FeasibilityQuery <> CCTDL and DataSelection <> CCTDL
+
+### Bugfix
+* various bugfixing and code refactoring
+
+
+
+## v6.0.0-alpha.3 (2024-09-09)
+
+### Feature
+* added language switch
+
+### Bugfix
+* apply rerendering after setting filter ([#238](https://github.com/medizininformatik-initiative/feasibility-gui/issues/238))
+* fix moving criteria within in- and exclusion ([#236](https://github.com/medizininformatik-initiative/feasibility-gui/issues/236))
+* added missing translation keys
+* fixed various css problems
+
 
 ## v6.0.0-alpha.2 (2024-09-05)
 
