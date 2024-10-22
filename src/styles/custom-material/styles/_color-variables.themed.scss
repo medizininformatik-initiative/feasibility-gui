@@ -17,6 +17,7 @@
   --num-color--primary-white: #{mat.get-color-from-palette($primary, 'white')};
 
   --num-color--primary-blue: #{mat.get-color-from-palette($primary, 'blue')};
+  --num-color--primary-red: #{mat.get-color-from-palette($primary, 'red')};
 
   --num-color--accent: #{mat.get-color-from-palette($accent, 500)};
   --num-color--warn: #{mat.get-color-from-palette($warn)};
