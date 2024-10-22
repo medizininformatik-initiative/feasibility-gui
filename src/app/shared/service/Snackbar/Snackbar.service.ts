@@ -30,8 +30,9 @@ export class SnackbarService {
 
   constructor(private snackBar: MatSnackBar) {}
 
-  public displayErrorMessage(errorCode: ErrorCodes, retryAfter: number = 0) {
-    const message = `${MessageType.ERROR}.${errorCode}`;
+  public displayErrorMessage(errorCode: string, retryAfter: number = 0) {
+    const validErrorCode = this.getErrorCodeEnum(errorCode);
+    const message = `${MessageType.ERROR}.${validErrorCode}`;
     const data: SnackbarData = {
       message,
       retryAfter,
@@ -41,7 +42,9 @@ export class SnackbarService {
   }
 
   public displayInfoMessage(infoMessage: string, retryAfter: number = 0) {
-    const message = `${MessageType.INFO}.${infoMessage}`;
+    const validInfoMessage = this.getErrorCodeEnum(infoMessage);
+
+    const message = `${MessageType.INFO}.${validInfoMessage}`;
     const data: SnackbarData = {
       message,
       retryAfter,
@@ -67,6 +70,11 @@ export class SnackbarService {
       duration,
       panelClass: ['snackbar-container'],
     });
+  }
+
+  private getErrorCodeEnum(errorCode: string): ErrorCodes | undefined {
+    const normalizedCode = errorCode.replace(/-/g, '_') as keyof typeof ErrorCodes;
+    return ErrorCodes[normalizedCode];
   }
 
   public closeSnackbar() {
