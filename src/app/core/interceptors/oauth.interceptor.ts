@@ -1,5 +1,8 @@
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { OAuthStorage, OAuthService } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { Observable, throwError } from 'rxjs';
+import { SnackbarService } from '../components/snack-bar/snack-bar.component';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -7,9 +10,6 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { SnackbarService } from '../components/snack-bar/snack-bar.component';
 
 @Injectable()
 export class OAuthInterceptor implements HttpInterceptor {

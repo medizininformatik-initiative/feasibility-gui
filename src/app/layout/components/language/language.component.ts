@@ -19,7 +19,7 @@ export class LanguageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  changeLanguage(lang: string) {
+  public changeLanguage(lang: string) {
     this.translate.use(lang);
   }
 }

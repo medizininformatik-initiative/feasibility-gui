@@ -7,7 +7,6 @@ import { ResultComponent } from './components/querybuilder-result/result.compone
 const routes: Routes = [
   { path: '', redirectTo: 'editor', pathMatch: 'full' },
   { path: 'editor', component: QuerybuilderEditorComponent },
-  //{ path: 'overview', component: QuerybuilderOverviewComponent },
   { path: 'result', component: ResultComponent },
 ];
 
