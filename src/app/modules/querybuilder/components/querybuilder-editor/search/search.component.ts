@@ -91,6 +91,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getElasticSearchFilter();
     this.searchText = this.elasticSearchService.getActiveSearchTerm();
     this.elasticSearchService.searchCriteria(' ').subscribe();
+    this.startElasticSearch('');
   }
 
   ngAfterViewInit() {

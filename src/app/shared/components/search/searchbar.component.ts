@@ -26,7 +26,7 @@ export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() label: string;
   @Input() minLength = 3;
-  @Input() searchText: string;
+  @Input() searchText = '';
   @Output() searchTextChange = new EventEmitter();
 
   currentText = '';
@@ -41,7 +41,7 @@ export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
         .get('query')
         .valueChanges.pipe(
           debounceTime(this.debounceTime),
-          filter((value) => value.length >= this.minLength)
+          filter((value) => value.length >= this.minLength || value.length === 0)
         )
         .subscribe((value) => {
           this.currentText = value;
