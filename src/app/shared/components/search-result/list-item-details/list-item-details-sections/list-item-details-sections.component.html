@@ -4,10 +4,13 @@
       fxLayout="row"
       fxLayoutAlign="space-between center"
       *ngFor="let item of listItemDetails"
-      class="mat-divider entry-layout highlight"
-      (click)="getSelectedRelative(item)"
+      class="mat-divider entry-layout"
     >
-      <div class="text-overflow" [matTooltip]="item.name">
+      <div
+        class="text-overflow display-name"
+        (click)="getSelectedRelative(item)"
+        [matTooltip]="item.name"
+      >
         {{ item.name }}
       </div>
       <num-menu

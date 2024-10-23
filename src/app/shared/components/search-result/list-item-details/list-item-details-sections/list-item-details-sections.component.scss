@@ -7,6 +7,7 @@
 }
 
 .entry-layout {
+  max-width: 80%;
   padding: 3%;
   height: 40px;
   margin-bottom: 10px;
@@ -14,7 +15,6 @@
   flex-wrap: wrap;
   min-width: 0px;
   white-space: nowrap;
-  cursor: pointer;
   background-color: rgba(90, 121, 175, 0.1);
   color: black;
 }
@@ -25,11 +25,16 @@
   color: black;
 }
 
+.display-name {
+  cursor: pointer;
+  width: max-content;
+  max-width: 80%;
+}
+
 .text-overflow {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 80%;
 }
 
 .container {
