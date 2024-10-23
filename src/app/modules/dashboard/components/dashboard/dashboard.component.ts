@@ -55,8 +55,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public navigateToDataQueryEditor() {
-    this.test.displayErrorMessage(ErrorCodes.SITE_NOT_FOUND);
-    //this.navigationHelperService.navigateToDataQueryEditor();
+    this.navigationHelperService.navigateToDataQueryEditor();
   }
 
   public navigateToQueryBuilderEditor() {
