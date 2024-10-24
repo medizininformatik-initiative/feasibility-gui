@@ -5,6 +5,10 @@ import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/In
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SavedFeasibilityQueryService } from '../../services/SavedFeasibilityQuery.service';
 import { StructuredQuery2FeasibilityQueryService } from '../../../../service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
+import { QueryResult } from 'src/app/model/Result/QueryResult';
+import { v4 as uuidv4 } from 'uuid';
+import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
+
 @Component({
   selector: 'num-feasibility',
   templateUrl: './feasibility.component.html',
@@ -17,7 +21,8 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
     private savedFeasibilityQueryService: SavedFeasibilityQueryService,
     private translator: StructuredQuery2FeasibilityQueryService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private resultProviderService: ResultProviderService
   ) {}
 
   ngOnInit() {
@@ -43,8 +48,15 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   loadQueryIntoEditor(id: string) {
     this.loadSubscription = this.savedFeasibilityQueryService
       .loadQueryIntoEditor(Number(id))
-      .subscribe((structuredQuery) => {
-        this.translator.translate(structuredQuery.content).subscribe((feasibilityQuery) => {
+      .subscribe((savedFeasibilityQuery) => {
+        this.translator.translate(savedFeasibilityQuery.content).subscribe((feasibilityQuery) => {
+          const queryResult = new QueryResult(
+            feasibilityQuery.getID(),
+            savedFeasibilityQuery.totalNumberOfPatients,
+            uuidv4()
+          );
+          this.resultProviderService.setResultByID(queryResult, queryResult.getId());
+          feasibilityQuery.setResultIds([queryResult.getId()]);
           this.feasibilityQueryService.setFeasibilityQueryByID(
             feasibilityQuery,
             feasibilityQuery.getID(),

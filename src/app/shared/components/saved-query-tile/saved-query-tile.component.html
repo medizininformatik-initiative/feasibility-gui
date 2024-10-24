@@ -1,5 +1,5 @@
 <div class="container" *ngIf="savedQuery">
-  <div fxLayout="column" class="text-layout width-40">
+  <div fxLayout="column" class="text-layout width-50">
     <div class="label text-overflow">
       <span matTooltipPosition="below" [matTooltip]="savedQuery.label">
         {{ savedQuery.label }}
@@ -11,8 +11,11 @@
       </span>
     </div>
   </div>
-  <div class="width-40">
+  <div class="width-10">
     {{ ('SAVED_QUERIES.CREATED_AT' | translate) + ' ' + (savedQuery.date | date : 'dd.MM.yyyy') }}
+  </div>
+  <div class="width-20">
+    {{ 'QUERYBUILDER.OVERVIEW.COHORT.PATIENTS' | translate }} {{ savedQuery.totalNumberOfPatients }}
   </div>
   <div>
     <num-button type="blue" (click)="onNavigate(savedQuery?.id)">

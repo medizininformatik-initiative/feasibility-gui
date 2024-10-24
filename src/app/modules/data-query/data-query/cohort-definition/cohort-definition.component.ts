@@ -1,8 +1,9 @@
-import { Component, OnInit, EventEmitter, Input, Output, ElementRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 import { StructuredQuery2FeasibilityQueryService } from 'src/app/service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from 'src/app/service/Validation.service';
@@ -18,6 +19,7 @@ export class CohortDefinitionComponent implements OnInit {
   fileName: string;
   isFeasibilityInclusionSet = false;
   isFeasibilityExistent = false;
+  totalNumberOfPatients: number;
 
   constructor(
     public elementRef: ElementRef,
@@ -25,11 +27,16 @@ export class CohortDefinitionComponent implements OnInit {
     private downloadCCDLService: DownloadCCDLService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
-    private validationService: ValidationService
+    private validationService: ValidationService,
+    private resultProviderService: ResultProviderService
   ) {}
 
   ngOnInit() {
     this.feasibilityQueryService.getActiveFeasibilityQuery().subscribe((feasibilityQuery) => {
+      const resultIdsLength = feasibilityQuery.getResultIds().length;
+      this.totalNumberOfPatients = this.resultProviderService
+        .getResultByID(feasibilityQuery.getResultIds()[resultIdsLength - 1])
+        ?.getTotalNumberOfPatients();
       if (feasibilityQuery.getInclusionCriteria().length > 0) {
         this.isFeasibilityInclusionSet = true;
       } else {

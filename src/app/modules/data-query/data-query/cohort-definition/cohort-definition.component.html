@@ -1,6 +1,15 @@
 <div class="container pr4">
   <div class="margin-top-5">
-    <num-header>{{ 'DATAQUERY.COHORT.HEADER' | translate }}</num-header>
+    <num-header>
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div>
+          {{ 'DATAQUERY.COHORT.HEADER' | translate }}
+        </div>
+        <div>
+          {{ totalNumberOfPatients }}
+        </div>
+      </div>
+    </num-header>
     <num-header-description>
       {{ 'QUERYBUILDER.SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
