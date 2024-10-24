@@ -302,7 +302,7 @@ export class BackendService {
     return this.http.post<any>(
       this.createUrl(BackendService.PATH_RUN_QUERY) +
         '/' +
-        queryResult.getQueryId() +
+        queryResult.getId() +
         '/' +
         BackendService.PATH_SAVED,
       savedQuery,

@@ -34,7 +34,7 @@
     {{ 'QUERYBUILDER.STAGE.BUTTON.ADD_TO_STAGE' | translate }}
   </num-button>
   <num-button
-    *ngIf="atStage"
+    *ngIf="atStage || hasQueryItems"
     type="green"
     (click)="doSendRequest()"
     [isDisabled]="!isValidQuery()"
@@ -52,9 +52,9 @@
     matBadgePosition="above after"
   >
     {{
-    atStage
-      ? ('QUERYBUILDER.STAGE.BUTTON.BACK_TO_SEARCH' | translate)
-      : ('QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate)
+      atStage
+        ? ('QUERYBUILDER.STAGE.BUTTON.BACK_TO_SEARCH' | translate)
+        : ('QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate)
     }}
   </num-button>
 </num-action-bar>

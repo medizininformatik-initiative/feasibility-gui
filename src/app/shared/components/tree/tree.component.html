@@ -29,7 +29,12 @@
         </div>
       </div>
       <div class="node-display-container width-80">
-        <span matTooltipPosition="below" [matTooltip]="node.data.display | displayTranslation">{{ node.data.display | displayTranslation }}</span>
+        <span
+          class="data-display"
+          matTooltipPosition="before"
+          [matTooltip]="node.data.display | displayTranslation"
+          >{{ node.data.display | displayTranslation }}</span
+        >
         <div *ngIf="node.data.description" class="field-description">
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
             ({{ node.data.description | displayTranslation }})

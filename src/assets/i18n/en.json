@@ -256,7 +256,8 @@
     },
     "OVERVIEW": {
       "COHORT": {
-        "LOAD": "Load cohort"
+        "LOAD": "Load cohort",
+        "PATIENTS": "Number of patients:"
       },
       "TITLE_LABEL": "Title",
       "COMMENT_LABEL": "Comment",
