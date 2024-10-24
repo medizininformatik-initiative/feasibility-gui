@@ -136,7 +136,7 @@ export class FeasibilityQueryResultService {
       map((result) => {
         if (!result.issues) {
           const queryResult: QueryResult = this.buildQueryResultInstance(result);
-          this.resultProvider.setResultByID(queryResult, queryResult.getQueryId());
+          this.resultProvider.setResultByID(queryResult, queryResult.getId());
           return queryResult;
         } else {
           this.snackbar.displayErrorMessage(ErrorCodes[result.issues[0].code]);
@@ -150,7 +150,7 @@ export class FeasibilityQueryResultService {
       map((result) => {
         if (!result.issues) {
           const queryResult: QueryResult = this.buildQueryResultInstance(result);
-          this.resultProvider.setResultByID(queryResult, queryResult.getQueryId());
+          this.resultProvider.setResultByID(queryResult, queryResult.getId());
           return queryResult;
         } else {
           this.snackbar.displayErrorMessage(ErrorCodes[result.issues[0].code]);

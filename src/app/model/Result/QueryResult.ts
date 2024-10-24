@@ -49,11 +49,11 @@ export class QueryResult {
     this.totalNumberOfPatients = value;
   }
 
-  getQueryId(): string {
+  getId(): string {
     return this.id;
   }
 
-  setQueryId(value: string): void {
+  setId(value: string): void {
     this.id = value;
   }
 
