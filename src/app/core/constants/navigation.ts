@@ -4,12 +4,6 @@ export const mainNavItems: INavItem[] = [
   {
     routeTo: 'home',
     roles: ['main'],
-    icon: 'th',
-    translationKey: 'NAVIGATION.DASHBOARD',
-  },
-  {
-    routeTo: 'data-query',
-    roles: ['main'],
     icon: 'database',
     translationKey: 'NAVIGATION.DATAQUERY',
   },

@@ -7,15 +7,16 @@ import { RouterModule, Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'home',
-    canLoad: [AuthGuard],
+    canLoad: [RoleGuard],
     data: {
-      navId: 'home',
-      breadcrumb: 'Home',
+      navId: 'data-query',
+      roles: ['main'],
+      breadcrumb: 'Data Query',
     },
     loadChildren: () =>
       import(
-        /* webpackChunkName: "Dashboard.Module" */ './modules/dashboard/dashboard.module'
-      ).then((m) => m.DashboardModule),
+        /* webpackChunkName: "DataQuery.Module" */ './modules/data-query/data-query.module'
+      ).then((m) => m.DataQueryModule),
   },
   {
     path: 'querybuilder',
@@ -81,19 +82,6 @@ export const routes: Routes = [
       import(
         /* webpackChunkName: "SavedQueries.Module" */ './modules/saved-queries/saved-queries.module'
       ).then((m) => m.SavedQueriesModule),
-  },
-  {
-    path: 'data-query',
-    canLoad: [RoleGuard],
-    data: {
-      navId: 'data-query',
-      roles: ['main'],
-      breadcrumb: 'Data Query',
-    },
-    loadChildren: () =>
-      import(
-        /* webpackChunkName: "DataQuery.Module" */ './modules/data-query/data-query.module'
-      ).then((m) => m.DataQueryModule),
   },
   {
     path: 'data-protection',
