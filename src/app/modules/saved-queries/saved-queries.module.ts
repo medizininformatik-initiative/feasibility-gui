@@ -8,11 +8,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SavedQueriesRoutingModule } from './saved-queries-routing.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { MaterialModule } from 'src/app/layout/material/material.module';
-import { CohortComponent } from './components/cohort/cohort.component';
 import { FeasibilityComponent } from './components/feasibility/feasibility.component';
 
 @NgModule({
-  declarations: [SavedQueriesComponent, CohortComponent, FeasibilityComponent],
+  declarations: [SavedQueriesComponent, FeasibilityComponent],
   imports: [
     CommonModule,
     SharedModule,
