@@ -2,14 +2,16 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import INavItem from '../../models/nav-item.interface';
-import { ActivationEnd, Router, RouterEvent } from '@angular/router';
+import { ActivationEnd, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { mainNavItems } from '../../../core/constants/navigation';
+import { slideInFromBottom, slideInFromTop } from 'src/app/route-animations';
 
 @Component({
   selector: 'num-app-layout',
   templateUrl: './app-layout.component.html',
   styleUrls: ['./app-layout.component.scss'],
+  animations: [slideInFromTop, slideInFromBottom],
 })
 export class AppLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('drawer', { static: true }) public drawer: MatSidenav;
@@ -33,6 +35,10 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.router.events.subscribe((event) => this.handleRouterEvent(event as RouterEvent))
     );
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 
   ngOnDestroy(): void {

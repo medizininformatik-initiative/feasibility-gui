@@ -5,10 +5,10 @@ import { FeasibilityQueryEditorComponent } from './components/editor/feasibility
 import { ResultComponent } from './components/result/result.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'search', pathMatch: 'full' },
-  { path: 'editor', component: FeasibilityQueryEditorComponent },
-  { path: 'result', component: ResultComponent },
-  { path: 'search', component: SearchComponent },
+  { path: '', redirectTo: 'search', pathMatch: 'full', data: { animation: 'Search' } },
+  { path: 'editor', component: FeasibilityQueryEditorComponent, data: { animation: 'Editor' } },
+  { path: 'result', component: ResultComponent, data: { animation: 'Result' } },
+  { path: 'search', component: SearchComponent, data: { animation: 'Search' } },
 ];
 
 @NgModule({

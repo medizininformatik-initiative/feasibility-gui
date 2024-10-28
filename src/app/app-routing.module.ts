@@ -12,6 +12,7 @@ export const routes: Routes = [
       navId: 'data-query',
       roles: ['main'],
       breadcrumb: 'Data Query',
+      animation: 'HomePage',
     },
     loadChildren: () =>
       import(
@@ -25,6 +26,7 @@ export const routes: Routes = [
       navId: 'feasibility-query',
       roles: ['main'],
       breadcrumb: 'Query Builder',
+      animation: 'FeasibilityQueryPage',
     },
     loadChildren: () =>
       import(
@@ -38,6 +40,7 @@ export const routes: Routes = [
       navId: 'options',
       roles: ['option'],
       breadcrumb: 'Options',
+      animation: 'OptionsPage',
     },
     loadChildren: () =>
       import(/* webpackChunkName: "Options.Module" */ './modules/options/options.module').then(
@@ -51,6 +54,7 @@ export const routes: Routes = [
       navId: 'result',
       roles: ['main'],
       breadcrumb: 'Result',
+      animation: 'ResultPage',
     },
     loadChildren: () =>
       import(
@@ -64,6 +68,7 @@ export const routes: Routes = [
       navId: 'data-selection',
       roles: ['main'],
       breadcrumb: 'Data Selection',
+      animation: 'DataSelectionPage',
     },
     loadChildren: () =>
       import(
@@ -77,6 +82,7 @@ export const routes: Routes = [
       navId: 'saved-queries',
       roles: ['main'],
       breadcrumb: 'Saved Queries',
+      animation: 'SavedQueriesPage',
     },
     loadChildren: () =>
       import(
@@ -86,7 +92,10 @@ export const routes: Routes = [
   {
     path: 'data-protection',
     component: DataProtectionComponent,
-    data: { breadcrumb: 'Data Protection' },
+    data: {
+      breadcrumb: 'Data Protection',
+      animation: 'DataProtectionPage',
+    },
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
