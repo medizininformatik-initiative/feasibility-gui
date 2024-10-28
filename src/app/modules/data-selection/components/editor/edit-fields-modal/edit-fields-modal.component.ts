@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
-import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileProfileNodeAdapter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
-import { ActiveDataSelectionService } from '../../../../service/Provider/ActiveDataSelection.service';
 import { SelectedDataSelectionProfileFieldsService } from 'src/app/service/DataSelection/SelectedDataSelectionProfileFields.service';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
+import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;

@@ -1,9 +1,13 @@
-import { DataSelectionModule } from './data-selection.module';
+import { DisplayDataSelectionComponent } from './components/editor/display/display.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DataSelectionComponent } from './components/data-selection.component';
+import { SearchDataSelectionComponent } from './components/search/search.component';
 
-const routes: Routes = [{ path: '', component: DataSelectionComponent }];
+const routes: Routes = [
+  { path: '', redirectTo: 'search', pathMatch: 'full', data: { animation: 'Search' } },
+  { path: 'search', component: SearchDataSelectionComponent },
+  { path: 'editor', component: DisplayDataSelectionComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

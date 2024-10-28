@@ -15,20 +15,20 @@ import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelection/CreateDataselectionProfileTree';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
-import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
 import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelection/SelectedDataSelectionProfile.service';
 import { map, Observable, Subscription, take } from 'rxjs';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 
 @Component({
-  selector: 'num-display-searchtree',
-  templateUrl: './display-searchtree.component.html',
-  styleUrls: ['./display-searchtree.component.scss'],
+  selector: 'num-search-data-selection',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss'],
 })
-export class DisplaySearchtreeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren(TreeComponent) numTrees!: QueryList<TreeComponent>;
   @Input() showActionBar;
   @Output() scrollClick = new EventEmitter();
@@ -55,7 +55,8 @@ export class DisplaySearchtreeComponent implements OnInit, AfterViewInit, OnDest
     private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
-    private selectedDataSelectionProfileService: SelectedDataSelectionProfileService
+    private selectedDataSelectionProfileService: SelectedDataSelectionProfileService,
+    private navigationHelperService: NavigationHelperService
   ) {}
 
   ngOnInit(): void {
@@ -146,8 +147,7 @@ export class DisplaySearchtreeComponent implements OnInit, AfterViewInit, OnDest
     }
   }
 
-  scroll() {
-    this.showActionBar = false;
-    this.scrollClick.emit(false);
+  public navigateToDataSelectionEditor() {
+    this.navigationHelperService.navigateToDataSelectionEditor();
   }
 }

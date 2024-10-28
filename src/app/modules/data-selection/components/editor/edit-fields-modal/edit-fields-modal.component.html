@@ -23,7 +23,11 @@
         class="selectedFilterBox"
       >
         <div class="display-part">
-          <span matTooltipPosition="below" [matTooltip]="selectedField.display | displayTranslation">{{ selectedField.display | displayTranslation }}</span>
+          <span
+            matTooltipPosition="below"
+            [matTooltip]="selectedField.display | displayTranslation"
+            >{{ selectedField.display | displayTranslation }}</span
+          >
         </div>
         <div>
           <mat-checkbox

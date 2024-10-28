@@ -46,7 +46,7 @@ export class DataSelectionComponent implements OnInit {
       dataSelection,
       true
     );
-    this.navigationHelperService.navigateToDataSelectionEditor();
+    this.navigationHelperService.navigateToDataSelectionSearch();
   }
 
   public downloadDataSelection() {}
@@ -75,8 +75,7 @@ export class DataSelectionComponent implements OnInit {
     }
   }
 
-  scroll() {
-    this.showActionBar = false;
-    this.scrollClick.emit(true);
+  public navigateToDataQueryCohortDefinition() {
+    this.navigationHelperService.navigateToDataQueryCohortDefinition();
   }
 }

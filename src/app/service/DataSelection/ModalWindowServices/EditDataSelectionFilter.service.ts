@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { EditFilterModalComponent } from 'src/app/modules/data-selection/components/edit-filter-modal/edit-filter-modal.component';
+import { EditFilterModalComponent } from 'src/app/modules/data-selection/components/editor/edit-filter-modal/edit-filter-modal.component';
 
 @Injectable({
   providedIn: 'root',

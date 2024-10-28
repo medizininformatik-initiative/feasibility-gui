@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SaveQueryModalComponent } from './save-dialog/save-dialog.component';
 @Component({
-  selector: 'num-result',
+  selector: 'num-feasibility-query-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
 })
@@ -19,7 +19,7 @@ export class ResultComponent implements OnInit {
   ngOnInit() {}
 
   public editStage(): void {
-    this.navigationHelperService.navigateToFeasibilityQueryEditor(true);
+    this.navigationHelperService.navigateToFeasibilityQueryEditor();
   }
 
   public saveQuery() {

@@ -2,7 +2,7 @@ import INavItem from '../../layout/models/nav-item.interface';
 
 export const mainNavItems: INavItem[] = [
   {
-    routeTo: 'home',
+    routeTo: 'data-query',
     roles: ['main'],
     icon: 'database',
     translationKey: 'NAVIGATION.DATAQUERY',
@@ -14,7 +14,7 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
   },
   {
-    routeTo: 'data-selection',
+    routeTo: 'data-selection/search',
     roles: ['main'],
     icon: 'dna',
     translationKey: 'NAVIGATION.DATASELECTION',

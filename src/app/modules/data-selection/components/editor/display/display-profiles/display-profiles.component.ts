@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
+import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { map, Observable } from 'rxjs';
-import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
-import { DownloadCRDTLService } from '../../../../service/Download/DownloadCRDTL.service';
 
 @Component({
   selector: 'num-display-profiles',
@@ -11,16 +10,14 @@ import { DownloadCRDTLService } from '../../../../service/Download/DownloadCRDTL
   styleUrls: ['./display-profiles.component.scss'],
 })
 export class DisplayProfilesComponent implements OnInit {
-  @Input() isEditable: boolean;
-  @Input() showActionBar;
-  @Output() scrollClick = new EventEmitter();
+  @Input()
+  isEditable: boolean;
+
   $dataSelectionProfileArray: Observable<Array<DataSelectionProfileProfile>>;
 
   constructor(
-    public elementRef: ElementRef,
     private dataSelectionProfileProvider: DataSelectionProfileProviderService,
-    private dataSelectionProvider: DataSelectionProviderService,
-    private downloadCRDTLService: DownloadCRDTLService
+    private dataSelectionProvider: DataSelectionProviderService
   ) {}
 
   ngOnInit(): void {
@@ -42,13 +39,5 @@ export class DisplayProfilesComponent implements OnInit {
             )
         )
       );
-  }
-
-  public downloadCRDTL() {
-    this.downloadCRDTLService.downloadActiveFeasibilityQueryAsFile();
-  }
-  scroll() {
-    this.showActionBar = false;
-    this.scrollClick.emit(true);
   }
 }

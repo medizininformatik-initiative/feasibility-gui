@@ -17,8 +17,8 @@ export class NavigationHelperService {
     this.router.navigate(['/saved-queries'], { state: { preventReset: true } });
   }
 
-  public navigateToFeasibilityQueryEditor(jumpToStage: boolean = false): void {
-    this.router.navigate(['/feasibility-query/editor'], { state: { jumpToStage } });
+  public navigateToFeasibilityQueryEditor(): void {
+    this.router.navigate(['/feasibility-query/editor']);
   }
 
   public navigateToFeasibilityQuerySearch(): void {
@@ -26,10 +26,18 @@ export class NavigationHelperService {
   }
 
   public navigateToDataSelectionEditor(): void {
-    this.router.navigate(['/data-selection'], { state: { jumpToStage: true } });
+    this.router.navigate(['/data-selection/editor']);
   }
 
-  public navigateToDataQueryEditor() {
-    this.router.navigate(['/data-query'], { state: { preventReset: true } });
+  public navigateToDataSelectionSearch(): void {
+    this.router.navigate(['/data-selection/search']);
+  }
+
+  public navigateToDataQueryCohortDefinition() {
+    this.router.navigate(['/data-query/cohort-definition'], { state: { preventReset: true } });
+  }
+
+  public navigateToDataQueryDataSelection() {
+    this.router.navigate(['/data-query/data-selection'], { state: { preventReset: true } });
   }
 }

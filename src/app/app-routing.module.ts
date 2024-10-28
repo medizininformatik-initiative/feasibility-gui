@@ -1,4 +1,3 @@
-import { AuthGuard } from './core/auth/guards/auth.guard';
 import { DataProtectionComponent } from './site/data-protection/data-protection.component';
 import { NgModule } from '@angular/core';
 import { RoleGuard } from './core/auth/guards/role.guard';
@@ -7,6 +6,10 @@ import { RouterModule, Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'home',
+    redirectTo: 'data-query',
+  },
+  {
+    path: 'data-query',
     canLoad: [RoleGuard],
     data: {
       navId: 'data-query',
@@ -97,8 +100,8 @@ export const routes: Routes = [
       animation: 'DataProtectionPage',
     },
   },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: '**', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'data-query', pathMatch: 'full' },
+  { path: '**', redirectTo: 'data-query', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataSelectionComponent } from './data-selection.component';
+import { DisplayProfilesComponent } from './display.component';
 
-describe('DataSelectionComponent', () => {
-  let component: DataSelectionComponent;
-  let fixture: ComponentFixture<DataSelectionComponent>;
+describe('DisplayProfilesComponent', () => {
+  let component: DisplayProfilesComponent;
+  let fixture: ComponentFixture<DisplayProfilesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DataSelectionComponent],
+      declarations: [DisplayProfilesComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DataSelectionComponent);
+    fixture = TestBed.createComponent(DisplayProfilesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

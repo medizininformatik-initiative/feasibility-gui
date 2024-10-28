@@ -28,7 +28,8 @@ export class CohortDefinitionComponent implements OnInit {
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
     private validationService: ValidationService,
-    private resultProviderService: ResultProviderService
+    private resultProviderService: ResultProviderService,
+    private navigationHelperService: NavigationHelperService
   ) {}
 
   ngOnInit() {
@@ -101,7 +102,7 @@ export class CohortDefinitionComponent implements OnInit {
   }
 
   public editFeasibilityQuery() {
-    this.routerHelperService.navigateToFeasibilityQueryEditor(true);
+    this.routerHelperService.navigateToFeasibilityQueryEditor();
   }
 
   public createNewCohort() {
@@ -113,11 +114,10 @@ export class CohortDefinitionComponent implements OnInit {
         true
       );
     }
-    this.routerHelperService.navigateToFeasibilityQueryEditor(false);
+    this.routerHelperService.navigateToFeasibilityQuerySearch();
   }
 
-  scroll() {
-    this.showActionBar = false;
-    this.scrollClick.emit(false);
+  public navigatToDataQueryDataSelection() {
+    this.navigationHelperService.navigateToDataQueryDataSelection();
   }
 }

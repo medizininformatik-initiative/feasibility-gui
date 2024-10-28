@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-display-feasibility-query',
-  templateUrl: './display-feasibility-query.component.html',
-  styleUrls: ['./display-feasibility-query.component.scss'],
+  templateUrl: './display.component.html',
+  styleUrls: ['./display.component.scss'],
 })
 export class DisplayFeasibilityQueryComponent implements OnInit {
   droppedItems: Criterion[] = [];

@@ -63,7 +63,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
             true
           );
         });
-        this.navigationHelperService.navigateToDataQueryEditor();
+        this.navigationHelperService.navigateToDataQueryCohortDefinition();
       });
   }
 }

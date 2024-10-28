@@ -3,12 +3,12 @@ import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataS
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { Component, Inject, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProviderService } from '../../services/DataSelectionProfileProvider.service';
-import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
+import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
+import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;

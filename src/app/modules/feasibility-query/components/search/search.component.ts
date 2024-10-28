@@ -29,11 +29,11 @@ import { SearchFilterService } from 'src/app/service/Search/Filter/SearchFilter.
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
-  selector: 'num-search',
+  selector: 'num-feasibility-query-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent implements OnInit, OnDestroy, AfterViewInit {
+export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('drawer') sidenav: MatDrawer;
   @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;

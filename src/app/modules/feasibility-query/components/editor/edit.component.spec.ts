@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FeasibilityQueryEditorComponent } from './feasibility-query-editor.component';
+import { FeasibilityQueryEditorComponent } from './edit.component';
 
 describe('EditorComponent', () => {
   let component: FeasibilityQueryEditorComponent;

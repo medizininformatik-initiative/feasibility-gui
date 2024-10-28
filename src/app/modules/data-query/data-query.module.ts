@@ -1,6 +1,5 @@
 import { CohortDefinitionComponent } from './data-query/cohort-definition/cohort-definition.component';
 import { CommonModule } from '@angular/common';
-import { DataQueryComponent } from './data-query/data-query.component';
 import { DataQueryRoutingModule } from './data-query-routing.module';
 import { DataSelectionComponent } from './data-query/data-selection/data-selection.component';
 import { DataSelectionModule } from '../data-selection/data-selection.module';
@@ -13,8 +12,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
 
 @NgModule({
-  declarations: [DataQueryComponent, CohortDefinitionComponent, DataSelectionComponent],
-  exports: [DataQueryComponent],
+  declarations: [CohortDefinitionComponent, DataSelectionComponent],
+  exports: [],
   imports: [
     DataQueryRoutingModule,
     CommonModule,

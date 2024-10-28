@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DisplayFeasibilityQueryComponent } from './display-feasibility-query.component';
+import { DisplayFeasibilityQueryComponent } from './display.component';
 
 describe('DisplayFeasibilityQueryComponent', () => {
   let component: DisplayFeasibilityQueryComponent;

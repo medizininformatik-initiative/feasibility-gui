@@ -2,19 +2,21 @@ import { AllowedUnitsComponent } from './components/editor/criterion-modal/quant
 import { AttributeFilterComponent } from './components/editor/criterion-modal/attribute-filter/attribute-filter.component';
 import { BeforeFilterComponent } from './components/editor/criterion-modal/time-restriction/before-filter/before-filter.component';
 import { BetweenFilterComponent } from './components/editor/criterion-modal/time-restriction/between-filter/between-filter.component';
+import { BoolLogicSwitchComponent } from './components/editor/display/bool-logic-switch/bool-logic-switch.component';
 import { CommonModule } from '@angular/common';
 import { ConceptComponent } from './components/editor/criterion-modal/concept/concept.component';
 import { ConsentSwitchesComponent } from './components/editor/stage/consent-switches/consent-switches.component';
 import { CriteriaStageComponent } from './components/editor/stage/criteria-stage.component';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DisplayCriteriaComponent } from './components/editor/display/display-criteria/display-criteria.component';
-import { DisplayFeasibilityQueryComponent } from './components/editor/display/display-feasibility-query.component';
+import { DisplayFeasibilityQueryComponent } from './components/editor/display/display.component';
 import { EditCriterionModalComponent } from './components/editor/criterion-modal/edit-criterion-modal.component';
+import { EditFeasibilityQueryComponent } from './components/editor/edit.component';
 import { EditorActionBarComponent } from './components/editor/action-bar/editor-action-bar.component';
 import { EditReferenceCriteriaModalComponent } from './components/editor/reference-criteria-modal/edit-reference-criteria-modal.component';
 import { EditTimeRestrictionComponent } from './components/editor/criterion-modal/time-restriction/edit-time-restriction.component';
-import { FeasibilityQueryEditorComponent } from './components/editor/feasibility-query-editor.component';
 import { FeasibilityQueryRoutingModule } from './feasibility-query-routing.module';
+import { FeasibilityQuerySearchComponent } from './components/search/search.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -30,7 +32,6 @@ import { ResultComponent } from './components/result/result.component';
 import { ResultDetailModalComponent } from './components/result/result-detail-modal/result-detail-modal.component';
 import { SaveQueryModalComponent } from './components/result/save-dialog/save-dialog.component';
 import { SearchActionBarComponent } from './components/search/action-bar/search-action-bar.component';
-import { SearchComponent } from './components/search/search.component';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SimpleResultComponent } from './components/result/simple-result/simple-result.component';
@@ -40,7 +41,6 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
-import { BoolLogicSwitchComponent } from './components/editor/display/bool-logic-switch/bool-logic-switch.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -57,7 +57,7 @@ export const FORMATS_GERMAN = {
 @NgModule({
   declarations: [
     BoolLogicSwitchComponent,
-    FeasibilityQueryEditorComponent,
+    EditFeasibilityQueryComponent,
     EditorActionBarComponent,
     CriteriaStageComponent,
     EditCriterionModalComponent,
@@ -80,7 +80,7 @@ export const FORMATS_GERMAN = {
     SaveQueryModalComponent,
     TimerestrictionTypeSelectorComponent,
     ConsentSwitchesComponent,
-    SearchComponent,
+    FeasibilityQuerySearchComponent,
     DisplayFeasibilityQueryComponent,
     SearchActionBarComponent,
     DisplayCriteriaComponent,
@@ -98,7 +98,7 @@ export const FORMATS_GERMAN = {
   ],
   exports: [
     EditTimeRestrictionComponent,
-    SearchComponent,
+    FeasibilityQuerySearchComponent,
     DisplayCriteriaComponent,
     DisplayFeasibilityQueryComponent,
   ],
