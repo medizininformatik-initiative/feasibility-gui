@@ -24,25 +24,5 @@ export class FeasibilityQueryEditorComponent implements OnInit {
     this.queryService.getActiveFeasibilityQuery().subscribe((query) => {
       this.query = query;
     });
-    setTimeout(() => {
-      if (window.history.state.jumpToStage) {
-        this.scroll(true);
-        //window.history.state.jumpToStage = false
-      }
-    }, 100);
-  }
-
-  scroll(event: boolean) {
-    if (event) {
-      if (this.stage) {
-        const element = this.stage.elementRef.nativeElement;
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      if (this.search) {
-        const element = this.search.elementRef.nativeElement;
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
   }
 }
