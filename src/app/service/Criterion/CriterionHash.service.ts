@@ -1,7 +1,7 @@
-import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { Injectable } from '@angular/core';
 import { TerminologyCode } from '../../model/Terminology/TerminologyCode';
 import { v3 as uuidv3 } from 'uuid';
+import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',

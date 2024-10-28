@@ -1,5 +1,4 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
-import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
@@ -12,6 +11,7 @@ import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profil
 import { v4 as uuidv4 } from 'uuid';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',

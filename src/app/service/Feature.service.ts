@@ -1,8 +1,8 @@
 import { AppConfigService } from '../config/app-config.service';
 import { environment } from '../../environments/environment';
-import { FeatureProviderService } from '../modules/querybuilder/service/feature-provider.service';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { FeatureProviderService } from '../modules/feasibility-query/service/feature-provider.service';
 
 @Injectable({
   providedIn: 'root',

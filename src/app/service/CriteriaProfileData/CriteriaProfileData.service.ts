@@ -1,6 +1,5 @@
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeDefinitionsResultMapper } from './Mapper/AttributeDefinitionsResultMapper';
-import { BackendService } from '../../modules/querybuilder/service/backend.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { finalize, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -10,6 +9,7 @@ import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemSe
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
+import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',

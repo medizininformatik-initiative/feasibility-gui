@@ -1,0 +1,30 @@
+<div fxFlexFill fxlayout="row" fxLayoutAlign="start" style="width: 800px">
+  <div fxlayout="column" fxFlex="50" class="inexclusion">
+    <num-section-name>
+      {{ 'QUERYBUILDER.SEARCH.INCLUSION' | translate }}
+    </num-section-name>
+    <num-display-criteria
+      id="Inclusion"
+      style="width: 600px; display: block; height: 1000px"
+      cdkDropList
+      numAppDropGroup
+      groupType="Inclusion"
+      [isEditable]="isEditable"
+    >
+    </num-display-criteria>
+  </div>
+  <div fxlayout="column" fxFlex="50" class="inexclusion">
+    <num-section-name>
+      {{ 'QUERYBUILDER.SEARCH.EXCLUSION' | translate }}
+    </num-section-name>
+    <num-display-criteria
+      id="Exclusion"
+      style="width: 600px; display: block; height: 1000px"
+      cdkDropList
+      numAppDropGroup
+      groupType="Exclusion"
+      [isEditable]="isEditable"
+    >
+    </num-display-criteria>
+  </div>
+</div>

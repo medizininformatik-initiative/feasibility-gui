@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 export class NavigationHelperService {
   constructor(private router: Router) {}
 
-  public navigateToQueryBuilderResult(): void {
-    this.router.navigate(['/querybuilder/result'], {
+  public navigateToFeasibilityQueryResult(): void {
+    this.router.navigate(['/feasibility-query/result'], {
       state: { preventReset: true, startPolling: true },
     });
   }
@@ -17,8 +17,12 @@ export class NavigationHelperService {
     this.router.navigate(['/saved-queries'], { state: { preventReset: true } });
   }
 
-  public navigateToQueryBuilderEditor(jumpToStage: boolean): void {
-    this.router.navigate(['/querybuilder/editor'], { state: { jumpToStage } });
+  public navigateToFeasibilityQueryEditor(jumpToStage: boolean = false): void {
+    this.router.navigate(['/feasibility-query/editor'], { state: { jumpToStage } });
+  }
+
+  public navigateToFeasibilityQuerySearch(): void {
+    this.router.navigate(['/feasibility-query/search']);
   }
 
   public navigateToDataSelectionEditor(): void {

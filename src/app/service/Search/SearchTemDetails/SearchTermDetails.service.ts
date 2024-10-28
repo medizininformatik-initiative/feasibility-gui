@@ -4,8 +4,8 @@ import { map, tap } from 'rxjs/operators';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
-import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { SearchTermDetailsProviderService } from './SearchTermDetailsProvider.service';
+import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',

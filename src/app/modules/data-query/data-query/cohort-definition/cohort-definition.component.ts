@@ -54,7 +54,7 @@ export class CohortDefinitionComponent implements OnInit {
   }
 
   public sendQuery() {
-    this.routerHelperService.navigateToQueryBuilderResult();
+    this.routerHelperService.navigateToFeasibilityQueryResult();
   }
 
   public onFileSelected(event: Event): void {
@@ -101,7 +101,7 @@ export class CohortDefinitionComponent implements OnInit {
   }
 
   public editFeasibilityQuery() {
-    this.routerHelperService.navigateToQueryBuilderEditor(true);
+    this.routerHelperService.navigateToFeasibilityQueryEditor(true);
   }
 
   public createNewCohort() {
@@ -113,7 +113,7 @@ export class CohortDefinitionComponent implements OnInit {
         true
       );
     }
-    this.routerHelperService.navigateToQueryBuilderEditor(false);
+    this.routerHelperService.navigateToFeasibilityQueryEditor(false);
   }
 
   scroll() {

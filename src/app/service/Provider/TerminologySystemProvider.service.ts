@@ -4,7 +4,7 @@ import {
   CodeSystemEntry,
   TerminologySystemDictionary,
 } from 'src/app/model/Utilities/TerminologySystemDictionary';
-import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
+import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',

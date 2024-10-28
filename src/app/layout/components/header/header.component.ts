@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service';
 import { FeatureService } from '../../../service/Feature.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
+import { FeatureProviderService } from 'src/app/modules/feasibility-query/service/feature-provider.service';
 
 @Component({
   selector: 'num-dataportal-header',

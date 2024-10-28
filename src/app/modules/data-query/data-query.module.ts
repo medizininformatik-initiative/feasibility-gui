@@ -8,9 +8,9 @@ import { FileSaverModule } from 'ngx-filesaver';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { QuerybuilderModule } from '../querybuilder/querybuilder.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
 
 @NgModule({
   declarations: [DataQueryComponent, CohortDefinitionComponent, DataSelectionComponent],
@@ -23,7 +23,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     OverlayModule,
     FileSaverModule,
     SharedFilterModule,
-    QuerybuilderModule,
+    FeasibilityQueryModule,
     DataSelectionModule,
   ],
 })

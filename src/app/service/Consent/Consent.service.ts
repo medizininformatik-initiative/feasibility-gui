@@ -1,11 +1,8 @@
 import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode';
+import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
 import { StructuredQueryCriterion } from 'src/app/model/StructuredQuery/Criterion/StructuredQueryCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { ActiveFeasibilityQueryService } from '../Provider/ActiveFeasibilityQuery.service';
-import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { map, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

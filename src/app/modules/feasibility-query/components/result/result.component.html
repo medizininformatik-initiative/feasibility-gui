@@ -1,0 +1,32 @@
+<div class="height-90 pr4">
+  <div class="result-header-line">
+    <num-header *ngIf="!resultLoaded">{{
+      'QUERYBUILDER.RESULT.HEADER.RESULT_NOT_LOADED' | translate
+    }}</num-header>
+    <num-header *ngIf="resultLoaded">{{
+      'QUERYBUILDER.RESULT.HEADER.RESULT_LOADED' | translate
+    }}</num-header>
+    <num-header-description>
+      {{ 'QUERYBUILDER.RESULT.HEADER_DESCRIPTION' | translate }}
+    </num-header-description>
+  </div>
+  <div class="simple-result">
+    <num-simple-result
+      (resultLoaded)="setResultLoaded($event)"
+      class="result-simple-box"
+    ></num-simple-result>
+  </div>
+  <num-display-feasibility-query [isEditable]="false" style="height: 400px">
+  </num-display-feasibility-query>
+  <num-action-bar class="bottom">
+    <num-button class="margin-right-10" type="green" (click)="editStage()">
+      {{ 'QUERYBUILDER.RESULT.BUTTON.EDIT_STAGE' | translate }}
+    </num-button>
+    <num-button (click)="saveQuery()" class="margin-right-10" type="green">
+      {{ 'QUERYBUILDER.RESULT.BUTTON.SAVE_QUERY' | translate }}
+    </num-button>
+    <num-button class="margin-right-10" (click)="doDownloadQuery()" type="green">
+      {{ 'QUERYBUILDER.RESULT.BUTTON.DOWNLOAD' | translate }}
+    </num-button>
+  </num-action-bar>
+</div>

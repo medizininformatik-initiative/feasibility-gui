@@ -1,0 +1,28 @@
+<div cdkDropListGroup fxLayout="column" fxLayoutAlign="start" class="overflow-auto pr4">
+  <div>
+    <num-header>
+      {{ 'QUERYBUILDER.STAGE.HEADER' | translate }}
+    </num-header>
+    <num-header-description>
+      {{ 'QUERYBUILDER.STAGE.HEADER_INFO' | translate }}
+    </num-header-description>
+    <num-consent-switches></num-consent-switches>
+    <num-section-name>
+      {{ 'QUERYBUILDER.HEADER_TITLE' | translate }}
+    </num-section-name>
+  </div>
+  <div fxFlexFill class="height-100">
+    <num-criteria-stage
+      [isEditable]="true"
+      class="height-90"
+      fxLayout="row wrap"
+      fxLayoutAlign="start start"
+      #stage
+    >
+    </num-criteria-stage>
+  </div>
+  <div class="height-100">
+    <num-display-feasibility-query [isEditable]="true"></num-display-feasibility-query>
+  </div>
+  <num-editor-action-bar (scrollClick)="scroll($event)"></num-editor-action-bar>
+</div>

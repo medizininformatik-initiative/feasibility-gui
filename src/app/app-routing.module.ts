@@ -19,17 +19,17 @@ export const routes: Routes = [
       ).then((m) => m.DataQueryModule),
   },
   {
-    path: 'querybuilder',
+    path: 'feasibility-query',
     canLoad: [RoleGuard],
     data: {
-      navId: 'querybuilder',
+      navId: 'feasibility-query',
       roles: ['main'],
       breadcrumb: 'Query Builder',
     },
     loadChildren: () =>
       import(
-        /* webpackChunkName: "Querybuilder.Module" */ './modules/querybuilder/querybuilder.module'
-      ).then((m) => m.QuerybuilderModule),
+        /* webpackChunkName: "FeasibilityQuery.Module" */ './modules/feasibility-query/feasibility-query.module'
+      ).then((m) => m.FeasibilityQueryModule),
   },
   {
     path: 'options',
@@ -54,8 +54,8 @@ export const routes: Routes = [
     },
     loadChildren: () =>
       import(
-        /* webpackChunkName: "Result.Module" */ './modules/querybuilder/querybuilder.module'
-      ).then((m) => m.QuerybuilderModule),
+        /* webpackChunkName: "Result.Module" */ './modules/feasibility-query/feasibility-query.module'
+      ).then((m) => m.FeasibilityQueryModule),
   },
   {
     path: 'data-selection',

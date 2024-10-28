@@ -1,4 +1,3 @@
-import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { DataSelectionProfileTree } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTree';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeRoot } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeRoot';
@@ -6,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',

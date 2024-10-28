@@ -2,12 +2,12 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
-import { FeatureProviderService } from '../../../querybuilder/service/feature-provider.service';
 import { FeatureService } from '../../../../service/Feature.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IAppConfig } from '../../../../config/app-config.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
+import { FeatureProviderService } from 'src/app/modules/feasibility-query/service/feature-provider.service';
 //import { UIQuery2StructuredQueryTranslatorService } from 'src/app/service/UIQuery2StructuredQueryTranslator.service';
 
 @Pipe({ name: 'safe' })

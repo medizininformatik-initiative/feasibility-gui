@@ -1,9 +1,9 @@
 import { AnnotatedStructuredQuery } from '../model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
-import { BackendService } from '../modules/querybuilder/service/backend.service';
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { StructuredQuery } from '../model/StructuredQuery/StructuredQuery';
 import { ErrorCodes, SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
+import { BackendService } from '../modules/feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',

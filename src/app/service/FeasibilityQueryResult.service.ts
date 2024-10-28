@@ -1,4 +1,3 @@
-import { BackendService } from '../modules/querybuilder/service/backend.service';
 import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
 import { FeatureService } from './Feature.service';
 import { Injectable } from '@angular/core';
@@ -20,6 +19,7 @@ import { ResultProviderService } from './Provider/ResultProvider.service';
 import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
 import { FeasibilityQueryProviderService } from './Provider/FeasibilityQueryProvider.service';
 import { ErrorCodes, SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
+import { BackendService } from '../modules/feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',

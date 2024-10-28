@@ -1,12 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../Provider/CriterionProvider.service';
-import { EditCriterionModalComponent } from 'src/app/modules/querybuilder/components/querybuilder-editor/edit/criterion-modal/edit-criterion-modal.component';
-import { EditReferenceCriteriaModalComponent } from 'src/app/modules/querybuilder/components/querybuilder-editor/edit/reference-criteria-modal/edit-reference-criteria-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
 import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
+import { EditCriterionModalComponent } from 'src/app/modules/feasibility-query/components/editor/criterion-modal/edit-criterion-modal.component';
+import { EditReferenceCriteriaModalComponent } from 'src/app/modules/feasibility-query/components/editor/reference-criteria-modal/edit-reference-criteria-modal.component';
 
 @Injectable({
   providedIn: 'root',

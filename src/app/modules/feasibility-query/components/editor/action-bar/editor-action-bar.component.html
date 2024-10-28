@@ -1,0 +1,20 @@
+<num-action-bar class="bottom">
+  <num-button
+    type="green"
+    (click)="doSendRequest()"
+    [isDisabled]="!isFeasibilityQueryValid"
+    class="margin-right-10"
+  >
+    {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
+  </num-button>
+  <num-button
+    icon="arrow-up"
+    type="green"
+    class="margin-right-10"
+    (click)="navigateToSearch()"
+    [matBadge]="($stageArray | async)?.length"
+    matBadgePosition="above after"
+  >
+    {{ 'QUERYBUILDER.STAGE.BUTTON.BACK_TO_SEARCH' | translate }}
+  </num-button>
+</num-action-bar>

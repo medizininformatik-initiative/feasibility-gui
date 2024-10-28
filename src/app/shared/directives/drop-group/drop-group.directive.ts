@@ -20,6 +20,7 @@ export class DropGroupDirective implements OnInit {
 
   @HostListener('cdkDropListDropped', ['$event'])
   onDrop(event: CdkDragDrop<any[]>) {
+    console.log(event);
     const groupType = this.groupType || this.elementRef.nativeElement.getAttribute('groupType');
     const droppedCriterion: string = event.item.data;
     if (event.container.id !== event.previousContainer.id) {

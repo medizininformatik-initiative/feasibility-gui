@@ -1,0 +1,20 @@
+<div
+  id="Stage"
+  cdkDropList
+  numAppDropGroup
+  fxLayout="row wrap"
+  fxLayoutAlign="start"
+  class="criteria-container"
+>
+  <div *ngFor="let criterion of $criteriaArray | async" class="criteria-box">
+    <num-criteria-box [criterion]="criterion" [isEditable]="isEditable"></num-criteria-box>
+  </div>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    *ngIf="($criteriaArray | async).length === 0"
+    class="no-selected-criteria"
+  >
+    {{ 'QUERYBUILDER.STAGE.NO_SELECTED_CRITERIA' | translate }}
+  </div>
+</div>

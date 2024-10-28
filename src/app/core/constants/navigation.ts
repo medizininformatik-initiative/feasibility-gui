@@ -8,7 +8,7 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.DATAQUERY',
   },
   {
-    routeTo: 'querybuilder/editor',
+    routeTo: 'feasibility-query/search',
     roles: ['main'],
     icon: 'file',
     translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
