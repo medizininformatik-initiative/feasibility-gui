@@ -13,7 +13,6 @@ import { EditCriterionModalComponent } from './components/editor/criterion-modal
 import { EditorActionBarComponent } from './components/editor/action-bar/editor-action-bar.component';
 import { EditReferenceCriteriaModalComponent } from './components/editor/reference-criteria-modal/edit-reference-criteria-modal.component';
 import { EditTimeRestrictionComponent } from './components/editor/criterion-modal/time-restriction/edit-time-restriction.component';
-import { FeasibilityQueryComponent } from './components/feasibility-query.component';
 import { FeasibilityQueryEditorComponent } from './components/editor/feasibility-query-editor.component';
 import { FeasibilityQueryRoutingModule } from './feasibility-query-routing.module';
 import { FileSaverModule } from 'ngx-filesaver';
@@ -82,7 +81,6 @@ export const FORMATS_GERMAN = {
     TimerestrictionTypeSelectorComponent,
     ConsentSwitchesComponent,
     SearchComponent,
-    FeasibilityQueryComponent,
     DisplayFeasibilityQueryComponent,
     SearchActionBarComponent,
     DisplayCriteriaComponent,
