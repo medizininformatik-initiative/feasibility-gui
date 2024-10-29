@@ -6,8 +6,4 @@ import { Component, Input } from '@angular/core';
   templateUrl: './action-bar.component.html',
   styleUrls: ['./action-bar.component.scss'],
 })
-export class ActionBarComponent {
-  BackgroundColor = BackgroundColor;
-  @Input()
-  backgroundLayout: BackgroundColor = BackgroundColor.GREEN;
-}
+export class ActionBarComponent {}
