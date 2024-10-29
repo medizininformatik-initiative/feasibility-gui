@@ -4,7 +4,10 @@
   <div fxFlex="100" fxLayoutAlign="end" class="margin-right">
     <num-language></num-language>
     <mat-form-field class="language-select" style="width: auto">
-      <mat-select (selectionChange)="logout()" [placeholder]="profile?.info.name">
+      <mat-select
+        (selectionChange)="logout()"
+        [placeholder]="profile?.info.name ? profile?.info.name : profile?.info.preferred_username"
+      >
         <mat-option value="de">
           <fa-icon size="lg" [fixedWidth]="true" [icon]="'sign-out-alt'"></fa-icon>
           Logout
