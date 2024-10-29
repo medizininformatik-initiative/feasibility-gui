@@ -5,13 +5,13 @@ import INavItem from '../../models/nav-item.interface';
 import { ActivationEnd, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { mainNavItems } from '../../../core/constants/navigation';
-import { slideInFromBottom, slideInFromTop } from 'src/app/route-animations';
+import { routeAnimations } from 'src/app/route-animations';
 
 @Component({
   selector: 'num-app-layout',
   templateUrl: './app-layout.component.html',
   styleUrls: ['./app-layout.component.scss'],
-  animations: [slideInFromBottom, slideInFromTop],
+  animations: [routeAnimations],
 })
 export class AppLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('drawer', { static: true }) public drawer: MatSidenav;

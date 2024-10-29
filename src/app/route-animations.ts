@@ -1,6 +1,6 @@
 import { trigger, transition, style, query, animate, group } from '@angular/animations';
 
-export const slideInFromBottom = trigger('routeAnimations', [
+export const routeAnimations = trigger('routeAnimations', [
   transition('Search => Editor, Cohort => DataSelection', [
     query(
       ':enter, :leave',
@@ -29,9 +29,7 @@ export const slideInFromBottom = trigger('routeAnimations', [
       ),
     ]),
   ]),
-]);
 
-export const slideInFromTop = trigger('routeAnimations', [
   transition('Editor => Search, DataSelection => Cohort', [
     query(
       ':enter, :leave',
