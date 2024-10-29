@@ -5,8 +5,8 @@ import { SearchDataSelectionComponent } from './components/search/search.compone
 
 const routes: Routes = [
   { path: '', redirectTo: 'search', pathMatch: 'full', data: { animation: 'Search' } },
-  { path: 'search', component: SearchDataSelectionComponent },
-  { path: 'editor', component: DisplayDataSelectionComponent },
+  { path: 'search', component: SearchDataSelectionComponent, data: { animation: 'Search' } },
+  { path: 'editor', component: DisplayDataSelectionComponent, data: { animation: 'Editor' } },
 ];
 
 @NgModule({

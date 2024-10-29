@@ -11,7 +11,7 @@ import { slideInFromBottom, slideInFromTop } from 'src/app/route-animations';
   selector: 'num-app-layout',
   templateUrl: './app-layout.component.html',
   styleUrls: ['./app-layout.component.scss'],
-  animations: [slideInFromTop, slideInFromBottom],
+  animations: [slideInFromBottom, slideInFromTop],
 })
 export class AppLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('drawer', { static: true }) public drawer: MatSidenav;

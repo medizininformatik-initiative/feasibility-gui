@@ -38,3 +38,11 @@
   height: 100%;
   overflow: hidden;
 }
+
+.animation-container {
+  padding-right: 2rem;
+  position: relative;
+  width: 100%;
+  height: 100vh; /* or other fixed height */
+  overflow: hidden; /* Prevent content overflow during transitions */
+}
