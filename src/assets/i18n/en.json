@@ -142,6 +142,7 @@
       "EMPTY": "You have not defined a cohort yet. Upload an existing cohort or create a new one."
     },
     "DATASELECTION": {
+      "HEADER":"Data Selection",
       "BUTTON": {
         "EDIT": "Edit data selection",
         "DOWNLOAD": "Download data selection",

@@ -142,6 +142,7 @@
       "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
     },
     "DATASELECTION": {
+      "HEADER": "Datenselektion",
       "BUTTON":{
         "EDIT":"Datenselektion bearbeiten",
         "DOWNLOAD":"Dataselektion herunterladen",
