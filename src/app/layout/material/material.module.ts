@@ -28,6 +28,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTreeModule } from '@angular/material/tree';
 import { NgModule } from '@angular/core';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const MATERIAL_MODULES = [
   MatSidenavModule,
@@ -59,6 +60,7 @@ const MATERIAL_MODULES = [
   MatSnackBarModule,
   MatMenuModule,
   MatBadgeModule,
+  MatStepperModule,
 ];
 
 @NgModule({

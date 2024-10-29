@@ -10,6 +10,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
+import { MaterialModule } from 'src/app/layout/material/material.module';
 
 @NgModule({
   declarations: [CohortDefinitionComponent, DataSelectionComponent],
@@ -24,6 +25,7 @@ import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.m
     SharedFilterModule,
     FeasibilityQueryModule,
     DataSelectionModule,
+    MaterialModule,
   ],
 })
 export class DataQueryModule {}

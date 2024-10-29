@@ -33,3 +33,14 @@
 .margin-right-10 {
   margin-right: 10px;
 }
+
+.stepper-container {
+  display: flex; /* Enable flexbox layout */
+  justify-content: start; /* Center horizontally */
+  align-items: center; /* Center vertically (optional) */
+}
+
+::ng-deep.mat-step-icon {
+  height: 35px !important;
+  width: 35px !important;
+}
