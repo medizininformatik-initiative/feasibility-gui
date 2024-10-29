@@ -8,6 +8,7 @@ import { StructuredQuery2FeasibilityQueryService } from '../../../../service/Tra
 import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { v4 as uuidv4 } from 'uuid';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
+import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/Translator/StructureQuery/StructuredQuery2UIQueryTranslator.service';
 
 @Component({
   selector: 'num-feasibility',
@@ -19,7 +20,8 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   loadSubscription: Subscription;
   constructor(
     private savedFeasibilityQueryService: SavedFeasibilityQueryService,
-    private translator: StructuredQuery2FeasibilityQueryService,
+    private SQToFQTranslator: StructuredQuery2FeasibilityQueryService,
+    private SQToUIQueryTranslator: StructuredQuery2UIQueryTranslatorService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private navigationHelperService: NavigationHelperService,
     private resultProviderService: ResultProviderService
@@ -49,20 +51,26 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
     this.loadSubscription = this.savedFeasibilityQueryService
       .loadQueryIntoEditor(Number(id))
       .subscribe((savedFeasibilityQuery) => {
-        this.translator.translate(savedFeasibilityQuery.content).subscribe((feasibilityQuery) => {
-          const queryResult = new QueryResult(
-            feasibilityQuery.getID(),
-            savedFeasibilityQuery.totalNumberOfPatients,
-            uuidv4()
-          );
-          this.resultProviderService.setResultByID(queryResult, queryResult.getId());
-          feasibilityQuery.setResultIds([queryResult.getId()]);
-          this.feasibilityQueryService.setFeasibilityQueryByID(
-            feasibilityQuery,
-            feasibilityQuery.getID(),
-            true
-          );
-        });
+        this.SQToFQTranslator.translate(savedFeasibilityQuery.content).subscribe(
+          (feasibilityQuery) => {
+            const queryResult = new QueryResult(
+              feasibilityQuery.getID(),
+              savedFeasibilityQuery.totalNumberOfPatients,
+              uuidv4()
+            );
+            this.resultProviderService.setResultByID(queryResult, queryResult.getId());
+            feasibilityQuery.setResultIds([queryResult.getId()]);
+            const consent = this.SQToUIQueryTranslator.getConsent(savedFeasibilityQuery.content);
+            if (consent !== null && consent !== undefined) {
+              feasibilityQuery.setConsent(true);
+            }
+            this.feasibilityQueryService.setFeasibilityQueryByID(
+              feasibilityQuery,
+              feasibilityQuery.getID(),
+              true
+            );
+          }
+        );
         this.navigationHelperService.navigateToDataQueryCohortDefinition();
       });
   }

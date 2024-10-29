@@ -46,7 +46,7 @@ export class StructuredQuery2UIQueryTranslatorService {
           criterionArray?.forEach((structuredQueryCriterion, innerIndex) => {
             const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
 
-            if (this.consentService.getBooleanFlags(termCode.getCode()) === null) {
+            if (!this.isConsent(termCode)) {
               this.setStructuredQueryCriterionFilter(structuredQueryCriterion);
               const structuredQueryCriterionHash = this.createSQHash(structuredQueryCriterion);
               const criterion = this.hashMap.get(structuredQueryCriterionHash);
@@ -76,7 +76,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   public innerCriterion(structuredQueryCriterionInnerArray: any[]) {
     return structuredQueryCriterionInnerArray.map((structuredQueryCriterion) => {
       const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
-      if (this.isNotConsent([termCode])) {
+      if (!this.isConsent(termCode)) {
         return this.createSQHash(structuredQueryCriterion);
       }
     });
@@ -234,13 +234,26 @@ export class StructuredQuery2UIQueryTranslatorService {
     return this.criterionHashService.createHash(context, termCode);
   }
 
-  private isNotConsent(termCodes: TerminologyCode[]) {
-    const consentCode = ConsentTermCode.getConsentTermCode().getCode();
-    const consentSystem = ConsentTermCode.getConsentTermCode().getSystem();
-    return !(termCodes[0].getCode() === consentCode && termCodes[0].getSystem() === consentSystem);
+  private isConsent(termCode: TerminologyCode): boolean {
+    return this.consentService.getBooleanFlags(termCode.getCode()) !== null;
   }
 
   public createTermCode(termCode: any) {
     return new TerminologyCode(termCode.code, termCode.display, termCode.system, termCode.version);
+  }
+
+  public getConsent(structuredQuery: any): any {
+    let result = {};
+    structuredQuery.inclusionCriteria.forEach((criterionArray) => {
+      criterionArray.forEach((structuredQueryCriterion) => {
+        const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
+        if (this.isConsent(termCode)) {
+          result = structuredQueryCriterion;
+        } else {
+          result = null;
+        }
+      });
+    });
+    return result;
   }
 }
