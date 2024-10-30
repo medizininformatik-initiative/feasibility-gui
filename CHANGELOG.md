@@ -1,5 +1,28 @@
 # Changelog
 
+## v6.0.0-alpha.5 (2024-10-30)
+
+### Changed
+* refactored Urls: querybuilder was renamed to feasibility-query
+* split the feasibility-query page into three subpages: Search, Editor, and Result, each with representative URLs (feasibility-query/search, feasibility-query/editor, feasibility-query/result)
+* split the data-selection page into three subpages: Search, Editor, and Result, with representative URLs (data-selection/search, data-selection/editor, data-selection/result)
+* split the data-query page into two pages: Cohort Definition and Data Selection, with representative URLs (data-query/cohort-definition, data-query/data-selection).
+* renamed file and folder names: querybuilder is now feasibility-query
+
+### Feature
+*implemented a new snackbar notification system to display error messages
+* added animations for routing between pages
+* introduced a stepper component for the data-query page
+* removed the dashboard and set the Data Request page as the default start page ([#260](https://github.com/medizininformatik-initiative/feasibility-gui/issues/260))
+
+
+### Bugfix
+* allowed empty search strings to be treated as valid search terms despite the minimum length requirement of 3 characters ([#254](https://github.com/medizininformatik-initiative/feasibility-gui/issues/254))
+* added a ternary operator for the placeholder ([#255](https://github.com/medizininformatik-initiative/feasibility-gui/issues/255))
+* fixed consent issue when loading from saved queries and starting a request.
+
+
+
 ## v6.0.0-alpha.4 (2024-10-20)
 
 ### Changed
