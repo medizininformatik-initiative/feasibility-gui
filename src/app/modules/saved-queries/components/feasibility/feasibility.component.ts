@@ -9,6 +9,7 @@ import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { v4 as uuidv4 } from 'uuid';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/Translator/StructureQuery/StructuredQuery2UIQueryTranslator.service';
+import { ConsentService } from '../../../../service/Consent/Consent.service';
 
 @Component({
   selector: 'num-feasibility',
@@ -24,7 +25,8 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
     private SQToUIQueryTranslator: StructuredQuery2UIQueryTranslatorService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private navigationHelperService: NavigationHelperService,
-    private resultProviderService: ResultProviderService
+    private resultProviderService: ResultProviderService,
+    private consentService: ConsentService
   ) {}
 
   ngOnInit() {
@@ -63,6 +65,10 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
             const consent = this.SQToUIQueryTranslator.getConsent(savedFeasibilityQuery.content);
             if (consent !== null && consent !== undefined) {
               feasibilityQuery.setConsent(true);
+            } else {
+              feasibilityQuery.setConsent(false);
+              this.consentService.setProvisionCode(false, false, false, false);
+              this.consentService.setConsent(false);
             }
             this.feasibilityQueryService.setFeasibilityQueryByID(
               feasibilityQuery,
