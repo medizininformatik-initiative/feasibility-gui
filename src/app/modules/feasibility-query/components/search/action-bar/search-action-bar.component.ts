@@ -12,7 +12,7 @@ import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTer
   styleUrls: ['./search-action-bar.component.scss'],
 })
 export class SearchActionBarComponent implements OnInit {
-  $listItemArray: Observable<SearchTermListEntry[]>;
+  $listItemArray: Observable<SearchTermListEntry[]> = of([]);
 
   $stageArray: Observable<Array<string>> = of([]);
 
