@@ -7,6 +7,7 @@ import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.s
 import { StructuredQuery2FeasibilityQueryService } from 'src/app/service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from 'src/app/service/Validation.service';
+import { ConsentService } from '../../../../service/Consent/Consent.service';
 
 @Component({
   selector: 'num-cohort-definition',
@@ -22,14 +23,14 @@ export class CohortDefinitionComponent implements OnInit {
   totalNumberOfPatients: number;
 
   constructor(
-    public elementRef: ElementRef,
     private routerHelperService: NavigationHelperService,
     private downloadCCDLService: DownloadCCDLService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
     private validationService: ValidationService,
     private resultProviderService: ResultProviderService,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private consentService: ConsentService
   ) {}
 
   ngOnInit() {
@@ -113,6 +114,8 @@ export class CohortDefinitionComponent implements OnInit {
         feasibilityQuery.getID(),
         true
       );
+      this.consentService.setConsent(false);
+      this.consentService.setProvisionCode(false, false, false, false);
     }
     this.routerHelperService.navigateToFeasibilityQuerySearch();
   }
