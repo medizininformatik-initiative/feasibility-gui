@@ -1,4 +1,4 @@
-<div cdkDropListGroup fxLayout="column" fxLayoutAlign="start" class="overflow-auto pr4">
+<div cdkDropListGroup fxLayout="column" fxLayoutAlign="start" class="height-90 pr4">
   <div>
     <num-header>
       {{ 'QUERYBUILDER.STAGE.HEADER' | translate }}
@@ -11,10 +11,10 @@
       {{ 'QUERYBUILDER.HEADER_TITLE' | translate }}
     </num-section-name>
   </div>
-  <div fxFlexFill class="height-100">
+  <div>
     <num-criteria-stage
       [isEditable]="true"
-      class="height-90"
+      class="overflow-auto"
       fxLayout="row wrap"
       fxLayoutAlign="start start"
       #stage
