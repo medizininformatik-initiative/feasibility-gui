@@ -202,7 +202,8 @@
         "ADD_TO_STAGE": "Add to Stage",
         "BACK_TO_SEARCH":"Add Criteria",
         "VIEW_STAGE": "View Stage",
-        "SEND_QUERY": "Send Query"
+        "SEND_QUERY": "Feasibility Query",
+        "DATA_REQUEST": "Data Request"
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"

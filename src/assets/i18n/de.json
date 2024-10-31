@@ -201,7 +201,10 @@
         "ADD_TO_STAGE": "Zur Bühne hinzufügen",
         "BACK_TO_SEARCH":"Kriterien hinzufügen",
         "VIEW_STAGE": "Bühne anzeigen",
-        "SEND_QUERY": "Anfrage senden"
+        "SEND_QUERY": "Machbarkeitsanfrage",
+        "DATA_REQUEST": "Datenanfrage"
+        
+
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Bühne hinzugefügt"

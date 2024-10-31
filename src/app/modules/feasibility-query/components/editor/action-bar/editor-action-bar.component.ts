@@ -34,4 +34,8 @@ export class EditorActionBarComponent implements OnInit, OnDestroy {
   public doSendRequest(): void {
     this.navigationHelperService.navigateToFeasibilityQueryResult();
   }
+
+  public navigateToDataRequestCohortDefinition(): void {
+    this.navigationHelperService.navigateToDataQueryCohortDefinition();
+  }
 }
