@@ -30,7 +30,7 @@
       "DELETE": "Delete",
       "REFERENCE": "Link criteria",
       "APPLY_FILTERS": "Apply filter",
-      "DEFINE_FIELDS": "Define fields",
+      "DEFINE_FIELDS": "Select fields",
       "SEARCH": "Use as searchterm",
       "SHOW_CRITERIA":"Show criteria",
       "ADD": "Add to stage"
