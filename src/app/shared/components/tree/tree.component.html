@@ -33,6 +33,7 @@
           (click)="checkboxSelected(node)"
           class="data-display"
           matTooltipPosition="after"
+          matTooltipShowDelay="300"
           [matTooltip]="node.data.display | displayTranslation"
           >{{ node.data.display | displayTranslation }}</span
         >
