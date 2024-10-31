@@ -50,20 +50,20 @@ export const routes: Routes = [
         (m) => m.OptionsModule
       ),
   },
-  {
-    path: 'result',
-    canLoad: [RoleGuard],
-    data: {
-      navId: 'result',
-      roles: ['main'],
-      breadcrumb: 'Result',
-      animation: 'ResultPage',
-    },
-    loadChildren: () =>
-      import(
-        /* webpackChunkName: "Result.Module" */ './modules/feasibility-query/feasibility-query.module'
-      ).then((m) => m.FeasibilityQueryModule),
-  },
+  //  {
+  //    path: 'result',
+  //    canLoad: [RoleGuard],
+  //    data: {
+  //      navId: 'result',
+  //      roles: ['main'],
+  //      breadcrumb: 'Result',
+  //      animation: 'ResultPage',
+  //    },
+  //    loadChildren: () =>
+  //      import(
+  //        /* webpackChunkName: "Result.Module" */ './modules/feasibility-query/feasibility-query.module'
+  //      ).then((m) => m.FeasibilityQueryModule),
+  //  },
   {
     path: 'data-selection',
     canLoad: [RoleGuard],

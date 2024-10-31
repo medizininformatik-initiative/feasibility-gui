@@ -1,4 +1,4 @@
-<div fxFlexFill fxLayout="column" fxLayoutAlign="start">
+<div fxFlexFill fxLayout="column" fxLayoutAlign="start" class="pr4">
   <div style="margin-top: 5px">
     <num-header>{{ 'QUERYBUILDER.SEARCH.HEADER' | translate }}</num-header>
     <num-header-description>
@@ -43,7 +43,7 @@
         </num-list-item-details>
       </div>
     </mat-drawer>
-    <mat-drawer-content *ngIf="listItems?.length > 0" class="content-height-90">
+    <mat-drawer-content *ngIf="listItems?.length > 0" class="content-height-88">
       <ng-container *ngIf="adaptedData">
         <num-table
           (selectedRow)="setSelectedRowItem($event)"

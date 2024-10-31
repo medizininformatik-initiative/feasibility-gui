@@ -1,11 +1,11 @@
-<div fxFlexFill fxlayout="row" fxLayoutAlign="start" style="width: 800px">
+<div fxlayout="row" fxLayoutAlign="start" style="min-width: 1200px">
   <div fxlayout="column" fxFlex="50" class="inexclusion">
     <num-section-name>
       {{ 'QUERYBUILDER.SEARCH.INCLUSION' | translate }}
     </num-section-name>
     <num-display-criteria
       id="Inclusion"
-      style="width: 600px; display: block; height: 1000px"
+      style="width: 600px; display: block"
       cdkDropList
       numAppDropGroup
       groupType="Inclusion"
@@ -19,7 +19,7 @@
     </num-section-name>
     <num-display-criteria
       id="Exclusion"
-      style="width: 600px; display: block; height: 1000px"
+      style="width: 600px; display: block"
       cdkDropList
       numAppDropGroup
       groupType="Exclusion"

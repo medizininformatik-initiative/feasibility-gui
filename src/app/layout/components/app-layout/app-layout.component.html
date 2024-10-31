@@ -71,7 +71,7 @@
         fxFlex.gt-md="90%"
         fxFlex.gt-lg="100%"
       >
-        <div [@routeAnimations]="prepareRoute(outlet)">
+        <div [@routeAnimations]="prepareRoute(outlet)" class="fullscreen">
           <router-outlet #outlet="outlet"></router-outlet>
         </div>
       </main>
