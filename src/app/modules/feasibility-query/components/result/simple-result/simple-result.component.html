@@ -16,6 +16,7 @@
     type="green"
     *ngIf="loadedResult"
     fxFlexAlign="start"
+    matTooltipShowDelay="300"
     [matTooltip]="'QUERYBUILDER.RESULT.DETAILS_TOOLTIP' | translate"
     matTooltipPosition="right"
     (click)="openDialogResultDetails()"
