@@ -108,6 +108,9 @@
         "HEADER": "Select fields to extract for ",
         "REQUIRED": "required"
       },
+      "FILTER": {
+        "HEADER": "Coding/Name"
+      },
       "EDIT": {
         "HEADER": "Selected Health Data for Extraction",
         "HEADER_DESCRIPTION": "Text needs to be added here",
@@ -117,7 +120,8 @@
         "ADD": "Add to Data Selection",
         "DOWNLOAD": "Download Data Selection",
         "JUMP_TO_DATASELECTION_TREE": "Add data element",
-        "JUMP_TO_DATASELECTION": "Show selection"
+        "JUMP_TO_DATASELECTION": "Show selection",
+        "DATA_REQUEST": "Data Request"
       },
       "SEARCH": {
         "LABEL": "Insert code or search text",
@@ -137,7 +141,9 @@
         "DOWNLOAD": "Download cohort",
         "EDIT": "Edit cohort",
         "NEW_COHORT": "New cohort",
-        "JUMP_TO_DATASELECTION": "To data selection"
+        "JUMP_TO_DATASELECTION": "To data selection",
+        "SEND_QUERY": "Feasibility Query"
+
       },
       "EMPTY": "You have not defined a cohort yet. Upload an existing cohort or create a new one."
     },
@@ -145,10 +151,10 @@
       "HEADER":"Data Selection",
       "BUTTON": {
         "EDIT": "Edit data selection",
-        "DOWNLOAD": "Download data selection",
-        "UPLOAD": "Upload data selection",
+        "DOWNLOAD": "Download Data Request",
+        "UPLOAD": "Upload Data Request",
         "NEW_DATASELECTION": "New data selection",
-        "JUMP_TO_COHORT_SELECTION": "to cohort selection"
+        "JUMP_TO_COHORT_SELECTION": "To Cohort selection"
       }
     }
   },

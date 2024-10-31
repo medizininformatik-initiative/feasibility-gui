@@ -108,6 +108,9 @@
       "HEADER": "Selektieren Sie zu extrahierende Felder für ",
       "REQUIRED": "erforderlich"
     },
+    "FILTER": {
+      "HEADER": "Kodierung/Name"
+    },
     "EDIT": {
       "HEADER": "Ausgewählte Gesundheitsdaten zum Extrahieren",
       "HEADER_DESCRIPTION":"Hier muss noch ein Text hinzukommen",
@@ -117,7 +120,8 @@
       "DOWNLOAD": "Datenselektion herunterladen",
       "ADD": "Zur Datenselektion hinzufügen",
       "JUMP_TO_DATASELECTION_TREE": "Datenelement hinzufügen",
-      "JUMP_TO_DATASELECTION": "Selektion anzeigen"
+      "JUMP_TO_DATASELECTION": "Selektion anzeigen",
+      "DATA_REQUEST": "Datenanfrage"
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -137,7 +141,8 @@
         "DOWNLOAD": "Kohorte herunterladen",
         "EDIT":"Kohorte bearbeiten",
         "NEW_COHORT":"Neue Kohorte",
-        "JUMP_TO_DATASELECTION": "zur Datenselektion"
+        "JUMP_TO_DATASELECTION": "zur Datenselektion",
+        "SEND_QUERY": "Machbarkeitsanfrage"
       },
       "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
     },
@@ -145,8 +150,8 @@
       "HEADER": "Datenselektion",
       "BUTTON":{
         "EDIT":"Datenselektion bearbeiten",
-        "DOWNLOAD":"Dataselektion herunterladen",
-        "UPLOAD": "Datenselektion hochladen",
+        "DOWNLOAD":"Datenanfrage herunterladen",
+        "UPLOAD": "Datenanfrage hochladen",
         "NEW_DATASELECTION":"Neue Dataselektion",
         "JUMP_TO_COHORT_SELECTION": "zur Kohortenselektion"
       }
