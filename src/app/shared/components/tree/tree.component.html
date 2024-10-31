@@ -30,8 +30,9 @@
       </div>
       <div class="node-display-container width-80">
         <span
+          (click)="checkboxSelected(node)"
           class="data-display"
-          matTooltipPosition="before"
+          matTooltipPosition="after"
           [matTooltip]="node.data.display | displayTranslation"
           >{{ node.data.display | displayTranslation }}</span
         >

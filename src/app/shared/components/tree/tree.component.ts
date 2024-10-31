@@ -21,7 +21,7 @@ export class TreeComponent implements OnInit {
 
   ngOnInit() {}
 
-  toggleExpand(node: any) {
+  public toggleExpand(node: any) {
     if (this.expandedNodes.has(node)) {
       this.expandedNodes.delete(node);
     } else {
@@ -29,31 +29,33 @@ export class TreeComponent implements OnInit {
     }
   }
 
-  isExpanded(node: any): boolean {
+  public isExpanded(node: any): boolean {
     return this.expandedNodes.has(node);
   }
 
-  calcMarginLeft(level: number): string {
+  public calcMarginLeft(level: number): string {
     return `calc(${level} * -20px)`;
   }
 
-  calcMarginLeftCheckbox(level: number): string {
+  public calcMarginLeftCheckbox(level: number): string {
     if (level === 0) {
       return '10px';
     } else {
       return `calc(${level} * 40px)`;
     }
   }
-  calcMarginLeftTreeNode(level: number, isCheckbox: boolean): string {
+  public calcMarginLeftTreeNode(level: number, isCheckbox: boolean): string {
     if (isCheckbox) {
       return '10px';
     } else {
       return `calc(${level} * 40px)`;
     }
   }
-  checkboxSelected(node: TreeNode): void {
-    node.data.isCheckboxSelected = !node.data.isCheckboxSelected;
-    this.selectedCheckbox.emit(node);
+  public checkboxSelected(node: TreeNode): void {
+    if (node.data.selectable) {
+      node.data.isCheckboxSelected = !node.data.isCheckboxSelected;
+      this.selectedCheckbox.emit(node);
+    }
   }
 
   public toggleDescription() {
