@@ -1,10 +1,11 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
 import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
 import { DownloadCRDTLService } from '../../../../../service/Download/DownloadCRDTL.service';
 import { map, Observable } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
   selector: 'num-display-data-selection',
@@ -17,11 +18,11 @@ export class DisplayDataSelectionComponent implements OnInit {
   $dataSelectionProfileArray: Observable<Array<DataSelectionProfileProfile>>;
 
   constructor(
-    public elementRef: ElementRef,
     private dataSelectionProfileProvider: DataSelectionProfileProviderService,
     private dataSelectionProvider: DataSelectionProviderService,
     private downloadCRDTLService: DownloadCRDTLService,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private test1: TerminologySystemProvider
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +32,7 @@ export class DisplayDataSelectionComponent implements OnInit {
   /**
    * @todo add rerender of ui component
    */
-  private getDataSelectionProfiles() {
+  private getDataSelectionProfiles(): void {
     this.$dataSelectionProfileArray = this.dataSelectionProvider
       .getActiveDataSelection()
       .pipe(
@@ -45,11 +46,15 @@ export class DisplayDataSelectionComponent implements OnInit {
       );
   }
 
-  public downloadCRDTL() {
+  public downloadCRDTL(): void {
     this.downloadCRDTLService.downloadActiveFeasibilityQueryAsFile();
   }
 
-  public navigateToDataSelectionSearch() {
+  public navigateToDataSelectionSearch(): void {
     this.navigationHelperService.navigateToDataSelectionSearch();
+  }
+
+  public navigateToDataRequestDataSelection(): void {
+    this.navigationHelperService.navigateToDataQueryDataSelection();
   }
 }
