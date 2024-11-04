@@ -6,7 +6,7 @@ import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilte
 @Injectable({
   providedIn: 'root',
 })
-export class ElasticSearchFilterProvider {
+export class SearchFilterProvider {
   private filtersSubject = new BehaviorSubject<Map<ElasticSearchFilterTypes, string[]>>(new Map());
   private filterMap: Map<ElasticSearchFilterTypes, string[]> = new Map();
 

@@ -27,6 +27,7 @@ import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchT
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { SearchFilterService } from 'src/app/service/Search/Filter/SearchFilter.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import { SearchFilterProvider } from 'src/app/service/Provider/ElasticSearchFilterProvider.service';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -58,6 +59,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     private elasticSearchService: SearchService,
     private cdr: ChangeDetectorRef,
     private elasticSearchFilterProvider: FilterProvider,
+    private searchFilterProvider: SearchFilterProvider,
     private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>,
     private searchTermDetailsService: SearchTermDetailsService,
     private searchResultProviderService: SearchResultProvider,
