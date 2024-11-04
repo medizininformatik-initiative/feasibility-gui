@@ -5,10 +5,18 @@ import { ResultComponent } from './components/result/result.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'search', pathMatch: 'full', data: { animation: 'Search' } },
-  { path: 'editor', component: EditFeasibilityQueryComponent, data: { animation: 'Editor' } },
-  { path: 'result', component: ResultComponent, data: { animation: 'Result' } },
-  { path: 'search', component: FeasibilityQuerySearchComponent, data: { animation: 'Search' } },
+  { path: '', redirectTo: 'search', pathMatch: 'full', data: { animation: 'Feasibility_Search' } },
+  {
+    path: 'editor',
+    component: EditFeasibilityQueryComponent,
+    data: { animation: 'Feasibility_Editor' },
+  },
+  { path: 'result', component: ResultComponent, data: { animation: 'Feasibility_Result' } },
+  {
+    path: 'search',
+    component: FeasibilityQuerySearchComponent,
+    data: { animation: 'Feasibility_Search' },
+  },
 ];
 
 @NgModule({

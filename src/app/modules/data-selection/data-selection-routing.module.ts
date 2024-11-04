@@ -4,9 +4,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { SearchDataSelectionComponent } from './components/search/search.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'search', pathMatch: 'full', data: { animation: 'Search' } },
-  { path: 'search', component: SearchDataSelectionComponent, data: { animation: 'Search' } },
-  { path: 'editor', component: DisplayDataSelectionComponent, data: { animation: 'Editor' } },
+  {
+    path: '',
+    redirectTo: 'search',
+    pathMatch: 'full',
+    data: { animation: 'Data_Selection_Search' },
+  },
+  {
+    path: 'search',
+    component: SearchDataSelectionComponent,
+    data: { animation: 'Data_Selection_Search' },
+  },
+  {
+    path: 'editor',
+    component: DisplayDataSelectionComponent,
+    data: { animation: 'Data_Selection_Editor' },
+  },
 ];
 
 @NgModule({
