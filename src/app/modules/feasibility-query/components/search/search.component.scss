@@ -118,3 +118,7 @@
 .search-warning {
   color: red;
 }
+
+::ng-deep .mat-drawer-container {
+  height: 80%;
+}
