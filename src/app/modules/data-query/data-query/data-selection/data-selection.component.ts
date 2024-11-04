@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output, ElementRef } from '@angular/core';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
+import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { CRTDL2UIModelService } from 'src/app/service/Translator/CRTDL/CRTDL2UIModel.service';
 import { DataExtraction2UiDataSelectionService } from 'src/app/service/Translator/DataExtraction/DataExtraction2UiDataSelection.service';
@@ -22,6 +23,7 @@ export class DataSelectionComponent implements OnInit {
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
     private crdtlTranslatorService: CRTDL2UIModelService,
+    private downloadCRDTLService: DownloadCRDTLService,
     private dataExtraction2UiDataSelectionService: DataExtraction2UiDataSelectionService
   ) {}
 
@@ -49,7 +51,9 @@ export class DataSelectionComponent implements OnInit {
     this.navigationHelperService.navigateToDataSelectionSearch();
   }
 
-  public downloadDataSelection() {}
+  public downloadCRDTL(): void {
+    this.downloadCRDTLService.downloadActiveDataSelectionAsFile();
+  }
 
   public onFileSelected(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];

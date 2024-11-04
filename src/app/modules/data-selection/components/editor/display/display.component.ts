@@ -20,7 +20,6 @@ export class DisplayDataSelectionComponent implements OnInit {
   constructor(
     private dataSelectionProfileProvider: DataSelectionProfileProviderService,
     private dataSelectionProvider: DataSelectionProviderService,
-    private downloadCRDTLService: DownloadCRDTLService,
     private navigationHelperService: NavigationHelperService,
     private test1: TerminologySystemProvider
   ) {}
@@ -44,10 +43,6 @@ export class DisplayDataSelectionComponent implements OnInit {
             )
         )
       );
-  }
-
-  public downloadCRDTL(): void {
-    this.downloadCRDTLService.downloadActiveFeasibilityQueryAsFile();
   }
 
   public navigateToDataSelectionSearch(): void {

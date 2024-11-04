@@ -12,7 +12,7 @@ export class DownloadCRDTLService {
     private fileSaverService: FileSaverService
   ) {}
 
-  public downloadActiveFeasibilityQueryAsFile(filename?: string) {
+  public downloadActiveDataSelectionAsFile(filename?: string) {
     this.createCRDTLService
       .createCRDTL()
       .subscribe((crdtl) => {
