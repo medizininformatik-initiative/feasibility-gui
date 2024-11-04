@@ -29,6 +29,8 @@ export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() searchText = '';
   @Output() searchTextChange = new EventEmitter();
 
+  showWarning = false;
+
   currentText = '';
 
   ngOnInit(): void {
@@ -39,13 +41,13 @@ export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
     this.subscriptions.add(
       this.searchForm
         .get('query')
-        .valueChanges.pipe(
-          debounceTime(this.debounceTime),
-          filter((value) => value.length >= this.minLength || value.length === 0)
-        )
+        .valueChanges.pipe(debounceTime(this.debounceTime))
         .subscribe((value) => {
           this.currentText = value;
-          this.searchTextChange.emit(value);
+          this.showWarning = value.length > 0 && value.length < this.minLength;
+          if (value.length >= this.minLength || value.length === 0) {
+            this.searchTextChange.emit(value);
+          }
         })
     );
   }

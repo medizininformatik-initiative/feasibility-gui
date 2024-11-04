@@ -224,6 +224,7 @@
     },
     "HEADER_TITLE": "Selected Criteria",
     "SEARCH": {
+      "MIN_LENGTH":"Required length of 3 letters",
       "BUTTON":{
         "RESET": "Reset filter"
       },

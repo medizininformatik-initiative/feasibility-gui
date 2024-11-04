@@ -144,6 +144,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   public startElasticSearch(searchtext: string) {
     this.searchtext = searchtext;
+    this.elasticSearchService.setActiveSearchTerm(searchtext);
     this.elasticSearchService.searchCriteria(searchtext).subscribe();
   }
 

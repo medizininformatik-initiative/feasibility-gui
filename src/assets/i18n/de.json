@@ -225,6 +225,7 @@
     },
     "HEADER_TITLE": "Ausgewählte Kriterien",
     "SEARCH": {
+      "MIN_LENGTH":"Bitte mindestens 3 Buchstaben eingeben",
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden um die Fallzahl deutschlandweit zu ermitteln.",
       "SEARCH_BUTTON": "Suchen",
       "SEARCHBAR":"Suchen nach Begriff oder Terminologiecode",
