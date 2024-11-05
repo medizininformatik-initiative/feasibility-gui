@@ -154,7 +154,9 @@
         "UPLOAD": "Datenanfrage hochladen",
         "NEW_DATASELECTION":"Neue Dataselektion",
         "JUMP_TO_COHORT_SELECTION": "zur Kohortenselektion"
-      }
+      },
+      "EMPTY":"Sie haben noch keine Datenselektion definiert. Laden Sie eine existierende Datenselektion oder kreieren Sie eine neue Datenselektion"
+
     }
   },
   "LANGUAGE": {

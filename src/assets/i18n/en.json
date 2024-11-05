@@ -155,7 +155,8 @@
         "UPLOAD": "Upload Data Request",
         "NEW_DATASELECTION": "New data selection",
         "JUMP_TO_COHORT_SELECTION": "To Cohort selection"
-      }
+      },
+      "EMPTY": "You have not defined a dataselection yet. Upload an existing dataselection or create a new one."
     }
   },
   "LANGUAGE": {

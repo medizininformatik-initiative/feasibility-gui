@@ -27,6 +27,11 @@
       {{ 'DATASELECTION.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
+  <div *ngIf="!isDataSelectionExistent" class="empty-data-selection-box">
+    <div class="empty-text-align">
+      {{ 'DATAQUERY.DATASELECTION.EMPTY' | translate }}
+    </div>
+  </div>
   <num-display-profiles [isEditable]="false"></num-display-profiles>
   <num-action-bar class="bottom">
     <num-button class="margin-right-10" (click)="createNewDataSelection()" type="green">
