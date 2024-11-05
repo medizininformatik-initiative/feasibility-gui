@@ -4,7 +4,7 @@ import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/Re
 import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SearchService } from 'src/app/service/Search/Search.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
@@ -39,8 +39,12 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   arrayOfSelectedReferences: selectedItem[] = [];
 
+  searchText$: Observable<string>;
+
+  searchResultsFound = false;
+
   constructor(
-    private elasticSearchService: SearchService,
+    private searchService: SearchService,
     private searchResultProviderService: SearchResultProvider,
     private selectedTableItemsService: SelectedTableItemsService<ReferenceCriteriaListEntry>
   ) {}
@@ -53,8 +57,14 @@ export class ReferenceComponent implements OnInit, OnDestroy {
         if (searchTermResults) {
           this.listItems = searchTermResults.results;
           this.adaptedData = ReferenceCriteriaListEntryAdapter.adapt(this.listItems);
+          if (this.adaptedData.body.rows.length > 0) {
+            this.searchResultsFound = true;
+          } else {
+            this.searchResultsFound = false;
+          }
         }
       });
+    this.searchText$ = this.searchService.getActiveSearchTerm();
     this.handleSelectedItemsSubscription();
   }
 
@@ -92,10 +102,9 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   startElasticSearch(searchtext: string) {
     if (this.referenceFilterUri?.length > 0) {
-      this.elasticSearchService
+      this.searchService
         .searchCriteriaSets(searchtext, this.referenceFilterUri)
         .subscribe((test) => {
-          console.log(test);
           this.listItems = test.results;
         });
     } else {

@@ -6,9 +6,10 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { SearchService } from 'src/app/service/Search/Search.service';
 
 @Component({
   selector: 'num-concept-filter-table',
@@ -32,7 +33,10 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
 
   private subscription2: Subscription = new Subscription();
 
+  searchText$: Observable<string>;
+
   constructor(
+    private searchService: SearchService,
     private conceptElasticSearchService: SearchResultProvider,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
   ) {}
@@ -43,7 +47,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
       .subscribe((results) => {
         this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
       });
-
+    this.searchText$ = this.searchService.getActiveSearchTerm();
     this.subscription = this.selectedConceptProviderService.getSelectedConcepts().subscribe(() => {
       this.updateCheckboxSelection();
     });

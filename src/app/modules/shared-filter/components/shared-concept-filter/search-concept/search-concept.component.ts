@@ -33,7 +33,6 @@ export class SearchConceptComponent implements OnDestroy, OnInit {
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
-
     this.searchSubscription = this.conceptFilterSearchService
       .searchCodeableConcepts(searchtext, this.valueSetUrl, this.conceptFilterId)
       .subscribe(

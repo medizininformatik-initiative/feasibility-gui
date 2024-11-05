@@ -11,6 +11,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { SearchService } from 'src/app/service/Search/Search.service';
 
 @Component({
   selector: 'num-searchbar',
@@ -20,7 +21,7 @@ import {
 export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
   private readonly debounceTime = 200;
   searchForm: UntypedFormGroup;
-  constructor() {}
+  constructor(private searchService: SearchService) {}
 
   private subscriptions = new Subscription();
 
@@ -46,6 +47,7 @@ export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
           this.currentText = value;
           this.showWarning = value.length > 0 && value.length < this.minLength;
           if (value.length >= this.minLength || value.length === 0) {
+            this.searchService.setActiveSearchTerm(value);
             this.searchTextChange.emit(value);
           }
         })

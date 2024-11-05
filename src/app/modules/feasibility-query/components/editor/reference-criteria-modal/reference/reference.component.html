@@ -8,6 +8,10 @@
     [searchTermResultList]="listItems"
     (selectedRow)="setSelectedRowItem($event)"
   ></num-table>
+  <num-placeholder-box class="no-results-text" *ngIf="!searchResultsFound"
+    >{{ 'QUERYBUILDER.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+    >"</num-placeholder-box
+  >
   <button
     *ngIf="isTableItemsSelected"
     mat-raised-button
