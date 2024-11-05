@@ -10,7 +10,7 @@
       />
     </form>
   </div>
-  <span *ngIf="showWarning" class="search-warning">
+  <span [style.visibility]="showWarning ? 'visible' : 'hidden'" class="search-warning">
     {{ 'QUERYBUILDER.SEARCH.MIN_LENGTH' | translate }}
   </span>
 </div>
