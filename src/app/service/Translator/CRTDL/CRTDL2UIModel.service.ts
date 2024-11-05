@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
 import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { map } from 'rxjs';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
 import { StructuredQuery2FeasibilityQueryService } from '../StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { ValidationService } from '../../Validation.service';
 
@@ -28,7 +27,6 @@ export class CRTDL2UIModelService {
             dataSelection,
             true
           );
-          this.dataSelectionProvider.getActiveDataSelection().subscribe((test) => console.log(test));
         })
       )
       .subscribe();

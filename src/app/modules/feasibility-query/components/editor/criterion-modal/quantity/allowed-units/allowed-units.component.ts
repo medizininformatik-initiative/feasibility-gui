@@ -28,8 +28,6 @@ export class AllowedUnitsComponent implements OnInit, OnChanges {
   selectedUnitDisplay: string;
 
   ngOnInit() {
-    //this.updateSelectedUnit();
-    console.log(this.selectedUnit);
     this.selectedUnitDisplay = this.selectedUnit.getDisplay();
   }
 
