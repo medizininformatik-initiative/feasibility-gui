@@ -11,9 +11,10 @@ import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
 import { MaterialModule } from 'src/app/layout/material/material.module';
+import { DownloadCohortComponent } from './data-query/cohort-definition/download-cohort/download-cohort.component';
 
 @NgModule({
-  declarations: [CohortDefinitionComponent, DataSelectionComponent],
+  declarations: [CohortDefinitionComponent, DataSelectionComponent, DownloadCohortComponent],
   exports: [],
   imports: [
     DataQueryRoutingModule,

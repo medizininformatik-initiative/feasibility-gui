@@ -144,6 +144,9 @@
         "JUMP_TO_DATASELECTION": "zur Datenselektion",
         "SEND_QUERY": "Machbarkeitsanfrage"
       },
+      "SAVE": {
+        "HEADER": "Aktuelle Kohorte herunterladen"
+      },
       "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
     },
     "DATASELECTION": {
@@ -154,6 +157,9 @@
         "UPLOAD": "Datenanfrage hochladen",
         "NEW_DATASELECTION":"Neue Dataselektion",
         "JUMP_TO_COHORT_SELECTION": "zur Kohortenselektion"
+      },
+      "SAVE": {
+        "HEADER": "Aktuelle Datenselektion herunterladen"
       },
       "EMPTY":"Sie haben noch keine Datenselektion definiert. Laden Sie eine existierende Datenselektion oder kreieren Sie eine neue Datenselektion"
 

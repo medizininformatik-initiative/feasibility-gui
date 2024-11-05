@@ -145,6 +145,9 @@
         "SEND_QUERY": "Feasibility Query"
 
       },
+      "SAVE": {
+        "HEADER": "Download current Cohort"
+      },
       "EMPTY": "You have not defined a cohort yet. Upload an existing cohort or create a new one."
     },
     "DATASELECTION": {
@@ -155,6 +158,9 @@
         "UPLOAD": "Upload Data Request",
         "NEW_DATASELECTION": "New data selection",
         "JUMP_TO_COHORT_SELECTION": "To Cohort selection"
+      },
+      "SAVE": {
+        "HEADER": "Download current Dataselection"
       },
       "EMPTY": "You have not defined a dataselection yet. Upload an existing dataselection or create a new one."
     }

@@ -15,27 +15,31 @@ export class DownloadCCDLService {
     private feasibilityQueryProviderService: FeasibilityQueryProviderService
   ) {}
 
-  public downloadActiveFeasibilityQueryAsFile() {
+  public downloadActiveFeasibilityQueryAsFile(filename?: string) {
     this.feasibilityQueryProviderService
       .getActiveFeasibilityQuery()
       .subscribe((feasibilityQuery) => {
         if (feasibilityQuery.getInclusionCriteria().length > 0) {
           this.fileSaverService.save(
             this.createFileData(feasibilityQuery),
-            this.createFilename() + '.json'
+            this.createFilename(filename) + '.json'
           );
         }
       })
       .unsubscribe();
   }
 
-  private createFilename(): string {
-    const filename =
-      'CCDL_' +
-      new Date().toLocaleDateString('de-DE') +
-      '_' +
-      new Date().toLocaleTimeString('de-DE');
-    return filename;
+  private createFilename(fileName?: string): string {
+    if (fileName?.length > 0) {
+      return fileName;
+    } else {
+      const filename =
+        'CCDL_' +
+        new Date().toLocaleDateString('de-DE') +
+        '_' +
+        new Date().toLocaleTimeString('de-DE');
+      return filename;
+    }
   }
 
   private createFileData(feasibilityQuery: FeasibilityQuery) {

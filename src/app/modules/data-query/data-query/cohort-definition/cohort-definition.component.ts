@@ -1,13 +1,15 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ConsentService } from '../../../../service/Consent/Consent.service';
 import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 import { StructuredQuery2FeasibilityQueryService } from 'src/app/service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from 'src/app/service/Validation.service';
-import { ConsentService } from '../../../../service/Consent/Consent.service';
+import { DownloadCohortComponent } from './download-cohort/download-cohort.component';
 
 @Component({
   selector: 'num-cohort-definition',
@@ -24,13 +26,13 @@ export class CohortDefinitionComponent implements OnInit {
 
   constructor(
     private routerHelperService: NavigationHelperService,
-    private downloadCCDLService: DownloadCCDLService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
     private validationService: ValidationService,
     private resultProviderService: ResultProviderService,
     private navigationHelperService: NavigationHelperService,
-    private consentService: ConsentService
+    private consentService: ConsentService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -99,7 +101,9 @@ export class CohortDefinitionComponent implements OnInit {
   }
 
   public doDownloadQuery() {
-    this.downloadCCDLService.downloadActiveFeasibilityQueryAsFile();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    this.dialog.open(DownloadCohortComponent, dialogConfig);
   }
 
   public editFeasibilityQuery() {
