@@ -1,6 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConsentService } from '../../../../service/Consent/Consent.service';
-import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';

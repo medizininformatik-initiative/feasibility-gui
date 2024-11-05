@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output, ElementRef } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
@@ -6,6 +7,7 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { CRTDL2UIModelService } from 'src/app/service/Translator/CRTDL/CRTDL2UIModel.service';
 import { DataExtraction2UiDataSelectionService } from 'src/app/service/Translator/DataExtraction/DataExtraction2UiDataSelection.service';
 import { v4 as uuidv4 } from 'uuid';
+import { DownloadDataSelectionComponent } from './download-data-selection/download-data-selection.component';
 
 @Component({
   selector: 'num-data-selection',
@@ -24,6 +26,7 @@ export class DataSelectionComponent implements OnInit {
     private navigationHelperService: NavigationHelperService,
     private crdtlTranslatorService: CRTDL2UIModelService,
     private downloadCRDTLService: DownloadCRDTLService,
+    private dialog: MatDialog,
     private dataExtraction2UiDataSelectionService: DataExtraction2UiDataSelectionService
   ) {}
 
@@ -52,7 +55,9 @@ export class DataSelectionComponent implements OnInit {
   }
 
   public downloadCRDTL(): void {
-    this.downloadCRDTLService.downloadActiveDataSelectionAsFile();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    this.dialog.open(DownloadDataSelectionComponent, dialogConfig);
   }
 
   public onFileSelected(event: Event): void {

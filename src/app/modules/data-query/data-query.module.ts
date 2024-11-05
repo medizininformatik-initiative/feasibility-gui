@@ -12,9 +12,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
 import { MaterialModule } from 'src/app/layout/material/material.module';
 import { DownloadCohortComponent } from './data-query/cohort-definition/download-cohort/download-cohort.component';
+import { DownloadDataSelectionComponent } from './data-query/data-selection/download-data-selection/download-data-selection.component';
 
 @NgModule({
-  declarations: [CohortDefinitionComponent, DataSelectionComponent, DownloadCohortComponent],
+  declarations: [
+    CohortDefinitionComponent,
+    DataSelectionComponent,
+    DownloadCohortComponent,
+    DownloadDataSelectionComponent,
+  ],
   exports: [],
   imports: [
     DataQueryRoutingModule,
