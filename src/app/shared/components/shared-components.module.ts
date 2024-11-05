@@ -32,6 +32,7 @@ import { LogicSwitchComponent } from './logic-switch/logic-switch.component';
 import { DisplayTranslationPipe } from '../pipes/DisplayTranslationPipe ';
 import { SnackbarComponent } from './snack-bar/snackbar.component';
 import { BreadcrumbComponent } from './breadcrumbs/breadcrumbs.component';
+import { PlaceholderBoxComponent } from './placeholder-box/placeholder-box.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -57,6 +58,7 @@ const SHARED_DECLARATIONS = [
   TreeComponent,
   ValueSelectComponent,
   BreadcrumbComponent,
+  PlaceholderBoxComponent,
 ];
 
 @NgModule({
@@ -81,6 +83,7 @@ const SHARED_DECLARATIONS = [
     ValueSelectComponent,
     LogicSwitchComponent,
     BreadcrumbComponent,
+    PlaceholderBoxComponent,
   ],
   imports: [
     DisplayTranslationPipe,

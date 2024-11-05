@@ -1,0 +1,26 @@
+.placeholder-box {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #666;
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.placeholder-icon {
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+.placeholder-content {
+  font-size: 1.5em;
+  color: #666;
+  text-align: center;
+}
