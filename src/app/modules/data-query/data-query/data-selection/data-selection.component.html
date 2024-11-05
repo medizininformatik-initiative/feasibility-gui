@@ -28,9 +28,9 @@
     </num-header-description>
   </div>
   <div *ngIf="!isDataSelectionExistent" class="empty-data-selection-box">
-    <div class="empty-text-align">
+    <num-placeholder-box>
       {{ 'DATAQUERY.DATASELECTION.EMPTY' | translate }}
-    </div>
+    </num-placeholder-box>
   </div>
   <num-display-profiles [isEditable]="false"></num-display-profiles>
   <num-action-bar class="bottom">

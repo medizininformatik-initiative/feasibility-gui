@@ -229,6 +229,7 @@
       "BUTTON":{
         "RESET": "Reset filter"
       },
+      "EMPTY":"Sorry we couldn't find any results for ",
       "SEARCH_BUTTON": "Search",
       "HEADER": "Criteria Search",
       "SEARCHBAR":"Search by term or terminology code",

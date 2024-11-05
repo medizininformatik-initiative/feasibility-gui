@@ -53,6 +53,8 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   searchText: Observable<string>;
 
+  searchResultsFound = false;
+
   constructor(
     public elementRef: ElementRef,
     private filterService: SearchFilterService,
@@ -72,6 +74,11 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
         if (searchTermResults) {
           this.listItems = searchTermResults.results;
           this.adaptedData = SearchTermListEntryAdapter.adapt(searchTermResults.results);
+          if (this.adaptedData.body.rows.length > 0) {
+            this.searchResultsFound = true;
+          } else {
+            this.searchResultsFound = false;
+          }
           this.selectedTableItemsService
             .getSelectedTableItems()
             .pipe(

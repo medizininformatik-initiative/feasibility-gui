@@ -235,6 +235,7 @@
       "BUTTON": {
         "RESET": "Filter zurücksetzen"
       },
+      "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
       "LABEL": "Code oder Suchbegriff eingeben",

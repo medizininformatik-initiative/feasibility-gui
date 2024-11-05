@@ -44,9 +44,9 @@
   >
   </num-display-feasibility-query>
   <div *ngIf="!isFeasibilityExistent" class="empty-cohort-box">
-    <div class="empty-text-align">
+    <num-placeholder-box>
       {{ 'DATAQUERY.COHORT.EMPTY' | translate }}
-    </div>
+    </num-placeholder-box>
   </div>
   <num-action-bar class="bottom">
     <num-button (click)="createNewCohort()" type="green">
