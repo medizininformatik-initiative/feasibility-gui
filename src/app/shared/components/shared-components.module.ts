@@ -33,6 +33,7 @@ import { DisplayTranslationPipe } from '../pipes/DisplayTranslationPipe ';
 import { SnackbarComponent } from './snack-bar/snackbar.component';
 import { BreadcrumbComponent } from './breadcrumbs/breadcrumbs.component';
 import { PlaceholderBoxComponent } from './placeholder-box/placeholder-box.component';
+import { SaveFileModalComponent } from './save-file-modal/save-file-modal.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -59,6 +60,7 @@ const SHARED_DECLARATIONS = [
   ValueSelectComponent,
   BreadcrumbComponent,
   PlaceholderBoxComponent,
+  SaveFileModalComponent,
 ];
 
 @NgModule({
@@ -84,6 +86,7 @@ const SHARED_DECLARATIONS = [
     LogicSwitchComponent,
     BreadcrumbComponent,
     PlaceholderBoxComponent,
+    SaveFileModalComponent,
   ],
   imports: [
     DisplayTranslationPipe,
