@@ -1,5 +1,6 @@
 export interface SearchFilter {
   filterType: string
+  selectedValues: string[]
   data: SearchFilterValues[]
 }
 

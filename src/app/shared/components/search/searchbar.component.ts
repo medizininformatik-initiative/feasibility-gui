@@ -19,7 +19,7 @@ import { SearchService } from 'src/app/service/Search/Search.service';
   styleUrls: ['./searchbar.component.scss'],
 })
 export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
-  private readonly debounceTime = 200;
+  private readonly debounceTime = 300;
   searchForm: UntypedFormGroup;
   constructor(private searchService: SearchService) {}
 

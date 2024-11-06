@@ -1,8 +1,8 @@
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
+import { SearchFilter, SearchFilterValues } from './InterfaceSearchFilter';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
-import { SearchFilter, SearchFilterValues } from './InterfaceSearchFilter';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 
 export class CriteriaSearchFilterAdapter {
   public static convertToFilterValues(filter: SearchTermFilter): SearchFilter {
@@ -14,6 +14,7 @@ export class CriteriaSearchFilterAdapter {
 
     return {
       filterType: filter.getName().toUpperCase(),
+      selectedValues: filter.getSelectedValues(),
       data: searchFilterValues,
     };
   }

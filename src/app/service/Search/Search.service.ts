@@ -14,6 +14,8 @@ import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchR
 export class SearchService {
   private activeSearchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
+  private activeCriteriaSearchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   constructor(
     private criteriaSearchService: CriteriaSearchEngineService,
     private criteriaSetSearchService: CriteriaSetSearchEngineService,
@@ -25,12 +27,19 @@ export class SearchService {
     return this.activeSearchTermSubject.asObservable();
   }
 
+  public getActiveCriteriaSearchTerm(): Observable<string> {
+    return this.activeCriteriaSearchTermSubject.asObservable();
+  }
+
+  public setActiveCriteriaSearchTerm(searchText: string) {
+    this.activeCriteriaSearchTermSubject.next(searchText);
+  }
+
   public setActiveSearchTerm(newSearchTerm: string): void {
     this.activeSearchTermSubject.next(newSearchTerm);
   }
 
   public searchCriteria(searchText: string): Observable<SearchTermResultList> {
-    this.setActiveSearchTerm(searchText);
     return this.criteriaSearchService.search(searchText);
   }
 
@@ -43,7 +52,7 @@ export class SearchService {
 
   public searchCodeableConcepts(
     searchText: string,
-    valueSetUrl: string,
+    valueSetUrl: string[],
     conceptFilterId: string
   ): Observable<CodeableConceptResultList> {
     return this.codeableConceptSearchService.search(searchText, valueSetUrl, conceptFilterId);

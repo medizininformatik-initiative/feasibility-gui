@@ -19,7 +19,9 @@ export class SearchFilterComponent implements OnInit {
   translatedLabel: { translatedSystem: string; count: number; url: string }[] = [];
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.selectedValues = this.filter.selectedValues;
+  }
 
   onSelectionChange(): void {
     const filterType =

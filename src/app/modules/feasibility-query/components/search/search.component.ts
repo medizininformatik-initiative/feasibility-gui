@@ -1,17 +1,21 @@
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { map, Observable, of, Subscription, take } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
+import { SearchFilterService } from 'src/app/service/Search/Filter/SearchFilter.service';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
+import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
+import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import { map, Observable, Subscription, switchMap, take } from 'rxjs';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -23,11 +27,6 @@ import {
   ViewContainerRef,
   TemplateRef,
 } from '@angular/core';
-import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
-import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SearchFilterService } from 'src/app/service/Search/Filter/SearchFilter.service';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
-import { SearchFilterProvider } from 'src/app/service/Provider/ElasticSearchFilterProvider.service';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -51,17 +50,20 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   searchFilters$: Observable<SearchFilter[]>;
 
-  searchText: Observable<string>;
+  searchText$: Observable<string>;
 
   searchResultsFound = false;
+
+  searchSubscription: Subscription;
+
+  searchWithFilterSubscription: Subscription;
 
   constructor(
     public elementRef: ElementRef,
     private filterService: SearchFilterService,
-    private elasticSearchService: SearchService,
+    private searchService: SearchService,
     private cdr: ChangeDetectorRef,
-    private elasticSearchFilterProvider: FilterProvider,
-    private searchFilterProvider: SearchFilterProvider,
+    private searchFilterProvider: FilterProvider,
     private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>,
     private searchTermDetailsService: SearchTermDetailsService,
     private searchResultProviderService: SearchResultProvider,
@@ -100,9 +102,16 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.selectedDetails$ = this.searchTermDetailsProviderService.getSearchTermDetails$();
     this.handleSelectedItemsSubscription();
     this.getElasticSearchFilter();
-    this.searchText = this.elasticSearchService.getActiveSearchTerm();
-    this.elasticSearchService.searchCriteria(' ').subscribe();
-    this.startElasticSearch('');
+    this.searchText$ = this.searchService.getActiveCriteriaSearchTerm();
+    this.searchSubscription = this.searchService
+      .getActiveCriteriaSearchTerm()
+      .pipe(
+        switchMap((searchText) => {
+          this.searchtext = searchText;
+          return this.searchService.searchCriteria(searchText || '');
+        })
+      )
+      .subscribe();
   }
 
   ngAfterViewInit() {
@@ -112,6 +121,8 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+    this.searchSubscription?.unsubscribe();
+    this.searchWithFilterSubscription?.unsubscribe();
   }
 
   public rerender() {
@@ -150,8 +161,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   public startElasticSearch(searchtext: string) {
-    this.searchtext = searchtext;
-    this.elasticSearchService.searchCriteria(searchtext).subscribe();
+    this.searchService.setActiveCriteriaSearchTerm(searchtext);
   }
 
   public setSelectedRowItem(item: InterfaceTableDataRow) {
@@ -171,6 +181,39 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
       .subscribe(() => this.openSidenav());
   }
 
+  public getElasticSearchFilter(): void {
+    this.searchFilters$ = this.filterService.fetchFilters().pipe(
+      map((searchFilters: SearchTermFilter[]) =>
+        searchFilters.map((searchFilter) => {
+          searchFilter.setSelectedValues(
+            this.searchFilterProvider.getSelectedValuesOfType(searchFilter.getName())
+          );
+          return CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter);
+        })
+      )
+    );
+  }
+
+  public setElasticSearchFilter(filter: any) {
+    this.searchWithFilterSubscription?.unsubscribe();
+    const newFilter = new SearchTermFilter(filter.type, []);
+    newFilter.setSelectedValues(filter.values);
+    this.searchFilterProvider.setFilter(newFilter);
+    this.searchService.searchCriteria(this.searchtext).subscribe();
+  }
+
+  public resetFilter(): void {
+    this.searchText$.pipe(take(1)).subscribe((searchText: string) => {
+      this.searchFilterProvider.resetSelectedValuesOfType();
+      this.searchService.searchCriteria(searchText).subscribe({
+        next: () => {
+          this.rerender();
+        },
+        error: (err) => console.error('Search failed', err),
+      });
+    });
+  }
+
   openSidenav() {
     if (this.sidenav) {
       this.isOpen = true;
@@ -183,36 +226,5 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
       this.isOpen = false;
       this.sidenav.close();
     }
-  }
-
-  public getElasticSearchFilter(): void {
-    this.searchFilters$ = this.filterService
-      .fetchFilters()
-      .pipe(
-        map((searchFilters: SearchTermFilter[]) =>
-          searchFilters.map((searchFilter) =>
-            CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
-          )
-        )
-      );
-  }
-
-  public setElasticSearchFilter(filter: any) {
-    const newFilter = new SearchTermFilter(filter.type, []);
-    newFilter.setSelectedValues(filter.values);
-    this.elasticSearchFilterProvider.setFilter(newFilter);
-    this.startElasticSearch(this.searchtext);
-  }
-
-  public resetFilter(): void {
-    this.searchText.pipe(take(1)).subscribe((searchText: string) => {
-      this.elasticSearchFilterProvider.resetSelectedValuesOfType();
-      this.elasticSearchService.searchCriteria(searchText).subscribe({
-        next: () => {
-          this.rerender();
-        },
-        error: (err) => console.error('Search failed', err),
-      });
-    });
   }
 }

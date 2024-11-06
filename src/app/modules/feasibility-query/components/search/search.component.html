@@ -8,7 +8,7 @@
   <div fxLayout="row" fxLayoutAlign="start start" class="searchbar-div">
     <num-searchbar
       fxFlex="50"
-      [searchText]="searchText | async"
+      [searchText]="searchText$ | async"
       [label]="'QUERYBUILDER.SEARCH.SEARCHBAR'"
       class="padding-right-1 width-100"
       (searchTextChange)="startElasticSearch($event)"
@@ -54,7 +54,7 @@
   </mat-drawer-container>
   <div *ngIf="!searchResultsFound" class="no-results-box">
     <num-placeholder-box class="no-results-text"
-      >{{ 'QUERYBUILDER.SEARCH.EMPTY' | translate }} "<strong>{{ searchText | async }}</strong
+      >{{ 'QUERYBUILDER.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
       >"</num-placeholder-box
     >
   </div>
