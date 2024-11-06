@@ -31,7 +31,7 @@ export class ConceptComponent implements OnInit {
   public emitConceptFilter(selectedConcepts: TerminologyCode[]) {
     const newConceptFilter = new ConceptFilter(
       uuidv4(),
-      this.conceptFilter.getAllowedConceptUri(),
+      this.conceptFilter.getAllowedConceptUrls(),
       selectedConcepts
     );
     this.changedConceptFilter.emit(newConceptFilter);

@@ -13,7 +13,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 })
 export class SharedConceptFilterComponent implements OnInit, OnDestroy {
   @Input()
-  valueSetUrl: string;
+  valueSetUrl: string[];
 
   @Input()
   conceptFilterId: string;

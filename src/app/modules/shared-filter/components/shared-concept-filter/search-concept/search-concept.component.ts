@@ -11,7 +11,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 })
 export class SearchConceptComponent implements OnDestroy, OnInit {
   @Input()
-  valueSetUrl: string;
+  valueSetUrl: string[];
 
   @Input()
   conceptFilterId: string;
@@ -22,7 +22,7 @@ export class SearchConceptComponent implements OnDestroy, OnInit {
   constructor(private conceptFilterSearchService: SearchService) {}
 
   ngOnInit(): void {
-    this.startElasticSearch('');
+    this.startElasticSearch(' ');
   }
   /**
    * Initiates a search and handles the results.

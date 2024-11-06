@@ -12,7 +12,7 @@
       *ngIf="conceptFilter"
       [conceptFilterId]="conceptFilter.getId()"
       [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
-      [valueSetUrl]="conceptFilter.getAllowedConceptUri()"
+      [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
       (changedSelectedConcepts)="emitConceptFilter($event)"
     >
     </num-shared-concept-filter>

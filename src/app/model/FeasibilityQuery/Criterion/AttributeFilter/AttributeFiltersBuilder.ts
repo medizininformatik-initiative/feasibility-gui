@@ -121,7 +121,7 @@ export class AttributeFiltersBuilder {
     allowedConceptUri: string,
     selectedConcepts?: Array<TerminologyCode>
   ) {
-    return new ConceptFilter(id, allowedConceptUri, selectedConcepts);
+    return new ConceptFilter(id, [allowedConceptUri], selectedConcepts);
   }
 
   /**

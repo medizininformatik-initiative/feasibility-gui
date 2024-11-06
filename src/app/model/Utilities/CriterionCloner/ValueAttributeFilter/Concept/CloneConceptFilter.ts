@@ -13,6 +13,10 @@ export class CloneConceptFilter {
     const copiedSelectedConcepts = CloneTerminologyCode.deepCopyTerminologyCodes(
       conceptFilter.getSelectedConcepts()
     );
-    return new ConceptFilter(uuidv4(), conceptFilter.getAllowedConceptUri(), copiedSelectedConcepts);
+    return new ConceptFilter(
+      uuidv4(),
+      conceptFilter.getAllowedConceptUrls(),
+      copiedSelectedConcepts
+    );
   }
 }

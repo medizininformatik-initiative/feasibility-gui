@@ -20,7 +20,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   codeableConceptResultList: CodeableConceptResultList;
 
   @Input()
-  valueSetUrl: string;
+  valueSetUrl: string[];
 
   @Input()
   conceptFilterId: string;

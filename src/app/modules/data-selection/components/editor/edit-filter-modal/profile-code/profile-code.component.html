@@ -4,7 +4,7 @@
   </num-section-name>
   <num-shared-concept-filter
     [conceptFilterId]="profileCodeFilter?.getId()"
-    [valueSetUrl]="profileCodeFilter?.getValueSetUrls()[0]"
+    [valueSetUrl]="profileCodeFilter?.getValueSetUrls()"
     [preSelectedConcepts]="profileCodeFilter?.getSelectedTokens()"
     (changedSelectedConcepts)="emitProfileCode($event)"
   >
