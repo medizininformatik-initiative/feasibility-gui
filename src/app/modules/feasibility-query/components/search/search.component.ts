@@ -67,8 +67,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>,
     private searchTermDetailsService: SearchTermDetailsService,
     private searchResultProviderService: SearchResultProvider,
-    private searchTermDetailsProviderService: SearchTermDetailsProviderService,
-    private terminology: TerminologySystemProvider
+    private searchTermDetailsProviderService: SearchTermDetailsProviderService
   ) {
     this.subscription = this.searchResultProviderService
       .getCriteriaSearchResults()

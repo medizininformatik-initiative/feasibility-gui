@@ -5,17 +5,38 @@ import { ResultComponent } from './components/result/result.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'search', pathMatch: 'full', data: { animation: 'Feasibility_Search' } },
+  {
+    path: '',
+    redirectTo: 'search',
+    pathMatch: 'full',
+    data: {
+      animation: 'Feasibility_Search',
+      title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
+    },
+  },
   {
     path: 'editor',
     component: EditFeasibilityQueryComponent,
-    data: { animation: 'Feasibility_Editor' },
+    data: {
+      animation: 'Feasibility_Editor',
+      title: 'TAB_TITLE.FEASIBILITY_QUERY.EDITOR',
+    },
   },
-  { path: 'result', component: ResultComponent, data: { animation: 'Feasibility_Result' } },
+  {
+    path: 'result',
+    component: ResultComponent,
+    data: {
+      animation: 'Feasibility_Result',
+      title: 'TAB_TITLE.FEASIBILITY_QUERY.RESULT',
+    },
+  },
   {
     path: 'search',
     component: FeasibilityQuerySearchComponent,
-    data: { animation: 'Feasibility_Search' },
+    data: {
+      animation: 'Feasibility_Search',
+      title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
+    },
   },
 ];
 

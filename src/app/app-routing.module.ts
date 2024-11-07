@@ -16,6 +16,7 @@ export const routes: Routes = [
       roles: ['main'],
       breadcrumb: 'Data Query',
       animation: 'HomePage',
+      title: 'Data Query',
     },
     loadChildren: () =>
       import(
@@ -30,6 +31,7 @@ export const routes: Routes = [
       roles: ['main'],
       breadcrumb: 'Query Builder',
       animation: 'FeasibilityQueryPage',
+      title: 'Feasibility Query',
     },
     loadChildren: () =>
       import(
@@ -44,26 +46,13 @@ export const routes: Routes = [
       roles: ['option'],
       breadcrumb: 'Options',
       animation: 'OptionsPage',
+      title: 'Options',
     },
     loadChildren: () =>
       import(/* webpackChunkName: "Options.Module" */ './modules/options/options.module').then(
         (m) => m.OptionsModule
       ),
   },
-  //  {
-  //    path: 'result',
-  //    canLoad: [RoleGuard],
-  //    data: {
-  //      navId: 'result',
-  //      roles: ['main'],
-  //      breadcrumb: 'Result',
-  //      animation: 'ResultPage',
-  //    },
-  //    loadChildren: () =>
-  //      import(
-  //        /* webpackChunkName: "Result.Module" */ './modules/feasibility-query/feasibility-query.module'
-  //      ).then((m) => m.FeasibilityQueryModule),
-  //  },
   {
     path: 'data-selection',
     canLoad: [RoleGuard],
@@ -72,6 +61,7 @@ export const routes: Routes = [
       roles: ['main'],
       breadcrumb: 'Data Selection',
       animation: 'DataSelectionPage',
+      title: 'Data Selection',
     },
     loadChildren: () =>
       import(
@@ -86,6 +76,7 @@ export const routes: Routes = [
       roles: ['main'],
       breadcrumb: 'Saved Queries',
       animation: 'SavedQueriesPage',
+      title: 'Saved Queries',
     },
     loadChildren: () =>
       import(
@@ -98,6 +89,7 @@ export const routes: Routes = [
     data: {
       breadcrumb: 'Data Protection',
       animation: 'DataProtectionPage',
+      title: 'Data Protection',
     },
   },
   { path: '', redirectTo: 'data-query', pathMatch: 'full' },

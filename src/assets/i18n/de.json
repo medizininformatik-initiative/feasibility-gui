@@ -393,6 +393,21 @@
     "SAVEQUERY": "Abfrage speichern",
     "VALIDATE": "Validieren"
   },
+  "TAB_TITLE": {
+    "DATA_QUERY": {
+      "COHORT_DEFINITION": "Datenabfrage - Kohortendefinition",
+      "DATA_SELECTION": "Datenabfrage - Datenselektion"
+    },
+    "DATA_SELECTION": {
+    "SEARCH": "Datenselektion - Suche",
+    "EDITOR": "Datenselektion - Editor"
+    },
+    "FEASIBILITY_QUERY": {
+      "SEARCH": "Machbarkeitsabfrage - Suche",
+      "EDITOR": "Machbarkeitsabfrage - Editor",
+      "RESULT": "Machbarkeitsabfrage - Ergebnis"
+    }
+  },
   "ERROR": {
     "FEAS-10001": "Ihr Benutzer wurde wegen zu vielen Anfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
     "FEAS-10005"  :"Die Anzahl der Standorte die geantwortet haben ist zu klein -> Detailergebnis wird nicht angezeigt",
