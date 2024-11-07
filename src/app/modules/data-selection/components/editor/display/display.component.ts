@@ -21,7 +21,7 @@ export class DisplayDataSelectionComponent implements OnInit {
     private dataSelectionProfileProvider: DataSelectionProfileProviderService,
     private dataSelectionProvider: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
-    private test1: TerminologySystemProvider
+    private terminologySystemProvider: TerminologySystemProvider
   ) {}
 
   ngOnInit(): void {

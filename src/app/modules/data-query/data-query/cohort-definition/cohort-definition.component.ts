@@ -9,6 +9,7 @@ import { StructuredQuery2FeasibilityQueryService } from 'src/app/service/Transla
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from 'src/app/service/Validation.service';
 import { DownloadCohortComponent } from './download-cohort/download-cohort.component';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
   selector: 'num-cohort-definition',
@@ -31,7 +32,8 @@ export class CohortDefinitionComponent implements OnInit {
     private resultProviderService: ResultProviderService,
     private navigationHelperService: NavigationHelperService,
     private consentService: ConsentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private terminologySystemProvider: TerminologySystemProvider
   ) {}
 
   ngOnInit() {

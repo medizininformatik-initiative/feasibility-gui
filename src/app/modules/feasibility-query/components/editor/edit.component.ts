@@ -11,7 +11,10 @@ import { TabTitleService } from 'src/app/service/TabTitle.service';
 })
 export class EditFeasibilityQueryComponent implements OnInit {
   query: FeasibilityQuery;
-  constructor(public queryService: FeasibilityQueryProviderService) {}
+  constructor(
+    private terminologySystemProvider: TerminologySystemProvider,
+    public queryService: FeasibilityQueryProviderService
+  ) {}
 
   ngOnInit(): void {
     this.queryService.getActiveFeasibilityQuery().subscribe((query) => {

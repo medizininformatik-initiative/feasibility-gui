@@ -59,6 +59,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   searchWithFilterSubscription: Subscription;
 
   constructor(
+    private terminologySystemProvider: TerminologySystemProvider,
     public elementRef: ElementRef,
     private filterService: SearchFilterService,
     private searchService: SearchService,
