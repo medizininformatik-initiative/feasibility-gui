@@ -25,7 +25,14 @@ export class SelectedDataSelectionProfileFieldsService {
   public setSelectedFields(fields: ProfileFields[]): void {
     this.selectedFields.next(fields);
     this.fieldIds.clear();
-    fields.forEach((field) => this.fieldIds.add(field.getId()));
+    this.setSelectedChildrenFields(fields);
+  }
+
+  public setSelectedChildrenFields(fields: ProfileFields[]) {
+    fields.forEach((field) => {
+      this.fieldIds.add(field.getId());
+      this.setSelectedChildrenFields(field.getChildren());
+    });
   }
 
   /**

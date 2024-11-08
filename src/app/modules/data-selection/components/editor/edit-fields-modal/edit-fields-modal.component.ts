@@ -50,10 +50,15 @@ export class EditFieldsModalComponent implements OnInit {
   }
 
   private setInitialArrayOfSelectedFields(fields: ProfileFields[]) {
+    this.setSelectedChildrenFields(fields);
+  }
+
+  public setSelectedChildrenFields(fields: ProfileFields[]) {
     fields.forEach((field) => {
       if (field.getIsSelected()) {
         this.selectedDataSelectionProfileFieldsService.addToSelection(field);
       }
+      this.setSelectedChildrenFields(field.getChildren());
     });
   }
 
