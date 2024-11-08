@@ -4,8 +4,10 @@ import { Subject } from 'rxjs';
 export enum ErrorCodes {
   FEAS_10001 = 'FEAS-10001',
   FEAS_10002 = 'FEAS-10002',
+  FEAS_10003 = 'FEAS-10003',
   FEAS_10004 = 'FEAS-10004',
   FEAS_10005 = 'FEAS-10005',
+  FEAS_10006 = 'FEAS-10006',
   VAL_20001 = 'VAL-20001',
   SITE_NOT_FOUND = '404',
 }

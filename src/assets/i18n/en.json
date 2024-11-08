@@ -410,6 +410,7 @@
     "FEAS-10002"  : "You sent too many queries, please wait {{RETRY_AFTER}} seconds and try again",
     "FEAS-10004"  : "The number of sites which answered is too small -> detailed results are not shown",
     "FEAS-10005"  : "The result size is too small -> result will not be shown",
+    "FEAS-10006"  : "Saved query limit reached. Please delete old saved queries before trying to create new ones.",
     "404" :        "Site not found",
     "VAL-20001"   :"The combination of context and termcode(s) is not found"
   },

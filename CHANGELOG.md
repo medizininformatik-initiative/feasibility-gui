@@ -10,7 +10,7 @@
 * renamed file and folder names: querybuilder is now feasibility-query
 
 ### Feature
-*implemented a new snackbar notification system to display error messages
+* implemented a new snackbar notification system to display error messages
 * added animations for routing between pages
 * introduced a stepper component for the data-query page
 * removed the dashboard and set the Data Request page as the default start page ([#260](https://github.com/medizininformatik-initiative/feasibility-gui/issues/260))
