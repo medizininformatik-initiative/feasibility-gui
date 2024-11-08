@@ -41,7 +41,7 @@ export class DataSelection2DataExtraction {
 
   private translateAttributes(fields: ProfileFields[]): Attributes[] {
     fields.forEach((field) => {
-      if (field.getIsSelected()) {
+      if (field.getIsSelected() || field.getIsRequired()) {
         this.attributes.push(this.translateAttribute(field));
       }
       if (field.getChildren().length > 0) {

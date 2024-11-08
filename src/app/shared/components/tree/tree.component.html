@@ -6,7 +6,7 @@
       <div>
         <mat-checkbox
           *ngIf="node.data.selectable"
-          [disabled]="!node.data.selectable"
+          [disabled]="!node.data.isDisabled"
           [checked]="node?.data.isCheckboxSelected"
           (change)="checkboxSelected(node)"
           [style.marginLeft]="calcMarginLeftCheckbox(level)"

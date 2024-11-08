@@ -7,6 +7,7 @@ export class ProfileFields {
   private children: ProfileFields[] = [];
   private isSelected = false;
   private isRequired = false;
+  private recommended = false;
 
   constructor(
     id: string,
@@ -14,7 +15,8 @@ export class ProfileFields {
     description: DisplayData,
     children: ProfileFields[] = [],
     isSelected: boolean = false,
-    isRequired: boolean = false
+    isRequired: boolean = false,
+    recommended: boolean
   ) {
     this.id = id;
     this.display = display;
@@ -22,6 +24,7 @@ export class ProfileFields {
     this.children = children;
     this.isSelected = isSelected;
     this.isRequired = isRequired;
+    this.recommended = recommended;
   }
 
   public getId(): string {
@@ -70,5 +73,13 @@ export class ProfileFields {
 
   public setIsRequired(value: boolean): void {
     this.isRequired = value;
+  }
+
+  public getRecommended(): boolean {
+    return this.recommended;
+  }
+
+  public setRecommended(recommended: boolean): void {
+    this.recommended = recommended;
   }
 }

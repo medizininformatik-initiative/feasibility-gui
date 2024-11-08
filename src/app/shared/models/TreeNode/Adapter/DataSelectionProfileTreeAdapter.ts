@@ -21,6 +21,7 @@ export class DataSelectionTreeAdapter {
             leaf: node.getLeaf(),
             selectable: node.getSelectable(),
             isCheckboxSelected: false,
+            isDisabled: node.getSelectable(),
           },
           children: DataSelectionTreeAdapter.toTreeNode(node.getChildren()),
           originalEntry: node,

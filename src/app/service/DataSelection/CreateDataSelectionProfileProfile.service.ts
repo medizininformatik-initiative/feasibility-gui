@@ -29,6 +29,7 @@ export class CreateDataSelectionProfileService {
         data.map((item: any) => {
           const fields = this.mapNodes(item.fields);
           const filters = this.createFilters(item.filters);
+          console.log(this.instanceOfDataSelectionProfileProfile(item, fields, filters));
           return this.instanceOfDataSelectionProfileProfile(item, fields, filters);
         })
       )
@@ -83,7 +84,8 @@ export class CreateDataSelectionProfileService {
       this.instantiateDisplayData(node.description),
       children,
       node.isSelected || false,
-      node.isRequired || false
+      node.isRequired || false,
+      node.recommended
     );
   }
 
