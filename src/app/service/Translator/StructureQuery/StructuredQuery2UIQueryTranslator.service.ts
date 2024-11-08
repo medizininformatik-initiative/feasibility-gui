@@ -88,6 +88,7 @@ export class StructuredQuery2UIQueryTranslatorService {
 
     this.applyTimeRestrictionIfPresent(structuredQueryCriterion, criterion);
     this.processAttributeFilters(structuredQueryCriterion.attributeFilters, criterion);
+    this.processValueFilter(structuredQueryCriterion.valueFilter, criterion);
   }
 
   private applyTimeRestrictionIfPresent(structuredQueryCriterion, criterion) {
@@ -120,6 +121,10 @@ export class StructuredQuery2UIQueryTranslatorService {
           attributeFilter.getAttributeCode().getSystem() ===
             structuredQueryAttributeFilter.attributeCode.system
       );
+  }
+
+  private processValueFilter(StructuredQueryValueFilter, criterion) {
+    this.handleFilterByType(criterion.getValueFilters()[0], StructuredQueryValueFilter, criterion);
   }
 
   private handleFilterByType(foundAttributeFilter, structuredQueryAttributeFilter, criterion) {
