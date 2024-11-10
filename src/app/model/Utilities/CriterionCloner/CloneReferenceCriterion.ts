@@ -43,6 +43,7 @@ export class CloneAbstractCriterion {
     criterionHash: string
     display: string
     isInvalid: boolean
+    isRequiredFilterSet: boolean
     uniqueID: string
     termCodes: Array<TerminologyCode>
   } {
@@ -59,6 +60,7 @@ export class CloneAbstractCriterion {
       criterionHash,
       display,
       isInvalid: abstractCriterion.getIsInvalid(),
+      isRequiredFilterSet: abstractCriterion.getIsRequiredFilterSet(),
       uniqueID: uuidv4(),
       termCodes,
     };

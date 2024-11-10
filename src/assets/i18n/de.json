@@ -9,6 +9,9 @@
     "patient_number": "Anzahl der Patienten",
     "Display": "Name",
     "Terminology Code": "Terminologie-Code",
+    "CRITERIA_BOX": {
+      "REQUIRED_FILTER": "Bitte einen Filter setzen"
+    },
     "ACTIONBAR": {
         "SELECTED_CRITERIA": {
           "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt",

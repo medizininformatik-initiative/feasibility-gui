@@ -69,6 +69,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
     criterionHash: string
     display: string
     isInvalid: boolean
+    isRequiredFilterSet: boolean
     uniqueID: string
     termCodes: Array<TerminologyCode>
   } {
@@ -76,13 +77,14 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
     const termCodes = criterion.getTermCodes();
     const display = criterion.getTermCodes()[0].getDisplay();
     const criterionHash = this.criterion.getCriterionHash();
-
+    const isRequiredFilterSet = this.setIsFilterRequired(criterion);
     return {
       isReference: false,
       context,
       criterionHash,
       display,
       isInvalid: true,
+      isRequiredFilterSet,
       uniqueID: criterion.getId(),
       termCodes,
     };
@@ -90,5 +92,24 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  private setIsFilterRequired(criterion: Criterion): boolean {
+    return (
+      criterion
+        .getValueFilters()
+        .filter(
+          (valueFilter) =>
+            !valueFilter.getOptional() &&
+            valueFilter.getConcept()?.getSelectedConcepts().length <= 0
+        ).length > 0 ||
+      this.criterion
+        .getAttributeFilters()
+        .filter(
+          (attributeFilter) =>
+            !attributeFilter.getOptional() &&
+            attributeFilter.getConcept()?.getSelectedConcepts().length <= 0
+        ).length > 0
+    );
   }
 }

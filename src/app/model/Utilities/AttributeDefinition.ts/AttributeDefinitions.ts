@@ -10,7 +10,7 @@ export class AttributeDefinitions extends AbstractAttributeDefinition {
   constructor(
     name: string,
     type: FilterTypes,
-    optional: boolean = false,
+    optional: boolean,
     allowedUnits: Array<QuantityUnit> = [],
     attributeCode?: TerminologyCode,
     max?: number,

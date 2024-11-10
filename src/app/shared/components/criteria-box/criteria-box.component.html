@@ -6,9 +6,13 @@
   class="container"
 >
   <div class="content">
-    <div matTooltipPosition="below" [matTooltip]="criterion.getTermCodes()[0].getDisplay()" class="title-section">
+    <div
+      matTooltipPosition="below"
+      [matTooltip]="criterion.getTermCodes()[0].getDisplay()"
+      class="title-section"
+    >
       {{ criterion.getTermCodes()[0].getDisplay() }}
-      </div>
+    </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
       <div class="info-item">
         {{ criterion.getContext().getDisplay() }}, {{ criterion.getTermCodes()[0].getCode() }},
@@ -16,6 +20,13 @@
       </div>
     </div>
     <div class="filter-chips-container">
+      <div *ngIf="isFilterRequired" fxLayout="row" fxLayoutAlign="start center">
+        <img src="assets/img/alert.png" class="img-layout" />
+        <span class="warning-message">
+          {{ 'SHAREDCOMPONENTS.CRITERIA_BOX.REQUIRED_FILTER' | translate }}
+        </span>
+      </div>
+
       <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
     </div>
   </div>

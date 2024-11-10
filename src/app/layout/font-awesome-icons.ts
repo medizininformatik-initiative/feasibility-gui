@@ -1,4 +1,9 @@
-import { faAngleDoubleLeft, faExclamation, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleDoubleLeft,
+  faExclamation,
+  faExclamationTriangle,
+  faFolderOpen,
+} from '@fortawesome/free-solid-svg-icons';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
@@ -117,4 +122,5 @@ export const FONT_AWESOME_ICONS = [
   faFileImage,
   faFolderOpen,
   faExclamation,
+  faExclamationTriangle,
 ];

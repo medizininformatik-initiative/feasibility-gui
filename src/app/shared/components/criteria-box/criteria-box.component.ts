@@ -27,6 +27,8 @@ export class CriteriaBoxComponent implements OnInit {
 
   system: string;
 
+  isFilterRequired: boolean;
+
   constructor(
     private menuService: CriterionMenuItems,
     private filterChipsService: CriterionFilterChipService
@@ -38,6 +40,7 @@ export class CriteriaBoxComponent implements OnInit {
     );
     this.getMenuItems();
     this.getFilterChips();
+    this.isFilterRequired = this.setIsFilterRequired();
   }
 
   private getMenuItems() {
@@ -52,5 +55,24 @@ export class CriteriaBoxComponent implements OnInit {
     return this.criterion
       .getAttributeFilters()
       .some((attributeFilter) => attributeFilter.isReferenceSet());
+  }
+
+  private setIsFilterRequired(): boolean {
+    return (
+      this.criterion
+        .getValueFilters()
+        .filter(
+          (valueFilter) =>
+            !valueFilter.getOptional() &&
+            valueFilter.getConcept()?.getSelectedConcepts().length <= 0
+        ).length > 0 ||
+      this.criterion
+        .getAttributeFilters()
+        .filter(
+          (attributeFilter) =>
+            !attributeFilter.getOptional() &&
+            attributeFilter.getConcept()?.getSelectedConcepts().length <= 0
+        ).length > 0
+    );
   }
 }

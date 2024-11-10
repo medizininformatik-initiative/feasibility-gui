@@ -107,7 +107,7 @@ export class CreateCriterionService {
         new ValueDefinition(
           uiProfile.name,
           uiProfile.valueDefinition.type,
-          uiProfile.valueDefinition.optional,
+          false, //uiProfile.valueDefinition.optional,
           uiProfile.valueDefinition.allowedUnits?.map(
             (unit) => new QuantityUnit(unit.code, unit.display, unit.system)
           ) || [],
@@ -160,6 +160,7 @@ export class CreateCriterionService {
     criterionHash: string
     display: string
     isInvalid: boolean
+    isRequiredFilterSet: boolean
     uniqueID: string
     termCodes: Array<TerminologyCode>
   } {
@@ -167,6 +168,7 @@ export class CreateCriterionService {
     const termCodes = criteriaProfileData.getTermCodes();
     const display = criteriaProfileData.getTermCodes()[0].getDisplay();
     const criterionHash = this.criterionHashService.createHash(context, termCodes[0]);
+    const isFilterRequired = !this.setIsRequiredFilterSet(criteriaProfileData);
 
     return {
       isReference: false,
@@ -174,9 +176,21 @@ export class CreateCriterionService {
       criterionHash,
       display,
       isInvalid: true,
+      isRequiredFilterSet: isFilterRequired,
       uniqueID: uuidv4(),
       termCodes,
     };
+  }
+
+  private setIsRequiredFilterSet(criteriaProfileData: CriteriaProfileData) {
+    return (
+      criteriaProfileData
+        .getAttributeDefinitions()
+        .filter((attributeDefinition) => !attributeDefinition.getOptional()).length > 0 ||
+      criteriaProfileData
+        .getValueDefinitions()
+        .filter((valueDefinition) => !valueDefinition.getOptional()).length > 0
+    );
   }
 
   private processAttributeDefinition(

@@ -19,6 +19,9 @@
         "PLURAL": "You have added {{amount}} criteria to the stage"
       }
     },
+    "CRITERIA_BOX": {
+      "REQUIRED_FILTER": "Please set a filter"
+    },
     "FILTER": {
       "CONTEXT": "Context",
       "AVAILABILITY": "Availability",

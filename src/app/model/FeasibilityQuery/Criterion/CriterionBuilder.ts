@@ -23,6 +23,7 @@ export class CriterionBuilder {
   private criterionHash?: string;
   private display?: string;
   private isInvalid?: boolean;
+  private isRequiredFilterSet: boolean;
   private parentId: string;
   private position?: CritGroupPosition;
   private termCodes?: Array<TerminologyCode>;
@@ -37,6 +38,7 @@ export class CriterionBuilder {
       criterionHash: string
       display: string
       isInvalid: boolean
+      isRequiredFilterSet: boolean
       uniqueID: string
       termCodes: Array<TerminologyCode>
     }
@@ -45,6 +47,7 @@ export class CriterionBuilder {
     this.criterionHash = mandatoryFields.criterionHash;
     this.display = mandatoryFields.display;
     this.isInvalid = mandatoryFields.isInvalid;
+    this.isRequiredFilterSet = mandatoryFields.isRequiredFilterSet;
     this.uniqueID = mandatoryFields.uniqueID;
     this.termCodes = mandatoryFields.termCodes;
   }
@@ -145,6 +148,7 @@ export class CriterionBuilder {
       this.criterionHash,
       this.display,
       this.isInvalid,
+      this.isRequiredFilterSet,
       this.position,
       this.termCodes,
       this.timeRestriction,
@@ -167,6 +171,7 @@ export class CriterionBuilder {
       this.criterionHash,
       this.display,
       this.isInvalid,
+      this.isRequiredFilterSet,
       this.position,
       this.termCodes,
       this.timeRestriction,

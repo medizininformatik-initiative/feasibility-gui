@@ -3,6 +3,7 @@ import { CriterionHashService } from '../CriterionHash.service';
 import { Injectable } from '@angular/core';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
+import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,7 @@ export class CriterionMetadataService {
     criterionHash: string
     display: string
     isInvalid: boolean
+    isRequiredFilterSet: boolean
     uniqueID: string
     termCodes: Array<TerminologyCode>
   } {
@@ -29,6 +31,7 @@ export class CriterionMetadataService {
     const termCodes = criteriaProfileData.getTermCodes();
     const display = termCodes[0].getDisplay();
     const criterionHash = this.criterionHashService.createHash(context, termCodes[0]);
+    const isFilterRequired = !this.setIsRequiredFilterSet(criteriaProfileData);
 
     return {
       isReference: false,
@@ -36,8 +39,20 @@ export class CriterionMetadataService {
       criterionHash,
       display,
       isInvalid: false,
+      isRequiredFilterSet: isFilterRequired,
       uniqueID: uuidv4(),
       termCodes,
     };
+  }
+
+  private setIsRequiredFilterSet(criteriaProfileData: CriteriaProfileData) {
+    return (
+      criteriaProfileData
+        .getAttributeDefinitions()
+        .filter((attributeDefinition) => !attributeDefinition.getOptional()).length > 0 ||
+      criteriaProfileData
+        .getValueDefinitions()
+        .filter((valueDefinition) => !valueDefinition.getOptional()).length > 0
+    );
   }
 }
