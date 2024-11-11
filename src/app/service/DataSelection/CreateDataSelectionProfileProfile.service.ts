@@ -29,7 +29,6 @@ export class CreateDataSelectionProfileService {
         data.map((item: any) => {
           const fields = this.mapNodes(item.fields);
           const filters = this.createFilters(item.filters);
-          console.log(this.instanceOfDataSelectionProfileProfile(item, fields, filters));
           return this.instanceOfDataSelectionProfileProfile(item, fields, filters);
         })
       )
@@ -91,10 +90,23 @@ export class CreateDataSelectionProfileService {
 
   private instantiateDisplayData(data: any) {
     return new DisplayData(
-      data.original,
+      this.checkValuesForTypeString(data.original),
       data.translations?.map(
-        (translation) => new Translation(translation.language, translation.value)
+        (translation) =>
+          new Translation(translation.language, this.checkValuesForTypeString(translation.value))
       )
     );
+  }
+
+  private checkValuesForTypeString(value: string | string[]): string[] {
+    if (typeof value == 'string') {
+      if (value.length > 0) {
+        return [value];
+      } else {
+        return [];
+      }
+    } else {
+      return value;
+    }
   }
 }

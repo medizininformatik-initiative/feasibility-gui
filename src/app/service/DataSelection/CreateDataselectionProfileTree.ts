@@ -18,7 +18,6 @@ export class DataSelectionProfileTreeService {
       map((response) => {
         const rootNode = this.createNode(response.children);
         const treeRoot = this.createTreeRoot(profileTreeData, rootNode);
-        console.log(rootNode);
         return new DataSelectionProfileTree(treeRoot, rootNode);
       })
     );
@@ -55,10 +54,23 @@ export class DataSelectionProfileTreeService {
 
   private instantiateDisplayData(data: any) {
     return new DisplayData(
-      data.original,
+      this.checkValuesForTypeString(data.original),
       data.translations?.map(
-        (translation) => new Translation(translation.language, translation.value)
+        (translation) =>
+          new Translation(translation.language, this.checkValuesForTypeString(translation.value))
       )
     );
+  }
+
+  private checkValuesForTypeString(value: string | string[]): string[] {
+    if (typeof value == 'string') {
+      if (value.length > 0) {
+        return [value];
+      } else {
+        return [];
+      }
+    } else {
+      return value;
+    }
   }
 }

@@ -26,7 +26,6 @@ export class CodeableConceptSearchEngineService {
   ): Observable<CodeableConceptResultList> {
     const resultMapper = this.getMapping();
     const url = this.createUrl(searchText, valueSetUrl);
-    console.log(url);
     return this.searchResultProcessorService.fetchAndMapSearchResults(url, resultMapper).pipe(
       map((result) => {
         this.searchResultSetter.setCodeableConceptSearchResults(result, conceptFilterId);

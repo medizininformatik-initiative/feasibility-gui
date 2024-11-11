@@ -24,7 +24,6 @@ export class DataExtraction2UiDataSelectionService {
    * @param dataExtraction
    */
   public translate(dataExtraction: any): Observable<DataSelection> {
-    console.log(dataExtraction);
     if (dataExtraction.attributeGroups?.length > 0) {
       const urls = dataExtraction.attributeGroups.map(
         (attributeGroup) => attributeGroup.groupReference
