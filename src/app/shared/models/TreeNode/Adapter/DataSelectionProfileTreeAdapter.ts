@@ -16,6 +16,7 @@ export class DataSelectionTreeAdapter {
           data: {
             name: node.getName(),
             display: node.getDisplay(),
+            displayFieldsInfo: node.getDisplayFieldsInfo(),
             module: node.getModule(),
             url: node.getUrl(),
             leaf: node.getLeaf(),

@@ -8,7 +8,7 @@ export class DisplayData {
     this.translations = translations;
   }
 
-  public getOriginnal(): string {
+  public getOriginal(): string {
     return this.original;
   }
 
@@ -18,6 +18,6 @@ export class DisplayData {
 
   public translate(language: string): string {
     const translation = this.translations.find((t) => t.getLanguage().split('-')[0] === language);
-    return translation && translation.getValue() ? translation.getValue() : this.original;
+    return translation && translation.getValue().length > 0 ? translation.getValue() : this.original;
   }
 }

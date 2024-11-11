@@ -18,6 +18,7 @@ export class DataSelectionProfileTreeService {
       map((response) => {
         const rootNode = this.createNode(response.children);
         const treeRoot = this.createTreeRoot(profileTreeData, rootNode);
+        console.log(rootNode);
         return new DataSelectionProfileTree(treeRoot, rootNode);
       })
     );
@@ -39,6 +40,7 @@ export class DataSelectionProfileTreeService {
             child.id,
             child.name,
             this.instantiateDisplayData(child.display),
+            this.instantiateDisplayData(child.fields),
             child.module,
             child.url,
             child.leaf,

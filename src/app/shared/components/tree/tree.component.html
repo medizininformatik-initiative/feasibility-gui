@@ -39,7 +39,14 @@
         >
         <div *ngIf="node.data.description" class="field-description">
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
-            ({{ node.data.description | displayTranslation }})
+            ({{ node.data.description | displayTranslation }}) ({{
+              node.data.displayFieldsInfo | displayTranslation
+            }})
+          </span>
+        </div>
+        <div *ngIf="node.data.selectable" class="field-description">
+          <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
+            {{ node.data.displayFieldsInfo | displayTranslation }}
           </span>
         </div>
       </div>

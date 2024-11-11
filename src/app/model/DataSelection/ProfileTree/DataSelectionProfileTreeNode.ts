@@ -4,6 +4,7 @@ export class DataSelectionProfileTreeNode {
   private id: string;
   private name: string;
   private display: DisplayData;
+  private displayFieldsInfo: DisplayData;
   private description: DisplayData;
   private module: string;
   private url: string;
@@ -15,6 +16,7 @@ export class DataSelectionProfileTreeNode {
     id: string,
     name: string,
     display: DisplayData,
+    displayFieldsInfo: DisplayData,
     module: string,
     url: string,
     leaf: boolean,
@@ -24,6 +26,7 @@ export class DataSelectionProfileTreeNode {
     this.id = id;
     this.name = name;
     this.display = display;
+    this.displayFieldsInfo = displayFieldsInfo;
     this.module = module;
     this.url = url;
     this.leaf = leaf;
@@ -55,7 +58,14 @@ export class DataSelectionProfileTreeNode {
     this.display = display;
   }
 
-  // Getter and setter for `module`
+  public getDisplayFieldsInfo(): DisplayData {
+    return this.displayFieldsInfo;
+  }
+
+  public setDisplayFieldsInfo(displayFieldsInfo: DisplayData): void {
+    this.displayFieldsInfo = displayFieldsInfo;
+  }
+
   public getModule(): string {
     return this.module;
   }

@@ -11,6 +11,9 @@ export class DisplayTranslationPipe implements PipeTransform {
   constructor(private translateService: TranslateService) {}
 
   transform(display: DisplayData): string {
+    if (!display) {
+      return '';
+    }
     const currentLang = this.translateService.currentLang;
     return display.translate(currentLang);
   }
