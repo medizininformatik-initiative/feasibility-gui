@@ -18,7 +18,7 @@ import { QueryResultLine } from '../model/Result/QueryResultLine';
 import { ResultProviderService } from './Provider/ResultProvider.service';
 import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
 import { FeasibilityQueryProviderService } from './Provider/FeasibilityQueryProvider.service';
-import { ErrorCodes, SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
+import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
 import { BackendService } from '../modules/feasibility-query/service/backend.service';
 
 @Injectable({
@@ -139,7 +139,7 @@ export class FeasibilityQueryResultService {
           this.resultProvider.setResultByID(queryResult, queryResult.getId());
           return queryResult;
         } else {
-          this.snackbar.displayErrorMessage(ErrorCodes[result.issues[0].code]);
+          this.snackbar.displayErrorMessage(result.issues[0].code);
         }
       })
     );
@@ -153,7 +153,7 @@ export class FeasibilityQueryResultService {
           this.resultProvider.setResultByID(queryResult, queryResult.getId());
           return queryResult;
         } else {
-          this.snackbar.displayErrorMessage(ErrorCodes[result.issues[0].code]);
+          this.snackbar.displayErrorMessage(result.issues[0].code);
         }
       })
     );

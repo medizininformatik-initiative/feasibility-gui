@@ -60,7 +60,7 @@ export class SnackbarService {
   }
 
   private getErrorCodeEnum(errorCode: string): ErrorCodes | undefined {
-    const normalizedCode = errorCode.replace(/-/g, '_') as keyof typeof ErrorCodes;
+    const normalizedCode = errorCode?.replace(/-/g, '_') as keyof typeof ErrorCodes;
     return ErrorCodes[normalizedCode];
   }
 }

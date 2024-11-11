@@ -55,11 +55,11 @@ export class DashboardComponent implements OnInit {
   }
 
   public navigateToDataQueryEditor() {
-    this.navigationHelperService.navigateToDataQueryEditor();
+    this.navigationHelperService.navigateToDataQueryCohortDefinition();
   }
 
   public navigateToQueryBuilderEditor() {
-    this.navigationHelperService.navigateToQueryBuilderEditor(false);
+    this.navigationHelperService.navigateToFeasibilityQueryEditor();
   }
 
   public navigateToDataSelectionEditor() {

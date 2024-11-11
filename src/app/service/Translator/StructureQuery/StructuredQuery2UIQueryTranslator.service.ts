@@ -128,7 +128,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private handleFilterByType(foundAttributeFilter, structuredQueryAttributeFilter, criterion) {
-    const type = foundAttributeFilter.getFilterType();
+    const type = foundAttributeFilter?.getFilterType();
 
     switch (type) {
       case FilterTypes.CONCEPT:

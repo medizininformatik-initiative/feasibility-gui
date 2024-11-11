@@ -11,7 +11,7 @@ export class FeasibilityQueryResultDetailsListAdapter {
   };
 
   public static adapt(listEntries: FeasibilityQueryResultDetailstListEntry[]): TableData {
-    const rows: InterfaceTableDataRow[] = listEntries.map((entry) => ({
+    const rows: InterfaceTableDataRow[] = listEntries?.map((entry) => ({
       id: uuidv4(),
       data: [entry.getSiteName(), entry.getNumberOfPatients().toString()],
       hasCheckbox: false,
