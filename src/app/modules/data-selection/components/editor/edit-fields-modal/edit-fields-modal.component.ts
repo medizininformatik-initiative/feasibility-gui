@@ -26,6 +26,7 @@ export class EditFieldsModalComponent implements OnInit {
   tree: TreeNode[];
   profileName: DisplayData;
 
+  removeFieldDisabled = false;
   arrayOfSelectedFields: ProfileFields[] = [];
 
   constructor(
@@ -55,7 +56,7 @@ export class EditFieldsModalComponent implements OnInit {
 
   public setSelectedChildrenFields(fields: ProfileFields[]) {
     fields.forEach((field) => {
-      if (field.getIsSelected()) {
+      if (field.getIsSelected() || field.getIsRequired() || field.getRecommended()) {
         this.selectedDataSelectionProfileFieldsService.addToSelection(field);
       }
       this.setSelectedChildrenFields(field.getChildren());
@@ -82,19 +83,22 @@ export class EditFieldsModalComponent implements OnInit {
 
   private addNodeToSelectedFields(node: ProfileFields): void {
     this.selectedDataSelectionProfileFieldsService.addToSelection(node);
+    node.setRecommended(false);
     node.setIsSelected(true);
   }
 
   private removeNodeFromSelectedFields(node: ProfileFields): void {
-    this.selectedDataSelectionProfileFieldsService.removeFromSelection(node);
-    node.setIsSelected(false);
-    const fieldToUpdate = this.dataSelectionProfileProfileNode.find(
-      (field) => field.getId() === node.getId()
-    );
-    if (fieldToUpdate) {
-      fieldToUpdate.setIsSelected(false);
+    if (!node.getIsRequired()) {
+      this.selectedDataSelectionProfileFieldsService.removeFromSelection(node);
+      node.setIsSelected(false);
+      const fieldToUpdate = this.dataSelectionProfileProfileNode.find(
+        (field) => field.getId() === node.getId()
+      );
+      if (fieldToUpdate) {
+        fieldToUpdate.setIsSelected(false);
+      }
+      this.tree = FieldsTreeAdapter.fromTree(this.dataSelectionProfileProfileNode);
     }
-    this.tree = FieldsTreeAdapter.fromTree(this.dataSelectionProfileProfileNode);
   }
 
   public saveFields() {

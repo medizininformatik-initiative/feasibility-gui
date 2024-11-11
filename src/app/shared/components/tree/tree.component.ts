@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TreeNode } from '../../models/TreeNode/TreeNodeInterface';
 
 @Component({
@@ -52,7 +52,7 @@ export class TreeComponent implements OnInit {
     }
   }
   public checkboxSelected(node: TreeNode): void {
-    if (node.data.selectable) {
+    if (node.data.selectable && node.data.isDisabled) {
       node.data.isCheckboxSelected = !node.data.isCheckboxSelected;
       this.selectedCheckbox.emit(node);
     }
