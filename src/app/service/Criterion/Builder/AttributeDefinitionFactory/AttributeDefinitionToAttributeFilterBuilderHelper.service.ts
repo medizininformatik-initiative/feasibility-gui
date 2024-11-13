@@ -69,8 +69,8 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
   ): void {
     builder.withQuantity(
       new QuantityNotSet(
-        undefined,
         abstractAttributeDefinition.getAllowedUnits(),
+        undefined,
         abstractAttributeDefinition.getPrecision()
       )
     );

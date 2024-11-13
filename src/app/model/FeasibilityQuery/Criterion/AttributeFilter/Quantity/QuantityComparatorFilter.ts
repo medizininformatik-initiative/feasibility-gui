@@ -27,7 +27,7 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
     comparator: QuantityComparisonOption = QuantityComparisonOption.NONE,
     value: number | null = null
   ) {
-    super(selectedUnit, allowedUnits, precision);
+    super(allowedUnits, selectedUnit, precision);
     this.comparator = comparator;
     this.value = value;
   }

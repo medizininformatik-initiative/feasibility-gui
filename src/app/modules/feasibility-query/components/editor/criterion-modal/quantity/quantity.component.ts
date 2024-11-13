@@ -24,9 +24,9 @@ export class QuantityComponent implements OnInit {
   /**
    * UI conditions
    */
-  isBetweenFilter: boolean;
-  isComparatorFilter: boolean;
-  showAllowedUnits: boolean;
+  isQuantityNotSet = false;
+  isBetweenFilter = false;
+  isComparatorFilter = false;
 
   /**
    * QuantityFilter Instances
@@ -46,7 +46,6 @@ export class QuantityComponent implements OnInit {
     this.setupFactoryService();
     this.initializaFilterType();
     this.initializeUnit();
-    this.updateConditions();
     this.selectedQuantityFilterComparator = this.quantityFilter.getComparator();
   }
 
@@ -59,9 +58,14 @@ export class QuantityComponent implements OnInit {
     const type: FilterTypes = this.quantityFilter.getType();
     if (type === FilterTypes.QUANTITY_COMPARATOR) {
       this.quantityComparatorFilter = this.quantityFilter as QuantityComparatorFilter;
+      this.isComparatorFilter = true;
     }
     if (type === FilterTypes.QUANTITY_RANGE) {
       this.quantityRangeFilter = this.quantityFilter as QuantityRangeFilter;
+      this.isBetweenFilter = true;
+    }
+    if (type === FilterTypes.QUANTITY_NOT_SET) {
+      this.isQuantityNotSet = true;
     }
   }
 
@@ -73,22 +77,24 @@ export class QuantityComponent implements OnInit {
     }
   }
 
+  public setSelectedQuantityFilterOption(option: QuantityComparisonOption): void {
+    this.selectedQuantityFilterComparator =
+      QuantityComparisonOption[option as keyof typeof QuantityComparisonOption];
+    if (option === QuantityComparisonOption.NONE) {
+      const emptyQuantityFilter = this.quantityFilterFactoryService.createEmptyQuantityFilter();
+      this.updateConditions();
+      this.quantityFilterChange.emit(emptyQuantityFilter);
+    }
+    this.updateConditions();
+  }
+
   private updateConditions() {
     this.isBetweenFilter =
       this.selectedQuantityFilterComparator === QuantityComparisonOption.BETWEEN;
     this.isComparatorFilter =
       this.selectedQuantityFilterComparator !== QuantityComparisonOption.BETWEEN &&
       this.selectedQuantityFilterComparator !== QuantityComparisonOption.NONE;
-    this.showAllowedUnits = this.selectedQuantityFilterComparator !== QuantityComparisonOption.NONE;
-  }
-
-  public setSelectedQuantityFilterOption(option: QuantityComparisonOption): void {
-    this.selectedQuantityFilterComparator =
-      QuantityComparisonOption[option as keyof typeof QuantityComparisonOption];
-    if (option !== QuantityComparisonOption.NONE) {
-      const emptyQuantityFilter = this.quantityFilterFactoryService.createEmptyQuantityFilter();
-      this.quantityFilterChange.emit(emptyQuantityFilter);
-    }
+    this.isQuantityNotSet = this.selectedQuantityFilterComparator === QuantityComparisonOption.NONE;
   }
 
   public setSelectQuantityFilterUnit(selectedUnit: QuantityUnit) {

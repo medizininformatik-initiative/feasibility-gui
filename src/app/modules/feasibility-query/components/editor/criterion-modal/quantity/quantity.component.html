@@ -37,7 +37,7 @@
       </ng-container>
 
       <!-- Quantity Units-->
-      <ng-container *ngIf="showAllowedUnits">
+      <ng-container *ngIf="!isQuantityNotSet">
         <num-allowed-units
           [selectedUnit]="
             quantityFilter.getSelectedUnit()

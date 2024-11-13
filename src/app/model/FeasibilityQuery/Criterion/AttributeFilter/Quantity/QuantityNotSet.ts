@@ -18,7 +18,7 @@ export class QuantityNotSet extends AbstractQuantityFilter {
     allowedUnits: QuantityUnit[] = [],
     precision: number = 0
   ): QuantityNotSet {
-    return new QuantityNotSet(selectedUnit, allowedUnits, precision);
+    return new QuantityNotSet(allowedUnits, selectedUnit, precision);
   }
 
   /**

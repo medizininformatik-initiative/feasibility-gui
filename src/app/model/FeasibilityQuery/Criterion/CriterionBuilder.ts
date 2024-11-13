@@ -12,6 +12,7 @@ import { ReferenceCriterion } from './ReferenceCriterion';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
+import { ValueDefinition } from '../../Utilities/AttributeDefinition.ts/ValueDefnition';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
@@ -192,19 +193,22 @@ export class CriterionBuilder {
   buildAttributeFilter(
     display: string,
     filterType: FilterTypes,
-    filterParams: AbstractAttributeDefinition,
+    attributeDefinition: AttributeDefinitions,
     attributeCode?: TerminologyCode
   ): AbstractAttributeFilters {
     const attributeFilterBuilder = new AttributeFiltersBuilder(
       display,
-      filterParams.getOptional(),
+      attributeDefinition.getOptional(),
       filterType
     );
 
     switch (filterType) {
       case FilterTypes.CONCEPT:
         attributeFilterBuilder.withConcept(
-          attributeFilterBuilder.buildConceptFilter(uuidv4(), filterParams.getReferencedValueSet())
+          attributeFilterBuilder.buildConceptFilter(
+            uuidv4(),
+            attributeDefinition.getReferencedValueSet()
+          )
         );
         break;
       case FilterTypes.QUANTITY:
@@ -212,13 +216,12 @@ export class CriterionBuilder {
       case FilterTypes.QUANTITY_RANGE:
         attributeFilterBuilder.withQuantity(
           attributeFilterBuilder.buildQuantityFilter(
-            filterParams.getAllowedUnits(),
-            filterParams.getPrecision()
+            attributeDefinition.getAllowedUnits(),
+            attributeDefinition.getPrecision()
           )
         );
         break;
       case FilterTypes.REFERENCE:
-        const attributeDefinition = filterParams as AttributeDefinitions;
         attributeFilterBuilder.withReference(
           attributeFilterBuilder.buildReferenceFilter(
             uuidv4(),
@@ -231,6 +234,34 @@ export class CriterionBuilder {
     }
     this.buildTimeRestriction();
     return attributeFilterBuilder.withAttributeCode(attributeCode).buildAttributeFilter();
+  }
+
+  buildValueFilter(valueDefinition: ValueDefinition, display: string, filterType: FilterTypes) {
+    const valueFilterBuilder = new AttributeFiltersBuilder(
+      display,
+      valueDefinition.getOptional(),
+      filterType
+    );
+    switch (filterType) {
+      case FilterTypes.CONCEPT:
+        valueFilterBuilder.withConcept(
+          valueFilterBuilder.buildConceptFilter(uuidv4(), valueDefinition.getReferencedValueSet())
+        );
+        break;
+      case FilterTypes.QUANTITY:
+      case FilterTypes.QUANTITY_COMPARATOR:
+      case FilterTypes.QUANTITY_RANGE:
+        valueFilterBuilder.withQuantity(
+          valueFilterBuilder.buildQuantityFilter(
+            valueDefinition.getAllowedUnits(),
+            valueDefinition.getPrecision()
+          )
+        );
+        break;
+      default:
+        throw new Error(`Unsupported filter type: ${filterType}`);
+    }
+    return valueFilterBuilder.buildValueFilter();
   }
 
   buildTimeRestriction() {

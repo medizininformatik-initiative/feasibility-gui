@@ -113,7 +113,7 @@ export class AttributeFiltersBuilder {
     precision?: number,
     selectedUnit?: QuantityUnit
   ): QuantityNotSet {
-    return new QuantityNotSet(selectedUnit, allowedUnits, precision);
+    return new QuantityNotSet(allowedUnits, selectedUnit, precision);
   }
 
   buildConceptFilter(

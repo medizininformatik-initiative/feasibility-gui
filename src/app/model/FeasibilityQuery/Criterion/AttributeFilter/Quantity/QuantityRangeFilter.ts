@@ -28,7 +28,7 @@ export class QuantityRangeFilter extends AbstractQuantityFilter {
     minValue: number | null = null,
     maxValue: number | null = null
   ) {
-    super(selectedUnit, allowedUnits, precision);
+    super(allowedUnits, selectedUnit, precision);
     this.minValue = minValue;
     this.maxValue = maxValue;
   }

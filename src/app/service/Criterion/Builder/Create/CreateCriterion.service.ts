@@ -150,6 +150,7 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion: Criterion = criterionBuilder.buildCriterion();
+    console.log(criterion);
     this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
     this.stageProviderService.addCriterionToStage(criterion.getId());
   }
@@ -218,7 +219,7 @@ export class CreateCriterionService {
     const name = valueDefinition.getName();
     const type = valueDefinition.getType();
     criterionBuilder.withValueFilters([
-      criterionBuilder.buildAttributeFilter(name, type, valueDefinition) as ValueFilter,
+      criterionBuilder.buildValueFilter(valueDefinition, name, type) as ValueFilter,
     ]);
   }
 }

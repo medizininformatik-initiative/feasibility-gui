@@ -18,11 +18,7 @@ export abstract class AbstractQuantityFilter {
    * @param allowedUnits - The allowed quantity units.
    * @param precision - The precision of the quantity filter.
    */
-  constructor(
-    selectedUnit?: QuantityUnit,
-    allowedUnits: QuantityUnit[] = [],
-    precision: number = 0
-  ) {
+  constructor(allowedUnits: QuantityUnit[], selectedUnit?: QuantityUnit, precision: number = 0) {
     this.selectedUnit = selectedUnit;
     this.allowedUnits = allowedUnits;
     this.precision = precision;
@@ -82,7 +78,7 @@ export abstract class AbstractQuantityFilter {
     this.precision = precision;
   }
 
-  getComparator() {
+  getComparator(): QuantityComparisonOption {
     return this.comparator;
   }
 

@@ -53,6 +53,6 @@ export class QuantityFilterFactoryService {
   }
 
   public createEmptyQuantityFilter(): QuantityNotSet {
-    return new QuantityNotSet();
+    return new QuantityNotSet(this.allowedUnits);
   }
 }
