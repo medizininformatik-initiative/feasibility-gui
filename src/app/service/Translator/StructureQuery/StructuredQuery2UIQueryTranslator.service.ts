@@ -236,9 +236,12 @@ export class StructuredQuery2UIQueryTranslatorService {
       ),
       feasibilityQueryAttributeFilter.getQuantity().getAllowedUnits(),
       feasibilityQueryAttributeFilter.getQuantity().getPrecision(),
-      QuantityComparisonOption.EQUAL, //structuredQueryAttributeFilter.comparator,
+      feasibilityQueryAttributeFilter
+        .getQuantity()
+        .mapComparatorToQuantityComparison(structuredQueryAttributeFilter.comparator),
       structuredQueryAttributeFilter.value
     );
+    console.log(quantityRangeFilter);
     feasibilityQueryAttributeFilter.setQuantity(quantityRangeFilter);
   }
 

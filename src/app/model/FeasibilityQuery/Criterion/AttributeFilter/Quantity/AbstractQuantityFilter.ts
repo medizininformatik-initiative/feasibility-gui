@@ -1,6 +1,7 @@
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityUnit } from '../../../QuantityUnit';
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
+import { Comparator } from 'src/app/model/Utilities/Quantity/Comparator';
 
 /**
  * Abstract class representing a quantity filter.
@@ -80,6 +81,40 @@ export abstract class AbstractQuantityFilter {
 
   getComparator(): QuantityComparisonOption {
     return this.comparator;
+  }
+
+  public mapQuantityComparisonToComparator(option: QuantityComparisonOption): Comparator {
+    switch (option) {
+      case QuantityComparisonOption.NONE:
+        return Comparator.NONE;
+      case QuantityComparisonOption.EQUAL:
+        return Comparator.EQUAL;
+      case QuantityComparisonOption.LESS_THAN:
+        return Comparator.LESS_THAN;
+      case QuantityComparisonOption.GREATER_THAN:
+        return Comparator.GREATER_THAN;
+      case QuantityComparisonOption.BETWEEN:
+        return Comparator.BETWEEN;
+      default:
+        return Comparator.NONE;
+    }
+  }
+
+  public mapComparatorToQuantityComparison(comparator: Comparator): QuantityComparisonOption {
+    switch (comparator) {
+      case Comparator.NONE:
+        return QuantityComparisonOption.NONE;
+      case Comparator.EQUAL:
+        return QuantityComparisonOption.EQUAL;
+      case Comparator.LESS_THAN:
+        return QuantityComparisonOption.LESS_THAN;
+      case Comparator.GREATER_THAN:
+        return QuantityComparisonOption.GREATER_THAN;
+      case Comparator.BETWEEN:
+        return QuantityComparisonOption.BETWEEN;
+      default:
+        return QuantityComparisonOption.NONE;
+    }
   }
 
   abstract getType(): FilterTypes;
