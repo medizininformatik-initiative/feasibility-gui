@@ -241,7 +241,6 @@ export class StructuredQuery2UIQueryTranslatorService {
         .mapComparatorToQuantityComparison(structuredQueryAttributeFilter.comparator),
       structuredQueryAttributeFilter.value
     );
-    console.log(quantityRangeFilter);
     feasibilityQueryAttributeFilter.setQuantity(quantityRangeFilter);
   }
 
