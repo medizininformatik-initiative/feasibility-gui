@@ -32,7 +32,7 @@
         </div>
         <div>
           <mat-checkbox
-            [checked]="selectedField.getIsRequired()"
+            [checked]="selectedField.getMustHave()"
             (change)="setFieldAsRequired(selectedField)"
           >
             {{ 'DATASELECTION.FIELD_SELECTION.REQUIRED' | translate }}

@@ -84,7 +84,8 @@ export class CreateDataSelectionProfileService {
       children,
       node.isSelected || false,
       node.required,
-      node.recommended
+      node.recommended,
+      false
     );
   }
 

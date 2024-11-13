@@ -74,7 +74,7 @@ export class EditFieldsModalComponent implements OnInit {
   }
 
   public setFieldAsRequired(field: ProfileFields) {
-    field.setIsRequired(!field.getIsRequired());
+    field.setMustHave(!field.getMustHave());
   }
 
   private getIndexInSelectedFields(node: ProfileFields): number {

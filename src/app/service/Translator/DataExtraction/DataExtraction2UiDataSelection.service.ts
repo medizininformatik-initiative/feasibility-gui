@@ -86,80 +86,11 @@ export class DataExtraction2UiDataSelectionService {
       );
       if (foundattribute) {
         field.setIsSelected(true);
-        field.setIsRequired(foundattribute.mustHave);
+        field.setMustHave(foundattribute.mustHave);
       }
       if (field.getChildren().length > 0) {
         this.setDataSectionProfileFields(attributes, field.getChildren());
       }
     });
   }
-
-  test = {
-    display: '',
-    version: 'http://json-schema.org/to-be-done/schema#',
-    cohortDefinition: {
-      version: 'http://to_be_decided.com/draft-1/schema#',
-      display: 'Ausgewählte Merkmale',
-    },
-    dataExtraction: {
-      attributeGroups: [
-        {
-          groupReference:
-            'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab',
-          attributes: [
-            {
-              attributeRef: 'Observation.status',
-              mustHave: false,
-            },
-            {
-              attributeRef: 'Observation.category',
-              mustHave: true,
-            },
-          ],
-          filter: [
-            {
-              type: 'token',
-              name: 'code',
-              codes: [
-                {
-                  code: '45197-1',
-                  display: 'Decanoylcarnitine (C10) [Moles/volume] in DBS',
-                  system: 'http://loinc.org',
-                  version: '2099',
-                },
-                {
-                  code: '45198-9',
-                  display: 'Decenoylcarnitine (C10:1) [Moles/volume] in DBS',
-                  system: 'http://loinc.org',
-                  version: '2099',
-                },
-              ],
-            },
-            {
-              type: 'date',
-              name: 'date',
-              start: '2024-09-04',
-            },
-          ],
-        },
-        {
-          groupReference:
-            'https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ServiceRequestLab',
-          attributes: [
-            {
-              attributeRef: 'ServiceRequest.identifier',
-              mustHave: false,
-            },
-          ],
-          filter: [
-            {
-              type: 'date',
-              name: 'date',
-              start: '2024-09-04',
-            },
-          ],
-        },
-      ],
-    },
-  };
 }

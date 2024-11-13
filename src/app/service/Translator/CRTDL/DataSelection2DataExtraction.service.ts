@@ -52,7 +52,7 @@ export class DataSelection2DataExtraction {
   }
 
   private translateAttribute(field: ProfileFields): Attributes {
-    return new Attributes(field.getId(), field.getIsRequired());
+    return new Attributes(field.getId(), field.getMustHave());
   }
 
   private translateFilters(
