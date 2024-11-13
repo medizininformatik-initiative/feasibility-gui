@@ -9,6 +9,7 @@ import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelect
 import { Observable, of } from 'rxjs';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { TranslateService } from '@ngx-translate/core';
+import { iteratee } from 'lodash';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -45,7 +46,11 @@ export class DataSelectionBoxesComponent implements OnInit {
   public getFilterChips(): void {
     const profileNodes = this.profile.getFields();
 
-    if (profileNodes.some((item) => item.getIsSelected() === true)) {
+    if (
+      profileNodes.some(
+        (item) => item.getIsSelected() === true || item.getIsRequired() || item.getRecommended()
+      )
+    ) {
       this.filterChipsSelected = true;
     }
 
