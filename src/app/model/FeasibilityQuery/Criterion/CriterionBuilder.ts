@@ -126,6 +126,11 @@ export class CriterionBuilder {
     return this;
   }
 
+  withRequiredFilter(withFilter: boolean): CriterionBuilder {
+    this.isRequiredFilterSet = withFilter;
+    return this;
+  }
+
   withHasReference(hasReference: boolean): CriterionBuilder {
     this.hasReference = hasReference;
     return this;

@@ -6,7 +6,6 @@ import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChi
 import { Observable, of } from 'rxjs';
 import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { forEach } from 'lodash';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 @Component({
@@ -40,7 +39,10 @@ export class CriteriaBoxComponent implements OnInit {
     );
     this.getMenuItems();
     this.getFilterChips();
-    this.isFilterRequired = this.setIsFilterRequired();
+    this.isFilterRequired = !this.criterion.getIsRequiredFilterSet();
+    console.log('Box');
+    console.log(this.criterion);
+    console.log(this.isFilterRequired);
   }
 
   private getMenuItems() {
@@ -55,24 +57,5 @@ export class CriteriaBoxComponent implements OnInit {
     return this.criterion
       .getAttributeFilters()
       .some((attributeFilter) => attributeFilter.isReferenceSet());
-  }
-
-  private setIsFilterRequired(): boolean {
-    return (
-      this.criterion
-        .getValueFilters()
-        .filter(
-          (valueFilter) =>
-            !valueFilter.getOptional() &&
-            valueFilter.getConcept()?.getSelectedConcepts().length <= 0
-        ).length > 0 ||
-      this.criterion
-        .getAttributeFilters()
-        .filter(
-          (attributeFilter) =>
-            !attributeFilter.getOptional() &&
-            attributeFilter.getConcept()?.getSelectedConcepts().length <= 0
-        ).length > 0
-    );
   }
 }

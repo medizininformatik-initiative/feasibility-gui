@@ -11,7 +11,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class EditorActionBarComponent implements OnInit, OnDestroy {
   $stageArray: Observable<Array<string>> = of([]);
-  isFeasibilityQueryValid: boolean;
+  isFeasibilityQueryValid: Observable<boolean>;
+
   constructor(
     private queryProviderService: FeasibilityQueryProviderService,
     private stageProviderService: StageProviderService,
@@ -19,9 +20,7 @@ export class EditorActionBarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.queryProviderService.getActiveFeasibilityQuery().subscribe((query) => {
-      this.isFeasibilityQueryValid = query.getInclusionCriteria().length > 0;
-    });
+    this.isFeasibilityQueryValid = this.queryProviderService.getIsFeasibilityQueryValid();
     this.$stageArray = this.stageProviderService.getStageUIDArray();
   }
 

@@ -36,6 +36,9 @@ export class CriterionModalService implements OnDestroy {
             updatedCriterion,
             updatedCriterion.getId()
           );
+          this.FeasibilityQueryProvider.checkCriteria();
+          console.log('afterEdit');
+          console.log(updatedCriterion);
         }
       });
   }
@@ -47,6 +50,7 @@ export class CriterionModalService implements OnDestroy {
     this.dialogSubscription = dialogRef.afterClosed().subscribe((updatedCriterion: Criterion) => {
       if (updatedCriterion) {
         this.criterionProviderService.setCriterionByUID(updatedCriterion, updatedCriterion.getId());
+        this.FeasibilityQueryProvider.checkCriteria();
       }
     });
   }

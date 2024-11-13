@@ -9,6 +9,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.service';
 
 export class EnterCriterionListComponentData {
   criterion: AbstractCriterion;
@@ -26,7 +27,8 @@ export class EditCriterionModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
     private dialogRef: MatDialogRef<EditCriterionModalComponent, AbstractCriterion>,
-    private criterionProvider: CriterionProviderService
+    private criterionProvider: CriterionProviderService,
+    private criterionValidationService: CriterionValidationService
   ) {}
 
   ngOnInit() {
@@ -90,43 +92,31 @@ export class EditCriterionModalComponent implements OnInit {
     const termCodes = criterion.getTermCodes();
     const display = criterion.getTermCodes()[0].getDisplay();
     const criterionHash = this.criterion.getCriterionHash();
-    const isRequiredFilterSet = this.setIsFilterRequired(criterion);
+    const isRequiredFilterSet = this.criterionValidationService.setIsFilterRequired(this.criterion);
     return {
       isReference: false,
       context,
       criterionHash,
       display,
-      isInvalid: true,
+      isInvalid: false,
       isRequiredFilterSet,
       uniqueID: criterion.getId(),
       termCodes,
     };
   }
 
-  private setIsFilterRequired(criterion: Criterion): boolean {
-    return (
-      criterion
-        .getValueFilters()
-        .filter(
-          (valueFilter) =>
-            !valueFilter.getOptional() &&
-            valueFilter.getConcept()?.getSelectedConcepts().length <= 0
-        ).length > 0 ||
-      this.criterion
-        .getAttributeFilters()
-        .filter(
-          (attributeFilter) =>
-            !attributeFilter.getOptional() &&
-            attributeFilter.getConcept()?.getSelectedConcepts().length <= 0
-        ).length > 0
-    );
-  }
   public updateValueFilter(valueFilter: ValueFilter) {
     this.criterionBuilder.withValueFilters([valueFilter]);
+    this.criterionBuilder.withRequiredFilter(
+      this.criterionValidationService.setIsFilterRequired(this.criterionBuilder.buildCriterion())
+    );
   }
 
   public updateAttributeFilter(attributeFilter: AttributeFilter) {
     this.criterionBuilder.withAttributeFilter(attributeFilter);
+    this.criterionBuilder.withRequiredFilter(
+      this.criterionValidationService.setIsFilterRequired(this.criterionBuilder.buildCriterion())
+    );
   }
 
   public updateTimeRestriction(timeRestriction: AbstractTimeRestriction) {

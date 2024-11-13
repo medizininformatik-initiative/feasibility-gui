@@ -29,6 +29,7 @@ export class MenuServiceCriterionFunctions {
     );
     this.criterionProviderService.setCriterionByUID(clonedCriterion, clonedCriterion.getId());
     this.stageProviderService.addCriterionToStage(clonedCriterion.getId());
+    this.queryProviderService.checkCriteria();
   }
 
   editLinkedCriteria(criterionUuid: string) {

@@ -20,8 +20,13 @@
       </div>
     </div>
     <div class="filter-chips-container">
-      <div *ngIf="isFilterRequired" fxLayout="row" fxLayoutAlign="start center">
-        <img src="assets/img/alert.png" class="img-layout" />
+      <div
+        *ngIf="isFilterRequired"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        style="margin-bottom: 5px"
+      >
+        <img src="assets/img/alert-blue-white.png" class="img-layout" />
         <span class="warning-message">
           {{ 'SHAREDCOMPONENTS.CRITERIA_BOX.REQUIRED_FILTER' | translate }}
         </span>

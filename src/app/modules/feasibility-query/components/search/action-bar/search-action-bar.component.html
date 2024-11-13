@@ -23,7 +23,7 @@
   <num-button
     icon="arrow-down"
     type="green"
-    [isDisabled]="!($stageArray | async)?.length"
+    [isDisabled]="!($stageArray | async)?.length && !(isFeasibilityExistent | async)"
     class="margin-right-10"
     (click)="navigateToEditor()"
     [matBadge]="($stageArray | async)?.length"

@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
+import { FeasibilityQueryProviderService } from '../../../Provider/FeasibilityQueryProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,8 @@ export class CreateCriterionService {
     private backend: BackendService,
     private listItemService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionProviderService: CriterionProviderService,
-    private stageProviderService: StageProviderService
+    private stageProviderService: StageProviderService,
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService
   ) {}
 
   public translateListItemsToCriterions() {
@@ -153,6 +155,7 @@ export class CreateCriterionService {
     console.log(criterion);
     this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
     this.stageProviderService.addCriterionToStage(criterion.getId());
+    this.feasibilityQueryProviderService.checkCriteria();
   }
 
   private createMandatoryFields(criteriaProfileData: CriteriaProfileData): {
@@ -176,7 +179,7 @@ export class CreateCriterionService {
       context,
       criterionHash,
       display,
-      isInvalid: true,
+      isInvalid: false,
       isRequiredFilterSet: isFilterRequired,
       uniqueID: uuidv4(),
       termCodes,

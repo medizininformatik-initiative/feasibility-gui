@@ -2,7 +2,7 @@
   <num-button
     type="green"
     (click)="doSendRequest()"
-    [isDisabled]="!isFeasibilityQueryValid"
+    [isDisabled]="!(isFeasibilityQueryValid | async)"
     class="margin-right-10"
   >
     {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}

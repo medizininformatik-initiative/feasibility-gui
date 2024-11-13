@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
-
+import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.service';
 @Component({
   selector: 'num-edit-reference-criteria',
   templateUrl: './edit-reference-criteria-modal.component.html',
@@ -24,7 +24,8 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: EditReferenceCriteriaModalComponent,
     private dialogRef: MatDialogRef<EditReferenceCriteriaModalComponent, Criterion>,
     private createReferenceService: CreateReferenceCriterionService,
-    private referenceCriterionProvider: ReferenceCriterionProviderService
+    private referenceCriterionProvider: ReferenceCriterionProviderService,
+    private criterionValidationService: CriterionValidationService
   ) {}
 
   ngOnInit() {
@@ -77,13 +78,13 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
     const termCodes = criterion.getTermCodes();
     const display = criterion.getTermCodes()[0].getDisplay();
     const criterionHash = this.criterion.getCriterionHash();
-    const isRequiredFilterSet = this.setIsFilterRequired(criterion);
+    const isRequiredFilterSet = this.criterionValidationService.setIsFilterRequired(this.criterion);
     return {
       isReference: false,
       context,
       criterionHash,
       display,
-      isInvalid: true,
+      isInvalid: false,
       isRequiredFilterSet,
       uniqueID: criterion.getId(),
       termCodes,
@@ -92,24 +93,5 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close();
-  }
-
-  private setIsFilterRequired(criterion: Criterion): boolean {
-    return (
-      criterion
-        .getValueFilters()
-        .filter(
-          (valueFilter) =>
-            !valueFilter.getOptional() &&
-            valueFilter.getConcept()?.getSelectedConcepts().length <= 0
-        ).length > 0 ||
-      this.criterion
-        .getAttributeFilters()
-        .filter(
-          (attributeFilter) =>
-            !attributeFilter.getOptional() &&
-            attributeFilter.getConcept()?.getSelectedConcepts().length <= 0
-        ).length > 0
-    );
   }
 }

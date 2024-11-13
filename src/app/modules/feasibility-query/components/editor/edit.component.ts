@@ -13,7 +13,7 @@ export class EditFeasibilityQueryComponent implements OnInit {
   query: FeasibilityQuery;
   constructor(
     private terminologySystemProvider: TerminologySystemProvider,
-    public queryService: FeasibilityQueryProviderService
+    private queryService: FeasibilityQueryProviderService
   ) {}
 
   ngOnInit(): void {

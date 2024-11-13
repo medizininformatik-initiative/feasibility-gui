@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from 'src/app/service/Validation.service';
 import { DownloadCohortComponent } from './download-cohort/download-cohort.component';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'num-cohort-definition',
@@ -20,8 +21,9 @@ export class CohortDefinitionComponent implements OnInit {
   @Input() showActionBar;
   @Output() scrollClick = new EventEmitter();
   fileName: string;
-  isFeasibilityInclusionSet = false;
-  isFeasibilityExistent = false;
+  isFeasibilityInclusionSet: Observable<boolean>;
+  isFeasibilityExistent: Observable<boolean>;
+  isFeasibilityQueryValid: Observable<boolean>;
   totalNumberOfPatients: number;
 
   constructor(
@@ -42,20 +44,11 @@ export class CohortDefinitionComponent implements OnInit {
       this.totalNumberOfPatients = this.resultProviderService
         .getResultByID(feasibilityQuery.getResultIds()[resultIdsLength - 1])
         ?.getTotalNumberOfPatients();
-      if (feasibilityQuery.getInclusionCriteria().length > 0) {
-        this.isFeasibilityInclusionSet = true;
-      } else {
-        this.isFeasibilityInclusionSet = false;
-      }
-      if (
-        feasibilityQuery.getInclusionCriteria().length === 0 &&
-        feasibilityQuery.getExclusionCriteria().length === 0
-      ) {
-        this.isFeasibilityExistent = false;
-      } else {
-        this.isFeasibilityExistent = true;
-      }
     });
+
+    this.isFeasibilityInclusionSet = this.feasibilityQueryService.getIsInclusionSet();
+    this.isFeasibilityExistent = this.feasibilityQueryService.getIsFeasibilityQuerySet();
+    this.isFeasibilityQueryValid = this.feasibilityQueryService.getIsFeasibilityQueryValid();
   }
 
   public sendQuery() {

@@ -5,6 +5,7 @@ import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchT
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 
 @Component({
   selector: 'num-search-action-bar',
@@ -13,19 +14,21 @@ import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTer
 })
 export class SearchActionBarComponent implements OnInit {
   $listItemArray: Observable<SearchTermListEntry[]> = of([]);
-
+  isFeasibilityExistent: Observable<boolean>;
   $stageArray: Observable<Array<string>> = of([]);
 
   constructor(
     private listItemSelectionService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionService: CreateCriterionService,
     private stageProviderService: StageProviderService,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private queryProviderService: FeasibilityQueryProviderService
   ) {}
 
   ngOnInit() {
     this.$listItemArray = this.listItemSelectionService.getSelectedTableItems();
     this.$stageArray = this.stageProviderService.getStageUIDArray();
+    this.isFeasibilityExistent = this.queryProviderService.getIsFeasibilityQuerySet();
   }
 
   public addItemsToStage() {

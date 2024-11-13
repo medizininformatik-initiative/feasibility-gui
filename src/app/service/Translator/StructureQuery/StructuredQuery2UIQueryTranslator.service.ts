@@ -15,7 +15,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
+import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,8 @@ export class StructuredQuery2UIQueryTranslatorService {
     private createReferenceCriterionService: CreateReferenceCriterionService,
     private consentService: ConsentService,
     private criterionProvider: CriterionProviderService,
-    private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService
+    private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService,
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService
   ) {}
 
   public translateInExclusion(inexclusion: any[]): Observable<string[][]> {
@@ -70,6 +71,7 @@ export class StructuredQuery2UIQueryTranslatorService {
         this.hashMap.forEach((criterion) => {
           this.criterionProvider.setCriterionByUID(criterion, criterion.getId());
         });
+        this.feasibilityQueryProviderService.checkCriteria();
         idArray = idArray.filter((id) => id.length > 0);
         return idArray;
       })
