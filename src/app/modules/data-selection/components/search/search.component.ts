@@ -60,6 +60,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   ) {}
 
   ngOnInit(): void {
+    //this.selectedDataSelectionProfileService.clearSelection()
     this.$dataSelectionProfileArray = this.dataSelectionProviderService
       .getActiveDataSelection()
       .pipe(map((dataSelection) => dataSelection.getProfiles()));
@@ -68,8 +69,25 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
 
     this.handleSelectedItemsSubscription();
     this.dataSelectionProfileTreeService.fetchProfileTree().subscribe((tree) => {
-      this.trees = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
+      const treeNodes = tree.getTreeNode();
+      treeNodes.forEach((node) => this.updateSelectionStatus(node));
+      const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
+      this.trees = rootNode;
     });
+  }
+
+  /**
+   * Recursively checks if each node is selected and updates its selection status.
+   *
+   * @param node The root node to start the update from.
+   */
+  private updateSelectionStatus(node: DataSelectionProfileTreeNode): void {
+    const isSelected = this.selectedDataSelectionProfileService
+      .getSelectedIds()
+      .includes(node.getId());
+    node.setSelected(isSelected);
+
+    node.getChildren().forEach((child) => this.updateSelectionStatus(child));
   }
 
   ngOnDestroy() {

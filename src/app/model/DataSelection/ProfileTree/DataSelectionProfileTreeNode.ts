@@ -11,6 +11,7 @@ export class DataSelectionProfileTreeNode {
   private leaf: boolean;
   private selectable: boolean;
   private children: DataSelectionProfileTreeNode[] = [];
+  private selected = false; // New property to track selection status
 
   constructor(
     id: string,
@@ -32,6 +33,14 @@ export class DataSelectionProfileTreeNode {
     this.leaf = leaf;
     this.selectable = selectable;
     this.children = children;
+  }
+
+  public isSelected(): boolean {
+    return this.selected;
+  }
+
+  public setSelected(selected: boolean): void {
+    this.selected = selected;
   }
 
   public getId(): string {
