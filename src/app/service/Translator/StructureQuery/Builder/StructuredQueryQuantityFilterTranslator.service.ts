@@ -13,6 +13,7 @@ import { QuantityRangeValueFilter } from 'src/app/model/StructuredQuery/Criterio
 import { QuantityUnit as QuantityUnitSQ } from '../../../../model/StructuredQuery/QuantityUnit';
 import { QuantityUnit as QuantityUnitFQ } from '../../../../model/FeasibilityQuery/QuantityUnit';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Comparator } from 'src/app/model/Utilities/Quantity/Comparator';
 
 @Injectable({
   providedIn: 'root',
@@ -97,13 +98,13 @@ export class StructuredQueryQuantityFilterTranslatorService {
       return new QuantityComparatorAttributeFilter(
         attributeCode,
         unit,
-        quantityComparator.getComparator(),
+        quantityComparator.mapQuantityComparisonToComparator(quantityComparator.getComparator()),
         quantityComparator.getValue()
       );
     } else {
       return new QuantityComparatorValueFilter(
         unit,
-        quantityComparator.getComparator(),
+        quantityComparator.mapQuantityComparisonToComparator(quantityComparator.getComparator()),
         quantityComparator.getValue()
       );
     }

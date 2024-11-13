@@ -2,6 +2,7 @@ import { AbstractQuantityFilter } from './AbstractQuantityFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
+import { Comparator } from 'src/app/model/Utilities/Quantity/Comparator';
 
 /**
  * Class representing a QuantityComparatorFilter.
@@ -75,5 +76,22 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
    */
   getType(): FilterTypes {
     return this.type;
+  }
+
+  public mapQuantityComparisonToComparator(option: QuantityComparisonOption): Comparator {
+    switch (option) {
+      case QuantityComparisonOption.NONE:
+        return Comparator.NONE;
+      case QuantityComparisonOption.EQUAL:
+        return Comparator.EQUAL;
+      case QuantityComparisonOption.LESS_THAN:
+        return Comparator.LESS_THAN;
+      case QuantityComparisonOption.GREATER_THAN:
+        return Comparator.GREATER_THAN;
+      case QuantityComparisonOption.BETWEEN:
+        return Comparator.BETWEEN;
+      default:
+        return Comparator.NONE;
+    }
   }
 }

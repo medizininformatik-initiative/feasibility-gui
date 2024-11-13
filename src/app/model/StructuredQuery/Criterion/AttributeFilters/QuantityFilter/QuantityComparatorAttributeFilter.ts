@@ -2,6 +2,7 @@ import { AbstractQuantityComparatorFilter } from '../../Abstract/Quantity/Compar
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Comparator } from 'src/app/model/Utilities/Quantity/Comparator';
 
 export class QuantityComparatorAttributeFilter extends AbstractQuantityComparatorFilter {
   private attributeCode: TerminologyCode;
@@ -9,7 +10,7 @@ export class QuantityComparatorAttributeFilter extends AbstractQuantityComparato
   constructor(
     attributeCode: TerminologyCode,
     unit: QuantityUnit,
-    comparator: QuantityComparisonOption,
+    comparator: Comparator,
     value: number
   ) {
     super(unit, comparator, value);
@@ -37,7 +38,7 @@ export class QuantityComparatorAttributeFilter extends AbstractQuantityComparato
   public static createFilter(
     attributeCode: TerminologyCode,
     unit: QuantityUnit,
-    comparator: QuantityComparisonOption,
+    comparator: Comparator,
     value: number
   ) {
     return new QuantityComparatorAttributeFilter(attributeCode, unit, comparator, value);
