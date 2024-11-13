@@ -23,7 +23,7 @@ export class QuantityRangeFilter extends AbstractQuantityFilter {
    */
   constructor(
     selectedUnit: QuantityUnit,
-    allowedUnits: QuantityUnit[] = [],
+    allowedUnits: QuantityUnit[],
     precision: number = 0,
     minValue: number | null = null,
     maxValue: number | null = null

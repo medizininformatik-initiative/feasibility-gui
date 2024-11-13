@@ -13,6 +13,9 @@ import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/At
 import { ReferenceCriterion } from '../../../model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
+import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 
 @Injectable({
   providedIn: 'root',
@@ -207,20 +210,36 @@ export class StructuredQuery2UIQueryTranslatorService {
     structuredQueryAttributeFilter,
     feasibilityQueryQuantityRange: AttributeFilter
   ) {
-    const quantityRange = feasibilityQueryQuantityRange.getQuantity() as QuantityRangeFilter;
-    quantityRange.setSelectedUnit(structuredQueryAttributeFilter.unit);
+    const quantityRange = new QuantityRangeFilter(
+      new QuantityUnit(
+        structuredQueryAttributeFilter.unit.code,
+        structuredQueryAttributeFilter.unit.display
+      ),
+      feasibilityQueryQuantityRange.getQuantity().getAllowedUnits(),
+      structuredQueryAttributeFilter.precision,
+      structuredQueryAttributeFilter.minValue,
+      structuredQueryAttributeFilter.maxValue
+    );
     quantityRange.setMinValue(structuredQueryAttributeFilter.minValue);
     quantityRange.setMaxValue(structuredQueryAttributeFilter.maxValue);
+    feasibilityQueryQuantityRange.setQuantity(quantityRange);
   }
 
   private buildQuantityComparatorInstance(
     structuredQueryAttributeFilter,
     feasibilityQueryAttributeFilter: AttributeFilter
   ) {
-    const quantityRange = feasibilityQueryAttributeFilter.getQuantity() as QuantityRangeFilter;
-    quantityRange.setSelectedUnit(structuredQueryAttributeFilter.unit);
-    quantityRange.setMinValue(structuredQueryAttributeFilter.minValue);
-    quantityRange.setMaxValue(structuredQueryAttributeFilter.maxValue);
+    const quantityRangeFilter = new QuantityComparatorFilter(
+      new QuantityUnit(
+        structuredQueryAttributeFilter.unit.code,
+        structuredQueryAttributeFilter.unit.display
+      ),
+      feasibilityQueryAttributeFilter.getQuantity().getAllowedUnits(),
+      feasibilityQueryAttributeFilter.getQuantity().getPrecision(),
+      QuantityComparisonOption.EQUAL, //structuredQueryAttributeFilter.comparator,
+      structuredQueryAttributeFilter.value
+    );
+    feasibilityQueryAttributeFilter.setQuantity(quantityRangeFilter);
   }
 
   public createCriterionInstanceFromHashes(criterionHashes: string[]): Observable<void[]> {

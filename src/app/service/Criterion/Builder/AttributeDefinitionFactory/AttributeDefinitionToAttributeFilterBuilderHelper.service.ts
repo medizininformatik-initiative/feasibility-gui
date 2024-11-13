@@ -45,10 +45,8 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
       case FilterTypes.CONCEPT:
         this.addConceptFilter(abstractAttributeDefinition, builder);
         break;
-      default:
-        if (this.filterTypesService.isQuantity(abstractAttributeDefinition.getType())) {
-          this.addQuantityFilter(abstractAttributeDefinition, builder);
-        }
+      case FilterTypes.QUANTITY:
+        this.addQuantityFilter(abstractAttributeDefinition, builder);
         break;
     }
     return builder;
