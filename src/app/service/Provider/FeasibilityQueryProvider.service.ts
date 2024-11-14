@@ -5,6 +5,7 @@ import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service';
 import { v4 as uuidv4 } from 'uuid';
 import { CriterionProviderService } from './CriterionProvider.service';
+import { ResultProviderService } from './ResultProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +19,14 @@ export class FeasibilityQueryProviderService {
   private foundInvalidCriteria: BehaviorSubject<string[]> = new BehaviorSubject([]);
   private isInclusionSet: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private isFeasibilityQuerySet: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private hasQueryResult: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   private feasibilityQueryIDToResultIDMap: Map<string, string> = new Map();
   constructor(
     @Inject(LOCAL_STORAGE) private storage: StorageService,
     private activeFeasibilityQuery: ActiveFeasibilityQueryService,
-    private criterionService: CriterionProviderService //private criterionValidationService: CriterionValidationService,
+    private criterionService: CriterionProviderService,
+    private resultProvider: ResultProviderService
   ) {
     this.loadInitialQuery();
   }
@@ -197,6 +200,12 @@ export class FeasibilityQueryProviderService {
       feasibilityQuery.getInclusionCriteria().length > 0 ||
         feasibilityQuery.getExclusionCriteria().length > 0
     );
+
+    const resultIdsArray = feasibilityQuery.getResultIds();
+    const latestResult = this.resultProvider.getResultByID(
+      resultIdsArray[resultIdsArray.length - 1]
+    );
+    this.hasQueryResult.next(!!latestResult?.getTotalNumberOfPatients());
     console.log('check!');
   }
   public getMissingRequiredFilterCriteria(): Observable<string[]> {
@@ -211,7 +220,6 @@ export class FeasibilityQueryProviderService {
   public getIsFeasibilityQuerySet(): Observable<boolean> {
     return this.isFeasibilityQuerySet.asObservable();
   }
-
   public getIsFeasibilityQueryValid(): Observable<boolean> {
     return combineLatest([
       this.getMissingRequiredFilterCriteria().pipe(map((criteria) => criteria.length === 0)),
@@ -223,5 +231,8 @@ export class FeasibilityQueryProviderService {
           noMissingCriteria && noInvalidCriteria && isInclusionSet
       )
     );
+  }
+  public getHasQueryResult(): Observable<boolean> {
+    return this.hasQueryResult.asObservable();
   }
 }

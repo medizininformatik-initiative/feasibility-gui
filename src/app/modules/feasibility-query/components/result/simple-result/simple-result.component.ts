@@ -9,6 +9,7 @@ import {
   ResultDetailModalComponent,
   ResultDetailsModalComponentData,
 } from '../result-detail-modal/result-detail-modal.component';
+import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 
 @Component({
   selector: 'num-simple-result',
@@ -34,7 +35,8 @@ export class SimpleResultComponent implements OnInit {
     public dialog: MatDialog,
     public backend: BackendService,
     private featureProviderService: FeatureProviderService,
-    private resultService: FeasibilityQueryResultService
+    private resultService: FeasibilityQueryResultService,
+    private queryProviderService: FeasibilityQueryProviderService
   ) {
     this.resultCallsRemaining$ = this.resultService.getResultCallsRemaining();
     this.resultCallsLimit$ = this.resultService.callsLimit$;
@@ -100,5 +102,6 @@ export class SimpleResultComponent implements OnInit {
   private finalize(): void {
     this.loadedResult = true;
     this.showSpinner = false;
+    this.queryProviderService.checkCriteria();
   }
 }
