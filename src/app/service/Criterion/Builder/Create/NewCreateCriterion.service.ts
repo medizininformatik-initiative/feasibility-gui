@@ -42,7 +42,6 @@ export class NewCreateCriterionService {
       criteriaProfileData.getAttributeDefinitions(),
       criterionBuilder
     );
-    const criterion: Criterion = criterionBuilder.buildCriterion();
-    return criterion;
+    return criterionBuilder.buildCriterion();
   }
 }
