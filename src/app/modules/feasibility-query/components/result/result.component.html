@@ -22,7 +22,12 @@
     <num-button class="margin-right-10" type="green" (click)="editStage()">
       {{ 'QUERYBUILDER.RESULT.BUTTON.EDIT_STAGE' | translate }}
     </num-button>
-    <num-button (click)="saveQuery()" class="margin-right-10" type="green">
+    <num-button
+      [isDisabled]="(hasQueryResult | async) === false"
+      (click)="saveQuery()"
+      class="margin-right-10"
+      type="green"
+    >
       {{ 'QUERYBUILDER.RESULT.BUTTON.SAVE_QUERY' | translate }}
     </num-button>
     <num-button class="margin-right-10" (click)="doDownloadQuery()" type="green">

@@ -218,7 +218,6 @@ export class CreateCriterionService {
   ): void {
     const name = valueDefinition.getName();
     const type = valueDefinition.getType();
-    console.log(criterionBuilder.buildValueFilter(valueDefinition, name, type));
     criterionBuilder.withValueFilters([
       criterionBuilder.buildValueFilter(valueDefinition, name, type),
     ]);

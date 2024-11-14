@@ -3,6 +3,8 @@ import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.servi
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SaveQueryModalComponent } from './save-dialog/save-dialog.component';
+import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'num-feasibility-query-result',
   templateUrl: './result.component.html',
@@ -10,13 +12,17 @@ import { SaveQueryModalComponent } from './save-dialog/save-dialog.component';
 })
 export class ResultComponent implements OnInit {
   resultLoaded = false;
+  hasQueryResult: Observable<boolean>;
   constructor(
     private navigationHelperService: NavigationHelperService,
     private dialog: MatDialog,
-    private downloadCCDLService: DownloadCCDLService
+    private downloadCCDLService: DownloadCCDLService,
+    private feasibilityQueryProvider: FeasibilityQueryProviderService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.hasQueryResult = this.feasibilityQueryProvider.getHasQueryResult();
+  }
 
   public editStage(): void {
     this.navigationHelperService.navigateToFeasibilityQueryEditor();
