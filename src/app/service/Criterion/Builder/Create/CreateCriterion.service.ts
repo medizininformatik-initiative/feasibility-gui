@@ -109,7 +109,7 @@ export class CreateCriterionService {
         new ValueDefinition(
           uiProfile.name,
           uiProfile.valueDefinition.type,
-          false, //uiProfile.valueDefinition.optional,
+          uiProfile.valueDefinition.optional,
           uiProfile.valueDefinition.allowedUnits?.map(
             (unit) => new QuantityUnit(unit.code, unit.display, unit.system)
           ) || [],
