@@ -6,7 +6,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { SearchService } from 'src/app/service/Search/Search.service';
@@ -42,15 +42,19 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription2 = this.conceptElasticSearchService
+    this.conceptElasticSearchService
       .getCodeableConceptSearchResults(this.conceptFilterId)
-      .subscribe((results) => {
-        this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
+      .pipe(
+        switchMap((results) => {
+          this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
+          return this.selectedConceptProviderService.getSelectedConcepts();
+        })
+      )
+      .subscribe(() => {
+        this.updateCheckboxSelection();
       });
+
     this.searchText$ = this.searchService.getActiveSearchTerm();
-    this.subscription = this.selectedConceptProviderService.getSelectedConcepts().subscribe(() => {
-      this.updateCheckboxSelection();
-    });
   }
 
   private updateCheckboxSelection(): void {
