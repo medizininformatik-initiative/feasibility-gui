@@ -8,7 +8,7 @@ export class FilterChipDataSelectionAdapter {
     const filterChips: InterfaceFilterChip[] = [];
 
     fields.forEach((field) => {
-      if (field.getIsSelected() || field.getIsRequired() || field.getRecommended()) {
+      if (field.getIsSelected() || field.getIsRequired()) {
         const type = field.getMustHave() ? 'required' : 'optional';
         const builder = new FilterChipBuilder(type);
 

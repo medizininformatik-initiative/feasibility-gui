@@ -19,7 +19,7 @@ export class FieldsTreeAdapter {
         display: node.getDisplay(),
         description: node.getDescription(),
         selectable: true,
-        isCheckboxSelected: node.getIsSelected() || node.getIsRequired() || node.getRecommended(),
+        isCheckboxSelected: node.getIsSelected() || node.getIsRequired(),
         isDisabled: !node.getIsRequired(),
       },
       children: node?.getChildren()?.map((child: any) => FieldsTreeAdapter.toTreeNode(child)),

@@ -40,6 +40,7 @@
         </div>
         <div fxLayout="row" fxFlex="10" fxLayoutAlign="end center" class="padding-right-10">
           <fa-icon
+            *ngIf="isFieldRequired(selectedField)"
             [icon]="'times'"
             size="1x"
             (click)="removeNodeFromSelectedFields(selectedField)"

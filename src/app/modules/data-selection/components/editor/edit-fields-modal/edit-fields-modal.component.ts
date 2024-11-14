@@ -101,6 +101,14 @@ export class EditFieldsModalComponent implements OnInit {
     }
   }
 
+  public isFieldRequired(field: ProfileFields) {
+    if (field.getIsRequired()) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   public saveFields() {
     const profile = this.dataSelectionProvider.getDataSelectionProfileByUID(this.data);
 

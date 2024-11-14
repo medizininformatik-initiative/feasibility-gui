@@ -82,7 +82,7 @@ export class CreateDataSelectionProfileService {
       this.instantiateDisplayData(node.display),
       this.instantiateDisplayData(node.description),
       children,
-      node.isSelected || false,
+      node.isSelected || node.recommended || node.required || false,
       node.required,
       node.recommended,
       false
