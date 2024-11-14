@@ -206,7 +206,6 @@ export class FeasibilityQueryProviderService {
       resultIdsArray[resultIdsArray.length - 1]
     );
     this.hasQueryResult.next(!!latestResult?.getTotalNumberOfPatients());
-    console.log('check!');
   }
   public getMissingRequiredFilterCriteria(): Observable<string[]> {
     return this.foundMissingFilterCriteria.asObservable();

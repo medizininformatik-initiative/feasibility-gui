@@ -83,7 +83,6 @@ export class CriterionValidationService {
       feasibilityQuery.getInclusionCriteria().length > 0 ||
         feasibilityQuery.getExclusionCriteria().length > 0
     );
-    console.log('check!');
   }
   public getMissingRequiredFilterCriteria(): Observable<string[]> {
     return this.foundMissingFilterCriteria.asObservable();

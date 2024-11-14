@@ -37,8 +37,6 @@ export class CriterionModalService implements OnDestroy {
             updatedCriterion.getId()
           );
           this.FeasibilityQueryProvider.checkCriteria();
-          console.log('afterEdit');
-          console.log(updatedCriterion);
         }
       });
   }
