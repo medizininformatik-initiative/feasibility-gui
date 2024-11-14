@@ -23,9 +23,8 @@ export class FeasibilityQueryProviderService {
   constructor(
     @Inject(LOCAL_STORAGE) private storage: StorageService,
     private activeFeasibilityQuery: ActiveFeasibilityQueryService,
-    private criterionService: CriterionProviderService
-  ) //private criterionValidationService: CriterionValidationService,
-  {
+    private criterionService: CriterionProviderService //private criterionValidationService: CriterionValidationService,
+  ) {
     this.loadInitialQuery();
   }
 
@@ -39,8 +38,7 @@ export class FeasibilityQueryProviderService {
     if (storedQuery && storedQuery.groups) {
       this.storage.remove(this.STORAGE_QUERY_KEY);
     }
-    this.setFeasibilityQueryByID(new FeasibilityQuery(uid), uid);
-    this.activeFeasibilityQuery.setActiveFeasibilityQueryID(uid);
+    this.setFeasibilityQueryByID(new FeasibilityQuery(uid), uid, true);
   }
 
   /**
@@ -60,6 +58,7 @@ export class FeasibilityQueryProviderService {
     if (setAsActive) {
       this.activeFeasibilityQuery.setActiveFeasibilityQueryID(id);
     }
+    this.checkCriteria();
   }
 
   /**

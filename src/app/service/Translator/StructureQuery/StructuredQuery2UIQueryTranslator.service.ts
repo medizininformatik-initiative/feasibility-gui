@@ -1,8 +1,7 @@
 import { AbstractCriterion } from '../../../model/FeasibilityQuery/Criterion/AbstractCriterion';
-import { Attribute, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { ConsentService } from '../../Consent/Consent.service';
-import { ConsentTermCode } from 'src/app/model/Utilities/ConsentTermCode';
 import { CreateReferenceCriterionService } from '../../Criterion/Builder/Create/CreateReferenceCriterion.service';
 import { CriterionHashService } from '../../Criterion/CriterionHash.service';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
@@ -158,7 +157,8 @@ export class StructuredQuery2UIQueryTranslatorService {
   private handleQuantityFilter(foundAttributeFilter, structuredQueryAttributeFilter) {
     if (structuredQueryAttributeFilter.type === FilterTypes.QUANTITY_RANGE) {
       this.buildQuantityRangeInstance(structuredQueryAttributeFilter, foundAttributeFilter);
-    } else if (structuredQueryAttributeFilter.type === FilterTypes.QUANTITY_COMPARATOR) {
+    }
+    if (structuredQueryAttributeFilter.type === FilterTypes.QUANTITY_COMPARATOR) {
       this.buildQuantityComparatorInstance(structuredQueryAttributeFilter, foundAttributeFilter);
     }
   }
@@ -231,19 +231,19 @@ export class StructuredQuery2UIQueryTranslatorService {
     structuredQueryAttributeFilter,
     feasibilityQueryAttributeFilter: AttributeFilter
   ) {
-    const quantityRangeFilter = new QuantityComparatorFilter(
+    const quantityComparatorFilter = new QuantityComparatorFilter(
       new QuantityUnit(
         structuredQueryAttributeFilter.unit.code,
         structuredQueryAttributeFilter.unit.display
       ),
       feasibilityQueryAttributeFilter.getQuantity().getAllowedUnits(),
-      feasibilityQueryAttributeFilter.getQuantity().getPrecision(),
+      structuredQueryAttributeFilter.precision,
       feasibilityQueryAttributeFilter
         .getQuantity()
         .mapComparatorToQuantityComparison(structuredQueryAttributeFilter.comparator),
       structuredQueryAttributeFilter.value
     );
-    feasibilityQueryAttributeFilter.setQuantity(quantityRangeFilter);
+    feasibilityQueryAttributeFilter.setQuantity(quantityComparatorFilter);
   }
 
   public createCriterionInstanceFromHashes(criterionHashes: string[]): Observable<void[]> {
