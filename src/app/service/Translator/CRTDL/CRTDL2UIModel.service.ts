@@ -18,19 +18,24 @@ export class CRTDL2UIModelService {
     private validationService: ValidationService
   ) {}
   public translateToUiModel(importedCrdtl: any) {
-    this.dataExtraction2UiDataSelectionService
-      .translate(importedCrdtl.dataExtraction)
-      .pipe(
-        map((dataSelection) => {
-          this.dataSelectionProvider.setDataSelectionByUID(
-            dataSelection.getId(),
-            dataSelection,
-            true
-          );
-        })
-      )
-      .subscribe();
-    this.doValidate(importedCrdtl.cohortDefinition);
+    if (importedCrdtl.cohortDefinition.inclusionCriteria?.length > 0) {
+      this.dataExtraction2UiDataSelectionService
+        .translate(importedCrdtl.dataExtraction)
+        .pipe(
+          map((dataSelection) => {
+            this.dataSelectionProvider.setDataSelectionByUID(
+              dataSelection.getId(),
+              dataSelection,
+              true
+            );
+          })
+        )
+        .subscribe();
+      this.doValidate(importedCrdtl.cohortDefinition);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   doValidate(importedQuery): void {

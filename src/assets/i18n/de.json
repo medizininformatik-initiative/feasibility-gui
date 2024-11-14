@@ -165,8 +165,15 @@
       "SAVE": {
         "HEADER": "Aktuelle Datenselektion herunterladen"
       },
-      "EMPTY":"Sie haben noch keine Datenselektion definiert. Laden Sie eine existierende Datenselektion oder kreieren Sie eine neue Datenselektion"
-
+      "EMPTY":"Sie haben noch keine Datenselektion definiert. Laden Sie eine existierende Datenselektion oder kreieren Sie eine neue Datenselektion",
+      "ERROR": {
+        "UPLOAD":"In der hochgeladenen Datei wurde keine Kohorte wurde definiert",
+        "DOWNLOAD": "Es wurden keine Kohorte definiert, download nicht möglich"
+      },
+      "SUCCESS": {
+        "UPLOAD": "Datenanfrage wurde hochgeladen",
+        "DOWNLOAD": "Datenagfrage wurde erfolgreich heruntergeladen"
+      } 
     }
   },
   "LANGUAGE": {

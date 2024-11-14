@@ -8,6 +8,7 @@ import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
 import { ActiveDataSelectionService } from '../../Provider/ActiveDataSelection.service';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +19,21 @@ export class CreateCRDTLService {
     private feasibilityQueryProvider: FeasibilityQueryProviderService,
     private uiQueryTranslator: UIQuery2StructuredQueryService,
     private dataSelectionProvider: DataSelectionProviderService,
-    private activeDataSelectionService: ActiveDataSelectionService
+    private activeDataSelectionService: ActiveDataSelectionService,
+    private snackBarService: SnackbarService
   ) {}
 
   public createCRDTL(): Observable<CRTDL> {
     return combineLatest([this.getStructuredQuery(), this.getDataExtraction()]).pipe(
-      map(([structuredQuery, dataExtraction]) => this.buildCRDTL(structuredQuery, dataExtraction))
+      map(([structuredQuery, dataExtraction]) => {
+        if (structuredQuery.getInclusionCriteria()?.length > 0) {
+          return this.buildCRDTL(structuredQuery, dataExtraction);
+        } else {
+          this.snackBarService.displayErrorMessageWithNoCode(
+            'Keine Kohorte definiert, download nicht möglich'
+          );
+        }
+      })
     );
   }
 

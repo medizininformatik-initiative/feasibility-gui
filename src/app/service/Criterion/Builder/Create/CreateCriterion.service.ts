@@ -1,11 +1,12 @@
-import { AbstractAttributeDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/AbstractAttributeDefinition';
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionHashService } from '../../CriterionHash.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { FeasibilityQueryProviderService } from '../../../Provider/FeasibilityQueryProvider.service';
 import { finalize, of, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
@@ -15,9 +16,6 @@ import { StageProviderService } from 'src/app/service/Provider/StageProvider.ser
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
-import { FeasibilityQueryProviderService } from '../../../Provider/FeasibilityQueryProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -109,7 +107,7 @@ export class CreateCriterionService {
         new ValueDefinition(
           uiProfile.name,
           uiProfile.valueDefinition.type,
-          false, //uiProfile.valueDefinition.optional,
+          uiProfile.valueDefinition.optional,
           uiProfile.valueDefinition.allowedUnits?.map(
             (unit) => new QuantityUnit(unit.code, unit.display, unit.system)
           ) || [],
@@ -120,8 +118,6 @@ export class CreateCriterionService {
         ),
       ];
     }
-
-    // Return an empty array if valueDefinition is undefined or null
     return [];
   }
 
@@ -152,7 +148,6 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion: Criterion = criterionBuilder.buildCriterion();
-    console.log(criterion);
     this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
     this.stageProviderService.addCriterionToStage(criterion.getId());
     this.feasibilityQueryProviderService.checkCriteria();
@@ -221,8 +216,9 @@ export class CreateCriterionService {
   ): void {
     const name = valueDefinition.getName();
     const type = valueDefinition.getType();
+    console.log(criterionBuilder.buildValueFilter(valueDefinition, name, type));
     criterionBuilder.withValueFilters([
-      criterionBuilder.buildValueFilter(valueDefinition, name, type) as ValueFilter,
+      criterionBuilder.buildValueFilter(valueDefinition, name, type),
     ]);
   }
 }

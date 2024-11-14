@@ -15,6 +15,7 @@ import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFact
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 
 @Injectable({
   providedIn: 'root',
@@ -105,7 +106,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
   }
 
-  private processAttributeFilters(attributeFilters, criterion) {
+  private processAttributeFilters(attributeFilters, criterion: Criterion) {
     attributeFilters?.forEach((structuredQueryAttributeFilter) => {
       const foundAttributeFilter = this.findMatchingAttributeFilter(
         criterion,
@@ -247,9 +248,11 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   public createCriterionInstanceFromHashes(criterionHashes: string[]): Observable<void[]> {
-    return this.createCriterionService
-      .createCriteriaFromHashes(criterionHashes)
-      .pipe(map((criterions) => criterions.map((criterion) => this.setCriterionHashMap(criterion))));
+    return this.createCriterionService.createCriteriaFromHashes(criterionHashes).pipe(
+      map((criterions) =>
+        criterions.map((criterion) => this.setCriterionHashMap(criterion))
+      )
+    );
   }
 
   private setCriterionHashMap(criterion: AbstractCriterion) {

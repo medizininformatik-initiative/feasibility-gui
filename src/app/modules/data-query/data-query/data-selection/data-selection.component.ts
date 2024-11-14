@@ -1,4 +1,12 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { CRTDL2UIModelService } from 'src/app/service/Translator/CRTDL/CRTDL2UIModel.service';
 import { DataExtraction2UiDataSelectionService } from 'src/app/service/Translator/DataExtraction/DataExtraction2UiDataSelection.service';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
@@ -9,6 +17,9 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'num-data-selection',
@@ -18,10 +29,13 @@ import { v4 as uuidv4 } from 'uuid';
 export class DataSelectionComponent implements OnInit {
   @Input() showActionBar;
   @Output() scrollClick = new EventEmitter();
+
   isDataSelectionExistent = false;
+  isCohortExistent = false;
 
   fileName: string;
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private terminologySystemProvider: TerminologySystemProvider,
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
@@ -29,16 +43,18 @@ export class DataSelectionComponent implements OnInit {
     private crdtlTranslatorService: CRTDL2UIModelService,
     private downloadCRDTLService: DownloadCRDTLService,
     private dialog: MatDialog,
-    private dataExtraction2UiDataSelectionService: DataExtraction2UiDataSelectionService
+    private dataExtraction2UiDataSelectionService: DataExtraction2UiDataSelectionService,
+    private snackbarService: SnackbarService,
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService
   ) {}
 
   ngOnInit(): void {
     this.dataSelectionProviderService.getActiveDataSelection().subscribe((dataSelection) => {
-      if (dataSelection.getProfiles().length > 0) {
-        this.isDataSelectionExistent = true;
-      } else {
-        this.isDataSelectionExistent = false;
-      }
+      this.isDataSelectionExistent = dataSelection.getProfiles().length > 0;
+    });
+
+    this.feasibilityQueryProviderService.getIsFeasibilityQueryValid().subscribe((isValid) => {
+      this.isCohortExistent = isValid;
     });
   }
 
@@ -59,7 +75,16 @@ export class DataSelectionComponent implements OnInit {
   public downloadCRDTL(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    this.dialog.open(DownloadDataSelectionComponent, dialogConfig);
+    if (this.isCohortExistent) {
+      this.dialog
+        .open(DownloadDataSelectionComponent, dialogConfig)
+        .afterClosed()
+        .subscribe(() => {
+          this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWLOAD');
+        });
+    } else {
+      this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.DOWNLOAD');
+    }
   }
 
   public onFileSelected(event: Event): void {
@@ -74,7 +99,12 @@ export class DataSelectionComponent implements OnInit {
   }
 
   public uploadDataSelection(crtdl: string) {
-    this.crdtlTranslatorService.translateToUiModel(crtdl);
+    this.isDataSelectionExistent = this.crdtlTranslatorService.translateToUiModel(crtdl);
+    if (!this.isDataSelectionExistent) {
+      this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');
+    } else {
+      this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD');
+    }
   }
 
   public onReaderLoad(event: ProgressEvent<FileReader>): void {
