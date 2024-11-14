@@ -15,6 +15,7 @@ import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFact
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
+import { CriterionValidationService } from '../../Criterion/CriterionValidation.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 
 @Injectable({
@@ -30,7 +31,8 @@ export class StructuredQuery2UIQueryTranslatorService {
     private consentService: ConsentService,
     private criterionProvider: CriterionProviderService,
     private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
+    private criterionValidationService: CriterionValidationService
   ) {}
 
   public translateInExclusion(inexclusion: any[]): Observable<string[][]> {
@@ -69,9 +71,11 @@ export class StructuredQuery2UIQueryTranslatorService {
         });
 
         this.hashMap.forEach((criterion) => {
+          criterion.setIsRequiredFilterSet(
+            this.criterionValidationService.setIsFilterRequired(criterion)
+          );
           this.criterionProvider.setCriterionByUID(criterion, criterion.getId());
         });
-        this.feasibilityQueryProviderService.checkCriteria();
         idArray = idArray.filter((id) => id.length > 0);
         return idArray;
       })
@@ -248,11 +252,9 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   public createCriterionInstanceFromHashes(criterionHashes: string[]): Observable<void[]> {
-    return this.createCriterionService.createCriteriaFromHashes(criterionHashes).pipe(
-      map((criterions) =>
-        criterions.map((criterion) => this.setCriterionHashMap(criterion))
-      )
-    );
+    return this.createCriterionService
+      .createCriteriaFromHashes(criterionHashes)
+      .pipe(map((criterions) => criterions.map((criterion) => this.setCriterionHashMap(criterion))));
   }
 
   private setCriterionHashMap(criterion: AbstractCriterion) {
