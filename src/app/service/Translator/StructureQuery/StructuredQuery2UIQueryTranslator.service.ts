@@ -16,6 +16,7 @@ import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 import { CriterionValidationService } from '../../Criterion/CriterionValidation.service';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 
 @Injectable({
   providedIn: 'root',
@@ -109,7 +110,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
   }
 
-  private processAttributeFilters(attributeFilters, criterion) {
+  private processAttributeFilters(attributeFilters, criterion: Criterion) {
     attributeFilters?.forEach((structuredQueryAttributeFilter) => {
       const foundAttributeFilter = this.findMatchingAttributeFilter(
         criterion,

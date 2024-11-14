@@ -165,7 +165,9 @@
       "SAVE": {
         "HEADER": "Download current Dataselection"
       },
-      "EMPTY": "You have not defined a dataselection yet. Upload an existing dataselection or create a new one."
+      "EMPTY": "You have not defined a dataselection yet. Upload an existing dataselection or create a new one.",
+      "ERROR_NO_COHORT": "No chort definition was found in the file"
+
     }
   },
   "LANGUAGE": {

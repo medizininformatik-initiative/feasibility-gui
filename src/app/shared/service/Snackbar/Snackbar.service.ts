@@ -42,10 +42,12 @@ export class SnackbarService {
     this.activateSnackbar(message, SnackbarColor.ERROR);
   }
 
-  public displayInfoMessage(infoMessage: string, retryAfter: number = 0) {
-    const validInfoMessage = this.getErrorCodeEnum(infoMessage);
-    const message = `${MessageType.INFO}.${validInfoMessage}`;
-    this.activateSnackbar(message, SnackbarColor.INFO);
+  public displayErrorMessageWithNoCode(message: string) {
+    this.activateSnackbar(message, SnackbarColor.ERROR);
+  }
+
+  public displayInfoMessage(infoMessage: string) {
+    this.activateSnackbar(infoMessage, SnackbarColor.INFO);
   }
 
   public activateSnackbar(message: string, color: string) {

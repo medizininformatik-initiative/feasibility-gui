@@ -18,11 +18,13 @@ export class NewCreateCriterionService {
   ) {}
 
   public createCriteriaFromHashes(hashes: string[]): Observable<Criterion[]> {
-    return this.criteriaProfileDataService.getCriteriaProfileData(hashes.filter(hash => hash !== undefined)).pipe(
-      mergeMap((criteriaProfileDatas) => from(criteriaProfileDatas)),
-      map((criteriaProfileData) => this.createCriterionFromProfileData(criteriaProfileData)),
-      toArray()
-    );
+    return this.criteriaProfileDataService
+      .getCriteriaProfileData(hashes.filter((hash) => hash !== undefined))
+      .pipe(
+        mergeMap((criteriaProfileDatas) => from(criteriaProfileDatas)),
+        map((criteriaProfileData) => this.createCriterionFromProfileData(criteriaProfileData)),
+        toArray()
+      );
   }
 
   private createCriterionFromProfileData(criteriaProfileData: CriteriaProfileData): Criterion {
