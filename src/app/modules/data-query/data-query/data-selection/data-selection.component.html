@@ -60,7 +60,7 @@
     <num-button
       class="margin-right-10"
       (click)="downloadCRDTL()"
-      [isDisabled]="!isDataSelectionExistent && !isCohortExistent"
+      [isDisabled]="!isDataSelectionExistent || !isCohortExistent"
       type="green"
     >
       {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
