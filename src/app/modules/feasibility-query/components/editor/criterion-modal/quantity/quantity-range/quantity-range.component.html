@@ -1,13 +1,17 @@
 <div fxLayout="row">
   <!--Min Value-->
-  <num-value-select [value]="maxValue" (selectedValue)="setMaxValue($event)">
-    <mat-label>{{ 'QUERYBUILDER.EDIT.MAX' | translate }}</mat-label>
-  </num-value-select>
+  <num-value-select
+    [value]="minValue"
+    (selectedValue)="setMinValue($event)"
+    [label]="'QUERYBUILDER.EDIT.MIN'"
+  ></num-value-select>
 
   <span>{{ 'QUERYBUILDER.EDIT.AND' | translate }}</span>
 
   <!--Max Value-->
-  <num-value-select [value]="minValue" (selectedValue)="setMinValue($event)">
-    <mat-label>{{ 'QUERYBUILDER.EDIT.MIN' | translate }}</mat-label>
-  </num-value-select>
+  <num-value-select
+    [value]="maxValue"
+    (selectedValue)="setMaxValue($event)"
+    [label]="'QUERYBUILDER.EDIT.MAX'"
+  ></num-value-select>
 </div>

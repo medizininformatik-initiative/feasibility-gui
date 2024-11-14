@@ -1,3 +1,5 @@
-<num-value-select [value]="value" (selectedValue)="setValue($event)">
-  <mat-label>{{ 'QUERYBUILDER.EDIT.VALUE' | translate }}</mat-label>
-</num-value-select>
+<num-value-select
+  [value]="value"
+  (selectedValue)="setValue($event)"
+  [label]="'QUERYBUILDER.EDIT.VALUE'"
+></num-value-select>

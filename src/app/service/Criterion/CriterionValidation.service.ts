@@ -22,8 +22,6 @@ export class CriterionValidationService {
   ) {}
 
   public setIsFilterRequired(criterion: Criterion): boolean {
-    console.log('validate');
-    console.log(criterion);
     return !(
       criterion.getValueFilters().filter(
         (valueFilter) =>

@@ -40,9 +40,6 @@ export class CriteriaBoxComponent implements OnInit {
     this.getMenuItems();
     this.getFilterChips();
     this.isFilterRequired = !this.criterion.getIsRequiredFilterSet();
-    console.log('Box');
-    console.log(this.criterion);
-    console.log(this.isFilterRequired);
   }
 
   private getMenuItems() {

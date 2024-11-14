@@ -9,6 +9,9 @@ export class ValueSelectComponent {
   @Input()
   value: number;
 
+  @Input()
+  label: string;
+
   @Output()
   selectedValue: EventEmitter<number> = new EventEmitter<number>();
 
