@@ -83,6 +83,9 @@ export abstract class AbstractQuantityFilter {
     return this.comparator;
   }
 
+  setComparator(comparator: QuantityComparisonOption): void {
+    this.comparator = comparator;
+  }
   public mapQuantityComparisonToComparator(option: QuantityComparisonOption): Comparator {
     switch (option) {
       case QuantityComparisonOption.NONE:
