@@ -166,8 +166,15 @@
       "SAVE": {
         "HEADER": "Download current Dataselection"
       },
-      "EMPTY": "You have not defined a dataselection yet. Upload an existing dataselection or create a new one.",
-      "ERROR_NO_COHORT": "No chort definition was found in the file"
+      "ERROR": {
+        "UPLOAD": "No cohort was defined in the uploaded file",
+        "DOWNLOAD": "No cohort was defined, download not possible"
+      },
+      "SUCCESS": {
+        "UPLOAD": "Data request has been uploaded",
+        "DOWNLOAD": "Data request has been successfully downloaded"
+}
+
 
     }
   },

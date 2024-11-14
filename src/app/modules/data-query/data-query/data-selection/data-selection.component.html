@@ -53,7 +53,12 @@
         #fileUpload
         style="display: none"
       />
-      <num-button type="green" class="margin-right-10" (click)="fileUpload.click()">
+      <num-button
+        [isDisabled]="isDataSelectionExistent"
+        type="green"
+        class="margin-right-10"
+        (click)="fileUpload.click()"
+      >
         {{ 'DATAQUERY.DATASELECTION.BUTTON.UPLOAD' | translate }}
       </num-button>
     </div>

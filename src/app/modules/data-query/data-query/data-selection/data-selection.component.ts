@@ -1,25 +1,14 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
 import { CRTDL2UIModelService } from 'src/app/service/Translator/CRTDL/CRTDL2UIModel.service';
-import { DataExtraction2UiDataSelectionService } from 'src/app/service/Translator/DataExtraction/DataExtraction2UiDataSelection.service';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
 import { DownloadDataSelectionComponent } from './download-data-selection/download-data-selection.component';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
-import { map } from 'rxjs';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'num-data-selection',
@@ -35,15 +24,12 @@ export class DataSelectionComponent implements OnInit {
 
   fileName: string;
   constructor(
-    private changeDetectorRef: ChangeDetectorRef,
     private terminologySystemProvider: TerminologySystemProvider,
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
     private crdtlTranslatorService: CRTDL2UIModelService,
-    private downloadCRDTLService: DownloadCRDTLService,
     private dialog: MatDialog,
-    private dataExtraction2UiDataSelectionService: DataExtraction2UiDataSelectionService,
     private snackbarService: SnackbarService,
     private feasibilityQueryProviderService: FeasibilityQueryProviderService
   ) {}

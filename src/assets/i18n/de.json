@@ -168,7 +168,7 @@
       },
       "EMPTY":"Sie haben noch keine Datenselektion definiert. Laden Sie eine existierende Datenselektion oder kreieren Sie eine neue Datenselektion",
       "ERROR": {
-        "UPLOAD":"In der hochgeladenen Datei wurde keine Kohorte wurde definiert",
+        "UPLOAD":"In der hochgeladenen Datei wurde keine Kohorte definiert",
         "DOWNLOAD": "Es wurden keine Kohorte definiert, download nicht möglich"
       },
       "SUCCESS": {
