@@ -31,6 +31,7 @@ export class DataExtraction2UiDataSelectionService {
       return this.createDataSelection.fetchDataSelectionProfileData(urls).pipe(
         map((dataSelectionProfiles) => {
           dataSelectionProfiles.forEach((dataSelectionProfile) => {
+            console.log(dataSelectionProfile);
             const externDataSelectionProfile = dataExtraction.attributeGroups.find(
               (attributeGroup) => attributeGroup.groupReference === dataSelectionProfile.getUrl()
             );
@@ -38,40 +39,42 @@ export class DataExtraction2UiDataSelectionService {
               externDataSelectionProfile.attributes,
               dataSelectionProfile.getFields()
             );
-            const profileTokenFilter = externDataSelectionProfile.filter?.map(
-              (externSingleFilter) => {
-                if (externSingleFilter.type === DataSelectionFilterType.TOKEN) {
-                  const codeFilter = dataSelectionProfile
-                    .getFilters()
-                    .find(
-                      (singleFilter) => singleFilter.getName() === externSingleFilter.name
-                    ) as ProfileTokenFilter;
-                  return new ProfileTokenFilter(
-                    uuidv4(),
-                    externSingleFilter.name,
-                    externSingleFilter.type,
-                    codeFilter.getValueSetUrls(),
-                    externSingleFilter.codes.map(
-                      (code) =>
-                        new TerminologyCode(code.code, code.display, code.system, code.version)
-                    )
-                  );
-                }
-
-                if (externSingleFilter.type === DataSelectionFilterType.DATE) {
-                  const timeRestriction =
-                    this.uITimeRestrictionFactoryService.createTimeRestrictionForDataSelection(
-                      externSingleFilter
+            if (externDataSelectionProfile.filter) {
+              const profileTokenFilter = externDataSelectionProfile.filter?.map(
+                (externSingleFilter) => {
+                  if (externSingleFilter.type === DataSelectionFilterType.TOKEN) {
+                    const codeFilter = dataSelectionProfile
+                      .getFilters()
+                      .find(
+                        (singleFilter) => singleFilter.getName() === externSingleFilter.name
+                      ) as ProfileTokenFilter;
+                    return new ProfileTokenFilter(
+                      uuidv4(),
+                      externSingleFilter.name,
+                      externSingleFilter.type,
+                      codeFilter.getValueSetUrls(),
+                      externSingleFilter.codes.map(
+                        (code) =>
+                          new TerminologyCode(code.code, code.display, code.system, code.version)
+                      )
                     );
-                  return new ProfileTimeRestrictionFilter(
-                    externSingleFilter.name,
-                    externSingleFilter.type,
-                    timeRestriction
-                  );
+                  }
+
+                  if (externSingleFilter.type === DataSelectionFilterType.DATE) {
+                    const timeRestriction =
+                      this.uITimeRestrictionFactoryService.createTimeRestrictionForDataSelection(
+                        externSingleFilter
+                      );
+                    return new ProfileTimeRestrictionFilter(
+                      externSingleFilter.name,
+                      externSingleFilter.type,
+                      timeRestriction
+                    );
+                  }
                 }
-              }
-            );
-            dataSelectionProfile.setFilters(profileTokenFilter);
+              );
+              dataSelectionProfile.setFilters(profileTokenFilter);
+            }
           });
           return new DataSelection(dataSelectionProfiles, uuidv4());
         })
