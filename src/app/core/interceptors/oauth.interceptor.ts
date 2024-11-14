@@ -44,8 +44,11 @@ export class OAuthInterceptor implements HttpInterceptor {
         if (error.status === 404) {
           this.handleErrorCodes(error.status);
         }
-        if (error.error.issues[0]) {
-          this.handleErrorCodes(error.error.issues[0].code, error.headers.get('Retry-After'));
+        if (error.error.issue) {
+          this.handleErrorCodes(error.error.issue[0]?.code);
+        }
+        if (error.error.issues) {
+          this.handleErrorCodes(error.error.issues[0]?.code, error.headers.get('Retry-After'));
         } else {
           this.handleErrorCodes(error.status);
         }
