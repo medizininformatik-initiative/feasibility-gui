@@ -241,7 +241,11 @@ export class CriterionBuilder {
     return attributeFilterBuilder.withAttributeCode(attributeCode).buildAttributeFilter();
   }
 
-  buildValueFilter(valueDefinition: ValueDefinition, display: string, filterType: FilterTypes) {
+  buildValueFilter(
+    valueDefinition: ValueDefinition,
+    display: string,
+    filterType: FilterTypes
+  ): ValueFilter {
     const valueFilterBuilder = new AttributeFiltersBuilder(
       display,
       valueDefinition.getOptional(),
