@@ -11,6 +11,7 @@ import { ValidationService } from 'src/app/service/Validation.service';
 import { DownloadCohortComponent } from './download-cohort/download-cohort.component';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { Observable } from 'rxjs';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Component({
   selector: 'num-cohort-definition',
@@ -35,7 +36,8 @@ export class CohortDefinitionComponent implements OnInit {
     private navigationHelperService: NavigationHelperService,
     private consentService: ConsentService,
     private dialog: MatDialog,
-    private terminologySystemProvider: TerminologySystemProvider
+    private terminologySystemProvider: TerminologySystemProvider,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -67,11 +69,11 @@ export class CohortDefinitionComponent implements OnInit {
   }
 
   public onReaderLoad(event: ProgressEvent<FileReader>): void {
-    try {
-      const importedQuery = JSON.parse(event.target?.result as string);
+    const importedQuery = JSON.parse(event.target?.result as string);
+    if (importedQuery.inclusionCriteria?.length > 0) {
       this.doValidate(importedQuery);
-    } catch (error) {
-      console.error('Error parsing the file:', error);
+    } else {
+      this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.COHORT.ERROR.UPLOAD');
     }
   }
 
