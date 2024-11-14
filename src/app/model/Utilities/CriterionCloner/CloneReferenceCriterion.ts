@@ -15,15 +15,18 @@ export class CloneAbstractCriterion {
   }
 
   static deepCopyAbstractCriterion(abstractCriterion: AbstractCriterion): AbstractCriterion {
+    let clonedTimeRestriction;
     const clonedAttributeFilters = CloneAttributeFilter.deepCopyAttributeFilters(
       abstractCriterion.getAttributeFilters()
     );
     const clonedValueFilters = CloneValueFilter.deepCopyValueFilters(
       abstractCriterion.getValueFilters()
     );
-    const clonedTimeRestriction = CloneTimeRestriction.deepCopyTimeRestriction(
-      abstractCriterion.getTimeRestriction()
-    );
+    if (abstractCriterion.getTimeRestriction()) {
+      clonedTimeRestriction = CloneTimeRestriction.deepCopyTimeRestriction(
+        abstractCriterion.getTimeRestriction()
+      );
+    }
 
     const mandatoryFields = this.createMandatoryFields(abstractCriterion);
     const criterionBuilder: CriterionBuilder = new CriterionBuilder(mandatoryFields);
