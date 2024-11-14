@@ -20,7 +20,8 @@ export class CriteriaResultMapperStrategy extends AbstractResultMapper<
           resultItem.termcode,
           resultItem.kdsModule,
           resultItem.name,
-          resultItem.id
+          resultItem.id,
+          resultItem.context
         )
     );
   }

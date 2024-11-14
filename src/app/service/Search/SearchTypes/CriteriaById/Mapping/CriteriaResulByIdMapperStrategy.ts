@@ -18,7 +18,8 @@ export class CriteriaResulByIdMapperStrategy
       results.termcode,
       results.kdsModule,
       results.name,
-      results.id
+      results.id,
+      results.context
     );
 
     return [entry];

@@ -11,6 +11,7 @@ export class SearchTermListEntry extends AbstractListEntry {
   private terminology: string;
   private termcode: string;
   private kdsModule: string;
+  private context: string;
   private name: string;
   /**
    *
@@ -29,7 +30,8 @@ export class SearchTermListEntry extends AbstractListEntry {
     termcode: string,
     kdsModule: string,
     name: string,
-    id: string
+    id: string,
+    context: string
   ) {
     super(id);
     this.availability = availability;
@@ -38,6 +40,7 @@ export class SearchTermListEntry extends AbstractListEntry {
     this.kdsModule = kdsModule;
     this.selectable = selectable;
     this.name = name;
+    this.context = context;
   }
 
   /**
@@ -127,10 +130,18 @@ export class SearchTermListEntry extends AbstractListEntry {
   setKdsModule(kdsModule: string): void {
     this.kdsModule = kdsModule;
   }
+
   getName(): string {
     return this.name;
   }
   setName(name: string): void {
     this.name = name;
+  }
+
+  getContext(): string {
+    return this.context;
+  }
+  setContext(context: string): void {
+    this.context = context;
   }
 }

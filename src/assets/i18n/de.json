@@ -1,6 +1,7 @@
 {
   "SHAREDCOMPONENTS": {
     "KDS_MODULE": "KDS Module",
+    "KONTEXT": "Kontext / KDS Profil",
     "Availability": "Anzahl",
     "Terminology": "Terminologie",
     "Termcode": "Terminologie-Code",

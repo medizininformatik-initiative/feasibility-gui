@@ -43,7 +43,7 @@
     class="height-400"
   >
   </num-display-feasibility-query>
-  <div *ngIf="!(isFeasibilityExistent | async)" class="empty-cohort-box">
+  <div *ngIf="(isFeasibilityExistent | async) === false" class="empty-cohort-box">
     <num-placeholder-box>
       {{ 'DATAQUERY.COHORT.EMPTY' | translate }}
     </num-placeholder-box>
@@ -53,7 +53,7 @@
       {{ 'DATAQUERY.COHORT.BUTTON.NEW_COHORT' | translate }}
     </num-button>
     <num-button
-      [isDisabled]="!(isFeasibilityExistent | async)"
+      [isDisabled]="(isFeasibilityExistent | async) === false"
       type="green"
       (click)="editFeasibilityQuery()"
     >
@@ -67,14 +67,14 @@
     </div>
     <num-button
       type="green"
-      [isDisabled]="!(isFeasibilityQueryValid | async)"
+      [isDisabled]="(isFeasibilityQueryValid | async) === false"
       (click)="doDownloadQuery()"
     >
       {{ 'DATAQUERY.COHORT.BUTTON.DOWNLOAD' | translate }}
     </num-button>
     <num-button
       type="green"
-      [isDisabled]="!(isFeasibilityQueryValid | async)"
+      [isDisabled]="(isFeasibilityQueryValid | async) === false"
       (click)="sendQuery()"
     >
       {{ 'DATAQUERY.COHORT.BUTTON.SEND_QUERY' | translate }}
