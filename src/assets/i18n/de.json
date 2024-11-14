@@ -37,7 +37,8 @@
       "DEFINE_FIELDS": "Felder selektieren",
       "SEARCH": "Als Suchbegriff nutzen",
       "SHOW_CRITERIA":"Kriterium anzeigen",
-      "ADD": "Zur Bühne hinzufügen"
+      "ADD": "Zur Bühne hinzufügen",
+      "OPTIONS": "Optionen"
     },
     "LIST_ITEM_DETAILS":{
       "PARENTS": "Elternelement",
@@ -152,6 +153,9 @@
       "SAVE": {
         "HEADER": "Aktuelle Kohorte herunterladen"
       },
+      "ERROR": {
+        "UPLOAD": "Keine valide Kohorten definition wurde hochgeladen"
+      },
       "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
     },
     "DATASELECTION": {
@@ -250,6 +254,7 @@
       "SEARCH_BUTTON": "Suchen",
       "SEARCHBAR":"Suchen nach Begriff oder Terminologiecode",
       "HEADER": "Kriterien Suche",
+      "CLOSE_DETAILS": "Schließen",
       "BUTTON": {
         "RESET": "Filter zurücksetzen"
       },
@@ -423,7 +428,7 @@
     "FEAS-10001": "Ihr Benutzer wurde wegen zu vielen Anfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
     "FEAS-10005"  :"Die Anzahl der Standorte die geantwortet haben ist zu klein -> Detailergebnis wird nicht angezeigt",
     "FEAS-10004"  :"Die Ergebnismenge ist zu klein -> Ergebnis wird nicht angezeigt",
-    "FEAS-10002"  :"Sie haben zu viele Anfragen gestellt, bitte warten Sie {{ RETRY_AFTER }} Sekunden und probieren Sie es erneut",
+    "FEAS-10002"  :"Sie haben zu viele Anfragen gestellt, bitte warten Sie und probieren Sie es erneut",
     "FEAS-10006"  :"Sie haben zu viele Kohorten gespeichert, bitte löschen Sie einige ältere Kohorten, bevor Sie Weitere speichern",
     "404"         :"Standort wurde nicht gefunden",
     "VAL-20001"   :"Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden"

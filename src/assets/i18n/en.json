@@ -37,7 +37,8 @@
       "DEFINE_FIELDS": "Select fields",
       "SEARCH": "Use as searchterm",
       "SHOW_CRITERIA":"Show criteria",
-      "ADD": "Add to stage"
+      "ADD": "Add to stage",
+      "OPTIONS": "Options"
     },
     "LIST_ITEM_DETAILS":{
       "PARENTS": "Parent element",
@@ -152,6 +153,9 @@
       "SAVE": {
         "HEADER": "Download current Cohort"
       },
+      "ERROR": {
+        "UPLOAD": "No valid cohort selection was uploaded"
+      },
       "EMPTY": "You have not defined a cohort yet. Upload an existing cohort or create a new one."
     },
     "DATASELECTION": {
@@ -257,6 +261,7 @@
       "EXCLUSION": "Exclusion criteria",
       "LABEL": "enter code or display",
       "ALL": "All",
+      "CLOSE_DETAILS": "Close",
       "CATEGORY_FILTER": "Filter by",
       "CONSENT_HEADER": "Type of data use",
       "CONSENT_CENTRAL_TOOLTIP": "For the central analysis you will recieve patient data pseudonymised by the MII, which fit your research project proposal. Pseudonymised data can only be used, if patients have consented to their use.The researches will recieve the pseudonymised data in form of a Download. They will then be able to conduct their analysis with greater flexibility and depths as well as faster speed compared to decentral analyis. The collection of the consent is currently underway across all sites. However it can be expected, that for most queries less patients will be found for central than de-central analysis.",
@@ -420,7 +425,7 @@
   },
   "ERROR": {
     "FEAS-10001"  : "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
-    "FEAS-10002"  : "You sent too many queries, please wait {{RETRY_AFTER}} seconds and try again",
+    "FEAS-10002"  : "You sent too many queries, please wait and try again",
     "FEAS-10004"  : "The number of sites which answered is too small -> detailed results are not shown",
     "FEAS-10005"  : "The result size is too small -> result will not be shown",
     "FEAS-10006"  : "Saved query limit reached. Please delete old saved queries before trying to create new ones.",
