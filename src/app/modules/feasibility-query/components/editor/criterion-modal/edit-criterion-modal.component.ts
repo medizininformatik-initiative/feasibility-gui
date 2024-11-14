@@ -149,6 +149,5 @@ export class EditCriterionModalComponent implements OnInit {
 
   public closeDialog() {
     this.dialogRef.close();
-    this.dialogRef.close(this.criterionBuilder.buildCriterion());
   }
 }
