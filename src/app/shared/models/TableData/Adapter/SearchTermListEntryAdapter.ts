@@ -8,7 +8,7 @@ import { TerminologySystemDictionary } from 'src/app/model/Utilities/Terminology
 
 export class SearchTermListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['Name', 'Availability', 'Terminology', 'Termcode', 'KDS_MODULE'],
+    headers: ['Name', 'Availability', 'Terminology', 'Termcode', 'KONTEXT'],
   };
 
   public static adapt(listEntries: SearchTermListEntry[]): TableData {
@@ -19,7 +19,7 @@ export class SearchTermListEntryAdapter {
         listEntry.getAvailability().toString(),
         TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology()),
         listEntry.getTermcode(),
-        listEntry.getKdsModule(),
+        listEntry.getContext(),
       ],
       hasCheckbox: true,
       isCheckboxSelected: false,
