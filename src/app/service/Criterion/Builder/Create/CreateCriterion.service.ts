@@ -40,7 +40,7 @@ export class CreateCriterionService {
    * @todo check if ids exceed 50 --> if so send second request and so on
    * due to url length
    */
-  public getCriteriaProfileData(ids: Array<string>) {
+  public getCriteriaProfileData(ids: Array<string>, clearIds: boolean = true) {
     this.backend
       .getCriteriaProfileData(ids)
       .pipe(
@@ -61,8 +61,10 @@ export class CreateCriterionService {
           return of(criteriaProfileDataArray);
         }),
         finalize(() => {
-          this.ids.clear();
-          this.listItemService.clearSelection();
+          if (clearIds) {
+            this.ids.clear();
+            this.listItemService.clearSelection();
+          }
         })
       )
       .subscribe(

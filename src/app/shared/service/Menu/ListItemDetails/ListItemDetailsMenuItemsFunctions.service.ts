@@ -22,7 +22,7 @@ export class ListItemDetailsMenuItemsFunctionsService {
   }
 
   public addToStage(id: string) {
-    this.criterionService.getCriteriaProfileData([id]);
+    this.criterionService.getCriteriaProfileData([id], false);
   }
 
   public searchCriteria(id: string) {
