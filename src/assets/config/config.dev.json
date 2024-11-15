@@ -15,7 +15,7 @@
     "roles": ["FeasibilityUser"]
   },
   "legal": {
-    "version": "6.0.0-alpha.5",
+    "version": "6.0.0-alpha.6",
     "copyrightYear": "2024",
     "copyrightOwner": "MII Team"
   },

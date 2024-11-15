@@ -1,5 +1,30 @@
 # Changelog
 
+## v6.0.0-alpha.6 (2024-11-15)
+
+### Changed
+* Added validation check before downloading and uploading a data request or cohort definition on the data request page
+* Changed label in numerical input fields and swapped min and max input fields in RangeFilter
+
+### Feature
+* Switched from module to context in Search Result list ([#286](https://github.com/medizininformatik-initiative/feasibility-gui/issues/286))
+* Added service to validate whether a criterion has all optional filters set and if inclusion criteria are set.
+* Checked through service whether required attributes are set ([#277](https://github.com/medizininformatik-initiative/feasibility-gui/issues/277))
+* Extended data model and added key to data object in adapter for profile tree; added info to view component to display field names comma-separated next to profile in DSE tree ([#275](https://github.com/medizininformatik-initiative/feasibility-gui/issues/275))
+* Added required and recommended fields in data model and disabled delete for required fields([#273](https://github.com/medizininformatik-initiative/feasibility-gui/issues/273))
+* Implemented dynamic tab title based on page and subpage ([#174](https://github.com/medizininformatik-initiative/feasibility-gui/issues/174))
+
+### Bugfix
+* Fixed translation of Quantity in CCDL Translator ([#282](https://github.com/medizininformatik-initiative/feasibility-gui/issues/282))
+* Fixed setting of comparator by creating a mapping function from UI intern to CCDL comparator ([#281](https://github.com/medizininformatik-initiative/feasibility-gui/issues/281))
+* Set optional when creating a criterion based on the criteria profile data ([#280](https://github.com/medizininformatik-initiative/feasibility-gui/issues/280))
+* Added missing function for translating valueFilter from CCDL to Ui intern data model ([#278](https://github.com/medizininformatik-initiative/feasibility-gui/issues/278))
+* Added missing check for field children ([#274](https://github.com/medizininformatik-initiative/feasibility-gui/commit/3ff9d5a756025139497dc05654d8ac84f1941133))
+* Display previously selected filter and search text when switching between search and editor page ([#262](https://github.com/medizininformatik-initiative/feasibility-gui/issues/262))
+* Enabled multiple ValueSet URLs for CodeableConcept search, concatenated by commas ([#253](https://github.com/medizininformatik-initiative/feasibility-gui/issues/253))
+
+
+
 ## v6.0.0-alpha.5 (2024-10-30)
 
 ### Changed
