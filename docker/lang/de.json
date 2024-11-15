@@ -1,6 +1,7 @@
 {
   "SHAREDCOMPONENTS": {
     "KDS_MODULE": "KDS Module",
+    "KONTEXT": "Kontext / KDS Profil",
     "Availability": "Anzahl",
     "Terminology": "Terminologie",
     "Termcode": "Terminologie-Code",
@@ -9,15 +10,18 @@
     "patient_number": "Anzahl der Patienten",
     "Display": "Name",
     "Terminology Code": "Terminologie-Code",
+    "CRITERIA_BOX": {
+      "REQUIRED_FILTER": "Bitte einen Filter setzen"
+    },
     "ACTIONBAR": {
-        "SELECTED_CRITERIA": {
-          "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt",
-          "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt"
+      "SELECTED_CRITERIA": {
+        "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt",
+        "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt"
       },
-          "ADDED_CRITERIA":{
-            "SINGULAR": "Sie haben {{amount}} Kriterium zur Bühne hinzugefügt",
-            "PLURAL": "Sie haben {{amount}} Kriterien zur Bühne hinzugefügt"
-          }
+      "ADDED_CRITERIA":{
+        "SINGULAR": "Sie haben {{amount}} Kriterium zur Bühne hinzugefügt",
+        "PLURAL": "Sie haben {{amount}} Kriterien zur Bühne hinzugefügt"
+      }
     },
     "FILTER": {
       "CONTEXT": "Kontext",
@@ -30,10 +34,11 @@
       "DELETE": "Löschen",
       "REFERENCE": "Kriterien verknüpfen",
       "APPLY_FILTERS": "Filter anwenden",
-      "DEFINE_FIELDS": "Felder definieren",
+      "DEFINE_FIELDS": "Felder selektieren",
       "SEARCH": "Als Suchbegriff nutzen",
       "SHOW_CRITERIA":"Kriterium anzeigen",
-      "ADD": "Zur Bühne hinzufügen"
+      "ADD": "Zur Bühne hinzufügen",
+      "OPTIONS": "Optionen"
     },
     "LIST_ITEM_DETAILS":{
       "PARENTS": "Elternelement",
@@ -47,6 +52,7 @@
     }
   },
   "SHAREDFILTER": {
+    "EMPTY":"Entschuldigung, wir konnten keine Ergebnisse finden für ",
     "FILTER_SELECTION": "Ausgewählte Elemente",
     "BUTTON": {
       "ADD": "Hinzufügen",
@@ -108,6 +114,9 @@
       "HEADER": "Selektieren Sie zu extrahierende Felder für ",
       "REQUIRED": "erforderlich"
     },
+    "FILTER": {
+      "HEADER": "Kodierung/Name"
+    },
     "EDIT": {
       "HEADER": "Ausgewählte Gesundheitsdaten zum Extrahieren",
       "HEADER_DESCRIPTION":"Hier muss noch ein Text hinzukommen",
@@ -117,7 +126,8 @@
       "DOWNLOAD": "Datenselektion herunterladen",
       "ADD": "Zur Datenselektion hinzufügen",
       "JUMP_TO_DATASELECTION_TREE": "Datenelement hinzufügen",
-      "JUMP_TO_DATASELECTION": "Selektion anzeigen"
+      "JUMP_TO_DATASELECTION": "Selektion anzeigen",
+      "DATA_REQUEST": "Datenanfrage"
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -137,17 +147,37 @@
         "DOWNLOAD": "Kohorte herunterladen",
         "EDIT":"Kohorte bearbeiten",
         "NEW_COHORT":"Neue Kohorte",
-        "JUMP_TO_DATASELECTION": "zur Datenselektion"
+        "JUMP_TO_DATASELECTION": "zur Datenselektion",
+        "SEND_QUERY": "Machbarkeitsanfrage"
+      },
+      "SAVE": {
+        "HEADER": "Aktuelle Kohorte herunterladen"
+      },
+      "ERROR": {
+        "UPLOAD": "Keine valide Kohorten definition wurde hochgeladen"
       },
       "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
     },
     "DATASELECTION": {
+      "HEADER": "Datenselektion",
       "BUTTON":{
         "EDIT":"Datenselektion bearbeiten",
-        "DOWNLOAD":"Dataselektion herunterladen",
-        "UPLOAD": "Datenselektion hochladen",
+        "DOWNLOAD":"Datenanfrage herunterladen",
+        "UPLOAD": "Datenanfrage hochladen",
         "NEW_DATASELECTION":"Neue Dataselektion",
         "JUMP_TO_COHORT_SELECTION": "zur Kohortenselektion"
+      },
+      "SAVE": {
+        "HEADER": "Aktuelle Datenselektion herunterladen"
+      },
+      "EMPTY":"Sie haben noch keine Datenselektion definiert. Laden Sie eine existierende Datenselektion oder kreieren Sie eine neue Datenselektion",
+      "ERROR": {
+        "UPLOAD":"In der hochgeladenen Datei wurde keine Kohorte definiert",
+        "DOWNLOAD": "Es wurden keine Kohorte definiert, download nicht möglich"
+      },
+      "SUCCESS": {
+        "UPLOAD": "Datenanfrage wurde hochgeladen",
+        "DOWNLOAD": "Datenagfrage wurde erfolgreich heruntergeladen"
       }
     }
   },
@@ -195,7 +225,10 @@
         "ADD_TO_STAGE": "Zur Bühne hinzufügen",
         "BACK_TO_SEARCH":"Kriterien hinzufügen",
         "VIEW_STAGE": "Bühne anzeigen",
-        "SEND_QUERY": "Anfrage senden"
+        "SEND_QUERY": "Machbarkeitsanfrage",
+        "DATA_REQUEST": "Datenanfrage"
+
+
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Bühne hinzugefügt"
@@ -206,8 +239,8 @@
         "TITLE": "Vorausgesetzte Einwilligungen zur Datenverarbeitung",
         "CENTRAL": "Zentral",
         "DISTRIBUTED": "Verteilt",
-        "EU_GDPR": "EU DSGVO konform",
-        "NON_EU_GDPR": "nicht EU DSGVO konform",
+        "EU_GDPR": "Alle Datenempfänger in Ländern mit Datenschutzniveau konform zur EU DSGVO",
+        "NON_EU_GDPR": "Datenempfänger im Ausland mit Datenschutzniveau unterhalb EU DSGVO",
         "WITHOUT_DATA": "ohne Krankenkassendaten",
         "WITH_DATA": "mit Krankenkassendaten",
         "WITHOUT_CONTACT": "ohne Rekontaktierung",
@@ -216,13 +249,16 @@
     },
     "HEADER_TITLE": "Ausgewählte Kriterien",
     "SEARCH": {
+      "MIN_LENGTH":"Bitte mindestens 3 Buchstaben eingeben",
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden um die Fallzahl deutschlandweit zu ermitteln.",
       "SEARCH_BUTTON": "Suchen",
       "SEARCHBAR":"Suchen nach Begriff oder Terminologiecode",
       "HEADER": "Kriterien Suche",
+      "CLOSE_DETAILS": "Schließen",
       "BUTTON": {
         "RESET": "Filter zurücksetzen"
       },
+      "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
       "INCLUSION": "Einschlusskriterien",
       "EXCLUSION": "Ausschlusskriterien",
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -256,7 +292,8 @@
     },
     "OVERVIEW": {
       "COHORT": {
-        "LOAD": "Kohorte laden"
+        "LOAD": "Kohorte laden",
+        "PATIENTS": "Anzahl der Patienten:"
       },
       "TITLE_LABEL": "Titel",
       "COMMENT_LABEL": "Kommentar",
@@ -372,11 +409,26 @@
     "SAVEQUERY": "Abfrage speichern",
     "VALIDATE": "Validieren"
   },
+  "TAB_TITLE": {
+    "DATA_QUERY": {
+      "COHORT_DEFINITION": "Datenabfrage - Kohortendefinition",
+      "DATA_SELECTION": "Datenabfrage - Datenselektion"
+    },
+    "DATA_SELECTION": {
+      "SEARCH": "Datenselektion - Suche",
+      "EDITOR": "Datenselektion - Editor"
+    },
+    "FEASIBILITY_QUERY": {
+      "SEARCH": "Machbarkeitsabfrage - Suche",
+      "EDITOR": "Machbarkeitsabfrage - Editor",
+      "RESULT": "Machbarkeitsabfrage - Ergebnis"
+    }
+  },
   "ERROR": {
     "FEAS-10001": "Ihr Benutzer wurde wegen zu vielen Anfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
     "FEAS-10005"  :"Die Anzahl der Standorte die geantwortet haben ist zu klein -> Detailergebnis wird nicht angezeigt",
     "FEAS-10004"  :"Die Ergebnismenge ist zu klein -> Ergebnis wird nicht angezeigt",
-    "FEAS-10002"  :"Sie haben zu viele Anfragen gestellt, bitte warten Sie {{ RETRY_AFTER }} Sekunden und probieren Sie es erneut",
+    "FEAS-10002"  :"Sie haben zu viele Anfragen gestellt, bitte warten Sie und probieren Sie es erneut",
     "FEAS-10006"  :"Sie haben zu viele Kohorten gespeichert, bitte löschen Sie einige ältere Kohorten, bevor Sie Weitere speichern",
     "404"         :"Standort wurde nicht gefunden",
     "VAL-20001"   :"Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden"

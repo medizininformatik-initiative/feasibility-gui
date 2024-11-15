@@ -1,6 +1,7 @@
 {
   "SHAREDCOMPONENTS": {
     "KDS Module": "KDS Module",
+    "KONTEXT": "Context / CDS Profile",
     "Availability": "Availability",
     "Terminology": "Terminology",
     "Termcode": "Terminology Code",
@@ -19,6 +20,9 @@
         "PLURAL": "You have added {{amount}} criteria to the stage"
       }
     },
+    "CRITERIA_BOX": {
+      "REQUIRED_FILTER": "Please set a filter"
+    },
     "FILTER": {
       "CONTEXT": "Context",
       "AVAILABILITY": "Availability",
@@ -30,10 +34,11 @@
       "DELETE": "Delete",
       "REFERENCE": "Link criteria",
       "APPLY_FILTERS": "Apply filter",
-      "DEFINE_FIELDS": "Define fields",
+      "DEFINE_FIELDS": "Select fields",
       "SEARCH": "Use as searchterm",
       "SHOW_CRITERIA":"Show criteria",
-      "ADD": "Add to stage"
+      "ADD": "Add to stage",
+      "OPTIONS": "Options"
     },
     "LIST_ITEM_DETAILS":{
       "PARENTS": "Parent element",
@@ -54,80 +59,84 @@
     }
   },
   "DASHBOARD": {
-      "HEADER": "Welcome to the „Find data and biospecimens“ service of the German Research Data Portal for Health",
-      "PARAGRAPH1": "This is a support service for scientists to assist you in realizing your research project. By submitting a feasibility request, you can find out how many data sets for your search criteria are available at university hospitals nationwide. Based on inclusion and exclusion criteria, the availability of health data for medical research purposes can be estimated.",
-      "PARAGRAPH2": "",
-      "PARAGRAPH3_1": "With ",
-      "PARAGRAPH3_2": "New Query",
-      "PARAGRAPH3_3": " you have the possibility to formulate and send a new query based on the ",
-      "PARAGRAPH3_4": " to get an overview of the available patient data records.",
-      "PARAGRAPH3_LINK": "core data set of the MII",
-      "PARAGRAPH4_1":"You can view and further edit saved queries or saved drafts via ",
-      "PARAGRAPH4_2":"My Queries",
-      "PARAGRAPH4_3": ".",
-      "PARAGRAPH5_1": "Once you have all the relevant information for your research project, you can submit an application for data use in the proposal portal of the German Research Data Portal for Health via",
-      "PARAGRAPH5_2": "Submit Application",
-      "PARAGRAPH5_3": ".",
+    "HEADER": "Welcome to the „Find data and biospecimens“ service of the German Research Data Portal for Health",
+    "PARAGRAPH1": "This is a support service for scientists to assist you in realizing your research project. By submitting a feasibility request, you can find out how many data sets for your search criteria are available at university hospitals nationwide. Based on inclusion and exclusion criteria, the availability of health data for medical research purposes can be estimated.",
+    "PARAGRAPH2": "",
+    "PARAGRAPH3_1": "With ",
+    "PARAGRAPH3_2": "New Query",
+    "PARAGRAPH3_3": " you have the possibility to formulate and send a new query based on the ",
+    "PARAGRAPH3_4": " to get an overview of the available patient data records.",
+    "PARAGRAPH3_LINK": "core data set of the MII",
+    "PARAGRAPH4_1":"You can view and further edit saved queries or saved drafts via ",
+    "PARAGRAPH4_2":"My Queries",
+    "PARAGRAPH4_3": ".",
+    "PARAGRAPH5_1": "Once you have all the relevant information for your research project, you can submit an application for data use in the proposal portal of the German Research Data Portal for Health via",
+    "PARAGRAPH5_2": "Submit Application",
+    "PARAGRAPH5_3": ".",
     "INFO":{
       "TEXT": " We are currently working on the feasibility portal. This can lead to slow responses and deviating results for some queries."
     },
-      "DATAQUERY": {
-        "HEADER": "Compose Data Query",
-        "BUTTON": "Go to Data Query"
-      },
-      "DATASELECTION": {
-        "HEADER": "Compose Data Selection",
-        "BUTTON": "New Dataselection"
-      },
-      "NEWQUERY": {
-        "HEADER": "Create Feasibility Request",
-        "BUTTON": "New Feasibility Query"
-      },
-      "SAVED_QUERIES": {
-        "HEADER": "My Queries",
-        "BUTTON": "Go to Overview"
-      },
-      "PREPOSALPORTAL": {
-        "HEADER": "Submit Research Proposal",
-        "BUTTON": "New Proposal"
-      }
-  },
+    "DATAQUERY": {
+      "HEADER": "Compose Data Query",
+      "BUTTON": "Go to Data Query"
+    },
     "DATASELECTION": {
-      "HEADER": "Data Selection",
-      "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
-      "DATASELECTION": "Data Selection",
-      "SELECTION_BOX": {
-        "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
-        "SELECTED_FIELDS": "Selected Fields",
-        "APPLIED_FILTER": "Applied Filters",
-        "REQUIRED": "required",
-        "OPTIONAL": "optional"
-      },
-      "FIELD_SELECTION": {
-        "FIELD_SELECTION": "Selected items",
-        "HEADER": "Select fields to extract for ",
-        "REQUIRED": "required"
-      },
-      "EDIT": {
-        "HEADER": "Selected Health Data for Extraction",
-        "HEADER_DESCRIPTION": "Text needs to be added here",
-        "SECTION": "Selected Criteria"
-      },
-      "BUTTON": {
-        "ADD": "Add to Data Selection",
-        "DOWNLOAD": "Download Data Selection",
-        "JUMP_TO_DATASELECTION_TREE": "Add data element",
-        "JUMP_TO_DATASELECTION": "Show selection"
-      },
-      "SEARCH": {
-        "LABEL": "Insert code or search text",
-        "CRITERIA": "Search criteria"
-      },
-      "DISPLAY": {
-        "LABEL": "Selected criteria"
-      },
-      "INFOTEXT": "Please select the criteria you would like to export and download your data selection. You can then either upload the data selection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
-      "REQUIRED": "required from all sites"
+      "HEADER": "Compose Data Selection",
+      "BUTTON": "New Dataselection"
+    },
+    "NEWQUERY": {
+      "HEADER": "Create Feasibility Request",
+      "BUTTON": "New Feasibility Query"
+    },
+    "SAVED_QUERIES": {
+      "HEADER": "My Queries",
+      "BUTTON": "Go to Overview"
+    },
+    "PREPOSALPORTAL": {
+      "HEADER": "Submit Research Proposal",
+      "BUTTON": "New Proposal"
+    }
+  },
+  "DATASELECTION": {
+    "HEADER": "Data Selection",
+    "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
+    "DATASELECTION": "Data Selection",
+    "SELECTION_BOX": {
+      "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
+      "SELECTED_FIELDS": "Selected Fields",
+      "APPLIED_FILTER": "Applied Filters",
+      "REQUIRED": "required",
+      "OPTIONAL": "optional"
+    },
+    "FIELD_SELECTION": {
+      "FIELD_SELECTION": "Selected items",
+      "HEADER": "Select fields to extract for ",
+      "REQUIRED": "required"
+    },
+    "FILTER": {
+      "HEADER": "Coding/Name"
+    },
+    "EDIT": {
+      "HEADER": "Selected Health Data for Extraction",
+      "HEADER_DESCRIPTION": "Text needs to be added here",
+      "SECTION": "Selected Criteria"
+    },
+    "BUTTON": {
+      "ADD": "Add to Data Selection",
+      "DOWNLOAD": "Download Data Selection",
+      "JUMP_TO_DATASELECTION_TREE": "Add data element",
+      "JUMP_TO_DATASELECTION": "Show selection",
+      "DATA_REQUEST": "Data Request"
+    },
+    "SEARCH": {
+      "LABEL": "Insert code or search text",
+      "CRITERIA": "Search criteria"
+    },
+    "DISPLAY": {
+      "LABEL": "Selected criteria"
+    },
+    "INFOTEXT": "Please select the criteria you would like to export and download your data selection. You can then either upload the data selection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
+    "REQUIRED": "required from all sites"
   },
   "DATAQUERY": {
     "COHORT": {
@@ -137,18 +146,40 @@
         "DOWNLOAD": "Download cohort",
         "EDIT": "Edit cohort",
         "NEW_COHORT": "New cohort",
-        "JUMP_TO_DATASELECTION": "To data selection"
+        "JUMP_TO_DATASELECTION": "To data selection",
+        "SEND_QUERY": "Feasibility Query"
+
+      },
+      "SAVE": {
+        "HEADER": "Download current Cohort"
+      },
+      "ERROR": {
+        "UPLOAD": "No valid cohort selection was uploaded"
       },
       "EMPTY": "You have not defined a cohort yet. Upload an existing cohort or create a new one."
     },
     "DATASELECTION": {
+      "HEADER":"Data Selection",
       "BUTTON": {
         "EDIT": "Edit data selection",
-        "DOWNLOAD": "Download data selection",
-        "UPLOAD": "Upload data selection",
+        "DOWNLOAD": "Download Data Request",
+        "UPLOAD": "Upload Data Request",
         "NEW_DATASELECTION": "New data selection",
-        "JUMP_TO_COHORT_SELECTION": "to cohort selection"
+        "JUMP_TO_COHORT_SELECTION": "To Cohort selection"
+      },
+      "SAVE": {
+        "HEADER": "Download current Dataselection"
+      },
+      "ERROR": {
+        "UPLOAD": "No cohort was defined in the uploaded file",
+        "DOWNLOAD": "No cohort was defined, download not possible"
+      },
+      "SUCCESS": {
+        "UPLOAD": "Data request has been uploaded",
+        "DOWNLOAD": "Data request has been successfully downloaded"
       }
+
+
     }
   },
   "LANGUAGE": {
@@ -195,30 +226,33 @@
         "ADD_TO_STAGE": "Add to Stage",
         "BACK_TO_SEARCH":"Add Criteria",
         "VIEW_STAGE": "View Stage",
-        "SEND_QUERY": "Send Query"
+        "SEND_QUERY": "Feasibility Query",
+        "DATA_REQUEST": "Data Request"
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
       },
-        "CONSENT": {
-          "WITH_CONSENT": "With Consent",
-          "WITHOUT_CONSENT": "Without Consent",
-          "TITLE": "Required Consents for Data Processing",
-          "CENTRAL": "Central",
-          "DISTRIBUTED": "Distributed",
-          "EU_GDPR": "EU GDPR",
-          "NON_EU_GDPR": "Non-EU GDPR",
-          "WITHOUT_DATA": "Without Data",
-          "WITH_DATA": "With Data",
-          "WITHOUT_CONTACT": "Without Contact",
-          "WITH_CONTACT": "With Contact"
-        }
+      "CONSENT": {
+        "WITH_CONSENT": "With Consent",
+        "WITHOUT_CONSENT": "Without Consent",
+        "TITLE": "Required Consents for Data Processing",
+        "CENTRAL": "Central",
+        "DISTRIBUTED": "Distributed",
+        "EU_GDPR": "All data recipients in countries with data protection levels compliant with the EU GDPR",
+        "NON_EU_GDPR": "Data recipients from countries with data protection levels below the EU GDPR",
+        "WITHOUT_DATA": "Without Data",
+        "WITH_DATA": "With Data",
+        "WITHOUT_CONTACT": "Without Contact",
+        "WITH_CONTACT": "With Contact"
+      }
     },
     "HEADER_TITLE": "Selected Criteria",
     "SEARCH": {
+      "MIN_LENGTH":"Required length of 3 letters",
       "BUTTON":{
         "RESET": "Reset filter"
       },
+      "EMPTY":"Sorry we couldn't find any results for ",
       "SEARCH_BUTTON": "Search",
       "HEADER": "Criteria Search",
       "SEARCHBAR":"Search by term or terminology code",
@@ -227,6 +261,7 @@
       "EXCLUSION": "Exclusion criteria",
       "LABEL": "enter code or display",
       "ALL": "All",
+      "CLOSE_DETAILS": "Close",
       "CATEGORY_FILTER": "Filter by",
       "CONSENT_HEADER": "Type of data use",
       "CONSENT_CENTRAL_TOOLTIP": "For the central analysis you will recieve patient data pseudonymised by the MII, which fit your research project proposal. Pseudonymised data can only be used, if patients have consented to their use.The researches will recieve the pseudonymised data in form of a Download. They will then be able to conduct their analysis with greater flexibility and depths as well as faster speed compared to decentral analyis. The collection of the consent is currently underway across all sites. However it can be expected, that for most queries less patients will be found for central than de-central analysis.",
@@ -256,7 +291,8 @@
     },
     "OVERVIEW": {
       "COHORT": {
-        "LOAD": "Load cohort"
+        "LOAD": "Load cohort",
+        "PATIENTS": "Number of patients:"
       },
       "TITLE_LABEL": "Title",
       "COMMENT_LABEL": "Comment",
@@ -322,14 +358,14 @@
     },
     "RESULT": {
       "HEADER": {
-          "RESULT_NOT_LOADED": "Feasibility query is being processed",
-          "RESULT_LOADED": "Query completed"
+        "RESULT_NOT_LOADED": "Feasibility query is being processed",
+        "RESULT_LOADED": "Query completed"
       },
-        "BUTTON": {
-          "DETAILS": "Details",
-          "EDIT_STAGE": "Edit stage",
-          "SAVE_QUERY": "Save cohort",
-          "DOWNLOAD": "Download cohort"
+      "BUTTON": {
+        "DETAILS": "Details",
+        "EDIT_STAGE": "Edit stage",
+        "SAVE_QUERY": "Save cohort",
+        "DOWNLOAD": "Download cohort"
       },
       "SAVE_DIALOG": {
         "HEADER": "Amount of Patients",
@@ -372,9 +408,24 @@
     "VALIDATE": "Validate",
     "IMPORT": "Load query"
   },
+  "TAB_TITLE": {
+    "DATA_QUERY": {
+      "COHORT_DEFINITION": "Data Query - Cohort Definition",
+      "DATA_SELECTION": "Data Query - Data Selection"
+    },
+    "DATA_SELECTION": {
+      "SEARCH": "Dataselection - Search",
+      "EDITOR": "Dataselection - Editor"
+    },
+    "FEASIBILITY_QUERY": {
+      "SEARCH": "Feasibility Query - Search",
+      "EDITOR": "Feasibility Query - Editor",
+      "RESULT": "Feasibility Query - Result"
+    }
+  },
   "ERROR": {
     "FEAS-10001"  : "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
-    "FEAS-10002"  : "You sent too many queries, please wait {{RETRY_AFTER}} seconds and try again",
+    "FEAS-10002"  : "You sent too many queries, please wait and try again",
     "FEAS-10004"  : "The number of sites which answered is too small -> detailed results are not shown",
     "FEAS-10005"  : "The result size is too small -> result will not be shown",
     "FEAS-10006"  : "Saved query limit reached. Please delete old saved queries before trying to create new ones.",
