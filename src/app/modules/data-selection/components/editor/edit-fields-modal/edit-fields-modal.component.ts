@@ -48,9 +48,10 @@ export class EditFieldsModalComponent implements OnInit {
     this.selectedDataSelectionProfileFieldsService
       .getDeepCopyProfileFields()
       .pipe(
+        first(), // Automatically complete the observable after fetching
         map((profileFields) => {
-          this.setInitialArrayOfSelectedFields(profileFields);
-          this.tree = FieldsTreeAdapter.fromTree(profileFields);
+          this.setInitialArrayOfSelectedFields(profileFields); // Initialize selected fields
+          this.tree = FieldsTreeAdapter.fromTree(profileFields); // Build the tree
         })
       )
       .subscribe();
@@ -101,11 +102,18 @@ export class EditFieldsModalComponent implements OnInit {
     if (!node.getIsRequired()) {
       node.setIsSelected(false);
       this.selectedDataSelectionProfileFieldsService.removeFromSelection(node);
+    }
+  }
 
-      // Reflect updates in the deep copy tree
+  public removeNodeFromSelectedFields2(node: ProfileFields): void {
+    if (!node.getIsRequired()) {
+      node.setIsSelected(false);
+      this.selectedDataSelectionProfileFieldsService.removeFromSelection(node);
+
       this.selectedDataSelectionProfileFieldsService
         .getDeepCopyProfileFields()
         .pipe(
+          first(),
           map((profileFields: ProfileFields[]) => {
             this.tree = FieldsTreeAdapter.fromTree(profileFields);
           })
