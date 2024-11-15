@@ -9,6 +9,7 @@ import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
+import { first, map } from 'rxjs';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;
@@ -22,7 +23,6 @@ export class EnterDataSelectionProfileProfileComponentData {
 })
 export class EditFieldsModalComponent implements OnInit {
   dataSelectionProfileProfileNode: ProfileFields[];
-
   tree: TreeNode[];
   profileName: DisplayData;
 
@@ -41,9 +41,19 @@ export class EditFieldsModalComponent implements OnInit {
   ngOnInit() {
     const dataSelectionProfile = this.dataSelectionProvider.getDataSelectionProfileByUID(this.data);
     this.profileName = dataSelectionProfile.getDisplay();
-    this.dataSelectionProfileProfileNode = dataSelectionProfile.getFields();
-    this.setInitialArrayOfSelectedFields(dataSelectionProfile.getFields());
-    this.tree = FieldsTreeAdapter.fromTree(this.dataSelectionProfileProfileNode);
+    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(
+      dataSelectionProfile.getFields()
+    );
+
+    this.selectedDataSelectionProfileFieldsService
+      .getDeepCopyProfileFields()
+      .pipe(
+        map((profileFields) => {
+          this.setInitialArrayOfSelectedFields(profileFields);
+          this.tree = FieldsTreeAdapter.fromTree(profileFields);
+        })
+      )
+      .subscribe();
 
     this.selectedDataSelectionProfileFieldsService.getSelectedFields().subscribe((fields) => {
       this.arrayOfSelectedFields = fields;
@@ -56,7 +66,7 @@ export class EditFieldsModalComponent implements OnInit {
 
   public setSelectedChildrenFields(fields: ProfileFields[]) {
     fields.forEach((field) => {
-      if (field.getIsSelected() || field.getIsRequired() || field.getRecommended()) {
+      if (field.getIsSelected() || field.getIsRequired()) {
         this.selectedDataSelectionProfileFieldsService.addToSelection(field);
       }
       this.setSelectedChildrenFields(field.getChildren());
@@ -75,6 +85,7 @@ export class EditFieldsModalComponent implements OnInit {
 
   public setFieldAsRequired(field: ProfileFields) {
     field.setMustHave(!field.getMustHave());
+    this.selectedDataSelectionProfileFieldsService.updateField(field);
   }
 
   private getIndexInSelectedFields(node: ProfileFields): number {
@@ -82,59 +93,64 @@ export class EditFieldsModalComponent implements OnInit {
   }
 
   private addNodeToSelectedFields(node: ProfileFields): void {
-    this.selectedDataSelectionProfileFieldsService.addToSelection(node);
-    node.setRecommended(false);
     node.setIsSelected(true);
+    this.selectedDataSelectionProfileFieldsService.addToSelection(node);
   }
 
   private removeNodeFromSelectedFields(node: ProfileFields): void {
     if (!node.getIsRequired()) {
-      this.selectedDataSelectionProfileFieldsService.removeFromSelection(node);
       node.setIsSelected(false);
-      const fieldToUpdate = this.dataSelectionProfileProfileNode.find(
-        (field) => field.getId() === node.getId()
-      );
-      if (fieldToUpdate) {
-        fieldToUpdate.setIsSelected(false);
-      }
-      this.tree = FieldsTreeAdapter.fromTree(this.dataSelectionProfileProfileNode);
+      this.selectedDataSelectionProfileFieldsService.removeFromSelection(node);
+
+      // Reflect updates in the deep copy tree
+      this.selectedDataSelectionProfileFieldsService
+        .getDeepCopyProfileFields()
+        .pipe(
+          map((profileFields: ProfileFields[]) => {
+            this.tree = FieldsTreeAdapter.fromTree(profileFields);
+          })
+        )
+        .subscribe();
     }
   }
 
   public isFieldRequired(field: ProfileFields) {
-    if (field.getIsRequired()) {
-      return false;
-    } else {
-      return true;
-    }
+    return !field.getIsRequired();
   }
 
   public saveFields() {
     const profile = this.dataSelectionProvider.getDataSelectionProfileByUID(this.data);
-
-    const fields = profile.getFields();
-    fields.forEach((field) => {
-      const foundElement = this.arrayOfSelectedFields.find(
-        (selectedField) => field.getId() === selectedField.getId()
-      );
-      field.setIsSelected(!!foundElement);
-    });
-    const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(profile);
-    this.dataSelectionProvider.setDataSelectionProfileByUID(profile.getId(), dataSelectionProfile);
-    this.setDataSelectionProvider(dataSelectionProfile);
-    this.dialogRef.close();
+    this.selectedDataSelectionProfileFieldsService
+      .getDeepCopyProfileFields()
+      .pipe(first())
+      .subscribe((profileFields) => {
+        const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(
+          profile,
+          profileFields
+        );
+        this.dataSelectionProvider.setDataSelectionProfileByUID(
+          profile.getId(),
+          dataSelectionProfile
+        );
+        this.setDataSelectionProvider(dataSelectionProfile);
+        this.dialogRef.close();
+      });
   }
+
   private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.service.setProfileInDataSelection(dataSelectionId, newProfile);
   }
 
-  private createInstanceOfDataSelectionProfile(profile: DataSelectionProfileProfile) {
+  private createInstanceOfDataSelectionProfile(
+    profile: DataSelectionProfileProfile,
+    profileFields: ProfileFields[]
+  ) {
     return new DataSelectionProfileProfile(
       profile.getId(),
       profile.getUrl(),
       profile.getDisplay(),
-      profile.getFields(),
+      profileFields,
       profile.getFilters()
     );
   }
