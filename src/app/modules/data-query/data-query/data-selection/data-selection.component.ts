@@ -66,7 +66,7 @@ export class DataSelectionComponent implements OnInit {
         .open(DownloadDataSelectionComponent, dialogConfig)
         .afterClosed()
         .subscribe(() => {
-          this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWLOAD');
+          this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
         });
     } else {
       this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.DOWNLOAD');
