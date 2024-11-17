@@ -11,12 +11,20 @@ export class SearchTermListEntryAdapter {
     headers: ['Name', 'Availability', 'Terminology', 'Termcode', 'KONTEXT'],
   };
 
+  private static changeAvailabilityDisplay(availability: number): string {
+    if (availability === 0) {
+      return '?';
+    }
+
+    return availability.toString();
+  }
+
   public static adapt(listEntries: SearchTermListEntry[]): TableData {
     const rows: InterfaceTableDataRow[] = listEntries.map((listEntry) => ({
       id: listEntry.getId(),
       data: [
         listEntry.getName(),
-        listEntry.getAvailability().toString(),
+        SearchTermListEntryAdapter.changeAvailabilityDisplay(listEntry.getAvailability()),
         TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology()),
         listEntry.getTermcode(),
         listEntry.getContext(),
