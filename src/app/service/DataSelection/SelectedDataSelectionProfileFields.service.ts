@@ -33,7 +33,8 @@ export class SelectedDataSelectionProfileFieldsService {
       profileField.getIsSelected(),
       profileField.getIsRequired(),
       profileField.getRecommended(),
-      profileField.getMustHave()
+      profileField.getMustHave(),
+      profileField.getReferencedProfiles()
     );
   }
 
