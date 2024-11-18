@@ -5,7 +5,7 @@ import { FeatureService } from '../../../service/Feature.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin, map } from 'rxjs';
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
 import { SearchTermListEntry } from '../../../shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
@@ -86,11 +86,26 @@ export class BackendService {
     return this.http.get<any>(this.createUrl(BackendService.PATH_TERMINOLOGY_SEARCH_FILTER));
   }
 
+  private chunkArray<T>(array: T[], chunkSize: number): T[][] {
+    const chunks = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      chunks.push(array.slice(i, i + chunkSize));
+    }
+    return chunks;
+  }
+
   public getCriteriaProfileData(ids: Array<string>): Observable<Array<CriteriaProfileData>> {
-    const commaSeparatedIds: string = ids.join(',');
-    return this.http.get<Array<CriteriaProfileData>>(
-      this.createUrl(BackendService.PATH_CRITERIA_PROFILE + '?ids=' + commaSeparatedIds)
-    );
+    const chunkSize = 50;
+    const chunks = this.chunkArray(ids, chunkSize);
+
+    const observables = chunks.map((chunk) => {
+      const commaSeparatedIds = chunk.join(',');
+      return this.http.get<Array<CriteriaProfileData>>(
+        this.createUrl(BackendService.PATH_CRITERIA_PROFILE + '?ids=' + commaSeparatedIds)
+      );
+    });
+
+    return forkJoin(observables).pipe(map((results) => [].concat(...results)));
   }
 
   public getSearchTermEntryRelations(id: string): Observable<SearchTermRelatives> {

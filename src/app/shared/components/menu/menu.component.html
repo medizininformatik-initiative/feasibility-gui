@@ -3,11 +3,11 @@
   #menuTrigger="matMenuTrigger"
   class="menu-icon"
   size="sm"
-  icon="ellipsis-h"
+  icon="pencil-alt"
 >
 </fa-icon>
 <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
-  <button class="divider" mat-menu-item>{{ 'SHAREDCOMPONENTS.MENU.OPTIONS' | translate }}</button>
+  <div class="divider options">{{ 'SHAREDCOMPONENTS.MENU.OPTIONS' | translate }}</div>
   <div *ngFor="let item of menuItems; let isLast = last">
     <button
       [ngClass]="{ divider: !isLast, 'last-item': isLast }"

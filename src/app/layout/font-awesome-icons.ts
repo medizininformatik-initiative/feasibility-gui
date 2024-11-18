@@ -51,6 +51,9 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faUsersCog } from '@fortawesome/free-solid-svg-icons';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { faWrench } from '@fortawesome/free-solid-svg-icons';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
+
 import {
   faClone,
   faDatabase,
@@ -61,6 +64,8 @@ import {
   faTh,
 } from '@fortawesome/free-solid-svg-icons';
 export const FONT_AWESOME_ICONS = [
+  faClipboardList,
+  faFilter,
   faQuestionCircle,
   faExclamationCircle,
   faTh,
