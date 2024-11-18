@@ -34,3 +34,15 @@
   background-color: #fff;
   width: 1000px;
 }
+
+.options {
+  font-weight: 500;
+  pointer-events: none;
+  cursor: default; /* Prevents pointer icon */
+  color: rgba(0, 0, 0, 0.87); /* Ensure consistent text color */
+  padding: 8px 16px; /* Matches mat-menu-item padding */
+}
+
+.non-clickable:hover {
+  background: none; /* Prevent hover background */
+}

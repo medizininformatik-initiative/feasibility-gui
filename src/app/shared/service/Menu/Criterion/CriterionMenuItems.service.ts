@@ -34,10 +34,9 @@ export class CriterionMenuItems {
       },
       {
         disabled: false,
-        icon: 'cog',
+        icon: 'filter',
         label: 'APPLY_FILTERS',
-        action: (id: string) =>
-          this.menuServiceCriterionFunctions.applyCriterionFilter(id),
+        action: (id: string) => this.menuServiceCriterionFunctions.applyCriterionFilter(id),
       },
     ];
   }
