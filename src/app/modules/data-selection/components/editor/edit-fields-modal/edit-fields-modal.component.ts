@@ -9,7 +9,7 @@ import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
-import { first, map, switchMap } from 'rxjs';
+import { first, map, of, switchMap } from 'rxjs';
 import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfileProfile.service';
 
 export class EnterDataSelectionProfileProfileComponentData {
@@ -33,15 +33,16 @@ export class EditFieldsModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public url: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
-    private dataSelectionProvider: DataSelectionProfileProviderService,
-    private service: DataSelectionProviderService,
+    private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
+    private dataSelectionProviderService: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
     private selectedDataSelectionProfileFieldsService: SelectedDataSelectionProfileFieldsService,
     private createDataSelectionProfileService: CreateDataSelectionProfileService
   ) {}
 
   ngOnInit() {
-    const dataSelectionProfile = this.dataSelectionProvider.getDataSelectionProfileByUrl(this.url);
+    const dataSelectionProfile =
+      this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
     this.profileName = dataSelectionProfile.getDisplay();
     this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(
       dataSelectionProfile.getFields()
@@ -130,7 +131,7 @@ export class EditFieldsModalComponent implements OnInit {
   }
 
   public saveFields(): void {
-    const profile = this.dataSelectionProvider.getDataSelectionProfileByUrl(this.url);
+    const profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
 
     this.selectedDataSelectionProfileFieldsService
       .getDeepCopyProfileFields()
@@ -141,10 +142,11 @@ export class EditFieldsModalComponent implements OnInit {
             profile,
             profileFields
           );
-          this.dataSelectionProvider.setDataSelectionProfileByUrl(
+          this.dataSelectionProfileProviderService.setDataSelectionProfileByUrl(
             profile.getUrl(),
             dataSelectionProfile
           );
+          this.setDataSelectionProvider(dataSelectionProfile);
           return this.selectedDataSelectionProfileFieldsService.getSelectedFields().pipe(
             first(), // Ensure only the latest selected fields are processed
             switchMap((selectedFields) => {
@@ -154,7 +156,9 @@ export class EditFieldsModalComponent implements OnInit {
                   field.getReferencedProfiles().length > 0 ? field.getReferencedProfiles() : []
                 )
                 .reduce((acc, curr) => acc.concat(curr), []);
-
+              if (referencedProfiles.length === 0) {
+                return of([]);
+              }
               // Fetch referenced profiles
               return this.createDataSelectionProfileService.fetchDataSelectionProfileData(
                 referencedProfiles,
@@ -165,7 +169,7 @@ export class EditFieldsModalComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (fetchedProfiles) => {
+        next: (fetchedProfiles: DataSelectionProfileProfile[]) => {
           fetchedProfiles.forEach((fetchedProfile) => this.setDataSelectionProvider(fetchedProfile));
         },
         error: (error) => {
@@ -179,7 +183,7 @@ export class EditFieldsModalComponent implements OnInit {
 
   private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-    this.service.setProfileInDataSelection(dataSelectionId, newProfile);
+    this.dataSelectionProviderService.setProfileInDataSelection(dataSelectionId, newProfile);
   }
 
   private createInstanceOfDataSelectionProfile(
