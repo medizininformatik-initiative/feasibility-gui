@@ -36,7 +36,12 @@ export class DataSelection2DataExtraction {
     const attributes = this.translateAttributes(profile.getFields());
     this.attributes = [];
     const filters = this.translateFilters(profile.getFilters());
-    return new AttributeGroup(profile.getUrl(), attributes, filters);
+    return new AttributeGroup(
+      profile.getUrl(),
+      attributes,
+      filters,
+      profile.getReference().getIsReferenceSet() && profile.getReference().getIncludeReferenceOnly()
+    );
   }
 
   private translateAttributes(fields: ProfileFields[]): Attributes[] {
