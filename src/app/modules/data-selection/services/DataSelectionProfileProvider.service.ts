@@ -6,30 +6,31 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DataSelectionProfileProviderService {
-  private dataSelectionProfileUIDMap: Map<string, DataSelectionProfileProfile> = new Map();
-  private dataSelectionProfileUIDMapSubject: BehaviorSubject<
+  private dataSelectionProfileUrlMap: Map<string, DataSelectionProfileProfile> = new Map();
+  private dataSelectionProfileUrlMapSubject: BehaviorSubject<
     Map<string, DataSelectionProfileProfile>
   > = new BehaviorSubject(new Map());
 
   constructor() {}
 
-  public getDataSelectionProfileUIDMap(): Observable<Map<string, DataSelectionProfileProfile>> {
-    return this.dataSelectionProfileUIDMapSubject.asObservable();
+  public getDataSelectionProfileUrlMap(): Observable<Map<string, DataSelectionProfileProfile>> {
+    return this.dataSelectionProfileUrlMapSubject.asObservable();
   }
 
-  public getDataSelectionProfileByUID(uid: string): DataSelectionProfileProfile | undefined {
-    return this.dataSelectionProfileUIDMap.get(uid);
+  public getDataSelectionProfileByUrl(url: string): DataSelectionProfileProfile | undefined {
+    return this.dataSelectionProfileUrlMap.get(url);
   }
 
-  public setDataSelectionProfileByUID(uid: string, profile: DataSelectionProfileProfile): void {
-    this.dataSelectionProfileUIDMap.set(uid, profile);
-    this.dataSelectionProfileUIDMapSubject.next(new Map(this.dataSelectionProfileUIDMap));
+  public setDataSelectionProfileByUrl(url: string, profile: DataSelectionProfileProfile): void {
+    this.dataSelectionProfileUrlMap.set(url, profile);
+    this.dataSelectionProfileUrlMapSubject.subscribe((test) => console.log(test));
+    this.dataSelectionProfileUrlMapSubject.next(new Map(this.dataSelectionProfileUrlMap));
   }
 
-  public removeDataSelectionProfileByUID(uid: string): void {
-    if (this.dataSelectionProfileUIDMap.has(uid)) {
-      this.dataSelectionProfileUIDMap.delete(uid);
-      this.dataSelectionProfileUIDMapSubject.next(new Map(this.dataSelectionProfileUIDMap));
+  public removeDataSelectionProfileByUrl(url: string): void {
+    if (this.dataSelectionProfileUrlMap.has(url)) {
+      this.dataSelectionProfileUrlMap.delete(url);
+      this.dataSelectionProfileUrlMapSubject.next(new Map(this.dataSelectionProfileUrlMap));
     }
   }
 }

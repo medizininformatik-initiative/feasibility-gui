@@ -30,7 +30,7 @@ export class EditFieldsModalComponent implements OnInit {
   arrayOfSelectedFields: ProfileFields[] = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: string,
+    @Inject(MAT_DIALOG_DATA) public url: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
     private dataSelectionProvider: DataSelectionProfileProviderService,
     private service: DataSelectionProviderService,
@@ -39,7 +39,7 @@ export class EditFieldsModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const dataSelectionProfile = this.dataSelectionProvider.getDataSelectionProfileByUID(this.data);
+    const dataSelectionProfile = this.dataSelectionProvider.getDataSelectionProfileByUrl(this.url);
     this.profileName = dataSelectionProfile.getDisplay();
     this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(
       dataSelectionProfile.getFields()
@@ -127,7 +127,7 @@ export class EditFieldsModalComponent implements OnInit {
   }
 
   public saveFields() {
-    const profile = this.dataSelectionProvider.getDataSelectionProfileByUID(this.data);
+    const profile = this.dataSelectionProvider.getDataSelectionProfileByUrl(this.url);
     this.selectedDataSelectionProfileFieldsService
       .getDeepCopyProfileFields()
       .pipe(first())
@@ -136,8 +136,8 @@ export class EditFieldsModalComponent implements OnInit {
           profile,
           profileFields
         );
-        this.dataSelectionProvider.setDataSelectionProfileByUID(
-          profile.getId(),
+        this.dataSelectionProvider.setDataSelectionProfileByUrl(
+          profile.getUrl(),
           dataSelectionProfile
         );
         this.setDataSelectionProvider(dataSelectionProfile);

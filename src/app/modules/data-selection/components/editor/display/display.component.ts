@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
 import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
-import { DownloadCRDTLService } from '../../../../../service/Download/DownloadCRDTL.service';
 import { map, Observable } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
@@ -32,17 +31,14 @@ export class DisplayDataSelectionComponent implements OnInit {
    * @todo add rerender of ui component
    */
   private getDataSelectionProfiles(): void {
-    this.$dataSelectionProfileArray = this.dataSelectionProvider
+    this.dataSelectionProvider
       .getActiveDataSelection()
       .pipe(
         map((dataSelection) =>
-          dataSelection
-            .getProfiles()
-            .map((profile) =>
-              this.dataSelectionProfileProvider.getDataSelectionProfileByUID(profile.getId())
-            )
+          dataSelection.getProfiles().map((profile) => this.dataSelectionProfileProvider.getDataSelectionProfileByUrl(profile.getUrl()))
         )
-      );
+      )
+      .subscribe();
   }
 
   public navigateToDataSelectionSearch(): void {

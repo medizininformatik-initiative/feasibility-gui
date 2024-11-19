@@ -18,8 +18,8 @@ export class MenuServiceDataSelection {
         disabled: false,
         icon: 'trash',
         label: 'DELETE',
-        action: (id: string) =>
-          this.menuServiceDataSelectionFunctions.deleteDataSelectionObject(id),
+        action: (url: string) =>
+          this.menuServiceDataSelectionFunctions.deleteDataSelectionObject(url),
       },
       {
         disabled: true,
@@ -31,15 +31,15 @@ export class MenuServiceDataSelection {
         disabled: false,
         icon: 'filter',
         label: 'APPLY_FILTERS',
-        action: (id: string) =>
-          this.menuServiceDataSelectionFunctions.openDataSelectionFilterModal(id),
+        action: (url: string) =>
+          this.menuServiceDataSelectionFunctions.openDataSelectionFilterModal(url),
       },
       {
         disabled: false,
         icon: 'clipboard-list',
         label: 'DEFINE_FIELDS',
-        action: (id: string) =>
-          this.menuServiceDataSelectionFunctions.openDataSelectionFieldModal(id),
+        action: (url: string) =>
+          this.menuServiceDataSelectionFunctions.openDataSelectionFieldModal(url),
       },
     ];
   }

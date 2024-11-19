@@ -25,7 +25,7 @@ export class SelectedDataSelectionProfileService {
   public setSelectedProfiles(profiles: DataSelectionProfileTreeNode[]): void {
     this.selectedProfiles.next(profiles);
     this.profileIds.clear();
-    profiles.forEach((profile) => this.profileIds.add(profile.getId()));
+    profiles.forEach((profile) => this.profileIds.add(profile.getUrl()));
   }
 
   /**
@@ -35,9 +35,9 @@ export class SelectedDataSelectionProfileService {
    */
   public addToSelection(profile: DataSelectionProfileTreeNode): void {
     const currentSelection = this.selectedProfiles.getValue();
-    if (!this.profileIds.has(profile.getId())) {
+    if (!this.profileIds.has(profile.getUrl())) {
       this.selectedProfiles.next([...currentSelection, profile]);
-      this.profileIds.add(profile.getId());
+      this.profileIds.add(profile.getUrl());
     }
   }
 
@@ -57,9 +57,9 @@ export class SelectedDataSelectionProfileService {
    */
   public removeFromSelection(profile: DataSelectionProfileTreeNode): void {
     const currentSelection = this.selectedProfiles.getValue();
-    const updatedSelection = currentSelection.filter((p) => p.getId() !== profile.getId());
+    const updatedSelection = currentSelection.filter((p) => p.getUrl() !== profile.getUrl());
     this.selectedProfiles.next(updatedSelection);
-    this.profileIds.delete(profile.getId());
+    this.profileIds.delete(profile.getUrl());
   }
 
   /**

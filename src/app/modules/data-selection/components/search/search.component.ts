@@ -60,7 +60,6 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   ) {}
 
   ngOnInit(): void {
-    //this.selectedDataSelectionProfileService.clearSelection()
     this.$dataSelectionProfileArray = this.dataSelectionProviderService
       .getActiveDataSelection()
       .pipe(map((dataSelection) => dataSelection.getProfiles()));

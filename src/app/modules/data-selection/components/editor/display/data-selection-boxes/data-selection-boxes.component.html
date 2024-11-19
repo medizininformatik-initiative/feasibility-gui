@@ -19,7 +19,7 @@
   <div fxLayout="column" class="filter-container">
     <div fxLayout="row wrap" fxLayoutAlign="space-between">
       {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
-      <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
+      <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="profile.getUrl()"></num-menu>
     </div>
     <div class="filter-chips-container">
       <num-filter-chips [filterChips]="filtersFilterChips"> </num-filter-chips>

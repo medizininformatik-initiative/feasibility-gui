@@ -63,13 +63,13 @@ export class DataSelectionProviderService {
     }
   }
 
-  public removeProfileFromDataSelection(dataSelectionId: string, profileId: string): void {
+  public removeProfileFromDataSelection(dataSelectionId: string, profileUrl: string): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
 
     if (dataSelection) {
       const updatedElements = dataSelection
         .getProfiles()
-        .filter((profile: DataSelectionProfileProfile) => profile.getId() !== profileId);
+        .filter((profile: DataSelectionProfileProfile) => profile.getUrl() !== profileUrl);
       this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
     }
   }
@@ -83,7 +83,7 @@ export class DataSelectionProviderService {
       const updatedElements = dataSelection
         .getProfiles()
         .map((existingProfile: DataSelectionProfileProfile) =>
-          existingProfile.getId() === profile.getId() ? profile : existingProfile
+          existingProfile.getUrl() === profile.getUrl() ? profile : existingProfile
         );
       if (!updatedElements.includes(profile)) {
         updatedElements.push(profile);

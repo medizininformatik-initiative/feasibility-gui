@@ -33,7 +33,7 @@ export class EditFilterModalComponent implements OnInit {
   dummyArrayCode: ProfileTokenFilter[] = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: string,
+    @Inject(MAT_DIALOG_DATA) public url: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
     private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
     private service: DataSelectionProviderService,
@@ -41,7 +41,7 @@ export class EditFilterModalComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUID(this.data);
+    this.profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
     this.profile.getFilters().forEach((filter) => {
       this.setInitialFilterType(filter);
     });
@@ -105,11 +105,11 @@ export class EditFilterModalComponent implements OnInit {
   }
 
   public saveDataSelection() {
-    const profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUID(this.data);
+    const profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
 
     const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(profile);
-    this.dataSelectionProfileProviderService.setDataSelectionProfileByUID(
-      profile.getId(),
+    this.dataSelectionProfileProviderService.setDataSelectionProfileByUrl(
+      profile.getUrl(),
       dataSelectionProfile
     );
     this.setDataSelectionProvider(dataSelectionProfile);

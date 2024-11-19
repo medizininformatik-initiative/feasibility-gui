@@ -1,5 +1,12 @@
 import { DataSelectionProfileProfile } from './Profile/DataSelectionProfileProfile';
 
+/**
+ * @todo
+ *   private profiles: DataSelectionProfileProfile[] = [];
+ *    sollte nicht die profiles als Array speichern sondern nur deren urls
+ *    private profileUrls: string[] = []
+ *
+ */
 export class DataSelection {
   private id: string;
 

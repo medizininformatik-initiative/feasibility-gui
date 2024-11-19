@@ -19,12 +19,12 @@ export class MenuServiceDataSelectionFunctions {
     private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
-  public openDataSelectionFieldModal(id: string) {
-    this.dataSelectionFieldsModalService.ediDataSelectionFields(id);
+  public openDataSelectionFieldModal(url: string) {
+    this.dataSelectionFieldsModalService.ediDataSelectionFields(url);
   }
 
-  public openDataSelectionFilterModal(id: string) {
-    this.dataSelectionFilterModalService.ediDataSelectionFilter(id);
+  public openDataSelectionFilterModal(url: string) {
+    this.dataSelectionFilterModalService.ediDataSelectionFilter(url);
   }
 
   /**
@@ -32,8 +32,8 @@ export class MenuServiceDataSelectionFunctions {
    *
    * @param id
    */
-  public cloneDataSelectionObject(id: string) {
-    const profile = this.dataSelectionProfileProvider.getDataSelectionProfileByUID(id);
+  public cloneDataSelectionObject(url: string) {
+    const profile = this.dataSelectionProfileProvider.getDataSelectionProfileByUrl(url);
     const copiedProfile = new DataSelectionProfileProfile(
       uuidv4(),
       profile.getUrl(),
@@ -41,14 +41,14 @@ export class MenuServiceDataSelectionFunctions {
       profile.getFields(),
       profile.getFilters()
     );
-    this.dataSelectionProfileProvider.setDataSelectionProfileByUID(copiedProfile.getId(), profile);
+    this.dataSelectionProfileProvider.setDataSelectionProfileByUrl(copiedProfile.getUrl(), profile);
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile);
   }
 
-  public deleteDataSelectionObject(id: string) {
+  public deleteDataSelectionObject(url: string) {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-    this.dataSelectionProvider.removeProfileFromDataSelection(dataSelectionId, id);
-    this.dataSelectionProfileProvider.removeDataSelectionProfileByUID(id);
+    this.dataSelectionProvider.removeProfileFromDataSelection(dataSelectionId, url);
+    this.dataSelectionProfileProvider.removeDataSelectionProfileByUrl(url);
   }
 }

@@ -35,7 +35,7 @@ export class DisplayProfilesComponent implements OnInit {
           dataSelection
             .getProfiles()
             .map((profile) =>
-              this.dataSelectionProfileProvider.getDataSelectionProfileByUID(profile.getId())
+              this.dataSelectionProfileProvider.getDataSelectionProfileByUrl(profile.getUrl())
             )
         )
       );

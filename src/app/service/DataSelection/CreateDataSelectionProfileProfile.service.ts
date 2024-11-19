@@ -74,8 +74,8 @@ export class CreateDataSelectionProfileService {
      * this.fetch(profile.getReferenceUrls, true)
      */
 
-    this.dataSelectionProvider.setDataSelectionProfileByUID(
-      dataSelectionProfileProfile.getId(),
+    this.dataSelectionProvider.setDataSelectionProfileByUrl(
+      dataSelectionProfileProfile.getUrl(),
       dataSelectionProfileProfile
     );
     return dataSelectionProfileProfile;
