@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
+import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +51,7 @@ export class CreateDataSelectionProfileService {
         data.map((item: any) => {
           const fields = this.mapFields(item.fields);
           const filters = this.createFilters(item.filters);
-          return this.instanceOfDataSelectionProfileProfile(item, fields, filters);
+          return this.instanceOfDataSelectionProfileProfile(item, fields, filters, markAsReference);
         })
       ),
       concatMap((profiles) => {
@@ -90,7 +91,8 @@ export class CreateDataSelectionProfileService {
   private instanceOfDataSelectionProfileProfile(
     item: any,
     fields: ProfileFields[],
-    filters: AbstractProfileFilter[]
+    filters: AbstractProfileFilter[],
+    markAsReference: boolean
   ): DataSelectionProfileProfile {
     const dataSelectionProfileProfile: DataSelectionProfileProfile =
       new DataSelectionProfileProfile(
@@ -98,7 +100,8 @@ export class CreateDataSelectionProfileService {
         item.url,
         this.instantiateDisplayData(item.display),
         fields,
-        filters
+        filters,
+        new ProfileReference(markAsReference, true)
       );
     return dataSelectionProfileProfile;
   }

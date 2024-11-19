@@ -21,6 +21,14 @@
       {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
       <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="profile.getUrl()"></num-menu>
     </div>
+    <div *ngIf="profile.getReference().getIncludeReferenceOnly()">
+      <div class="block">reference</div>
+      <div class="block-triangle"></div>
+      <mat-checkbox
+        [checked]="profile.getReference().getIsReferenceSet()"
+        (change)="toggleIsReferenceSet(profile.getReference())"
+      ></mat-checkbox>
+    </div>
     <div class="filter-chips-container">
       <num-filter-chips [filterChips]="filtersFilterChips"> </num-filter-chips>
     </div>

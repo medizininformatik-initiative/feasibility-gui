@@ -157,7 +157,8 @@ export class EditFieldsModalComponent implements OnInit {
 
               // Fetch referenced profiles
               return this.createDataSelectionProfileService.fetchDataSelectionProfileData(
-                referencedProfiles
+                referencedProfiles,
+                true
               );
             })
           );
@@ -190,7 +191,8 @@ export class EditFieldsModalComponent implements OnInit {
       profile.getUrl(),
       profile.getDisplay(),
       profileFields,
-      profile.getFilters()
+      profile.getFilters(),
+      profile.getReference()
     );
   }
 

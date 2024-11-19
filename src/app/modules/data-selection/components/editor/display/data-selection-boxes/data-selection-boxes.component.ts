@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { TranslateService } from '@ngx-translate/core';
 import { iteratee } from 'lodash';
+import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -75,5 +76,9 @@ export class DataSelectionBoxesComponent implements OnInit {
 
   private getMenuItems() {
     this.menuItems = this.menuService.getMenuItemsForDataSelection();
+  }
+
+  public toggleIsReferenceSet(reference: ProfileReference): void {
+    reference.setIsReferenceSet(!reference.getIsReferenceSet());
   }
 }

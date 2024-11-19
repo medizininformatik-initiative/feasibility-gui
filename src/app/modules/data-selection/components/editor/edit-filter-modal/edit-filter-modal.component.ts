@@ -100,7 +100,8 @@ export class EditFilterModalComponent implements OnInit {
       profile.getUrl(),
       profile.getDisplay(),
       profile.getFields(),
-      result
+      result,
+      profile.getReference()
     );
   }
 

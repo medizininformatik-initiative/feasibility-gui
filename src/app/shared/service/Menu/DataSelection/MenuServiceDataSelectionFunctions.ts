@@ -39,7 +39,8 @@ export class MenuServiceDataSelectionFunctions {
       profile.getUrl(),
       profile.getDisplay(),
       profile.getFields(),
-      profile.getFilters()
+      profile.getFilters(),
+      profile.getReference()
     );
     this.dataSelectionProfileProvider.setDataSelectionProfileByUrl(copiedProfile.getUrl(), profile);
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
