@@ -7,7 +7,7 @@
     "Termcode": "Terminologie-Code",
     "Name": "Kriterium",
     "site": "Standort",
-    "patient_number": "Anzahl der Patienten",
+    "patient_number": "Anzahl der Patientinnen und Patienten",
     "Display": "Name",
     "Terminology Code": "Terminologie-Code",
     "CRITERIA_BOX": {
@@ -19,8 +19,8 @@
           "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt"
       },
           "ADDED_CRITERIA":{
-            "SINGULAR": "Sie haben {{amount}} Kriterium zur Bühne hinzugefügt",
-            "PLURAL": "Sie haben {{amount}} Kriterien zur Bühne hinzugefügt"
+            "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohorten Selektion hinzugefügt",
+            "PLURAL": "Sie haben {{amount}} Kriterien zur Kohorten Selektion hinzugefügt"
           }
     },
     "FILTER": {
@@ -37,7 +37,7 @@
       "DEFINE_FIELDS": "Felder selektieren",
       "SEARCH": "Als Suchbegriff nutzen",
       "SHOW_CRITERIA":"Kriterium anzeigen",
-      "ADD": "Zur Bühne hinzufügen",
+      "ADD": "Zur Kohorten Selektion hinzufügen",
       "OPTIONS": "Optionen"
     },
     "LIST_ITEM_DETAILS":{
@@ -56,16 +56,16 @@
     "FILTER_SELECTION": "Ausgewählte Elemente",
     "BUTTON": {
       "ADD": "Hinzufügen",
-      "REMOVE": "entfernen"
+      "REMOVE": "Entfernen"
     }
   },
   "DASHBOARD": {
     "HEADER": "Willkommen im Bereich „Daten und Bioproben finden“ des Forschungsdatenportals für Gesundheit",
     "PARAGRAPH1": "Hier finden Sie ein Unterstützungsangebot für Wissenschaftlerinnen und Wissenschaftler zur Umsetzung Ihres Forschungsvorhabens.",
-    "PARAGRAPH2": "Mit einer Machbarkeitsanfrage erfahren Sie, wie viele Datensätze für Ihre Suchkriterien in den Universitätskliniken bundesweit vorhanden sind. Anhand von Ein- und Ausschlusskriterien kann die Verfügbarkeit von Gesundheitsdaten für medizinische Forschungszwecke abgeschätzt werden.",
+    "PARAGRAPH2": "Mit einer Machbarkeitsabfrage erfahren Sie, wie viele Datensätze für Ihre Suchkriterien in den Universitätskliniken bundesweit vorhanden sind. Anhand von Ein- und Ausschlusskriterien kann die Verfügbarkeit von Gesundheitsdaten für medizinische Forschungszwecke abgeschätzt werden.",
     "PARAGRAPH3_1": "Über ",
     "PARAGRAPH3_2": "Neue Abfrage",
-    "PARAGRAPH3_3": " haben Sie die Möglichkeit, eine neue Suchanfrage auf Basis des ",
+    "PARAGRAPH3_3": " haben Sie die Möglichkeit, eine neue Suchabfrage auf Basis des ",
     "PARAGRAPH3_4": " zu formulieren und abzuschicken, um einen Überblick über die verfügbaren Datensätze zu erhalten.",
     "PARAGRAPH3_LINK": "Kerndatensatzes der MII",
     "PARAGRAPH4_1":"Gespeicherte Abfragen oder gespeicherte Entwürfe können Sie über ",
@@ -75,18 +75,18 @@
     "PARAGRAPH5_2": "Antrag stellen",
     "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen.",
     "INFO":{
-      "TEXT": " Wir arbeiten gerade am Machbarkeitsportal, sodass es bei manchen Anfragen zu Verzögerungen und abweichenden Ergebnissen kommen kann."
+      "TEXT": " Wir arbeiten gerade am Machbarkeitsportal, sodass es bei manchen abfragen zu Verzögerungen und abweichenden Ergebnissen kommen kann."
     },
     "DATAQUERY": {
-      "HEADER": "Datenabfrage zusammenstellen",
-      "BUTTON": "Zur Datenabfrage"
+      "HEADER": "Daten beantragen",
+      "BUTTON": "Zum Datenantrag"
     },
     "DATASELECTION": {
-      "HEADER": "Datenselektion zusammenstellen",
-      "BUTTON": "Zur Dataselektion"
+      "HEADER": "Merkmal Selektion zusammenstellen",
+      "BUTTON": "Zur Merkmal Selektion"
     },
     "NEWQUERY": {
-      "HEADER": "Machbarkeitsanfrage stellen",
+      "HEADER": "Machbarkeitsabfrage stellen",
       "BUTTON": "Zur Machbarkeitsabfrage"
     },
     "SAVED_QUERIES": {
@@ -99,11 +99,11 @@
     }
   },
   "DATASELECTION": {
-    "HEADER": "Datenselektion",
-    "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Kerndatensatz (KDS) Module deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und haben die Möglichkeit anzugeben welche Datenpunkte zwingen erforderlich sind für Ihre Forschungsfrage.",
-    "DATASELECTION": "Datenselektion",
+    "HEADER": "Merkmal Selektion",
+    "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Kerndatensatz (KDS) Module deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und Sie haben die Möglichkeit anzugeben welche Datenpunkte zwingen erforderlich sind für Ihre Forschungsfrage.",
+    "DATASELECTION": "Merkmal Selektion",
     "SELECTION_BOX":{
-      "FIELDS_MISSING": "Selektieren Sie mindestens ein Feld für die Extraktion durch Verwendung der ... Taste in der oberen rechten Ecke dieser Box.",
+      "FIELDS_MISSING": "Wählen Sie mindestens ein Feld für die Selektion durch Verwendung der Stift Taste in der oberen rechten Ecke dieser Box.",
       "SELECTED_FIELDS": "Selektierte Felder",
       "APPLIED_FILTER": "Angewandte Filter",
       "REQUIRED": "erforderlich",
@@ -111,23 +111,23 @@
     },
     "FIELD_SELECTION":{
       "FIELD_SELECTION": "Ausgewählte Elemente",
-      "HEADER": "Selektieren Sie zu extrahierende Felder für ",
+      "HEADER": "Selektieren Sie Merkmale für ",
       "REQUIRED": "erforderlich"
     },
     "FILTER": {
       "HEADER": "Kodierung/Name"
     },
     "EDIT": {
-      "HEADER": "Ausgewählte Gesundheitsdaten zum Extrahieren",
-      "HEADER_DESCRIPTION":"Hier muss noch ein Text hinzukommen",
+      "HEADER": "Ausgewählte Merkmale",
+      "HEADER_DESCRIPTION":"Hier können Sie definieren welche Merkmale von Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll/ Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z.b. auf bestimmte Diagnosecodes) hinzu",
       "SECTION": "Ausgewählte Kriterien"
     },
     "BUTTON": {
-      "DOWNLOAD": "Datenselektion herunterladen",
-      "ADD": "Zur Datenselektion hinzufügen",
-      "JUMP_TO_DATASELECTION_TREE": "Datenelement hinzufügen",
+      "DOWNLOAD": "Merkmal Selektion herunterladen",
+      "ADD": "Zur Merkmal Selektion hinzufügen",
+      "JUMP_TO_DATASELECTION_TREE": "Merkmal hinzufügen",
       "JUMP_TO_DATASELECTION": "Selektion anzeigen",
-      "DATA_REQUEST": "Datenanfrage"
+      "DATA_REQUEST": "Daten beantragen"
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -136,48 +136,48 @@
     "DISPLAY": {
       "LABEL": "Ausgewählte Merkmale"
     },
-    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie exportieren möchten und laden Sie die Datenselektion herunter. Sie können die Datei dann entweder als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen oder eine E-Mail an info@forschen-fuer-gesundheit.de schicken.",
+    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie erforschen möchten und laden Sie die Daten Definition herunter. Sie können die Datei dann als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen. Diese Datei ist maschinenlesbar und darf nicht verändert werden.",
     "REQUIRED":"Variable muss an allen Standorten vorliegen"
   },
   "DATAQUERY": {
     "COHORT": {
-      "HEADER":"Kohorten Definition",
+      "HEADER":"Kohorte Selektion",
       "BUTTON": {
-        "UPLOAD": "Kohorte hochladen",
-        "DOWNLOAD": "Kohorte herunterladen",
-        "EDIT":"Kohorte bearbeiten",
+        "UPLOAD": "Kohorten Selektion hochladen",
+        "DOWNLOAD": "Kohorten Selektion herunterladen",
+        "EDIT":"Kohorten Selektion bearbeiten",
         "NEW_COHORT":"Neue Kohorte",
-        "JUMP_TO_DATASELECTION": "zur Datenselektion",
-        "SEND_QUERY": "Machbarkeitsanfrage"
+        "JUMP_TO_DATASELECTION": "zur Merkmal Selektion",
+        "SEND_QUERY": "Machbarkeitsabfrage"
       },
       "SAVE": {
-        "HEADER": "Aktuelle Kohorte herunterladen"
+        "HEADER": "Aktuelle Kohorten Selektion herunterladen"
       },
       "ERROR": {
-        "UPLOAD": "Keine valide Kohorten definition wurde hochgeladen"
+        "UPLOAD": "Kohorten Selektion nicht valide"
       },
-      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorte oder kreieren Sie eine neue Kohorte"
+      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorten Selektion oder kreieren Sie eine neue Kohorte"
     },
     "DATASELECTION": {
-      "HEADER": "Datenselektion",
+      "HEADER": "Merkmal Selektion",
       "BUTTON":{
-        "EDIT":"Datenselektion bearbeiten",
-        "DOWNLOAD":"Datenanfrage herunterladen",
-        "UPLOAD": "Datenanfrage hochladen",
-        "NEW_DATASELECTION":"Neue Dataselektion",
-        "JUMP_TO_COHORT_SELECTION": "zur Kohortenselektion"
+        "EDIT":"Merkmal Selektion bearbeiten",
+        "DOWNLOAD":"Daten Definition herunterladen",
+        "UPLOAD": "Daten Definition hochladen",
+        "NEW_DATASELECTION":"Neue Merkmal Selektion",
+        "JUMP_TO_COHORT_SELECTION": "zur Kohorten Selektion"
       },
       "SAVE": {
-        "HEADER": "Aktuelle Datenselektion herunterladen"
+        "HEADER": "Aktuelle Daten Definition herunterladen"
       },
-      "EMPTY":"Sie haben noch keine Datenselektion definiert. Laden Sie eine existierende Datenselektion oder kreieren Sie eine neue Datenselektion",
+      "EMPTY":"Sie haben noch keine Merkmal Selektion definiert. Laden Sie eine existierende Merkmal Selektion oder erstellen Sie eine neue Merkmal Selektion",
       "ERROR": {
         "UPLOAD":"In der hochgeladenen Datei wurde keine Kohorte definiert",
         "DOWNLOAD": "Es wurden keine Kohorte definiert, download nicht möglich"
       },
       "SUCCESS": {
-        "UPLOAD": "Datenanfrage wurde hochgeladen",
-        "DOWNLOAD": "Datenagfrage wurde erfolgreich heruntergeladen"
+        "UPLOAD": "Daten Definition wurde hochgeladen",
+        "DOWNLOAD": "Daten Definition wurde erfolgreich heruntergeladen"
       } 
     }
   },
@@ -199,8 +199,8 @@
     "QUERYBUILDER_EDITOR": "Kohorten Selektion",
     "QUERYBUILDER_OVERVIEW": "Gespeichert Abfragen",
     "QUERYBUILDER_RESULT": "Machbarkeitsabfrage",
-    "DATASELECTION": "Datenselektion",
-    "DATAQUERY": "Datenabfrage",
+    "DATASELECTION": "Merkmal Selektion",
+    "DATAQUERY": "Daten Definition",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
   },
@@ -220,18 +220,18 @@
     "STAGE": {
       "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl",
       "HEADER": "Kriterien Editor",
-      "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen sie Ihre Anfrage zusammen",
+      "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen Sie Ihre Kohorten Selektion zusammen. Die Kohorten Selektion kann verwendet werden um direkt eine standortübergreifende Machbarkeitsabfrage zu stellen.",
       "BUTTON": {
-        "ADD_TO_STAGE": "Zur Bühne hinzufügen",
+        "ADD_TO_STAGE": "Zur Kohorten Selektion hinzufügen",
         "BACK_TO_SEARCH":"Kriterien hinzufügen",
-        "VIEW_STAGE": "Bühne anzeigen",
-        "SEND_QUERY": "Machbarkeitsanfrage",
-        "DATA_REQUEST": "Datenanfrage"
+        "VIEW_STAGE": "Kohorten Selektion anzeigen",
+        "SEND_QUERY": "Machbarkeitsabfrage",
+        "DATA_REQUEST": "Daten Definition"
 
 
       },
       "MESSAGE": {
-        "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Bühne hinzugefügt"
+        "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Kohorten Selektion hinzugefügt"
       },
       "CONSENT": {
         "WITH_CONSENT": "Mit Einwilligung",
@@ -250,7 +250,7 @@
     "HEADER_TITLE": "Ausgewählte Kriterien",
     "SEARCH": {
       "MIN_LENGTH":"Bitte mindestens 3 Buchstaben eingeben",
-      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden um die Fallzahl deutschlandweit zu ermitteln.",
+      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohorten Selektion direkt verwenden um die Patientenzahl deutschlandweit abzuschätzen.",
       "SEARCH_BUTTON": "Suchen",
       "SEARCHBAR":"Suchen nach Begriff oder Terminologiecode",
       "HEADER": "Kriterien Suche",
@@ -292,14 +292,14 @@
     },
     "OVERVIEW": {
       "COHORT": {
-        "LOAD": "Kohorte laden",
+        "LOAD": "Kohorten Selektion laden",
         "PATIENTS": "Anzahl der Patienten:"
       },
       "TITLE_LABEL": "Titel",
       "COMMENT_LABEL": "Kommentar",
-      "SAVE_HEADER": "Abspeichern der aktuellen Suchanfrage",
-      "LOAD_HEADER": "Bisherige Suchanfragen",
-      "IMPORT_HEADER": "Suchanfragen importieren",
+      "SAVE_HEADER": "Abspeichern der aktuellen Suchabfrage",
+      "LOAD_HEADER": "Bisherige Suchabfragen",
+      "IMPORT_HEADER": "Suchabfragen importieren",
       "SAVE_WITH_QUERY": "für Datennutzungsantrag speichern (muss vorher ausgeführt worden sein)",
       "SAVE_TEMPLATE": "Als Vorlage speichern",
       "DOWNLOAD_SQ": "Als Datei speichern",
@@ -307,7 +307,7 @@
       "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
       "SAVED_TEMPLATES": "Gespeicherte Vorlagen",
       "MAXIMUM_QUERY_SLOT": "Sie haben das maximale Limit an verfügbaren freien Speicherplätzen für Abfragen erreicht",
-      "INVALID_WARNING1": "Anfrage konnte nicht vollständig geladen werden: Ein oder mehrere Kriterien Ihrer Anfrage sind nicht mehr gültig. Bitte ersetzen Sie alle durch folgendes Symbol ",
+      "INVALID_WARNING1": "Abfrage konnte nicht vollständig geladen werden: Ein oder mehrere Kriterien Ihrer Abfrage sind nicht gültig. Bitte ersetzen Sie alle durch folgendes Symbol ",
       "INVALID_WARNING2": " gekennzeichneten Kriterien oder kontaktieren Sie ",
       "SAVE_BUTTON": "speichern"
     },
@@ -360,7 +360,7 @@
     "RESULT": {
       "BUTTON": {
         "DETAILS": "Details",
-        "EDIT_STAGE": "Bühne bearbeiten",
+        "EDIT_STAGE": "Kohorten Selektion bearbeiten",
         "SAVE_QUERY":"Kohorte speichern",
         "DOWNLOAD": "Kohorte herunterladen"
       },
@@ -370,11 +370,11 @@
       },
       "SAVE_DIALOG": {
         "HEADER": "Anzahl der Patienten",
-        "HEADER_DESCRIPTION":"Hier muss noch ein Text hinzukommen"
+        "HEADER_DESCRIPTION":"Die Anzahl an Patientinnen und Patienten, die die Kriterien Ihrer Kohorte erfüllen wird standortübergreifend ermittelt. Dieses Ergebnis ist nicht exakt."
       },
-      "HEADER_DESCRIPTION": "Hier muss noch ein Text hinzukommen",
+      "HEADER_DESCRIPTION": "Die Anzahl an Patientinnen und Patienten, die die Kriterien Ihrer Kohorte erfüllen wird standortübergreifend ermittelt. Dieses Ergebnis ist nicht exakt.",
       "PATIENT_NUMBER": "Anzahl der Patienten",
-      "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsanfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Anfrage werden anonymisiert. In dem Prozess werden Abweichungen zum exakten Ergebnis bewusst eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts, sie sollten aber nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
+      "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsabfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Abfrage werden anonymisiert. In dem Prozess werden Abweichungen zum exakten Ergebnis bewusst eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts. Sie sollte nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
       "TOTAL": "Gesamt",
       "SITE": "Standort",
       "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
@@ -400,7 +400,7 @@
     "DOWNLOAD": "Herunterladen",
     "EDIT": "Speichern",
     "IMPORT": "Query laden",
-    "IMPORT_DATASELECTION":"Dataselektion hochladen",
+    "IMPORT_DATASELECTION":"Merkmal Selektion hochladen",
     "IMPORT_FROM_FILE": "Datei auswählen",
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
@@ -411,12 +411,12 @@
   },
   "TAB_TITLE": {
     "DATA_QUERY": {
-      "COHORT_DEFINITION": "Datenabfrage - Kohortendefinition",
-      "DATA_SELECTION": "Datenabfrage - Datenselektion"
+      "COHORT_DEFINITION": "Daten Definition - Kohorten Selektion",
+      "DATA_SELECTION": "Daten Definition - Merkmal Selektion"
     },
     "DATA_SELECTION": {
-    "SEARCH": "Datenselektion - Suche",
-    "EDITOR": "Datenselektion - Editor"
+    "SEARCH": "Merkmal Selektion - Suche",
+    "EDITOR": "Merkmal Selektion - Editor"
     },
     "FEASIBILITY_QUERY": {
       "SEARCH": "Machbarkeitsabfrage - Suche",
@@ -425,15 +425,15 @@
     }
   },
   "ERROR": {
-    "FEAS-10001": "Ihr Benutzer wurde wegen zu vielen Anfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
+    "FEAS-10001": "Ihr Benutzer wurde wegen zu vielen Abfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
     "FEAS-10005"  :"Die Anzahl der Standorte die geantwortet haben ist zu klein -> Detailergebnis wird nicht angezeigt",
     "FEAS-10004"  :"Die Ergebnismenge ist zu klein -> Ergebnis wird nicht angezeigt",
-    "FEAS-10002"  :"Sie haben zu viele Anfragen gestellt, bitte warten Sie und probieren Sie es erneut",
-    "FEAS-10006"  :"Sie haben zu viele Kohorten gespeichert, bitte löschen Sie einige ältere Kohorten, bevor Sie Weitere speichern",
+    "FEAS-10002"  :"Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut",
+    "FEAS-10006"  :"Sie haben zu viele Kohorten gespeichert, bitte löschen Sie Kohorten Selektionen, bevor Sie weitere speichern",
     "404"         :"Standort wurde nicht gefunden",
     "VAL-20001"   :"Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden"
   },
   "INFO":{
-    "UPDATE_NOTE": "Aufgrund von Updates zentral und an den Standorten wird das Portal zwischen dem 10.11 und dem 13.11 vorraussichtlich nur eingeschränkt nutzbar sein. Machbarkeitsanfragen für die Bewerbung der NUM-MII Förderung können auch ohne Standortergebnis oder bis zum 17.11 nachgereicht werden. Wir bedanken uns für Ihr Verständnis."
+    "UPDATE_NOTE": "Aufgrund von Updates zentral und an den Standorten ist das Portal aktuell nur eingeschränkt nutzbar. Wir bedanken uns für Ihr Verständnis."
   }
 }
