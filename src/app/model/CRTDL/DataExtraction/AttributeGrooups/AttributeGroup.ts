@@ -5,17 +5,13 @@ export class AttributeGroup {
   groupReference: string;
   attributes: Attributes[];
   filter: AbstractAttributeGroupFilter[];
-  includeReferenceOnly?: boolean;
-
   constructor(
     groupReference: string,
     attributes: Attributes[],
-    filter: AbstractAttributeGroupFilter[],
-    includeReferenceOnly?: boolean
+    filter: AbstractAttributeGroupFilter[]
   ) {
     this.groupReference = groupReference;
     this.attributes = attributes;
     this.filter = filter;
-    this.includeReferenceOnly = includeReferenceOnly || undefined;
   }
 }

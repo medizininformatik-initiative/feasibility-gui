@@ -25,7 +25,6 @@
       <div class="block">reference</div>
       <div class="block-triangle"></div>
       <mat-checkbox
-        [disabled]="!isEditable"
         [checked]="profile.getReference().getIsReferenceSet()"
         (change)="toggleIsReferenceSet(profile.getReference())"
       ></mat-checkbox>
