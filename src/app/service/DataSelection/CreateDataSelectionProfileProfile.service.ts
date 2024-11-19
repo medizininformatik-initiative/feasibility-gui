@@ -100,16 +100,6 @@ export class CreateDataSelectionProfileService {
         fields,
         filters
       );
-
-    /**
-     * @todo
-     * Hier wird der Request rausgeschickt für die Referenzen
-     * this.fetch(profile.getReferenceUrls, true)
-     */
-    this.dataSelectionProvider.setDataSelectionProfileByUrl(
-      dataSelectionProfileProfile.getUrl(),
-      dataSelectionProfileProfile
-    );
     return dataSelectionProfileProfile;
   }
 
