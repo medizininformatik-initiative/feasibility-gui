@@ -9,6 +9,7 @@ import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/P
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { v4 as uuidv4 } from 'uuid';
+import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 
 @Injectable({
   providedIn: 'root',
@@ -73,6 +74,12 @@ export class DataExtraction2UiDataSelectionService {
                 }
               );
               dataSelectionProfile.setFilters(profileTokenFilter);
+            }
+
+            if (externDataSelectionProfile.includeReferenceOnly) {
+              dataSelectionProfile.setReference(new ProfileReference(true, true));
+            } else {
+              dataSelectionProfile.setReference(new ProfileReference(true, false));
             }
           });
           return new DataSelection(dataSelectionProfiles, uuidv4());
