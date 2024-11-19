@@ -17,12 +17,13 @@
   transition: width 0.3s ease; /* Transition for width change */
 }
 
-.chip-container.expanded, .block.expanded {
+.chip-container.expanded,
+.block.expanded {
   width: auto; /* Expand to fit content */
   min-width: auto;
+  max-width: max-content;
   white-space: normal; /* Allow text to wrap if needed */
   overflow: visible; /* Show all content when expanded */
-  text-overflow: clip; /* Clip text without ellipsis when expanded */
 }
 
 .block-triangle {
