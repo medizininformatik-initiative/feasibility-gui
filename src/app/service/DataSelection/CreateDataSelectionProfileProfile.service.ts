@@ -4,7 +4,7 @@ import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { concatMap, map, Observable } from 'rxjs';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
@@ -17,6 +17,7 @@ import { BackendService } from 'src/app/modules/feasibility-query/service/backen
   providedIn: 'root',
 })
 export class CreateDataSelectionProfileService {
+  private referencedProfiles: string[] = [];
   constructor(
     private backend: BackendService,
     private dataSelectionProvider: DataSelectionProfileProviderService
@@ -26,15 +27,47 @@ export class CreateDataSelectionProfileService {
     urls: string[],
     markAsReference: boolean = false
   ): Observable<DataSelectionProfileProfile[]> {
-    const commaSeparatedIds: string = urls.join(',');
+    const profilesToFetch: string[] = [];
+
+    for (const url of urls) {
+      if (!this.dataSelectionProvider.getDataSelectionProfileByUrl(url)) {
+        profilesToFetch.push(url);
+      }
+    }
+
+    if (profilesToFetch.length === 0) {
+      return new Observable((observer) => {
+        observer.next([]);
+        observer.complete();
+      });
+    }
+
+    const commaSeparatedIds: string = profilesToFetch.join(',');
+    this.referencedProfiles = [];
+
     return this.backend.getDataSelectionProfileData(commaSeparatedIds).pipe(
       map((data: any[]) =>
         data.map((item: any) => {
-          const fields = this.mapNodes(item.fields);
+          const fields = this.mapFields(item.fields);
           const filters = this.createFilters(item.filters);
           return this.instanceOfDataSelectionProfileProfile(item, fields, filters);
         })
-      )
+      ),
+      concatMap((profiles) => {
+        profiles.forEach((profile) =>
+          this.dataSelectionProvider.setDataSelectionProfileByUrl(profile.getUrl(), profile)
+        );
+
+        if (this.referencedProfiles.length > 0) {
+          const uniqueReferencedProfiles = [...new Set(this.referencedProfiles)];
+          this.referencedProfiles = [];
+          return this.fetchDataSelectionProfileData(uniqueReferencedProfiles, true).pipe(
+            map((referencedProfiles) => profiles.concat(referencedProfiles))
+          );
+        } else {
+          return [profiles]; // End recursion
+        }
+      })
     );
   }
 
@@ -73,7 +106,6 @@ export class CreateDataSelectionProfileService {
      * Hier wird der Request rausgeschickt für die Referenzen
      * this.fetch(profile.getReferenceUrls, true)
      */
-
     this.dataSelectionProvider.setDataSelectionProfileByUrl(
       dataSelectionProfileProfile.getUrl(),
       dataSelectionProfileProfile
@@ -81,12 +113,17 @@ export class CreateDataSelectionProfileService {
     return dataSelectionProfileProfile;
   }
 
-  private mapNodes(nodes: any[]): ProfileFields[] {
-    return nodes?.map((node) => this.mapNode(node));
+  private mapFields(nodes: any[]): ProfileFields[] {
+    return nodes?.map((node) => this.mapField(node));
   }
 
-  private mapNode(node: any): ProfileFields {
-    const children = node.children ? this.mapNodes(node.children) : [];
+  private mapField(node: any): ProfileFields {
+    const children = node.children ? this.mapFields(node.children) : [];
+    if (node.referencedProfiles.length > 0) {
+      node.referencedProfiles.map((referencedProfile) =>
+        this.referencedProfiles.push(referencedProfile)
+      );
+    }
     return new ProfileFields(
       node.id,
       this.instantiateDisplayData(node.display),

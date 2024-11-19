@@ -23,7 +23,6 @@ export class DataSelectionProfileProviderService {
 
   public setDataSelectionProfileByUrl(url: string, profile: DataSelectionProfileProfile): void {
     this.dataSelectionProfileUrlMap.set(url, profile);
-    this.dataSelectionProfileUrlMapSubject.subscribe((test) => console.log(test));
     this.dataSelectionProfileUrlMapSubject.next(new Map(this.dataSelectionProfileUrlMap));
   }
 
