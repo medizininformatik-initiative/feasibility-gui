@@ -8,7 +8,7 @@ import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/Profil
 export class SelectedDataSelectionProfileService {
   private selectedProfiles = new BehaviorSubject<DataSelectionProfileTreeNode[]>([]);
 
-  private profileIds = new Set<string>();
+  private profileUrls = new Set<string>();
 
   /**
    * Gets the selected profiles as an observable.
@@ -24,8 +24,8 @@ export class SelectedDataSelectionProfileService {
    */
   public setSelectedProfiles(profiles: DataSelectionProfileTreeNode[]): void {
     this.selectedProfiles.next(profiles);
-    this.profileIds.clear();
-    profiles.forEach((profile) => this.profileIds.add(profile.getUrl()));
+    this.profileUrls.clear();
+    profiles.forEach((profile) => this.profileUrls.add(profile.getUrl()));
   }
 
   /**
@@ -35,9 +35,9 @@ export class SelectedDataSelectionProfileService {
    */
   public addToSelection(profile: DataSelectionProfileTreeNode): void {
     const currentSelection = this.selectedProfiles.getValue();
-    if (!this.profileIds.has(profile.getUrl())) {
+    if (!this.profileUrls.has(profile.getUrl())) {
       this.selectedProfiles.next([...currentSelection, profile]);
-      this.profileIds.add(profile.getUrl());
+      this.profileUrls.add(profile.getUrl());
     }
   }
 
@@ -46,8 +46,8 @@ export class SelectedDataSelectionProfileService {
    *
    * @returns An array of IDs.
    */
-  public getSelectedIds(): string[] {
-    return Array.from(this.profileIds);
+  public getSelectedUrls(): string[] {
+    return Array.from(this.profileUrls);
   }
 
   /**
@@ -59,7 +59,7 @@ export class SelectedDataSelectionProfileService {
     const currentSelection = this.selectedProfiles.getValue();
     const updatedSelection = currentSelection.filter((p) => p.getUrl() !== profile.getUrl());
     this.selectedProfiles.next(updatedSelection);
-    this.profileIds.delete(profile.getUrl());
+    this.profileUrls.delete(profile.getUrl());
   }
 
   /**
@@ -67,6 +67,6 @@ export class SelectedDataSelectionProfileService {
    */
   public clearSelection(): void {
     this.selectedProfiles.next([]);
-    this.profileIds.clear();
+    this.profileUrls.clear();
   }
 }

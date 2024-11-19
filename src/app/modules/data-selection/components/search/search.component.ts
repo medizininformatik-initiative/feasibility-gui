@@ -82,8 +82,8 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
    */
   private updateSelectionStatus(node: DataSelectionProfileTreeNode): void {
     const isSelected = this.selectedDataSelectionProfileService
-      .getSelectedIds()
-      .includes(node.getId());
+      .getSelectedUrls()
+      .includes(node.getUrl());
     node.setSelected(isSelected);
 
     node.getChildren().forEach((child) => this.updateSelectionStatus(child));
@@ -154,8 +154,8 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
     const originalEntry = node.originalEntry as DataSelectionProfileTreeNode;
     this.selectedDataSelectionProfileUrls.add(originalEntry.getUrl());
 
-    const selectedIds = this.selectedDataSelectionProfileService.getSelectedIds();
-    const originalEntryId = node.originalEntry.id;
+    const selectedIds = this.selectedDataSelectionProfileService.getSelectedUrls();
+    const originalEntryId = node.originalEntry.url;
     if (selectedIds.includes(originalEntryId)) {
       this.selectedDataSelectionProfileUrls.delete(originalEntry.getUrl());
       this.selectedDataSelectionProfileService.removeFromSelection(originalEntry);
