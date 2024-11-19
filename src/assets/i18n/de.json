@@ -119,7 +119,7 @@
     },
     "EDIT": {
       "HEADER": "Ausgewählte Merkmale",
-      "HEADER_DESCRIPTION":"Hier können Sie definieren welche Merkmale von Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll/ Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z.b. auf bestimmte Diagnosecodes) hinzu",
+      "HEADER_DESCRIPTION":"Hier können Sie definieren, welche Merkmale von Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll/ Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z.b. auf bestimmte Diagnosecodes) hinzu",
       "SECTION": "Ausgewählte Kriterien"
     },
     "BUTTON": {
