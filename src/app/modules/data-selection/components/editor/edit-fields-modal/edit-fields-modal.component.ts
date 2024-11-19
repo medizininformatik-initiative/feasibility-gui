@@ -142,6 +142,7 @@ export class EditFieldsModalComponent implements OnInit {
             profile,
             profileFields
           );
+          dataSelectionProfile.getReference().setIsReferenceSet(false);
           this.dataSelectionProfileProviderService.setDataSelectionProfileByUrl(
             profile.getUrl(),
             dataSelectionProfile

@@ -87,6 +87,19 @@ export class EditFilterModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  public saveDataSelection() {
+    const profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
+
+    const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(profile);
+    dataSelectionProfile.getReference().setIsReferenceSet(false);
+    this.dataSelectionProfileProviderService.setDataSelectionProfileByUrl(
+      profile.getUrl(),
+      dataSelectionProfile
+    );
+    this.setDataSelectionProvider(dataSelectionProfile);
+    this.dialogRef.close();
+  }
+
   private createInstanceOfDataSelectionProfile(profile: DataSelectionProfileProfile) {
     const result: AbstractProfileFilter[] = [];
     result.push(...this.dummyArrayCode);
@@ -103,18 +116,6 @@ export class EditFilterModalComponent implements OnInit {
       result,
       profile.getReference()
     );
-  }
-
-  public saveDataSelection() {
-    const profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
-
-    const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(profile);
-    this.dataSelectionProfileProviderService.setDataSelectionProfileByUrl(
-      profile.getUrl(),
-      dataSelectionProfile
-    );
-    this.setDataSelectionProvider(dataSelectionProfile);
-    this.dialogRef.close();
   }
 
   private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
