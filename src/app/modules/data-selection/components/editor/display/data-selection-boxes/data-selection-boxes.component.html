@@ -22,7 +22,7 @@
       <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="profile.getUrl()"></num-menu>
     </div>
     <div *ngIf="profile.getReference().getIncludeReferenceOnly()">
-      <div class="block">reference</div>
+      <div class="block">{{ 'DATASELECTION.DISPLAY.REFERENCE' | translate }}</div>
       <div class="block-triangle"></div>
       <mat-checkbox
         [disabled]="!isEditable"
