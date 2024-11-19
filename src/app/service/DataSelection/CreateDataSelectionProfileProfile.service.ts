@@ -109,7 +109,7 @@ export class CreateDataSelectionProfileService {
 
   private mapField(node: any): ProfileFields {
     const children = node.children ? this.mapFields(node.children) : [];
-    if (node.referencedProfiles.length > 0) {
+    if (node.referencedProfiles.length > 0 && (node.required || node.recommended)) {
       node.referencedProfiles.map((referencedProfile) =>
         this.referencedProfiles.push(referencedProfile)
       );
