@@ -9,7 +9,8 @@ import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
-import { first, map } from 'rxjs';
+import { first, map, switchMap } from 'rxjs';
+import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfileProfile.service';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;
@@ -35,7 +36,8 @@ export class EditFieldsModalComponent implements OnInit {
     private dataSelectionProvider: DataSelectionProfileProviderService,
     private service: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
-    private selectedDataSelectionProfileFieldsService: SelectedDataSelectionProfileFieldsService
+    private selectedDataSelectionProfileFieldsService: SelectedDataSelectionProfileFieldsService,
+    private createDataSelectionProfileService: CreateDataSelectionProfileService
   ) {}
 
   ngOnInit() {
@@ -75,7 +77,8 @@ export class EditFieldsModalComponent implements OnInit {
   }
 
   public setSelectedFieldElement(element) {
-    const node = element.originalEntry;
+    const node: ProfileFields = element.originalEntry as ProfileFields;
+    console.log(node);
     const index = this.getIndexInSelectedFields(node);
     if (index !== -1) {
       this.removeNodeFromSelectedFields(node);
@@ -126,22 +129,50 @@ export class EditFieldsModalComponent implements OnInit {
     return !field.getIsRequired();
   }
 
-  public saveFields() {
+  public saveFields(): void {
     const profile = this.dataSelectionProvider.getDataSelectionProfileByUrl(this.url);
+
     this.selectedDataSelectionProfileFieldsService
       .getDeepCopyProfileFields()
-      .pipe(first())
-      .subscribe((profileFields) => {
-        const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(
-          profile,
-          profileFields
-        );
-        this.dataSelectionProvider.setDataSelectionProfileByUrl(
-          profile.getUrl(),
-          dataSelectionProfile
-        );
-        this.setDataSelectionProvider(dataSelectionProfile);
-        this.dialogRef.close();
+      .pipe(
+        first(),
+        switchMap((profileFields) => {
+          const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(
+            profile,
+            profileFields
+          );
+          this.dataSelectionProvider.setDataSelectionProfileByUrl(
+            profile.getUrl(),
+            dataSelectionProfile
+          );
+          return this.selectedDataSelectionProfileFieldsService.getSelectedFields().pipe(
+            first(), // Ensure only the latest selected fields are processed
+            switchMap((selectedFields) => {
+              // Extract referenced profiles and flatten the array
+              const referencedProfiles = selectedFields
+                .map((field) =>
+                  field.getReferencedProfiles().length > 0 ? field.getReferencedProfiles() : []
+                )
+                .reduce((acc, curr) => acc.concat(curr), []);
+
+              // Fetch referenced profiles
+              return this.createDataSelectionProfileService.fetchDataSelectionProfileData(
+                referencedProfiles
+              );
+            })
+          );
+        })
+      )
+      .subscribe({
+        next: (fetchedProfiles) => {
+          fetchedProfiles.forEach((fetchedProfile) => this.setDataSelectionProvider(fetchedProfile));
+        },
+        error: (error) => {
+          console.error('Error saving fields:', error);
+        },
+        complete: () => {
+          this.dialogRef.close();
+        },
       });
   }
 
