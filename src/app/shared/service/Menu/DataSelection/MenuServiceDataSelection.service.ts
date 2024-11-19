@@ -29,14 +29,14 @@ export class MenuServiceDataSelection {
       },
       {
         disabled: false,
-        icon: 'cog',
+        icon: 'filter',
         label: 'APPLY_FILTERS',
         action: (id: string) =>
           this.menuServiceDataSelectionFunctions.openDataSelectionFilterModal(id),
       },
       {
         disabled: false,
-        icon: 'cog',
+        icon: 'clipboard-list',
         label: 'DEFINE_FIELDS',
         action: (id: string) =>
           this.menuServiceDataSelectionFunctions.openDataSelectionFieldModal(id),

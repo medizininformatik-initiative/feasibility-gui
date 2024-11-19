@@ -9,6 +9,7 @@ export class ProfileFields {
   private isRequired = false;
   private recommended = false;
   private mustHave: boolean;
+  private referencedProfiles: string[];
 
   constructor(
     id: string,
@@ -18,7 +19,8 @@ export class ProfileFields {
     isSelected: boolean = false,
     isRequired: boolean = false,
     recommended: boolean,
-    mustHave: boolean
+    mustHave: boolean,
+    referencedProfiles: string[]
   ) {
     this.id = id;
     this.display = display;
@@ -28,6 +30,7 @@ export class ProfileFields {
     this.isRequired = isRequired;
     this.recommended = recommended;
     this.mustHave = mustHave;
+    this.referencedProfiles = referencedProfiles;
   }
 
   public getId(): string {
@@ -92,5 +95,13 @@ export class ProfileFields {
 
   public setMustHave(mustHave: boolean): void {
     this.mustHave = mustHave;
+  }
+
+  public getReferencedProfiles(): string[] {
+    return this.referencedProfiles;
+  }
+
+  public setReferencedProfiles(referencedProfiles: string[]): void {
+    this.referencedProfiles = referencedProfiles;
   }
 }

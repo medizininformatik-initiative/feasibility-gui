@@ -29,7 +29,7 @@ export class ReferenceCriterionMenuItems {
       },
       {
         disabled: false,
-        icon: 'cog',
+        icon: 'filter',
         label: 'APPLY_FILTERS',
         action: (id: string) =>
           this.referenceCriterionMenuFunctions.applyReferenceCriterionFilter(id),
