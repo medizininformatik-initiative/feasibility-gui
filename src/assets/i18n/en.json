@@ -134,7 +134,7 @@
       },
       "DISPLAY": {
         "LABEL": "Selected criteria",
-        "REFERENCE": "Referenced"
+        "REFERENCE": "only if referenced"
       },
       "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal.",
       "REQUIRED": "required from all sites"
