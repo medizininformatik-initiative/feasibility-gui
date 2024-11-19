@@ -22,7 +22,10 @@ export class CreateDataSelectionProfileService {
     private dataSelectionProvider: DataSelectionProfileProviderService
   ) {}
 
-  public fetchDataSelectionProfileData(urls: string[]): Observable<DataSelectionProfileProfile[]> {
+  public fetchDataSelectionProfileData(
+    urls: string[],
+    markAsReference: boolean = false
+  ): Observable<DataSelectionProfileProfile[]> {
     const commaSeparatedIds: string = urls.join(',');
     return this.backend.getDataSelectionProfileData(commaSeparatedIds).pipe(
       map((data: any[]) =>
@@ -64,6 +67,13 @@ export class CreateDataSelectionProfileService {
         fields,
         filters
       );
+
+    /**
+     * @todo
+     * Hier wird der Request rausgeschickt für die Referenzen
+     * this.fetch(profile.getReferenceUrls, true)
+     */
+
     this.dataSelectionProvider.setDataSelectionProfileByUID(
       dataSelectionProfileProfile.getId(),
       dataSelectionProfileProfile
