@@ -61,6 +61,7 @@ const SHARED_DECLARATIONS = [
   BreadcrumbComponent,
   PlaceholderBoxComponent,
   SaveFileModalComponent,
+  DisplayTranslationPipe,
 ];
 
 @NgModule({
@@ -89,7 +90,6 @@ const SHARED_DECLARATIONS = [
     SaveFileModalComponent,
   ],
   imports: [
-    DisplayTranslationPipe,
     CommonModule,
     FontAwesomeModule,
     MaterialModule,

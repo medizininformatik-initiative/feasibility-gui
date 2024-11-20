@@ -19,10 +19,7 @@ export class DataSelectionFilterChipsService {
   public generateFilterChipsFromDataSelectionFields(
     dataSelectionProfileProfileNode: ProfileFields[]
   ): Observable<InterfaceFilterChip[]> {
-    const filterChips = FilterChipDataSelectionAdapter.adaptFields(
-      dataSelectionProfileProfileNode,
-      this.translate.currentLang
-    );
+    const filterChips = FilterChipDataSelectionAdapter.adaptFields(dataSelectionProfileProfileNode);
     const squashedFilterChips = this.squashFilterChips(filterChips);
     this.filterChipsSubject.next(squashedFilterChips);
     return this.filterChipsSubject.asObservable();
