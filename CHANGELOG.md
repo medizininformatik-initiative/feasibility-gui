@@ -1,5 +1,17 @@
 # Changelog
 
+## v6.0.1 (2024-11-20)
+
+### Bugfix
+
+* Display data for all chip types correctly
+* small language fixes
+
+### Changed
+* Increased pencil size icon in menu
+
+
+
 ## v6.0.0 (2024-11-20)
 
 * New Design

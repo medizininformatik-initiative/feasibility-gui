@@ -142,7 +142,7 @@
   },
   "DATAQUERY": {
     "COHORT": {
-      "HEADER":"Kohorte Selektion",
+      "HEADER":"Kohorten Selektion",
       "BUTTON": {
         "UPLOAD": "Kohorten Selektion hochladen",
         "DOWNLOAD": "Kohorten Selektion herunterladen",
