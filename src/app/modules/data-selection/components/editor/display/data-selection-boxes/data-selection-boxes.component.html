@@ -21,7 +21,12 @@
       {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
       <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="profile.getUrl()"></num-menu>
     </div>
-    <div *ngIf="profile.getReference().getIncludeReferenceOnly()">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      *ngIf="profile.getReference().getIncludeReferenceOnly()"
+      class="reference-chip-padding-30"
+    >
       <div class="block">{{ 'DATASELECTION.DISPLAY.REFERENCE' | translate }}</div>
       <div class="block-triangle"></div>
       <mat-checkbox
