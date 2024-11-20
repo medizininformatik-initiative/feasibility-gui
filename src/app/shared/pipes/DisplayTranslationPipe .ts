@@ -4,7 +4,6 @@ import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Pipe({
   name: 'displayTranslation',
-  standalone: true,
   pure: false,
 })
 export class DisplayTranslationPipe implements PipeTransform {

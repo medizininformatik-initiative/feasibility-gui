@@ -11,7 +11,7 @@ export class FilterChipBuilder {
     this.type = type;
   }
 
-  public addData(id: string, text: string, expanded: boolean = false): this {
+  public addData(id: string, text: any, expanded: boolean = false): this {
     this.data.push({ id, text, expanded });
     return this;
   }

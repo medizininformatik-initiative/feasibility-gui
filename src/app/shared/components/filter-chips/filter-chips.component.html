@@ -6,9 +6,11 @@
     <div *ngIf="filterChip.type === 'required'" class="block">
       {{ 'DATASELECTION.SELECTION_BOX.REQUIRED' | translate }}
     </div>
-    <div *ngIf="filterChip.type !== 'required' && filterChip.type !== 'optional'" class="block"
-         [ngClass]="{ expanded: filterChip.typeExpanded }"
-         (click)="toggleTypeExpanded(filterChip)"
+    <div
+      *ngIf="filterChip.type !== 'required' && filterChip.type !== 'optional'"
+      class="block"
+      [ngClass]="{ expanded: filterChip.typeExpanded }"
+      (click)="toggleTypeExpanded(filterChip)"
     >
       {{ filterChip.type }}
     </div>
@@ -20,7 +22,7 @@
         [ngClass]="{ expanded: chip.expanded }"
         (click)="toggleExpanded(chip)"
       >
-        {{ chip.text }}
+        {{ chip.text | displayTranslation }}
       </div>
     </div>
   </div>
