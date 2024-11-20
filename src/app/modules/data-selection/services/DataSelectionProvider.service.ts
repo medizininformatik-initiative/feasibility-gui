@@ -100,4 +100,8 @@ export class DataSelectionProviderService {
     this.dataSelectionUIDMap.set(dataSelectionId, updatedDataSelection);
     this.dataSelectionUIDMapSubject.next(new Map(this.dataSelectionUIDMap));
   }
+
+  public resetDataSelectionMap(): void {
+    this.dataSelectionUIDMapSubject.next(new Map());
+  }
 }

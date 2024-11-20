@@ -9,6 +9,7 @@ import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.servic
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -31,7 +32,8 @@ export class DataSelectionComponent implements OnInit {
     private crdtlTranslatorService: CRTDL2UIModelService,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
+    private dataSelectionProfileProviderService: DataSelectionProfileProviderService
   ) {}
 
   ngOnInit(): void {
@@ -85,6 +87,7 @@ export class DataSelectionComponent implements OnInit {
   }
 
   public uploadDataSelection(crtdl: string) {
+    this.dataSelectionProfileProviderService.resetDataSelectionProfileMap();
     this.isDataSelectionExistent = this.crdtlTranslatorService.translateToUiModel(crtdl);
     if (!this.isDataSelectionExistent) {
       this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');

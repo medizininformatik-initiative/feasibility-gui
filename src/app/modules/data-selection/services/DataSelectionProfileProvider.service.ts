@@ -32,4 +32,9 @@ export class DataSelectionProfileProviderService {
       this.dataSelectionProfileUrlMapSubject.next(new Map(this.dataSelectionProfileUrlMap));
     }
   }
+
+  public resetDataSelectionProfileMap(): void {
+    this.dataSelectionProfileUrlMap.clear();
+    this.dataSelectionProfileUrlMapSubject.next(new Map());
+  }
 }
