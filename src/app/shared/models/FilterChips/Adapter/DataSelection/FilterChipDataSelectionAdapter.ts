@@ -4,7 +4,7 @@ import { InterfaceFilterChip } from '../../InterfaceFilterChip';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 export class FilterChipDataSelectionAdapter {
-  public static adaptFields(fields: ProfileFields[], currentLang: string): InterfaceFilterChip[] {
+  public static adaptFields(fields: ProfileFields[]): InterfaceFilterChip[] {
     const filterChips: InterfaceFilterChip[] = [];
 
     fields.forEach((field) => {
@@ -14,19 +14,13 @@ export class FilterChipDataSelectionAdapter {
 
         builder.addData(
           field.getId(),
-          new DisplayData(
-            field.getDisplay().getOriginal(),
-            field.getDisplay().getTranslations()
-          ).translate(currentLang)
+          new DisplayData(field.getDisplay().getOriginal(), field.getDisplay().getTranslations())
         );
         filterChips.push(builder.buildFilterChip());
       }
 
       if (field.getChildren().length > 0) {
-        const childChips = FilterChipDataSelectionAdapter.adaptFields(
-          field.getChildren(),
-          currentLang
-        );
+        const childChips = FilterChipDataSelectionAdapter.adaptFields(field.getChildren());
         filterChips.push(...childChips);
       }
     });

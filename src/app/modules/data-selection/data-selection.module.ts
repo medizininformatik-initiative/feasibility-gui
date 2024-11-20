@@ -41,7 +41,6 @@ import { DisplayProfilesComponent } from './components/editor/display/display-pr
     FileSaverModule,
     FeasibilityQueryModule,
     SharedFilterModule,
-    DisplayTranslationPipe,
   ],
   exports: [DisplayProfilesComponent],
 })

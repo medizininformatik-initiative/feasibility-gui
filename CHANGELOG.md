@@ -1,5 +1,96 @@
 # Changelog
 
+## v6.0.0 (2024-11-20)
+
+* New Design
+  - Introduced a completely redesigned user interface for an improved user experience.
+  - Updated visual elements, including color schemes, typography, and iconography, to create a modern and cohesive look.
+
+* New Data Model
+  - Implemented a new data model to enhance data handling and processing capabilities.
+
+* New Component Structure
+  - Reorganized the component structure for better modularity and maintainability.
+
+* New Process Infrastructure
+  - Developed a new process infrastructure to optimize system performance and scalability.
+  - Redesigned the information architecture to make content more discoverable and ensure logical organization of information throughout the platform.
+
+* New Backend Endpoints
+  - Added new backend endpoints to support additional functionalities and improve API interactions.
+  - Integrated Elastic Search feature that allows users to quickly find criteria and concepts within the application.
+
+* New Module: Data Selection
+  - Introduced a new data selection module to facilitate more efficient data management and retrieval.
+
+* New translation services
+  - Implemented new translation services for converting FeasibilityQueries and DataSelections to new CRDTL format.
+
+
+### Feature
+
+* Referenced Profiles in DSE Fields: ([#292](https://github.com/medizininformatik-initiative/feasibility-gui/issues/292)), ([#294](https://github.com/medizininformatik-initiative/feasibility-gui/issues/294))
+  * Introduced referencedProfiles field for DSE to identify profiles referenced by a given field.
+  * Added a checkbox in the UI to specify if a field is included as a profile reference or as a profile itself.
+  * Automatic Addition of Referenced Profiles: When fetching the data selection profile, automatically include referenced profiles if the reference field is marked as required or recommended.
+* Enable upload of data definition and cohort in data definition page
+* Feature: reset time restriction, added new data class TimeRestrictionNotSet as default class
+* added language switch
+* implemented a new snackbar notification system to display error messages
+* added animations for routing between pages
+* introduced a stepper component for the data-query page
+* removed the dashboard and set the Data Request page as the default start page ([#260](https://github.com/medizininformatik-initiative/feasibility-gui/issues/260))
+* Switched from module to context in Search Result list ([#286](https://github.com/medizininformatik-initiative/feasibility-gui/issues/286))
+* Added service to validate whether a criterion has all optional filters set and if inclusion criteria are set.
+* Checked through service whether required attributes are set ([#277](https://github.com/medizininformatik-initiative/feasibility-gui/issues/277))
+* Extended data model and added key to data object in adapter for profile tree; added info to view component to display field names comma-separated next to profile in DSE tree ([#275](https://github.com/medizininformatik-initiative/feasibility-gui/issues/275))
+* Added required and recommended fields in data model and disabled delete for required fields([#273](https://github.com/medizininformatik-initiative/feasibility-gui/issues/273))
+* Implemented dynamic tab title based on page and subpage ([#174](https://github.com/medizininformatik-initiative/feasibility-gui/issues/174))
+
+
+### Changed
+* update to new api endpoint version v4 ([#232](https://github.com/medizininformatik-initiative/feasibility-gui/issues/232))
+* setting uniqueID for each DataSelection profile
+* Changing icons, header and descriptions for better usability
+* Update translations
+* added new translators for FeasibilityQuery <> CCTDL and DataSelection <> CCTDL
+* refactored Urls: querybuilder was renamed to feasibility-query
+* split the feasibility-query page into three subpages: Search, Editor, and Result, each with representative URLs (feasibility-query/search, feasibility-query/editor, feasibility-query/result)
+* split the data-selection page into three subpages: Search, Editor, and Result, with representative URLs (data-selection/search, data-selection/editor, data-selection/result)
+* split the data-query page into two pages: Cohort Definition and Data Selection, with representative URLs (data-query/cohort-definition, data-query/data-selection).
+* renamed file and folder names: querybuilder is now feasibility-query
+* Added validation check before downloading and uploading a data request or cohort definition on the data request page
+* Changed label in numerical input fields and swapped min and max input fields in RangeFilter
+
+
+### Bugfix
+* fixed display and css of the search filter ([#231](https://github.com/medizininformatik-initiative/feasibility-gui/issues/231))
+* fixed spelling issue ([#230](https://github.com/medizininformatik-initiative/feasibility-gui/issues/230))
+* fixed filter error in the linking criteria search ([#229](https://github.com/medizininformatik-initiative/feasibility-gui/issues/229))
+* fixed search param error in the linking criteria search ([#228](https://github.com/medizininformatik-initiative/feasibility-gui/issues/228))
+* show attribute display in the modal window ([#227](https://github.com/medizininformatik-initiative/feasibility-gui/issues/227))
+* fixed viewport for Drag&Drop ([#226](https://github.com/medizininformatik-initiative/feasibility-gui/issues/226))
+* exclude termcode version from hash ([#224](https://github.com/medizininformatik-initiative/feasibility-gui/issues/224))
+* fixed various css problems
+* Loading large queries - separate queries to chunks for getting profile data by ids ([#290](https://github.com/medizininformatik-initiative/feasibility-gui/issues/290))
+* apply rerendering after setting filter ([#238](https://github.com/medizininformatik-initiative/feasibility-gui/issues/238))
+* fix moving criteria within in- and exclusion ([#236](https://github.com/medizininformatik-initiative/feasibility-gui/issues/236))
+* added missing translation keys
+* fixed various css problems
+* various bugfixing and code refactoring
+* allowed empty search strings to be treated as valid search terms despite the minimum length requirement of 3 characters ([#254](https://github.com/medizininformatik-initiative/feasibility-gui/issues/254))
+* added a ternary operator for the placeholder ([#255](https://github.com/medizininformatik-initiative/feasibility-gui/issues/255))
+* fixed consent issue when loading from saved queries and starting a request.
+* Fixed translation of Quantity in CCDL Translator ([#282](https://github.com/medizininformatik-initiative/feasibility-gui/issues/282))
+* Fixed setting of comparator by creating a mapping function from UI intern to CCDL comparator ([#281](https://github.com/medizininformatik-initiative/feasibility-gui/issues/281))
+* Set optional when creating a criterion based on the criteria profile data ([#280](https://github.com/medizininformatik-initiative/feasibility-gui/issues/280))
+* Added missing function for translating valueFilter from CCDL to Ui intern data model ([#278](https://github.com/medizininformatik-initiative/feasibility-gui/issues/278))
+* Added missing check for field children ([#274](https://github.com/medizininformatik-initiative/feasibility-gui/commit/3ff9d5a756025139497dc05654d8ac84f1941133))
+* Display previously selected filter and search text when switching between search and editor page ([#262](https://github.com/medizininformatik-initiative/feasibility-gui/issues/262))
+* Enabled multiple ValueSet URLs for CodeableConcept search, concatenated by commas ([#253](https://github.com/medizininformatik-initiative/feasibility-gui/issues/253))
+
+
+
 ## v6.0.0-alpha.6 (2024-11-15)
 
 ### Changed

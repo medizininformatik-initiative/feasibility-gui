@@ -1,6 +1,6 @@
 {
   "SHAREDCOMPONENTS": {
-    "KDS Module": "KDS Module",
+    "KDS Module": "CDS Module",
     "KONTEXT": "Context / CDS Profile",
     "Availability": "Availability",
     "Terminology": "Terminology",
@@ -16,8 +16,8 @@
         "PLURAL": "You have selected {{amount}} criteria"
       },
       "ADDED_CRITERIA": {
-        "SINGULAR": "You have added {{amount}} criterion to the stage",
-        "PLURAL": "You have added {{amount}} criteria to the stage"
+        "SINGULAR": "You have added {{amount}} criterion to the Cohort Selection",
+        "PLURAL": "You have added {{amount}} criteria to the Cohort Selection"
       }
     },
     "CRITERIA_BOX": {
@@ -37,7 +37,7 @@
       "DEFINE_FIELDS": "Select fields",
       "SEARCH": "Use as searchterm",
       "SHOW_CRITERIA":"Show criteria",
-      "ADD": "Add to stage",
+      "ADD": "Add to Cohort Selection",
       "OPTIONS": "Options"
     },
     "LIST_ITEM_DETAILS":{
@@ -81,7 +81,7 @@
       "BUTTON": "Go to Data Query"
     },
     "DATASELECTION": {
-      "HEADER": "Compose Data Selection",
+      "HEADER": "Compose Feature Selection",
       "BUTTON": "New Dataselection"
     },
     "NEWQUERY": {
@@ -98,18 +98,18 @@
     }
   },
   "DATASELECTION": {
-    "HEADER": "Data Selection",
-    "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (KDS) modules. You can also filter data points if, for example, only certain laboratory values are of interest and have the option of specifying which data points are absolutely necessary for your research question.",
-    "DATASELECTION": "Data Selection",
+    "HEADER": "Feature Selection",
+    "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (CDS) modules. You can also filter data points, e.g. if only certain laboratory values are of interest, and you have the option of specifying which data points are absolutely necessary for your research question.",
+    "DATASELECTION": "Feature Selection",
     "SELECTION_BOX": {
-      "FIELDS_MISSING": "Please select at least one field to extract using the ... button on the top right corner of this box.",
+      "FIELDS_MISSING": "Please select at least one field using the pen symbol on the top right corner of this box.",
       "SELECTED_FIELDS": "Selected Fields",
       "APPLIED_FILTER": "Applied Filters",
       "REQUIRED": "required",
       "OPTIONAL": "optional"
     },
     "FIELD_SELECTION": {
-      "FIELD_SELECTION": "Selected items",
+      "FIELD_SELECTION": "Selected features",
       "HEADER": "Select fields to extract for ",
       "REQUIRED": "required"
     },
@@ -117,15 +117,15 @@
       "HEADER": "Coding/Name"
     },
     "EDIT": {
-      "HEADER": "Selected Health Data for Extraction",
-      "HEADER_DESCRIPTION": "Text needs to be added here",
+      "HEADER": "Selected features",
+      "HEADER_DESCRIPTION": "Here you can define which features of patients in the cohort are relevant to your research question. Pay attention to data sparseness and congruence with the description in the study protocol / ethics vote / research proposal (if already available). Change the selection by clicking on the pencil icon and add further filters (e.g. for specific diagnosis codes) if required",
       "SECTION": "Selected Criteria"
     },
     "BUTTON": {
-      "ADD": "Add to Data Selection",
-      "DOWNLOAD": "Download Data Selection",
-      "JUMP_TO_DATASELECTION_TREE": "Add data element",
-      "JUMP_TO_DATASELECTION": "Show selection",
+      "ADD": "Add to Feature Selection",
+      "DOWNLOAD": "Download Feature Selection",
+      "JUMP_TO_DATASELECTION_TREE": "Add Feature",
+      "JUMP_TO_DATASELECTION": "Show Selection",
       "DATA_REQUEST": "Data Request"
     },
     "SEARCH": {
@@ -133,50 +133,51 @@
       "CRITERIA": "Search criteria"
     },
     "DISPLAY": {
-      "LABEL": "Selected criteria"
+      "LABEL": "Selected criteria",
+      "REFERENCE": "only if referenced"
     },
-    "INFOTEXT": "Please select the criteria you would like to export and download your data selection. You can then either upload the data selection file as an attachment to your research proposal in the proposal portal or send an email to info@forschen-fuer-gesundheit.de.",
+    "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal.",
     "REQUIRED": "required from all sites"
   },
   "DATAQUERY": {
     "COHORT": {
-      "HEADER": "Cohort definition",
+      "HEADER": "Cohort Selection",
       "BUTTON": {
-        "UPLOAD": "Upload cohort",
-        "DOWNLOAD": "Download cohort",
-        "EDIT": "Edit cohort",
-        "NEW_COHORT": "New cohort",
-        "JUMP_TO_DATASELECTION": "To data selection",
+        "UPLOAD": "Upload Cohort Selection",
+        "DOWNLOAD": "Download Cohort Selection",
+        "EDIT": "Edit Cohort Selection",
+        "NEW_COHORT": "New Cohort",
+        "JUMP_TO_DATASELECTION": "To Feature Selection",
         "SEND_QUERY": "Feasibility Query"
 
       },
       "SAVE": {
-        "HEADER": "Download current Cohort"
+        "HEADER": "Download current Cohort Selection"
       },
       "ERROR": {
-        "UPLOAD": "No valid cohort selection was uploaded"
+        "UPLOAD": "No valid Cohort Selection was uploaded"
       },
-      "EMPTY": "You have not defined a cohort yet. Upload an existing cohort or create a new one."
+      "EMPTY": "You have not defined a cohort yet. Upload an existing Cohort Selection or create a new one."
     },
     "DATASELECTION": {
-      "HEADER":"Data Selection",
+      "HEADER":"Feature Selection",
       "BUTTON": {
-        "EDIT": "Edit data selection",
+        "EDIT": "Edit Feature Selection",
         "DOWNLOAD": "Download Data Request",
         "UPLOAD": "Upload Data Request",
-        "NEW_DATASELECTION": "New data selection",
-        "JUMP_TO_COHORT_SELECTION": "To Cohort selection"
+        "NEW_DATASELECTION": "New Feature Selection",
+        "JUMP_TO_COHORT_SELECTION": "To Cohort Selection"
       },
       "SAVE": {
-        "HEADER": "Download current Dataselection"
+        "HEADER": "Download current Data Definition"
       },
       "ERROR": {
         "UPLOAD": "No cohort was defined in the uploaded file",
         "DOWNLOAD": "No cohort was defined, download not possible"
       },
       "SUCCESS": {
-        "UPLOAD": "Data request has been uploaded",
-        "DOWNLOAD": "Data request has been successfully downloaded"
+        "UPLOAD": "Data Definition has been uploaded",
+        "DOWNLOAD": "Data Definition has been successfully downloaded"
       }
 
 
@@ -201,7 +202,7 @@
     "QUERYBUILDER_OVERVIEW": "Saved Queries",
     "QUERYBUILDER_RESULT": "Feasibility",
     "DATASELECTION": "Data Selection",
-    "DATAQUERY": "Data request",
+    "DATAQUERY": "Data Definition",
     "OPTIONS": "Options",
     "SIGNOUT": "Sign out"
   },
@@ -223,14 +224,14 @@
       "HEADER": "Criteria Editor",
       "HEADER_INFO": "Edit your criteria here and build your request",
       "BUTTON": {
-        "ADD_TO_STAGE": "Add to Stage",
+        "ADD_TO_STAGE": "Add to Cohort Selection",
         "BACK_TO_SEARCH":"Add Criteria",
-        "VIEW_STAGE": "View Stage",
+        "VIEW_STAGE": "View Cohort Selection",
         "SEND_QUERY": "Feasibility Query",
         "DATA_REQUEST": "Data Request"
       },
       "MESSAGE": {
-        "ADDED_CRITERIA": "You have added '{number}' criteria to your stage"
+        "ADDED_CRITERIA": "You have added '{number}' criteria to your Cohort Selection"
       },
       "CONSENT": {
         "WITH_CONSENT": "With Consent",
@@ -291,7 +292,7 @@
     },
     "OVERVIEW": {
       "COHORT": {
-        "LOAD": "Load cohort",
+        "LOAD": "Load Cohort Selection",
         "PATIENTS": "Number of patients:"
       },
       "TITLE_LABEL": "Title",
@@ -334,8 +335,6 @@
       "BETWEEN": "between",
       "TIMERESTRICTION": {
         "LABEL": "Date",
-        "EVER": "All occurrences in",
-        "LATEST": "Latest occurrence in",
         "FROM": "from",
         "TO": "to",
         "AT": "at",
@@ -345,7 +344,9 @@
         "AFTER": "after",
         "AFTER_OR_AT": "after or at",
         "BETWEEN": "between",
-        "TITLE": "Time constraint (optional)"
+        "TITLE": "Time constraint (optional)",
+        "NONE": "no time restriction"
+
       }
     },
     "HINT": {
@@ -369,9 +370,9 @@
       },
       "SAVE_DIALOG": {
         "HEADER": "Amount of Patients",
-        "HEADER_DESCRIPTION": "Lorem ipsum"
+        "HEADER_DESCRIPTION": "The number of patients who fulfill the criteria of your cohort is determined across all locations. This result is not exact."
       },
-      "HEADER_DESCRIPTION": "Lorem ipsum",
+      "HEADER_DESCRIPTION": "The number of patients who fulfill the criteria of your cohort is determined across all locations. This result is not exact.",
       "PATIENT_NUMBER": "Number of patients",
       "PATIENT_NUMBER_TOOLTIP": "The feasibility queries return approximate results. The results of the query are anaonymised. In this process, deviations from the exact result are deliberately introduced. Therefore, the results are only suitable for the first evaluation of the feasibility of your project and should not be used for scientific work. The publication of the results is generally not permitted. The actual number of patients can only be quantified once your project has been requested via a data use application and reviewed by the relevant Use & Access Committees.",
       "TOTAL": "Total",
@@ -410,12 +411,12 @@
   },
   "TAB_TITLE": {
     "DATA_QUERY": {
-      "COHORT_DEFINITION": "Data Query - Cohort Definition",
-      "DATA_SELECTION": "Data Query - Data Selection"
+      "COHORT_DEFINITION": "Data Definition - Cohort Selection",
+      "DATA_SELECTION": "Data Definition - Feature Selection"
     },
     "DATA_SELECTION": {
-      "SEARCH": "Dataselection - Search",
-      "EDITOR": "Dataselection - Editor"
+      "SEARCH": "Feature Selection - Search",
+      "EDITOR": "Feature Selection - Editor"
     },
     "FEASIBILITY_QUERY": {
       "SEARCH": "Feasibility Query - Search",
@@ -433,6 +434,6 @@
     "VAL-20001"   :"The combination of context and termcode(s) is not found"
   },
   "INFO":{
-    "UPDATE_NOTE": "Due to updates centrally and at the sites, the portal will presumably be of limited use between 10.11 and 13.11. Feasibility requests for the application of the NUM-MII funding can also be submitted without site results or until 17.11. We thank you for your understanding."
+    "UPDATE_NOTE": "Due to updates centrally and at the sites, the portal is of limited use. We thank you for your understanding."
   }
 }
