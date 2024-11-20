@@ -35,6 +35,11 @@ export class DataExtraction2UiDataSelectionService {
             const externDataSelectionProfile = dataExtraction.attributeGroups.find(
               (attributeGroup) => attributeGroup.groupReference === dataSelectionProfile.getUrl()
             );
+
+            if (externDataSelectionProfile === undefined) {
+              return;
+            }
+
             this.setDataSectionProfileFields(
               externDataSelectionProfile.attributes,
               dataSelectionProfile.getFields()
