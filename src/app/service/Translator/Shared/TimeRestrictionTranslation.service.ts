@@ -37,6 +37,8 @@ export class TimeRestrictionTranslationService {
           return this.createBeforeFilter(startDate);
         case TimeRestrictionType.BETWEEN:
           return this.createBetweenFilter(startDate, endDate);
+        case TimeRestrictionType.NONE:
+          return undefined;
       }
     }
     return undefined;

@@ -12,4 +12,5 @@ export enum TimeRestrictionType {
   AT = 'AT',
   BEFORE = 'BEFORE',
   BETWEEN = 'BETWEEN',
+  NONE = 'NONE',
 }

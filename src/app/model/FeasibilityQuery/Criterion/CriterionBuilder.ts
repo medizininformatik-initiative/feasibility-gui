@@ -13,6 +13,7 @@ import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
 import { ValueDefinition } from '../../Utilities/AttributeDefinition.ts/ValueDefnition';
+import { TimeRestrictionNotSet } from './TimeRestriction/TimeRestrictionNotSet';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
@@ -274,8 +275,6 @@ export class CriterionBuilder {
   }
 
   buildTimeRestriction() {
-    const today = new Date();
-    const dateOnly = today.toISOString().split('T')[0];
-    return new BetweenFilter(null, null);
+    return new TimeRestrictionNotSet();
   }
 }

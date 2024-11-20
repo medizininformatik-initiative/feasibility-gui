@@ -335,8 +335,6 @@
       "BETWEEN": "between",
       "TIMERESTRICTION": {
         "LABEL": "Date",
-        "EVER": "All occurrences in",
-        "LATEST": "Latest occurrence in",
         "FROM": "from",
         "TO": "to",
         "AT": "at",
@@ -346,7 +344,9 @@
         "AFTER": "after",
         "AFTER_OR_AT": "after or at",
         "BETWEEN": "between",
-        "TITLE": "Time constraint (optional)"
+        "TITLE": "Time constraint (optional)",
+        "NONE": "no time restriction"
+
       }
     },
     "HINT": {

@@ -23,7 +23,9 @@
       </ng-container>
 
       <!--After, At, Before Filter-->
-      <ng-container *ngIf="selectedTimeRestrictionType !== 'BETWEEN'">
+      <ng-container
+        *ngIf="selectedTimeRestrictionType !== 'BETWEEN' && selectedTimeRestrictionType !== 'NONE'"
+      >
         <num-before-filter
           class="width-100"
           [timeRestrictionType]="selectedTimeRestrictionType"

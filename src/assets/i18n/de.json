@@ -347,7 +347,8 @@
         "AFTER": "nach",
         "AFTER_OR_AT": "nach oder am",
         "BETWEEN": "zwischen",
-        "TITLE": "Zeitraum (optional)"
+        "TITLE": "Zeitraum (optional)",
+        "NONE":"kein Filter"
       }
     },
     "HINT": {
