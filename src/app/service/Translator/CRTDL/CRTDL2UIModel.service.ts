@@ -18,7 +18,7 @@ export class CRTDL2UIModelService {
     private validationService: ValidationService
   ) {}
   public translateToUiModel(importedCrdtl: any) {
-    if (importedCrdtl.cohortDefinition.inclusionCriteria?.length > 0) {
+    if (importedCrdtl.cohortDefinition?.inclusionCriteria?.length > 0) {
       this.dataExtraction2UiDataSelectionService
         .translate(importedCrdtl.dataExtraction)
         .pipe(
@@ -32,6 +32,9 @@ export class CRTDL2UIModelService {
         )
         .subscribe();
       this.doValidate(importedCrdtl.cohortDefinition);
+      return true;
+    } else if (importedCrdtl.inclusionCriteria) {
+      this.doValidate(importedCrdtl);
       return true;
     } else {
       return false;
