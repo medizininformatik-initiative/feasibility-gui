@@ -7,6 +7,8 @@ import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criteri
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { v4 as uuidv4 } from 'uuid';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 export class FilterChipQuantityAdapter {
   public static adaptQuantity(quantity: AbstractQuantityFilter): InterfaceFilterChip[] {
@@ -65,7 +67,16 @@ export class FilterChipQuantityAdapter {
    */
   private static createFilterChip(type: string, text: string): InterfaceFilterChip {
     const builder = new FilterChipBuilder(type);
-    builder.addData(uuidv4(), text);
+    builder.addData(uuidv4(), this.createDisplayDataInstance(text));
     return builder.buildFilterChip();
+  }
+
+  private static createDisplayDataInstance(text: string) {
+    const german = 'de-DE';
+    const english = 'en-US';
+    return new DisplayData(
+      [text],
+      [new Translation(german, [text]), new Translation(english, [text])]
+    );
   }
 }

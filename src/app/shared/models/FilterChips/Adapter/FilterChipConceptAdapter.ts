@@ -5,6 +5,8 @@ import { InterfaceFilterChip } from '../InterfaceFilterChip';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ConceptFilterChipService } from 'src/app/shared/service/FilterChips/Criterion/ConceptFilterChipService.service';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 export class FilterChipConceptAdapter {
   public static conceptFilterChips: InterfaceFilterChip[] = [];
@@ -82,7 +84,13 @@ export class FilterChipConceptAdapter {
    * @param builder The FilterChipBuilder instance
    */
   private static createFilterChip(concept: TerminologyCode, builder: FilterChipBuilder): void {
-    const displayText = concept.getDisplay();
+    const displayText = new DisplayData(
+      [concept.getDisplay()],
+      [
+        new Translation('de-DE', [concept.getDisplay()]),
+        new Translation('en-US', [concept.getDisplay()]),
+      ]
+    );
 
     if (!displayText) {
       console.warn('Concept display text is undefined or null', concept);
