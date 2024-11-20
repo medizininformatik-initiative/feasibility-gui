@@ -54,7 +54,7 @@ export class SnackbarService {
     this.visibilitySubject.next(true);
     this.messageSubject.next(message);
     this.colorSubject.next(color);
-    //setTimeout(() => this.deactivateSnackbar(), 5000);
+    setTimeout(() => this.deactivateSnackbar(), 5000);
   }
 
   public deactivateSnackbar() {
