@@ -79,7 +79,6 @@ export class EditFieldsModalComponent implements OnInit {
 
   public setSelectedFieldElement(element) {
     const node: ProfileFields = element.originalEntry as ProfileFields;
-    console.log(node);
     const index = this.getIndexInSelectedFields(node);
     if (index !== -1) {
       this.removeNodeFromSelectedFields(node);
