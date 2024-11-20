@@ -29,17 +29,12 @@ export class DataExtraction2UiDataSelectionService {
       const urls = dataExtraction.attributeGroups.map(
         (attributeGroup) => attributeGroup.groupReference
       );
-      return this.createDataSelection.fetchDataSelectionProfileData(urls).pipe(
+      return this.createDataSelection.fetchDataSelectionProfileData(urls, false, false).pipe(
         map((dataSelectionProfiles) => {
           dataSelectionProfiles.forEach((dataSelectionProfile) => {
             const externDataSelectionProfile = dataExtraction.attributeGroups.find(
               (attributeGroup) => attributeGroup.groupReference === dataSelectionProfile.getUrl()
             );
-
-            if (externDataSelectionProfile === undefined) {
-              return;
-            }
-
             this.setDataSectionProfileFields(
               externDataSelectionProfile.attributes,
               dataSelectionProfile.getFields()

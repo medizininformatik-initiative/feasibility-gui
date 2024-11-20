@@ -26,7 +26,8 @@ export class CreateDataSelectionProfileService {
 
   public fetchDataSelectionProfileData(
     urls: string[],
-    markAsReference: boolean = false
+    markAsReference: boolean = false,
+    loadReferences: boolean = true
   ): Observable<DataSelectionProfileProfile[]> {
     const profilesToFetch: string[] = [];
 
@@ -59,7 +60,7 @@ export class CreateDataSelectionProfileService {
           this.dataSelectionProvider.setDataSelectionProfileByUrl(profile.getUrl(), profile)
         );
 
-        if (this.referencedProfiles.length > 0) {
+        if (this.referencedProfiles.length > 0 && loadReferences) {
           const uniqueReferencedProfiles = [...new Set(this.referencedProfiles)];
           this.referencedProfiles = [];
           return this.fetchDataSelectionProfileData(uniqueReferencedProfiles, true).pipe(
