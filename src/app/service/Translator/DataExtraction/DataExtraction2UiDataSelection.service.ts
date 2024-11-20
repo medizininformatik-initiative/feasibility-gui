@@ -101,6 +101,8 @@ export class DataExtraction2UiDataSelectionService {
       if (foundattribute) {
         field.setIsSelected(true);
         field.setMustHave(foundattribute.mustHave);
+      } else {
+        field.setIsSelected(false);
       }
       if (field.getChildren().length > 0) {
         this.setDataSectionProfileFields(attributes, field.getChildren());
