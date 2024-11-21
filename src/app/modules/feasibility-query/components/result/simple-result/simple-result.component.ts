@@ -2,7 +2,6 @@ import { BackendService } from '../../../service/backend.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
-import { FeatureProviderService } from '../../../service/feature-provider.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import {
@@ -10,6 +9,7 @@ import {
   ResultDetailsModalComponentData,
 } from '../result-detail-modal/result-detail-modal.component';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
+import { FeatureService } from '../../../../../service/Feature.service';
 
 @Component({
   selector: 'num-simple-result',
@@ -34,13 +34,13 @@ export class SimpleResultComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public backend: BackendService,
-    private featureProviderService: FeatureProviderService,
     private resultService: FeasibilityQueryResultService,
-    private queryProviderService: FeasibilityQueryProviderService
+    private queryProviderService: FeasibilityQueryProviderService,
+    private featureService: FeatureService
   ) {
     this.resultCallsRemaining$ = this.resultService.getResultCallsRemaining();
     this.resultCallsLimit$ = this.resultService.callsLimit$;
-    this.pollingTime = this.featureProviderService.getFeatures().options.pollingtimeinseconds;
+    this.pollingTime = this.featureService.getPollingTime();
   }
 
   ngOnInit(): void {
