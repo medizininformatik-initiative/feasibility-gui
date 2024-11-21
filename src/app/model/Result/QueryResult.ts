@@ -4,7 +4,7 @@ export class QueryResult {
   private feasibilityQueryId: string;
   private totalNumberOfPatients: number;
   private resultLines: QueryResultLine[] = [];
-  private issues?: [
+  issues?: [
     {
       message: string
       type: string
