@@ -12,7 +12,6 @@ import {
   takeUntil,
   takeWhile,
   timer,
-  filter,
 } from 'rxjs';
 import { QueryResult } from '../model/Result/QueryResult';
 import { QueryResultLine } from '../model/Result/QueryResultLine';
@@ -34,7 +33,6 @@ export class FeasibilityQueryResultService {
   private callsLimit: number;
   private callsRemaining: number;
   private queryId: string;
-  private result: QueryResult;
 
   private callsLimitSubject = new BehaviorSubject<number>(0);
   private callsRemainingSubject = new BehaviorSubject<number>(0);
@@ -80,19 +78,9 @@ export class FeasibilityQueryResultService {
       switchMap((url) => {
         this.queryId = url.substring(url.lastIndexOf('/') + 1);
         feasibilityQuery.addResultId(this.queryId);
-        return this.getResultPolling(this.queryId, false).pipe(
-          filter((result) => result != null),
-          endWith(null)
-        );
+        return this.getResultPolling(this.queryId, false).pipe(endWith(null));
       }),
-      takeWhile((x) => {
-        if (x === null) {
-          if (this.result.issues[0].code) {
-            this.snackbar.displayErrorMessage(this.result.issues[0].code);
-          }
-        }
-        return x != null;
-      })
+      takeWhile((x) => x != null)
     );
   }
 
@@ -133,7 +121,7 @@ export class FeasibilityQueryResultService {
     withDetails: boolean
   ): Observable<QueryResult> {
     return interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
-      takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 200)),
+      takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 100)),
       switchMap(() =>
         withDetails
           ? this.getDetailedObfuscatedResult(feasibilityQueryResultId)
@@ -146,15 +134,12 @@ export class FeasibilityQueryResultService {
   public getSummaryResult(feasibilityQueryResultId: string): Observable<QueryResult> {
     return this.backend.getSummaryResult(feasibilityQueryResultId, false).pipe(
       map((result) => {
-        this.result = result;
         if (!result.issues) {
           const queryResult: QueryResult = this.buildQueryResultInstance(result);
           this.resultProvider.setResultByID(queryResult, queryResult.getId());
           return queryResult;
         } else {
-          if (result.issues[0].code !== 'FEAS-10004') {
-            this.snackbar.displayErrorMessage(result.issues[0].code);
-          }
+          this.snackbar.displayErrorMessage(result.issues[0].code);
         }
       })
     );

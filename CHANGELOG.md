@@ -1,14 +1,5 @@
 # Changelog
 
-## v6.0.1 (2024-11-21)
-
-### Bugfix
-
-* Getting polling time from Feature-Provider-Service instead of Feature-Service
-* Repeat polling until end of timer, regardless Null results in between
-
-
-
 ## v6.0.1 (2024-11-20)
 
 ### Bugfix
