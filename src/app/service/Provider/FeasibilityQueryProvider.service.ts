@@ -201,18 +201,11 @@ export class FeasibilityQueryProviderService {
         feasibilityQuery.getExclusionCriteria().length > 0
     );
 
-    this.resultProvider
-      .getResultMap()
-      .pipe(
-        map((resultMap) => {
-          const resultArray = Array.from(resultMap.values());
-          const latestResult = resultArray[resultArray.length - 1];
-          return !!latestResult?.getTotalNumberOfPatients();
-        })
-      )
-      .subscribe((hasResult) => {
-        this.hasQueryResult.next(hasResult);
-      });
+    const resultIdsArray = feasibilityQuery.getResultIds();
+    const latestResult = this.resultProvider.getResultByID(
+      resultIdsArray[resultIdsArray.length - 1]
+    );
+    this.hasQueryResult.next(!!latestResult?.getTotalNumberOfPatients());
   }
   public getMissingRequiredFilterCriteria(): Observable<string[]> {
     return this.foundMissingFilterCriteria.asObservable();
