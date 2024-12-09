@@ -1,6 +1,12 @@
 # Changelog
 
-## v6.0.1 (2024-11-21)
+## v6.0.3 (2024-12-9)
+
+### Bugfix
+
+* Update query result after each polling intervall ([#303](https://github.com/medizininformatik-initiative/feasibility-gui/issues/304))
+
+## v6.0.2 (2024-11-21)
 
 ### Bugfix
 
