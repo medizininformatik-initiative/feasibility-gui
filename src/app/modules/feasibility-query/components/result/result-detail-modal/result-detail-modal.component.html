@@ -1,21 +1,15 @@
-<div class="result-details-box">
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <button
-      fxLayoutAlign="end"
-      class="close-button"
-      type="button"
-      mat-icon-button
-      (click)="doClose()"
-    >
-      <fa-icon size="2x" icon="window-close"></fa-icon>
-    </button>
-  </div>
+<num-modal-window [displaySaveButtons]="false">
   <div>
-    <num-header>{{ 'QUERYBUILDER.RESULT.SAVE_DIALOG.HEADER' | translate }}</num-header>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <num-header>{{ 'QUERYBUILDER.RESULT.SAVE_DIALOG.HEADER' | translate }}</num-header>
+      <fa-icon size="2x" class="icon-close" icon="window-close" (click)="doClose()"></fa-icon>
+    </div>
     <num-header-description>
       {{ 'QUERYBUILDER.RESULT.SAVE_DIALOG.HEADER_DESCRIPTION' | translate }}
     </num-header-description>
   </div>
   <br />
-  <num-table class="result-list-container" [tableData]="adaptedData"> </num-table>
-</div>
+  <div class="overflow">
+    <num-table [tableData]="adaptedData"></num-table>
+  </div>
+</num-modal-window>
