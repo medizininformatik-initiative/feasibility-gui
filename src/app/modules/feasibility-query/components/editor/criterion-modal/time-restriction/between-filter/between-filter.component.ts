@@ -19,6 +19,8 @@ export class BetweenFilterComponent implements OnInit {
 
   afterDate: string;
 
+  displayDateWarning = false;
+
   constructor(private timeRestrictionFactoryService: TimeRestrictionFactoryService) {}
 
   ngOnInit(): void {
@@ -43,12 +45,18 @@ export class BetweenFilterComponent implements OnInit {
 
   public emitInstance() {
     if (this.beforeDate && this.afterDate) {
-      const timeRestrictionFilter = this.timeRestrictionFactoryService.createTimeRestrictionFilter(
-        TimeRestrictionType.BETWEEN,
-        this.afterDate,
-        this.beforeDate
-      ) as BetweenFilter;
-      this.betweenFilterChanged.emit(timeRestrictionFilter);
+      if (new Date(this.beforeDate).getTime() > new Date(this.afterDate).getTime()) {
+        const timeRestrictionFilter =
+          this.timeRestrictionFactoryService.createTimeRestrictionFilter(
+            TimeRestrictionType.BETWEEN,
+            this.afterDate,
+            this.beforeDate
+          ) as BetweenFilter;
+        this.betweenFilterChanged.emit(timeRestrictionFilter);
+        this.displayDateWarning = false;
+      } else {
+        this.displayDateWarning = true;
+      }
     }
   }
 }

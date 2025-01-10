@@ -179,8 +179,6 @@
         "UPLOAD": "Data Definition has been uploaded",
         "DOWNLOAD": "Data Definition has been successfully downloaded"
 }
-
-
     }
   },
   "LANGUAGE": {
@@ -287,7 +285,8 @@
         "BOTH": "between {{ from }} and {{ to }}",
         "FROM": "later than {{ from }}",
         "TO": "before {{ to }}",
-        "NONE": "no time restriction"
+        "NONE": "no time restriction",
+        "WARNING": "The start date must be earlier than the end date"      
       }
     },
     "OVERVIEW": {
