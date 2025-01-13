@@ -2,17 +2,18 @@ import { DataProtectionComponent } from './site/data-protection/data-protection.
 import { NgModule } from '@angular/core';
 import { RoleGuard } from './core/auth/guards/role.guard';
 import { RouterModule, Routes } from '@angular/router';
+import { BasePaths } from './app-paths';
 
 export const routes: Routes = [
   {
     path: 'home',
-    redirectTo: 'data-query',
+    redirectTo: BasePaths.dataQuery,
   },
   {
-    path: 'data-query',
+    path: BasePaths.dataQuery,
     canLoad: [RoleGuard],
     data: {
-      navId: 'data-query',
+      navId: BasePaths.dataQuery,
       roles: ['main'],
       breadcrumb: 'Data Query',
       animation: 'HomePage',
@@ -24,10 +25,10 @@ export const routes: Routes = [
       ).then((m) => m.DataQueryModule),
   },
   {
-    path: 'feasibility-query',
+    path: BasePaths.feasibilityQuery,
     canLoad: [RoleGuard],
     data: {
-      navId: 'feasibility-query',
+      navId: BasePaths.feasibilityQuery,
       roles: ['main'],
       breadcrumb: 'Query Builder',
       animation: 'FeasibilityQueryPage',
@@ -39,10 +40,10 @@ export const routes: Routes = [
       ).then((m) => m.FeasibilityQueryModule),
   },
   {
-    path: 'options',
+    path: BasePaths.options,
     canLoad: [RoleGuard],
     data: {
-      navId: 'options',
+      navId: BasePaths.options,
       roles: ['option'],
       breadcrumb: 'Options',
       animation: 'OptionsPage',
@@ -54,10 +55,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'data-selection',
+    path: BasePaths.dataSelection,
     canLoad: [RoleGuard],
     data: {
-      navId: 'data-selection',
+      navId: BasePaths.dataSelection,
       roles: ['main'],
       breadcrumb: 'Data Selection',
       animation: 'DataSelectionPage',
@@ -92,8 +93,8 @@ export const routes: Routes = [
       title: 'Data Protection',
     },
   },
-  { path: '', redirectTo: 'data-query', pathMatch: 'full' },
-  { path: '**', redirectTo: 'data-query', pathMatch: 'full' },
+  { path: '', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
+  { path: '**', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
 ];
 
 @NgModule({

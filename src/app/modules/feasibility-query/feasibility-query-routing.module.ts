@@ -1,13 +1,14 @@
 import { EditFeasibilityQueryComponent } from './components/editor/edit.component';
 import { FeasibilityQuerySearchComponent } from './components/search/search.component';
 import { NgModule } from '@angular/core';
+import { PathSegments } from 'src/app/app-paths';
 import { ResultComponent } from './components/result/result.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'search',
+    redirectTo: PathSegments.search,
     pathMatch: 'full',
     data: {
       animation: 'Feasibility_Search',
@@ -15,7 +16,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'editor',
+    path: PathSegments.editor,
     component: EditFeasibilityQueryComponent,
     data: {
       animation: 'Feasibility_Editor',
@@ -23,7 +24,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'result',
+    path: PathSegments.result,
     component: ResultComponent,
     data: {
       animation: 'Feasibility_Result',
@@ -31,7 +32,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'search',
+    path: PathSegments.search,
     component: FeasibilityQuerySearchComponent,
     data: {
       animation: 'Feasibility_Search',

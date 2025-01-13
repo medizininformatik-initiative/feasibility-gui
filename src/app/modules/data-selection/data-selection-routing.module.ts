@@ -2,21 +2,22 @@ import { DisplayDataSelectionComponent } from './components/editor/display/displ
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchDataSelectionComponent } from './components/search/search.component';
+import { PathSegments } from 'src/app/app-paths';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'search',
+    redirectTo: PathSegments.search,
     pathMatch: 'full',
     data: { animation: 'Data_Selection_Search', title: 'TAB_TITLE.DATA_SELECTION.SEARCH' },
   },
   {
-    path: 'search',
+    path: PathSegments.search,
     component: SearchDataSelectionComponent,
     data: { animation: 'Data_Selection_Search', title: 'TAB_TITLE.DATA_SELECTION.SEARCH' },
   },
   {
-    path: 'editor',
+    path: PathSegments.editor,
     component: DisplayDataSelectionComponent,
     data: { animation: 'Data_Selection_Editor', title: 'TAB_TITLE.DATA_SELECTION.EDITOR' },
   },
