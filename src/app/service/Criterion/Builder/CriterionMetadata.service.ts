@@ -3,7 +3,6 @@ import { CriterionHashService } from '../CriterionHash.service';
 import { Injectable } from '@angular/core';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
-import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 
 @Injectable({
   providedIn: 'root',
