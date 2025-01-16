@@ -32,7 +32,7 @@ export class TerminologyApiService {
     console.log(id);
     return this.http.get<any>(
       this.backendService.createUrl(
-        TerminologyPaths.ENTRY_ENDPOINT + id + TerminologyPaths.RELATIONS_ENDPOINT
+        TerminologyPaths.ENTRY_ENDPOINT + '/' + id + TerminologyPaths.RELATIONS_ENDPOINT
       )
     );
   }
@@ -43,7 +43,9 @@ export class TerminologyApiService {
   }
 
   public getEntryById(id: string): Observable<any> {
-    return this.http.get<any>(this.backendService.createUrl(TerminologyPaths.ENTRY_ENDPOINT + id));
+    return this.http.get<any>(
+      this.backendService.createUrl(TerminologyPaths.ENTRY_ENDPOINT + '/' + id)
+    );
   }
 
   public getTerminologySystems() {
