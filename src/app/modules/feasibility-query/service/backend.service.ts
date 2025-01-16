@@ -60,6 +60,7 @@ export class BackendService {
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + this.token);
 
+  /*
   public getElasticSearchEntry(id: string): Observable<SearchTermListEntry> {
     return this.http.get<SearchTermListEntry>(this.createUrl(BackendService.PATH_ENTRY + '/' + id));
   }
@@ -114,17 +115,6 @@ export class BackendService {
     );
   }
 
-  /**
-   *
-   * @param searchString
-   * @param context
-   * @param terminology
-   * @param kds
-   * @param availability
-   * @param limit
-   * @param offset
-   * @returns
-   */
   public getElasticSearchResultsForCriteria(
     searchString: string,
     availability?: string,
@@ -199,13 +189,13 @@ export class BackendService {
     );
   }
 
-  /**
-   * @param id
-   * @returns
-   */
-  public getElasticSearchResultById(id: string): Observable<any> {
-    return this.http.get<any>(this.createUrl(BackendService.PATH_ENTRY + id));
+
+
+ public getElasticSearchResultById(id: string): Observable<any> {
+   return this.http.get<any>(this.createUrl(BackendService.PATH_ENTRY + id));
   }
+
+  */
 
   public postQueryNew(query: StructuredQuery): Observable<any> {
     return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), query, {
