@@ -1,3 +1,4 @@
+import { DisplayData } from '../DataSelection/Profile/DisplayData';
 import { TerminologyCode } from '../Terminology/TerminologyCode';
 import { AttributeDefinitions } from '../Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { ValueDefinition } from '../Utilities/AttributeDefinition.ts/ValueDefnition';
@@ -8,8 +9,9 @@ import { ValueDefinition } from '../Utilities/AttributeDefinition.ts/ValueDefnit
 export class CriteriaProfileData {
   private attributeDefinitions: Array<AttributeDefinitions> = [];
   private context: TerminologyCode;
-  private termCodes: TerminologyCode[];
+  private display: DisplayData;
   private id: string;
+  private termCodes: TerminologyCode[];
   private timeRestrictionAllowed = false;
   private valueDefinitions: Array<ValueDefinition> = [];
 
@@ -22,6 +24,7 @@ export class CriteriaProfileData {
    */
   constructor(
     id: string,
+    display: DisplayData,
     timeRestrictionAllowed: boolean,
     attributeDefinitions: Array<AttributeDefinitions>,
     context: TerminologyCode,
@@ -30,6 +33,7 @@ export class CriteriaProfileData {
   ) {
     this.attributeDefinitions = attributeDefinitions;
     this.context = context;
+    this.display = display;
     this.termCodes = termCodes;
     this.id = id;
     this.timeRestrictionAllowed = timeRestrictionAllowed;
@@ -131,5 +135,13 @@ export class CriteriaProfileData {
 
   public setValueDefinitions(valueDefinitions: Array<ValueDefinition>): void {
     this.valueDefinitions = valueDefinitions;
+  }
+
+  public setDisplay(display: DisplayData): void {
+    this.display = display;
+  }
+
+  public getDisplay(): DisplayData {
+    return this.display;
   }
 }

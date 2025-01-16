@@ -6,6 +6,7 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionHashService } from '../../CriterionHash.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { FeasibilityQueryProviderService } from '../../../Provider/FeasibilityQueryProvider.service';
 import { finalize, of, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -49,8 +50,10 @@ export class CreateCriterionService {
             const context = this.mapTerminologyCode(response.context);
             const termCodes = response.termCodes.map(this.mapTerminologyCode);
             const id = response.id;
+            const display = response.display;
             return new CriteriaProfileData(
               id,
+              display,
               response.uiProfile.timeRestrictionAllowed,
               this.mapAttributeDefinitions(response.uiProfile),
               context,
@@ -159,7 +162,7 @@ export class CreateCriterionService {
     isReference: false
     context: TerminologyCode
     criterionHash: string
-    display: string
+    display: DisplayData
     isInvalid: boolean
     isRequiredFilterSet: boolean
     uniqueID: string
@@ -167,7 +170,7 @@ export class CreateCriterionService {
   } {
     const context = criteriaProfileData.getContext();
     const termCodes = criteriaProfileData.getTermCodes();
-    const display = criteriaProfileData.getTermCodes()[0].getDisplay();
+    const display = criteriaProfileData.getDisplay();
     const criterionHash = this.criterionHashService.createHash(context, termCodes[0]);
     const isFilterRequired = !this.setIsRequiredFilterSet(criteriaProfileData);
 

@@ -10,6 +10,7 @@ import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeF
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.service';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 export class EnterCriterionListComponentData {
   criterion: AbstractCriterion;
@@ -82,7 +83,7 @@ export class EditCriterionModalComponent implements OnInit {
     isReference: boolean
     context: TerminologyCode
     criterionHash: string
-    display: string
+    display: DisplayData
     isInvalid: boolean
     isRequiredFilterSet: boolean
     uniqueID: string
@@ -90,7 +91,7 @@ export class EditCriterionModalComponent implements OnInit {
   } {
     const context = criterion.getContext();
     const termCodes = criterion.getTermCodes();
-    const display = criterion.getTermCodes()[0].getDisplay();
+    const display = criterion.getDisplay();
     const criterionHash = this.criterion.getCriterionHash();
     const isRequiredFilterSet = this.criterionValidationService.setIsFilterRequired(this.criterion);
     return {

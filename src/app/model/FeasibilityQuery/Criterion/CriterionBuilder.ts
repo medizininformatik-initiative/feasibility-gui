@@ -7,13 +7,14 @@ import { AttributeFiltersBuilder } from './AttributeFilter/AttributeFiltersBuild
 import { BetweenFilter } from './TimeRestriction/BetweenFilter';
 import { Criterion } from './Criterion';
 import { CritGroupPosition } from '../CritGroupPosition';
+import { DisplayData } from '../../DataSelection/Profile/DisplayData';
 import { FilterTypes } from '../../Utilities/FilterTypes';
 import { ReferenceCriterion } from './ReferenceCriterion';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { v4 as uuidv4 } from 'uuid';
-import { ValueFilter } from './AttributeFilter/ValueFilter';
-import { ValueDefinition } from '../../Utilities/AttributeDefinition.ts/ValueDefnition';
 import { TimeRestrictionNotSet } from './TimeRestriction/TimeRestrictionNotSet';
+import { v4 as uuidv4 } from 'uuid';
+import { ValueDefinition } from '../../Utilities/AttributeDefinition.ts/ValueDefnition';
+import { ValueFilter } from './AttributeFilter/ValueFilter';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
@@ -23,7 +24,7 @@ export class CriterionBuilder {
   private attributeFilters?: Array<AttributeFilter> = [];
   private context?: TerminologyCode;
   private criterionHash?: string;
-  private display?: string;
+  private display?: DisplayData;
   private isInvalid?: boolean;
   private isRequiredFilterSet: boolean;
   private parentId: string;
@@ -38,7 +39,7 @@ export class CriterionBuilder {
       isReference: boolean
       context: TerminologyCode
       criterionHash: string
-      display: string
+      display: DisplayData
       isInvalid: boolean
       isRequiredFilterSet: boolean
       uniqueID: string
@@ -87,7 +88,7 @@ export class CriterionBuilder {
     return this;
   }
 
-  withDisplay(display: string): CriterionBuilder {
+  withDisplay(display: DisplayData): CriterionBuilder {
     this.display = display;
     return this;
   }

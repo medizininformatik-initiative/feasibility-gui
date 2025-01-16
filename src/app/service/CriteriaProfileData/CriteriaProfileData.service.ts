@@ -57,9 +57,11 @@ export class CriteriaProfileDataService {
         const context = this.mapTerminologyCode(response.context);
         const termCodes = response.termCodes.map(this.mapTerminologyCode);
         const id = response.id;
+        const display = response.display;
 
         return new CriteriaProfileData(
           id,
+          display,
           response.uiProfile.timeRestrictionAllowed,
           this.mapAttributeDefinitions(response.uiProfile),
           context,
