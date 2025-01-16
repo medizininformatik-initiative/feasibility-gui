@@ -1,4 +1,3 @@
-import { BackendService } from '../../../service/backend.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
@@ -10,6 +9,7 @@ import {
 } from '../result-detail-modal/result-detail-modal.component';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { FeatureService } from '../../../../../service/Feature.service';
+import { BackendService } from 'src/app/service/Backend/Backend.service';
 
 @Component({
   selector: 'num-simple-result',
@@ -33,10 +33,10 @@ export class SimpleResultComponent implements OnInit {
   feasibilityQuery: FeasibilityQuery;
   constructor(
     public dialog: MatDialog,
-    public backend: BackendService,
     private resultService: FeasibilityQueryResultService,
     private queryProviderService: FeasibilityQueryProviderService,
-    private featureService: FeatureService
+    private featureService: FeatureService,
+    private backendService: BackendService
   ) {
     this.resultCallsRemaining$ = this.resultService.getResultCallsRemaining();
     this.resultCallsLimit$ = this.resultService.callsLimit$;
@@ -81,7 +81,7 @@ export class SimpleResultComponent implements OnInit {
    * If the result array has fewer than 10 digits, pad it with leading '0' digits until its length is 10
    */
   private setObfuscatedPatientCount(totalNumberOfPatients: number): void {
-    const obfuscatedPatientCount = this.backend.obfuscateResult(totalNumberOfPatients);
+    const obfuscatedPatientCount = this.backendService.obfuscateResult(totalNumberOfPatients);
     const obfuscatedPatientCountArray = obfuscatedPatientCount.toString().split('');
     while (obfuscatedPatientCountArray.length < 8) {
       obfuscatedPatientCountArray.unshift('0');

@@ -5,7 +5,6 @@ import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResu
 import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { SearchTermDetailsProviderService } from './SearchTermDetailsProvider.service';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
 
 @Injectable({

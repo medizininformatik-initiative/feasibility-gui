@@ -4,18 +4,18 @@ import {
   CodeSystemEntry,
   TerminologySystemDictionary,
 } from 'src/app/model/Utilities/TerminologySystemDictionary';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
+import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TerminologySystemProvider {
-  constructor(private backEndService: BackendService) {
+  constructor(private terminologyApiService: TerminologyApiService) {
     this.initializeTerminologySystems();
   }
 
   public initializeTerminologySystems(): void {
-    this.backEndService
+    this.terminologyApiService
       .getTerminologySystems()
       .pipe(
         tap((data: CodeSystemEntry[]) => {

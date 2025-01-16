@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NewBackendService } from '../NewBackend.service';
+import { BackendService } from '../Backend.service';
 import { forkJoin, map, Observable } from 'rxjs';
 import { TerminologyPaths } from '../Paths/TerminologyPaths';
-import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TerminologyApiService {
-  constructor(private backendService: NewBackendService, private http: HttpClient) {}
+  constructor(private backendService: BackendService, private http: HttpClient) {}
 
   public getSearchFilter(): Observable<Array<any>> {
     return this.http.get<any>(
@@ -39,7 +38,6 @@ export class TerminologyApiService {
   }
 
   public getElasticSearchResults(url: string): Observable<{ totalHits: number; results: any[] }> {
-    console.log(url);
     const parsedUrl = this.backendService.createUrl(url);
     return this.http.get<{ totalHits: number; results: any[] }>(parsedUrl);
   }

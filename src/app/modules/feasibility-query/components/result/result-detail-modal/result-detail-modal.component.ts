@@ -1,5 +1,5 @@
-import { BackendService } from '../../../service/backend.service';
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { BackendService } from 'src/app/service/Backend/Backend.service';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter';
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../shared/models/ListEntries/FeasibilityQueryResultDetailstListEntry';

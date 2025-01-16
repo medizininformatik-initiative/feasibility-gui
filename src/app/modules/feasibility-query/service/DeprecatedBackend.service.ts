@@ -20,7 +20,7 @@ import { QueryResult } from '../../../model/Result/QueryResult';
  * @todo Create Interfaces for all HTTP Response Objects
  *
  */
-export class BackendService {
+export class DeprecatedBackendService {
   constructor(
     private config: AppConfigService,
     private feature: FeatureService,
@@ -195,7 +195,6 @@ export class BackendService {
    return this.http.get<any>(this.createUrl(BackendService.PATH_ENTRY + id));
   }
 
-  */
 
   public postQueryNew(query: StructuredQuery): Observable<any> {
     return this.http.post<QueryResponse>(this.createUrl(BackendService.PATH_RUN_QUERY), query, {
@@ -218,12 +217,8 @@ export class BackendService {
   }
 
   public getSummaryResult(
-    feasibilityQueryResultId: string,
-    gottenDetailedResult: boolean
+    feasibilityQueryResultId: string
   ): Observable<any> {
-    if (gottenDetailedResult) {
-      return this.resultObservable;
-    }
     const url =
       BackendService.PATH_RUN_QUERY +
       '/' +
@@ -256,11 +251,7 @@ export class BackendService {
 
   public getDetailedObfuscatedResult(
     feasibilityQueryResultId: string,
-    gottenDetailedResult: boolean
   ): Observable<any> {
-    if (gottenDetailedResult) {
-      return this.resultObservable;
-    }
     const url =
       BackendService.PATH_RUN_QUERY +
       '/' +
@@ -337,6 +328,8 @@ export class BackendService {
       }
     );
   }
+    */
+
   /*
   public loadSavedTemplates(validate?: boolean): Observable<StructuredQueryTemplate[]> {
     if (this.feature.mockLoadnSave()) {
@@ -352,7 +345,6 @@ export class BackendService {
       );
     }
   }
-*/
   public deleteSavedTemplate(id: number) {
     const headers = this.headers;
     const url = this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id);
@@ -422,6 +414,7 @@ export class BackendService {
       }
     );
   }
+      */
 
   createUrl(pathToResource: string, paramString?: string): string {
     let url = this.config.getConfig().uiBackendApi.baseUrl;

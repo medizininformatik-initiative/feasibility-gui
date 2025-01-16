@@ -9,7 +9,6 @@ import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemSe
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
 
 @Injectable({

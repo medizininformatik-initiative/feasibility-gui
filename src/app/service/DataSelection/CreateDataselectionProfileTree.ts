@@ -5,16 +5,16 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
+import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelectionProfileTreeService {
-  constructor(private backendservice: BackendService) {}
+  constructor(private dataSelectionApiService: DataSelectionApiService) {}
 
   public fetchProfileTree(profileTreeData?: any): Observable<DataSelectionProfileTree> {
-    return this.backendservice.getDataSelectionProfileTree().pipe(
+    return this.dataSelectionApiService.getDataSelectionProfileTree().pipe(
       map((response) => {
         const rootNode = this.createNode(response.children);
         const treeRoot = this.createTreeRoot(profileTreeData, rootNode);

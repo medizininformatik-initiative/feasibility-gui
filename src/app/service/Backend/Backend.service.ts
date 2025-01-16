@@ -7,7 +7,7 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 @Injectable({
   providedIn: 'root',
 })
-export class NewBackendService {
+export class BackendService {
   constructor(
     private config: AppConfigService,
     private feature: FeatureService,
@@ -45,7 +45,7 @@ export class NewBackendService {
     return url;
   }
 
-  obfuscateResult(result: number): string {
+  public obfuscateResult(result: number): string {
     if (result === 0) {
       return '0';
     } else {

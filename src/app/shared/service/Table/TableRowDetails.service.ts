@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
 import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service';
 
 @Injectable({

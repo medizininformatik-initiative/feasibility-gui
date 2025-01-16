@@ -20,7 +20,8 @@ import { ResultProviderService } from './Provider/ResultProvider.service';
 import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
 import { FeasibilityQueryProviderService } from './Provider/FeasibilityQueryProvider.service';
 import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
-import { BackendService } from '../modules/feasibility-query/service/backend.service';
+import { FeasibilityQueryApiService } from './Backend/Api/FeasibilityQueryApi.service';
+import { FeasibilityQueryResultApiService } from './Backend/Api/FeasibilityQueryResultApi.service';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +56,8 @@ export class FeasibilityQueryResultService {
   }
 
   constructor(
-    private backend: BackendService,
+    private feasibilityQueryApiService: FeasibilityQueryApiService,
+    private feasibilityQueryResultApiService: FeasibilityQueryResultApiService,
     private featureService: FeatureService,
     private translator: UIQuery2StructuredQueryService,
     private resultProvider: ResultProviderService,
@@ -97,7 +99,7 @@ export class FeasibilityQueryResultService {
   }
 
   private getDetailedResultRateLimit(): void {
-    this.backend.getDetailedResultRateLimit().subscribe(
+    this.feasibilityQueryResultApiService.getDetailedResultRateLimit().subscribe(
       (result) => {
         this.callsLimitSubject.next(result.limit);
         this.callsRemainingSubject.next(result.remaining);
@@ -123,8 +125,8 @@ export class FeasibilityQueryResultService {
   }
 
   public getPollingUrl(query: FeasibilityQuery): Observable<string> {
-    return this.backend
-      .postQueryNew(this.translator.translateToStructuredQuery(query))
+    return this.feasibilityQueryApiService
+      .postStructuredQuery(this.translator.translateToStructuredQuery(query))
       .pipe(map((result) => result.headers.get('location')));
   }
 
@@ -144,7 +146,7 @@ export class FeasibilityQueryResultService {
   }
 
   public getSummaryResult(feasibilityQueryResultId: string): Observable<QueryResult> {
-    return this.backend.getSummaryResult(feasibilityQueryResultId, false).pipe(
+    return this.feasibilityQueryResultApiService.getSummaryResult(feasibilityQueryResultId).pipe(
       map((result) => {
         this.result = result;
         if (!result.issues) {
@@ -161,17 +163,19 @@ export class FeasibilityQueryResultService {
   }
 
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<QueryResult> {
-    return this.backend.getDetailedObfuscatedResult(feasibilityQueryResultId, false).pipe(
-      map((result) => {
-        if (!result.issues) {
-          const queryResult: QueryResult = this.buildQueryResultInstance(result);
-          this.resultProvider.setResultByID(queryResult, queryResult.getId());
-          return queryResult;
-        } else {
-          this.snackbar.displayErrorMessage(result.issues[0].code);
-        }
-      })
-    );
+    return this.feasibilityQueryResultApiService
+      .getDetailedObfuscatedResult(feasibilityQueryResultId)
+      .pipe(
+        map((result) => {
+          if (!result.issues) {
+            const queryResult: QueryResult = this.buildQueryResultInstance(result);
+            this.resultProvider.setResultByID(queryResult, queryResult.getId());
+            return queryResult;
+          } else {
+            this.snackbar.displayErrorMessage(result.issues[0].code);
+          }
+        })
+      );
   }
 
   private buildQueryResultInstance(result: any): QueryResult {
