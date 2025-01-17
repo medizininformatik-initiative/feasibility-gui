@@ -1,13 +1,13 @@
 import { ActiveFeasibilityQueryService } from '../../../../../service/Provider/ActiveFeasibilityQuery.service';
-import { BackendService } from '../../../service/backend.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CreateCRDTLService } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
-import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQueryApiService } from 'src/app/service/Backend/Api/FeasibilityQueryApi.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { of, Subscription, switchMap } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
+import { SavedFeasibilityQueryResults } from 'src/app/model/Result/SavedFeasibilityQueryResults';
 
 @Component({
   selector: 'num-save-dialog',
@@ -29,7 +29,7 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
 
   constructor(
     public feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    public backendService: BackendService,
+    public feasibilityQueryApiService: FeasibilityQueryApiService,
     private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
     private resultProvider: ResultProviderService,
     private activeFeasibilityQuery: ActiveFeasibilityQueryService,
@@ -53,7 +53,14 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((result) => {
-        this.backendService.saveQuery(result, this.title, this.comment).subscribe();
+        const savedQuery = new SavedFeasibilityQueryResults(
+          this.title,
+          this.comment,
+          result.getTotalNumberOfPatients()
+        );
+        this.feasibilityQueryApiService
+          .postSavedFeasibilityQuery(savedQuery, result.getId())
+          .subscribe();
         this.doDiscard();
       })
       .unsubscribe();

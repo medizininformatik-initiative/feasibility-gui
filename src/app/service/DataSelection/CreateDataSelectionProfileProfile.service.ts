@@ -11,8 +11,8 @@ import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profil
 import { v4 as uuidv4 } from 'uuid';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
+import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/
 export class CreateDataSelectionProfileService {
   private referencedProfiles: string[] = [];
   constructor(
-    private backend: BackendService,
+    private dataSelectionApiService: DataSelectionApiService,
     private dataSelectionProvider: DataSelectionProfileProviderService
   ) {}
 
@@ -30,7 +30,6 @@ export class CreateDataSelectionProfileService {
     loadReferences: boolean = true
   ): Observable<DataSelectionProfileProfile[]> {
     const profilesToFetch: string[] = [];
-
     for (const url of urls) {
       if (!this.dataSelectionProvider.getDataSelectionProfileByUrl(url)) {
         profilesToFetch.push(url);
@@ -47,7 +46,7 @@ export class CreateDataSelectionProfileService {
     const commaSeparatedIds: string = profilesToFetch.join(',');
     this.referencedProfiles = [];
 
-    return this.backend.getDataSelectionProfileData(commaSeparatedIds).pipe(
+    return this.dataSelectionApiService.getDataSelectionProfileData(commaSeparatedIds).pipe(
       map((data: any[]) =>
         data.map((item: any) => {
           const fields = this.mapFields(item.fields);

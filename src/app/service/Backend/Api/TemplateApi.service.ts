@@ -1,20 +1,18 @@
-import { Injectable } from '@angular/core';
-import { StructuredQueryInquiry } from 'src/app/model/SavedFeasibilityQuery/SavedAnnotatedFeasibilityQuery';
-import { FeatureService } from '../../Feature.service';
 import { HttpClient } from '@angular/common/http';
-import { NewBackendService } from '../NewBackend.service';
-import { TemplatePaths } from '../Paths/TemplatePaths';
+import { Injectable } from '@angular/core';
+import { BackendService } from '../Backend.service';
 import { Observable } from 'rxjs';
+import { TemplatePaths } from '../Paths/TemplatePaths';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TemplateApiService {
-  constructor(private backendService: NewBackendService, private http: HttpClient) {}
+  constructor(private backendService: BackendService, private http: HttpClient) {}
 
-  public loadTemplate(id: number): Observable<StructuredQueryInquiry> {
+  public loadTemplate(id: number): Observable<any> {
     const headers = this.backendService.getHeaders();
-    return this.http.get<StructuredQueryInquiry>(
+    return this.http.get<any>(
       this.backendService.createUrl(TemplatePaths.TEMPLATE_QUERY_ENDPOINT + '/' + id.toString()),
       { headers }
     );

@@ -9,7 +9,7 @@ export class CriteriaResulByIdMapperStrategy
     const listItems: SearchTermListEntry[] = this.mapResponseToEntries(response);
     return new SearchTermResultList(1, listItems);
   }
-  p;
+
   public mapResponseToEntries(results: any): SearchTermListEntry[] {
     const entry = new SearchTermListEntry(
       results.availability,

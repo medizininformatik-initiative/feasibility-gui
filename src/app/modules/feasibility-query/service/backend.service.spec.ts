@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BackendService } from './backend.service';
+import { BackendService } from './DeprecatedBackend.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AppConfigService } from '../../../config/app-config.service';
 import { IAppConfig } from '../../../config/app-config.model';

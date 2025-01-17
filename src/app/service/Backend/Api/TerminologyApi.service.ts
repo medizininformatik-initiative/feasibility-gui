@@ -1,37 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NewBackendService } from '../NewBackend.service';
-import { Observable } from 'rxjs';
+import { BackendService } from '../Backend.service';
+import { forkJoin, map, Observable } from 'rxjs';
 import { TerminologyPaths } from '../Paths/TerminologyPaths';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TerminologyApiService {
-  constructor(private backendService: NewBackendService, private http: HttpClient) {}
+  constructor(private backendService: BackendService, private http: HttpClient) {}
 
-  public getElasticSearchEntry(id: string): Observable<any> {
-    return this.http.get<any>(
-      this.backendService.createUrl(TerminologyPaths.SEARCH_ENTRY_ENDPOINT + id)
-    );
-  }
-
-  public getElasticSearchFilter(): Observable<Array<any>> {
+  public getSearchFilter(): Observable<Array<any>> {
     return this.http.get<any>(
       this.backendService.createUrl(TerminologyPaths.SEARCH_FILTER_ENDPOINT)
     );
   }
 
-  public getCriteriaProfileData(commaSeparatedIds: string): Observable<Array<any>> {
-    return this.http.get<Array<any>>(
-      this.backendService.createUrl(TerminologyPaths.CRITERIA_PROFILE_ENDPOINT + commaSeparatedIds)
-    );
+  public getCriteriaProfileData(commaSeparatedIds: string[]): Observable<Array<any>> {
+    const chunkSize = 50;
+    const chunks = this.backendService.chunkArray(commaSeparatedIds, chunkSize);
+    const observables = chunks.map((chunk) => {
+      const joinedIds = chunk.join(',');
+      return this.http.get<Array<any>>(
+        this.backendService.createUrl(TerminologyPaths.CRITERIA_PROFILE_ENDPOINT + joinedIds)
+      );
+    });
+    return forkJoin(observables).pipe(map((results) => [].concat(...results)));
   }
 
   public getSearchTermEntryRelations(id: string): Observable<any> {
     return this.http.get<any>(
       this.backendService.createUrl(
-        TerminologyPaths.ENTRY_ENDPOINT + id + TerminologyPaths.RELATIONS_ENDPOINT
+        TerminologyPaths.ENTRY_ENDPOINT + '/' + id + TerminologyPaths.RELATIONS_ENDPOINT
       )
     );
   }
@@ -41,8 +41,10 @@ export class TerminologyApiService {
     return this.http.get<{ totalHits: number; results: any[] }>(parsedUrl);
   }
 
-  public getElasticSearchResultById(id: string): Observable<any> {
-    return this.http.get<any>(this.backendService.createUrl(TerminologyPaths.ENTRY_ENDPOINT + id));
+  public getEntryById(id: string): Observable<any> {
+    return this.http.get<any>(
+      this.backendService.createUrl(TerminologyPaths.ENTRY_ENDPOINT + '/' + id)
+    );
   }
 
   public getTerminologySystems() {

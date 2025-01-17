@@ -5,14 +5,14 @@ import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResu
 import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermTranslation';
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { SearchTermDetailsProviderService } from './SearchTermDetailsProvider.service';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
+import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchTermDetailsService {
   constructor(
-    private backendService: BackendService,
+    private terminologyApiService: TerminologyApiService,
     private searchTermDetailsProviderService: SearchTermDetailsProviderService
   ) {}
 
@@ -23,7 +23,7 @@ export class SearchTermDetailsService {
    * @returns An Observable emitting the details of the list item.
    */
   public getDetailsForListItem(id: string): Observable<SearchTermDetails> {
-    return this.backendService.getSearchTermEntryRelations(id).pipe(
+    return this.terminologyApiService.getSearchTermEntryRelations(id).pipe(
       map((response: any) => {
         const translations = this.mapToSearchTermTranslations(response.translations);
         const parents = this.mapToSearchTermRelatives(response.parents);

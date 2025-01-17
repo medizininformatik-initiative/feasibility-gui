@@ -1,6 +1,5 @@
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
@@ -16,6 +15,7 @@ import { StageProviderService } from 'src/app/service/Provider/StageProvider.ser
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
+import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class CreateCriterionService {
 
   constructor(
     private criterionHashService: CriterionHashService,
-    private backend: BackendService,
+    private terminologyApiService: TerminologyApiService,
     private listItemService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionProviderService: CriterionProviderService,
     private stageProviderService: StageProviderService,
@@ -41,7 +41,7 @@ export class CreateCriterionService {
    * due to url length
    */
   public getCriteriaProfileData(ids: Array<string>, clearIds: boolean = true) {
-    this.backend
+    this.terminologyApiService
       .getCriteriaProfileData(ids)
       .pipe(
         switchMap((responses: any[]) => {

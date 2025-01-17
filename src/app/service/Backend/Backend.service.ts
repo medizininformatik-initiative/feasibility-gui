@@ -7,7 +7,7 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 @Injectable({
   providedIn: 'root',
 })
-export class NewBackendService {
+export class BackendService {
   constructor(
     private config: AppConfigService,
     private feature: FeatureService,
@@ -15,14 +15,14 @@ export class NewBackendService {
   ) {}
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345';
 
-  public getToken() {
+  private getAccessToken() {
     return this.authStorage.getItem('access_token');
   }
 
   public getHeaders() {
     return new HttpHeaders()
       .set('Content-Type', 'application/json')
-      .set('Authorization', 'Bearer ' + this.getToken());
+      .set('Authorization', 'Bearer ' + this.getAccessToken());
   }
 
   public getLowerBoundaryPatient() {
@@ -45,7 +45,7 @@ export class NewBackendService {
     return url;
   }
 
-  obfuscateResult(result: number): string {
+  public obfuscateResult(result: number): string {
     if (result === 0) {
       return '0';
     } else {
@@ -57,5 +57,13 @@ export class NewBackendService {
         }
       }
     }
+  }
+
+  public chunkArray<T>(array: T[], chunkSize: number): T[][] {
+    const chunks = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      chunks.push(array.slice(i, i + chunkSize));
+    }
+    return chunks;
   }
 }

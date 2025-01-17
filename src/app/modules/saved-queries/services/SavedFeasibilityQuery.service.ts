@@ -1,18 +1,18 @@
-import { map, Observable, take } from 'rxjs';
+import { FeasibilityQueryApiService } from 'src/app/service/Backend/Api/FeasibilityQueryApi.service';
 import { Injectable } from '@angular/core';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
+import { map, Observable } from 'rxjs';
 import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTile/SavedFeasibilityQueryAdapter';
-import { BackendService } from '../../feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SavedFeasibilityQueryService {
-  constructor(private backendService: BackendService) {}
+  constructor(private feasibilityQueryApiService: FeasibilityQueryApiService) {}
 
   public loadSavedQueries(): Observable<InterfaceSavedQueryTile[]> {
-    return this.backendService
-      .loadSavedQueries()
+    return this.feasibilityQueryApiService
+      .getSavedFeasibilityQueries()
       .pipe(
         map((queries) =>
           queries
@@ -22,10 +22,10 @@ export class SavedFeasibilityQueryService {
       );
   }
   public deleteQuery(id: number): Observable<any> {
-    return this.backendService.deleteSavedQuery(id);
+    return this.feasibilityQueryApiService.deleteSavedQuery(id);
   }
 
   public loadQueryIntoEditor(id: number): Observable<any> {
-    return this.backendService.loadStructuredQuery(id);
+    return this.feasibilityQueryApiService.getStructuredQueryById(id);
   }
 }
