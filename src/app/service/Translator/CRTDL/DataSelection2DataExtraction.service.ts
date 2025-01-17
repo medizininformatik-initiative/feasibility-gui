@@ -98,8 +98,8 @@ export class DataSelection2DataExtraction {
       ? new DateFilter(
           profileDateFilter.getName(),
           profileDateFilter.getType(),
-          time.getBeforeDate(),
-          time.getAfterDate()
+          time.getAfterDate(),
+          time.getBeforeDate()
         )
       : undefined;
   }
