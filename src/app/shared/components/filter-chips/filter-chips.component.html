@@ -22,7 +22,12 @@
         [ngClass]="{ expanded: chip.expanded }"
         (click)="toggleExpanded(chip)"
       >
-        {{ chip.text | displayTranslation }}
+        <span *ngIf="isDisplayData(chip.text)">
+          {{ chip.text | displayTranslation }}
+        </span>
+        <span *ngIf="!isDisplayData(chip.text)">
+          {{ chip.text }}
+        </span>
       </div>
     </div>
   </div>

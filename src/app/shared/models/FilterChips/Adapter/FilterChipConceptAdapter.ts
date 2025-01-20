@@ -1,12 +1,12 @@
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { FilterChipBuilder } from '../FilterChipBuilder';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { InterfaceFilterChip } from '../InterfaceFilterChip';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { v4 as uuidv4 } from 'uuid';
-import { ConceptFilterChipService } from 'src/app/shared/service/FilterChips/Criterion/ConceptFilterChipService.service';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { v4 as uuidv4 } from 'uuid';
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 
 export class FilterChipConceptAdapter {
   public static conceptFilterChips: InterfaceFilterChip[] = [];
@@ -19,7 +19,7 @@ export class FilterChipConceptAdapter {
    * @returns An array of InterfaceFilterChip
    */
   public static adaptCodeableConcept(
-    selectedConcepts: TerminologyCode[] = [],
+    selectedConcepts: Concept[] = [],
     attributeCode?: TerminologyCode
   ): InterfaceFilterChip[] {
     this.resetFilterChips();
@@ -59,7 +59,7 @@ export class FilterChipConceptAdapter {
    * @param conceptFilter The ConceptFilter to retrieve concepts from
    * @returns A Set of TerminologyCode or null
    */
-  private static getSelectedConcepts(conceptFilter: ConceptFilter): Array<TerminologyCode> | null {
+  private static getSelectedConcepts(conceptFilter: ConceptFilter): Concept[] | null {
     return conceptFilter?.getSelectedConcepts() || null;
   }
 
@@ -69,9 +69,9 @@ export class FilterChipConceptAdapter {
    * @param selectedConcepts A Set of TerminologyCode
    * @param type The filter type
    */
-  private static buildFilterChips(selectedConcepts: Array<TerminologyCode>, type: string): void {
+  private static buildFilterChips(selectedConcepts: Concept[], type: string): void {
     const builder = new FilterChipBuilder(type);
-    Array.from(selectedConcepts).forEach((concept) => {
+    selectedConcepts.forEach((concept) => {
       this.createFilterChip(concept, builder);
     });
     this.conceptFilterChips.push(builder.buildFilterChip());
@@ -83,8 +83,8 @@ export class FilterChipConceptAdapter {
    * @param concept The TerminologyCode to use for creating the chip
    * @param builder The FilterChipBuilder instance
    */
-  private static createFilterChip(concept: TerminologyCode, builder: FilterChipBuilder): void {
-    const displayText = new DisplayData(
+  private static createFilterChip(concept: Concept, builder: FilterChipBuilder): void {
+    /*const displayText = new DisplayData(
       [concept.getDisplay()],
       [
         new Translation('de-DE', [concept.getDisplay()]),
@@ -95,8 +95,7 @@ export class FilterChipConceptAdapter {
     if (!displayText) {
       console.warn('Concept display text is undefined or null', concept);
       return;
-    }
-
-    builder.addData(uuidv4(), displayText);
+    }*/
+    builder.addData(uuidv4(), concept.getDisplay());
   }
 }
