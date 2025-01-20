@@ -17,6 +17,7 @@ import { StageProviderService } from 'src/app/service/Provider/StageProvider.ser
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
+import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfileProfile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,8 @@ export class CreateCriterionService {
     private listItemService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionProviderService: CriterionProviderService,
     private stageProviderService: StageProviderService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
+    private createDataSelectionProfileService: CreateDataSelectionProfileService
   ) {}
 
   public translateListItemsToCriterions() {
@@ -40,6 +42,9 @@ export class CreateCriterionService {
   /**
    * @todo check if ids exceed 50 --> if so send second request and so on
    * due to url length
+   *
+   * @todo Need to create an DisplayData class instance and within the Translation class instance
+   * @todo create the service for displayData and Translation
    */
   public getCriteriaProfileData(ids: Array<string>, clearIds: boolean = true) {
     this.backend
@@ -53,7 +58,7 @@ export class CreateCriterionService {
             const display = response.display;
             return new CriteriaProfileData(
               id,
-              display,
+              this.createDataSelectionProfileService.instantiateDisplayData(display), //display,
               response.uiProfile.timeRestrictionAllowed,
               this.mapAttributeDefinitions(response.uiProfile),
               context,

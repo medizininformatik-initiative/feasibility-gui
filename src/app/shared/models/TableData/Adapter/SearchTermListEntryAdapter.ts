@@ -23,7 +23,7 @@ export class SearchTermListEntryAdapter {
     const rows: InterfaceTableDataRow[] = listEntries.map((listEntry) => ({
       id: listEntry.getId(),
       data: [
-        listEntry.getName(),
+        listEntry.getDisplay(),
         SearchTermListEntryAdapter.changeAvailabilityDisplay(listEntry.getAvailability()),
         TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology()),
         listEntry.getTermcode(),
