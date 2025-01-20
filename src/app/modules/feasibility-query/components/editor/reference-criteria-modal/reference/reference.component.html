@@ -33,11 +33,11 @@
         <div
           matTooltipPosition="below"
           matTooltipShowDelay="300"
-          [matTooltip]="selectedReferences.termCode.getDisplay()"
+          [matTooltip]="selectedReferences.display | displayTranslation"
           fxFlex="50"
           class="display-part"
         >
-          {{ selectedReferences.termCode.getDisplay() }}
+          {{ selectedReferences.display | displayTranslation }}
         </div>
         <div fxFlex="50" class="display-part">
           {{ selectedReferences.termCode.getCode() }} ({{
