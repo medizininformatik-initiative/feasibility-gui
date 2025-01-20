@@ -107,7 +107,9 @@ export class DataSelection2DataExtraction {
   private translateTokenFilter(profileTokenFilter: ProfileTokenFilter): TokenFilter | undefined {
     const selectedTokens = profileTokenFilter.getSelectedTokens();
     if (selectedTokens.length > 0) {
-      const terminologyCodes = this.terminologyCodeTranslator.translateTermCodes(selectedTokens);
+      const terminologyCodes = this.terminologyCodeTranslator.translateTermCodes(
+        selectedTokens.map((token) => token.getTerminologyCode())
+      );
       return new TokenFilter(
         profileTokenFilter.getName(),
         profileTokenFilter.getType(),

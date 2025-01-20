@@ -1,10 +1,11 @@
 import { AbstractProfileFilter } from './AbstractProfileFilter';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 
 export class ProfileTokenFilter extends AbstractProfileFilter {
   private readonly id: string;
-  selectedTokens: TerminologyCode[] = [];
+  selectedTokens: Concept[] = [];
   valueSetUrls: string[];
   protected uiType: DataSelectionUIType = DataSelectionUIType.CODE;
 
@@ -13,7 +14,7 @@ export class ProfileTokenFilter extends AbstractProfileFilter {
     name: string,
     type: string,
     valueSetUrls: string[],
-    selectedTokens: TerminologyCode[]
+    selectedTokens: Concept[]
   ) {
     super(type, name);
     this.selectedTokens = selectedTokens;
@@ -28,18 +29,20 @@ export class ProfileTokenFilter extends AbstractProfileFilter {
     this.valueSetUrls = valueSetUrls;
   }
 
-  public getSelectedTokens(): TerminologyCode[] {
+  public getSelectedTokens(): Concept[] {
     return this.selectedTokens;
   }
 
-  public setSelectedTokens(selectedTokens: TerminologyCode[]) {
+  public setSelectedTokens(selectedTokens: Concept[]) {
     this.selectedTokens = selectedTokens;
   }
 
-  public setSelectedToken(selectedToken: TerminologyCode): TerminologyCode[] {
+  public setSelectedToken(selectedToken: Concept): Concept[] {
     if (this.selectedTokens.length > 0) {
       const index = this.selectedTokens.findIndex(
-        (preSelectedToken) => preSelectedToken.getCode() === selectedToken.getCode()
+        (preSelectedToken) =>
+          preSelectedToken.getTerminologyCode().getCode() ===
+          selectedToken.getTerminologyCode().getCode()
       );
       if (index !== -1) {
         this.selectedTokens[index] = selectedToken;

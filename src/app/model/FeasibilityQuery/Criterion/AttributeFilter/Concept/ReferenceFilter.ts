@@ -2,6 +2,7 @@ import { AbstractConceptFilter } from './AbstractConceptFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { ReferenceCriterion } from '../../ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Concept } from './Concept';
 
 /**
  * Class representing a ReferenceFilter.
@@ -22,7 +23,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
     id: string,
     allowedReferenceUri: string,
     selectedReferences: ReferenceCriterion[] = [],
-    selectedConcepts: Array<TerminologyCode>
+    selectedConcepts: Concept[]
   ) {
     super(id, selectedConcepts);
     this.selectedReferences = selectedReferences;
@@ -95,7 +96,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
     id: string,
     allowedReferenceUri: string,
     selectedReference: ReferenceCriterion[] = [],
-    selectedConcepts: Array<TerminologyCode>
+    selectedConcepts: Concept[]
   ): ReferenceFilter {
     return new ReferenceFilter(id, allowedReferenceUri, selectedReference, selectedConcepts);
   }

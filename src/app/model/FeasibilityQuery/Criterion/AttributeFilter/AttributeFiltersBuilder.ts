@@ -8,6 +8,7 @@ import { ReferenceCriterion } from '../ReferenceCriterion';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
 import { TerminologyCode } from '../../../Terminology/TerminologyCode';
 import { ValueFilter } from './ValueFilter';
+import { Concept } from './Concept/Concept';
 
 /**
  * Builder class for constructing instances of AbstractAttributeFilters and its subclasses.
@@ -116,11 +117,7 @@ export class AttributeFiltersBuilder {
     return new QuantityNotSet(allowedUnits, selectedUnit, precision);
   }
 
-  buildConceptFilter(
-    id: string,
-    allowedConceptUri: string,
-    selectedConcepts?: Array<TerminologyCode>
-  ) {
+  buildConceptFilter(id: string, allowedConceptUri: string, selectedConcepts?: Concept[]) {
     return new ConceptFilter(id, [allowedConceptUri], selectedConcepts);
   }
 
@@ -133,7 +130,7 @@ export class AttributeFiltersBuilder {
     id: string,
     allowedReferenceUri: string,
     selectedReference?: ReferenceCriterion[],
-    selectedConcepts?: Array<TerminologyCode>
+    selectedConcepts?: Concept[]
   ): ReferenceFilter {
     return new ReferenceFilter(id, allowedReferenceUri, selectedReference, selectedConcepts);
   }

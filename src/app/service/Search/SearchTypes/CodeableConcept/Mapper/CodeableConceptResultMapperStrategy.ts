@@ -5,6 +5,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 
 export class CodeableConceptResultMapperStrategy
   implements MappingStrategy<CodeableConceptResultListEntry, CodeableConceptResultList>
@@ -25,8 +26,7 @@ export class CodeableConceptResultMapperStrategy
         resultItem.termCode.version
       );
       return new CodeableConceptResultListEntry(
-        this.instantiateDisplayData(resultItem.display),
-        terminologyCode,
+        new Concept(this.instantiateDisplayData(resultItem.display), terminologyCode),
         uuidv4()
       );
     });
@@ -39,11 +39,10 @@ export class CodeableConceptResultMapperStrategy
    */
   public instantiateDisplayData(data: any) {
     return new DisplayData(
-      this.checkValuesForTypeString(data.original),
       data.translations?.map(
-        (translation) =>
-          new Translation(translation.language, this.checkValuesForTypeString(translation.value))
-      )
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      data.original
     );
   }
 
