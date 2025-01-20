@@ -1,4 +1,5 @@
 import { AbstractConceptFilter } from './AbstractConceptFilter';
+import { Concept } from './Concept';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
@@ -15,7 +16,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @param allowedConceptUri - The allowed concept URI.
    * @param selectedConcepts - The selected concepts.
    */
-  constructor(id: string, allowedConceptUrls: string[], selectedConcepts: Array<TerminologyCode>) {
+  constructor(id: string, allowedConceptUrls: string[], selectedConcepts: Array<Concept>) {
     super(id, selectedConcepts);
     this.allowedConceptUrls = allowedConceptUrls;
   }

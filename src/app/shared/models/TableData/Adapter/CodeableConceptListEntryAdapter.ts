@@ -16,6 +16,7 @@ export class CodeableConceptListEntryAdapter {
       (entry: CodeableConceptResultListEntry) => ({
         id: uuidv4(),
         data: [
+          entry.getDisplay(),
           entry.getTerminologyCode().getDisplay(),
           TerminologySystemDictionary.getNameByUrl(entry.getTerminologyCode().getSystem()) ??
             entry.getTerminologyCode().getSystem(),

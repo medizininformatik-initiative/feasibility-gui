@@ -3,6 +3,8 @@ import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntrie
 import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 export class CodeableConceptResultMapperStrategy
   implements MappingStrategy<CodeableConceptResultListEntry, CodeableConceptResultList>
@@ -17,12 +19,43 @@ export class CodeableConceptResultMapperStrategy
   public mapResponseToEntries(response: any): CodeableConceptResultListEntry[] {
     return response.map((resultItem: any) => {
       const terminologyCode = new TerminologyCode(
-        resultItem.code,
-        resultItem.display,
-        resultItem.system,
-        resultItem.version
+        resultItem.termCode.code,
+        resultItem.termCode.display,
+        resultItem.termCode.system,
+        resultItem.termCode.version
       );
-      return new CodeableConceptResultListEntry(terminologyCode, uuidv4());
+      return new CodeableConceptResultListEntry(
+        this.instantiateDisplayData(resultItem.display),
+        terminologyCode,
+        uuidv4()
+      );
     });
+  }
+
+  /**
+   *
+   * @param data @todo need to outsource this to a service
+   * @returns
+   */
+  public instantiateDisplayData(data: any) {
+    return new DisplayData(
+      this.checkValuesForTypeString(data.original),
+      data.translations?.map(
+        (translation) =>
+          new Translation(translation.language, this.checkValuesForTypeString(translation.value))
+      )
+    );
+  }
+
+  public checkValuesForTypeString(value: string | string[]): string[] {
+    if (typeof value == 'string') {
+      if (value.length > 0) {
+        return [value];
+      } else {
+        return [];
+      }
+    } else {
+      return value;
+    }
   }
 }
