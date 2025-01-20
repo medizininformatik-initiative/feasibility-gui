@@ -30,7 +30,7 @@ export abstract class AbstractConceptFilter {
    *
    * @returns A Set of selected concepts.
    */
-  getSelectedConcepts(): Array<Concept> {
+  public getSelectedConcepts(): Array<Concept> {
     return this.selectedConcepts;
   }
 
@@ -39,7 +39,7 @@ export abstract class AbstractConceptFilter {
    *
    * @param selectedConcepts - A Set of selected concepts.
    */
-  setSelectedConcepts(selectedConcepts: Array<Concept>): void {
+  public setSelectedConcepts(selectedConcepts: Array<Concept>): void {
     this.selectedConcepts = selectedConcepts;
   }
 
@@ -48,7 +48,7 @@ export abstract class AbstractConceptFilter {
    *
    * @returns True if the selected concepts set exists, otherwise false.
    */
-  isSelectedConceptSet(): boolean {
+  public isSelectedConceptSet(): boolean {
     return (
       this.selectedConcepts !== undefined &&
       this.selectedConcepts !== null &&
