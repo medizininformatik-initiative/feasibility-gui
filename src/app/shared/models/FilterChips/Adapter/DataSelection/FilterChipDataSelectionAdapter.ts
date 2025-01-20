@@ -1,21 +1,23 @@
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { CloneDisplayData } from 'src/app/model/Utilities/DisplayData/CloneDisplayData';
 import { FilterChipBuilder } from '../../FilterChipBuilder';
 import { InterfaceFilterChip } from '../../InterfaceFilterChip';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 
 export class FilterChipDataSelectionAdapter {
+  /**
+   * @todo check if deep copy of field.getDisplay() is needed
+   * @param fields
+   * @returns
+   */
   public static adaptFields(fields: ProfileFields[]): InterfaceFilterChip[] {
     const filterChips: InterfaceFilterChip[] = [];
 
-    fields.forEach((field) => {
+    fields.forEach((field: ProfileFields) => {
       if (field.getIsSelected() || field.getIsRequired()) {
         const type = field.getMustHave() ? 'required' : 'optional';
         const builder = new FilterChipBuilder(type);
 
-        builder.addData(
-          field.getId(),
-          new DisplayData(field.getDisplay().getOriginal(), field.getDisplay().getTranslations())
-        );
+        builder.addData(field.getId(), CloneDisplayData.deepCopyDisplayData(field.getDisplay()));
         filterChips.push(builder.buildFilterChip());
       }
 
