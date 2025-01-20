@@ -1,9 +1,11 @@
 export class Translation {
   private language: string;
+  private value: string;
   private values: string[];
 
-  constructor(language: string, values: string[]) {
+  constructor(language: string, value?: string, values?: string[]) {
     this.language = language;
+    this.value = value;
     this.values = values;
   }
 
@@ -13,6 +15,14 @@ export class Translation {
 
   public setLangugae(language: string): void {
     this.language = language;
+  }
+
+  public getValue(): string {
+    return this.value;
+  }
+
+  public setValue(value: string): void {
+    this.value = value;
   }
 
   public getValues(): string[] {
