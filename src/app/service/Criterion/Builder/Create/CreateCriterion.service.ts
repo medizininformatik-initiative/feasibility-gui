@@ -159,7 +159,6 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion: Criterion = criterionBuilder.buildCriterion();
-    console.log(criterion);
     this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
     this.stageProviderService.addCriterionToStage(criterion.getId());
     this.feasibilityQueryProviderService.checkCriteria();
@@ -234,7 +233,6 @@ export class CreateCriterionService {
   }
 
   public instantiateDisplayData(displayData: any): DisplayData {
-    console.log(displayData);
     return new DisplayData(
       displayData.translations.map(
         (translation) => new Translation(translation.language, translation.value)
