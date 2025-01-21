@@ -121,7 +121,7 @@ export class CreateDataSelectionProfileService {
     return new ProfileFields(
       node.id,
       this.instantiateDisplayData(node.display),
-      this.instantiateDisplayData(node.description),
+      this.instantiateDisplayDataForFields(node.description),
       children,
       node.isSelected || node.recommended || node.required || false,
       node.required,
@@ -131,12 +131,30 @@ export class CreateDataSelectionProfileService {
     );
   }
 
+  public instantiateDisplayDataForFields(displayData: any): DisplayData {
+    return new DisplayData(
+      displayData.translations.map(
+        (translation) =>
+          new Translation(
+            translation.language,
+            undefined,
+            this.checkValuesForTypeString(translation.value)
+          )
+      ),
+      undefined,
+      this.checkValuesForTypeString(displayData.original)
+    );
+  }
+
   public instantiateDisplayData(displayData: any): DisplayData {
     return new DisplayData(
       displayData.translations.map(
-        (translation) => new Translation(translation.language, '', translation.value)
+        (translation) =>
+          new Translation(
+            translation.language,
+            translation.value.length > 0 ? translation.value : undefined
+          )
       ),
-      '',
       displayData.original
     );
   }

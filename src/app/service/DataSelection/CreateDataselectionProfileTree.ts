@@ -59,11 +59,11 @@ export class DataSelectionProfileTreeService {
         (translation) =>
           new Translation(
             translation.language,
-            '',
+            undefined,
             this.checkValuesForTypeString(translation.value)
           )
       ),
-      '',
+      undefined,
       this.checkValuesForTypeString(displayData.original)
     );
   }
@@ -71,7 +71,11 @@ export class DataSelectionProfileTreeService {
   public instantiateDisplayDataForDisplay(displayData: any): DisplayData {
     return new DisplayData(
       displayData.translations.map(
-        (translation) => new Translation(translation.language, translation.value)
+        (translation) =>
+          new Translation(
+            translation.language,
+            translation.value.length > 0 ? translation.value : undefined
+          )
       ),
       displayData.original
     );

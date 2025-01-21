@@ -3,7 +3,7 @@ export class Translation {
   private value: string;
   private values: string[];
 
-  constructor(language: string, value?: string, values?: string[]) {
+  constructor(language: string, value: string = undefined, values?: string[]) {
     this.language = language;
     this.value = value;
     this.values = values;
