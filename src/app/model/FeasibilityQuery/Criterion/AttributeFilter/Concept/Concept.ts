@@ -1,9 +1,13 @@
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
+/**
+ * @todo the id of a concept needs to be set in the future --> can be system + code or uuid maybe
+ */
 export class Concept {
-  display: DisplayData;
-  terminologyCode: TerminologyCode;
+  private display: DisplayData;
+  private id: string;
+  private terminologyCode: TerminologyCode;
 
   constructor(display: DisplayData, terminologyCode: TerminologyCode) {
     this.display = display;
