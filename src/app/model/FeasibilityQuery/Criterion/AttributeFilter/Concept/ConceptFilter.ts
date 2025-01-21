@@ -26,7 +26,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    *
    * @returns The allowed concept URI.
    */
-  getAllowedConceptUrls(): string[] {
+  public getAllowedConceptUrls(): string[] {
     return this.allowedConceptUrls;
   }
 
@@ -35,7 +35,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    *
    * @param allowedConceptUri - The new allowed concept URI.
    */
-  setAllowedConceptUri(allowedConceptUrls: string[]): void {
+  public setAllowedConceptUri(allowedConceptUrls: string[]): void {
     this.allowedConceptUrls = allowedConceptUrls;
   }
 
@@ -44,7 +44,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    *
    * @returns The filter type.
    */
-  getType(): FilterTypes {
+  public getType(): FilterTypes {
     return this.type;
   }
 
@@ -53,7 +53,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    *
    * @param type - The new filter type.
    */
-  setType(type: FilterTypes): void {
+  public setType(type: FilterTypes): void {
     this.type = type;
   }
 
@@ -64,11 +64,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @param selectedConcepts - The selected concepts.
    * @returns The created ConceptFilter instance.
    */
-  static create(
-    id: string,
-    allowedConceptUri: string,
-    selectedConcepts: Array<TerminologyCode>
-  ): ConceptFilter {
+  static create(id: string, allowedConceptUri: string, selectedConcepts: Concept[]): ConceptFilter {
     return new ConceptFilter(id, [allowedConceptUri], selectedConcepts);
   }
 
@@ -77,10 +73,11 @@ export class ConceptFilter extends AbstractConceptFilter {
    *
    * @returns True if the selected concepts set exists, otherwise false.
    */
-  isSelectedConceptSet(): boolean {
+  public isSelectedConceptSet(): boolean {
     return this.selectedConcepts !== undefined && this.selectedConcepts !== null;
   }
-  hasSelectedConcepts(): boolean {
+
+  public hasSelectedConcepts(): boolean {
     return this.isSelectedConceptSet() && this.selectedConcepts.length > 0;
   }
 }
