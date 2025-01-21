@@ -41,11 +41,10 @@ export class CriteriaResultMapperStrategy extends AbstractResultMapper<
    */
   public instantiateDisplayData(data: any) {
     return new DisplayData(
-      this.checkValuesForTypeString(data.original),
       data.translations?.map(
-        (translation) =>
-          new Translation(translation.language, this.checkValuesForTypeString(translation.value))
-      )
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      data.original
     );
   }
 

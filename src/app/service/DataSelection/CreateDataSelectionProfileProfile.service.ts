@@ -1,18 +1,18 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
+import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
+import { concatMap, map, Observable } from 'rxjs';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
-import { Injectable } from '@angular/core';
-import { concatMap, map, Observable } from 'rxjs';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
-import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { v4 as uuidv4 } from 'uuid';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
+import { Injectable } from '@angular/core';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -131,17 +131,17 @@ export class CreateDataSelectionProfileService {
     );
   }
 
-  private instantiateDisplayData(data: any) {
+  public instantiateDisplayData(displayData: any): DisplayData {
     return new DisplayData(
-      this.checkValuesForTypeString(data.original),
-      data.translations?.map(
-        (translation) =>
-          new Translation(translation.language, this.checkValuesForTypeString(translation.value))
-      )
+      displayData.translations.map(
+        (translation) => new Translation(translation.language, '', translation.value)
+      ),
+      '',
+      displayData.original
     );
   }
 
-  private checkValuesForTypeString(value: string | string[]): string[] {
+  public checkValuesForTypeString(value: string | string[]): string[] {
     if (typeof value == 'string') {
       if (value.length > 0) {
         return [value];

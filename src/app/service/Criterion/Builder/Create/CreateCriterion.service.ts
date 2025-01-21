@@ -18,6 +18,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfileProfile.service';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +59,7 @@ export class CreateCriterionService {
             const display = response.display;
             return new CriteriaProfileData(
               id,
-              this.createDataSelectionProfileService.instantiateDisplayData(display), //display,
+              this.instantiateDisplayData(display), //display,
               response.uiProfile.timeRestrictionAllowed,
               this.mapAttributeDefinitions(response.uiProfile),
               context,
@@ -158,6 +159,7 @@ export class CreateCriterionService {
       criterionBuilder.withTimeRestriction(criterionBuilder.buildTimeRestriction());
     }
     const criterion: Criterion = criterionBuilder.buildCriterion();
+    console.log(criterion);
     this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
     this.stageProviderService.addCriterionToStage(criterion.getId());
     this.feasibilityQueryProviderService.checkCriteria();
@@ -229,5 +231,15 @@ export class CreateCriterionService {
     criterionBuilder.withValueFilters([
       criterionBuilder.buildValueFilter(valueDefinition, name, type),
     ]);
+  }
+
+  public instantiateDisplayData(displayData: any): DisplayData {
+    console.log(displayData);
+    return new DisplayData(
+      displayData.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      displayData.original
+    );
   }
 }
