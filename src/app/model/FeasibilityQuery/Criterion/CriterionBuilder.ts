@@ -198,7 +198,7 @@ export class CriterionBuilder {
    * @returns The created AttributeFilter instance.
    */
   buildAttributeFilter(
-    display: string,
+    display: DisplayData,
     filterType: FilterTypes,
     attributeDefinition: AttributeDefinitions,
     attributeCode?: TerminologyCode
@@ -245,7 +245,7 @@ export class CriterionBuilder {
 
   buildValueFilter(
     valueDefinition: ValueDefinition,
-    display: string,
+    display: DisplayData,
     filterType: FilterTypes
   ): ValueFilter {
     const valueFilterBuilder = new AttributeFiltersBuilder(

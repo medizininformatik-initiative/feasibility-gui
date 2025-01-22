@@ -3,6 +3,7 @@ import { ConceptFilter } from './Concept/ConceptFilter';
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 /**
  * Class representing a ValueFilter.
@@ -17,7 +18,7 @@ export class ValueFilter extends AbstractAttributeFilters {
    * @param optional - Whether the filter is optional or not. Default is false.
    */
   constructor(
-    display: string,
+    display: DisplayData,
     filter: FilterTypes,
     concept?: ConceptFilter,
     quantity?: AbstractQuantityFilter,
