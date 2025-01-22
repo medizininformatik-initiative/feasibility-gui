@@ -54,6 +54,7 @@ export class FilterChipConceptAdapter {
   }
 
   /**
+   * @todo AttributeCode will be extended in the future by displayData --> Need to fix this
    * Retrieves the selected concepts from the ConceptFilter.
    *
    * @param conceptFilter The ConceptFilter to retrieve concepts from
