@@ -6,6 +6,8 @@ import { FilterTypesService } from 'src/app/service/FilterTypes.service';
 import { Injectable } from '@angular/core';
 import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
 import { v4 as uuidv4 } from 'uuid';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,19 @@ import { v4 as uuidv4 } from 'uuid';
 export class AttributeDefinitionToAttributeFilterBuilderHelperService {
   constructor(private filterTypesService: FilterTypesService) {}
 
+  private emptyDisplayData = {
+    original: '',
+    translations: [
+      {
+        language: 'de-DE',
+        value: undefined,
+      },
+      {
+        language: 'en-US',
+        value: undefined,
+      },
+    ],
+  };
   /**
    * Initializes the AttributeFiltersBuilder with common properties from the value definition.
    *
@@ -22,8 +37,9 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
   public initializeFilterBuilder(
     abstractAttributeDefinition: AbstractAttributeDefinition
   ): AttributeFiltersBuilder {
+    console.log(abstractAttributeDefinition);
     const builder = new AttributeFiltersBuilder(
-      abstractAttributeDefinition.getName(),
+      this.instantiateEmptyDisplayData(abstractAttributeDefinition.getName()),
       abstractAttributeDefinition.getOptional(),
       abstractAttributeDefinition.getType()
     );
@@ -71,6 +87,15 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
         undefined,
         abstractAttributeDefinition.getPrecision()
       )
+    );
+  }
+
+  public instantiateEmptyDisplayData(displayData: string): DisplayData {
+    return new DisplayData(
+      this.emptyDisplayData.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      displayData
     );
   }
 }

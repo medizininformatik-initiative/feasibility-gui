@@ -26,14 +26,27 @@ import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 export class CreateCriterionService {
   ids: Set<string> = new Set<string>();
 
+  private emptyDisplayData = {
+    original: '',
+    translations: [
+      {
+        language: 'de-DE',
+        value: undefined,
+      },
+      {
+        language: 'en-US',
+        value: undefined,
+      },
+    ],
+  };
+
   constructor(
     private criterionHashService: CriterionHashService,
     private backend: BackendService,
     private listItemService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionProviderService: CriterionProviderService,
     private stageProviderService: StageProviderService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    private createDataSelectionProfileService: CreateDataSelectionProfileService
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService
   ) {}
 
   public translateListItemsToCriterions() {
@@ -207,10 +220,13 @@ export class CreateCriterionService {
     criterionBuilder: CriterionBuilder,
     attributeDefinition: AttributeDefinitions
   ): void {
-    const name = attributeDefinition.getName();
+    const name = this.instantiateEmptyDisplayData(
+      attributeDefinition.getAttributeCode().getDisplay()
+    );
     const attributeCode = attributeDefinition.getAttributeCode();
     const type = attributeDefinition.getType();
     const attributeDef = attributeDefinition;
+    console.log('attributeDefinition', attributeDefinition);
     criterionBuilder.withAttributeFilter(
       criterionBuilder.buildAttributeFilter(
         name,
@@ -225,11 +241,20 @@ export class CreateCriterionService {
     criterionBuilder: CriterionBuilder,
     valueDefinition: ValueDefinition
   ): void {
-    const name = valueDefinition.getName();
+    const name = this.instantiateEmptyDisplayData(valueDefinition.getName());
     const type = valueDefinition.getType();
     criterionBuilder.withValueFilters([
       criterionBuilder.buildValueFilter(valueDefinition, name, type),
     ]);
+  }
+
+  public instantiateEmptyDisplayData(displayData: string): DisplayData {
+    return new DisplayData(
+      this.emptyDisplayData.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      displayData
+    );
   }
 
   public instantiateDisplayData(displayData: any): DisplayData {
