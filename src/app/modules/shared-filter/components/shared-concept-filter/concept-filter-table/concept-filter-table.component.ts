@@ -1,17 +1,15 @@
-import { CloneTerminologyCode } from 'src/app/model/Utilities/CriterionCloner/TerminologyCode/CloneTerminologyCode';
+import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
-import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
-import { map, Observable, Subscription, switchMap } from 'rxjs';
-import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { SearchService } from 'src/app/service/Search/Search.service';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
+import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
+import { Observable, Subscription, switchMap } from 'rxjs';
+import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
+import { SearchService } from 'src/app/service/Search/Search.service';
+import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
+import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 
 @Component({
   selector: 'num-concept-filter-table',
@@ -82,7 +80,12 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
       this.selectedConceptProviderService.removeConcept(concept);
       this.clearSelectedConceptArray();
     } else {
-      this.selectedConcepts.push(concept);
+      const foundConcept = this.selectedConcepts.find(
+        (c) => c.getTerminologyCode().getCode() === concept.getTerminologyCode().getCode()
+      );
+      if (foundConcept === undefined) {
+        this.selectedConcepts.push(concept);
+      }
     }
   }
 
