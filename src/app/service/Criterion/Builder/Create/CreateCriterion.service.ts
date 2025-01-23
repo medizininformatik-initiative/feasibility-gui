@@ -5,6 +5,7 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionHashService } from '../../CriterionHash.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { FeasibilityQueryProviderService } from '../../../Provider/FeasibilityQueryProvider.service';
 import { finalize, of, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -16,12 +17,27 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CreateCriterionService {
   ids: Set<string> = new Set<string>();
+
+  private emptyDisplayData = {
+    original: '',
+    translations: [
+      {
+        language: 'de-DE',
+        value: undefined,
+      },
+      {
+        language: 'en-US',
+        value: undefined,
+      },
+    ],
+  };
 
   constructor(
     private criterionHashService: CriterionHashService,
@@ -39,6 +55,9 @@ export class CreateCriterionService {
   /**
    * @todo check if ids exceed 50 --> if so send second request and so on
    * due to url length
+   *
+   * @todo Need to create an DisplayData class instance and within the Translation class instance
+   * @todo create the service for displayData and Translation
    */
   public getCriteriaProfileData(ids: Array<string>, clearIds: boolean = true) {
     this.terminologyApiService
@@ -49,8 +68,10 @@ export class CreateCriterionService {
             const context = this.mapTerminologyCode(response.context);
             const termCodes = response.termCodes.map(this.mapTerminologyCode);
             const id = response.id;
+            const display = response.display;
             return new CriteriaProfileData(
               id,
+              this.instantiateDisplayData(display), //display,
               response.uiProfile.timeRestrictionAllowed,
               this.mapAttributeDefinitions(response.uiProfile),
               context,
@@ -159,7 +180,7 @@ export class CreateCriterionService {
     isReference: false
     context: TerminologyCode
     criterionHash: string
-    display: string
+    display: DisplayData
     isInvalid: boolean
     isRequiredFilterSet: boolean
     uniqueID: string
@@ -167,7 +188,7 @@ export class CreateCriterionService {
   } {
     const context = criteriaProfileData.getContext();
     const termCodes = criteriaProfileData.getTermCodes();
-    const display = criteriaProfileData.getTermCodes()[0].getDisplay();
+    const display = criteriaProfileData.getDisplay();
     const criterionHash = this.criterionHashService.createHash(context, termCodes[0]);
     const isFilterRequired = !this.setIsRequiredFilterSet(criteriaProfileData);
 
@@ -198,7 +219,9 @@ export class CreateCriterionService {
     criterionBuilder: CriterionBuilder,
     attributeDefinition: AttributeDefinitions
   ): void {
-    const name = attributeDefinition.getName();
+    const name = this.instantiateEmptyDisplayData(
+      attributeDefinition.getAttributeCode().getDisplay()
+    );
     const attributeCode = attributeDefinition.getAttributeCode();
     const type = attributeDefinition.getType();
     const attributeDef = attributeDefinition;
@@ -216,10 +239,28 @@ export class CreateCriterionService {
     criterionBuilder: CriterionBuilder,
     valueDefinition: ValueDefinition
   ): void {
-    const name = valueDefinition.getName();
+    const name = this.instantiateEmptyDisplayData(valueDefinition.getName());
     const type = valueDefinition.getType();
     criterionBuilder.withValueFilters([
       criterionBuilder.buildValueFilter(valueDefinition, name, type),
     ]);
+  }
+
+  public instantiateEmptyDisplayData(displayData: string): DisplayData {
+    return new DisplayData(
+      this.emptyDisplayData.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      displayData
+    );
+  }
+
+  public instantiateDisplayData(displayData: any): DisplayData {
+    return new DisplayData(
+      displayData.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      displayData.original
+    );
   }
 }

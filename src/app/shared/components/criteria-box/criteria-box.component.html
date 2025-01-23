@@ -8,10 +8,10 @@
   <div class="content">
     <div
       matTooltipPosition="below"
-      [matTooltip]="criterion.getTermCodes()[0].getDisplay()"
+      [matTooltip]="criterion.getDisplay() | displayTranslation"
       class="title-section"
     >
-      {{ criterion.getTermCodes()[0].getDisplay() }}
+      {{ criterion.getDisplay() | displayTranslation }}
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
       <div class="info-item">

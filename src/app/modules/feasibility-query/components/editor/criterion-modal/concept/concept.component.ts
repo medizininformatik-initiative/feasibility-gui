@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,7 +29,7 @@ export class ConceptComponent implements OnInit {
     }
   }
 
-  public emitConceptFilter(selectedConcepts: TerminologyCode[]) {
+  public emitConceptFilter(selectedConcepts: Concept[]) {
     const newConceptFilter = new ConceptFilter(
       uuidv4(),
       this.conceptFilter.getAllowedConceptUrls(),

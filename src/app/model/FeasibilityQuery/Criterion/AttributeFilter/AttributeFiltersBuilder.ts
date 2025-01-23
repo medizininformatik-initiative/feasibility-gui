@@ -8,12 +8,14 @@ import { ReferenceCriterion } from '../ReferenceCriterion';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
 import { TerminologyCode } from '../../../Terminology/TerminologyCode';
 import { ValueFilter } from './ValueFilter';
+import { Concept } from './Concept/Concept';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 /**
  * Builder class for constructing instances of AbstractAttributeFilters and its subclasses.
  */
 export class AttributeFiltersBuilder {
-  private display: string;
+  private display: DisplayData;
   private optional = false;
   private concept?: ConceptFilter;
   private reference?: ReferenceFilter;
@@ -21,7 +23,7 @@ export class AttributeFiltersBuilder {
   private attributeCode?: TerminologyCode;
   private filterType: FilterTypes;
 
-  constructor(display: string, optional: boolean, filterType: FilterTypes) {
+  constructor(display: DisplayData, optional: boolean, filterType: FilterTypes) {
     this.display = display;
     this.optional = optional;
     this.filterType = filterType;
@@ -116,11 +118,7 @@ export class AttributeFiltersBuilder {
     return new QuantityNotSet(allowedUnits, selectedUnit, precision);
   }
 
-  buildConceptFilter(
-    id: string,
-    allowedConceptUri: string,
-    selectedConcepts?: Array<TerminologyCode>
-  ) {
+  buildConceptFilter(id: string, allowedConceptUri: string, selectedConcepts?: Concept[]) {
     return new ConceptFilter(id, [allowedConceptUri], selectedConcepts);
   }
 
@@ -133,7 +131,7 @@ export class AttributeFiltersBuilder {
     id: string,
     allowedReferenceUri: string,
     selectedReference?: ReferenceCriterion[],
-    selectedConcepts?: Array<TerminologyCode>
+    selectedConcepts?: Concept[]
   ): ReferenceFilter {
     return new ReferenceFilter(id, allowedReferenceUri, selectedReference, selectedConcepts);
   }

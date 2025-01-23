@@ -17,12 +17,29 @@ import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criteri
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 import { CriterionValidationService } from '../../Criterion/CriterionValidation.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2UIQueryTranslatorService {
   private hashMap: Map<string, AbstractCriterion> = new Map();
+
+  private emptyDisplayData = {
+    original: 'test',
+    translations: [
+      {
+        language: 'de-DE',
+        value: undefined,
+      },
+      {
+        language: 'en-US',
+        value: undefined,
+      },
+    ],
+  };
 
   constructor(
     private createCriterionService: NewCreateCriterionService,
@@ -153,10 +170,15 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private handleConceptFilter(foundAttributeFilter, structuredQueryAttributeFilter) {
-    const selectedConcepts: TerminologyCode[] = structuredQueryAttributeFilter.selectedConcepts.map(
-      (concept) => new TerminologyCode(concept.code, concept.display, concept.system)
+    const selectedConcepts: Concept[] = structuredQueryAttributeFilter.selectedConcepts.map(
+      (concept) => {
+        console.log(concept);
+        const terminologyCode = new TerminologyCode(concept.code, concept.display, concept.system);
+        return new Concept(this.instantiateDisplayData(concept.display), terminologyCode);
+      }
     );
     foundAttributeFilter.getConcept().setSelectedConcepts(selectedConcepts);
+    console.log(foundAttributeFilter);
   }
 
   private handleQuantityFilter(foundAttributeFilter, structuredQueryAttributeFilter) {
@@ -288,5 +310,31 @@ export class StructuredQuery2UIQueryTranslatorService {
       });
     });
     return result;
+  }
+
+  /**
+   *
+   * @param data @todo need to outsource this to a service
+   * @returns
+   */
+  public instantiateDisplayData(display: string) {
+    return new DisplayData(
+      this.emptyDisplayData.translations?.map(
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      display ?? 'test'
+    );
+  }
+
+  public checkValuesForTypeString(value: string | string[]): string[] {
+    if (typeof value == 'string') {
+      if (value.length > 0) {
+        return [value];
+      } else {
+        return [];
+      }
+    } else {
+      return value;
+    }
   }
 }

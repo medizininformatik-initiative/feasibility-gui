@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
-import { SearchService } from 'src/app/service/Search/Search.service';
-import { map, switchMap, switchMapTo, take } from 'rxjs';
 import { CreateCriterionService } from '../../../../service/Criterion/Builder/Create/CreateCriterion.service';
-import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
-import { TableRowDetailsService } from '../../Table/TableRowDetails.service';
+import { Injectable } from '@angular/core';
+import { Subject, switchMap, take, takeUntil } from 'rxjs';
+import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 
 @Injectable({
@@ -13,12 +11,12 @@ export class ListItemDetailsMenuItemsFunctionsService {
   constructor(
     private searchService: SearchService,
     private criterionService: CreateCriterionService,
-    private test: SearchTermDetailsService
+    private searchTermDetailsService: SearchTermDetailsService
   ) {}
 
   public showCriteriaInResultList(id: string) {
     this.searchService.searchCriteriaById(id).pipe(take(1)).subscribe();
-    this.test.getDetailsForListItem(id).subscribe();
+    this.searchTermDetailsService.getDetailsForListItem(id).pipe(take(1)).subscribe();
   }
 
   public addToStage(id: string) {
@@ -29,9 +27,14 @@ export class ListItemDetailsMenuItemsFunctionsService {
     this.searchService
       .searchCriteriaById(id)
       .pipe(
-        switchMap((criteria) => {
-          this.searchService.setActiveCriteriaSearchTerm(criteria.getResults()[0].getName());
-          return this.searchService.searchCriteria(criteria.getResults()[0].getName());
+        take(1),
+        switchMap((searchTermResultList) => {
+          this.searchService.setActiveCriteriaSearchTerm(
+            searchTermResultList.getResults()[0].getDisplay().getOriginal()
+          );
+          return this.searchService.searchCriteria(
+            searchTermResultList.getResults()[0].getDisplay().getOriginal()
+          );
         })
       )
       .subscribe();

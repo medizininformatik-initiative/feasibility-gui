@@ -1,6 +1,8 @@
 import { AbstractResultMapper } from '../../../Abstract/AbstractResultMapper';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 export class CriteriaResultMapperStrategy extends AbstractResultMapper<
   SearchTermListEntry,
   SearchTermResultList
@@ -10,6 +12,12 @@ export class CriteriaResultMapperStrategy extends AbstractResultMapper<
     return new SearchTermResultList(response.totalHits, listItems);
   }
 
+  /**
+   *
+   * @param results
+   * @returns
+   * @todo create Instance of displayData and Translation
+   */
   public mapResponseToEntries(results: any[]): SearchTermListEntry[] {
     return results.map(
       (resultItem: any) =>
@@ -19,10 +27,36 @@ export class CriteriaResultMapperStrategy extends AbstractResultMapper<
           resultItem.terminology,
           resultItem.termcode,
           resultItem.kdsModule,
-          resultItem.name,
+          this.instantiateDisplayData(resultItem.display),
           resultItem.id,
           resultItem.context
         )
     );
+  }
+
+  /**
+   *
+   * @param data @todo need to outsource this to a service
+   * @returns
+   */
+  public instantiateDisplayData(data: any) {
+    return new DisplayData(
+      data.translations?.map(
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      data.original
+    );
+  }
+
+  public checkValuesForTypeString(value: string | string[]): string[] {
+    if (typeof value == 'string') {
+      if (value.length > 0) {
+        return [value];
+      } else {
+        return [];
+      }
+    } else {
+      return value;
+    }
   }
 }

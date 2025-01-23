@@ -10,6 +10,8 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
 import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
@@ -57,9 +59,11 @@ export class CriteriaProfileDataService {
         const context = this.mapTerminologyCode(response.context);
         const termCodes = response.termCodes.map(this.mapTerminologyCode);
         const id = response.id;
+        const display = response.display;
 
         return new CriteriaProfileData(
           id,
+          this.instantiateDisplayData(display), //display,
           response.uiProfile.timeRestrictionAllowed,
           this.mapAttributeDefinitions(response.uiProfile),
           context,
@@ -88,5 +92,14 @@ export class CriteriaProfileDataService {
 
   private mapTerminologyCode(termCode: any): TerminologyCode {
     return new TerminologyCode(termCode.code, termCode.display, termCode.system, termCode.version);
+  }
+
+  public instantiateDisplayData(displayData: any): DisplayData {
+    return new DisplayData(
+      displayData.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      displayData.original
+    );
   }
 }

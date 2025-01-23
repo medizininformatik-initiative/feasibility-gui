@@ -40,10 +40,13 @@ export class SelectedDataSelectionProfileFieldsService {
 
   private instantiateDisplayData(displayData: DisplayData): DisplayData {
     return new DisplayData(
-      displayData.getOriginal(),
       displayData
         .getTranslations()
-        .map((translation) => new Translation(translation.getLanguage(), translation.getValues()))
+        .map(
+          (translation) => new Translation(translation.getLanguage(), '', translation.getValues())
+        ),
+      '',
+      displayData.getOriginals()
     );
   }
 

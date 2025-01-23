@@ -38,8 +38,8 @@ export class DataSelectionProfileTreeService {
           new DataSelectionProfileTreeNode(
             child.id,
             child.name,
-            this.instantiateDisplayData(child.display),
-            this.instantiateDisplayData(child.fields),
+            this.instantiateDisplayDataForDisplay(child.display),
+            this.instantiateDisplayDataForFields(child.fields),
             child.module,
             child.url,
             child.leaf,
@@ -49,16 +49,35 @@ export class DataSelectionProfileTreeService {
         );
       });
     }
+
     return result;
   }
 
-  private instantiateDisplayData(data: any) {
+  public instantiateDisplayDataForFields(displayData: any): DisplayData {
     return new DisplayData(
-      this.checkValuesForTypeString(data.original),
-      data.translations?.map(
+      displayData.translations.map(
         (translation) =>
-          new Translation(translation.language, this.checkValuesForTypeString(translation.value))
-      )
+          new Translation(
+            translation.language,
+            undefined,
+            this.checkValuesForTypeString(translation.value)
+          )
+      ),
+      undefined,
+      this.checkValuesForTypeString(displayData.original)
+    );
+  }
+
+  public instantiateDisplayDataForDisplay(displayData: any): DisplayData {
+    return new DisplayData(
+      displayData.translations.map(
+        (translation) =>
+          new Translation(
+            translation.language,
+            translation.value.length > 0 ? translation.value : undefined
+          )
+      ),
+      displayData.original
     );
   }
 

@@ -25,7 +25,7 @@ export class SearchTermDetailsService {
   public getDetailsForListItem(id: string): Observable<SearchTermDetails> {
     return this.terminologyApiService.getSearchTermEntryRelations(id).pipe(
       map((response: any) => {
-        const translations = this.mapToSearchTermTranslations(response.translations);
+        const translations = this.mapToSearchTermTranslations(response.display.translations);
         const parents = this.mapToSearchTermRelatives(response.parents);
         const children = this.mapToSearchTermRelatives(response.children);
         const relatedTerms = this.mapToSearchTermRelatives(response.relatedTerms);

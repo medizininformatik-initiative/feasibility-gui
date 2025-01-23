@@ -1,3 +1,4 @@
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { AbstractListEntry } from './AbstractListEntry';
 
 /**
@@ -12,7 +13,7 @@ export class SearchTermListEntry extends AbstractListEntry {
   private termcode: string;
   private kdsModule: string;
   private context: string;
-  private name: string;
+  private display: DisplayData;
   /**
    *
    * @param availability
@@ -20,7 +21,7 @@ export class SearchTermListEntry extends AbstractListEntry {
    * @param terminology
    * @param termcode
    * @param kdsModule
-   * @param name
+   * @param display
    * @param id
    */
   constructor(
@@ -29,7 +30,7 @@ export class SearchTermListEntry extends AbstractListEntry {
     terminology: string,
     termcode: string,
     kdsModule: string,
-    name: string,
+    display: DisplayData,
     id: string,
     context: string
   ) {
@@ -39,7 +40,7 @@ export class SearchTermListEntry extends AbstractListEntry {
     this.termcode = termcode;
     this.kdsModule = kdsModule;
     this.selectable = selectable;
-    this.name = name;
+    this.display = display;
     this.context = context;
   }
 
@@ -131,11 +132,11 @@ export class SearchTermListEntry extends AbstractListEntry {
     this.kdsModule = kdsModule;
   }
 
-  getName(): string {
-    return this.name;
+  getDisplay(): DisplayData {
+    return this.display;
   }
-  setName(name: string): void {
-    this.name = name;
+  setDisplay(display: DisplayData): void {
+    this.display = display;
   }
 
   getContext(): string {

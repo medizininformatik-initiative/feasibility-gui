@@ -186,13 +186,15 @@ export class UIQuery2StructuredQueryService {
   ): ConceptAttributeFilter {
     const conceptAttributeFilter = new ConceptAttributeFilter(
       attributeCode,
-      Array.from(conceptFilter.getSelectedConcepts())
+      conceptFilter.getSelectedConcepts().map((concept) => concept.getTerminologyCode())
     );
     return conceptAttributeFilter;
   }
 
   private createConceptValueFilter(valueFilter: ConceptFilter): ConceptValueFilter | undefined {
-    return new ConceptValueFilter(Array.from(valueFilter.getSelectedConcepts()));
+    return new ConceptValueFilter(
+      valueFilter.getSelectedConcepts().map((concept) => concept.getTerminologyCode())
+    );
   }
 
   private createReferences(

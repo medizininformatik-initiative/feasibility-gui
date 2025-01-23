@@ -67,10 +67,11 @@ export class FilterChipQuantityAdapter {
    */
   private static createFilterChip(type: string, text: string): InterfaceFilterChip {
     const builder = new FilterChipBuilder(type);
-    builder.addData(uuidv4(), this.createDisplayDataInstance(text));
+    builder.addData(uuidv4(), text);
     return builder.buildFilterChip();
   }
 
+  /*
   private static createDisplayDataInstance(text: string) {
     const german = 'de-DE';
     const english = 'en-US';
@@ -79,4 +80,5 @@ export class FilterChipQuantityAdapter {
       [new Translation(german, [text]), new Translation(english, [text])]
     );
   }
+    */
 }

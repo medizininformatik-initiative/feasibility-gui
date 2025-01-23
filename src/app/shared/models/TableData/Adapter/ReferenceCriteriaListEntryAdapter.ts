@@ -14,6 +14,7 @@ export class ReferenceCriteriaListEntryAdapter {
     const rows: InterfaceTableDataRow[] = listEntries.map((listEntry) => ({
       id: listEntry.getId(),
       data: [
+        listEntry.getDisplay(),
         listEntry.getTerminologyCode().getDisplay(),
         TerminologySystemDictionary.getNameByUrl(listEntry.getTerminologyCode().getSystem()),
       ],

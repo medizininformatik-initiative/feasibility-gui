@@ -1,18 +1,18 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
+import { concatMap, map, Observable } from 'rxjs';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
-import { Injectable } from '@angular/core';
-import { concatMap, map, Observable } from 'rxjs';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
-import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { v4 as uuidv4 } from 'uuid';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { Injectable } from '@angular/core';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -120,7 +120,7 @@ export class CreateDataSelectionProfileService {
     return new ProfileFields(
       node.id,
       this.instantiateDisplayData(node.display),
-      this.instantiateDisplayData(node.description),
+      this.instantiateDisplayDataForFields(node.description),
       children,
       node.isSelected || node.recommended || node.required || false,
       node.required,
@@ -130,17 +130,35 @@ export class CreateDataSelectionProfileService {
     );
   }
 
-  private instantiateDisplayData(data: any) {
+  public instantiateDisplayDataForFields(displayData: any): DisplayData {
     return new DisplayData(
-      this.checkValuesForTypeString(data.original),
-      data.translations?.map(
+      displayData.translations.map(
         (translation) =>
-          new Translation(translation.language, this.checkValuesForTypeString(translation.value))
-      )
+          new Translation(
+            translation.language,
+            undefined,
+            this.checkValuesForTypeString(translation.value)
+          )
+      ),
+      undefined,
+      this.checkValuesForTypeString(displayData.original)
     );
   }
 
-  private checkValuesForTypeString(value: string | string[]): string[] {
+  public instantiateDisplayData(displayData: any): DisplayData {
+    return new DisplayData(
+      displayData.translations.map(
+        (translation) =>
+          new Translation(
+            translation.language,
+            translation.value.length > 0 ? translation.value : undefined
+          )
+      ),
+      displayData.original
+    );
+  }
+
+  public checkValuesForTypeString(value: string | string[]): string[] {
     if (typeof value == 'string') {
       if (value.length > 0) {
         return [value];
