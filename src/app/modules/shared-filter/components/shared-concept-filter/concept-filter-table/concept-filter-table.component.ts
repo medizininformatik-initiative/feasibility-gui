@@ -76,6 +76,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   public addSelectedRow(item: InterfaceTableDataRow) {
     const entry = item.originalEntry as CodeableConceptResultListEntry;
     const concept = CloneConcept.deepCopyConcept(entry.getConcept());
+
     if (this.selectedConceptProviderService.findConcept(concept)) {
       this.selectedConceptProviderService.removeConcept(concept);
       this.clearSelectedConceptArray();
@@ -83,7 +84,12 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
       const foundConcept = this.selectedConcepts.find(
         (c) => c.getTerminologyCode().getCode() === concept.getTerminologyCode().getCode()
       );
-      if (foundConcept === undefined) {
+
+      if (foundConcept) {
+        this.selectedConcepts = this.selectedConcepts.filter(
+          (c) => c.getTerminologyCode().getCode() !== concept.getTerminologyCode().getCode()
+        );
+      } else {
         this.selectedConcepts.push(concept);
       }
     }
