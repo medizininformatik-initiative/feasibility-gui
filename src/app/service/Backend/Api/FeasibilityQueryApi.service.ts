@@ -18,7 +18,6 @@ export class FeasibilityQueryApiService {
    * @returns A string contained in the header response which is the location of the query result
    */
   public postStructuredQuery(structuredQuery: StructuredQuery): Observable<any> {
-    console.log(structuredQuery);
     return this.http.post<any>(
       this.backendService.createUrl(FeasibilityQueryPaths.EXECUTE_QUERY),
       structuredQuery,
