@@ -1,14 +1,22 @@
+import { BackendService } from '../Backend.service';
+import { ChunkedRequestService } from './ChunkedRequest.service';
+import { CodeableConceptPaths } from '../Paths/CodeableConceptPaths';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BackendService } from '../Backend.service';
-import { forkJoin, map, Observable } from 'rxjs';
 import { TerminologyPaths } from '../Paths/TerminologyPaths';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TerminologyApiService {
-  constructor(private backendService: BackendService, private http: HttpClient) {}
+  private readonly chunkSize = 50;
+
+  constructor(
+    private backendService: BackendService,
+    private http: HttpClient,
+    private chunkedRequestService: ChunkedRequestService
+  ) {}
 
   public getSearchFilter(): Observable<Array<any>> {
     return this.http.get<any>(
@@ -17,15 +25,10 @@ export class TerminologyApiService {
   }
 
   public getCriteriaProfileData(commaSeparatedIds: string[]): Observable<Array<any>> {
-    const chunkSize = 50;
-    const chunks = this.backendService.chunkArray(commaSeparatedIds, chunkSize);
-    const observables = chunks.map((chunk) => {
-      const joinedIds = chunk.join(',');
-      return this.http.get<Array<any>>(
-        this.backendService.createUrl(TerminologyPaths.CRITERIA_PROFILE_ENDPOINT + joinedIds)
-      );
-    });
-    return forkJoin(observables).pipe(map((results) => [].concat(...results)));
+    return this.chunkedRequestService.getChunkedRequest(
+      commaSeparatedIds,
+      TerminologyPaths.CRITERIA_PROFILE_ENDPOINT
+    );
   }
 
   public getSearchTermEntryRelations(id: string): Observable<any> {
@@ -39,6 +42,13 @@ export class TerminologyApiService {
   public getElasticSearchResults(url: string): Observable<{ totalHits: number; results: any[] }> {
     const parsedUrl = this.backendService.createUrl(url);
     return this.http.get<{ totalHits: number; results: any[] }>(parsedUrl);
+  }
+
+  public getCodeableConceptsById(commaSeparatedIds: string[]): Observable<Array<any>> {
+    return this.chunkedRequestService.getChunkedRequest(
+      commaSeparatedIds,
+      CodeableConceptPaths.ENTRY_CONCEPT_ENDPOINT
+    );
   }
 
   public getEntryById(id: string): Observable<any> {

@@ -42,11 +42,7 @@ export class CreateDataSelectionProfileService {
         observer.complete();
       });
     }
-
-    const commaSeparatedIds: string = profilesToFetch.join(',');
-    this.referencedProfiles = [];
-
-    return this.dataSelectionApiService.getDataSelectionProfileData(commaSeparatedIds).pipe(
+    return this.dataSelectionApiService.getDataSelectionProfileData(profilesToFetch).pipe(
       map((data: any[]) =>
         data.map((item: any) => {
           const fields = this.mapFields(item.fields);
