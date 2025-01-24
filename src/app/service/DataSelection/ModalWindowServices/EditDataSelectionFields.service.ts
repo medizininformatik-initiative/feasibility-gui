@@ -17,6 +17,7 @@ export class EditDataSelectionFields implements OnDestroy {
 
   public ediDataSelectionFields(url: string) {
     const dialogRef = this.dialog.open(EditFieldsModalComponent, {
+      disableClose: true,
       data: url,
     });
 

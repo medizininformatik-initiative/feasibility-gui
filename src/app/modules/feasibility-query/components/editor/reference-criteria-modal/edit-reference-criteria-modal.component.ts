@@ -1,5 +1,5 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { CreateReferenceCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateReferenceCriterion.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
@@ -28,6 +28,10 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
     private referenceCriterionProvider: ReferenceCriterionProviderService,
     private criterionValidationService: CriterionValidationService
   ) {}
+
+  @HostListener('window:keyup.esc') onKeyUp() {
+    this.dialogRef.close();
+  }
 
   ngOnInit() {
     this.criterion = this.data.criterion;

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileProfileNodeAdapter';
@@ -39,6 +39,10 @@ export class EditFieldsModalComponent implements OnInit {
     private selectedDataSelectionProfileFieldsService: SelectedDataSelectionProfileFieldsService,
     private createDataSelectionProfileService: CreateDataSelectionProfileService
   ) {}
+
+  @HostListener('window:keyup.esc') onKeyUp() {
+    this.dialogRef.close();
+  }
 
   ngOnInit() {
     const dataSelectionProfile =

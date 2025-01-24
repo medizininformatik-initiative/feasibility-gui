@@ -1,7 +1,7 @@
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -31,6 +31,10 @@ export class EditCriterionModalComponent implements OnInit {
     private criterionProvider: CriterionProviderService,
     private criterionValidationService: CriterionValidationService
   ) {}
+
+  @HostListener('window:keyup.esc') onKeyUp() {
+    this.dialogRef.close();
+  }
 
   ngOnInit() {
     this.criterion = this.data.criterion;

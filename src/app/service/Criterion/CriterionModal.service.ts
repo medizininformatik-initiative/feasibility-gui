@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { HostListener, Injectable, OnDestroy } from '@angular/core';
 import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../Provider/CriterionProvider.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,6 +26,7 @@ export class CriterionModalService implements OnDestroy {
 
   public openCriterionModal(criterion: AbstractCriterion) {
     const dialogRef = this.dialog.open(EditCriterionModalComponent, {
+      disableClose: true,
       data: { criterion },
     });
     this.dialogSubscription = dialogRef
@@ -43,6 +44,7 @@ export class CriterionModalService implements OnDestroy {
 
   public openReferenceCriteriaModal(criterion: Criterion) {
     const dialogRef = this.dialog.open(EditReferenceCriteriaModalComponent, {
+      disableClose: true,
       data: { criterion },
     });
     this.dialogSubscription = dialogRef.afterClosed().subscribe((updatedCriterion: Criterion) => {

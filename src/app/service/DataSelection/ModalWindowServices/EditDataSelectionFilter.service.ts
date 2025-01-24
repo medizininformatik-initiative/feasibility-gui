@@ -17,6 +17,7 @@ export class EditDataSelectionFilter implements OnDestroy {
 
   public ediDataSelectionFilter(url: string) {
     const dialogRef = this.dialog.open(EditFilterModalComponent, {
+      disableClose: true,
       data: url,
     });
 
