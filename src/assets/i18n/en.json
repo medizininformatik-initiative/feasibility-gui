@@ -98,6 +98,8 @@
       }
   },
     "DATASELECTION": {
+      "REQUIRED":"Required",
+      "OPTIONAL":"Optional",
       "HEADER": "Feature Selection",
       "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (CDS) modules. You can also filter data points, e.g. if only certain laboratory values are of interest, and you have the option of specifying which data points are absolutely necessary for your research question.",
       "DATASELECTION": "Feature Selection",
@@ -136,8 +138,7 @@
         "LABEL": "Selected criteria",
         "REFERENCE": "only if referenced"
       },
-      "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal.",
-      "REQUIRED": "required from all sites"
+      "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
   },
   "DATAQUERY": {
     "COHORT": {

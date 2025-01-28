@@ -14,7 +14,7 @@ export class FilterChipDataSelectionAdapter {
 
     fields.forEach((field: ProfileFields) => {
       if (field.getIsSelected() || field.getIsRequired()) {
-        const type = field.getMustHave() ? 'required' : 'optional';
+        const type = field.getMustHave() ? 'DATASELECTION.REQUIRED' : 'DATASELECTION.OPTIONAL';
         const builder = new FilterChipBuilder(type);
 
         builder.addData(field.getId(), CloneDisplayData.deepCopyDisplayData(field.getDisplay()));
