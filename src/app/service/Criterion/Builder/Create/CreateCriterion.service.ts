@@ -108,7 +108,7 @@ export class CreateCriterionService {
     return uiProfile.attributeDefinitions.map(
       (attributeDefinition) =>
         new AttributeDefinitions(
-          uiProfile.name,
+          this.instantiateDisplayData(attributeDefinition.display),
           attributeDefinition.type,
           attributeDefinition.optional,
           attributeDefinition.allowedUnits?.map(
@@ -128,7 +128,7 @@ export class CreateCriterionService {
     if (uiProfile.valueDefinition) {
       return [
         new ValueDefinition(
-          uiProfile.name,
+          this.instantiateDisplayData(uiProfile.valueDefinition.display),
           uiProfile.valueDefinition.type,
           uiProfile.valueDefinition.optional,
           uiProfile.valueDefinition.allowedUnits?.map(
@@ -219,15 +219,13 @@ export class CreateCriterionService {
     criterionBuilder: CriterionBuilder,
     attributeDefinition: AttributeDefinitions
   ): void {
-    const name = this.instantiateEmptyDisplayData(
-      attributeDefinition.getAttributeCode().getDisplay()
-    );
+    const display = attributeDefinition.getDisplay();
     const attributeCode = attributeDefinition.getAttributeCode();
     const type = attributeDefinition.getType();
     const attributeDef = attributeDefinition;
     criterionBuilder.withAttributeFilter(
       criterionBuilder.buildAttributeFilter(
-        name,
+        display,
         type,
         attributeDef,
         attributeCode
@@ -239,20 +237,11 @@ export class CreateCriterionService {
     criterionBuilder: CriterionBuilder,
     valueDefinition: ValueDefinition
   ): void {
-    const name = this.instantiateEmptyDisplayData(valueDefinition.getName());
+    const display = valueDefinition.getDisplay();
     const type = valueDefinition.getType();
     criterionBuilder.withValueFilters([
-      criterionBuilder.buildValueFilter(valueDefinition, name, type),
+      criterionBuilder.buildValueFilter(valueDefinition, display, type),
     ]);
-  }
-
-  public instantiateEmptyDisplayData(displayData: string): DisplayData {
-    return new DisplayData(
-      this.emptyDisplayData.translations.map(
-        (translation) => new Translation(translation.language, translation.value)
-      ),
-      displayData
-    );
   }
 
   public instantiateDisplayData(displayData: any): DisplayData {

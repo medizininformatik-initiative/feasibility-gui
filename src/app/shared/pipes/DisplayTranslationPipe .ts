@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateDefaultParser, TranslateService } from '@ngx-translate/core';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Pipe({
@@ -14,6 +14,8 @@ export class DisplayTranslationPipe implements PipeTransform {
       return '';
     }
     const currentLang = this.translateService.currentLang;
+    //console.log(this.translateService.get('DATASELECTION.HEADER').subscribe((res) => console.log(res)));
+
     return display.translate(currentLang);
   }
 }

@@ -1,4 +1,5 @@
 import { AbstractAttributeDefinition } from './AbstractAttributeDefinition';
+import { DisplayData } from '../../DataSelection/Profile/DisplayData';
 import { FilterTypes } from '../FilterTypes';
 import { QuantityUnit } from '../../FeasibilityQuery/QuantityUnit';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
@@ -8,7 +9,7 @@ export class AttributeDefinitions extends AbstractAttributeDefinition {
   private referencedCriteriaSet?: string;
 
   constructor(
-    name: string,
+    display: DisplayData,
     type: FilterTypes,
     optional: boolean,
     allowedUnits: Array<QuantityUnit> = [],
@@ -19,7 +20,7 @@ export class AttributeDefinitions extends AbstractAttributeDefinition {
     referenceCriteriaSet?: string,
     referencedValueSet?: string
   ) {
-    super(name, type, optional, allowedUnits, max, min, precision, referencedValueSet);
+    super(display, type, optional, allowedUnits, max, min, precision, referencedValueSet);
     this.attributeCode = attributeCode;
     this.referencedCriteriaSet = referenceCriteriaSet;
   }

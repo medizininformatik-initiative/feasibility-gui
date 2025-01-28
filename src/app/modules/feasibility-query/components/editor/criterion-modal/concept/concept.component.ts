@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -17,14 +18,14 @@ export class ConceptComponent implements OnInit {
   changedConceptFilter = new EventEmitter<ConceptFilter>();
 
   @Input()
-  attributeCode: TerminologyCode;
+  display: DisplayData;
 
   expanded = false;
 
   constructor() {}
 
   ngOnInit() {
-    if (!this.attributeCode) {
+    if (!this.display) {
       this.expanded = true;
     }
   }

@@ -39,7 +39,7 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
   ): AttributeFiltersBuilder {
     console.log(abstractAttributeDefinition);
     const builder = new AttributeFiltersBuilder(
-      this.instantiateEmptyDisplayData(abstractAttributeDefinition.getName()),
+      this.instantiateDisplayData(abstractAttributeDefinition.getDisplay()),
       abstractAttributeDefinition.getOptional(),
       abstractAttributeDefinition.getType()
     );
@@ -96,6 +96,15 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
         (translation) => new Translation(translation.language, translation.value)
       ),
       displayData
+    );
+  }
+
+  instantiateDisplayData(displayData: any): DisplayData {
+    return new DisplayData(
+      displayData.translations.map(
+        (translation) => new Translation(translation.language, translation.value)
+      ),
+      displayData.original
     );
   }
 }
