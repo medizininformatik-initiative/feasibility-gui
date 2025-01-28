@@ -35,7 +35,11 @@ export class QuantityComparatorComponent implements OnChanges, OnInit {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ((changes.value && this.value != null) || changes.quantityFilterUnit) {
+    if (
+      (changes.value && this.value != null) ||
+      changes.quantityFilterUnit ||
+      changes.quantityComparatorType?.currentValue !== changes.quantityComparatorType?.previousValue
+    ) {
       this.emitComparatorInstance();
     }
   }
