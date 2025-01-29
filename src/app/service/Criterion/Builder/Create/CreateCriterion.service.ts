@@ -18,6 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { DisplayDataFactoryService } from 'src/app/service/Factory/DisplayDataFactory.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,27 +26,14 @@ import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 export class CreateCriterionService {
   ids: Set<string> = new Set<string>();
 
-  private emptyDisplayData = {
-    original: '',
-    translations: [
-      {
-        language: 'de-DE',
-        value: undefined,
-      },
-      {
-        language: 'en-US',
-        value: undefined,
-      },
-    ],
-  };
-
   constructor(
     private criterionHashService: CriterionHashService,
     private terminologyApiService: TerminologyApiService,
     private listItemService: SelectedTableItemsService<SearchTermListEntry>,
     private criterionProviderService: CriterionProviderService,
     private stageProviderService: StageProviderService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
+    private displayDataFactoryService: DisplayDataFactoryService
   ) {}
 
   public translateListItemsToCriterions() {
@@ -71,7 +59,7 @@ export class CreateCriterionService {
             const display = response.display;
             return new CriteriaProfileData(
               id,
-              this.instantiateDisplayData(display), //display,
+              this.displayDataFactoryService.createDisplayData(display),
               response.uiProfile.timeRestrictionAllowed,
               this.mapAttributeDefinitions(response.uiProfile),
               context,
@@ -108,7 +96,7 @@ export class CreateCriterionService {
     return uiProfile.attributeDefinitions.map(
       (attributeDefinition) =>
         new AttributeDefinitions(
-          uiProfile.name,
+          this.displayDataFactoryService.createDisplayData(attributeDefinition.display),
           attributeDefinition.type,
           attributeDefinition.optional,
           attributeDefinition.allowedUnits?.map(
@@ -128,7 +116,7 @@ export class CreateCriterionService {
     if (uiProfile.valueDefinition) {
       return [
         new ValueDefinition(
-          uiProfile.name,
+          this.displayDataFactoryService.createDisplayData(uiProfile.valueDefinition.display),
           uiProfile.valueDefinition.type,
           uiProfile.valueDefinition.optional,
           uiProfile.valueDefinition.allowedUnits?.map(
@@ -219,15 +207,13 @@ export class CreateCriterionService {
     criterionBuilder: CriterionBuilder,
     attributeDefinition: AttributeDefinitions
   ): void {
-    const name = this.instantiateEmptyDisplayData(
-      attributeDefinition.getAttributeCode().getDisplay()
-    );
+    const display = attributeDefinition.getDisplay();
     const attributeCode = attributeDefinition.getAttributeCode();
     const type = attributeDefinition.getType();
     const attributeDef = attributeDefinition;
     criterionBuilder.withAttributeFilter(
       criterionBuilder.buildAttributeFilter(
-        name,
+        display,
         type,
         attributeDef,
         attributeCode
@@ -239,28 +225,10 @@ export class CreateCriterionService {
     criterionBuilder: CriterionBuilder,
     valueDefinition: ValueDefinition
   ): void {
-    const name = this.instantiateEmptyDisplayData(valueDefinition.getName());
+    const display = valueDefinition.getDisplay();
     const type = valueDefinition.getType();
     criterionBuilder.withValueFilters([
-      criterionBuilder.buildValueFilter(valueDefinition, name, type),
+      criterionBuilder.buildValueFilter(valueDefinition, display, type),
     ]);
-  }
-
-  public instantiateEmptyDisplayData(displayData: string): DisplayData {
-    return new DisplayData(
-      this.emptyDisplayData.translations.map(
-        (translation) => new Translation(translation.language, translation.value)
-      ),
-      displayData
-    );
-  }
-
-  public instantiateDisplayData(displayData: any): DisplayData {
-    return new DisplayData(
-      displayData.translations.map(
-        (translation) => new Translation(translation.language, translation.value)
-      ),
-      displayData.original
-    );
   }
 }

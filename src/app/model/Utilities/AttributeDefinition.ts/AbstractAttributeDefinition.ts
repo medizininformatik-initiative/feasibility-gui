@@ -1,5 +1,6 @@
 import { FilterTypes } from '../FilterTypes';
 import { QuantityUnit } from '../../FeasibilityQuery/QuantityUnit';
+import { DisplayData } from '../../DataSelection/Profile/DisplayData';
 
 export abstract class AbstractAttributeDefinition {
   protected allowedUnits: Array<QuantityUnit> = [];
@@ -9,10 +10,10 @@ export abstract class AbstractAttributeDefinition {
   protected precision = 1;
   protected type: FilterTypes;
   protected referencedValueSet?: string;
-  protected name: string;
+  protected display: DisplayData;
 
   constructor(
-    name: string,
+    display: DisplayData,
     type: FilterTypes,
     optional: boolean = false,
     allowedUnits: Array<QuantityUnit> = [],
@@ -21,7 +22,7 @@ export abstract class AbstractAttributeDefinition {
     precision: number = 1,
     referencedValueSet?: string
   ) {
-    this.name = name;
+    this.display = display;
     this.type = type;
     this.optional = optional;
     this.allowedUnits = allowedUnits;
@@ -31,12 +32,12 @@ export abstract class AbstractAttributeDefinition {
     this.referencedValueSet = referencedValueSet;
   }
 
-  getName(): string {
-    return this.name;
+  getDisplay(): DisplayData {
+    return this.display;
   }
 
-  setName(name: string): void {
-    this.name = name;
+  setDisplay(display: DisplayData): void {
+    this.display = display;
   }
 
   getType(): FilterTypes {

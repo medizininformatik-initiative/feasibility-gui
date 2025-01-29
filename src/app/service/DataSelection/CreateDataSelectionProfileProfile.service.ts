@@ -1,17 +1,18 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { concatMap, map, Observable } from 'rxjs';
+import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { Injectable } from '@angular/core';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
@@ -21,7 +22,8 @@ export class CreateDataSelectionProfileService {
   private referencedProfiles: string[] = [];
   constructor(
     private dataSelectionApiService: DataSelectionApiService,
-    private dataSelectionProvider: DataSelectionProfileProviderService
+    private dataSelectionProvider: DataSelectionProfileProviderService,
+    private displayDataFactoryService: DisplayDataFactoryService
   ) {}
 
   public fetchDataSelectionProfileData(

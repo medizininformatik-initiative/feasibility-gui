@@ -1,11 +1,8 @@
 <div *ngIf="conceptFilter" class="container" [@.disabled]="disableAnimation">
   <mat-expansion-panel togglePosition="before" [expanded]="expanded">
     <mat-expansion-panel-header>
-      <mat-panel-title *ngIf="attributeCode">
-        {{ attributeCode.getDisplay() }}
-      </mat-panel-title>
-      <mat-panel-title *ngIf="!attributeCode">
-        {{ 'QUERYBUILDER.EDIT.HEADER_FILTER_VALUE' | translate }}
+      <mat-panel-title>
+        {{ display | displayTranslation }}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <num-shared-concept-filter

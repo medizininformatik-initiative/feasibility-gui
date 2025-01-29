@@ -4,6 +4,7 @@ import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeF
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { FilterChipQuantityAdapter } from '../../../models/FilterChips/Adapter/FilterChipQuantityAdapter';
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,12 @@ export class QuantityFilterChipService {
     attributeFilters.forEach((attributeFilter) => {
       const quantityFilter = attributeFilter.getQuantity();
       if (quantityFilter) {
-        chips.push(...this.generateQuantityChipsFromAttributeFilter(quantityFilter));
+        chips.push(
+          ...this.generateQuantityChipsFromAttributeFilter(
+            quantityFilter,
+            attributeFilter.getDisplay()
+          )
+        );
       }
     });
 
@@ -44,7 +50,9 @@ export class QuantityFilterChipService {
     valueFilters.forEach((valueFilter) => {
       const quantityFilter = valueFilter?.getQuantity();
       if (quantityFilter) {
-        chips.push(...this.generateQuantityChipsFromValueFilter(quantityFilter));
+        chips.push(
+          ...this.generateQuantityChipsFromValueFilter(quantityFilter, valueFilter.getDisplay())
+        );
       }
     });
 
@@ -58,10 +66,11 @@ export class QuantityFilterChipService {
    * @returns Array of InterfaceFilterChip
    */
   private generateQuantityChipsFromAttributeFilter(
-    quantityFilter: AbstractQuantityFilter
+    quantityFilter: AbstractQuantityFilter,
+    display: DisplayData
   ): InterfaceFilterChip[] {
     if (quantityFilter?.getComparator()) {
-      return this.generateQuantityChips(quantityFilter);
+      return this.generateQuantityChips(quantityFilter, display);
     }
     return [];
   }
@@ -73,10 +82,11 @@ export class QuantityFilterChipService {
    * @returns Array of InterfaceFilterChip
    */
   private generateQuantityChipsFromValueFilter(
-    quantityFilter: AbstractQuantityFilter
+    quantityFilter: AbstractQuantityFilter,
+    display: DisplayData
   ): InterfaceFilterChip[] {
     if (quantityFilter?.getComparator()) {
-      return this.generateQuantityChips(quantityFilter);
+      return this.generateQuantityChips(quantityFilter, display);
     }
     return [];
   }
@@ -87,7 +97,10 @@ export class QuantityFilterChipService {
    * @param quantityFilter The AbstractQuantityFilter object
    * @returns Array of InterfaceFilterChip
    */
-  private generateQuantityChips(quantityFilter: AbstractQuantityFilter): InterfaceFilterChip[] {
-    return FilterChipQuantityAdapter.adaptQuantity(quantityFilter);
+  private generateQuantityChips(
+    quantityFilter: AbstractQuantityFilter,
+    display: DisplayData
+  ): InterfaceFilterChip[] {
+    return FilterChipQuantityAdapter.adaptQuantity(quantityFilter, display);
   }
 }

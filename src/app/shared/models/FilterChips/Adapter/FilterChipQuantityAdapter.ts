@@ -1,4 +1,5 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { FilterChipBuilder } from '../FilterChipBuilder';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { getArithmeticSymbol } from 'src/app/model/Utilities/Quantity/ArithmeticSymbolResolver';
@@ -7,26 +8,34 @@ import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criteri
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { v4 as uuidv4 } from 'uuid';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 export class FilterChipQuantityAdapter {
-  public static adaptQuantity(quantity: AbstractQuantityFilter): InterfaceFilterChip[] {
+  public static adaptQuantity(
+    quantity: AbstractQuantityFilter,
+    display: DisplayData
+  ): InterfaceFilterChip[] {
     const chips: InterfaceFilterChip[] = [];
 
     if (quantity && quantity.getType() !== FilterTypes.QUANTITY_NOT_SET) {
-      const display = quantity.getSelectedUnit().getDisplay();
+      const unitDisplay = quantity.getSelectedUnit().getDisplay();
       const comparator = quantity.getComparator();
       const symbol = getArithmeticSymbol(comparator);
       switch (comparator) {
         case QuantityComparisonOption.BETWEEN:
-          chips.push(this.createQuantityRangeChip(quantity as QuantityRangeFilter, display));
+          chips.push(
+            this.createQuantityRangeChip(display, quantity as QuantityRangeFilter, unitDisplay)
+          );
           break;
         case QuantityComparisonOption.EQUAL:
         case QuantityComparisonOption.GREATER_THAN:
         case QuantityComparisonOption.LESS_THAN:
           chips.push(
-            this.createQuantityComparatorChip(quantity as QuantityComparatorFilter, display, symbol)
+            this.createQuantityComparatorChip(
+              display,
+              quantity as QuantityComparatorFilter,
+              unitDisplay,
+              symbol
+            )
           );
           break;
         default:
@@ -37,25 +46,27 @@ export class FilterChipQuantityAdapter {
   }
 
   private static createQuantityRangeChip(
+    display: DisplayData,
     quantity: QuantityRangeFilter,
-    display: string
+    unitDisplay: string
   ): InterfaceFilterChip {
     const minValue = quantity.getMinValue();
     const maxValue = quantity.getMaxValue();
-    const text = `Between ${minValue} - ${maxValue} ${display}`;
+    const text = `Between ${minValue} - ${maxValue} ${unitDisplay}`;
 
-    return this.createFilterChip(FilterTypes.QUANTITY, text);
+    return this.createFilterChip(display, text);
   }
 
   private static createQuantityComparatorChip(
+    display: DisplayData,
     quantity: QuantityComparatorFilter,
-    display: string,
+    unitDisplay: string,
     symbol
   ): InterfaceFilterChip {
     const value = quantity.getValue();
-    const text = `${symbol} ${value} ${display}`;
+    const text = `${symbol} ${value} ${unitDisplay}`;
 
-    return this.createFilterChip(FilterTypes.QUANTITY, text);
+    return this.createFilterChip(display, text);
   }
 
   /**
@@ -65,8 +76,8 @@ export class FilterChipQuantityAdapter {
    * @param text The text to display in the chip
    * @returns An InterfaceFilterChip
    */
-  private static createFilterChip(type: string, text: string): InterfaceFilterChip {
-    const builder = new FilterChipBuilder(type);
+  private static createFilterChip(display: DisplayData, text: string): InterfaceFilterChip {
+    const builder = new FilterChipBuilder(display);
     builder.addData(uuidv4(), text);
     return builder.buildFilterChip();
   }

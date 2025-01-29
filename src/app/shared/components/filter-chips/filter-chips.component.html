@@ -1,19 +1,13 @@
 <div *ngIf="filterChips.length > 0">
   <div *ngFor="let filterChip of filterChips" fxLayout="row" fxLayoutAlign="start start">
-    <div *ngIf="filterChip.type === 'optional'" class="block">
-      {{ 'DATASELECTION.SELECTION_BOX.OPTIONAL' | translate }}
-    </div>
-    <div *ngIf="filterChip.type === 'required'" class="block">
-      {{ 'DATASELECTION.SELECTION_BOX.REQUIRED' | translate }}
-    </div>
     <div
-      *ngIf="filterChip.type !== 'required' && filterChip.type !== 'optional'"
       class="block"
-      [ngClass]="{ expanded: filterChip.typeExpanded }"
       (click)="toggleTypeExpanded(filterChip)"
+      [ngClass]="{ expanded: filterChip.typeExpanded }"
     >
-      {{ filterChip.type }}
+      {{ filterChip.type | displayTranslation }}
     </div>
+
     <div class="block-triangle"></div>
     <div fxLayout="row wrap" class="padding-left-20">
       <div
@@ -22,12 +16,7 @@
         [ngClass]="{ expanded: chip.expanded }"
         (click)="toggleExpanded(chip)"
       >
-        <span *ngIf="isDisplayData(chip.text)">
-          {{ chip.text | displayTranslation }}
-        </span>
-        <span *ngIf="!isDisplayData(chip.text)">
-          {{ chip.text }}
-        </span>
+        {{ chip.text | displayTranslation }}
       </div>
     </div>
   </div>

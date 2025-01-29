@@ -1,33 +1,17 @@
 import { AbstractAttributeDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/AbstractAttributeDefinition';
 import { AttributeFiltersBuilder } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFiltersBuilder';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { DisplayDataFactoryService } from 'src/app/service/Factory/DisplayDataFactory.service';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { FilterTypesService } from 'src/app/service/FilterTypes.service';
 import { Injectable } from '@angular/core';
 import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
 import { v4 as uuidv4 } from 'uuid';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AttributeDefinitionToAttributeFilterBuilderHelperService {
-  constructor(private filterTypesService: FilterTypesService) {}
-
-  private emptyDisplayData = {
-    original: '',
-    translations: [
-      {
-        language: 'de-DE',
-        value: undefined,
-      },
-      {
-        language: 'en-US',
-        value: undefined,
-      },
-    ],
-  };
+  constructor(private displayDataFactoryService: DisplayDataFactoryService) {}
   /**
    * Initializes the AttributeFiltersBuilder with common properties from the value definition.
    *
@@ -39,7 +23,7 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
   ): AttributeFiltersBuilder {
     console.log(abstractAttributeDefinition);
     const builder = new AttributeFiltersBuilder(
-      this.instantiateEmptyDisplayData(abstractAttributeDefinition.getName()),
+      this.displayDataFactoryService.createDisplayData(abstractAttributeDefinition.getDisplay()),
       abstractAttributeDefinition.getOptional(),
       abstractAttributeDefinition.getType()
     );
@@ -87,15 +71,6 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
         undefined,
         abstractAttributeDefinition.getPrecision()
       )
-    );
-  }
-
-  public instantiateEmptyDisplayData(displayData: string): DisplayData {
-    return new DisplayData(
-      this.emptyDisplayData.translations.map(
-        (translation) => new Translation(translation.language, translation.value)
-      ),
-      displayData
     );
   }
 }

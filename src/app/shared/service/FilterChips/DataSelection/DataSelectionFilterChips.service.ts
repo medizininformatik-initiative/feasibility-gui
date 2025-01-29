@@ -4,6 +4,9 @@ import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChip
 import { Injectable } from '@angular/core';
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { TranslateService } from '@ngx-translate/core';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 
 @Injectable({
   providedIn: 'root',
@@ -26,18 +29,23 @@ export class DataSelectionFilterChipsService {
   }
 
   private squashFilterChips(filterChips: InterfaceFilterChip[]): InterfaceFilterChip[] {
-    const squashedChipsMap: { [key: string]: InterfaceFilterChip } = {};
+    const squashedChipsMap = new Map<
+      DisplayData | FilterTypes | TimeRestrictionType | string,
+      InterfaceFilterChip
+    >();
 
     filterChips.forEach((chip) => {
-      if (!squashedChipsMap[chip.type]) {
-        squashedChipsMap[chip.type] = {
+      if (!squashedChipsMap.has(chip.type)) {
+        squashedChipsMap.set(chip.type, {
           type: chip.type,
           data: [...chip.data],
-        };
+        });
       } else {
-        squashedChipsMap[chip.type].data.push(...chip.data);
+        const existingChip = squashedChipsMap.get(chip.type);
+        existingChip?.data.push(...chip.data);
       }
     });
-    return Object.values(squashedChipsMap);
+
+    return Array.from(squashedChipsMap.values());
   }
 }

@@ -20,18 +20,16 @@ export class FilterChipConceptAdapter {
    */
   public static adaptCodeableConcept(
     selectedConcepts: Concept[] = [],
-    attributeCode?: TerminologyCode
+    display?: DisplayData
   ): InterfaceFilterChip[] {
     this.resetFilterChips();
-
-    const type = this.getFilterType(attributeCode);
 
     if (selectedConcepts.length === 0) {
       console.warn('No selected concepts found in the ConceptFilter');
       return [];
     }
 
-    this.buildFilterChips(selectedConcepts, type);
+    this.buildFilterChips(selectedConcepts, display);
 
     return this.conceptFilterChips;
   }
@@ -70,7 +68,7 @@ export class FilterChipConceptAdapter {
    * @param selectedConcepts A Set of TerminologyCode
    * @param type The filter type
    */
-  private static buildFilterChips(selectedConcepts: Concept[], type: string): void {
+  private static buildFilterChips(selectedConcepts: Concept[], type: DisplayData): void {
     const builder = new FilterChipBuilder(type);
     selectedConcepts.forEach((concept) => {
       this.createFilterChip(concept, builder);

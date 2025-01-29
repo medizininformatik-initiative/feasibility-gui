@@ -1,7 +1,7 @@
 import { AbstractResultMapper } from '../../../Abstract/AbstractResultMapper';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 export class CriteriaResultMapperStrategy extends AbstractResultMapper<
   SearchTermListEntry,
@@ -46,17 +46,5 @@ export class CriteriaResultMapperStrategy extends AbstractResultMapper<
       ),
       data.original
     );
-  }
-
-  public checkValuesForTypeString(value: string | string[]): string[] {
-    if (typeof value == 'string') {
-      if (value.length > 0) {
-        return [value];
-      } else {
-        return [];
-      }
-    } else {
-      return value;
-    }
   }
 }
