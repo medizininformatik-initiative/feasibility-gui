@@ -1,15 +1,6 @@
 <div *ngIf="filterChips.length > 0">
   <div *ngFor="let filterChip of filterChips" fxLayout="row" fxLayoutAlign="start start">
     <div
-      *ngIf="!isDisplayData(filterChip.type)"
-      class="block"
-      (click)="toggleTypeExpanded(filterChip)"
-      [ngClass]="{ expanded: filterChip.typeExpanded }"
-    >
-      {{ filterChip.type | translate }}
-    </div>
-    <div
-      *ngIf="isDisplayData(filterChip.type)"
       class="block"
       (click)="toggleTypeExpanded(filterChip)"
       [ngClass]="{ expanded: filterChip.typeExpanded }"
@@ -25,12 +16,7 @@
         [ngClass]="{ expanded: chip.expanded }"
         (click)="toggleExpanded(chip)"
       >
-        <span *ngIf="isDisplayData(chip.text)">
-          {{ chip.text | displayTranslation }}
-        </span>
-        <span *ngIf="!isDisplayData(chip.text)">
-          {{ chip.text }}
-        </span>
+        {{ chip.text | displayTranslation }}
       </div>
     </div>
   </div>

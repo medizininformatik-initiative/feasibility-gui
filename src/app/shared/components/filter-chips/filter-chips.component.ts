@@ -24,8 +24,4 @@ export class FilterChipsComponent implements OnInit {
   public toggleTypeExpanded(chip) {
     chip.typeExpanded = !chip.typeExpanded;
   }
-
-  public isDisplayData(text: any): boolean {
-    return text && text instanceof DisplayData;
-  }
 }

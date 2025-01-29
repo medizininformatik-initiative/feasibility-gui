@@ -1,21 +1,30 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { TranslateDefaultParser, TranslateService } from '@ngx-translate/core';
 import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Pipe, PipeTransform } from '@angular/core';
+import { TranslateParser, TranslateService } from '@ngx-translate/core';
 
 @Pipe({
   name: 'displayTranslation',
   pure: false,
 })
 export class DisplayTranslationPipe implements PipeTransform {
-  constructor(private translateService: TranslateService) {}
+  constructor(
+    private translateService: TranslateService,
+    private translateParser: TranslateParser // Inject TranslateParser
+  ) {}
 
-  transform(display: DisplayData): string {
-    if (!display) {
+  public transform(value: any, params?: any): string {
+    if (!value) {
       return '';
     }
-    const currentLang = this.translateService.currentLang;
-    //console.log(this.translateService.get('DATASELECTION.HEADER').subscribe((res) => console.log(res)));
 
-    return display.translate(currentLang);
+    const currentLang = this.translateService.currentLang;
+
+    if (value instanceof DisplayData) {
+      const translatedValue = value.translate(currentLang);
+      return this.translateParser.interpolate(translatedValue, params);
+    } else {
+      const translatedValue = this.translateService.instant(value);
+      return this.translateParser.interpolate(translatedValue, params);
+    }
   }
 }
