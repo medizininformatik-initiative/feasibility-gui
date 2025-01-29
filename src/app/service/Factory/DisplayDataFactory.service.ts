@@ -9,7 +9,7 @@ export class DisplayDataFactoryService {
   constructor() {}
 
   public createDisplayData(displayData: any): DisplayData {
-    const translations = displayData.translations.map((translation) =>
+    const translations = displayData.translations?.map((translation) =>
       this.createTranslation(translation)
     );
     return new DisplayData(translations, displayData.original);
