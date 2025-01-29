@@ -1,17 +1,18 @@
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeDefinitionsResultMapper } from './Mapper/AttributeDefinitionsResultMapper';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { finalize, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemService.service';
+import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
-import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,8 @@ export class CriteriaProfileDataService {
 
   constructor(
     private terminologyApiService: TerminologyApiService,
-    private listItemService: SelectedTableItemsService<SearchTermListEntry> //private snackbar: SnackbarService
+    private listItemService: SelectedTableItemsService<SearchTermListEntry>,
+    private displayDataFactoryService: DisplayDataFactoryService
   ) {}
 
   /**
@@ -63,7 +65,7 @@ export class CriteriaProfileDataService {
 
         return new CriteriaProfileData(
           id,
-          this.instantiateDisplayData(display), //display,
+          this.displayDataFactoryService.createDisplayData(display),
           response.uiProfile.timeRestrictionAllowed,
           this.mapAttributeDefinitions(response.uiProfile),
           context,
@@ -92,14 +94,5 @@ export class CriteriaProfileDataService {
 
   private mapTerminologyCode(termCode: any): TerminologyCode {
     return new TerminologyCode(termCode.code, termCode.display, termCode.system, termCode.version);
-  }
-
-  public instantiateDisplayData(displayData: any): DisplayData {
-    return new DisplayData(
-      displayData.translations.map(
-        (translation) => new Translation(translation.language, translation.value)
-      ),
-      displayData.original
-    );
   }
 }
