@@ -45,16 +45,4 @@ export class CodeableConceptResultMapperStrategy
       data.original
     );
   }
-
-  public checkValuesForTypeString(value: string | string[]): string[] {
-    if (typeof value == 'string') {
-      if (value.length > 0) {
-        return [value];
-      } else {
-        return [];
-      }
-    } else {
-      return value;
-    }
-  }
 }
