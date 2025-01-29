@@ -25,17 +25,15 @@ export class DisplayData {
 
   public translate(language: string): string {
     const translation = this.translations.find((t) => t.getLanguage().split('-')[0] === language);
+
     if (translation && translation.getValue()) {
-      return translation && translation.getValue()?.length > 0
-        ? translation.getValue()
-        : this.original;
+      return translation.getValue().length > 0 ? translation.getValue() : this.original;
     }
+
     if (translation && translation.getValues()?.length > 0) {
-      return translation && translation.getValues()?.length > 0
-        ? translation.getValues().join(', ')
-        : this.originals.join(', ');
-    } else {
-      return this.original?.length > 0 ? this.original : this.originals.join(', ');
+      return translation.getValues().join(', ');
     }
+
+    return this.original?.length > 0 ? this.original : this.originals.join(', ');
   }
 }
