@@ -1,6 +1,14 @@
 import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQueryApiService } from './Backend/Api/FeasibilityQueryApi.service';
+import { FeasibilityQueryProviderService } from './Provider/FeasibilityQueryProvider.service';
+import { FeasibilityQueryResultApiService } from './Backend/Api/FeasibilityQueryResultApi.service';
 import { FeatureService } from './Feature.service';
 import { Injectable } from '@angular/core';
+import { QueryResult } from '../model/Result/QueryResult';
+import { QueryResultLine } from '../model/Result/QueryResultLine';
+import { ResultProviderService } from './Provider/ResultProvider.service';
+import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
+import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
 import {
   BehaviorSubject,
   endWith,
@@ -13,15 +21,8 @@ import {
   takeWhile,
   timer,
   filter,
+  Subject,
 } from 'rxjs';
-import { QueryResult } from '../model/Result/QueryResult';
-import { QueryResultLine } from '../model/Result/QueryResultLine';
-import { ResultProviderService } from './Provider/ResultProvider.service';
-import { UIQuery2StructuredQueryService } from './Translator/StructureQuery/UIQuery2StructuredQuery.service';
-import { FeasibilityQueryProviderService } from './Provider/FeasibilityQueryProvider.service';
-import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
-import { FeasibilityQueryApiService } from './Backend/Api/FeasibilityQueryApi.service';
-import { FeasibilityQueryResultApiService } from './Backend/Api/FeasibilityQueryResultApi.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,7 @@ export class FeasibilityQueryResultService {
   readonly POLLING_MAXL_MILLISECONDS = this.featureService.getPollingTime() * 1000;
   resultObservable$: Observable<QueryResult>;
   private feasibilityQueryID: string;
+  private stopPolling$ = new Subject<void>(); // Stop signal
 
   private callsLimit: number;
   private callsRemaining: number;
@@ -73,6 +75,7 @@ export class FeasibilityQueryResultService {
     let feasibilityQuery: FeasibilityQuery;
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
     this.getDetailedResultRateLimit();
+    this.resetStopSubject();
     return this.queryProviderService.getActiveFeasibilityQuery().pipe(
       switchMap((query) => {
         feasibilityQuery = query;
@@ -84,6 +87,8 @@ export class FeasibilityQueryResultService {
         feasibilityQuery.addResultId(this.queryId);
         return this.getResultPolling(this.queryId, false).pipe(
           filter((result) => result != null),
+          takeUntil(this.stopPolling$), // Stops polling when stopPolling$ emits
+
           endWith(null)
         );
       }),
@@ -99,19 +104,10 @@ export class FeasibilityQueryResultService {
   }
 
   private getDetailedResultRateLimit(): void {
-    this.feasibilityQueryResultApiService.getDetailedResultRateLimit().subscribe(
-      (result) => {
-        this.callsLimitSubject.next(result.limit);
-        this.callsRemainingSubject.next(result.remaining);
-      },
-      (error) => {
-        if (error.error.issues !== undefined) {
-          if (error.error.issues[0].code !== undefined) {
-            // this.snackbar.displayErrorMessage(error.error.issues[0].code);
-          }
-        }
-      }
-    );
+    this.feasibilityQueryResultApiService.getDetailedResultRateLimit().subscribe((result) => {
+      this.callsLimitSubject.next(result.limit);
+      this.callsRemainingSubject.next(result.remaining);
+    });
   }
 
   public getResultCallsRemaining(): Observable<number> {
@@ -136,11 +132,7 @@ export class FeasibilityQueryResultService {
   ): Observable<QueryResult> {
     return interval(this.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.POLLING_MAXL_MILLISECONDS + 200)),
-      switchMap(() =>
-        withDetails
-          ? this.getDetailedObfuscatedResult(feasibilityQueryResultId)
-          : this.getSummaryResult(feasibilityQueryResultId)
-      ),
+      switchMap(() => this.getSummaryResult(feasibilityQueryResultId)),
       share()
     );
   }
@@ -153,10 +145,6 @@ export class FeasibilityQueryResultService {
           const queryResult: QueryResult = this.buildQueryResultInstance(result);
           this.resultProvider.setResultByID(queryResult, queryResult.getId());
           return queryResult;
-        } else {
-          if (result.issues[0].code !== 'FEAS-10004') {
-            this.snackbar.displayErrorMessage(result.issues[0].code);
-          }
         }
       })
     );
@@ -171,8 +159,6 @@ export class FeasibilityQueryResultService {
             const queryResult: QueryResult = this.buildQueryResultInstance(result);
             this.resultProvider.setResultByID(queryResult, queryResult.getId());
             return queryResult;
-          } else {
-            this.snackbar.displayErrorMessage(result.issues[0].code);
           }
         })
       );
@@ -186,5 +172,15 @@ export class FeasibilityQueryResultService {
       result.resultLines.map((line) => new QueryResultLine(line?.numberOfPatients, line?.siteName)),
       result.issues
     );
+  }
+
+  public stopPolling() {
+    this.stopPolling$.next();
+  }
+
+  private resetStopSubject() {
+    if (this.stopPolling$.closed) {
+      this.stopPolling$ = new Subject<void>();
+    }
   }
 }
