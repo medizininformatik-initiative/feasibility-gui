@@ -35,11 +35,7 @@ export class OAuthInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          if (req.url === 'http://localhost:8090/api/v1/query-handler/stored-query') {
-            this.handleErrorCodes(error.status);
-          } else {
-            this.oauthService.logOut();
-          }
+          this.oauthService.logOut();
         }
         if (error.status === 404) {
           this.handleErrorCodes(error.status);
@@ -49,8 +45,6 @@ export class OAuthInterceptor implements HttpInterceptor {
         }
         if (error.error.issues) {
           this.handleErrorCodes(error.error.issues[0]?.code, error.headers.get('Retry-After'));
-        } else {
-          this.handleErrorCodes(error.status);
         }
         return throwError(error);
       })
