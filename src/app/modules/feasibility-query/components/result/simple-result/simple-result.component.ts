@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   ResultDetailModalComponent,
   ResultDetailsModalComponentData,
@@ -10,19 +10,21 @@ import {
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { FeatureService } from '../../../../../service/Feature.service';
 import { BackendService } from 'src/app/service/Backend/Backend.service';
+import { ResultProviderService } from '../../../../../service/Provider/ResultProvider.service';
 
 @Component({
   selector: 'num-simple-result',
   templateUrl: './simple-result.component.html',
   styleUrls: ['./simple-result.component.scss'],
 })
-export class SimpleResultComponent implements OnInit {
+export class SimpleResultComponent implements OnInit, OnDestroy {
   showSpinner = false;
 
   obfuscatedPatientCountArray: string[] = [];
 
   resultCallsRemaining$: Observable<number>;
   resultCallsLimit$: Observable<number>;
+  dialogModalSubscription: Subscription;
 
   pollingTime: number;
   loadedResult = false;
@@ -36,7 +38,8 @@ export class SimpleResultComponent implements OnInit {
     private resultService: FeasibilityQueryResultService,
     private queryProviderService: FeasibilityQueryProviderService,
     private featureService: FeatureService,
-    private backendService: BackendService
+    private backendService: BackendService,
+    private resultProvider: ResultProviderService
   ) {
     this.resultCallsRemaining$ = this.resultService.getResultCallsRemaining();
     this.resultCallsLimit$ = this.resultService.callsLimit$;
@@ -49,12 +52,18 @@ export class SimpleResultComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.dialogModalSubscription?.unsubscribe();
+  }
   openDialogResultDetails(): void {
+    this.dialogModalSubscription?.unsubscribe();
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig);
-    modal.afterClosed().subscribe().unsubscribe();
+    this.dialogModalSubscription = modal.afterClosed().subscribe((id: string) => {
+      this.updateSummaryDisplay(id);
+    });
   }
 
   doSend(): void {
@@ -103,5 +112,10 @@ export class SimpleResultComponent implements OnInit {
     this.loadedResult = true;
     this.showSpinner = false;
     this.queryProviderService.checkCriteria();
+  }
+
+  public updateSummaryDisplay(id: string): void {
+    const result = this.resultProvider.getResultByID(id);
+    this.handleResult(result);
   }
 }

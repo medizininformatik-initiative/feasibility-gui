@@ -20,6 +20,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
   adaptedData: TableData;
   providerSubscription: Subscription;
   resultServiceSubscription: Subscription;
+  activeResultID: string;
   constructor(
     private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsModalComponentData,
@@ -43,6 +44,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
           this.resultServiceSubscription = this.feasibilityQueryResultService
             .getDetailedObfuscatedResult(latestResultId)
             .subscribe((result) => {
+              this.activeResultID = result.getId();
               this.adaptedData = FeasibilityQueryResultDetailsListAdapter.adapt(
                 this.sortResult(result)
               );
@@ -58,7 +60,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
   }
 
   doClose(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(this.activeResultID);
   }
 
   private sortResult(queryResult: QueryResult): FeasibilityQueryResultDetailstListEntry[] {
