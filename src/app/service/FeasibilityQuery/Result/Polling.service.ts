@@ -48,10 +48,15 @@ export class PollingService {
     return this.feasibilityQueryResultApiService.getSummaryResult(resultId);
   }
 
-  public getPollingUrl(query: FeasibilityQuery): Observable<string> {
+  public getFeasibilityIdFromPollingUrl(query: FeasibilityQuery): Observable<string> {
     return this.feasibilityQueryApiService
       .postStructuredQuery(this.translator.translateToStructuredQuery(query))
-      .pipe(map((result) => result.headers.get('location')));
+      .pipe(
+        map((result) => {
+          const pollingUrl = result.headers.get('location');
+          return pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1);
+        })
+      );
   }
 
   /**

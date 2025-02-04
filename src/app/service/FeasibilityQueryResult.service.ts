@@ -51,18 +51,17 @@ export class FeasibilityQueryResultService {
 
   private handleFeasibilityQuery(feasibilityQuery: FeasibilityQuery): Observable<QueryResult> {
     return this.pollingService
-      .getPollingUrl(feasibilityQuery)
-      .pipe(switchMap((pollingUrl) => this.startPollingProcess(feasibilityQuery, pollingUrl)));
+      .getFeasibilityIdFromPollingUrl(feasibilityQuery)
+      .pipe(switchMap((feasibilityId) => this.startPollingProcess(feasibilityQuery, feasibilityId)));
   }
 
   private startPollingProcess(
     feasibilityQuery: FeasibilityQuery,
-    pollingUrl: string
+    feasibilityId: string
   ): Observable<QueryResult> {
-    this.queryId = pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1);
-    feasibilityQuery.addResultId(this.queryId);
+    feasibilityQuery.addResultId(feasibilityId);
 
-    return this.pollingService.startPolling(this.queryId).pipe(
+    return this.pollingService.startPolling(feasibilityId).pipe(
       map((pollingResult) => this.processPollingResult(pollingResult)),
       filter((result) => result != null),
       takeWhile((result) => result !== null),
