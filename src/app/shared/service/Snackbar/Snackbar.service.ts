@@ -37,8 +37,7 @@ export class SnackbarService {
   constructor() {}
 
   public displayErrorMessage(errorCode: string, retryAfter: number = 0) {
-    const validErrorCode = this.getErrorCodeEnum(errorCode);
-    const message = `${MessageType.ERROR}.${validErrorCode}`;
+    const message = `${MessageType.ERROR}.${errorCode}`;
     this.activateSnackbar(message, SnackbarColor.ERROR);
   }
 
@@ -59,10 +58,5 @@ export class SnackbarService {
 
   public deactivateSnackbar() {
     this.visibilitySubject.next(false);
-  }
-
-  private getErrorCodeEnum(errorCode: string): ErrorCodes | undefined {
-    const normalizedCode = errorCode?.replace(/-/g, '_') as keyof typeof ErrorCodes;
-    return ErrorCodes[normalizedCode];
   }
 }
