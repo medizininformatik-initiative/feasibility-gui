@@ -142,7 +142,7 @@ export class FeasibilityQueryResultService {
       map((result) => {
         this.result = result;
         if (!result.issues) {
-          const queryResult: QueryResult = this.buildQueryResultInstance(result);
+          const queryResult: QueryResult = this.buildQueryResultInstance(result, false);
           this.resultProvider.setResultByID(queryResult, queryResult.getId());
           return queryResult;
         }
@@ -156,7 +156,7 @@ export class FeasibilityQueryResultService {
       .pipe(
         map((result) => {
           if (!result.issues) {
-            const queryResult: QueryResult = this.buildQueryResultInstance(result);
+            const queryResult: QueryResult = this.buildQueryResultInstance(result, true);
             this.resultProvider.setResultByID(queryResult, queryResult.getId());
             return queryResult;
           }
@@ -164,8 +164,9 @@ export class FeasibilityQueryResultService {
       );
   }
 
-  private buildQueryResultInstance(result: any): QueryResult {
+  private buildQueryResultInstance(result: any, detailedReceived: boolean): QueryResult {
     return new QueryResult(
+      detailedReceived,
       this.feasibilityQueryID,
       result.totalNumberOfPatients,
       result.queryId.toString(),
