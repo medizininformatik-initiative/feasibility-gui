@@ -1,7 +1,7 @@
 import { BehaviorSubject, map, Observable, shareReplay, switchMap } from 'rxjs';
+import { FeasibilityQueryResultApiService } from 'src/app/service/Backend/Api/FeasibilityQueryResultApi.service';
 import { Injectable } from '@angular/core';
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
-import { FeasibilityQueryResultApiService } from 'src/app/service/Backend/Api/FeasibilityQueryResultApi.service';
 
 @Injectable({
   providedIn: 'root',

@@ -65,7 +65,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.feasibilityQueryResultService.doSendQueryRequest().subscribe({
       next: (result: QueryResult) => this.handleResult(result),
       error: (error) => console.error('Error fetching query result', error),
-      complete: () => this.finalize(), // Correct property name is `complete`, not `next`
+      complete: () => this.finalize(),
     });
   }
 
@@ -94,7 +94,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
    */
   private setPatientCount(totalNumberOfPatients: number): void {
     const patientCountArray = totalNumberOfPatients.toString().split('');
-    while (patientCountArray.length < 8) {
+    const lengthOfDigitFields = 8;
+    while (patientCountArray.length < lengthOfDigitFields) {
       patientCountArray.unshift('0');
     }
     this.patientCountArray = patientCountArray;
