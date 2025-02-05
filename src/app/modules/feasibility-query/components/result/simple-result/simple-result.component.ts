@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
+import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service';
 import { FeatureService } from 'src/app/service/Feature.service';
 import { filter, Observable, Subject, takeUntil } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -62,10 +62,11 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   private doSend(): void {
     this.initializeState();
-    this.feasibilityQueryResultService.doSendQueryRequest().subscribe(
-      (result: QueryResult) => this.handleResult(result),
-      () => this.finalize()
-    );
+    this.feasibilityQueryResultService.doSendQueryRequest().subscribe({
+      next: (result: QueryResult) => this.handleResult(result),
+      error: (error) => console.error('Error fetching query result', error),
+      complete: () => this.finalize(), // Correct property name is `complete`, not `next`
+    });
   }
 
   openDialogResultDetails(): void {
@@ -83,6 +84,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   private handleResult(result: QueryResult): void {
     this.loadedResult = true;
+    this.showSpinner = false;
     this.setPatientCount(result.getTotalNumberOfPatients());
     this.resultLoaded.emit(this.loadedResult);
   }
