@@ -71,7 +71,7 @@ export class FeasibilityQueryResultApiService {
     });
   }
 
-  public getDetailedResultRateLimit(): Observable<QueryResultRateLimit> {
+  public getDetailedResultRateLimit(): Observable<any> {
     return this.http.get<QueryResultRateLimit>(
       this.backendService.createUrl(
         FeasibilityQueryResultPaths.getBaseUrl() +

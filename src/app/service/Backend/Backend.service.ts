@@ -1,5 +1,4 @@
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { FeatureService } from '../Feature.service';
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
@@ -8,11 +7,7 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
   providedIn: 'root',
 })
 export class BackendService {
-  constructor(
-    private config: AppConfigService,
-    private feature: FeatureService,
-    private authStorage: OAuthStorage
-  ) {}
+  constructor(private config: AppConfigService, private authStorage: OAuthStorage) {}
   public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345';
 
   private getAccessToken() {
@@ -23,10 +18,6 @@ export class BackendService {
     return new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', 'Bearer ' + this.getAccessToken());
-  }
-
-  public getLowerBoundaryPatient() {
-    return this.feature.getPatientResultLowerBoundary();
   }
 
   public createUrl(pathToResource: string, paramString?: string): string {
@@ -43,20 +34,6 @@ export class BackendService {
     }
 
     return url;
-  }
-
-  public obfuscateResult(result: number): string {
-    if (result === 0) {
-      return '0';
-    } else {
-      if (result) {
-        if (result <= this.getLowerBoundaryPatient()) {
-          return '< ' + this.getLowerBoundaryPatient().toString();
-        } else {
-          return result.toString();
-        }
-      }
-    }
   }
 
   public chunkArray<T>(array: T[], chunkSize: number): T[][] {

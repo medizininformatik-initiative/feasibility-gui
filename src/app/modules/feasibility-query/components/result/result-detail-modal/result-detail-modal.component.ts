@@ -3,7 +3,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter';
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../shared/models/ListEntries/FeasibilityQueryResultDetailstListEntry';
-import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQueryResult.service';
+import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service';
 import { FeatureService } from '../../../../../service/Feature.service';
 import { map, Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -22,6 +22,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
   providerSubscription: Subscription;
   resultServiceSubscription: Subscription;
   activeResultID: string;
+
   constructor(
     private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsModalComponentData,
@@ -44,7 +45,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
           const resultIdsArray = feasibilityQuery.getResultIds();
           const latestResultId = resultIdsArray[resultIdsArray.length - 1];
           const latestResult = this.resultProviderService.getResultByID(latestResultId);
-          if (latestResult.getDetailedReceived()) {
+          if (latestResult.getDetailsReceived()) {
             this.setActiveResultIdAndAdaptedData(latestResult);
           } else {
             this.resultServiceSubscription = this.feasibilityQueryResultService
@@ -69,7 +70,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
   }
 
   doClose(): void {
-    this.dialogRef.close(this.activeResultID);
+    this.dialogRef.close();
   }
 
   private sortResult(queryResult: QueryResult): FeasibilityQueryResultDetailstListEntry[] {

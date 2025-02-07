@@ -1,10 +1,10 @@
 import { QueryResultLine } from './QueryResultLine';
 export class QueryResult {
+  private detailsReceived = false;
   private id: string;
   private feasibilityQueryId: string;
   private totalNumberOfPatients: number;
   private resultLines: QueryResultLine[] = [];
-  private detailedReceived = false;
   issues?: [
     {
       message: string
@@ -15,7 +15,7 @@ export class QueryResult {
   ];
 
   constructor(
-    detailedReceived: boolean,
+    detailsReceived: boolean,
     feasibilityQueryId: string,
     totalNumberOfPatients: number,
     id: string,
@@ -29,7 +29,7 @@ export class QueryResult {
       }
     ]
   ) {
-    this.detailedReceived = detailedReceived;
+    this.detailsReceived = detailsReceived;
     this.feasibilityQueryId = feasibilityQueryId;
     this.totalNumberOfPatients = totalNumberOfPatients;
     this.id = id;
@@ -37,12 +37,12 @@ export class QueryResult {
     this.issues = issues;
   }
 
-  public getDetailedReceived(): boolean {
-    return this.detailedReceived;
+  getDetailsReceived(): boolean {
+    return this.detailsReceived;
   }
 
-  public setDetailedReceived(detailedReceived: boolean): void {
-    this.detailedReceived = detailedReceived;
+  setDetailsReceived(detailsReceived: boolean): void {
+    this.detailsReceived = detailsReceived;
   }
 
   getFeasibilityQueryId(): string {

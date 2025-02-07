@@ -2,10 +2,10 @@
   <div
     fxLayout="row"
     fxLayoutAlign="start center"
-    *ngIf="obfuscatedPatientCountArray.length > 0"
+    *ngIf="patientCountArray.length > 0"
     class="margin-bottom-20"
   >
-    <div *ngFor="let digit of obfuscatedPatientCountArray" class="number-of-patients">
+    <div *ngFor="let digit of patientCountArray" class="number-of-patients">
       <div class="digit">
         {{ digit }}
       </div>
@@ -23,7 +23,9 @@
     class="button-dialog-result-details"
   >
     {{ 'QUERYBUILDER.RESULT.BUTTON.DETAILS' | translate }}
-    ({{ resultCallsRemaining$ | async }}/{{ resultCallsLimit$ | async }})
+    ({{ (queryResultRateLimit$ | async)?.getRemaining() }}/{{
+      (queryResultRateLimit$ | async)?.getLimit()
+    }})
   </num-button>
   <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
 </div>

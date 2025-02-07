@@ -1,16 +1,16 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
-import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQueryResult.service';
+import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
+import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service';
+import { FeatureService } from 'src/app/service/Feature.service';
+import { filter, Observable, Subject, takeUntil } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
+import { QueryResult } from 'src/app/model/Result/QueryResult';
+import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
 import {
   ResultDetailModalComponent,
   ResultDetailsModalComponentData,
 } from '../result-detail-modal/result-detail-modal.component';
-import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
-import { FeatureService } from '../../../../../service/Feature.service';
-import { BackendService } from 'src/app/service/Backend/Backend.service';
-import { ResultProviderService } from '../../../../../service/Provider/ResultProvider.service';
 
 @Component({
   selector: 'num-simple-result',
@@ -20,13 +20,10 @@ import { ResultProviderService } from '../../../../../service/Provider/ResultPro
 export class SimpleResultComponent implements OnInit, OnDestroy {
   showSpinner = false;
 
-  obfuscatedPatientCountArray: string[] = [];
-
-  resultCallsRemaining$: Observable<number>;
-  resultCallsLimit$: Observable<number>;
-  dialogModalSubscription: Subscription;
-
   pollingTime: number;
+  patientCountArray: string[] = [];
+
+  queryResultRateLimit$: Observable<QueryResultRateLimit>;
   loadedResult = false;
 
   @Output()
@@ -35,44 +32,50 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   feasibilityQuery: FeasibilityQuery;
   constructor(
     public dialog: MatDialog,
-    private resultService: FeasibilityQueryResultService,
+    private feasibilityQueryResultService: FeasibilityQueryResultService,
     private queryProviderService: FeasibilityQueryProviderService,
-    private featureService: FeatureService,
-    private backendService: BackendService,
-    private resultProvider: ResultProviderService
+    private featureService: FeatureService
   ) {
-    this.resultCallsRemaining$ = this.resultService.getResultCallsRemaining();
-    this.resultCallsLimit$ = this.resultService.callsLimit$;
+    this.queryResultRateLimit$ = this.feasibilityQueryResultService.getDetailedResultRateLimit();
     this.pollingTime = this.featureService.getPollingTime();
   }
 
+  private destroy$ = new Subject<void>();
+
   ngOnInit(): void {
-    if (window.history.state.startPolling) {
-      this.doSend();
-    }
+    this.queryProviderService
+      .getActiveFeasibilityQuery()
+      .pipe(
+        filter((feasibilityQuery) => feasibilityQuery.getInclusionCriteria().length > 0),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: () => this.doSend(),
+        error: (err) => console.error('Error fetching feasibility query', err),
+      });
   }
 
   ngOnDestroy(): void {
-    this.dialogModalSubscription?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
+
+  private doSend(): void {
+    this.initializeState();
+    this.feasibilityQueryResultService.doSendQueryRequest().subscribe({
+      next: (result: QueryResult) =>
+        result === null ? this.finalize() : this.handleResult(result),
+      error: (error) => console.error('Error fetching query result', error),
+      complete: () => this.finalize(),
+    });
+  }
+
   openDialogResultDetails(): void {
-    this.dialogModalSubscription?.unsubscribe();
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig);
-    this.dialogModalSubscription = modal.afterClosed().subscribe((id: string) => {
-      this.updateSummaryDisplay(id);
-    });
-  }
-
-  doSend(): void {
-    this.initializeState();
-    this.resultService.doSendQueryRequest().subscribe(
-      (result) => this.handleResult(result),
-      (error) => this.handleError(error),
-      () => this.finalize()
-    );
+    modal.afterClosed().subscribe().unsubscribe();
   }
 
   private initializeState(): void {
@@ -80,42 +83,28 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.showSpinner = true;
   }
 
-  private handleResult(result: any): void {
+  private handleResult(result: QueryResult): void {
     this.loadedResult = true;
-    this.setObfuscatedPatientCount(result.getTotalNumberOfPatients());
+    this.setPatientCount(result.getTotalNumberOfPatients());
     this.resultLoaded.emit(this.loadedResult);
   }
 
   /**
    * If the result array has fewer than 10 digits, pad it with leading '0' digits until its length is 10
    */
-  private setObfuscatedPatientCount(totalNumberOfPatients: number): void {
-    const obfuscatedPatientCount = this.backendService.obfuscateResult(totalNumberOfPatients);
-    const obfuscatedPatientCountArray = obfuscatedPatientCount.toString().split('');
-    while (obfuscatedPatientCountArray.length < 8) {
-      obfuscatedPatientCountArray.unshift('0');
+  private setPatientCount(totalNumberOfPatients: number): void {
+    const patientCountArray = totalNumberOfPatients.toString().split('');
+    const lengthOfDigitFields = 8;
+    while (patientCountArray.length < lengthOfDigitFields) {
+      patientCountArray.unshift('0');
     }
-    this.obfuscatedPatientCountArray = obfuscatedPatientCountArray;
-  }
-
-  private handleError(error: any): void {
-    this.showSpinner = false;
-    if (error.status === 404) {
-      // this.snackbar.displayErrorMessage(this.snackbar.errorCodes['404']);
-    }
-    if (error.status === 429) {
-      // this.snackbar.displayErrorMessage(this.snackbar.errorCodes['FEAS-10002']);
-    }
+    this.patientCountArray = patientCountArray;
   }
 
   private finalize(): void {
+    console.log('Finalize');
     this.loadedResult = true;
     this.showSpinner = false;
     this.queryProviderService.checkCriteria();
-  }
-
-  public updateSummaryDisplay(id: string): void {
-    const result = this.resultProvider.getResultByID(id);
-    this.handleResult(result);
   }
 }

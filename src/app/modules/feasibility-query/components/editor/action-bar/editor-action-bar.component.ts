@@ -3,6 +3,7 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { Observable, of } from 'rxjs';
 import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service';
 
 @Component({
   selector: 'num-editor-action-bar',
