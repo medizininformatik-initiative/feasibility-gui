@@ -45,7 +45,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
           const resultIdsArray = feasibilityQuery.getResultIds();
           const latestResultId = resultIdsArray[resultIdsArray.length - 1];
           const latestResult = this.resultProviderService.getResultByID(latestResultId);
-          if (latestResult.getDetailedReceived()) {
+          if (latestResult.getDetailsReceived()) {
             this.setActiveResultIdAndAdaptedData(latestResult);
           } else {
             this.resultServiceSubscription = this.feasibilityQueryResultService

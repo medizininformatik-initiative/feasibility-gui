@@ -1,6 +1,6 @@
 import { QueryResultLine } from './QueryResultLine';
 export class QueryResult {
-  private detailedReceived = false;
+  private detailsReceived = false;
   private id: string;
   private feasibilityQueryId: string;
   private totalNumberOfPatients: number;
@@ -15,7 +15,7 @@ export class QueryResult {
   ];
 
   constructor(
-    detailesReceived: boolean,
+    detailsReceived: boolean,
     feasibilityQueryId: string,
     totalNumberOfPatients: number,
     id: string,
@@ -29,7 +29,7 @@ export class QueryResult {
       }
     ]
   ) {
-    this.detailedReceived = detailesReceived;
+    this.detailsReceived = detailsReceived;
     this.feasibilityQueryId = feasibilityQueryId;
     this.totalNumberOfPatients = totalNumberOfPatients;
     this.id = id;
@@ -37,12 +37,12 @@ export class QueryResult {
     this.issues = issues;
   }
 
-  getDetailedReceived(): boolean {
-    return this.detailedReceived;
+  getDetailsReceived(): boolean {
+    return this.detailsReceived;
   }
 
-  setDetailedReceived(detailedReceived: boolean): void {
-    this.detailedReceived = detailedReceived;
+  setDetailsReceived(detailsReceived: boolean): void {
+    this.detailsReceived = detailsReceived;
   }
 
   getFeasibilityQueryId(): string {
