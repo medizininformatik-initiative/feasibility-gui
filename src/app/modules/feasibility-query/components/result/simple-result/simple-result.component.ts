@@ -63,7 +63,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private doSend(): void {
     this.initializeState();
     this.feasibilityQueryResultService.doSendQueryRequest().subscribe({
-      next: (result: QueryResult) => this.handleResult(result),
+      next: (result: QueryResult) =>
+        result === null ? this.finalize() : this.handleResult(result),
       error: (error) => console.error('Error fetching query result', error),
       complete: () => this.finalize(),
     });
@@ -84,7 +85,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   private handleResult(result: QueryResult): void {
     this.loadedResult = true;
-    this.showSpinner = false;
     this.setPatientCount(result.getTotalNumberOfPatients());
     this.resultLoaded.emit(this.loadedResult);
   }
@@ -102,6 +102,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   private finalize(): void {
+    console.log('Finalize');
     this.loadedResult = true;
     this.showSpinner = false;
     this.queryProviderService.checkCriteria();

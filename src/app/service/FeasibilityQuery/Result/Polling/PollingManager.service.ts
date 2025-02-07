@@ -11,6 +11,7 @@ import {
   takeWhile,
   endWith,
   tap,
+  defaultIfEmpty,
 } from 'rxjs';
 import { PollingService } from './Polling.service';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
@@ -42,7 +43,7 @@ export class PollingManagerService {
         feasibilityQuery.addResultId(feasibilityQueryResultId);
         return this.startPollingProcess(feasibilityQueryResultId, feasibilityQuery.getID()).pipe(
           tap((test) => console.log(test)),
-          takeWhile((result) => result !== null)
+          takeWhile((result) => result !== null, true)
         );
       })
     );
@@ -78,7 +79,7 @@ export class PollingManagerService {
    * @returns A structured QueryResult.
    */
   private processPollingResult(pollingResult: any, feasibilityQueryId: string): QueryResult {
-    return this.queryResultMapperService.createQueryResult(pollingResult, feasibilityQueryId);
+    return this.queryResultMapperService.createQueryResult(false, pollingResult, feasibilityQueryId);
   }
 
   /**
