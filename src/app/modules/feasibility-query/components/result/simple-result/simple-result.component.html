@@ -12,20 +12,21 @@
     </div>
     {{ 'QUERYBUILDER.RESULT.PATIENT_NUMBER' | translate }}
   </div>
-  <num-button
-    type="green"
-    *ngIf="loadedResult"
-    fxFlexAlign="start"
-    matTooltipShowDelay="300"
-    [matTooltip]="'QUERYBUILDER.RESULT.DETAILS_TOOLTIP' | translate"
-    matTooltipPosition="right"
-    (click)="openDialogResultDetails()"
-    class="button-dialog-result-details"
-  >
-    {{ 'QUERYBUILDER.RESULT.BUTTON.DETAILS' | translate }}
-    ({{ (queryResultRateLimit$ | async)?.getRemaining() }}/{{
-      (queryResultRateLimit$ | async)?.getLimit()
-    }})
-  </num-button>
-  <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <num-button
+      type="green"
+      [isDisabled]="!loadedResult"
+      matTooltipShowDelay="300"
+      [matTooltip]="'QUERYBUILDER.RESULT.DETAILS_TOOLTIP' | translate"
+      matTooltipPosition="right"
+      (click)="openDialogResultDetails()"
+      class="button-dialog-result-details"
+    >
+      {{ 'QUERYBUILDER.RESULT.BUTTON.DETAILS' | translate }}
+      ({{ (queryResultRateLimit$ | async)?.getRemainingCalls() }}/{{
+        (queryResultRateLimit$ | async)?.getLimit()
+      }})
+    </num-button>
+    <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
+  </div>
 </div>

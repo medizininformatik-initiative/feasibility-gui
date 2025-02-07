@@ -84,7 +84,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   private handleResult(result: QueryResult): void {
-    this.loadedResult = true;
     this.setPatientCount(result.getTotalNumberOfPatients());
     this.resultLoaded.emit(this.loadedResult);
   }
