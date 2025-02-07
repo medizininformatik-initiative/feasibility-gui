@@ -1,8 +1,8 @@
+import { map, Observable, switchMap } from 'rxjs';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 import { FeatureService } from '../../Feature.service';
 import { Injectable } from '@angular/core';
-import { map, Observable, switchMap, takeWhile } from 'rxjs';
 import { ObfuscatedResultRateLimitService } from './Obfuscate/ObfuscatedResultRateLimit.service';
 import { ObfuscatedResultService } from './Obfuscate/ObfuscatedResult.service';
 import { PollingManagerService } from './Polling/PollingManager.service';
@@ -38,7 +38,6 @@ export class FeasibilityQueryResultService {
             if (queryResult !== null) {
               this.setQueryResultProvider(queryResult);
             }
-            console.log(queryResult);
             return queryResult;
           })
         )
@@ -63,5 +62,9 @@ export class FeasibilityQueryResultService {
 
   private setQueryResultProvider(queryResult: QueryResult): void {
     this.resultProvider.setResultByID(queryResult, queryResult.getId());
+  }
+
+  public stopPolling(): void {
+    this.pollingManagerService.stopPolling();
   }
 }
