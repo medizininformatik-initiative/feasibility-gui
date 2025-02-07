@@ -32,6 +32,7 @@ export class ObfuscatedResultService {
 
   private mapQueryResult(result, feasibilityQueryId: string): QueryResult {
     const queryResult: QueryResult = this.queryResultMapperService.createQueryResult(
+      true,
       result,
       feasibilityQueryId
     );

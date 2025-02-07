@@ -30,7 +30,7 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
   public doSaveFeasibilityQuery(data: SaveDataModal): void {
     this.subscriptionResult = this.saveFeasibilityQueryModalService
       .saveFeasibilityQuery(data.title, data.comment)
-      .subscribe();
+      .subscribe(() => this.doDiscard());
   }
 
   public doDiscard(): void {
