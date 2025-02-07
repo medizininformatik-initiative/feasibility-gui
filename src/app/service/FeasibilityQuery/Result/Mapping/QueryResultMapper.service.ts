@@ -8,8 +8,13 @@ import { QueryResultLine } from 'src/app/model/Result/QueryResultLine';
 export class QueryResultMapperService {
   constructor() {}
 
-  public createQueryResult(result: any, feasibilityQueryId: string): QueryResult {
+  public createQueryResult(
+    detailedReceived: boolean,
+    result: any,
+    feasibilityQueryId: string
+  ): QueryResult {
     return new QueryResult(
+      detailedReceived,
       feasibilityQueryId,
       result.totalNumberOfPatients,
       result.queryId.toString(),
