@@ -13,7 +13,10 @@ export class CriterionValidationService {
     private criterionValidationManagerService: CriterionValidationManagerService
   ) {}
 
-  /** Get missing required filter criteria reactively */
+  /**
+   *
+   * @returns Observable<string[]
+   */
   public getMissingRequiredFilterCriteria(): Observable<string[]> {
     return this.getActiveFeasibilityQuery().pipe(
       map((query) =>
@@ -22,7 +25,10 @@ export class CriterionValidationService {
     );
   }
 
-  /** Get invalid criteria reactively */
+  /**
+   *
+   * @returns Observable<string[]>
+   */
   public getInvalidCriteria(): Observable<string[]> {
     return this.getActiveFeasibilityQuery().pipe(
       map((query) =>
@@ -31,14 +37,20 @@ export class CriterionValidationService {
     );
   }
 
-  /** Check if inclusion criteria is set */
+  /**
+   *
+   * @returns Observable<boolean>
+   */
   public getIsInclusionSet(): Observable<boolean> {
     return this.getActiveFeasibilityQuery().pipe(
       map((query) => (query ? this.criterionValidationManagerService.isInclusionSet(query) : false))
     );
   }
 
-  /** Check if feasibility query is set */
+  /**
+   *
+   * @returns Observable<boolean>
+   */
   public getIsFeasibilityQuerySet(): Observable<boolean> {
     return this.getActiveFeasibilityQuery().pipe(
       map((query) =>
@@ -47,7 +59,10 @@ export class CriterionValidationService {
     );
   }
 
-  /** Determine if the feasibility query is valid */
+  /**
+   *
+   * @returns Observable<boolean>
+   */
   public getIsFeasibilityQueryValid(): Observable<boolean> {
     return combineLatest([
       this.getMissingRequiredFilterCriteria().pipe(map((criteria) => criteria.length === 0)),
@@ -61,6 +76,10 @@ export class CriterionValidationService {
     );
   }
 
+  /**
+   *
+   * @returns Observable<FeasibilityQuery>
+   */
   private getActiveFeasibilityQuery(): Observable<FeasibilityQuery> {
     return this.feasibilityQueryProvider.getActiveFeasibilityQuery();
   }
