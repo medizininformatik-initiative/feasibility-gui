@@ -10,20 +10,11 @@ export class CriterionHashService {
   constructor() {}
 
   public createHash(context: TerminologyCode, termCode: TerminologyCode): string {
-    let contextVersion = '';
-    let contextSystem = '';
-    let contextCode = '';
+    const contextSystem = context?.getSystem() || '';
+    const contextCode = context?.getCode() || '';
+    const contextVersion = context?.getVersion() || '';
 
-    if (context) {
-      contextSystem = context.getSystem();
-      contextCode = context.getCode();
-      if (context.getVersion()) {
-        contextVersion = context.getVersion();
-      }
-    }
-
-    const hashCode =
-      contextSystem + contextCode + contextVersion + termCode.getSystem() + termCode.getCode();
+    const hashCode = `${contextSystem}${contextCode}${contextVersion}${termCode.getSystem()}${termCode.getCode()}`;
 
     return uuidv3(hashCode, UuidPaths.UUID_NAMESPACE);
   }
