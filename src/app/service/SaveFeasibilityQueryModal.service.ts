@@ -31,8 +31,8 @@ export class SaveFeasibilityQueryModalService {
   }
 
   private saveFeasibilityQueryResult(
-    comment: string,
     title: string,
+    comment: string,
     result: QueryResult
   ): Observable<void> {
     const savedQuery = new SavedFeasibilityQueryResults(
