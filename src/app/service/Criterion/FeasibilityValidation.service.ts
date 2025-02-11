@@ -19,8 +19,8 @@ export class CriterionValidationService {
    */
   public getMissingRequiredFilterCriteria(): Observable<string[]> {
     return this.getActiveFeasibilityQuery().pipe(
-      map((query) =>
-        query ? this.criterionValidationManagerService.getMissingRequiredFilterCriteria(query) : []
+      map((feasibilityQuery) =>
+        this.criterionValidationManagerService.getMissingRequiredFilterCriteria(feasibilityQuery)
       )
     );
   }
@@ -31,8 +31,8 @@ export class CriterionValidationService {
    */
   public getInvalidCriteria(): Observable<string[]> {
     return this.getActiveFeasibilityQuery().pipe(
-      map((query) =>
-        query ? this.criterionValidationManagerService.getInvalidCriteria(query) : []
+      map((feasibilityQuery) =>
+        this.criterionValidationManagerService.getInvalidCriteria(feasibilityQuery)
       )
     );
   }
@@ -43,7 +43,9 @@ export class CriterionValidationService {
    */
   public getIsInclusionSet(): Observable<boolean> {
     return this.getActiveFeasibilityQuery().pipe(
-      map((query) => (query ? this.criterionValidationManagerService.isInclusionSet(query) : false))
+      map((feasibilityQuery) =>
+        this.criterionValidationManagerService.isInclusionSet(feasibilityQuery)
+      )
     );
   }
 
@@ -53,8 +55,8 @@ export class CriterionValidationService {
    */
   public getIsFeasibilityQuerySet(): Observable<boolean> {
     return this.getActiveFeasibilityQuery().pipe(
-      map((query) =>
-        query ? this.criterionValidationManagerService.isFeasibilityQuerySet(query) : false
+      map((feasibilityQuery) =>
+        this.criterionValidationManagerService.isFeasibilityQuerySet(feasibilityQuery)
       )
     );
   }
@@ -65,8 +67,10 @@ export class CriterionValidationService {
    */
   public getIsFeasibilityQueryValid(): Observable<boolean> {
     return combineLatest([
-      this.getMissingRequiredFilterCriteria().pipe(map((criteria) => criteria.length === 0)),
-      this.getInvalidCriteria().pipe(map((criteria) => criteria.length === 0)),
+      this.getMissingRequiredFilterCriteria().pipe(
+        map((missingCriteria) => missingCriteria.length === 0)
+      ),
+      this.getInvalidCriteria().pipe(map((invalidCriteria) => invalidCriteria.length === 0)),
       this.getIsInclusionSet(),
     ]).pipe(
       map(
