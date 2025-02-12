@@ -1,8 +1,9 @@
 import { CreateCriterionService } from '../../../../service/Criterion/Builder/Create/CreateCriterion.service';
 import { Injectable } from '@angular/core';
-import { Subject, switchMap, take, takeUntil } from 'rxjs';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
+import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { switchMap, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class ListItemDetailsMenuItemsFunctionsService {
       .searchCriteriaById(id)
       .pipe(
         take(1),
-        switchMap((searchTermResultList) => {
+        switchMap((searchTermResultList: SearchTermResultList) => {
           this.searchService.setActiveCriteriaSearchTerm(
             searchTermResultList.getResults()[0].getDisplay().getOriginal()
           );

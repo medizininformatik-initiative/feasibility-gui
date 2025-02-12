@@ -21,7 +21,6 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
   public initializeFilterBuilder(
     abstractAttributeDefinition: AbstractAttributeDefinition
   ): AttributeFiltersBuilder {
-    console.log(abstractAttributeDefinition);
     const builder = new AttributeFiltersBuilder(
       this.displayDataFactoryService.createDisplayData(abstractAttributeDefinition.getDisplay()),
       abstractAttributeDefinition.getOptional(),

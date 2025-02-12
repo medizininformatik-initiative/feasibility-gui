@@ -57,7 +57,6 @@ export class ConceptFilterChipService {
     attributeFilter: AttributeFilter
   ): InterfaceFilterChip[] {
     const conceptFilter = attributeFilter.getConcept();
-    const attributeCode = attributeFilter.getAttributeCode();
     const display = attributeFilter.getDisplay();
     if (conceptFilter) {
       return this.generateConceptChips(conceptFilter, display);

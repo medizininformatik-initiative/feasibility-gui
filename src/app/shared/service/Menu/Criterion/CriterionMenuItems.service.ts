@@ -9,7 +9,6 @@ export class CriterionMenuItems {
   constructor(private menuServiceCriterionFunctions: MenuServiceCriterionFunctions) {}
 
   /**
-   * @todo Labels need to be redefined for translation jsons
    * @returns Array of Menu functions for a criterion box
    */
   public getMenuItemsForCriterion(isReferenceEnabled: boolean): MenuItemInterface[] {
@@ -36,7 +35,7 @@ export class CriterionMenuItems {
         disabled: false,
         icon: 'filter',
         label: 'APPLY_FILTERS',
-        action: (id: string) => this.menuServiceCriterionFunctions.applyCriterionFilter(id),
+        action: (id: string) => this.menuServiceCriterionFunctions.editCriterionFilter(id),
       },
     ];
   }

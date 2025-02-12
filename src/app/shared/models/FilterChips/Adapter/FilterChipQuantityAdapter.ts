@@ -81,15 +81,4 @@ export class FilterChipQuantityAdapter {
     builder.addData(uuidv4(), text);
     return builder.buildFilterChip();
   }
-
-  /*
-  private static createDisplayDataInstance(text: string) {
-    const german = 'de-DE';
-    const english = 'en-US';
-    return new DisplayData(
-      [text],
-      [new Translation(german, [text]), new Translation(english, [text])]
-    );
-  }
-    */
 }
