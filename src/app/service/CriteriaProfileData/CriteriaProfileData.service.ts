@@ -1,7 +1,6 @@
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeDefinitionsResultMapper } from './Mapper/AttributeDefinitionsResultMapper';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { finalize, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -10,7 +9,6 @@ import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTer
 import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemService.service';
 import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
 
