@@ -1,6 +1,7 @@
 import { AbstractAttributeDefinitionsResultMapper } from './AbstractAttributeDefinitionsResultMapper';
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { AttributeDefinition } from 'src/app/model/FeasibilityQuery/AttributeDefinitions';
 
 export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitionsResultMapper {
   /**
@@ -29,7 +30,7 @@ export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitio
    */
   private mapSingleAttributeDefinition(attributeDefinition: any): AttributeDefinitions {
     return new AttributeDefinitions(
-      attributeDefinition.name,
+      attributeDefinition.display,
       attributeDefinition.type,
       attributeDefinition.optional,
       this.mapAllowedUnits(attributeDefinition.allowedUnits),
