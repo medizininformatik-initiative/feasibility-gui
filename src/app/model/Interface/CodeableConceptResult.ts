@@ -1,6 +1,6 @@
 import { SearchResult } from './SearchResult';
-import { TermCode } from './TermCode';
+import { TerminologyCodeData } from './TerminologyCodeData ';
 
 export interface CodeableConceptResult extends SearchResult {
-  termCode: TermCode
+  termCode: TerminologyCodeData
 }

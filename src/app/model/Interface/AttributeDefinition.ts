@@ -1,14 +1,15 @@
-import { Display } from './Display';
 import { AttributeCode } from './AttributeCode';
+import { Display } from './Display';
+import { Unit } from './Unit';
 
 export interface AttributeDefinition {
-  display: Display
-  type: string
-  selectableConcepts: any[]
+  allowedUnits: Unit[]
   attributeCode: AttributeCode
+  display: Display
   optional: boolean
-  allowedUnits: any[]
   precision: number
   referencedCriteriaSet?: string
   referencedValueSet?: string
+  selectableConcepts: string[]
+  type: string
 }

@@ -1,4 +1,4 @@
-export interface TermCode {
+export interface TerminologyCodeData {
   code: string
   system: string
   version: string

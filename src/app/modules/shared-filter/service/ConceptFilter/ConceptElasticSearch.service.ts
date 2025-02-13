@@ -1,4 +1,3 @@
-import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
@@ -9,6 +8,7 @@ import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
+import { BackendService } from 'src/app/service/Backend/Backend.service';
 
 @Injectable({
   providedIn: 'root',
