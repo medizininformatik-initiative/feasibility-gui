@@ -161,7 +161,6 @@ export class CreateCriterionService {
     const criterion: Criterion = criterionBuilder.buildCriterion();
     this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
     this.stageProviderService.addCriterionToStage(criterion.getId());
-    this.feasibilityQueryProviderService.checkCriteria();
   }
 
   private createMandatoryFields(criteriaProfileData: CriteriaProfileData): {

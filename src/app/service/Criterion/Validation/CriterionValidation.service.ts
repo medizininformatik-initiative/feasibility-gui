@@ -34,11 +34,9 @@ export class CriterionValidationService {
     const missingCriteria: string[] = [];
     const invalidCriteria: string[] = [];
 
-    // Extract inclusion and exclusion criteria groups.
     const inclusionCriteria = feasibilityQuery.getInclusionCriteria();
     const exclusionCriteria = feasibilityQuery.getExclusionCriteria();
 
-    // Process each group of criteria (each group is an array of criterion IDs)
     inclusionCriteria.forEach((criteriaGroup) =>
       this.processCriteriaGroup(criteriaGroup, missingCriteria, invalidCriteria)
     );
@@ -46,11 +44,9 @@ export class CriterionValidationService {
       this.processCriteriaGroup(criteriaGroup, missingCriteria, invalidCriteria)
     );
 
-    // Update the BehaviorSubjects only once after processing
     this.foundMissingFilterCriteria.next(missingCriteria);
     this.foundInvalidCriteria.next(invalidCriteria);
 
-    // Update state flags
     this.isInclusionSet.next(inclusionCriteria.length > 0);
     this.isFeasibilityQuerySet.next(inclusionCriteria.length > 0 || exclusionCriteria.length > 0);
   }

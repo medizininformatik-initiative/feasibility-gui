@@ -16,30 +16,29 @@ export class MenuServiceCriterionFunctions {
     private queryProviderService: FeasibilityQueryProviderService
   ) {}
 
-  deleteCriterion(uid: string) {
+  public deleteCriterion(uid: string) {
     this.stageProviderService.deleteCriterionByUID(uid);
     this.queryProviderService.deleteFromInclusion(uid);
     this.queryProviderService.deleteFromExclusion(uid);
     this.criterionProviderService.deleteCriterionFromMapByUID(uid);
   }
 
-  duplicateCriterion(uid: string) {
+  public duplicateCriterion(uid: string) {
     const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(
       this.criterionProviderService.getCriterionByUID(uid)
     );
     this.criterionProviderService.setCriterionByUID(clonedCriterion, clonedCriterion.getId());
     this.stageProviderService.addCriterionToStage(clonedCriterion.getId());
-    this.queryProviderService.checkCriteria();
   }
 
-  editLinkedCriteria(criterionUuid: string) {
+  public editLinkedCriteria(criterionUuid: string) {
     const criterion = this.criterionProviderService.getCriterionByUID(criterionUuid);
     if (criterion) {
       this.editCriterionService.openReferenceCriteriaModal(criterion);
     }
   }
 
-  applyCriterionFilter(criterionUuid: string) {
+  public applyCriterionFilter(criterionUuid: string) {
     const criterion = this.criterionProviderService.getCriterionByUID(criterionUuid);
     if (criterion) {
       this.editCriterionService.openCriterionModal(criterion);

@@ -15,13 +15,8 @@ export class FeasibilityQueryProviderService {
   private feasibilityQueryMap: Map<string, FeasibilityQuery> = new Map();
   private feasibilityQueryMapSubject: BehaviorSubject<Map<string, FeasibilityQuery>> =
     new BehaviorSubject(new Map());
-  private foundMissingFilterCriteria: BehaviorSubject<string[]> = new BehaviorSubject([]);
-  private foundInvalidCriteria: BehaviorSubject<string[]> = new BehaviorSubject([]);
-  private isInclusionSet: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private isFeasibilityQuerySet: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private hasQueryResult: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  private feasibilityQueryIDToResultIDMap: Map<string, string> = new Map();
   constructor(
     @Inject(LOCAL_STORAGE) private storage: StorageService,
     private activeFeasibilityQuery: ActiveFeasibilityQueryService,
@@ -61,7 +56,6 @@ export class FeasibilityQueryProviderService {
     if (setAsActive) {
       this.activeFeasibilityQuery.setActiveFeasibilityQueryID(id);
     }
-    this.checkCriteria();
   }
 
   /**
@@ -114,7 +108,6 @@ export class FeasibilityQueryProviderService {
       this.activeFeasibilityQuery.getActiveFeasibilityQueryID(),
       feasibilityQuery
     );
-    this.checkCriteria();
     this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
   }
 
@@ -127,7 +120,6 @@ export class FeasibilityQueryProviderService {
       this.activeFeasibilityQuery.getActiveFeasibilityQueryID(),
       feasibilityQuery
     );
-    this.checkCriteria();
     this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap));
   }
 
@@ -157,87 +149,6 @@ export class FeasibilityQueryProviderService {
     return inexclusion;
   }
 
-  public checkCriteria(): void {
-    const foundMissingFilterCriteria: string[] = [];
-    const foundInvalidCriteria: string[] = [];
-
-    const feasibilityQuery = this.feasibilityQueryMap.get(
-      this.activeFeasibilityQuery.getActiveFeasibilityQueryID()
-    );
-    feasibilityQuery.getInclusionCriteria().forEach((innerArray) => {
-      foundMissingFilterCriteria.push(
-        ...innerArray.filter(
-          (criterion) =>
-            this.criterionService.getCriterionByUID(criterion).getIsRequiredFilterSet() === false
-        )
-      );
-      this.foundMissingFilterCriteria.next(foundMissingFilterCriteria);
-      foundInvalidCriteria.push(
-        ...innerArray.filter(
-          (criterion) => this.criterionService.getCriterionByUID(criterion).getIsInvalid() === true
-        )
-      );
-
-      this.foundInvalidCriteria.next(foundInvalidCriteria);
-    });
-    feasibilityQuery.getExclusionCriteria().forEach((innerArray) => {
-      foundMissingFilterCriteria.push(
-        ...innerArray.filter(
-          (criterion) =>
-            this.criterionService.getCriterionByUID(criterion).getIsRequiredFilterSet() === false
-        )
-      );
-      this.foundMissingFilterCriteria.next(foundMissingFilterCriteria);
-      foundInvalidCriteria.push(
-        ...innerArray.filter(
-          (criterion) => this.criterionService.getCriterionByUID(criterion).getIsInvalid() === true
-        )
-      );
-      this.foundInvalidCriteria.next(foundInvalidCriteria);
-    });
-    this.isInclusionSet.next(feasibilityQuery.getInclusionCriteria().length > 0);
-    this.isFeasibilityQuerySet.next(
-      feasibilityQuery.getInclusionCriteria().length > 0 ||
-        feasibilityQuery.getExclusionCriteria().length > 0
-    );
-
-    this.resultProvider
-      .getResultMap()
-      .pipe(
-        map((resultMap) => {
-          const resultArray = Array.from(resultMap.values());
-          const latestResult = resultArray[resultArray.length - 1];
-          return !!latestResult?.getTotalNumberOfPatients();
-        })
-      )
-      .subscribe((hasResult) => {
-        this.hasQueryResult.next(hasResult);
-      });
-  }
-  public getMissingRequiredFilterCriteria(): Observable<string[]> {
-    return this.foundMissingFilterCriteria.asObservable();
-  }
-  public getInvalidCriteria(): Observable<string[]> {
-    return this.foundInvalidCriteria.asObservable();
-  }
-  public getIsInclusionSet(): Observable<boolean> {
-    return this.isInclusionSet.asObservable();
-  }
-  public getIsFeasibilityQuerySet(): Observable<boolean> {
-    return this.isFeasibilityQuerySet.asObservable();
-  }
-  public getIsFeasibilityQueryValid(): Observable<boolean> {
-    return combineLatest([
-      this.getMissingRequiredFilterCriteria().pipe(map((criteria) => criteria.length === 0)),
-      this.getInvalidCriteria().pipe(map((criteria) => criteria.length === 0)),
-      this.getIsInclusionSet(),
-    ]).pipe(
-      map(
-        ([noMissingCriteria, noInvalidCriteria, isInclusionSet]) =>
-          noMissingCriteria && noInvalidCriteria && isInclusionSet
-      )
-    );
-  }
   public getHasQueryResult(): Observable<boolean> {
     return this.hasQueryResult.asObservable();
   }

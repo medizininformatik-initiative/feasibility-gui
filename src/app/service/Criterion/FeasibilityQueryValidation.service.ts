@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class CriterionValidationService {
+export class FeasibilityQueryValidation {
   constructor(
     private feasibilityQueryProvider: FeasibilityQueryProviderService,
     private criterionValidationManagerService: CriterionValidationManagerService

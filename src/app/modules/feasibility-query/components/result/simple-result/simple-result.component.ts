@@ -103,6 +103,5 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private finalize(): void {
     this.loadedResult = true;
     this.showSpinner = false;
-    this.queryProviderService.checkCriteria();
   }
 }

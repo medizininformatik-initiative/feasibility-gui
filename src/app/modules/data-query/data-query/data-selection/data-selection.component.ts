@@ -10,6 +10,8 @@ import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologyS
 import { v4 as uuidv4 } from 'uuid';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
+import { map, Observable } from 'rxjs';
+import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -18,10 +20,11 @@ import { DataSelectionProfileProviderService } from 'src/app/modules/data-select
 })
 export class DataSelectionComponent implements OnInit {
   @Input() showActionBar;
-  @Output() scrollClick = new EventEmitter();
+  @Output()
+  scrollClick = new EventEmitter();
 
-  isDataSelectionExistent = false;
-  isCohortExistent = false;
+  isDataSelectionExistent$: Observable<boolean>;
+  isCohortExistent$: Observable<boolean>;
 
   fileName: string;
   constructor(
@@ -33,17 +36,16 @@ export class DataSelectionComponent implements OnInit {
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService
+    private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
+    private feasibilityQueryValidation: FeasibilityQueryValidation
   ) {}
 
   ngOnInit(): void {
-    this.dataSelectionProviderService.getActiveDataSelection().subscribe((dataSelection) => {
-      this.isDataSelectionExistent = dataSelection.getProfiles().length > 0;
-    });
+    this.isDataSelectionExistent$ = this.dataSelectionProviderService
+      .getActiveDataSelection()
+      .pipe(map((dataSelection) => dataSelection.getProfiles().length > 0));
 
-    this.feasibilityQueryProviderService.getIsFeasibilityQueryValid().subscribe((isValid) => {
-      this.isCohortExistent = isValid;
-    });
+    this.isCohortExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
   }
 
   public editDataSelection() {
@@ -63,16 +65,25 @@ export class DataSelectionComponent implements OnInit {
   public downloadCRDTL(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    if (this.isCohortExistent) {
-      this.dialog
-        .open(DownloadDataSelectionComponent, dialogConfig)
-        .afterClosed()
-        .subscribe(() => {
-          this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
-        });
-    } else {
-      this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.DOWNLOAD');
-    }
+
+    this.isCohortExistent$
+      .pipe(
+        map((isCohortExistent) => {
+          if (isCohortExistent) {
+            this.dialog
+              .open(DownloadDataSelectionComponent, dialogConfig)
+              .afterClosed()
+              .subscribe(() => {
+                this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
+              });
+          } else {
+            this.snackbarService.displayErrorMessageWithNoCode(
+              'DATAQUERY.DATASELECTION.ERROR.DOWNLOAD'
+            );
+          }
+        })
+      )
+      .subscribe();
   }
 
   public onFileSelected(event: Event): void {
@@ -88,8 +99,8 @@ export class DataSelectionComponent implements OnInit {
 
   public uploadDataSelection(crtdl: string) {
     this.dataSelectionProfileProviderService.resetDataSelectionProfileMap();
-    this.isDataSelectionExistent = this.crdtlTranslatorService.translateToUiModel(crtdl);
-    if (!this.isDataSelectionExistent) {
+    const isDataSelectionValid = this.crdtlTranslatorService.translateToUiModel(crtdl);
+    if (!isDataSelectionValid) {
       this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');
     } else {
       this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD');
