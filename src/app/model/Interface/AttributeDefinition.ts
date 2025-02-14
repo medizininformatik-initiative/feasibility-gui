@@ -1,11 +1,11 @@
 import { AttributeCode } from './AttributeCode';
-import { Display } from './Display';
+import { DisplayData } from './DisplayData';
 import { Unit } from './Unit';
 
 export interface AttributeDefinition {
   allowedUnits: Unit[]
   attributeCode: AttributeCode
-  display: Display
+  display: DisplayData
   optional: boolean
   precision: number
   referencedCriteriaSet?: string

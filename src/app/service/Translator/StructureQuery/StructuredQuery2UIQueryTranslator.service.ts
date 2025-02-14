@@ -18,8 +18,8 @@ import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQuery
 import { CriterionValidationService } from '../../Criterion/CriterionValidation.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Injectable({
   providedIn: 'root',
@@ -318,7 +318,7 @@ export class StructuredQuery2UIQueryTranslatorService {
    * @returns
    */
   public instantiateDisplayData(display: string) {
-    return new DisplayData(
+    return new Display(
       this.emptyDisplayData.translations?.map(
         (translation) => new Translation(translation.language, translation.value)
       ),

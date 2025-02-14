@@ -1,5 +1,5 @@
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { FilterChipBuilder } from '../FilterChipBuilder';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { InterfaceFilterChip } from '../InterfaceFilterChip';
@@ -20,7 +20,7 @@ export class FilterChipConceptAdapter {
    */
   public static adaptCodeableConcept(
     selectedConcepts: Concept[] = [],
-    display?: DisplayData
+    display?: Display
   ): InterfaceFilterChip[] {
     this.resetFilterChips();
 
@@ -68,7 +68,7 @@ export class FilterChipConceptAdapter {
    * @param selectedConcepts A Set of TerminologyCode
    * @param type The filter type
    */
-  private static buildFilterChips(selectedConcepts: Concept[], type: DisplayData): void {
+  private static buildFilterChips(selectedConcepts: Concept[], type: Display): void {
     const builder = new FilterChipBuilder(type);
     selectedConcepts.forEach((concept) => {
       this.createFilterChip(concept, builder);

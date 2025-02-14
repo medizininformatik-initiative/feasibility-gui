@@ -1,4 +1,4 @@
-import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
+import { CriteriaProfile } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriteriaProfileDataService } from '../../../CriteriaProfileData/CriteriaProfileData.service';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionBuilderHelperService } from './CriterionBuilderHelper.service';
@@ -26,7 +26,7 @@ export class CreateReferenceCriterionService {
     return this.criteriaProfileDataService
       .getCriteriaProfileData(hashes)
       .pipe(
-        switchMap((criteriaProfileDatas: CriteriaProfileData[]) =>
+        switchMap((criteriaProfileDatas: CriteriaProfile[]) =>
           of(
             criteriaProfileDatas.map((criteriaProfileData) =>
               this.createReferenceCriterionFromProfileData(criteriaProfileData, parentId)
@@ -37,7 +37,7 @@ export class CreateReferenceCriterionService {
   }
 
   public createReferenceCriterionFromProfileData(
-    criteriaProfileData: CriteriaProfileData,
+    criteriaProfileData: CriteriaProfile,
     parentId: string
   ): ReferenceCriterion {
     const mandatoryFields = this.criterionMetadataService.createMandatoryFields(criteriaProfileData);

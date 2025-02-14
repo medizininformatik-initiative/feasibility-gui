@@ -1,11 +1,10 @@
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
+import { CriteriaProfile } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionHashService } from '../../CriterionHash.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { FeasibilityQueryProviderService } from '../../../Provider/FeasibilityQueryProvider.service';
 import { finalize, of, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -19,6 +18,7 @@ import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/
 import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { DisplayDataFactoryService } from 'src/app/service/Factory/DisplayDataFactory.service';
+import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +57,7 @@ export class CreateCriterionService {
             const termCodes = response.termCodes.map(this.mapTerminologyCode);
             const id = response.id;
             const display = response.display;
-            return new CriteriaProfileData(
+            return new CriteriaProfile(
               id,
               this.displayDataFactoryService.createDisplayData(display),
               response.uiProfile.timeRestrictionAllowed,
@@ -77,7 +77,7 @@ export class CreateCriterionService {
         })
       )
       .subscribe(
-        (criteriaProfileDataArray: CriteriaProfileData[] | null) => {
+        (criteriaProfileDataArray: CriteriaProfile[] | null) => {
           criteriaProfileDataArray.forEach((criteriaProfileData) => {
             this.createCriterionFromProfileData(criteriaProfileData);
           });
@@ -144,7 +144,7 @@ export class CreateCriterionService {
     return new TerminologyCode(termCode.code, termCode.display, termCode.system, termCode.version);
   }
 
-  public createCriterionFromProfileData(criteriaProfileData: CriteriaProfileData): void {
+  public createCriterionFromProfileData(criteriaProfileData: CriteriaProfile): void {
     const mandatoryFields = this.createMandatoryFields(criteriaProfileData);
     const criterionBuilder = new CriterionBuilder(mandatoryFields);
 
@@ -164,11 +164,11 @@ export class CreateCriterionService {
     this.feasibilityQueryProviderService.checkCriteria();
   }
 
-  private createMandatoryFields(criteriaProfileData: CriteriaProfileData): {
+  private createMandatoryFields(criteriaProfileData: CriteriaProfile): {
     isReference: false
     context: TerminologyCode
     criterionHash: string
-    display: DisplayData
+    display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
     uniqueID: string
@@ -192,7 +192,7 @@ export class CreateCriterionService {
     };
   }
 
-  private setIsRequiredFilterSet(criteriaProfileData: CriteriaProfileData) {
+  private setIsRequiredFilterSet(criteriaProfileData: CriteriaProfile) {
     return (
       criteriaProfileData
         .getAttributeDefinitions()

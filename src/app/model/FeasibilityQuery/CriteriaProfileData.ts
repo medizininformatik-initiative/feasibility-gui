@@ -1,4 +1,4 @@
-import { DisplayData } from '../DataSelection/Profile/DisplayData';
+import { Display } from '../DataSelection/Profile/DisplayData';
 import { TerminologyCode } from '../Terminology/TerminologyCode';
 import { AttributeDefinitions } from '../Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { ValueDefinition } from '../Utilities/AttributeDefinition.ts/ValueDefnition';
@@ -6,10 +6,10 @@ import { ValueDefinition } from '../Utilities/AttributeDefinition.ts/ValueDefnit
 /**
  * Represents criteria profile data.
  */
-export class CriteriaProfileData {
+export class CriteriaProfile {
   private attributeDefinitions: Array<AttributeDefinitions> = [];
   private context: TerminologyCode;
-  private display: DisplayData;
+  private display: Display;
   private id: string;
   private termCodes: TerminologyCode[];
   private timeRestrictionAllowed = false;
@@ -24,7 +24,7 @@ export class CriteriaProfileData {
    */
   constructor(
     id: string,
-    display: DisplayData,
+    display: Display,
     timeRestrictionAllowed: boolean,
     attributeDefinitions: Array<AttributeDefinitions>,
     context: TerminologyCode,
@@ -137,11 +137,11 @@ export class CriteriaProfileData {
     this.valueDefinitions = valueDefinitions;
   }
 
-  public setDisplay(display: DisplayData): void {
+  public setDisplay(display: Display): void {
     this.display = display;
   }
 
-  public getDisplay(): DisplayData {
+  public getDisplay(): Display {
     return this.display;
   }
 }

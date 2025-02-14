@@ -1,11 +1,10 @@
-import { DisplayData } from '../../DataSelection/Profile/DisplayData';
-import { Translation } from '../../DataSelection/Profile/Translation';
 import { CloneTranslations } from './CloneTranslations';
+import { Display } from '../../DataSelection/Profile/DisplayData';
 
 export class CloneDisplayData {
-  static deepCopyDisplayData(displayData: DisplayData): DisplayData {
+  static deepCopyDisplayData(displayData: Display): Display {
     const original = displayData.getOriginal();
     const translations = CloneTranslations.deepCopyTranslations(displayData.getTranslations());
-    return new DisplayData(translations, original);
+    return new Display(translations, original);
   }
 }

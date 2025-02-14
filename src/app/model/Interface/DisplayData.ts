@@ -1,6 +1,6 @@
 import { Translation } from './Translation';
 
-export interface Display {
+export interface DisplayData {
   original: string
   translations: Translation[]
 }

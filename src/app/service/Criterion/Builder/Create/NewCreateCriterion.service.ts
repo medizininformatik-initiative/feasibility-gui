@@ -1,4 +1,4 @@
-import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
+import { CriteriaProfile } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriteriaProfileDataService } from '../../../CriteriaProfileData/CriteriaProfileData.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
@@ -27,7 +27,7 @@ export class NewCreateCriterionService {
       );
   }
 
-  private createCriterionFromProfileData(criteriaProfileData: CriteriaProfileData): Criterion {
+  private createCriterionFromProfileData(criteriaProfileData: CriteriaProfile): Criterion {
     const mandatoryFields = this.criterionMetadataService.createMandatoryFields(criteriaProfileData);
     const criterionBuilder = new CriterionBuilder(mandatoryFields);
 

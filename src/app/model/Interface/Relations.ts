@@ -1,4 +1,4 @@
-import { Display } from './Display';
+import { Display } from './DisplayData';
 import { Relatives } from './Relatives';
 
 export interface Relations {

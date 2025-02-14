@@ -1,4 +1,4 @@
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { AbstractListEntry } from './AbstractListEntry';
 
 /**
@@ -13,7 +13,7 @@ export class SearchTermListEntry extends AbstractListEntry {
   private termcode: string;
   private kdsModule: string;
   private context: string;
-  private display: DisplayData;
+  private display: Display;
   /**
    *
    * @param availability
@@ -30,7 +30,7 @@ export class SearchTermListEntry extends AbstractListEntry {
     terminology: string,
     termcode: string,
     kdsModule: string,
-    display: DisplayData,
+    display: Display,
     id: string,
     context: string
   ) {
@@ -132,10 +132,10 @@ export class SearchTermListEntry extends AbstractListEntry {
     this.kdsModule = kdsModule;
   }
 
-  getDisplay(): DisplayData {
+  getDisplay(): Display {
     return this.display;
   }
-  setDisplay(display: DisplayData): void {
+  setDisplay(display: Display): void {
     this.display = display;
   }
 

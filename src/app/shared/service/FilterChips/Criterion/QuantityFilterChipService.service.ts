@@ -4,7 +4,7 @@ import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeF
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { FilterChipQuantityAdapter } from '../../../models/FilterChips/Adapter/FilterChipQuantityAdapter';
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +67,7 @@ export class QuantityFilterChipService {
    */
   private generateQuantityChipsFromAttributeFilter(
     quantityFilter: AbstractQuantityFilter,
-    display: DisplayData
+    display: Display
   ): InterfaceFilterChip[] {
     if (quantityFilter?.getComparator()) {
       return this.generateQuantityChips(quantityFilter, display);
@@ -83,7 +83,7 @@ export class QuantityFilterChipService {
    */
   private generateQuantityChipsFromValueFilter(
     quantityFilter: AbstractQuantityFilter,
-    display: DisplayData
+    display: Display
   ): InterfaceFilterChip[] {
     if (quantityFilter?.getComparator()) {
       return this.generateQuantityChips(quantityFilter, display);
@@ -99,7 +99,7 @@ export class QuantityFilterChipService {
    */
   private generateQuantityChips(
     quantityFilter: AbstractQuantityFilter,
-    display: DisplayData
+    display: Display
   ): InterfaceFilterChip[] {
     return FilterChipQuantityAdapter.adaptQuantity(quantityFilter, display);
   }

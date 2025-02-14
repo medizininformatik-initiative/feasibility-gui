@@ -6,7 +6,7 @@ import { CloneValueFilter } from './ValueAttributeFilter/CloneValueFilter';
 import { CriterionBuilder } from '../../FeasibilityQuery/Criterion/CriterionBuilder';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
-import { DisplayData } from '../../DataSelection/Profile/DisplayData';
+import { Display } from '../../DataSelection/Profile/DisplayData';
 
 export class CloneAbstractCriterion {
   static deepCopyAbstractCriterions(abstractCriterions: AbstractCriterion[]): AbstractCriterion[] {
@@ -45,7 +45,7 @@ export class CloneAbstractCriterion {
     isReference: boolean
     context: TerminologyCode
     criterionHash: string
-    display: DisplayData
+    display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
     uniqueID: string

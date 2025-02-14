@@ -1,6 +1,6 @@
-import { Display } from './Display';
+import { DisplayData } from './DisplayData';
 
 export interface SearchResult {
   id: string
-  display: Display
+  display: DisplayData
 }

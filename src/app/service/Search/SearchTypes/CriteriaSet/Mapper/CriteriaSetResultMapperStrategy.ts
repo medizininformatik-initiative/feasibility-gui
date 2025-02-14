@@ -1,9 +1,9 @@
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 export class CriteriaSetResultMapperStrategy
   implements MappingStrategy<ReferenceCriteriaListEntry, ReferenceCriteriaResultList>
@@ -39,7 +39,7 @@ export class CriteriaSetResultMapperStrategy
    * @returns
    */
   public instantiateDisplayData(data: any) {
-    return new DisplayData(
+    return new Display(
       data.translations?.map(
         (translation) => new Translation(translation.language, translation.value)
       ),
