@@ -1,16 +1,27 @@
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { AbstractListEntry } from './AbstractListEntry';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 export class ReferenceCriteriaListEntry extends AbstractListEntry {
+  private display: DisplayData;
   private terminologyCode: TerminologyCode;
 
   /**
    * @param terminologyCode
    * @param id
    */
-  constructor(terminologyCode: TerminologyCode, id: string) {
+  constructor(display: DisplayData, terminologyCode: TerminologyCode, id: string) {
     super(id);
+    this.display = display;
     this.terminologyCode = terminologyCode;
+  }
+
+  public getDisplay(): DisplayData {
+    return this.display;
+  }
+
+  public setDisplay(display: DisplayData): void {
+    this.display = display;
   }
 
   /**

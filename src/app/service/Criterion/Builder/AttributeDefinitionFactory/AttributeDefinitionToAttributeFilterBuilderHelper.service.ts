@@ -1,8 +1,8 @@
 import { AbstractAttributeDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/AbstractAttributeDefinition';
 import { AttributeFiltersBuilder } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFiltersBuilder';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { DisplayDataFactoryService } from 'src/app/service/Factory/DisplayDataFactory.service';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { FilterTypesService } from 'src/app/service/FilterTypes.service';
 import { Injectable } from '@angular/core';
 import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,8 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root',
 })
 export class AttributeDefinitionToAttributeFilterBuilderHelperService {
-  constructor(private filterTypesService: FilterTypesService) {}
-
+  constructor(private displayDataFactoryService: DisplayDataFactoryService) {}
   /**
    * Initializes the AttributeFiltersBuilder with common properties from the value definition.
    *
@@ -23,7 +22,7 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
     abstractAttributeDefinition: AbstractAttributeDefinition
   ): AttributeFiltersBuilder {
     const builder = new AttributeFiltersBuilder(
-      abstractAttributeDefinition.getName(),
+      this.displayDataFactoryService.createDisplayData(abstractAttributeDefinition.getDisplay()),
       abstractAttributeDefinition.getOptional(),
       abstractAttributeDefinition.getType()
     );

@@ -77,7 +77,7 @@ export class FeasibilityQueryProviderService {
 
   public getActiveFeasibilityQuery(): Observable<FeasibilityQuery> {
     return this.activeFeasibilityQuery
-      .getActiveFeasibilityQueryIDObservable()
+      .getActiveFeasibilityQueryIdObservable()
       .pipe(
         switchMap((id) =>
           this.feasibilityQueryMapSubject.pipe(

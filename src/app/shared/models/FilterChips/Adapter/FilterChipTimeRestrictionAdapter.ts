@@ -1,11 +1,11 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
 import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { FilterChipBuilder } from '../FilterChipBuilder';
 import { InterfaceFilterChip } from '../InterfaceFilterChip';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
-import { v4 as uuidv4 } from 'uuid';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { v4 as uuidv4 } from 'uuid';
 
 export class FilterChipTimeRestrictionAdapter {
   public static adaptTimeRestriction(
@@ -36,7 +36,7 @@ export class FilterChipTimeRestrictionAdapter {
 
   private static createBetweenChip(timeRestriction: any): InterfaceFilterChip {
     const betweenText = this.createDisplayDataInstanceForBetweenFilter(timeRestriction);
-    const builder = new FilterChipBuilder(TimeRestrictionType.BETWEEN);
+    const builder = new FilterChipBuilder('QUERYBUILDER.EDIT.TIMERESTRICTION.BETWEEN');
     builder.addData(uuidv4(), betweenText);
     return builder.buildFilterChip();
   }
@@ -45,7 +45,7 @@ export class FilterChipTimeRestrictionAdapter {
     const atText = this.createDisplayDataInstance(
       `${this.formatDate(timeRestriction.getBeforeDate())}`
     );
-    const builder = new FilterChipBuilder(TimeRestrictionType.AT);
+    const builder = new FilterChipBuilder('QUERYBUILDER.EDIT.TIMERESTRICTION.AT');
     builder.addData(uuidv4(), atText);
     return builder.buildFilterChip();
   }
@@ -54,7 +54,7 @@ export class FilterChipTimeRestrictionAdapter {
     const beforeText = this.createDisplayDataInstance(
       `${this.formatDate(timeRestriction.getAfterDate())}`
     );
-    const builder = new FilterChipBuilder(TimeRestrictionType.BEFORE);
+    const builder = new FilterChipBuilder('QUERYBUILDER.EDIT.TIMERESTRICTION.BEFORE');
     builder.addData(uuidv4(), beforeText);
     return builder.buildFilterChip();
   }
@@ -63,12 +63,12 @@ export class FilterChipTimeRestrictionAdapter {
     const afterText = this.createDisplayDataInstance(
       `${this.formatDate(timeRestriction.getAfterDate())}`
     );
-    const builder = new FilterChipBuilder(TimeRestrictionType.AFTER);
+    const builder = new FilterChipBuilder('QUERYBUILDER.EDIT.TIMERESTRICTION.AFTER');
     builder.addData(uuidv4(), afterText);
     return builder.buildFilterChip();
   }
 
-  public static formatDate(date: string) {
+  public static formatDate(date: string): string {
     const dateFormat = new Date(date);
 
     const day = String(dateFormat.getDate()).padStart(2, '0');
@@ -82,10 +82,7 @@ export class FilterChipTimeRestrictionAdapter {
   private static createDisplayDataInstance(text: string) {
     const german = 'de-DE';
     const english = 'en-US';
-    return new DisplayData(
-      [text],
-      [new Translation(german, [text]), new Translation(english, [text])]
-    );
+    return new DisplayData([new Translation(german, text), new Translation(english, text)], text);
   }
 
   /**
@@ -105,8 +102,8 @@ export class FilterChipTimeRestrictionAdapter {
     )} bis ${this.formatDate(timeRestriction.getBeforeDate())}`;
 
     return new DisplayData(
-      [germanText],
-      [new Translation(german, [germanText]), new Translation(english, [englishText])]
+      [new Translation(german, germanText), new Translation(english, englishText)],
+      germanText
     );
   }
 }

@@ -38,6 +38,8 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
 
   dataSelectionProfileSubscription: Subscription;
 
+  dataSelectionProfileTreeSubscription: Subscription;
+
   selectedDataSelectionProfileUrls: Set<string> = new Set();
 
   $dataSelectionProfileArray: Observable<DataSelectionProfileProfile[]>;
@@ -67,12 +69,14 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
       this.selectedDataSelectionProfileService.getSelectedProfiles();
 
     this.handleSelectedItemsSubscription();
-    this.dataSelectionProfileTreeService.fetchProfileTree().subscribe((tree) => {
-      const treeNodes = tree.getTreeNode();
-      treeNodes.forEach((node) => this.updateSelectionStatus(node));
-      const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
-      this.trees = rootNode;
-    });
+    this.dataSelectionProfileTreeSubscription = this.dataSelectionProfileTreeService
+      .fetchProfileTree()
+      .subscribe((tree) => {
+        const treeNodes = tree.getTreeNode();
+        treeNodes.forEach((node) => this.updateSelectionStatus(node));
+        const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
+        this.trees = rootNode;
+      });
   }
 
   /**
@@ -92,6 +96,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   ngOnDestroy() {
     this.crdtlSubscription?.unsubscribe();
     this.dataSelectionProfileSubscription?.unsubscribe();
+    this.dataSelectionProfileTreeSubscription?.unsubscribe();
   }
 
   ngAfterViewInit() {}

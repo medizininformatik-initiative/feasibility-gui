@@ -2,28 +2,31 @@
   <div
     fxLayout="row"
     fxLayoutAlign="start center"
-    *ngIf="obfuscatedPatientCountArray.length > 0"
+    *ngIf="patientCountArray.length > 0"
     class="margin-bottom-20"
   >
-    <div *ngFor="let digit of obfuscatedPatientCountArray" class="number-of-patients">
+    <div *ngFor="let digit of patientCountArray" class="number-of-patients">
       <div class="digit">
         {{ digit }}
       </div>
     </div>
     {{ 'QUERYBUILDER.RESULT.PATIENT_NUMBER' | translate }}
   </div>
-  <num-button
-    type="green"
-    *ngIf="loadedResult"
-    fxFlexAlign="start"
-    matTooltipShowDelay="300"
-    [matTooltip]="'QUERYBUILDER.RESULT.DETAILS_TOOLTIP' | translate"
-    matTooltipPosition="right"
-    (click)="openDialogResultDetails()"
-    class="button-dialog-result-details"
-  >
-    {{ 'QUERYBUILDER.RESULT.BUTTON.DETAILS' | translate }}
-    ({{ resultCallsRemaining$ | async }}/{{ resultCallsLimit$ | async }})
-  </num-button>
-  <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <num-button
+      type="green"
+      [isDisabled]="!loadedResult"
+      matTooltipShowDelay="300"
+      [matTooltip]="'QUERYBUILDER.RESULT.DETAILS_TOOLTIP' | translate"
+      matTooltipPosition="right"
+      (click)="openDialogResultDetails()"
+      class="button-dialog-result-details"
+    >
+      {{ 'QUERYBUILDER.RESULT.BUTTON.DETAILS' | translate }}
+      ({{ (queryResultRateLimit$ | async)?.getRemainingCalls() }}/{{
+        (queryResultRateLimit$ | async)?.getLimit()
+      }})
+    </num-button>
+    <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
+  </div>
 </div>

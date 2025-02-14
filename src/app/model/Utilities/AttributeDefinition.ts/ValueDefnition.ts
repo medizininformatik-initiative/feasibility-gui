@@ -1,10 +1,11 @@
-import { QuantityUnit } from '../../FeasibilityQuery/QuantityUnit';
-import { FilterTypes } from '../FilterTypes';
 import { AbstractAttributeDefinition } from './AbstractAttributeDefinition';
+import { DisplayData } from '../../DataSelection/Profile/DisplayData';
+import { FilterTypes } from '../FilterTypes';
+import { QuantityUnit } from '../../FeasibilityQuery/QuantityUnit';
 
 export class ValueDefinition extends AbstractAttributeDefinition {
   constructor(
-    name: string,
+    display: DisplayData,
     type: FilterTypes,
     optional: boolean = false,
     allowedUnits: Array<QuantityUnit> = [],
@@ -13,6 +14,6 @@ export class ValueDefinition extends AbstractAttributeDefinition {
     precision: number = 1,
     referencedValueSet?: string
   ) {
-    super(name, type, optional, allowedUnits, max, min, precision, referencedValueSet);
+    super(display, type, optional, allowedUnits, max, min, precision, referencedValueSet);
   }
 }

@@ -1,11 +1,15 @@
 <div cdkDrag fxLayout="row" fxLayoutAlign="start start" class="container">
   <div class="content">
-    <div matTooltipPosition="below" [matTooltip]="referenceCriterion.getTermCodes()[0].getDisplay()" class="title-section">
-      {{ referenceCriterion.getTermCodes()[0].getDisplay() }}
+    <div
+      matTooltipPosition="below"
+      [matTooltip]="referenceCriterion.getDisplay() | displayTranslation"
+      class="title-section"
+    >
+      {{ referenceCriterion.getDisplay() | displayTranslation }}
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
       <div class="info-item">
-        {{ referenceCriterion.getContext().getDisplay() }},
+        {{ referenceCriterion.getDisplay() | displayTranslation }},
         {{ referenceCriterion.getTermCodes()[0].getCode() }},
         {{ translatedSystem }}
       </div>

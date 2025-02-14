@@ -33,10 +33,10 @@
             [ngClass]="{
               'name-column': j === 0,
               'info-column': j > 0,
-              'highlight': row.isClickable && j === 0
+              highlight: row.isClickable && j === 0
             }"
           >
-            {{ cell }}
+            {{ cell | displayTranslation }}
           </div>
         </div>
       </td>

@@ -1,14 +1,15 @@
-import { BackendService } from '../../../service/backend.service';
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { BackendService } from 'src/app/service/Backend/Backend.service';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter';
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../shared/models/ListEntries/FeasibilityQueryResultDetailstListEntry';
-import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQueryResult.service';
+import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service';
 import { FeatureService } from '../../../../../service/Feature.service';
 import { map, Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { TableData } from '../../../../../shared/models/TableData/InterfaceTableData';
+import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 
 export class ResultDetailsModalComponentData {}
 @Component({
@@ -20,13 +21,16 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
   adaptedData: TableData;
   providerSubscription: Subscription;
   resultServiceSubscription: Subscription;
+  activeResultID: string;
+
   constructor(
     private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsModalComponentData,
     public dialogRef: MatDialogRef<ResultDetailModalComponent>,
     public backend: BackendService,
     private featureService: FeatureService,
-    private feasibilityQueryResultService: FeasibilityQueryResultService
+    private feasibilityQueryResultService: FeasibilityQueryResultService,
+    private resultProviderService: ResultProviderService
   ) {}
   lowerBoundaryLocation: number = this.featureService.getLocationResultLowerBoundary();
 
@@ -40,16 +44,24 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
         map((feasibilityQuery) => {
           const resultIdsArray = feasibilityQuery.getResultIds();
           const latestResultId = resultIdsArray[resultIdsArray.length - 1];
-          this.resultServiceSubscription = this.feasibilityQueryResultService
-            .getDetailedObfuscatedResult(latestResultId)
-            .subscribe((result) => {
-              this.adaptedData = FeasibilityQueryResultDetailsListAdapter.adapt(
-                this.sortResult(result)
-              );
-            });
+          const latestResult = this.resultProviderService.getResultByID(latestResultId);
+          if (latestResult.getDetailsReceived()) {
+            this.setActiveResultIdAndAdaptedData(latestResult);
+          } else {
+            this.resultServiceSubscription = this.feasibilityQueryResultService
+              .getDetailedObfuscatedResult(latestResultId)
+              .subscribe((result) => {
+                this.setActiveResultIdAndAdaptedData(result);
+              });
+          }
         })
       )
       .subscribe();
+  }
+
+  private setActiveResultIdAndAdaptedData(result: QueryResult): void {
+    this.activeResultID = result.getId();
+    this.adaptedData = FeasibilityQueryResultDetailsListAdapter.adapt(this.sortResult(result));
   }
 
   ngOnDestroy() {

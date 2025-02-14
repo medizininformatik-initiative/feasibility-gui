@@ -1,15 +1,18 @@
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeDefinitionsResultMapper } from './Mapper/AttributeDefinitionsResultMapper';
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { finalize, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemService.service';
+import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
-import { BackendService } from 'src/app/modules/feasibility-query/service/backend.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +21,9 @@ export class CriteriaProfileDataService {
   ids: Set<string> = new Set<string>();
 
   constructor(
-    private backend: BackendService,
-    private listItemService: SelectedTableItemsService<SearchTermListEntry> //private snackbar: SnackbarService
+    private terminologyApiService: TerminologyApiService,
+    private listItemService: SelectedTableItemsService<SearchTermListEntry>,
+    private displayDataFactoryService: DisplayDataFactoryService
   ) {}
 
   /**
@@ -36,7 +40,7 @@ export class CriteriaProfileDataService {
    * @returns Observable<CriteriaProfileData[]> The observable of criteria profile data array.
    */
   public getCriteriaProfileData(ids: Array<string>): Observable<CriteriaProfileData[]> {
-    return this.backend.getCriteriaProfileData(ids).pipe(
+    return this.terminologyApiService.getCriteriaProfileData(ids).pipe(
       mergeMap((responses: any[]) => {
         const criteriaProfileDataArray = responses
           .map((response) => this.createCriteriaProfileData(response))
@@ -57,9 +61,11 @@ export class CriteriaProfileDataService {
         const context = this.mapTerminologyCode(response.context);
         const termCodes = response.termCodes.map(this.mapTerminologyCode);
         const id = response.id;
+        const display = response.display;
 
         return new CriteriaProfileData(
           id,
+          this.displayDataFactoryService.createDisplayData(display),
           response.uiProfile.timeRestrictionAllowed,
           this.mapAttributeDefinitions(response.uiProfile),
           context,

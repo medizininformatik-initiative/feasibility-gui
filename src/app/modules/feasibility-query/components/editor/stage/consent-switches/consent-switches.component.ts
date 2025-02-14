@@ -20,7 +20,7 @@ export class ConsentSwitchesComponent implements OnInit {
   insuranceData = InsuranceData;
 
   distributedAnalysis = false;
-  euGdpr = false;
+  euGdpr = true;
   insuranceDataBoolean = false;
   contact = false;
 

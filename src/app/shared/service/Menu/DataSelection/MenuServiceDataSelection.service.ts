@@ -9,7 +9,6 @@ export class MenuServiceDataSelection {
   constructor(private menuServiceDataSelectionFunctions: MenuServiceDataSelectionFunctions) {}
 
   /**
-   * @todo Labels need to be redefined for translation jsons
    * @returns Array of Menu functions for a criterion box
    */
   public getMenuItemsForDataSelection(): MenuItemInterface[] {

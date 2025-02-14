@@ -41,6 +41,7 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
+import { ResultActionBarComponent } from './components/result/action-bar/result-action-bar.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -84,6 +85,7 @@ export const FORMATS_GERMAN = {
     DisplayFeasibilityQueryComponent,
     SearchActionBarComponent,
     DisplayCriteriaComponent,
+    ResultActionBarComponent,
   ],
   imports: [
     CommonModule,

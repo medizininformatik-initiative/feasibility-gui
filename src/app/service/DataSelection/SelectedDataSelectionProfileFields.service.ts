@@ -28,7 +28,7 @@ export class SelectedDataSelectionProfileFieldsService {
     return new ProfileFields(
       profileField.getId(),
       this.instantiateDisplayData(profileField.getDisplay()),
-      this.instantiateDisplayData(profileField.getDescription()),
+      this.instantiateDisplayDataForDescription(profileField.getDescription()),
       children,
       profileField.getIsSelected(),
       profileField.getIsRequired(),
@@ -38,12 +38,27 @@ export class SelectedDataSelectionProfileFieldsService {
     );
   }
 
-  private instantiateDisplayData(displayData: DisplayData): DisplayData {
+  private instantiateDisplayDataForDescription(displayData: DisplayData): DisplayData {
     return new DisplayData(
-      displayData.getOriginal(),
       displayData
         .getTranslations()
-        .map((translation) => new Translation(translation.getLanguage(), translation.getValues()))
+        .map(
+          (translation) => new Translation(translation.getLanguage(), '', translation.getValues())
+        ),
+      '',
+      displayData.getOriginals()
+    );
+  }
+
+  private instantiateDisplayData(displayData: DisplayData): DisplayData {
+    return new DisplayData(
+      displayData
+        .getTranslations()
+        .map(
+          (translation) =>
+            new Translation(translation.getLanguage(), translation.getValue(), undefined)
+        ),
+      displayData.getOriginal()
     );
   }
 

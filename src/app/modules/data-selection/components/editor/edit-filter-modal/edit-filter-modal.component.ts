@@ -1,7 +1,7 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
 import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
@@ -39,6 +39,10 @@ export class EditFilterModalComponent implements OnInit {
     private service: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService
   ) {}
+
+  @HostListener('window:keyup.esc') onKeyUp() {
+    this.dialogRef.close();
+  }
 
   public ngOnInit(): void {
     this.profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);

@@ -2,14 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionFilterChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFilterChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
 import { Observable, of } from 'rxjs';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
-import { TranslateService } from '@ngx-translate/core';
-import { iteratee } from 'lodash';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 
 @Component({
@@ -34,8 +32,7 @@ export class DataSelectionBoxesComponent implements OnInit {
   constructor(
     private fieldsFilterChipsService: DataSelectionFilterChipsService,
     private menuService: MenuServiceDataSelection,
-    private filtersFilterChipsService: DataSelectionFiltersFilterChips,
-    private translate: TranslateService
+    private filtersFilterChipsService: DataSelectionFiltersFilterChips
   ) {}
 
   ngOnInit(): void {

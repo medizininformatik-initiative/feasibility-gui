@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Injectable({
   providedIn: 'root',
@@ -56,9 +57,9 @@ export class ConceptFilterChipService {
     attributeFilter: AttributeFilter
   ): InterfaceFilterChip[] {
     const conceptFilter = attributeFilter.getConcept();
-    const attributeCode = attributeFilter.getAttributeCode();
+    const display = attributeFilter.getDisplay();
     if (conceptFilter) {
-      return this.generateConceptChips(conceptFilter, attributeCode);
+      return this.generateConceptChips(conceptFilter, display);
     }
     return [];
   }
@@ -72,7 +73,7 @@ export class ConceptFilterChipService {
   private generateConceptChipsFromValueFilter(valueFilter: ValueFilter): InterfaceFilterChip[] {
     const conceptFilter = valueFilter?.getConcept();
     if (conceptFilter) {
-      return this.generateConceptChips(conceptFilter);
+      return this.generateConceptChips(conceptFilter, valueFilter.getDisplay());
     }
     return [];
   }
@@ -86,11 +87,11 @@ export class ConceptFilterChipService {
    */
   public generateConceptChips(
     conceptFilter: ConceptFilter,
-    attributeCode?: TerminologyCode
+    display: DisplayData
   ): InterfaceFilterChip[] {
     return FilterChipConceptAdapter.adaptCodeableConcept(
       conceptFilter.getSelectedConcepts(),
-      attributeCode
+      display
     );
   }
 }

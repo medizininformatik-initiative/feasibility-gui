@@ -1,9 +1,9 @@
 import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriterionHashService } from '../CriterionHash.service';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { Injectable } from '@angular/core';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
-import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,7 @@ export class CriterionMetadataService {
     isReference: false
     context: TerminologyCode
     criterionHash: string
-    display: string
+    display: DisplayData
     isInvalid: boolean
     isRequiredFilterSet: boolean
     uniqueID: string
@@ -29,7 +29,7 @@ export class CriterionMetadataService {
   } {
     const context = criteriaProfileData.getContext();
     const termCodes = criteriaProfileData.getTermCodes();
-    const display = termCodes[0].getDisplay();
+    const display = criteriaProfileData.getDisplay();
     const criterionHash = this.criterionHashService.createHash(context, termCodes[0]);
     const isFilterRequired = !this.setIsRequiredFilterSet(criteriaProfileData);
 

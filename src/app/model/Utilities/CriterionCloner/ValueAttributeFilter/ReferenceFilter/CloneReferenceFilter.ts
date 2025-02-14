@@ -1,6 +1,6 @@
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { CloneAbstractCriterion } from '../../CloneReferenceCriterion';
-import { CloneTerminologyCode } from '../../TerminologyCode/CloneTerminologyCode';
+import { CloneConcept } from '../Concept/CloneConcept';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -19,7 +19,7 @@ export class CloneReferenceFilter {
       referenceFilter.getSelectedReferences()
     ) as ReferenceCriterion[];
 
-    const copiedSelectedConcepts = CloneTerminologyCode.deepCopyTerminologyCodes(
+    const copiedSelectedConcepts = CloneConcept.deepCopyConcepts(
       referenceFilter.getSelectedConcepts()
     );
 

@@ -4,6 +4,7 @@ import { AtFilter } from '../../../FeasibilityQuery/Criterion/TimeRestriction/At
 import { BeforeFilter } from '../../../FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter';
 import { BetweenFilter } from '../../../FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { TimeRestrictionType } from '../../../FeasibilityQuery/TimeRestriction';
+import { TimeRestrictionNotSet } from '../../../FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet';
 
 export class CloneTimeRestriction {
   /**
@@ -27,6 +28,8 @@ export class CloneTimeRestriction {
         return new AtFilter(timeRestriction.getAfterDate(), timeRestriction.getBeforeDate());
       case TimeRestrictionType.BETWEEN:
         return new BetweenFilter(timeRestriction.getAfterDate(), timeRestriction.getBeforeDate());
+      case TimeRestrictionType.NONE:
+        return new TimeRestrictionNotSet();
       default:
         throw new Error('Unsupported time restriction type: ' + timeRestriction.getType());
     }

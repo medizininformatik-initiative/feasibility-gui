@@ -20,7 +20,7 @@ export class SearchFilterService {
    */
   public fetchFilters(): Observable<Array<SearchTermFilter>> {
     return this.backendService
-      .getElasticSearchFilter()
+      .getSearchFilter()
       .pipe(
         map((response) =>
           response

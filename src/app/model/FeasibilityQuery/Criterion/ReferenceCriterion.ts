@@ -1,8 +1,9 @@
 import { AbstractCriterion } from './AbstractCriterion';
-import { AttributeFilter } from './AttributeFilter/AttributeFilter';
-import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { CritGroupPosition } from '../CritGroupPosition';
 import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
+import { AttributeFilter } from './AttributeFilter/AttributeFilter';
+import { CritGroupPosition } from '../CritGroupPosition';
+import { DisplayData } from '../../DataSelection/Profile/DisplayData';
+import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
 
 export class ReferenceCriterion extends AbstractCriterion {
@@ -14,7 +15,7 @@ export class ReferenceCriterion extends AbstractCriterion {
     attributeFilters: Array<AttributeFilter>,
     context: TerminologyCode,
     criterionHash: string,
-    display: string,
+    display: DisplayData,
     isInvalid: boolean,
     isRequiredFilterSet: boolean,
     position: CritGroupPosition,

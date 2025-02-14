@@ -1,5 +1,6 @@
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Observable, Subscription } from 'rxjs';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
@@ -19,10 +20,10 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
   conceptFilterId: string;
 
   @Input()
-  preSelectedConcepts: TerminologyCode[] = [];
+  preSelectedConcepts: Concept[] = [];
 
   @Output()
-  changedSelectedConcepts = new EventEmitter<TerminologyCode[]>();
+  changedSelectedConcepts = new EventEmitter<Concept[]>();
 
   searchResults$: Observable<CodeableConceptResultList>;
 
@@ -42,7 +43,7 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
     );
     this.subscription = this.selectedConceptFilterService
       .getSelectedConcepts()
-      .subscribe((selectedConcepts: TerminologyCode[]) => {
+      .subscribe((selectedConcepts: Concept[]) => {
         this.updateAndEmitConceptFilter(selectedConcepts);
       });
   }
@@ -54,7 +55,7 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
     this.selectedConceptFilterService.clearSelectedConceptFilter();
   }
 
-  private updateAndEmitConceptFilter(selectedConcepts: TerminologyCode[]): void {
+  private updateAndEmitConceptFilter(selectedConcepts: Concept[]): void {
     this.changedSelectedConcepts.emit(selectedConcepts);
   }
 }

@@ -1,10 +1,40 @@
 # Changelog
 
-## v6.0.3 (2024-12-9)
+## v6.0.4 (2025-02-14)
+
+### Bug Fixes
+* fixed wrong key for attributeDefinition mapping
+
+### Changes
+* Refactored criterion hash service
+
+
+
+## v6.0.4-alpha (2025-02-11)
+
+### Bug Fixes
+* Removed hashes in result details modal and replaced them with DIZ n-1 ([#313](https://github.com/medizininformatik-initiative/feasibility-gui/issues/313)).
+* Fixed error message display and refactored snackbar service ([#310](https://github.com/medizininformatik-initiative/feasibility-gui/issues/310)).
+* Resolved inconsistency between summary and detail results ([#303](https://github.com/medizininformatik-initiative/feasibility-gui/issues/303), [#304](https://github.com/medizininformatik-initiative/feasibility-gui/issues/304)).
+
+### Changes
+* Refactored feasibility query result service into smaller services ([#329](https://github.com/medizininformatik-initiative/feasibility-gui/issues/329)).
+* Updated result details only once per feasibility query ([#317](https://github.com/medizininformatik-initiative/feasibility-gui/issues/317)).
+* Refactored backend service ([#312](https://github.com/medizininformatik-initiative/feasibility-gui/issues/312)).
+
+### Features
+* Added UI support for attribute translations and main value display ([#314](https://github.com/medizininformatik-initiative/feasibility-gui/issues/314), [#311](https://github.com/medizininformatik-initiative/feasibility-gui/issues/311), [#315](https://github.com/medizininformatik-initiative/feasibility-gui/issues/315)).
+* Displayed warning message when the start date is earlier than the end date ([#308](https://github.com/medizininformatik-initiative/feasibility-gui/issues/308)).
+
+
+
+
+## v6.0.3 (2024-12-09)
 
 ### Bugfix
 
 * Update query result after each polling intervall ([#303](https://github.com/medizininformatik-initiative/feasibility-gui/issues/304))
+
 
 ## v6.0.2 (2024-11-21)
 
@@ -12,6 +42,8 @@
 
 * Getting polling time from Feature-Provider-Service instead of Feature-Service
 * Repeat polling until end of timer, regardless Null results in between
+
+
 
 ## v6.0.1 (2024-11-20)
 

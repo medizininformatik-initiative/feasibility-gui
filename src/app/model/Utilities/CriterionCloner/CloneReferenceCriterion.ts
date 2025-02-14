@@ -6,6 +6,7 @@ import { CloneValueFilter } from './ValueAttributeFilter/CloneValueFilter';
 import { CriterionBuilder } from '../../FeasibilityQuery/Criterion/CriterionBuilder';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
+import { DisplayData } from '../../DataSelection/Profile/DisplayData';
 
 export class CloneAbstractCriterion {
   static deepCopyAbstractCriterions(abstractCriterions: AbstractCriterion[]): AbstractCriterion[] {
@@ -44,7 +45,7 @@ export class CloneAbstractCriterion {
     isReference: boolean
     context: TerminologyCode
     criterionHash: string
-    display: string
+    display: DisplayData
     isInvalid: boolean
     isRequiredFilterSet: boolean
     uniqueID: string
@@ -54,7 +55,7 @@ export class CloneAbstractCriterion {
     const termCodes = CloneTerminologyCode.deepCopyTerminologyCodes(
       abstractCriterion.getTermCodes()
     );
-    const display = abstractCriterion.getTermCodes()[0].getDisplay();
+    const display = abstractCriterion.getDisplay();
     const criterionHash = abstractCriterion.getCriterionHash();
 
     return {

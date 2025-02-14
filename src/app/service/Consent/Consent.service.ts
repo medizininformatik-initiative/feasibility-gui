@@ -112,7 +112,7 @@ export class ConsentService {
   };
 
   constructor(private feasibilityQueryProviderService: FeasibilityQueryProviderService) {
-    this.setProvisionCode(false, false, false, false);
+    this.setProvisionCode(false, true, false, false);
   }
 
   public setFeasibilityQueryConsent() {

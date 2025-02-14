@@ -34,6 +34,7 @@ import { SnackbarComponent } from './snack-bar/snackbar.component';
 import { BreadcrumbComponent } from './breadcrumbs/breadcrumbs.component';
 import { PlaceholderBoxComponent } from './placeholder-box/placeholder-box.component';
 import { SaveFileModalComponent } from './save-file-modal/save-file-modal.component';
+import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -88,6 +89,7 @@ const SHARED_DECLARATIONS = [
     BreadcrumbComponent,
     PlaceholderBoxComponent,
     SaveFileModalComponent,
+    ConfirmDeleteModalComponent,
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,7 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
 import { Observable, of } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'num-filter-chips',

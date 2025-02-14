@@ -1,13 +1,10 @@
-import { ActiveFeasibilityQueryService } from '../../../../../service/Provider/ActiveFeasibilityQuery.service';
-import { BackendService } from '../../../service/backend.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CreateCRDTLService } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
-import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQueryApiService } from 'src/app/service/Backend/Api/FeasibilityQueryApi.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { of, Subscription, switchMap } from 'rxjs';
-import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
+import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModalInterface';
+import { SaveFeasibilityQueryModalService } from 'src/app/service/SaveFeasibilityQueryModal.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-save-dialog',
@@ -16,24 +13,12 @@ import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.s
 })
 export class SaveQueryModalComponent implements OnInit, OnDestroy {
   private subscriptionResult: Subscription;
-  hasQuerySend: boolean | string;
-
-  query: FeasibilityQuery;
-  title = '';
-  comment = '';
-  filename = '';
-  saveWithQuery: boolean | string = false;
-  letQuerySave = false;
-  saveButtonDisabled = true;
-  downloadQuery = false;
 
   constructor(
     public feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    public backendService: BackendService,
+    public feasibilityQueryApiService: FeasibilityQueryApiService,
     private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
-    private resultProvider: ResultProviderService,
-    private activeFeasibilityQuery: ActiveFeasibilityQueryService,
-    private createCRDTLService: CreateCRDTLService
+    private saveFeasibilityQueryModalService: SaveFeasibilityQueryModalService
   ) {}
 
   ngOnInit(): void {}
@@ -42,28 +27,13 @@ export class SaveQueryModalComponent implements OnInit, OnDestroy {
     this.subscriptionResult?.unsubscribe();
   }
 
-  doSaveFeasibilityQuery(): void {
-    this.activeFeasibilityQuery
-      .getActiveFeasibilityQueryIDObservable()
-      .pipe(
-        switchMap((id) => this.feasibilityQueryProviderService.getFeasibilityQueryByID(id)),
-        switchMap((feasibilityQuery: FeasibilityQuery) => {
-          const resultIds: string[] = feasibilityQuery.getResultIds();
-          return of(this.resultProvider.getResultByID(resultIds[resultIds.length - 1]));
-        })
-      )
-      .subscribe((result) => {
-        this.backendService.saveQuery(result, this.title, this.comment).subscribe();
-        this.doDiscard();
-      })
-      .unsubscribe();
+  public doSaveFeasibilityQuery(data: SaveDataModal): void {
+    this.subscriptionResult = this.saveFeasibilityQueryModalService
+      .saveFeasibilityQuery(data.title, data.comment)
+      .subscribe(() => this.doDiscard());
   }
 
-  public doSaveDataSelection() {
-    this.createCRDTLService.createCRDTL().subscribe().unsubscribe();
-  }
-
-  doDiscard(): void {
+  public doDiscard(): void {
     this.dialogRef.close();
   }
 }

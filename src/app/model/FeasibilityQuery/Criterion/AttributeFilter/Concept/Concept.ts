@@ -1,0 +1,32 @@
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+
+/**
+ * @todo the id of a concept needs to be set in the future --> can be system + code or uuid maybe
+ */
+export class Concept {
+  private display: DisplayData;
+  private id: string;
+  private terminologyCode: TerminologyCode;
+
+  constructor(display: DisplayData, terminologyCode: TerminologyCode) {
+    this.display = display;
+    this.terminologyCode = terminologyCode;
+  }
+
+  public getDisplay(): DisplayData {
+    return this.display;
+  }
+
+  public setDisplay(display: DisplayData) {
+    this.display = display;
+  }
+
+  public getTerminologyCode(): TerminologyCode {
+    return this.terminologyCode;
+  }
+
+  public setTerminologyCode(terminologyCode: TerminologyCode) {
+    this.terminologyCode = terminologyCode;
+  }
+}

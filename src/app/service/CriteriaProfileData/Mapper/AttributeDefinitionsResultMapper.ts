@@ -29,7 +29,7 @@ export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitio
    */
   private mapSingleAttributeDefinition(attributeDefinition: any): AttributeDefinitions {
     return new AttributeDefinitions(
-      attributeDefinition.name,
+      attributeDefinition.display,
       attributeDefinition.type,
       attributeDefinition.optional,
       this.mapAllowedUnits(attributeDefinition.allowedUnits),

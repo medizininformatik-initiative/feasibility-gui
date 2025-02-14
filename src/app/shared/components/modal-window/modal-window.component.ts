@@ -9,6 +9,9 @@ export class ModalWindowComponent {
   @Input()
   disabled = false;
 
+  @Input()
+  displaySaveButtons = true;
+
   @Output()
   cancelButtonSelected = new EventEmitter();
 

@@ -98,6 +98,8 @@
       }
   },
     "DATASELECTION": {
+      "REQUIRED":"Required",
+      "OPTIONAL":"Optional",
       "HEADER": "Feature Selection",
       "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (CDS) modules. You can also filter data points, e.g. if only certain laboratory values are of interest, and you have the option of specifying which data points are absolutely necessary for your research question.",
       "DATASELECTION": "Feature Selection",
@@ -136,8 +138,7 @@
         "LABEL": "Selected criteria",
         "REFERENCE": "only if referenced"
       },
-      "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal.",
-      "REQUIRED": "required from all sites"
+      "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
   },
   "DATAQUERY": {
     "COHORT": {
@@ -179,8 +180,6 @@
         "UPLOAD": "Data Definition has been uploaded",
         "DOWNLOAD": "Data Definition has been successfully downloaded"
 }
-
-
     }
   },
   "LANGUAGE": {
@@ -287,7 +286,8 @@
         "BOTH": "between {{ from }} and {{ to }}",
         "FROM": "later than {{ from }}",
         "TO": "before {{ to }}",
-        "NONE": "no time restriction"
+        "NONE": "no time restriction",
+        "WARNING": "The start date must be earlier than the end date"      
       }
     },
     "OVERVIEW": {
@@ -427,6 +427,7 @@
   "ERROR": {
     "FEAS-10001"  : "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
     "FEAS-10002"  : "You sent too many queries, please wait and try again",
+    "FEAS-10003"  : "You sent too many queries, please wait and try again",
     "FEAS-10004"  : "The number of sites which answered is too small -> detailed results are not shown",
     "FEAS-10005"  : "The result size is too small -> result will not be shown",
     "FEAS-10006"  : "Saved query limit reached. Please delete old saved queries before trying to create new ones.",

@@ -1,51 +1,45 @@
 import { AbstractListEntry } from './AbstractListEntry';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 
 export class CodeableConceptResultListEntry extends AbstractListEntry {
   private isSelected = false;
-  private terminologyCode: TerminologyCode;
+  private concept: Concept;
 
   /**
-   * @param terminologyCode
+   * @param concept
    * @param id
    */
-  constructor(terminologyCode: TerminologyCode, id: string, isSelected: boolean = false) {
+  constructor(concept: Concept, id: string, isSelected: boolean = false) {
     super(id);
-    this.terminologyCode = terminologyCode;
+    this.concept = concept;
     this.isSelected = isSelected;
   }
 
   /**
    * @returns
    */
-  getIsSelected(): boolean {
+  public getIsSelected(): boolean {
     return this.isSelected;
   }
 
   /**
    * @param isSelected
    */
-  setIsSelected(isSelected: boolean) {
+  public setIsSelected(isSelected: boolean) {
     this.isSelected = isSelected;
   }
 
   /**
    * @returns
    */
-  getTerminologyCode(): TerminologyCode {
-    return this.terminologyCode;
+  public getConcept(): Concept {
+    return this.concept;
   }
 
   /**
-   * @param terminologyCode
+   * @param concept
    */
-  setTerminologyCode(terminologyCode: TerminologyCode) {
-    this.terminologyCode = terminologyCode;
-  }
-  getName(): string {
-    return this.terminologyCode.getDisplay();
-  }
-  setName(name: string): void {
-    this.terminologyCode.setDisplay(name);
+  public setConcept(concept: Concept) {
+    this.concept = concept;
   }
 }

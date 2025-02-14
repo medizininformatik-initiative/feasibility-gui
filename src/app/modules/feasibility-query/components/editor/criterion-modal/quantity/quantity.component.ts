@@ -6,6 +6,7 @@ import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/Quant
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service';
+import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Component({
   selector: 'num-quantity',
@@ -20,6 +21,9 @@ export class QuantityComponent implements OnInit {
 
   @Output()
   quantityFilterChange = new EventEmitter<AbstractQuantityFilter>();
+
+  @Input()
+  display: DisplayData;
 
   /**
    * UI conditions

@@ -28,7 +28,7 @@ export class ActiveFeasibilityQueryService {
    *
    * @returns The current active FeasibilityQueryID or null if not set.
    */
-  public getActiveFeasibilityQueryIDObservable(): Observable<string> | null {
+  public getActiveFeasibilityQueryIdObservable(): Observable<string> | null {
     return this.activeFeasibilityQueryIDSubject.asObservable();
   }
 

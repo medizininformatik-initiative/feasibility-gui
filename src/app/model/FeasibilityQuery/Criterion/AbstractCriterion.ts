@@ -3,6 +3,7 @@ import { AttributeFilter } from './AttributeFilter/AttributeFilter';
 import { CritGroupPosition } from '../CritGroupPosition';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
+import { DisplayData } from '../../DataSelection/Profile/DisplayData';
 
 /**
  * Abstract class representing a criterion with various filters and properties.
@@ -11,7 +12,7 @@ export abstract class AbstractCriterion {
   private attributeFilters?: Array<AttributeFilter> = [];
   private context?: TerminologyCode;
   private criterionHash?: string;
-  private display?: string;
+  private display: DisplayData;
   private isInvalid?: boolean = false;
   private isReference = false;
   private position?: CritGroupPosition;
@@ -42,7 +43,7 @@ export abstract class AbstractCriterion {
     attributeFilters?: Array<AttributeFilter>,
     context?: TerminologyCode,
     criterionHash?: string,
-    display?: string,
+    display?: DisplayData,
     isInvalid?: boolean,
     isRequiredFilterSet?: boolean,
     position?: CritGroupPosition,
@@ -150,7 +151,7 @@ export abstract class AbstractCriterion {
    *
    * @returns Display string for the criterion.
    */
-  public getDisplay(): string | undefined {
+  public getDisplay(): DisplayData {
     return this.display;
   }
 
@@ -159,7 +160,7 @@ export abstract class AbstractCriterion {
    *
    * @param display - Display string for the criterion.
    */
-  public setDisplay(display: string): void {
+  public setDisplay(display: DisplayData): void {
     this.display = display;
   }
 
