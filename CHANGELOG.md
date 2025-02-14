@@ -1,5 +1,15 @@
 # Changelog
 
+## v6.0.4 (2025-02-14)
+
+### Bug Fixes
+* fixed wrong key for attributeDefinition mapping
+
+### Changes
+* Refactored criterion hash service
+
+
+
 ## v6.0.4-alpha (2025-02-11)
 
 ### Bug Fixes
