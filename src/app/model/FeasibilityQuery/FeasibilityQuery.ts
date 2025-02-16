@@ -54,7 +54,7 @@ export class FeasibilityQuery {
     this.resultIDs = resultIDs;
   }
 
-  getID(): string {
+  getId(): string {
     return this.id;
   }
   /**

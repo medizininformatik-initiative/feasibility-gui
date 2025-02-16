@@ -57,7 +57,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
           (feasibilityQuery) => {
             const queryResult = new QueryResult(
               false,
-              feasibilityQuery.getID(),
+              feasibilityQuery.getId(),
               savedFeasibilityQuery.totalNumberOfPatients,
               uuidv4()
             );
@@ -73,7 +73,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
             }
             this.feasibilityQueryService.setFeasibilityQueryByID(
               feasibilityQuery,
-              feasibilityQuery.getID(),
+              feasibilityQuery.getId(),
               true
             );
           }
