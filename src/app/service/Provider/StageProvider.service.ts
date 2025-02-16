@@ -30,6 +30,17 @@ export class StageProviderService {
   }
 
   /**
+   * Sets criterions by its unique ID and updates the map.
+   *
+   * @param criterion The criterion to set
+   */
+  public addCriteriaToStage(ids: string[]): void {
+    console.log(ids);
+    this.stageUIDArray.push(...ids);
+    this.StageUIDArraySubject.next(this.stageUIDArray);
+  }
+
+  /**
    * Deletes a criterion by its UID from the map.
    *
    * @param uid The unique ID of the criterion to delete
