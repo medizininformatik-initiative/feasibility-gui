@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterion.service';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
+import { map, Observable, of } from 'rxjs';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { NewCreateCriterionService } from 'src/app/service/Criterion/Builder/Create/NewCreateCriterion.service';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
 
 @Component({
   selector: 'num-search-action-bar',
@@ -19,10 +21,12 @@ export class SearchActionBarComponent implements OnInit {
 
   constructor(
     private listItemSelectionService: SelectedTableItemsService<SearchTermListEntry>,
-    private criterionService: CreateCriterionService,
+    private criterionService: NewCreateCriterionService,
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
-    private queryProviderService: FeasibilityQueryProviderService
+    private queryProviderService: FeasibilityQueryProviderService,
+    private listItemService: SelectedTableItemsService<SearchTermListEntry>,
+    private feasibilityQueryProviderHub: FeasibilityQueryProviderHub
   ) {}
 
   ngOnInit() {
@@ -32,7 +36,16 @@ export class SearchActionBarComponent implements OnInit {
   }
 
   public addItemsToStage() {
-    this.criterionService.translateListItemsToCriterions();
+    const ids = this.listItemService.getSelectedIds();
+    this.criterionService
+      .createCriteriaFromHashes(ids)
+      .pipe(
+        map((criteria: Criterion[]) => {
+          this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria);
+          this.feasibilityQueryProviderHub.addCriteriaToStage(criteria);
+        })
+      )
+      .subscribe(() => this.listItemService.clearSelection());
   }
 
   public navigateToEditor() {

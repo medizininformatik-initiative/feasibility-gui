@@ -1,9 +1,11 @@
-import { CreateCriterionService } from '../../../../service/Criterion/Builder/Create/CreateCriterion.service';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
 import { Injectable } from '@angular/core';
+import { map, switchMap, take } from 'rxjs';
+import { NewCreateCriterionService } from 'src/app/service/Criterion/Builder/Create/NewCreateCriterion.service';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { switchMap, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +13,9 @@ import { switchMap, take } from 'rxjs';
 export class ListItemDetailsMenuItemsFunctionsService {
   constructor(
     private searchService: SearchService,
-    private criterionService: CreateCriterionService,
-    private searchTermDetailsService: SearchTermDetailsService
+    private criterionService: NewCreateCriterionService,
+    private searchTermDetailsService: SearchTermDetailsService,
+    private feasibilityQueryProviderHub: FeasibilityQueryProviderHub
   ) {}
 
   public showCriteriaInResultList(id: string) {
@@ -21,7 +24,15 @@ export class ListItemDetailsMenuItemsFunctionsService {
   }
 
   public addToStage(id: string) {
-    this.criterionService.getCriteriaProfileData([id], false);
+    this.criterionService
+      .createCriteriaFromHashes([id])
+      .pipe(
+        map((criteria: Criterion[]) => {
+          this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria);
+          this.feasibilityQueryProviderHub.addCriteriaToStage(criteria);
+        })
+      )
+      .subscribe();
   }
 
   public searchCriteria(id: string) {
