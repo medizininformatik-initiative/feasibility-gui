@@ -49,7 +49,7 @@ export class FeasibilityQueryResultService {
     return this.queryProviderService.getActiveFeasibilityQuery().pipe(
       switchMap((feasibilityQuery: FeasibilityQuery) =>
         this.obfuscatedResultService
-          .getDetailedObfuscatedResult(feasibilityQueryResultId, feasibilityQuery.getID())
+          .getDetailedObfuscatedResult(feasibilityQueryResultId, feasibilityQuery.getId())
           .pipe(
             map((queryResult: QueryResult) => {
               this.setQueryResultProvider(queryResult);

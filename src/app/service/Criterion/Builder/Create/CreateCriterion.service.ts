@@ -47,7 +47,7 @@ export class CreateCriterionService {
    * @todo Need to create an DisplayData class instance and within the Translation class instance
    * @todo create the service for displayData and Translation
    */
-  public getCriteriaProfileData(ids: Array<string>, clearIds: boolean = true) {
+  public getCriteriaProfileData(ids: Array<string>, clearIds: boolean = true): void {
     this.terminologyApiService
       .getCriteriaProfileData(ids)
       .pipe(
