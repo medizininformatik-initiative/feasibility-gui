@@ -43,6 +43,18 @@ export class CriterionProviderService {
   }
 
   /**
+   * Sets criteria by their unique IDs and updates the map.
+   *
+   * @param criteria The array of criteria to set
+   */
+  public setCriteriaById(criteria: Criterion[]): void {
+    criteria.forEach((criterion) => {
+      this.criterionUIDMap.set(criterion.getId(), criterion);
+    });
+    this.criterionUIDMapSubject.next(new Map(this.criterionUIDMap));
+  }
+
+  /**
    * Deletes a criterion by its UID from the map.
    *
    * @param uid The unique ID of the criterion to delete

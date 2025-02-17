@@ -85,7 +85,7 @@ export class CohortDefinitionComponent implements OnInit {
           .subscribe((feasibilityQuery) => {
             this.feasibilityQueryService.setFeasibilityQueryByID(
               feasibilityQuery,
-              feasibilityQuery.getID(),
+              feasibilityQuery.getId(),
               true
             );
           });
@@ -111,7 +111,7 @@ export class CohortDefinitionComponent implements OnInit {
       const feasibilityQuery = new FeasibilityQuery(uuidv4());
       this.feasibilityQueryService.setFeasibilityQueryByID(
         feasibilityQuery,
-        feasibilityQuery.getID(),
+        feasibilityQuery.getId(),
         true
       );
       this.consentService.setConsent(false);

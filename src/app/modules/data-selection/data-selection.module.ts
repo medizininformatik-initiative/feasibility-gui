@@ -15,7 +15,6 @@ import { ProfileCodeComponent } from './components/editor/edit-filter-modal/prof
 import { ProfileTimeRestrictionComponent } from './components/editor/edit-filter-modal/profile-time-restriction/profile-time-restriction.component';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DisplayTranslationPipe } from 'src/app/shared/pipes/DisplayTranslationPipe ';
 import { SearchDataSelectionComponent } from './components/search/search.component';
 import { DisplayProfilesComponent } from './components/editor/display/display-profiles/display-profiles.component';
 

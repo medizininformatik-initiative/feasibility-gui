@@ -49,7 +49,7 @@ export class CRTDL2UIModelService {
           .subscribe((feasibilityQuery) => {
             this.feasibilityQueryService.setFeasibilityQueryByID(
               feasibilityQuery,
-              feasibilityQuery.getID(),
+              feasibilityQuery.getId(),
               true
             );
           });

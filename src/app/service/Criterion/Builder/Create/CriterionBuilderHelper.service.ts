@@ -1,9 +1,13 @@
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeDefinitionToAttributeFilterFactoryService } from '../AttributeDefinitionFactory/AttributeDefinitionToAttributeFilterFactory.service';
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
+import { CriterionMetadataService } from '../CriterionMetadata.service';
 import { Injectable } from '@angular/core';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionToValueFilterFactoryService } from '../AttributeDefinitionFactory/ValueDefinitionToValueFilterFactory.service';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +15,23 @@ import { ValueDefinitionToValueFilterFactoryService } from '../AttributeDefiniti
 export class CriterionBuilderHelperService {
   constructor(
     private attributeFilterFactoryService: AttributeDefinitionToAttributeFilterFactoryService,
-    private valueFilterFactoryService: ValueDefinitionToValueFilterFactoryService
+    private valueFilterFactoryService: ValueDefinitionToValueFilterFactoryService,
+    private criterionMetadataService: CriterionMetadataService
   ) {}
+
+  public setBuilderWithCriteriaProfileData(profileData: CriteriaProfileData): CriterionBuilder {
+    const mandatoryFields = this.criterionMetadataService.createMandatoryFields(profileData);
+    const builder = new CriterionBuilder(mandatoryFields);
+    const valueFilter = this.addValueFilters(profileData.getValueDefinitions());
+    const attributeFilter = this.addAttributeFilters(profileData.getAttributeDefinitions());
+
+    if (profileData.getTimeRestrictionAllowed()) {
+      builder.withTimeRestriction(builder.buildTimeRestriction());
+    }
+    builder.withValueFilters(valueFilter);
+    builder.withAttributeFilters(attributeFilter);
+    return builder;
+  }
 
   /**
    * Adds attribute filters to the criterion builder.
@@ -21,17 +40,14 @@ export class CriterionBuilderHelperService {
    * @param criterionBuilder The criterion builder to which attribute filters will be added.
    * @returns The modified CriterionBuilder.
    */
-  public addAttributeFilters(
-    attributeDefinitions: AttributeDefinitions[],
-    criterionBuilder: CriterionBuilder
-  ): CriterionBuilder {
+  private addAttributeFilters(
+    attributeDefinitions: AttributeDefinitions[]
+  ): AttributeFilter[] | [] {
     if (attributeDefinitions.length > 0) {
-      const attributeFilters = attributeDefinitions.map((attributeDefinition) =>
+      return attributeDefinitions.map((attributeDefinition: AttributeDefinitions) =>
         this.attributeFilterFactoryService.createAttributeFilter(attributeDefinition)
       );
-      criterionBuilder.withAttributeFilters(attributeFilters);
     }
-    return criterionBuilder;
   }
 
   /**
@@ -41,16 +57,12 @@ export class CriterionBuilderHelperService {
    * @param criterionBuilder The criterion builder to which value filters will be added.
    * @returns The modified CriterionBuilder.
    */
-  public addValueFilters(
-    valueDefinitions: ValueDefinition[],
-    criterionBuilder: CriterionBuilder
-  ): CriterionBuilder {
+  private addValueFilters(valueDefinitions: ValueDefinition[]): ValueFilter[] | [] {
     if (valueDefinitions.length > 0) {
-      const valueFilters = valueDefinitions.map((valueDefinition) =>
+      return valueDefinitions.map((valueDefinition) =>
         this.valueFilterFactoryService.createValueFilter(valueDefinition)
       );
-      criterionBuilder.withValueFilters(valueFilters);
     }
-    return criterionBuilder;
+    return [];
   }
 }

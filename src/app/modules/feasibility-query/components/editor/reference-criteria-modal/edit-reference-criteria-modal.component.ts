@@ -1,6 +1,6 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { CreateReferenceCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateReferenceCriterion.service';
+import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -24,7 +24,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EditReferenceCriteriaModalComponent,
     private dialogRef: MatDialogRef<EditReferenceCriteriaModalComponent, Criterion>,
-    private createReferenceService: CreateReferenceCriterionService,
+    private createCriterionService: CreateCriterionService,
     private referenceCriterionProvider: ReferenceCriterionProviderService,
     private criterionValidationService: CriterionValidationService
   ) {}
@@ -43,8 +43,8 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
   }
 
   public saveReferenceCriterion() {
-    this.createReferenceService
-      .fetchReferenceCriterions(this.ids, this.criterion.getId())
+    this.createCriterionService
+      .createReferenceCriteriaFromHashes(this.ids, this.criterion.getId())
       .subscribe((referenceCriteria: ReferenceCriterion[]) => {
         referenceCriteria.forEach((referenceCriterion) =>
           this.referenceCriterionProvider.setReferenceCriterionByUID(
