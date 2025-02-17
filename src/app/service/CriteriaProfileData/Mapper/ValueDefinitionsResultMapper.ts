@@ -12,7 +12,7 @@ export class ValueDefinitionsResultMapper extends AbstractAttributeDefinitionsRe
     if (uiProfile.valueDefinition) {
       return [
         new ValueDefinition(
-          uiProfile.name,
+          uiProfile.valueDefinition.display,
           uiProfile.valueDefinition.type,
           uiProfile.valueDefinition.optional,
           this.mapAllowedUnits(uiProfile.valueDefinition.allowedUnits),

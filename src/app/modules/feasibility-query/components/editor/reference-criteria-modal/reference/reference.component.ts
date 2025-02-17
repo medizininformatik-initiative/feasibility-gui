@@ -120,7 +120,6 @@ export class ReferenceComponent implements OnInit, OnDestroy {
       .getSelectedTableItems()
       .subscribe((items) => {
         items.forEach((item) => {
-          console.log(item);
           this.arrayOfSelectedReferences.push({
             id: item.getId(),
             display: item.getDisplay(),

@@ -35,7 +35,6 @@ export class StageProviderService {
    * @param criterion The criterion to set
    */
   public addCriteriaToStage(ids: string[]): void {
-    console.log(ids);
     this.stageUIDArray.push(...ids);
     this.StageUIDArraySubject.next(this.stageUIDArray);
   }

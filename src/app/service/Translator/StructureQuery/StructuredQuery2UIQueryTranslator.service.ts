@@ -2,12 +2,11 @@ import { AbstractCriterion } from '../../../model/FeasibilityQuery/Criterion/Abs
 import { Injectable } from '@angular/core';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { ConsentService } from '../../Consent/Consent.service';
-import { CreateReferenceCriterionService } from '../../Criterion/Builder/Create/CreateReferenceCriterion.service';
+import { CreateCriterionService } from '../../Criterion/Builder/Create/CreateCriterionService';
 import { CriterionHashService } from '../../Criterion/CriterionHash.service';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { map, Observable } from 'rxjs';
-import { NewCreateCriterionService } from '../../Criterion/Builder/Create/NewCreateCriterion.service';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { ReferenceCriterion } from '../../../model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -42,13 +41,11 @@ export class StructuredQuery2UIQueryTranslatorService {
   };
 
   constructor(
-    private createCriterionService: NewCreateCriterionService,
+    private createCriterionService: CreateCriterionService,
     private criterionHashService: CriterionHashService,
-    private createReferenceCriterionService: CreateReferenceCriterionService,
     private consentService: ConsentService,
     private criterionProvider: CriterionProviderService,
     private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     private criterionValidationService: CriterionValidationService
   ) {}
 
@@ -172,13 +169,11 @@ export class StructuredQuery2UIQueryTranslatorService {
   private handleConceptFilter(foundAttributeFilter, structuredQueryAttributeFilter) {
     const selectedConcepts: Concept[] = structuredQueryAttributeFilter.selectedConcepts.map(
       (concept) => {
-        console.log(concept);
         const terminologyCode = new TerminologyCode(concept.code, concept.display, concept.system);
         return new Concept(this.instantiateDisplayData(concept.display), terminologyCode);
       }
     );
     foundAttributeFilter.getConcept().setSelectedConcepts(selectedConcepts);
-    console.log(foundAttributeFilter);
   }
 
   private handleQuantityFilter(foundAttributeFilter, structuredQueryAttributeFilter) {
@@ -214,8 +209,8 @@ export class StructuredQuery2UIQueryTranslatorService {
     foundAttributeFilter,
     structuredQueryAttributeFilter
   ) {
-    this.createReferenceCriterionService
-      .fetchReferenceCriterions(referenceCriterionHashes, criterion.getId())
+    this.createCriterionService
+      .createReferenceCriteriaFromHashes(referenceCriterionHashes, criterion.getId())
       .subscribe((referenceCriteria: ReferenceCriterion[]) => {
         foundAttributeFilter.getReference().setSelectedReferences(referenceCriteria);
         this.updateCriterionHashMap(referenceCriteria);

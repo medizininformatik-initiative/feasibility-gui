@@ -2,10 +2,10 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
 import { Injectable } from '@angular/core';
 import { map, switchMap, take } from 'rxjs';
-import { NewCreateCriterionService } from 'src/app/service/Criterion/Builder/Create/NewCreateCriterion.service';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchR
 export class ListItemDetailsMenuItemsFunctionsService {
   constructor(
     private searchService: SearchService,
-    private criterionService: NewCreateCriterionService,
+    private criterionService: CreateCriterionService,
     private searchTermDetailsService: SearchTermDetailsService,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub
   ) {}

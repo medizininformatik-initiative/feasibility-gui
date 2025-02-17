@@ -4,10 +4,10 @@ import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/Feasibilit
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { map, Observable, of } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { NewCreateCriterionService } from 'src/app/service/Criterion/Builder/Create/NewCreateCriterion.service';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
+import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
 
 @Component({
   selector: 'num-search-action-bar',
@@ -21,7 +21,7 @@ export class SearchActionBarComponent implements OnInit {
 
   constructor(
     private listItemSelectionService: SelectedTableItemsService<SearchTermListEntry>,
-    private criterionService: NewCreateCriterionService,
+    private criterionService: CreateCriterionService,
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
     private queryProviderService: FeasibilityQueryProviderService,
