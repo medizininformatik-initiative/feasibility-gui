@@ -1,5 +1,12 @@
 # Changelog
 
+## v6.0.5 (2025-02-17)
+
+### Bug Fixes
+* fixed wrong key for valueDefinition mapping
+
+
+
 ## v6.0.4 (2025-02-14)
 
 ### Bug Fixes

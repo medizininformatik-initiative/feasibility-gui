@@ -42,7 +42,6 @@ export class PollingManagerService {
       switchMap((feasibilityQueryResultId) => {
         feasibilityQuery.addResultId(feasibilityQueryResultId);
         return this.startPollingProcess(feasibilityQueryResultId, feasibilityQuery.getID()).pipe(
-          tap((test) => console.log(test)),
           takeWhile((result) => result !== null, true)
         );
       })
