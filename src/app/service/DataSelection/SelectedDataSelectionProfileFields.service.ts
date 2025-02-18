@@ -2,7 +2,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',

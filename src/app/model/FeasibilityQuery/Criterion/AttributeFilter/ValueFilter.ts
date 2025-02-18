@@ -3,7 +3,7 @@ import { ConceptFilter } from './Concept/ConceptFilter';
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 /**
  * Class representing a ValueFilter.

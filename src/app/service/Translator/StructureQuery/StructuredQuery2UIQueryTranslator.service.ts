@@ -19,7 +19,7 @@ import { CriterionValidationService } from '../../Criterion/CriterionValidation.
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',

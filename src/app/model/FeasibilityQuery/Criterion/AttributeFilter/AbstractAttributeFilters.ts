@@ -2,7 +2,7 @@ import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { ConceptFilter } from './Concept/ConceptFilter';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 export abstract class AbstractAttributeFilters {
   private display: Display;

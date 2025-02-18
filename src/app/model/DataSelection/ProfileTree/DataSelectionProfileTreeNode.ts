@@ -1,4 +1,4 @@
-import { Display } from '../Profile/DisplayData';
+import { Display } from '../Profile/Display';
 
 export class DataSelectionProfileTreeNode {
   private id: string;

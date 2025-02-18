@@ -1,6 +1,6 @@
-import { Translation } from './Translation';
+import { TranslationData } from './TranslationData';
 
 export interface DisplayData {
   original: string
-  translations: Translation[]
+  translations: TranslationData[]
 }

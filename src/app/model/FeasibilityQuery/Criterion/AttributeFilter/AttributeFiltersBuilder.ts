@@ -9,7 +9,7 @@ import { ReferenceFilter } from './Concept/ReferenceFilter';
 import { TerminologyCode } from '../../../Terminology/TerminologyCode';
 import { ValueFilter } from './ValueFilter';
 import { Concept } from './Concept/Concept';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 /**
  * Builder class for constructing instances of AbstractAttributeFilters and its subclasses.

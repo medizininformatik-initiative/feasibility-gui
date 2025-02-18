@@ -2,7 +2,7 @@ import { AbstractAttributeDefinitionsResultMapper } from './AbstractAttributeDef
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayData } from 'src/app/model/Interface/DisplayData';
 
 export class ValueDefinitionsResultMapper extends AbstractAttributeDefinitionsResultMapper {

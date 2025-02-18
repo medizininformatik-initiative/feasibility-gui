@@ -1,4 +1,4 @@
-import { Display } from '../DisplayData';
+import { Display } from '../Display';
 
 export class ProfileFields {
   private id: string;

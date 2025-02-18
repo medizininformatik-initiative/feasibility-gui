@@ -1,6 +1,6 @@
 import { FilterTypes } from '../FilterTypes';
 import { QuantityUnit } from '../../FeasibilityQuery/QuantityUnit';
-import { Display } from '../../DataSelection/Profile/DisplayData';
+import { Display } from '../../DataSelection/Profile/Display';
 
 export abstract class AbstractAttributeDefinition {
   protected allowedUnits: Array<QuantityUnit> = [];

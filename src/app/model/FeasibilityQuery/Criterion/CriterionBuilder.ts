@@ -14,7 +14,7 @@ import { TimeRestrictionNotSet } from './TimeRestriction/TimeRestrictionNotSet';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueDefinition } from '../../Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
-import { Display } from '../../DataSelection/Profile/DisplayData';
+import { Display } from '../../DataSelection/Profile/Display';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.

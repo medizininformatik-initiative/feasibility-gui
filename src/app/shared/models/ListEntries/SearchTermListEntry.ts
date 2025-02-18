@@ -1,4 +1,4 @@
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { AbstractListEntry } from './AbstractListEntry';
 
 /**

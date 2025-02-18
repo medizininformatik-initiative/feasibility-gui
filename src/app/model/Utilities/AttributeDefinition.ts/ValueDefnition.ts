@@ -1,5 +1,5 @@
 import { AbstractAttributeDefinition } from './AbstractAttributeDefinition';
-import { Display } from '../../DataSelection/Profile/DisplayData';
+import { Display } from '../../DataSelection/Profile/Display';
 import { FilterTypes } from '../FilterTypes';
 import { QuantityUnit } from '../../FeasibilityQuery/QuantityUnit';
 

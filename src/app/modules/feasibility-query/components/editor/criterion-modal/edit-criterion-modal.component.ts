@@ -10,7 +10,7 @@ import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeF
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.service';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 export class EnterCriterionListComponentData {
   criterion: AbstractCriterion;

@@ -1,8 +1,11 @@
+import { FilterTypes } from '../Utilities/FilterTypes';
 import { AttributeCode } from './AttributeCode';
 import { DisplayData } from './DisplayData';
 import { Unit } from './Unit';
 
-export interface AttributeDefinition {
+export interface AttributeDefinitionData {
+  min: number
+  max: number
   allowedUnits: Unit[]
   attributeCode: AttributeCode
   display: DisplayData
@@ -11,5 +14,5 @@ export interface AttributeDefinition {
   referencedCriteriaSet?: string
   referencedValueSet?: string
   selectableConcepts: string[]
-  type: string
+  type: FilterTypes
 }

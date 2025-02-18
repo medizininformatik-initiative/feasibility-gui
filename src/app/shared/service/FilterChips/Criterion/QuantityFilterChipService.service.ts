@@ -4,7 +4,7 @@ import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeF
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { FilterChipQuantityAdapter } from '../../../models/FilterChips/Adapter/FilterChipQuantityAdapter';
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',

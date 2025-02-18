@@ -5,7 +5,7 @@ import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { Injectable } from '@angular/core';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';

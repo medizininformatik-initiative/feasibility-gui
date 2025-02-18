@@ -1,3 +1,5 @@
+import { TranslationData } from '../../Interface/TranslationData';
+
 export class Translation {
   private language: string;
   private value: string;

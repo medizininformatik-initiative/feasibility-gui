@@ -18,7 +18,7 @@ import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/
 import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { DisplayDataFactoryService } from 'src/app/service/Factory/DisplayDataFactory.service';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',

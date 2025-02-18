@@ -1,3 +1,4 @@
+import { DisplayData } from '../../Interface/DisplayData';
 import { Translation } from './Translation';
 
 export class Display {

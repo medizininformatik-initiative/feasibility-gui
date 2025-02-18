@@ -3,7 +3,7 @@ import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/Profil
 import { DataSelectionProfileTreeRoot } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeRoot';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
 

@@ -1,5 +1,5 @@
 import { CloneTranslations } from './CloneTranslations';
-import { Display } from '../../DataSelection/Profile/DisplayData';
+import { Display } from '../../DataSelection/Profile/Display';
 
 export class CloneDisplayData {
   static deepCopyDisplayData(displayData: Display): Display {

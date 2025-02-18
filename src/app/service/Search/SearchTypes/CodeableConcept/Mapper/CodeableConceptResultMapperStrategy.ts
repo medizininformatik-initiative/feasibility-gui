@@ -2,7 +2,7 @@ import { CodeableConceptResult } from 'src/app/model/Interface/CodeableConceptRe
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 import { SearchResponse } from 'src/app/model/Interface/SearchResponse';
 import { SearchResult } from 'src/app/model/Interface/SearchResult';

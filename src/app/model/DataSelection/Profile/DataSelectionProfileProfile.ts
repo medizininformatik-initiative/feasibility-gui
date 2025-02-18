@@ -1,6 +1,6 @@
 import { AbstractProfileFilter } from './Filter/AbstractProfileFilter';
 import { ProfileFields } from './Fields/ProfileFields';
-import { Display } from './DisplayData';
+import { Display } from './Display';
 import { TranslateService } from '@ngx-translate/core';
 import { ProfileReference } from './Reference/ProfileReference';
 

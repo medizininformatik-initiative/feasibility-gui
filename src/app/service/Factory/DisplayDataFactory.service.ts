@@ -1,4 +1,4 @@
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayData } from 'src/app/model/Interface/DisplayData';
 import { Injectable } from '@angular/core';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';

@@ -1,6 +1,6 @@
 import { CriteriaProfile } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriterionHashService } from '../CriterionHash.service';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';

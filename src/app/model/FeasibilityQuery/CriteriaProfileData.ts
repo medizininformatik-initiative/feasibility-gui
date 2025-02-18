@@ -1,4 +1,4 @@
-import { Display } from '../DataSelection/Profile/DisplayData';
+import { Display } from '../DataSelection/Profile/Display';
 import { TerminologyCode } from '../Terminology/TerminologyCode';
 import { AttributeDefinitions } from '../Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { ValueDefinition } from '../Utilities/AttributeDefinition.ts/ValueDefnition';

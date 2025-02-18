@@ -5,7 +5,7 @@ import { InterfaceFilterChip } from '../InterfaceFilterChip';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 export class FilterChipTimeRestrictionAdapter {
   public static adaptTimeRestriction(

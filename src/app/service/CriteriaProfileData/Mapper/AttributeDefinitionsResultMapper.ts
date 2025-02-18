@@ -1,6 +1,10 @@
 import { AbstractAttributeDefinitionsResultMapper } from './AbstractAttributeDefinitionsResultMapper';
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { DisplayData } from 'src/app/model/Interface/DisplayData';
 
 export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitionsResultMapper {
   /**
@@ -10,7 +14,9 @@ export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitio
    * @param uiProfileName The name from the UI profile to be used in each AttributeDefinition.
    * @returns An array of AttributeDefinition instances.
    */
-  public mapAttributeDefinitions(attributeDefinitions: any[]): AttributeDefinitions[] {
+  public mapAttributeDefinitions(
+    attributeDefinitions: AttributeDefinitionData[]
+  ): AttributeDefinitions[] {
     if (!attributeDefinitions || attributeDefinitions.length === 0) {
       return [];
     }
@@ -27,9 +33,11 @@ export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitio
    * @param uiProfileName The name from the UI profile to be used in the AttributeDefinition.
    * @returns An AttributeDefinition instance.
    */
-  private mapSingleAttributeDefinition(attributeDefinition: any): AttributeDefinitions {
+  private mapSingleAttributeDefinition(
+    attributeDefinition: AttributeDefinitionData
+  ): AttributeDefinitions {
     return new AttributeDefinitions(
-      attributeDefinition.name,
+      this.createDisplayData(attributeDefinition.display),
       attributeDefinition.type,
       attributeDefinition.optional,
       this.mapAllowedUnits(attributeDefinition.allowedUnits),
@@ -37,8 +45,8 @@ export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitio
       attributeDefinition.max,
       attributeDefinition.min,
       attributeDefinition.precision,
-      attributeDefinition.referencedCriteriaSet || [],
-      attributeDefinition.referencedValueSet || []
+      attributeDefinition.referencedCriteriaSet,
+      attributeDefinition.referencedValueSet
     );
   }
 
@@ -55,5 +63,16 @@ export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitio
       terminologyCodeData.system,
       terminologyCodeData.version
     );
+  }
+
+  public createDisplayData(displayData: DisplayData): Display {
+    const translations = displayData.translations?.map((translation) =>
+      this.createTranslation(translation)
+    );
+    return new Display(translations, displayData.original);
+  }
+
+  private createTranslation(translation: any): Translation {
+    return new Translation(translation.language, translation.value);
   }
 }

@@ -1,5 +1,5 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipBuilder } from '../FilterChipBuilder';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { getArithmeticSymbol } from 'src/app/model/Utilities/Quantity/ArithmeticSymbolResolver';

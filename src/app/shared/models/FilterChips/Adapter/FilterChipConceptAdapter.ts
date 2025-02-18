@@ -1,5 +1,5 @@
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipBuilder } from '../FilterChipBuilder';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { InterfaceFilterChip } from '../InterfaceFilterChip';

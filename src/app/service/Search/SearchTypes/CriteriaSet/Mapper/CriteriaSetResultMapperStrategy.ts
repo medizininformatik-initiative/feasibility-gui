@@ -3,7 +3,7 @@ import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/Re
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 export class CriteriaSetResultMapperStrategy
   implements MappingStrategy<ReferenceCriteriaListEntry, ReferenceCriteriaResultList>

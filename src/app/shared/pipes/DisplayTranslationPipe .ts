@@ -1,4 +1,4 @@
-import { Display } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateParser, TranslateService } from '@ngx-translate/core';
 

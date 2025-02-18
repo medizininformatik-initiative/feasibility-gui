@@ -1,7 +1,7 @@
 import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
 import { AttributeFilter } from './AttributeFilter/AttributeFilter';
 import { CritGroupPosition } from '../CritGroupPosition';
-import { Display } from '../../DataSelection/Profile/DisplayData';
+import { Display } from '../../DataSelection/Profile/Display';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
 
