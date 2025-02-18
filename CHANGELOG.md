@@ -1,4 +1,13 @@
 # Changelog
+## v6.0.6 (2025-02-18)
+
+### Bug Fixes
+* fixed error message for missing consent validation
+
+### Changes
+* Refactored CreateCriterionService ([#326](https://github.com/medizininformatik-initiative/feasibility-gui/issues/326))
+
+
 
 ## v6.0.5 (2025-02-17)
 
