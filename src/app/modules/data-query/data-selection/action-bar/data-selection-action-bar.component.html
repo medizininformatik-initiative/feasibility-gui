@@ -1,0 +1,41 @@
+<num-action-bar class="bottom">
+  <num-button class="margin-right-10" (click)="createNewDataSelection()" type="green">
+    {{ 'DATAQUERY.DATASELECTION.BUTTON.NEW_DATASELECTION' | translate }}
+  </num-button>
+  <num-button
+    type="green"
+    (click)="editDataSelection()"
+    class="margin-right-10"
+    [isDisabled]="!isDataSelectionExistent"
+  >
+    {{ 'DATAQUERY.DATASELECTION.BUTTON.EDIT' | translate }}
+  </num-button>
+  <div>
+    <input
+      type="file"
+      class="file-input"
+      (change)="onFileSelected($event)"
+      #fileUpload
+      style="display: none"
+    />
+    <num-button type="green" class="margin-right-10" (click)="fileUpload.click()">
+      {{ 'DATAQUERY.DATASELECTION.BUTTON.UPLOAD' | translate }}
+    </num-button>
+  </div>
+  <num-button
+    class="margin-right-10"
+    (click)="downloadCRDTL()"
+    [isDisabled]="!isDataSelectionExistent || !isCohortExistent"
+    type="green"
+  >
+    {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
+  </num-button>
+  <num-button
+    [icon]="'arrow-up'"
+    class="margin-right-10"
+    (click)="navigateToDataQueryCohortDefinition()"
+    type="green"
+  >
+    {{ 'DATAQUERY.DATASELECTION.BUTTON.JUMP_TO_COHORT_SELECTION' | translate }}
+  </num-button>
+</num-action-bar>

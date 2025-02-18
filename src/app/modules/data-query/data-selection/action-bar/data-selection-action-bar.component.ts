@@ -1,50 +1,33 @@
+import { Component, ElementRef } from '@angular/core';
 import { CRTDL2UIModelService } from 'src/app/service/Translator/CRTDL/CRTDL2UIModel.service';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
+import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { DownloadDataSelectionComponent } from './download-data-selection/download-data-selection.component';
-import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { DownloadDataSelectionComponent } from '../download-data-selection/download-data-selection.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 
 @Component({
-  selector: 'num-data-selection',
-  templateUrl: './data-selection.component.html',
-  styleUrls: ['./data-selection.component.scss'],
+  selector: 'num-data-selection-action-bar',
+  templateUrl: './data-selection-action-bar.component.html',
+  styleUrls: ['./data-selection-action-bar.component.scss'],
 })
-export class DataSelectionComponent implements OnInit {
-  @Input() showActionBar;
-  @Output() scrollClick = new EventEmitter();
-
+export class DataSelectionActionBarComponent {
   isDataSelectionExistent = false;
   isCohortExistent = false;
-
   fileName: string;
+
   constructor(
-    private terminologySystemProvider: TerminologySystemProvider,
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
     private crdtlTranslatorService: CRTDL2UIModelService,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     private dataSelectionProfileProviderService: DataSelectionProfileProviderService
   ) {}
-
-  ngOnInit(): void {
-    this.dataSelectionProviderService.getActiveDataSelection().subscribe((dataSelection) => {
-      this.isDataSelectionExistent = dataSelection.getProfiles().length > 0;
-    });
-
-    this.feasibilityQueryProviderService.getIsFeasibilityQueryValid().subscribe((isValid) => {
-      this.isCohortExistent = isValid;
-    });
-  }
 
   public editDataSelection() {
     this.navigationHelperService.navigateToDataSelectionEditor();

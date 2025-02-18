@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ConsentService } from '../../../../service/Consent/Consent.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -12,6 +11,7 @@ import { DownloadCohortComponent } from './download-cohort/download-cohort.compo
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { Observable } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { ConsentService } from 'src/app/service/Consent/Consent.service';
 
 @Component({
   selector: 'num-cohort-definition',
