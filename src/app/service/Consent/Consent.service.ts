@@ -1,17 +1,23 @@
 import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode';
 import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { StructuredQueryCriterion } from 'src/app/model/StructuredQuery/Criterion/StructuredQueryCriterion';
+import { Subscription } from 'rxjs';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConsentService {
+export class ConsentService implements OnDestroy {
+  ngOnDestroy(): void {
+    this.activeFeasibilityQuerySusbscription?.unsubscribe();
+  }
+
   private consent = false;
   private consentTermcode: TerminologyCode;
   private consentLookUpTableKey: string;
 
+  private activeFeasibilityQuerySusbscription: Subscription;
   private lookupTable: { [key: string]: { code: string; display: string; system: string } } = {
     'true:true:true:true': {
       code: 'yes-yes-yes-yes',
@@ -116,12 +122,12 @@ export class ConsentService {
   }
 
   public setFeasibilityQueryConsent() {
-    this.feasibilityQueryProviderService
+    this.activeFeasibilityQuerySusbscription?.unsubscribe();
+    this.activeFeasibilityQuerySusbscription = this.feasibilityQueryProviderService
       .getActiveFeasibilityQuery()
       .subscribe((feasibilityQuery) => {
         feasibilityQuery.setConsent(this.consent);
-      })
-      .unsubscribe();
+      });
   }
 
   public getConsentLookUpTableKey(): string {

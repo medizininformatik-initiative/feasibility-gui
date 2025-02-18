@@ -3,7 +3,7 @@ import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/Feasibil
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service';
 import { FeatureService } from 'src/app/service/Feature.service';
-import { filter, Observable, Subject, takeUntil } from 'rxjs';
+import { filter, Observable, Subject, Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
@@ -26,6 +26,10 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   queryResultRateLimit$: Observable<QueryResultRateLimit>;
   loadedResult = false;
 
+  activeFeasibilityQuerySusbscription: Subscription;
+
+  doSendSusbscription: Subscription;
+
   @Output()
   resultLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -43,12 +47,10 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.queryProviderService
+    this.activeFeasibilityQuerySusbscription?.unsubscribe();
+    this.activeFeasibilityQuerySusbscription = this.queryProviderService
       .getActiveFeasibilityQuery()
-      .pipe(
-        filter((feasibilityQuery) => feasibilityQuery.getInclusionCriteria().length > 0),
-        takeUntil(this.destroy$)
-      )
+      .pipe(filter((feasibilityQuery) => feasibilityQuery.getInclusionCriteria().length > 0))
       .subscribe({
         next: () => this.doSend(),
         error: (err) => console.error('Error fetching feasibility query', err),
@@ -56,13 +58,16 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.activeFeasibilityQuerySusbscription?.unsubscribe();
+    this.doSendSusbscription?.unsubscribe();
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   private doSend(): void {
     this.initializeState();
-    this.feasibilityQueryResultService.doSendQueryRequest().subscribe({
+    this.doSendSusbscription?.unsubscribe();
+    this.doSendSusbscription = this.feasibilityQueryResultService.doSendQueryRequest().subscribe({
       next: (result: QueryResult) =>
         result === null ? this.finalize() : this.handleResult(result),
       error: (error) => console.error('Error fetching query result', error),
