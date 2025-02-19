@@ -86,6 +86,14 @@ export class CreateDataSelectionProfileService {
     return new ProfileTimeRestrictionFilter(filter.name, filter.type, new BetweenFilter(null, null));
   }
 
+  /**
+   * @todo use ids from Onto files
+   * @param item
+   * @param fields
+   * @param filters
+   * @param markAsReference
+   * @returns
+   */
   private instanceOfDataSelectionProfileProfile(
     item: any,
     fields: ProfileFields[],
