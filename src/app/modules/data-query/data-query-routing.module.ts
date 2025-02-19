@@ -1,8 +1,8 @@
+import { CohortDefinitionComponent } from './cohort-definition/cohort-definition.component';
+import { DataSelectionComponent } from './data-selection/data-selection.component';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CohortDefinitionComponent } from './data-query/cohort-definition/cohort-definition.component';
-import { DataSelectionComponent } from './data-query/data-selection/data-selection.component';
 import { PathSegments } from 'src/app/app-paths';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {

@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
+import { CdkNestedTreeNode } from '@angular/cdk/tree';
 
 @Component({
   selector: 'num-display-profiles',
