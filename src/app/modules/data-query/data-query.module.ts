@@ -1,3 +1,4 @@
+import { CohortDefinitionActionBarComponent } from './cohort-definition/action-bar/cohort-definition-action-bar.component';
 import { CohortDefinitionComponent } from './cohort-definition/cohort-definition.component';
 import { CommonModule } from '@angular/common';
 import { DataQueryRoutingModule } from './data-query-routing.module';
@@ -22,6 +23,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     DownloadCohortComponent,
     DownloadDataSelectionComponent,
     DataSelectionActionBarComponent,
+    CohortDefinitionActionBarComponent,
   ],
   exports: [],
   imports: [

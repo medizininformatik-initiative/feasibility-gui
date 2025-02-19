@@ -1,0 +1,35 @@
+<num-action-bar class="bottom">
+  <num-button (click)="createNewCohort()" type="green">
+    {{ 'DATAQUERY.COHORT.BUTTON.NEW_COHORT' | translate }}
+  </num-button>
+  <num-button
+    [isDisabled]="(isFeasibilityExistent | async) === false"
+    type="green"
+    (click)="editFeasibilityQuery()"
+  >
+    {{ 'DATAQUERY.COHORT.BUTTON.EDIT' | translate }}
+  </num-button>
+  <div>
+    <input type="file" class="file-input" (change)="uploadCohort($event)" #fileUpload />
+    <num-button type="green" (click)="fileUpload.click()">
+      {{ 'DATAQUERY.COHORT.BUTTON.UPLOAD' | translate }}
+    </num-button>
+  </div>
+  <num-button
+    type="green"
+    [isDisabled]="(isFeasibilityQueryValid | async) === false"
+    (click)="downloadCohort()"
+  >
+    {{ 'DATAQUERY.COHORT.BUTTON.DOWNLOAD' | translate }}
+  </num-button>
+  <num-button
+    type="green"
+    [isDisabled]="(isFeasibilityQueryValid | async) === false"
+    (click)="sendQuery()"
+  >
+    {{ 'DATAQUERY.COHORT.BUTTON.SEND_QUERY' | translate }}
+  </num-button>
+  <num-button [icon]="'arrow-down'" (click)="navigatToDataQueryDataSelection()" type="green">
+    {{ 'DATAQUERY.COHORT.BUTTON.JUMP_TO_DATASELECTION' | translate }}
+  </num-button>
+</num-action-bar>
