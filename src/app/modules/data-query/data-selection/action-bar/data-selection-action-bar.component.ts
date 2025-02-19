@@ -1,91 +1,66 @@
-import { Component, ElementRef } from '@angular/core';
-import { CRTDL2UIModelService } from 'src/app/service/Translator/CRTDL/CRTDL2UIModel.service';
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
+import { CCDLUploadService } from 'src/app/service/FileUpload/CCDLUpload.service';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { DataSelectionInstanceService } from 'src/app/service/DataSelection/DataSelectionInstance.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { DownloadDataSelectionComponent } from '../download-data-selection/download-data-selection.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { map } from 'rxjs/operators';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { v4 as uuidv4 } from 'uuid';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-data-selection-action-bar',
   templateUrl: './data-selection-action-bar.component.html',
   styleUrls: ['./data-selection-action-bar.component.scss'],
 })
-export class DataSelectionActionBarComponent {
-  isDataSelectionExistent = false;
-  isCohortExistent = false;
+export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
+  isDataSelectionExistent$: Observable<boolean>;
+  isCohortExistent$: Observable<boolean>;
   fileName: string;
+  private subscription: Subscription;
 
   constructor(
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
-    private crdtlTranslatorService: CRTDL2UIModelService,
-    private dialog: MatDialog,
-    private snackbarService: SnackbarService,
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService
+    private ccdlUploadService: CCDLUploadService,
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
+    private dataSelectionInstanceService: DataSelectionInstanceService,
+    private downloadCRDTLService: DownloadCRDTLService
   ) {}
+
+  ngOnInit(): void {
+    this.isDataSelectionExistent$ = this.dataSelectionProviderService
+      .getActiveDataSelection()
+      .pipe(map((dataSelection) => dataSelection.getProfiles().length > 0));
+
+    this.isCohortExistent$ = this.feasibilityQueryProviderService.getIsFeasibilityQueryValid();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription?.unsubscribe();
+    }
+  }
 
   public editDataSelection() {
     this.navigationHelperService.navigateToDataSelectionEditor();
   }
 
   public createNewDataSelection() {
-    const dataSelection = new DataSelection([], uuidv4());
-    this.dataSelectionProviderService.setDataSelectionByUID(
-      dataSelection.getId(),
-      dataSelection,
-      true
-    );
+    this.dataSelectionInstanceService.instantiate();
     this.navigationHelperService.navigateToDataSelectionSearch();
   }
 
   public downloadCRDTL(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    if (this.isCohortExistent) {
-      this.dialog
-        .open(DownloadDataSelectionComponent, dialogConfig)
-        .afterClosed()
-        .subscribe(() => {
-          this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
-        });
-    } else {
-      this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.DOWNLOAD');
-    }
+    this.subscription = this.isCohortExistent$.subscribe((isCohortExistent) => {
+      this.downloadCRDTLService.openDownloadDialog(isCohortExistent);
+    });
   }
 
-  public onFileSelected(event: Event): void {
+  public uploadCCDL(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];
-
-    if (file) {
-      this.fileName = file.name;
-      const reader = new FileReader();
-      reader.onload = this.onReaderLoad.bind(this);
-      reader.readAsText(file);
-    }
-  }
-
-  public uploadDataSelection(crtdl: string) {
-    this.dataSelectionProfileProviderService.resetDataSelectionProfileMap();
-    this.isDataSelectionExistent = this.crdtlTranslatorService.translateToUiModel(crtdl);
-    if (!this.isDataSelectionExistent) {
-      this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');
-    } else {
-      this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD');
-    }
-  }
-
-  public onReaderLoad(event: ProgressEvent<FileReader>): void {
-    try {
-      const importedQuery = JSON.parse(event.target?.result as string);
-      this.uploadDataSelection(importedQuery);
-    } catch (error) {
-      console.error('Error parsing the file:', error);
-    }
+    this.ccdlUploadService.uploadCCDL(file);
   }
 
   public navigateToDataQueryCohortDefinition() {
