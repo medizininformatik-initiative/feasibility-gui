@@ -1,13 +1,13 @@
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeDefinitionToAttributeFilterFactoryService } from '../AttributeDefinitionFactory/AttributeDefinitionToAttributeFilterFactory.service';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionMetadataService } from '../CriterionMetadata.service';
 import { Injectable } from '@angular/core';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionToValueFilterFactoryService } from '../AttributeDefinitionFactory/ValueDefinitionToValueFilterFactory.service';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { CriteriaProfile } from '../../../../model/FeasibilityQuery/CriteriaProfileData';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class CriterionBuilderHelperService {
     private criterionMetadataService: CriterionMetadataService
   ) {}
 
-  public setBuilderWithCriteriaProfileData(profileData: CriteriaProfileData): CriterionBuilder {
+  public setBuilderWithCriteriaProfileData(profileData: CriteriaProfile): CriterionBuilder {
     const mandatoryFields = this.criterionMetadataService.createMandatoryFields(profileData);
     const builder = new CriterionBuilder(mandatoryFields);
     const valueFilter = this.addValueFilters(profileData.getValueDefinitions());
