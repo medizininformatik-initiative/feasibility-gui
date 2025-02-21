@@ -4,6 +4,7 @@ import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayData } from 'src/app/model/Interface/DisplayData';
+import { ValueDefinitionData } from '../../../model/Interface/ValueDefinition';
 
 export class ValueDefinitionsResultMapper extends AbstractAttributeDefinitionsResultMapper {
   /**
@@ -14,20 +15,22 @@ export class ValueDefinitionsResultMapper extends AbstractAttributeDefinitionsRe
    */
   public mapValueDefinition(uiProfile: UiProfileData): ValueDefinition[] {
     if (uiProfile.valueDefinition) {
-      return [
-        new ValueDefinition(
-          this.createDisplayData(uiProfile.display),
-          uiProfile.valueDefinition.type,
-          uiProfile.valueDefinition.optional,
-          this.mapAllowedUnits(uiProfile.valueDefinition.allowedUnits),
-          uiProfile.valueDefinition.max,
-          uiProfile.valueDefinition.min,
-          uiProfile.valueDefinition.precision,
-          uiProfile.valueDefinition.referencedValueSet
-        ),
-      ];
+      return [this.mapValueDefinitionInstance(uiProfile.valueDefinition)];
     }
     return [];
+  }
+
+  public mapValueDefinitionInstance(valueDefinitionData: ValueDefinitionData): ValueDefinition {
+    return new ValueDefinition(
+      this.createDisplayData(valueDefinitionData.display),
+      valueDefinitionData.type,
+      valueDefinitionData.optional,
+      this.mapAllowedUnits(valueDefinitionData.allowedUnits),
+      valueDefinitionData.max,
+      valueDefinitionData.min,
+      valueDefinitionData.precision,
+      valueDefinitionData.referencedValueSet
+    );
   }
 
   public createDisplayData(displayData: DisplayData): Display {
