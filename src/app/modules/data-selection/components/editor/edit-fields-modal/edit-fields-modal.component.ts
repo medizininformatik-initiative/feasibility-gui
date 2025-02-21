@@ -156,7 +156,9 @@ export class EditFieldsModalComponent implements OnInit {
               // Extract referenced profiles and flatten the array
               const referencedProfiles = selectedFields
                 .map((field) =>
-                  field.getReferencedProfiles().length > 0 ? field.getReferencedProfiles() : []
+                  field.getReferencedProfileUrls().length > 0
+                    ? field.getReferencedProfileUrls()
+                    : []
                 )
                 .reduce((acc, curr) => acc.concat(curr), []);
               if (referencedProfiles.length === 0) {
