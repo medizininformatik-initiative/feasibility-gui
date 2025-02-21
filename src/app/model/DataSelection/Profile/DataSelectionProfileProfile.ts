@@ -10,6 +10,7 @@ export class DataSelectionProfileProfile {
   private display: DisplayData;
   private fields: ProfileFields[] = [];
   private filters: AbstractProfileFilter[] = [];
+  private label: string;
   private reference: ProfileReference;
 
   constructor(
@@ -26,6 +27,14 @@ export class DataSelectionProfileProfile {
     this.fields = fields;
     this.filters = filters;
     this.reference = reference;
+  }
+
+  public getLabel(): string {
+    return this.label;
+  }
+
+  public setLabel(label: string): void {
+    this.label = label;
   }
 
   public getId(): string {
