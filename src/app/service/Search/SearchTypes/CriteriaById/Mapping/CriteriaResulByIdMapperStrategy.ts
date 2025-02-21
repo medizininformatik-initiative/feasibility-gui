@@ -1,7 +1,7 @@
 import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 export class CriteriaResulByIdMapperStrategy
@@ -33,7 +33,7 @@ export class CriteriaResulByIdMapperStrategy
    * @returns
    */
   public instantiateDisplayData(data: any) {
-    return new DisplayData(
+    return new Display(
       data.translations?.map(
         (translation) => new Translation(translation.language, translation.value)
       ),

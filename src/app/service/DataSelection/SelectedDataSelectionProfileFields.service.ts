@@ -2,7 +2,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',
@@ -38,8 +38,8 @@ export class SelectedDataSelectionProfileFieldsService {
     );
   }
 
-  private instantiateDisplayDataForDescription(displayData: DisplayData): DisplayData {
-    return new DisplayData(
+  private instantiateDisplayDataForDescription(displayData: Display): Display {
+    return new Display(
       displayData
         .getTranslations()
         .map(
@@ -50,8 +50,8 @@ export class SelectedDataSelectionProfileFieldsService {
     );
   }
 
-  private instantiateDisplayData(displayData: DisplayData): DisplayData {
-    return new DisplayData(
+  private instantiateDisplayData(displayData: Display): Display {
+    return new Display(
       displayData
         .getTranslations()
         .map(

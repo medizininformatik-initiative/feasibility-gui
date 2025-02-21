@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 @Component({
   selector: 'num-table',
@@ -40,9 +39,5 @@ export class TableComponent implements OnInit {
         foundRow.isCheckboxSelected = false;
       }
     });
-  }
-
-  public isDisplayData(cell: any): boolean {
-    return cell && cell instanceof DisplayData;
   }
 }

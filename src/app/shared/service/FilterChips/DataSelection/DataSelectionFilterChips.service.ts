@@ -4,7 +4,7 @@ import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChip
 import { Injectable } from '@angular/core';
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { TranslateService } from '@ngx-translate/core';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 
@@ -30,7 +30,7 @@ export class DataSelectionFilterChipsService {
 
   private squashFilterChips(filterChips: InterfaceFilterChip[]): InterfaceFilterChip[] {
     const squashedChipsMap = new Map<
-      DisplayData | FilterTypes | TimeRestrictionType | string,
+      Display | FilterTypes | TimeRestrictionType | string,
       InterfaceFilterChip
     >();
 

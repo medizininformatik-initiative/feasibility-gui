@@ -1,5 +1,5 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipBuilder } from '../FilterChipBuilder';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { getArithmeticSymbol } from 'src/app/model/Utilities/Quantity/ArithmeticSymbolResolver';
@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class FilterChipQuantityAdapter {
   public static adaptQuantity(
     quantity: AbstractQuantityFilter,
-    display: DisplayData
+    display: Display
   ): InterfaceFilterChip[] {
     const chips: InterfaceFilterChip[] = [];
 
@@ -46,7 +46,7 @@ export class FilterChipQuantityAdapter {
   }
 
   private static createQuantityRangeChip(
-    display: DisplayData,
+    display: Display,
     quantity: QuantityRangeFilter,
     unitDisplay: string
   ): InterfaceFilterChip {
@@ -58,7 +58,7 @@ export class FilterChipQuantityAdapter {
   }
 
   private static createQuantityComparatorChip(
-    display: DisplayData,
+    display: Display,
     quantity: QuantityComparatorFilter,
     unitDisplay: string,
     symbol
@@ -76,7 +76,7 @@ export class FilterChipQuantityAdapter {
    * @param text The text to display in the chip
    * @returns An InterfaceFilterChip
    */
-  private static createFilterChip(display: DisplayData, text: string): InterfaceFilterChip {
+  private static createFilterChip(display: Display, text: string): InterfaceFilterChip {
     const builder = new FilterChipBuilder(display);
     builder.addData(uuidv4(), text);
     return builder.buildFilterChip();

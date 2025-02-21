@@ -1,11 +1,11 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
 import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { FilterChipBuilder } from '../FilterChipBuilder';
 import { InterfaceFilterChip } from '../InterfaceFilterChip';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 export class FilterChipTimeRestrictionAdapter {
   public static adaptTimeRestriction(
@@ -82,7 +82,7 @@ export class FilterChipTimeRestrictionAdapter {
   private static createDisplayDataInstance(text: string) {
     const german = 'de-DE';
     const english = 'en-US';
-    return new DisplayData([new Translation(german, text), new Translation(english, text)], text);
+    return new Display([new Translation(german, text), new Translation(english, text)], text);
   }
 
   /**
@@ -101,7 +101,7 @@ export class FilterChipTimeRestrictionAdapter {
       timeRestriction.getAfterDate()
     )} bis ${this.formatDate(timeRestriction.getBeforeDate())}`;
 
-    return new DisplayData(
+    return new Display(
       [new Translation(german, germanText), new Translation(english, englishText)],
       germanText
     );

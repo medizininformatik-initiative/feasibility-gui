@@ -1,6 +1,5 @@
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { TreeNode } from '../TreeNodeInterface';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 
 export class FieldsTreeAdapter {
   static fromTree(trees: ProfileFields[]): TreeNode[] {
