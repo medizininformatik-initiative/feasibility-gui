@@ -1,5 +1,5 @@
 <num-action-bar class="bottom">
-  <ng-container *ngIf="$listItemArray | async as listItemArray">
+  <ng-container *ngIf="listItemArray$ | async as listItemArray">
     <div *ngIf="listItemArray.length > 0" class="display-selected">
       {{
         listItemArray.length === 1
@@ -23,10 +23,10 @@
   <num-button
     icon="arrow-down"
     type="green"
-    [isDisabled]="($stageArray | async)?.length === 0 && (isFeasibilityExistent | async) === false"
+    [isDisabled]="(stageArray$ | async)?.length === 0 && (isFeasibilityExistent$ | async) === false"
     class="margin-right-10"
     (click)="navigateToEditor()"
-    [matBadge]="($stageArray | async)?.length"
+    [matBadge]="(stageArray$ | async)?.length"
     matBadgePosition="above after"
   >
     {{ 'QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate }}

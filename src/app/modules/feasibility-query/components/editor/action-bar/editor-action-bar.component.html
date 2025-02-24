@@ -2,7 +2,7 @@
   <num-button
     type="green"
     (click)="doSendRequest()"
-    [isDisabled]="(isFeasibilityQueryValid | async) === false"
+    [isDisabled]="(isFeasibilityQueryValid$ | async) === false"
     class="margin-right-10"
   >
     {{ 'QUERYBUILDER.STAGE.BUTTON.SEND_QUERY' | translate }}
@@ -19,7 +19,7 @@
     type="green"
     class="margin-right-10"
     (click)="navigateToSearch()"
-    [matBadge]="($stageArray | async)?.length"
+    [matBadge]="(stageArray$ | async)?.length"
     matBadgePosition="above after"
   >
     {{ 'QUERYBUILDER.STAGE.BUTTON.BACK_TO_SEARCH' | translate }}
