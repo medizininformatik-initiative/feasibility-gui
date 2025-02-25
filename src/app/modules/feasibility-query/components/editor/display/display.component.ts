@@ -1,10 +1,8 @@
 /* eslint-disable */
-import * as htmlToImage from 'html-to-image' // eslint-disable-line
 import { Component, Input, OnInit } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { FileSaverService } from 'ngx-filesaver'
+import { HtmlToImageService } from 'src/app/service/HtmlToImage.service'
 import { Subscription } from 'rxjs'
-import { toBlob, toJpeg, toPixelData, toPng, toSvg } from 'html-to-image'
 
 @Component({
   selector: 'num-display-feasibility-query',
@@ -18,21 +16,12 @@ export class DisplayFeasibilityQueryComponent implements OnInit {
 
   @Input() isEditable: boolean
 
-  constructor(private fileSaverService: FileSaverService) {} // Inject FileSaverService
+  constructor(private htmlToImageService: HtmlToImageService) {}
 
   ngOnInit() {}
 
   render(): void {
-    const node = document.getElementById('rendertest')
-
-    // Convert the node to a PNG Blob
-    htmlToImage
-      .toBlob(node)
-      .then((blob) => {
-        this.fileSaverService.save(blob, 'image.png')
-      })
-      .catch((error) => {
-        console.error('Oops, something went wrong!', error)
-      })
+    const node = document.getElementById('renderCriteria')
+    this.htmlToImageService.toBlob(node)
   }
 }
