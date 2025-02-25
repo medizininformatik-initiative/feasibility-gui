@@ -1,6 +1,8 @@
+import { combineLatest, Observable, of } from 'rxjs';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -8,25 +10,35 @@ import { Injectable } from '@angular/core';
 export class MissingCriteriaService {
   constructor(private criterionService: CriterionProviderService) {}
 
-  public getMissingCriteria(feasibilityQuery: FeasibilityQuery): string[] {
-    const missingCriteria: string[] = [];
-
-    feasibilityQuery.getInclusionCriteria().forEach((criteriaGroup) => {
-      this.processMissingCriteria(criteriaGroup, missingCriteria);
-    });
-    feasibilityQuery.getExclusionCriteria().forEach((criteriaGroup) => {
-      this.processMissingCriteria(criteriaGroup, missingCriteria);
-    });
-
-    return missingCriteria;
+  public getMissingCriteria(feasibilityQuery: FeasibilityQuery): Observable<string[]> {
+    return combineLatest([
+      this.processMissingCriteria(feasibilityQuery.getInclusionCriteria()),
+      this.processMissingCriteria(feasibilityQuery.getExclusionCriteria()),
+    ]).pipe(map(this.flattenLists));
   }
 
-  private processMissingCriteria(criteriaGroup: string[], missingCriteria: string[]): void {
-    criteriaGroup.forEach((criterionId) => {
-      const criterion = this.criterionService.getCriterionByUID(criterionId);
-      if (!criterion.getIsRequiredFilterSet()) {
-        missingCriteria.push(criterionId);
-      }
-    });
+  private processMissingCriteria(criteriaGroups: string[][]): Observable<string[]> {
+    if (!criteriaGroups.length) {
+      return of([]);
+    }
+
+    const observables = criteriaGroups.map((group) => this.getMissingCriteriaFromGroup(group));
+    return combineLatest(observables).pipe(map(this.flattenLists));
+  }
+
+  private getMissingCriteriaFromGroup(criteriaGroup: string[]): Observable<string[]> {
+    return this.criterionService
+      .getCriterionUIDMap()
+      .pipe(
+        map((criterionMap) =>
+          criteriaGroup.filter(
+            (criterionId) => !criterionMap.get(criterionId)?.getIsRequiredFilterSet()
+          )
+        )
+      );
+  }
+
+  private flattenLists(lists: string[][]): string[] {
+    return lists.reduce((acc, curr) => acc.concat(curr), []);
   }
 }

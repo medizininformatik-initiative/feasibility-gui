@@ -1,4 +1,4 @@
-import { combineLatest, map, Observable } from 'rxjs';
+import { combineLatest, map, Observable, switchMap } from 'rxjs';
 import { CriterionValidationManagerService } from './Validation/CriterionValidationManager.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
@@ -15,13 +15,13 @@ export class FeasibilityQueryValidation {
 
   /**
    *
-   * @returns Observable<string[]
+   * @returns Observable<string[]>
    */
   public getMissingRequiredFilterCriteria(): Observable<string[]> {
     return this.getActiveFeasibilityQuery().pipe(
-      map((feasibilityQuery) =>
-        this.criterionValidationManagerService.getMissingRequiredFilterCriteria(feasibilityQuery)
-      )
+      switchMap((feasibilityQuery) => this.criterionValidationManagerService.getMissingRequiredFilterCriteria(
+          feasibilityQuery
+        ))
     );
   }
 
@@ -73,10 +73,7 @@ export class FeasibilityQueryValidation {
       this.getInvalidCriteria().pipe(map((invalidCriteria) => invalidCriteria.length === 0)),
       this.getIsInclusionSet(),
     ]).pipe(
-      map(
-        ([noMissingCriteria, noInvalidCriteria, isInclusionSet]) =>
-          noMissingCriteria && noInvalidCriteria && isInclusionSet
-      )
+      map(([noMissingCriteria, noInvalidCriteria, isInclusionSet]) => noMissingCriteria && noInvalidCriteria && isInclusionSet)
     );
   }
 

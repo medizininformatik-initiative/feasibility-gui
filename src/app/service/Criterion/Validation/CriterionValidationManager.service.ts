@@ -2,6 +2,7 @@ import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuer
 import { Injectable } from '@angular/core';
 import { InvalidCriteriaService } from './InvalidCriteria.service';
 import { MissingCriteriaService } from './MissingCriteria.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,9 @@ export class CriterionValidationManagerService {
     private invalidCriteriaService: InvalidCriteriaService
   ) {}
 
-  public getMissingRequiredFilterCriteria(feasibilityQuery: FeasibilityQuery): string[] {
+  public getMissingRequiredFilterCriteria(
+    feasibilityQuery: FeasibilityQuery
+  ): Observable<string[]> {
     return this.missingCriteriaService.getMissingCriteria(feasibilityQuery);
   }
 
