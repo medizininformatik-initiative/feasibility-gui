@@ -1,4 +1,4 @@
-@font-face {
+/*@font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
@@ -27,12 +27,10 @@
     url('/assets/font/roboto-medium-500.woff') format('woff'),
     url('/assets/font/roboto-medium-500.ttf') format('truetype');
 }
-
+*/
 @font-face {
   font-family: 'Titillium Web';
   font-style: normal;
   font-weight: 400;
-  src: local('Titillium Web'),
-    url('/assets/font/titillium-web-v14-latin-regular.woff2') format('woff2'),
-    url('/assets/font/titillium-web-v14-latin-regular.woff') format('woff');
+  src: local('Titillium Web'), url('/assets/font/TitilliumWeb-Regular.ttf') format('truetype');
 }

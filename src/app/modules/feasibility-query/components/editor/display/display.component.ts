@@ -24,18 +24,6 @@ export class DisplayFeasibilityQueryComponent implements OnInit {
 
   render(): void {
     const node = document.getElementById('rendertest')
-    const fontCss = document.createElement('style')
-    const fontCssRule = `
-    @font-face {
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 500;
-        backgroundColor: white;
-        color: white;
-        
-    }`
-    fontCss.appendChild(document.createTextNode(fontCssRule))
-    document.head.appendChild(fontCss)
 
     // Convert the node to a PNG Blob
     htmlToImage
