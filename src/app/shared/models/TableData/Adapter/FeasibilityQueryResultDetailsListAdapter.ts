@@ -13,7 +13,7 @@ export class FeasibilityQueryResultDetailsListAdapter {
   public static adapt(listEntries: FeasibilityQueryResultDetailstListEntry[]): TableData {
     const rows: InterfaceTableDataRow[] = listEntries?.map((entry, index) => ({
       id: uuidv4(),
-      data: ['DIZ ' + index + 1, entry.getNumberOfPatients().toString()],
+      data: ['DIZ ' + (index + 1), entry.getNumberOfPatients().toString()],
       hasCheckbox: false,
       isCheckboxSelected: false,
       isClickable: false,
