@@ -1,4 +1,20 @@
 # Changelog
+
+## v6.0.7 (2025-02-27)
+
+### Bug Fixes
+* Fixed index increment issue with parentheses ([#313](https://github.com/medizininformatik-initiative/feasibility-gui/issues/313))
+* Reduced container height ([#343](https://github.com/medizininformatik-initiative/feasibility-gui/issues/343))
+* Corrected consent subscription ([#344](https://github.com/medizininformatik-initiative/feasibility-gui/issues/344))
+
+### Features
+* Defined and applied interfaces ([#333](https://github.com/medizininformatik-initiative/feasibility-gui/issues/333))
+* Refactored CriterionValidationService into smaller services ([#332](https://github.com/medizininformatik-initiative/feasibility-gui/issues/332))
+* Merged two criterion creation services into one ([#326](https://github.com/medizininformatik-initiative/feasibility-gui/issues/326))
+* Added translation for consent text ([#263](https://github.com/medizininformatik-initiative/feasibility-gui/issues/263))
+
+
+
 ## v6.0.6 (2025-02-18)
 
 ### Bug Fixes
