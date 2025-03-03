@@ -27,7 +27,7 @@
       {{ 'DATASELECTION.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
-  <div *ngIf="!(isDataSelectionExistent$ | async)" class="empty-data-selection-box">
+  <div *ngIf="(isDataSelectionExistent$ | async) === false" class="empty-data-selection-box">
     <num-placeholder-box>
       {{ 'DATAQUERY.DATASELECTION.EMPTY' | translate }}
     </num-placeholder-box>
@@ -41,7 +41,7 @@
       type="green"
       (click)="editDataSelection()"
       class="margin-right-10"
-      [isDisabled]="!(isDataSelectionExistent$ | async)"
+      [isDisabled]="(isDataSelectionExistent$ | async) === false"
     >
       {{ 'DATAQUERY.DATASELECTION.BUTTON.EDIT' | translate }}
     </num-button>
@@ -59,7 +59,9 @@
     </div>
     <num-button
       class="margin-right-10"
-      [isDisabled]="!(isDataSelectionExistent$ | async) || !(isCohortExistent$ | async)"
+      [isDisabled]="
+        (isDataSelectionExistent$ | async) === false || (isCohortExistent$ | async) === false
+      "
       type="green"
       (click)="downloadCRDTL()"
     >
