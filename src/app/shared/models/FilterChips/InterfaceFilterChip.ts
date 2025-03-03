@@ -6,5 +6,6 @@ import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestrict
 export interface InterfaceFilterChip {
   type: Display | FilterTypes | TimeRestrictionType | string
   typeExpanded?: boolean
+  twoLineDisplay?: boolean
   data: InterfaceFilterChipData[]
 }
