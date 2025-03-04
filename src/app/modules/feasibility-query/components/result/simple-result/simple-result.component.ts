@@ -70,7 +70,11 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.doSendSusbscription = this.feasibilityQueryResultService.doSendQueryRequest().subscribe({
       next: (result: QueryResult) =>
         result === null ? this.finalize() : this.handleResult(result),
-      error: (error) => console.error('Error fetching query result', error),
+      error: (error) => {
+        console.error('Error fetching query result', error);
+        this.showSpinner = false;
+      },
+
       complete: () => this.finalize(),
     });
   }
