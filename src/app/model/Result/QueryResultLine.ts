@@ -1,3 +1,5 @@
+import { QueryResultLineData } from '../Interface/QueryResultLineData';
+
 export class QueryResultLine {
   private numberOfPatients: number;
   private siteName: string;
@@ -7,21 +9,23 @@ export class QueryResultLine {
     this.siteName = siteName;
   }
 
-  // Getter and Setter for numberOfPatients
-  getNumberOfPatients(): number {
+  public getNumberOfPatients(): number {
     return this.numberOfPatients;
   }
 
-  setNumberOfPatients(value: number) {
+  public setNumberOfPatients(value: number): void {
     this.numberOfPatients = value;
   }
 
-  // Getter and Setter for siteName
-  getSiteName(): string {
+  public getSiteName(): string {
     return this.siteName;
   }
 
-  setSiteName(value: string) {
+  public setSiteName(value: string): void {
     this.siteName = value;
+  }
+
+  public static fromJson(json: QueryResultLineData): QueryResultLine {
+    return new QueryResultLine(json.numberOfPatients, json.siteName);
   }
 }
