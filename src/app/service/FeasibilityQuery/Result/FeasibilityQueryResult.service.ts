@@ -34,7 +34,7 @@ export class FeasibilityQueryResultService {
     return this.activeFeasibilityQuery().pipe(
       switchMap((feasibilityQuery) => {
         const result = this.pollingManagerService.getPollingResult(feasibilityQuery);
-        return this.mapResult(result);
+        return this.setProvider(result);
       })
     );
   }
@@ -46,12 +46,12 @@ export class FeasibilityQueryResultService {
           feasibilityQueryResultId,
           feasibilityQuery.getId()
         );
-        return this.mapResult(result);
+        return this.setProvider(result);
       })
     );
   }
 
-  private mapResult(result: Observable<QueryResult>): Observable<QueryResult> {
+  private setProvider(result: Observable<QueryResult>): Observable<QueryResult> {
     return result.pipe(
       map((queryResult: QueryResult) => {
         console.log(queryResult);
@@ -59,7 +59,6 @@ export class FeasibilityQueryResultService {
           this.setQueryResultProvider(queryResult);
           return queryResult;
         } else {
-          console.log(queryResult);
           return queryResult;
         }
       })
