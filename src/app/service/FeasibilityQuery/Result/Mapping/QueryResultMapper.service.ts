@@ -15,12 +15,10 @@ export class QueryResultMapperService {
   constructor() {}
 
   public createErrorQueryResult(
-    errorResponse: HttpErrorResponse,
+    issueData: IssueData[],
     feasibilityQueryId: string
-  ): QueryResult {
-    const issues: Issue[] = (errorResponse.error.issues || []).map((issue: IssueData) =>
-      Issue.fromJson(issue)
-    );
+  ): ErrorQueryResult {
+    const issues: Issue[] = (issueData || []).map((issue: IssueData) => Issue.fromJson(issue));
     return new ErrorQueryResult(feasibilityQueryId, issues);
   }
 
