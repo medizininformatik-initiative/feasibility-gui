@@ -81,16 +81,19 @@ export class CohortDefinitionComponent implements OnInit {
 
   doValidate(importedQuery): void {
     this.validationService.validateStructuredQuery(importedQuery).subscribe(
-      (validatedStructuredQuery) => {
-        this.structuredQuery2FeasibilityQueryService
-          .translate(validatedStructuredQuery)
-          .subscribe((feasibilityQuery) => {
-            this.feasibilityQueryService.setFeasibilityQueryByID(
-              feasibilityQuery,
-              feasibilityQuery.getId(),
-              true
-            );
-          });
+      (hasIssues) => {
+        console.log('hasIssues', hasIssues);
+        if (!hasIssues) {
+          this.structuredQuery2FeasibilityQueryService
+            .translate(importedQuery)
+            .subscribe((feasibilityQuery) => {
+              this.feasibilityQueryService.setFeasibilityQueryByID(
+                feasibilityQuery,
+                feasibilityQuery.getId(),
+                true
+              );
+            });
+        }
       },
       (error) => {
         console.error('Validation error:', error);
