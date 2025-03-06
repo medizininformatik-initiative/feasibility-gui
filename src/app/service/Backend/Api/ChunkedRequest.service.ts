@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ChunkedRequestService {
-  private readonly chunkSize = 50;
+  private readonly chunkSize = 25;
 
   constructor(private backendService: BackendService, private http: HttpClient) {}
 
