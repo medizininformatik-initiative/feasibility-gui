@@ -17,6 +17,7 @@ export class CodeableConceptSearchUrlStrategy implements SearchUrlStrategy {
       this.valueSetUrls.length > 0 ? this.valueSetUrls.join(',') : this.valueSetUrls[0];
     const url = new SearchUrlBuilder(this.path)
       .withFiltertUrl(ElasticSearchFilterPaths.VALUESETS, valueSetUrl)
+      .withPageSize()
       .withSearchTerm(this.searchText)
       .buildUrl();
     return url;

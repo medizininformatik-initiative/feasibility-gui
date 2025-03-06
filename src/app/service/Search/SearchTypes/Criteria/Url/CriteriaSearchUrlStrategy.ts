@@ -30,6 +30,7 @@ export class CriteriaSearchUrlStrategy implements SearchUrlStrategy {
       .withContext(this.contextFilter)
       .withKds(this.kdsFilter)
       .withTerminology(this.terminologyFilter)
+      .withPageSize()
       .buildUrl();
     return url;
   }
