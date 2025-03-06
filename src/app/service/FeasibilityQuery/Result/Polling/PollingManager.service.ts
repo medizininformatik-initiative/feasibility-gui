@@ -96,6 +96,7 @@ export class PollingManagerService {
           return of(lastError);
         }
       }),
+      endWith(null),
       share()
     );
   }
