@@ -1,25 +1,20 @@
+import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { Injectable } from '@angular/core';
+import { PollingService } from './Polling.service';
+import { QueryResult } from 'src/app/model/Result/QueryResult';
+import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service';
 import {
   Observable,
   Subject,
   switchMap,
   takeUntil,
-  share,
   interval,
   timer,
   endWith,
-  tap,
-  defaultIfEmpty,
-  filter,
-  finalize,
-  of,
+  mergeMap,
+  map,
 } from 'rxjs';
-import { PollingService } from './Polling.service';
-import { QueryResult } from 'src/app/model/Result/QueryResult';
-import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult';
-import { Issue } from 'src/app/model/Utilities/Issue';
 
 @Injectable({
   providedIn: 'root',
@@ -61,43 +56,35 @@ export class PollingManagerService {
   private pollingProcess(
     resultId: string,
     feasibilityQueryId: string
-  ): Observable<QueryResult | ErrorQueryResult> {
+  ): Observable<QueryResult | ErrorQueryResult | null> {
     let lastValidResult: QueryResult | null = null;
     let lastError: ErrorQueryResult | null = null;
 
     return interval(this.pollingService.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.pollingService.POLLING_MAXL_MILLISECONDS + 200)),
-      switchMap(() =>
+      mergeMap(() =>
         this.requestPollingResult(resultId).pipe(
-          filter((result) => {
-            if (result.issues?.length === 0) {
+          map((result) => {
+            if (result?.issues) {
+              lastError = this.queryResultMapperService.createErrorQueryResult(
+                result.issues,
+                feasibilityQueryId
+              );
+              return lastError;
+            } else {
               lastValidResult = this.queryResultMapperService.createQueryResult(
                 false,
                 result,
                 feasibilityQueryId
               );
               lastError = null;
-              return true;
-            } else {
-              lastError = this.queryResultMapperService.createErrorQueryResult(
-                result.issues,
-                feasibilityQueryId
-              );
-              return false;
+              return lastValidResult;
             }
           })
         )
       ),
       takeUntil(this.stopPolling$),
-      finalize(() => {
-        if (lastValidResult) {
-          return of(lastValidResult);
-        } else if (lastError) {
-          return of(lastError);
-        }
-      }),
-      endWith(null),
-      share()
+      endWith(lastValidResult ?? lastError ?? null)
     );
   }
 

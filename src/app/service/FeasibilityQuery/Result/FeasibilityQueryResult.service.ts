@@ -54,8 +54,7 @@ export class FeasibilityQueryResultService {
   private setProvider(result: Observable<QueryResult>): Observable<QueryResult> {
     return result.pipe(
       map((queryResult: QueryResult) => {
-        console.log(queryResult);
-        if (queryResult.getTotalNumberOfPatients() !== null) {
+        if (queryResult?.getTotalNumberOfPatients() !== null && queryResult !== null) {
           this.setQueryResultProvider(queryResult);
           return queryResult;
         } else {
