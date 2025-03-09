@@ -1,6 +1,5 @@
-export interface TerminologyCodeData {
-  code: string
-  system: string
-  version: string
-  display: string
+import { TerminologyCodeBaseData } from './TerminologyBaseData';
+
+export interface TerminologyCodeData extends TerminologyCodeBaseData {
+  version?: string
 }
