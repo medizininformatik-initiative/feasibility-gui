@@ -27,6 +27,10 @@ export class FeasibilityQueryResultService {
     return this.obfuscatedResultRateLimitService.getRateLimit();
   }
 
+  public refreshResultRateLimit(): void {
+    return this.obfuscatedResultRateLimitService.refreshRateLimit();
+  }
+
   public doSendQueryRequest(): Observable<QueryResult> {
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
     this.obfuscatedResultRateLimitService.refreshRateLimit();

@@ -43,6 +43,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   doSendSusbscription: Subscription;
 
+  modalSubscription: Subscription;
+
   @Output()
   resultLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -74,6 +76,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.activeFeasibilityQuerySusbscription?.unsubscribe();
     this.doSendSusbscription?.unsubscribe();
+    this.modalSubscription?.unsubscribe();
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -150,11 +153,14 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   openDialogResultDetails(): void {
+    this.modalSubscription?.unsubscribe();
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig);
-    modal.afterClosed().subscribe().unsubscribe();
+    this.modalSubscription = modal
+      .afterClosed()
+      .subscribe(() => this.feasibilityQueryResultService.refreshResultRateLimit());
   }
 
   private initializeState(): void {
