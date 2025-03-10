@@ -7,12 +7,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ChunkedRequestService {
-  private readonly chunkSize = 25;
+  private readonly chunkSize = 1900;
 
   constructor(private backendService: BackendService, private http: HttpClient) {}
 
   public getChunkedRequest(ids: string[], path: string): Observable<Array<any>> {
-    const chunks = this.backendService.chunkArray(ids, this.chunkSize);
+    const chunks = this.backendService.chunkArrayForStrings(ids, this.chunkSize);
     const observables = chunks.map((chunk) => {
       const commaSeparatedIds = chunk.join(',');
       return this.http.get<Array<any>>(this.backendService.createUrl(path + commaSeparatedIds));
