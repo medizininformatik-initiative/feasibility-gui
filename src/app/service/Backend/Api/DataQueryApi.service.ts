@@ -9,6 +9,7 @@ import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
 import { AnnotatedCRTDL } from 'src/app/model/AnnotatedCRTDL./AnnotatedCRTDL';
 import { AnnotatedCRTDLData } from 'src/app/model/Interface/AnnotatedCRTDLData';
+import { SavedDataQueryListItemData } from 'src/app/model/Interface/SavedDataQueryListItemData';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +27,9 @@ export class DataQueryApiService {
     });
   }
 
-  public getDataQuery(): Observable<SavedDataQueryData> {
+  public getDataQuery(): Observable<SavedDataQueryListItemData[]> {
     const url = this.backendService.createUrl(DataqueryPaths.DATA);
-    return this.http.get<SavedDataQueryData>(url, {
+    return this.http.get<SavedDataQueryListItemData[]>(url, {
       headers: this.backendService.getHeaders(),
     });
   }

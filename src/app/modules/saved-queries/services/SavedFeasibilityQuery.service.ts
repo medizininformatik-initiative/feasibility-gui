@@ -1,31 +1,50 @@
+import { DataQueryApiService } from 'src/app/service/Backend/Api/DataQueryApi.service';
 import { FeasibilityQueryApiService } from 'src/app/service/Backend/Api/FeasibilityQueryApi.service';
 import { Injectable } from '@angular/core';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
+import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQueryListItem';
 import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTile/SavedFeasibilityQueryAdapter';
+import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
+import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
+import { CreateCRDTLService } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
+import { CRTDL2UIModelService } from 'src/app/service/Translator/CRTDL/CRTDL2UIModel.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SavedFeasibilityQueryService {
-  constructor(private feasibilityQueryApiService: FeasibilityQueryApiService) {}
+  constructor(
+    private dataQueryApiService: DataQueryApiService,
+    private crtdl2UIModelService: CRTDL2UIModelService,
+    private feasibilityQueryApiService: FeasibilityQueryApiService
+  ) {}
 
   public loadSavedQueries(): Observable<InterfaceSavedQueryTile[]> {
-    return this.feasibilityQueryApiService
-      .getSavedFeasibilityQueries()
-      .pipe(
-        map((queries) =>
-          queries
-            .sort((a, b) => a.id - b.id)
-            .map((query) => SavedFeasibilityQueryAdapter.adapt(query))
-        )
-      );
+    return this.dataQueryApiService.getDataQuery().pipe(
+      tap((queries) => console.log(queries)),
+      map((queries) =>
+        queries
+          //.sort((a, b) => a.id - b.id)
+          .map((query) => {
+            const savedDataQueryListItem = SavedDataQueryListItem.fromJson(query);
+            return SavedFeasibilityQueryAdapter.adapt(savedDataQueryListItem);
+          })
+      )
+    );
   }
   public deleteQuery(id: number): Observable<any> {
-    return this.feasibilityQueryApiService.deleteSavedQuery(id);
+    return this.dataQueryApiService.deleteDataQueryById(id);
   }
 
-  public loadQueryIntoEditor(id: number): Observable<any> {
-    return this.feasibilityQueryApiService.getStructuredQueryById(id);
+  public loadQueryIntoEditor(id: number): Observable<SavedDataQueryData> {
+    return this.dataQueryApiService.getDataQueryById(id).pipe(
+      map((data: SavedDataQueryData) => {
+        const crtdl = this.crtdl2UIModelService.createCRDTLFromJson(data.crtdl).pipe(
+          map((uiCRTDL) => SavedDataQuery.fromJson(data, uiCRTDL))
+        );
+        return data;
+      })
+    );
   }
 }

@@ -36,6 +36,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.loadSubscription?.unsubscribe();
   }
+
   private loadSavedQueries() {
     this.savedQueries$ = this.savedFeasibilityQueryService.loadSavedQueries();
   }
@@ -53,15 +54,14 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
     this.loadSubscription = this.savedFeasibilityQueryService
       .loadQueryIntoEditor(Number(id))
       .subscribe((savedFeasibilityQuery) => {
-        this.SQToFQTranslator.translate(savedFeasibilityQuery.content).subscribe(
-          (feasibilityQuery) => {
-            const queryResult = new QueryResult(
-              false,
-              feasibilityQuery.getId(),
-              savedFeasibilityQuery.totalNumberOfPatients,
-              uuidv4()
-            );
-            this.resultProviderService.setResultByID(queryResult, queryResult.getId());
+        console.log(savedFeasibilityQuery);
+        const queryResult = new QueryResult(
+          false,
+          '1', //feasibilityQuery.getId(),
+          savedFeasibilityQuery.totalNumberOfPatients,
+          uuidv4()
+        );
+        /* this.resultProviderService.setResultByID(queryResult, queryResult.getId());
             feasibilityQuery.setResultIds([queryResult.getId()]);
             const consent = this.SQToUIQueryTranslator.getConsent(savedFeasibilityQuery.content);
             if (consent !== null && consent !== undefined) {
@@ -75,9 +75,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
               feasibilityQuery,
               feasibilityQuery.getId(),
               true
-            );
-          }
-        );
+            ); */
         this.navigationHelperService.navigateToDataQueryCohortDefinition();
       });
   }

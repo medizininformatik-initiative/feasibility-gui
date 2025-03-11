@@ -2,8 +2,8 @@ export interface SavedDataQueryListItemData {
   id: string
   label: string
   comment: string
-  totalNumberOfResults?: number
-  createdAt: string
+  resultSize?: number
+  lastModified: string
   ccdl: {
     exists: boolean
     isValid: boolean

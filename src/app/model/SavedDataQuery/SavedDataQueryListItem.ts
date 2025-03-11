@@ -2,9 +2,10 @@ import { SavedDataQueryListItemData } from '../Interface/SavedDataQueryListItemD
 
 export class SavedDataQueryListItem {
   private id: string;
-  private name: string;
+  private label: string;
   private createdAt: string;
   private totalNumberOfResults?: number;
+  private comment: string;
   private ccdl: {
     exists: boolean
     isValid: boolean
@@ -15,18 +16,28 @@ export class SavedDataQueryListItem {
   };
   constructor(
     id: string,
-    name: string,
+    label: string,
+    comment: string,
     createdAt: string,
     ccdl: { exists: boolean; isValid: boolean },
     dataSelection: { exists: boolean; isValid: boolean },
     totalNumberOfResults?: number
   ) {
     this.id = id;
-    this.name = name;
+    this.label = label;
+    this.comment = comment;
     this.createdAt = createdAt;
     this.totalNumberOfResults = totalNumberOfResults;
     this.ccdl = ccdl;
     this.dataSelection = dataSelection;
+  }
+
+  public getComment(): string {
+    return this.comment;
+  }
+
+  public setComment(comment: string): void {
+    this.comment = comment;
   }
 
   public getId(): string {
@@ -37,12 +48,12 @@ export class SavedDataQueryListItem {
     this.id = value;
   }
 
-  public getName(): string {
-    return this.name;
+  public setLabel(label: string): void {
+    this.label = label;
   }
 
-  public setName(value: string): void {
-    this.name = value;
+  public getLabel(): string {
+    return this.label;
   }
 
   public getCreatedAt(): string {
@@ -81,10 +92,11 @@ export class SavedDataQueryListItem {
     return new SavedDataQueryListItem(
       json.id,
       json.label,
-      json.createdAt,
+      json.comment,
+      json.lastModified,
       json.ccdl,
       json.dataSelection,
-      json.totalNumberOfResults
+      json.resultSize
     );
   }
 }

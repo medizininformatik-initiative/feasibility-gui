@@ -9,6 +9,7 @@ import { DataSelectionProviderService } from 'src/app/modules/data-selection/ser
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
 import { ActiveDataSelectionService } from '../../Provider/ActiveDataSelection.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,7 @@ export class CreateCRDTLService {
     );
   }
 
-  private buildCRDTL(structuredQuery: StructuredQuery, dataExtraction: DataExtraction): CRTDL {
+  public buildCRDTL(structuredQuery: StructuredQuery, dataExtraction: DataExtraction): CRTDL {
     const version = 'http://json-schema.org/to-be-done/schema#';
     const display = '';
 

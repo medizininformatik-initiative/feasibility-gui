@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';
+import { DataQueryApiService } from 'src/app/service/Backend/Api/DataQueryApi.service';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { CreateCRDTLService } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
 
 @Component({
   selector: 'num-editor-action-bar',
@@ -16,7 +19,10 @@ export class EditorActionBarComponent implements OnInit, OnDestroy {
   constructor(
     private feasibilityQueryValidation: FeasibilityQueryValidation,
     private stageProviderService: StageProviderService,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private dataQueryApiService: DataQueryApiService,
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
+    private createCRDTLService: CreateCRDTLService
   ) {}
 
   ngOnInit() {
@@ -36,5 +42,13 @@ export class EditorActionBarComponent implements OnInit, OnDestroy {
 
   public navigateToDataRequestCohortDefinition(): void {
     this.navigationHelperService.navigateToDataQueryCohortDefinition();
+  }
+
+  public saveFeasibilityQuery(): void {
+    /*  this.createCRDTLService.createCRDTL().pipe(
+      map((crdtl) => {
+        this.dataQueryApiService.postDataQuery(crdtl);
+      })
+    ); */
   }
 }

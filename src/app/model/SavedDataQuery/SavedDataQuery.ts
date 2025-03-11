@@ -1,13 +1,14 @@
 import { CRTDL } from '../CRTDL/DataExtraction/CRTDL';
 import { SavedDataQueryData } from '../Interface/SavedDataQueryData';
+import { UiCRTDL } from '../UiCRTDL';
 
 export class SavedDataQuery {
-  private crtdl: CRTDL;
+  private crtdl: UiCRTDL;
   private comment: string;
   private label: string;
   private totalNumberOfPatients?: number;
 
-  constructor(crtdl: CRTDL, comment: string, label: string, totalNumberOfPatients: number) {
+  constructor(crtdl: UiCRTDL, comment: string, label: string, totalNumberOfPatients: number) {
     this.crtdl = crtdl;
     this.comment = comment;
     this.label = label;
@@ -38,15 +39,15 @@ export class SavedDataQuery {
     this.totalNumberOfPatients = totalNumberOfPatients;
   }
 
-  public getCrtdl(): CRTDL {
+  public getCrtdl(): UiCRTDL {
     return this.crtdl;
   }
 
-  public setCrtdl(crtdl: CRTDL): void {
+  public setCrtdl(crtdl: UiCRTDL): void {
     this.crtdl = crtdl;
   }
 
-  public static fromJson(json: SavedDataQueryData, crtdl: CRTDL): SavedDataQuery {
+  public static fromJson(json: SavedDataQueryData, crtdl: UiCRTDL): SavedDataQuery {
     return new SavedDataQuery(crtdl, json.comment, json.label, json.totalNumberOfPatients);
   }
 }
