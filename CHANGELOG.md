@@ -1,5 +1,14 @@
 # Changelog
 
+## v6.0.8 (2025-03-11)
+
+### Bug Fixes
+* Increment the details button counter after the modal is closed ([#357](https://github.com/medizininformatik-initiative/feasibility-gui/issues/357))
+* Split URL list of data selection references based on URL length ([#353](https://github.com/medizininformatik-initiative/feasibility-gui/issues/353))
+* UI now continues polling results even after receiving an error from `summary-result`. If the final response contains an error, it will be displayed, while intermediate errors are ignored to ensure uninterrupted polling ([#349](https://github.com/medizininformatik-initiative/feasibility-gui/issues/349))
+
+
+
 ## v6.0.7 (2025-02-27)
 
 ### Bug Fixes
