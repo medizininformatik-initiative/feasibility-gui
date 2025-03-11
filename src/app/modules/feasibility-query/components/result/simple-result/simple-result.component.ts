@@ -107,6 +107,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private handleQueryResults(prev: QueryResponseType, current: QueryResponseType): void {
     if (this.shouldFinalize(prev, current)) {
       this.finalize();
+      this.handleResult(prev as QueryResult);
     } else if (this.shouldHandleError(prev, current)) {
       console.error('Received an error result:', prev);
       this.snackbarService.displayErrorMessage(prev?.getIssues()?.[0]?.getCode());
