@@ -2,7 +2,7 @@ import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExt
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
-import { combineLatest, map, Observable } from 'rxjs';
+import { combineLatest, map, Observable, of } from 'rxjs';
 import { StructuredQuery2FeasibilityQueryService } from '../StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { ValidationService } from '../../Validation.service';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
@@ -12,6 +12,8 @@ import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { CreateCRDTLService } from './CreateCRDTL.service';
 import { UiCRTDL } from 'src/app/model/UiCRTDL';
+import { v4 as uuidv4 } from 'uuid';
+import { isDataExtractionData } from '../../TypeGuard/TypeGuard';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +43,9 @@ export class CRTDL2UIModelService {
   }
 
   private translateDataExtraction(dataExtraction: DataExtractionData): Observable<DataSelection> {
-    return this.dataExtraction2UiDataSelectionService.translate(dataExtraction);
+    return isDataExtractionData(dataExtraction)
+      ? this.dataExtraction2UiDataSelectionService.translate(dataExtraction)
+      : of(new DataSelection([], uuidv4()));
   }
 
   private combineFeasibilityAndDataExtraction(
@@ -49,7 +53,7 @@ export class CRTDL2UIModelService {
     dataExtraction: Observable<DataSelection>
   ): Observable<UiCRTDL> {
     return combineLatest([cohortDefinition, dataExtraction]).pipe(
-      map(([cohort, data]) => new UiCRTDL(cohort, data))
+      map(([cohort, data]) => new UiCRTDL(uuidv4(), cohort, data))
     );
   }
 

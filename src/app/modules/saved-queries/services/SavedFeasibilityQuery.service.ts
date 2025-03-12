@@ -1,14 +1,14 @@
+import { CRTDL2UIModelService } from 'src/app/service/Translator/CRTDL/CRTDL2UIModel.service';
 import { DataQueryApiService } from 'src/app/service/Backend/Api/DataQueryApi.service';
 import { FeasibilityQueryApiService } from 'src/app/service/Backend/Api/FeasibilityQueryApi.service';
 import { Injectable } from '@angular/core';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
-import { map, Observable, tap } from 'rxjs';
+import { isSavedDataQueryData } from 'src/app/service/TypeGuard/TypeGuard';
+import { map, Observable, switchMap, tap } from 'rxjs';
+import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
+import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQueryListItem';
 import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTile/SavedFeasibilityQueryAdapter';
-import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
-import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
-import { CreateCRDTLService } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
-import { CRTDL2UIModelService } from 'src/app/service/Translator/CRTDL/CRTDL2UIModel.service';
 
 @Injectable({
   providedIn: 'root',
@@ -37,14 +37,20 @@ export class SavedFeasibilityQueryService {
     return this.dataQueryApiService.deleteDataQueryById(id);
   }
 
-  public loadQueryIntoEditor(id: number): Observable<SavedDataQueryData> {
+  public loadQueryIntoEditor(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
-      map((data: SavedDataQueryData) => {
-        const crtdl = this.crtdl2UIModelService.createCRDTLFromJson(data.crtdl).pipe(
-          map((uiCRTDL) => SavedDataQuery.fromJson(data, uiCRTDL))
-        );
-        return data;
-      })
+      switchMap((data) =>
+        /*         if (!isSavedDataQueryData(data)) {
+          throw new Error('Invalid data format: Expected SavedDataQueryData')
+        } */
+         this.transformDataQuery(data)
+      )
     );
+  }
+
+  private transformDataQuery(data: SavedDataQueryData): Observable<SavedDataQuery> {
+    return this.crtdl2UIModelService
+      .createCRDTLFromJson(data.content)
+      .pipe(map((uiCRTDL) => SavedDataQuery.fromJson(data, uiCRTDL)));
   }
 }

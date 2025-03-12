@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Query } from '@angular/core';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { first, Observable, Subscription } from 'rxjs';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/Translator/StructureQuery/StructuredQuery2UIQueryTranslator.service';
 import { ConsentService } from '../../../../service/Consent/Consent.service';
+import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 
 @Component({
   selector: 'num-feasibility',
@@ -53,29 +54,26 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   loadQueryIntoEditor(id: string) {
     this.loadSubscription = this.savedFeasibilityQueryService
       .loadQueryIntoEditor(Number(id))
-      .subscribe((savedFeasibilityQuery) => {
+      .subscribe((savedFeasibilityQuery: SavedDataQuery) => {
         console.log(savedFeasibilityQuery);
+        const feasibilityQuery = savedFeasibilityQuery.getCrtdl().getFeasibilityQuery();
         const queryResult = new QueryResult(
           false,
-          '1', //feasibilityQuery.getId(),
-          savedFeasibilityQuery.totalNumberOfPatients,
+          feasibilityQuery.getId(),
+          savedFeasibilityQuery.getTotalNumberOfPatients(),
           uuidv4()
         );
-        /* this.resultProviderService.setResultByID(queryResult, queryResult.getId());
-            feasibilityQuery.setResultIds([queryResult.getId()]);
-            const consent = this.SQToUIQueryTranslator.getConsent(savedFeasibilityQuery.content);
-            if (consent !== null && consent !== undefined) {
-              feasibilityQuery.setConsent(true);
-            } else {
-              feasibilityQuery.setConsent(false);
-              this.consentService.setProvisionCode(false, false, false, false);
-              this.consentService.setConsent(false);
-            }
-            this.feasibilityQueryService.setFeasibilityQueryByID(
-              feasibilityQuery,
-              feasibilityQuery.getId(),
-              true
-            ); */
+        this.resultProviderService.setResultByID(queryResult, queryResult.getId());
+        feasibilityQuery.setResultIds([queryResult.getId()]);
+        if (!feasibilityQuery.getConsent()) {
+          this.consentService.setProvisionCode(false, false, false, false);
+          this.consentService.setConsent(false);
+        }
+        this.feasibilityQueryService.setFeasibilityQueryByID(
+          feasibilityQuery,
+          feasibilityQuery.getId(),
+          true
+        );
         this.navigationHelperService.navigateToDataQueryCohortDefinition();
       });
   }

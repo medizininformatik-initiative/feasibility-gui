@@ -48,6 +48,6 @@ export class SavedDataQuery {
   }
 
   public static fromJson(json: SavedDataQueryData, crtdl: UiCRTDL): SavedDataQuery {
-    return new SavedDataQuery(crtdl, json.comment, json.label, json.totalNumberOfPatients);
+    return new SavedDataQuery(crtdl, json.comment, json.label, json.resultSize);
   }
 }
