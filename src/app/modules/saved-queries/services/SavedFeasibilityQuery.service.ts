@@ -3,7 +3,6 @@ import { DataQueryApiService } from 'src/app/service/Backend/Api/DataQueryApi.se
 import { FeasibilityQueryApiService } from 'src/app/service/Backend/Api/FeasibilityQueryApi.service';
 import { Injectable } from '@angular/core';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
-import { isSavedDataQueryData } from 'src/app/service/TypeGuard/TypeGuard';
 import { map, Observable, switchMap, tap } from 'rxjs';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
@@ -43,7 +42,7 @@ export class SavedFeasibilityQueryService {
         /*         if (!isSavedDataQueryData(data)) {
           throw new Error('Invalid data format: Expected SavedDataQueryData')
         } */
-         this.transformDataQuery(data)
+        this.transformDataQuery(data)
       )
     );
   }

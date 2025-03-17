@@ -1,3 +1,4 @@
+import { AnnotatedCRTDLData } from 'src/app/model/Interface/AnnotatedCRTDLData';
 import { BackendService } from '../Backend.service';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 import { DataqueryPaths } from '../Paths/DataqueryPaths';
@@ -7,8 +8,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
-import { AnnotatedCRTDL } from 'src/app/model/AnnotatedCRTDL./AnnotatedCRTDL';
-import { AnnotatedCRTDLData } from 'src/app/model/Interface/AnnotatedCRTDLData';
 import { SavedDataQueryListItemData } from 'src/app/model/Interface/SavedDataQueryListItemData';
 
 @Injectable({

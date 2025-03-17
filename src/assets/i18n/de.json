@@ -246,7 +246,8 @@
         "BACK_TO_SEARCH": "Kriterien hinzufügen",
         "VIEW_STAGE": "Kohorten Selektion anzeigen",
         "SEND_QUERY": "Machbarkeitsabfrage",
-        "DATA_REQUEST": "Daten Definition"
+        "DATA_REQUEST": "Daten Definition",
+        "SAVE_DATAQUERY": "Daten Definition speichern"
       },
       "MESSAGE": {
         "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Kohorten Selektion hinzugefügt"
