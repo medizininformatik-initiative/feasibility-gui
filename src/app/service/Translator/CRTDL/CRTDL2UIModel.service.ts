@@ -1,19 +1,20 @@
-import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
-import { Injectable } from '@angular/core';
 import { combineLatest, map, Observable, of } from 'rxjs';
-import { StructuredQuery2FeasibilityQueryService } from '../StructureQuery/StructuredQuery2FeasibilityQuery.service';
-import { ValidationService } from '../../Validation.service';
+import { CreateCRDTLService } from './CreateCRDTL.service';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
-import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service';
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { CreateCRDTLService } from './CreateCRDTL.service';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
+import { Injectable } from '@angular/core';
+import { StructuredQuery2FeasibilityQueryService } from '../StructureQuery/StructuredQuery2FeasibilityQuery.service';
+import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData';
+import { TypeAssertion } from '../../TypeGuard/TypeAssersations';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { UiCRTDL } from 'src/app/model/UiCRTDL';
 import { v4 as uuidv4 } from 'uuid';
-import { isDataExtractionData } from '../../TypeGuard/TypeGuard';
+import { ValidationService } from '../../Validation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -43,9 +44,15 @@ export class CRTDL2UIModelService {
   }
 
   private translateDataExtraction(dataExtraction: DataExtractionData): Observable<DataSelection> {
-    return isDataExtractionData(dataExtraction)
-      ? this.dataExtraction2UiDataSelectionService.translate(dataExtraction)
-      : of(new DataSelection([], uuidv4()));
+    if (TypeGuard.isDataExtractionData(dataExtraction)) {
+      try {
+        TypeAssertion.assertDataExtractionData(dataExtraction);
+        return this.dataExtraction2UiDataSelectionService.translate(dataExtraction);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    return of(new DataSelection([], uuidv4()));
   }
 
   private combineFeasibilityAndDataExtraction(
