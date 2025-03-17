@@ -6,6 +6,7 @@ import { StageProviderService } from '../../../../../service/Provider/StageProvi
 import { DataQueryApiService } from 'src/app/service/Backend/Api/DataQueryApi.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { CreateCRDTLService } from 'src/app/service/Translator/CRTDL/CreateCRDTL.service';
+import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
 
 @Component({
   selector: 'num-editor-action-bar',
@@ -20,14 +21,20 @@ export class EditorActionBarComponent implements OnInit, OnDestroy {
     private feasibilityQueryValidation: FeasibilityQueryValidation,
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
-    private dataQueryApiService: DataQueryApiService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    private createCRDTLService: CreateCRDTLService
+    private t: SaveDataQueryModalService
   ) {}
 
   ngOnInit() {
     this.isFeasibilityQueryValid$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
     this.stageArray$ = this.stageProviderService.getStageUIDArray();
+  }
+
+  public saveDataQuery() {
+    const z = {
+      title: 'string',
+      comment: 'string',
+    };
+    this.t.saveDataQuery(z);
   }
 
   ngOnDestroy() {}
