@@ -8,6 +8,7 @@ import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQueryListItem';
 import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTile/SavedFeasibilityQueryAdapter';
+import { TypeAssertion } from 'src/app/service/TypeGuard/TypeAssersations';
 
 @Injectable({
   providedIn: 'root',
@@ -15,35 +16,41 @@ import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTi
 export class SavedFeasibilityQueryService {
   constructor(
     private dataQueryApiService: DataQueryApiService,
-    private crtdl2UIModelService: CRTDL2UIModelService,
-    private feasibilityQueryApiService: FeasibilityQueryApiService
+    private crtdl2UIModelService: CRTDL2UIModelService
   ) {}
 
   public loadSavedQueries(): Observable<InterfaceSavedQueryTile[]> {
     return this.dataQueryApiService.getDataQuery().pipe(
-      tap((queries) => console.log(queries)),
-      map((queries) =>
-        queries
-          //.sort((a, b) => a.id - b.id)
-          .map((query) => {
+      map((queries) => {
+        try {
+          queries.every((query) => TypeAssertion.assertSavedDataQueryListItemData(query));
+          return queries.map((query) => {
             const savedDataQueryListItem = SavedDataQueryListItem.fromJson(query);
             return SavedFeasibilityQueryAdapter.adapt(savedDataQueryListItem);
-          })
-      )
+          });
+        } catch (error) {
+          console.error(error);
+          throw error;
+        }
+      })
     );
   }
+
   public deleteQuery(id: number): Observable<any> {
     return this.dataQueryApiService.deleteDataQueryById(id);
   }
 
-  public loadQueryIntoEditor(id: number): Observable<SavedDataQuery> {
+  public getDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
-      switchMap((data) =>
-        /*         if (!isSavedDataQueryData(data)) {
-          throw new Error('Invalid data format: Expected SavedDataQueryData')
-        } */
-        this.transformDataQuery(data)
-      )
+      switchMap((data) => {
+        try {
+          TypeAssertion.assertSavedDataQueryData(data);
+          return this.transformDataQuery(data);
+        } catch (error) {
+          console.error(error);
+          throw error;
+        }
+      })
     );
   }
 

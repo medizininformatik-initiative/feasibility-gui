@@ -53,7 +53,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
 
   loadQueryIntoEditor(id: string) {
     this.loadSubscription = this.savedFeasibilityQueryService
-      .loadQueryIntoEditor(Number(id))
+      .getDataQueryById(Number(id))
       .subscribe((savedFeasibilityQuery: SavedDataQuery) => {
         console.log(savedFeasibilityQuery);
         const feasibilityQuery = savedFeasibilityQuery.getCrtdl().getFeasibilityQuery();
