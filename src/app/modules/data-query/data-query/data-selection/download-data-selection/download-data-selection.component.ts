@@ -16,7 +16,7 @@ export class DownloadDataSelectionComponent {
   ) {}
 
   public saveDataSelection(data: SaveDataModal) {
-    this.downloadCRDTLService.downloadActiveDataSelectionAsFile(data.title);
+    this.downloadCRDTLService.downloadActiveDataSelectionAsFile(data);
     this.doDiscard();
   }
 

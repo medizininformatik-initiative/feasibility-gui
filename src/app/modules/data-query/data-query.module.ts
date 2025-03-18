@@ -13,6 +13,7 @@ import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.m
 import { MaterialModule } from 'src/app/layout/material/material.module';
 import { DownloadCohortComponent } from './data-query/cohort-definition/download-cohort/download-cohort.component';
 import { DownloadDataSelectionComponent } from './data-query/data-selection/download-data-selection/download-data-selection.component';
+import { SaveDataQueryModalComponent } from './save-dialog/save-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { DownloadDataSelectionComponent } from './data-query/data-selection/down
     DataSelectionComponent,
     DownloadCohortComponent,
     DownloadDataSelectionComponent,
+    SaveDataQueryModalComponent,
   ],
   exports: [],
   imports: [

@@ -11,7 +11,26 @@
         <textarea matInput [(ngModel)]="comment"></textarea>
       </mat-form-field>
     </div>
+    <div fxLayout="row" fxLayoutAlign="space-around center" class="checkbox-box">
+      <mat-checkbox
+        color="primary"
+        disableRipple="true"
+        [disabled]=""
+        [checked]="isFeasibilityChecked"
+        (change)="toggleFeasibilityQuery($event)"
+        >Kohorten Selektion</mat-checkbox
+      >
+      <mat-checkbox
+        color="primary"
+        disableRipple="true"
+        [disabled]=""
+        [checked]="isDataSelectionChecked"
+        (change)="toggleDataSelection($event)"
+        >Merkmal Selektion</mat-checkbox
+      >
+    </div>
   </div>
+
   <div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
     <div fxFlex="fill"></div>
 

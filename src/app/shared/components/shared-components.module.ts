@@ -62,6 +62,7 @@ const SHARED_DECLARATIONS = [
   BreadcrumbComponent,
   PlaceholderBoxComponent,
   SaveFileModalComponent,
+
   DisplayTranslationPipe,
 ];
 

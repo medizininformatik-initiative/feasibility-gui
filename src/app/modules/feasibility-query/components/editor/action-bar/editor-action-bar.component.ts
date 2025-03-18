@@ -33,6 +33,8 @@ export class EditorActionBarComponent implements OnInit, OnDestroy {
     const z = {
       title: 'string',
       comment: 'string',
+      feasibilityQuery: true,
+      dataSelection: true,
     };
     this.t.saveDataQuery(z);
   }
