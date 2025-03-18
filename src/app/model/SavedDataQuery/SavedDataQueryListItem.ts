@@ -95,7 +95,7 @@ export class SavedDataQueryListItem {
       json.comment,
       json.lastModified,
       json.ccdl,
-      json.dataSelection,
+      json.dataExtraction,
       json.resultSize
     );
   }
