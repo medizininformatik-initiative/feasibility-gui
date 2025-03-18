@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, switchMap } from 'rxjs';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { ResultProviderService } from '../../Provider/ResultProvider.service';
-import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModalInterface';
+import { SaveDataModal } from '../../../shared/models/SaveDataModal/SaveDataModal';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class SavedDataQueryService {
 
   public saveDataQuery(data: SaveDataModal | null = null): void {
     this.createCRDTLService
-      .createCRDTL()
+      .createCRDTLForSave(data.feasibilityQuery, data.dataSelection)
       .pipe(switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)))
       .subscribe((savedDataQueryData) => this.postDataQuery(savedDataQueryData));
   }

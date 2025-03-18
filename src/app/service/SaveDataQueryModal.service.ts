@@ -1,48 +1,31 @@
+import { CreateCRDTLService } from './Translator/CRTDL/CreateCRDTL.service';
+import { DataQueryApiService } from './Backend/Api/DataQueryApi.service';
 import { Injectable } from '@angular/core';
-import { SaveDataModal } from '../shared/models/SaveDataModal/SaveDataModalInterface';
-import { SavedDataQueryService } from './DataQuery/Persistence/SaveDataQuery.service';
+import { ResultProviderService } from './Provider/ResultProvider.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SaveDataQueryModalComponent } from '../shared/components/save-dataquery-modal/save-dataquery-modal.component';
+import { DataQueryStorageService } from './DataQuery/DataQueryStorage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SaveDataQueryModalService {
-  constructor(private saveDataQueryService: SavedDataQueryService) {}
+  constructor(
+    private createCRDTLService: CreateCRDTLService,
+    private resultProvider: ResultProviderService,
+    private dataQueryApiService: DataQueryApiService,
+    private dialog: MatDialog,
+    private dataQueryStorage: DataQueryStorageService
+  ) {}
 
-  public saveDataQuery(data: SaveDataModal | null = null): void {
-    this.createCRDTLService
-      .createCRDTL(data.feasibilityQuery, data.dataSelection)
-      .pipe(switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)))
-      .subscribe((savedDataQueryData) => this.postDataQuery(savedDataQueryData));
-  }
-
-  private buildSavedDataQueryData(crtdl: CRTDL, data: SaveDataModal | null): Observable<any> {
-    return this.getResultSize().pipe(
-      map((result: QueryResult) => ({
-        content: this.createCrtdlJson(crtdl),
-        comment: data?.comment || '',
-        label: data?.title || '',
-        resultSize: result?.getTotalNumberOfPatients() ?? 0,
-      }))
-    );
-  }
-
-  private createCrtdlJson(crtdl: CRTDL) {
-    return {
-      display: crtdl.display,
-      version: crtdl.version,
-      cohortDefinition: crtdl.cohortDefinition,
-      dataExtraction: crtdl.dataExtraction,
-    };
-  }
-
-  private getResultSize(): Observable<QueryResult> {
-    return this.resultProvider.getResultOfActiveFeasibilityQuery();
-  }
-
-  private postDataQuery(data: any): void {
-    this.dataQueryApiService.postDataQuery(data).subscribe(
-      (response) => console.log('Response:', response),
-      (error) => console.error('Error posting data query:', error)
-    );
+  public openSaveDataQueryModal(): void {
+    const dialogRef = this.dialog.open(SaveDataQueryModalComponent, {
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.dataQueryStorage.saveDataQuery(data);
+      }
+    });
   }
 }

@@ -57,6 +57,6 @@ export class DisplayDataSelectionComponent implements OnInit {
   }
 
   public saveDataQuery(): void {
-    this.saveDataQueryModalService.saveDataQuery();
+    this.saveDataQueryModalService.openSaveDataQueryModal();
   }
 }

@@ -2,7 +2,6 @@ import { CreateCRDTLService } from '../Translator/CRTDL/CreateCRDTL.service';
 import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
 import { FileSaverService } from 'ngx-filesaver';
 import { Injectable } from '@angular/core';
-import { SaveDataModal } from '../../shared/models/SaveDataModal/SaveDataModalInterface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +12,13 @@ export class DownloadCRDTLService {
     private fileSaverService: FileSaverService
   ) {}
 
-  public downloadActiveDataSelectionAsFile(data: SaveDataModal) {
+  public downloadActiveDataSelectionAsFile(filename?: string) {
     this.createCRDTLService
-      .createCRDTL(data.feasibilityQuery, data.dataSelection)
+      .createCRDTL()
       .subscribe((crdtl) => {
         this.fileSaverService.save(
           this.createFileData(crdtl),
-          this.createFilename(data.title) + '.json'
+          this.createFilename(filename) + '.json'
         );
       })
       .unsubscribe();

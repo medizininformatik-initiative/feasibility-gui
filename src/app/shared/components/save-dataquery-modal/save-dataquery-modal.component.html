@@ -6,10 +6,28 @@
         <mat-label>{{ 'QUERYBUILDER.OVERVIEW.TITLE_LABEL' | translate }}</mat-label>
         <input matInput type="text" [(ngModel)]="title" />
       </mat-form-field>
-      <mat-form-field *ngIf="isCommentRequired" class="input-field" appearance="fill">
+      <mat-form-field class="input-field" appearance="fill">
         <mat-label>{{ 'QUERYBUILDER.OVERVIEW.COMMENT_LABEL' | translate }}</mat-label>
         <textarea matInput [(ngModel)]="comment"></textarea>
       </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-around center" class="checkbox-box">
+      <mat-checkbox
+        color="primary"
+        disableRipple="true"
+        [disabled]="(validatedDataQuery$ | async).feasibilityQuery === false"
+        [checked]="isFeasibilityChecked"
+        (change)="toggleFeasibilityQuery($event)"
+        >Kohorten Selektion</mat-checkbox
+      >
+      <mat-checkbox
+        color="primary"
+        disableRipple="true"
+        [disabled]="(validatedDataQuery$ | async).dataSelection === false"
+        [checked]="isDataSelectionChecked"
+        (change)="toggleDataSelection($event)"
+        >Merkmal Selektion</mat-checkbox
+      >
     </div>
   </div>
 

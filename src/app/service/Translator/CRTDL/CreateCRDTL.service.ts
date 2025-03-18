@@ -24,11 +24,26 @@ export class CreateCRDTLService {
     private snackBarService: SnackbarService
   ) {}
 
-  public createCRDTL(getFeasibility: boolean, getDataSelection: boolean): Observable<CRTDL> {
-    return combineLatest([
-      this.getStructuredQuery(getFeasibility),
-      this.getDataExtraction(getDataSelection),
-    ]).pipe(
+  public createCRDTLForSave(getFeasibility: boolean, getDataSelection: boolean): Observable<CRTDL> {
+    const structuredQuery$ = this.getStructuredQuery();
+    const dataExtraction$ = this.getDataExtraction();
+
+    if (getFeasibility && getDataSelection) {
+      return combineLatest([structuredQuery$, dataExtraction$]).pipe(
+        map(([structuredQuery, dataExtraction]) => this.buildCRDTL(structuredQuery, dataExtraction))
+      );
+    }
+    if (getDataSelection) {
+      return dataExtraction$.pipe(map((dataExtraction) => this.buildCRDTL(null, dataExtraction)));
+    }
+    if (getFeasibility) {
+      return structuredQuery$.pipe(map((structuredQuery) => this.buildCRDTL(structuredQuery, null)));
+    }
+    return of(this.buildCRDTL(null, null));
+  }
+
+  public createCRDTL(): Observable<CRTDL> {
+    return combineLatest([this.getStructuredQuery(), this.getDataExtraction()]).pipe(
       map(([structuredQuery, dataExtraction]) => {
         if (structuredQuery.getInclusionCriteria()?.length > 0) {
           return this.buildCRDTL(structuredQuery, dataExtraction);
@@ -48,32 +63,24 @@ export class CreateCRDTLService {
     return new CRTDL(display, version, structuredQuery, dataExtraction);
   }
 
-  private getStructuredQuery(getSQ: boolean): Observable<StructuredQuery> {
-    if (getSQ) {
-      return this.feasibilityQueryProvider
-        .getActiveFeasibilityQuery()
-        .pipe(
-          map((feasibilityQuery) =>
-            this.uiQueryTranslator.translateToStructuredQuery(feasibilityQuery)
-          )
-        );
-    } else {
-      return of(null);
-    }
+  private getStructuredQuery(): Observable<StructuredQuery> {
+    return this.feasibilityQueryProvider
+      .getActiveFeasibilityQuery()
+      .pipe(
+        map((feasibilityQuery) =>
+          this.uiQueryTranslator.translateToStructuredQuery(feasibilityQuery)
+        )
+      );
   }
 
-  private getDataExtraction(getDE: boolean): Observable<DataExtraction> {
-    if (getDE) {
-      const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-      return this.dataSelectionProvider
-        .getDataSelectionByUID(dataSelectionId)
-        .pipe(
-          map((dataSelection) =>
-            this.dataExtractionTranslator.translateToDataExtraction(dataSelection)
-          )
-        );
-    } else {
-      return of(null);
-    }
+  private getDataExtraction(): Observable<DataExtraction> {
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
+    return this.dataSelectionProvider
+      .getDataSelectionByUID(dataSelectionId)
+      .pipe(
+        map((dataSelection) =>
+          this.dataExtractionTranslator.translateToDataExtraction(dataSelection)
+        )
+      );
   }
 }
