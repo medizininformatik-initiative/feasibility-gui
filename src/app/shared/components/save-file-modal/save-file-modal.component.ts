@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModalInterface';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'num-save-file-modal',
@@ -18,12 +19,26 @@ export class SaveFileModalComponent {
 
   title = '';
   comment = '';
+  isFeasibilityChecked = true;
+  isDataSelectionChecked = true;
 
   doSave(): void {
-    this.save.emit({ title: this.title, comment: this.comment });
+    this.save.emit({
+      title: this.title,
+      comment: this.comment,
+      feasibilityQuery: this.isFeasibilityChecked,
+      dataSelection: this.isDataSelectionChecked,
+    });
   }
 
   doDiscard(): void {
     this.cancel.emit();
+  }
+
+  toggleFeasibilityQuery(checked: MatCheckboxChange) {
+    this.isFeasibilityChecked = checked.checked;
+  }
+  toggleDataSelection(checked: MatCheckboxChange) {
+    this.isDataSelectionChecked = checked.checked;
   }
 }

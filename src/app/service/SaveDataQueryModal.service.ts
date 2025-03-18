@@ -20,7 +20,7 @@ export class SaveDataQueryModalService {
 
   public saveDataQuery(data: SaveDataModal | null = null): void {
     this.createCRDTLService
-      .createCRDTL()
+      .createCRDTL(data.feasibilityQuery, data.dataSelection)
       .pipe(switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)))
       .subscribe((savedDataQueryData) => this.postDataQuery(savedDataQueryData));
   }
