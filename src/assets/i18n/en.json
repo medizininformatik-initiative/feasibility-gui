@@ -146,7 +146,8 @@
       "DOWNLOAD": "Download Feature Selection",
       "JUMP_TO_DATASELECTION_TREE": "Add Feature",
       "JUMP_TO_DATASELECTION": "Show Selection",
-      "DATA_REQUEST": "Data Request"
+      "DATA_REQUEST": "Data Request",
+      "SAVE_DATAQUERY": "Save Data Request"
     },
     "SEARCH": {
       "LABEL": "Insert code or search text",

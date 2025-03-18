@@ -147,7 +147,9 @@
       "ADD": "Zur Merkmal Selektion hinzufügen",
       "JUMP_TO_DATASELECTION_TREE": "Merkmal hinzufügen",
       "JUMP_TO_DATASELECTION": "Selektion anzeigen",
-      "DATA_REQUEST": "Daten beantragen"
+      "DATA_REQUEST": "Daten beantragen",
+      "SAVE_DATAQUERY": "Datenanfrage speichern"
+
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
