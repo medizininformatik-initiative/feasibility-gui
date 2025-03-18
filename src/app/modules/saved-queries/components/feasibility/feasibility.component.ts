@@ -3,7 +3,6 @@ import { FeasibilityQueryProviderService } from '../../../../service/Provider/Fe
 import { first, Observable, Subscription } from 'rxjs';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SavedFeasibilityQueryService } from '../../services/SavedFeasibilityQuery.service';
 import { StructuredQuery2FeasibilityQueryService } from '../../../../service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,6 +10,7 @@ import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.s
 import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/Translator/StructureQuery/StructuredQuery2UIQueryTranslator.service';
 import { ConsentService } from '../../../../service/Consent/Consent.service';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
+import { SavedFeasibilityQueryService } from 'src/app/service/SavedFeasibilityQuery.service';
 
 @Component({
   selector: 'num-feasibility',
@@ -22,8 +22,6 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   loadSubscription: Subscription;
   constructor(
     private savedFeasibilityQueryService: SavedFeasibilityQueryService,
-    private SQToFQTranslator: StructuredQuery2FeasibilityQueryService,
-    private SQToUIQueryTranslator: StructuredQuery2UIQueryTranslatorService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private navigationHelperService: NavigationHelperService,
     private resultProviderService: ResultProviderService,
