@@ -2,13 +2,15 @@ export interface SavedDataQueryListItemData {
   id: string
   label: string
   comment: string
-  resultSize?: number
+  content: null
+  createdBy: null
+  resultSize: number
   lastModified: string
   ccdl: {
     exists: boolean
     isValid: boolean
   }
-  dataSelection: {
+  dataExtraction: {
     exists: boolean
     isValid: boolean
   }
