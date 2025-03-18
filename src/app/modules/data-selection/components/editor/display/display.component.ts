@@ -5,6 +5,8 @@ import { DataSelectionProviderService } from '../../../services/DataSelectionPro
 import { map, Observable } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
+import { DataQueryStorageService } from 'src/app/service/DataQuery/DataQueryStorage.service';
 
 @Component({
   selector: 'num-display-data-selection',
@@ -20,6 +22,7 @@ export class DisplayDataSelectionComponent implements OnInit {
     private dataSelectionProfileProvider: DataSelectionProfileProviderService,
     private dataSelectionProvider: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
+    private saveDataQueryModalService: SaveDataQueryModalService,
     private terminologySystemProvider: TerminologySystemProvider
   ) {}
 
@@ -35,7 +38,11 @@ export class DisplayDataSelectionComponent implements OnInit {
       .getActiveDataSelection()
       .pipe(
         map((dataSelection) =>
-          dataSelection.getProfiles().map((profile) => this.dataSelectionProfileProvider.getDataSelectionProfileByUrl(profile.getUrl()))
+          dataSelection
+            .getProfiles()
+            .map((profile) =>
+              this.dataSelectionProfileProvider.getDataSelectionProfileByUrl(profile.getUrl())
+            )
         )
       )
       .subscribe();
@@ -47,5 +54,9 @@ export class DisplayDataSelectionComponent implements OnInit {
 
   public navigateToDataRequestDataSelection(): void {
     this.navigationHelperService.navigateToDataQueryDataSelection();
+  }
+
+  public saveDataQuery(): void {
+    this.saveDataQueryModalService.saveDataQuery();
   }
 }
