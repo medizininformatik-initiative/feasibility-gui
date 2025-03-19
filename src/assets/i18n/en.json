@@ -36,11 +36,11 @@
       "APPLY_FILTERS": "Apply filter",
       "DEFINE_FIELDS": "Select fields",
       "SEARCH": "Use as searchterm",
-      "SHOW_CRITERIA":"Show criteria",
+      "SHOW_CRITERIA": "Show criteria",
       "ADD": "Add to Cohort Selection",
       "OPTIONS": "Options"
     },
-    "LIST_ITEM_DETAILS":{
+    "LIST_ITEM_DETAILS": {
       "PARENTS": "Parent element",
       "CHILDREN": "Child element"
     },
@@ -58,87 +58,105 @@
       "REMOVE": "Remove"
     }
   },
+  "CONSENT": {
+    "yes-yes-yes-yes": "Distributed, EU-GDPR compliant analysis, with health insurance data, and with recontacting",
+    "yes-yes-yes-no": "Distributed, EU-GDPR compliant analysis, with health insurance data, and without recontacting",
+    "yes-yes-no-yes": "Distributed, EU-GDPR compliant analysis, without health insurance data, and with recontacting",
+    "yes-yes-no-no": "Distributed, EU-GDPR compliant analysis, without health insurance data, and without recontacting",
+    "yes-no-yes-yes": "Distributed, non-EU GDPR-compliant analysis, with health insurance data, and with recontacting",
+    "yes-no-yes-no": "Distributed, non-EU GDPR-compliant analysis, with health insurance data, and without recontacting",
+    "yes-no-no-yes": "Distributed, non-EU GDPR-compliant analysis, without health insurance data, and with recontacting",
+    "yes-no-no-no": "Distributed, non-EU GDPR-compliant analysis, without health insurance data, and without recontacting",
+    "no-yes-yes-yes": "Central, EU-GDPR compliant analysis, with health insurance data, and with recontacting",
+    "no-yes-yes-no": "Central, EU-GDPR compliant analysis, with health insurance data, and without recontacting",
+    "no-yes-no-yes": "Central, EU-GDPR compliant analysis, without health insurance data, and with recontacting",
+    "no-yes-no-no": "Central, EU-GDPR compliant analysis, without health insurance data, and without recontacting",
+    "no-no-yes-yes": "Central, non-EU GDPR-compliant analysis, with health insurance data, and with recontacting",
+    "no-no-yes-no": "Central, non-EU GDPR-compliant analysis, with health insurance data, and without recontacting",
+    "no-no-no-yes": "Central, non-EU GDPR-compliant analysis, without health insurance data, and with recontacting",
+    "no-no-no-no": "Central, non-EU GDPR-compliant analysis, without health insurance data, and without recontacting"
+  },
   "DASHBOARD": {
-      "HEADER": "Welcome to the „Find data and biospecimens“ service of the German Research Data Portal for Health",
-      "PARAGRAPH1": "This is a support service for scientists to assist you in realizing your research project. By submitting a feasibility request, you can find out how many data sets for your search criteria are available at university hospitals nationwide. Based on inclusion and exclusion criteria, the availability of health data for medical research purposes can be estimated.",
-      "PARAGRAPH2": "",
-      "PARAGRAPH3_1": "With ",
-      "PARAGRAPH3_2": "New Query",
-      "PARAGRAPH3_3": " you have the possibility to formulate and send a new query based on the ",
-      "PARAGRAPH3_4": " to get an overview of the available patient data records.",
-      "PARAGRAPH3_LINK": "core data set of the MII",
-      "PARAGRAPH4_1":"You can view and further edit saved queries or saved drafts via ",
-      "PARAGRAPH4_2":"My Queries",
-      "PARAGRAPH4_3": ".",
-      "PARAGRAPH5_1": "Once you have all the relevant information for your research project, you can submit an application for data use in the proposal portal of the German Research Data Portal for Health via",
-      "PARAGRAPH5_2": "Submit Application",
-      "PARAGRAPH5_3": ".",
-    "INFO":{
+    "HEADER": "Welcome to the „Find data and biospecimens“ service of the German Research Data Portal for Health",
+    "PARAGRAPH1": "This is a support service for scientists to assist you in realizing your research project. By submitting a feasibility request, you can find out how many data sets for your search criteria are available at university hospitals nationwide. Based on inclusion and exclusion criteria, the availability of health data for medical research purposes can be estimated.",
+    "PARAGRAPH2": "",
+    "PARAGRAPH3_1": "With ",
+    "PARAGRAPH3_2": "New Query",
+    "PARAGRAPH3_3": " you have the possibility to formulate and send a new query based on the ",
+    "PARAGRAPH3_4": " to get an overview of the available patient data records.",
+    "PARAGRAPH3_LINK": "core data set of the MII",
+    "PARAGRAPH4_1": "You can view and further edit saved queries or saved drafts via ",
+    "PARAGRAPH4_2": "My Queries",
+    "PARAGRAPH4_3": ".",
+    "PARAGRAPH5_1": "Once you have all the relevant information for your research project, you can submit an application for data use in the proposal portal of the German Research Data Portal for Health via",
+    "PARAGRAPH5_2": "Submit Application",
+    "PARAGRAPH5_3": ".",
+    "INFO": {
       "TEXT": " We are currently working on the feasibility portal. This can lead to slow responses and deviating results for some queries."
     },
-      "DATAQUERY": {
-        "HEADER": "Compose Data Query",
-        "BUTTON": "Go to Data Query"
-      },
-      "DATASELECTION": {
-        "HEADER": "Compose Feature Selection",
-        "BUTTON": "New Dataselection"
-      },
-      "NEWQUERY": {
-        "HEADER": "Create Feasibility Request",
-        "BUTTON": "New Feasibility Query"
-      },
-      "SAVED_QUERIES": {
-        "HEADER": "My Queries",
-        "BUTTON": "Go to Overview"
-      },
-      "PREPOSALPORTAL": {
-        "HEADER": "Submit Research Proposal",
-        "BUTTON": "New Proposal"
-      }
-  },
+    "DATAQUERY": {
+      "HEADER": "Compose Data Query",
+      "BUTTON": "Go to Data Query"
+    },
     "DATASELECTION": {
-      "REQUIRED":"Required",
-      "OPTIONAL":"Optional",
-      "HEADER": "Feature Selection",
-      "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (CDS) modules. You can also filter data points, e.g. if only certain laboratory values are of interest, and you have the option of specifying which data points are absolutely necessary for your research question.",
-      "DATASELECTION": "Feature Selection",
-      "SELECTION_BOX": {
-        "FIELDS_MISSING": "Please select at least one field using the pen symbol on the top right corner of this box.",
-        "SELECTED_FIELDS": "Selected Fields",
-        "APPLIED_FILTER": "Applied Filters",
-        "REQUIRED": "required",
-        "OPTIONAL": "optional"
-      },
-      "FIELD_SELECTION": {
-        "FIELD_SELECTION": "Selected features",
-        "HEADER": "Select fields to extract for ",
-        "REQUIRED": "required"
-      },
-      "FILTER": {
-        "HEADER": "Coding/Name"
-      },
-      "EDIT": {
-        "HEADER": "Selected features",
-        "HEADER_DESCRIPTION": "Here you can define which features of patients in the cohort are relevant to your research question. Pay attention to data sparseness and congruence with the description in the study protocol / ethics vote / research proposal (if already available). Change the selection by clicking on the pencil icon and add further filters (e.g. for specific diagnosis codes) if required",
-        "SECTION": "Selected Criteria"
-      },
-      "BUTTON": {
-        "ADD": "Add to Feature Selection",
-        "DOWNLOAD": "Download Feature Selection",
-        "JUMP_TO_DATASELECTION_TREE": "Add Feature",
-        "JUMP_TO_DATASELECTION": "Show Selection",
-        "DATA_REQUEST": "Data Request"
-      },
-      "SEARCH": {
-        "LABEL": "Insert code or search text",
-        "CRITERIA": "Search criteria"
-      },
-      "DISPLAY": {
-        "LABEL": "Selected criteria",
-        "REFERENCE": "only if referenced"
-      },
-      "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
+      "HEADER": "Compose Feature Selection",
+      "BUTTON": "New Dataselection"
+    },
+    "NEWQUERY": {
+      "HEADER": "Create Feasibility Request",
+      "BUTTON": "New Feasibility Query"
+    },
+    "SAVED_QUERIES": {
+      "HEADER": "My Queries",
+      "BUTTON": "Go to Overview"
+    },
+    "PREPOSALPORTAL": {
+      "HEADER": "Submit Research Proposal",
+      "BUTTON": "New Proposal"
+    }
+  },
+  "DATASELECTION": {
+    "REQUIRED": "Required",
+    "OPTIONAL": "Optional",
+    "HEADER": "Feature Selection",
+    "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (CDS) modules. You can also filter data points, e.g. if only certain laboratory values are of interest, and you have the option of specifying which data points are absolutely necessary for your research question.",
+    "DATASELECTION": "Feature Selection",
+    "SELECTION_BOX": {
+      "FIELDS_MISSING": "Please select at least one field using the pen symbol on the top right corner of this box.",
+      "SELECTED_FIELDS": "Selected Fields",
+      "APPLIED_FILTER": "Applied Filters",
+      "REQUIRED": "required",
+      "OPTIONAL": "optional"
+    },
+    "FIELD_SELECTION": {
+      "FIELD_SELECTION": "Selected features",
+      "HEADER": "Select fields to extract for ",
+      "REQUIRED": "required"
+    },
+    "FILTER": {
+      "HEADER": "Coding/Name"
+    },
+    "EDIT": {
+      "HEADER": "Selected features",
+      "HEADER_DESCRIPTION": "Here you can define which features of patients in the cohort are relevant to your research question. Pay attention to data sparseness and congruence with the description in the study protocol / ethics vote / research proposal (if already available). Change the selection by clicking on the pencil icon and add further filters (e.g. for specific diagnosis codes) if required",
+      "SECTION": "Selected Criteria"
+    },
+    "BUTTON": {
+      "ADD": "Add to Feature Selection",
+      "DOWNLOAD": "Download Feature Selection",
+      "JUMP_TO_DATASELECTION_TREE": "Add Feature",
+      "JUMP_TO_DATASELECTION": "Show Selection",
+      "DATA_REQUEST": "Data Request"
+    },
+    "SEARCH": {
+      "LABEL": "Insert code or search text",
+      "CRITERIA": "Search criteria"
+    },
+    "DISPLAY": {
+      "LABEL": "Selected criteria",
+      "REFERENCE": "only if referenced"
+    },
+    "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
   },
   "DATAQUERY": {
     "COHORT": {
@@ -150,7 +168,6 @@
         "NEW_COHORT": "New Cohort",
         "JUMP_TO_DATASELECTION": "To Feature Selection",
         "SEND_QUERY": "Feasibility Query"
-
       },
       "SAVE": {
         "HEADER": "Download current Cohort Selection"
@@ -161,7 +178,7 @@
       "EMPTY": "You have not defined a cohort yet. Upload an existing Cohort Selection or create a new one."
     },
     "DATASELECTION": {
-      "HEADER":"Feature Selection",
+      "HEADER": "Feature Selection",
       "BUTTON": {
         "EDIT": "Edit Feature Selection",
         "DOWNLOAD": "Download Data Request",
@@ -179,7 +196,7 @@
       "SUCCESS": {
         "UPLOAD": "Data Definition has been uploaded",
         "DOWNLOAD": "Data Definition has been successfully downloaded"
-}
+      }
     }
   },
   "LANGUAGE": {
@@ -224,7 +241,7 @@
       "HEADER_INFO": "Edit your criteria here and build your request",
       "BUTTON": {
         "ADD_TO_STAGE": "Add to Cohort Selection",
-        "BACK_TO_SEARCH":"Add Criteria",
+        "BACK_TO_SEARCH": "Add Criteria",
         "VIEW_STAGE": "View Cohort Selection",
         "SEND_QUERY": "Feasibility Query",
         "DATA_REQUEST": "Data Request"
@@ -232,30 +249,30 @@
       "MESSAGE": {
         "ADDED_CRITERIA": "You have added '{number}' criteria to your Cohort Selection"
       },
-        "CONSENT": {
-          "WITH_CONSENT": "With Consent",
-          "WITHOUT_CONSENT": "Without Consent",
-          "TITLE": "Required Consents for Data Processing",
-          "CENTRAL": "Central",
-          "DISTRIBUTED": "Distributed",
-          "EU_GDPR": "All data recipients in countries with data protection levels compliant with the EU GDPR",
-          "NON_EU_GDPR": "Data recipients from countries with data protection levels below the EU GDPR",
-          "WITHOUT_DATA": "Without Data",
-          "WITH_DATA": "With Data",
-          "WITHOUT_CONTACT": "Without Contact",
-          "WITH_CONTACT": "With Contact"
-        }
+      "CONSENT": {
+        "WITH_CONSENT": "With Consent",
+        "WITHOUT_CONSENT": "Without Consent",
+        "TITLE": "Required Consents for Data Processing",
+        "CENTRAL": "Central",
+        "DISTRIBUTED": "Distributed",
+        "EU_GDPR": "All data recipients in countries with data protection levels compliant with the EU GDPR",
+        "NON_EU_GDPR": "Data recipients from countries with data protection levels below the EU GDPR",
+        "WITHOUT_DATA": "Without Data",
+        "WITH_DATA": "With Data",
+        "WITHOUT_CONTACT": "Without Contact",
+        "WITH_CONTACT": "With Contact"
+      }
     },
     "HEADER_TITLE": "Selected Criteria",
     "SEARCH": {
-      "MIN_LENGTH":"Required length of 3 letters",
-      "BUTTON":{
+      "MIN_LENGTH": "Required length of 3 letters",
+      "BUTTON": {
         "RESET": "Reset filter"
       },
-      "EMPTY":"Sorry we couldn't find any results for ",
+      "EMPTY": "Sorry we couldn't find any results for ",
       "SEARCH_BUTTON": "Search",
       "HEADER": "Criteria Search",
-      "SEARCHBAR":"Search by term or terminology code",
+      "SEARCHBAR": "Search by term or terminology code",
       "HEADER_INFO": "Define your cohort based on criteria that you can select using the search field. For targeted searches, you can restrict your search to certain terminologies (e.g. ICD10, LOINC, OPS) or KDS modules. You can use the cohort selection directly to determine the number of cases across Germany.",
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
@@ -287,7 +304,7 @@
         "FROM": "later than {{ from }}",
         "TO": "before {{ to }}",
         "NONE": "no time restriction",
-        "WARNING": "The start date must be earlier than the end date"      
+        "WARNING": "The start date must be earlier than the end date"
       }
     },
     "OVERVIEW": {
@@ -320,7 +337,7 @@
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Choose one or more valid values ({{ label }}):",
       "HEADER_FILTER_REFERENCE": "observed diagnosis",
       "HEADER_FILTER_VALUE": "Value restriction",
-      "CHOOSE_GROUP":"Choose a group",
+      "CHOOSE_GROUP": "Choose a group",
       "MANDATORY_HINT": "Mandatory field",
       "UNIT": "Unit",
       "MIN": "Min",
@@ -346,7 +363,6 @@
         "BETWEEN": "between",
         "TITLE": "Time constraint (optional)",
         "NONE": "no time restriction"
-
       }
     },
     "HINT": {
@@ -359,14 +375,14 @@
     },
     "RESULT": {
       "HEADER": {
-          "RESULT_NOT_LOADED": "Feasibility query is being processed",
-          "RESULT_LOADED": "Query completed"
+        "RESULT_NOT_LOADED": "Feasibility query is being processed",
+        "RESULT_LOADED": "Query completed"
       },
-        "BUTTON": {
-          "DETAILS": "Details",
-          "EDIT_STAGE": "Edit stage",
-          "SAVE_QUERY": "Save cohort",
-          "DOWNLOAD": "Download cohort"
+      "BUTTON": {
+        "DETAILS": "Details",
+        "EDIT_STAGE": "Edit stage",
+        "SAVE_QUERY": "Save cohort",
+        "DOWNLOAD": "Download cohort"
       },
       "SAVE_DIALOG": {
         "HEADER": "Amount of Patients",
@@ -415,8 +431,8 @@
       "DATA_SELECTION": "Data Definition - Feature Selection"
     },
     "DATA_SELECTION": {
-    "SEARCH": "Feature Selection - Search",
-    "EDITOR": "Feature Selection - Editor"
+      "SEARCH": "Feature Selection - Search",
+      "EDITOR": "Feature Selection - Editor"
     },
     "FEASIBILITY_QUERY": {
       "SEARCH": "Feasibility Query - Search",
@@ -425,16 +441,16 @@
     }
   },
   "ERROR": {
-    "FEAS-10001"  : "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
-    "FEAS-10002"  : "You sent too many queries, please wait and try again",
-    "FEAS-10003"  : "You sent too many queries, please wait and try again",
-    "FEAS-10004"  : "The number of sites which answered is too small -> detailed results are not shown",
-    "FEAS-10005"  : "The result size is too small -> result will not be shown",
-    "FEAS-10006"  : "Saved query limit reached. Please delete old saved queries before trying to create new ones.",
-    "404" :        "Site not found",
-    "VAL-20001"   :"The combination of context and termcode(s) is not found"
+    "FEAS-10001": "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
+    "FEAS-10002": "You sent too many queries, please wait and try again",
+    "FEAS-10003": "You sent too many queries, please wait and try again",
+    "FEAS-10004": "The number of sites which answered is too small -> detailed results are not shown",
+    "FEAS-10005": "The result size is too small -> result will not be shown",
+    "FEAS-10006": "Saved query limit reached. Please delete old saved queries before trying to create new ones.",
+    "404": "Site not found",
+    "VAL-20001": "The combination of context and termcode(s) is not found"
   },
-  "INFO":{
+  "INFO": {
     "UPDATE_NOTE": "Due to updates centrally and at the sites, the portal is of limited use. We thank you for your understanding."
   }
 }

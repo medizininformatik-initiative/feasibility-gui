@@ -8,7 +8,7 @@ import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/Ref
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.service';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 @Component({
   selector: 'num-edit-reference-criteria',
   templateUrl: './edit-reference-criteria-modal.component.html',
@@ -73,7 +73,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
     isReference: boolean
     context: TerminologyCode
     criterionHash: string
-    display: DisplayData
+    display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
     uniqueID: string

@@ -19,13 +19,19 @@
 
 .chip-container.expanded,
 .block.expanded {
-  width: auto; /* Expand to fit content */
-  min-width: auto;
+  width: min-content; /* Expand to fit content */
+  min-width: 150px;
   max-width: max-content;
   white-space: normal; /* Allow text to wrap if needed */
   overflow: visible; /* Show all content when expanded */
+  padding-right: 5px;
+  height: auto;
+  min-height: 26px;
 }
-
+.block.expanded.twoLine {
+  margin-bottom: 3px;
+  min-height: 42px;
+}
 .block-triangle {
   color: #5a79af;
   border-left: 13px solid;
@@ -36,6 +42,11 @@
   /*position: absolute;
   right: -13px;
   top: 0;*/
+}
+.block-triangle.twoLine {
+  border-left: 21px solid;
+  border-top: 21px solid transparent;
+  border-bottom: 21px solid transparent;
 }
 .block {
   border-top-left-radius: 5px;

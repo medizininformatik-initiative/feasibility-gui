@@ -1,18 +1,17 @@
+import { Issue } from '../Utilities/Issue';
 import { QueryResultLine } from './QueryResultLine';
+import { QueryResultLineData } from '../Interface/QueryResultLineData';
+import { IssueData } from '../Interface/IssueData';
+import { QueryResultData } from '../Interface/QueryResultData';
+
 export class QueryResult {
   private detailsReceived = false;
   private id: string;
   private feasibilityQueryId: string;
   private totalNumberOfPatients: number;
   private resultLines: QueryResultLine[] = [];
-  private issues?: [
-    {
-      message: string
-      type: string
-      code: string
-      severity: string
-    }
-  ];
+
+  private issues: Issue[];
 
   constructor(
     detailsReceived: boolean,
@@ -20,14 +19,7 @@ export class QueryResult {
     totalNumberOfPatients: number,
     id: string,
     resultLines: QueryResultLine[] = [],
-    issues?: [
-      {
-        message: string
-        type: string
-        code: string
-        severity: string
-      }
-    ]
+    issues: Issue[] = []
   ) {
     this.detailsReceived = detailsReceived;
     this.feasibilityQueryId = feasibilityQueryId;
@@ -37,69 +29,66 @@ export class QueryResult {
     this.issues = issues;
   }
 
-  getDetailsReceived(): boolean {
+  public getDetailsReceived(): boolean {
     return this.detailsReceived;
   }
 
-  setDetailsReceived(detailsReceived: boolean): void {
+  public setDetailsReceived(detailsReceived: boolean): void {
     this.detailsReceived = detailsReceived;
   }
 
-  getFeasibilityQueryId(): string {
+  public getFeasibilityQueryId(): string {
     return this.feasibilityQueryId;
   }
-  setFeasibilityQueryId(id: string): void {
+
+  public setFeasibilityQueryId(id: string): void {
     this.feasibilityQueryId = id;
   }
-  getTotalNumberOfPatients(): number {
+
+  public getTotalNumberOfPatients(): number {
     return this.totalNumberOfPatients;
   }
 
-  setTotalNumberOfPatients(value: number): void {
+  public setTotalNumberOfPatients(value: number): void {
     this.totalNumberOfPatients = value;
   }
 
-  getId(): string {
+  public getId(): string {
     return this.id;
   }
 
-  setId(value: string): void {
+  public setId(value: string): void {
     this.id = value;
   }
 
-  getResultLines(): QueryResultLine[] {
+  public getResultLines(): QueryResultLine[] {
     return this.resultLines;
   }
 
-  setResultLines(value: QueryResultLine[]): void {
+  public setResultLines(value: QueryResultLine[]): void {
     this.resultLines = value;
   }
 
-  getIssues():
-    | [
-        {
-          message: string
-          type: string
-          code: string
-          severity: string
-        }
-      ]
-    | undefined {
+  public getIssues(): Issue[] {
     return this.issues;
   }
 
-  setIssues(
-    value:
-      | [
-          {
-            message: string
-            type: string
-            code: string
-            severity: string
-          }
-        ]
-      | undefined
-  ): void {
+  public setIssues(value: Issue[]): void {
     this.issues = value;
+  }
+
+  public static fromJson(json: QueryResultData): QueryResult {
+    const issues = json.issues.map((issue: IssueData) => Issue.fromJson(issue));
+    const resultLines = json.resultLines.map((resultLine: QueryResultLineData) =>
+      QueryResultLine.fromJson(resultLine)
+    );
+    return new QueryResult(
+      json.detailsReceived,
+      json.queryId,
+      json.totalNumberOfPatients,
+      json.id,
+      resultLines,
+      issues
+    );
   }
 }

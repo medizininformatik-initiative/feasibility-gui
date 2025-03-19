@@ -1,26 +1,27 @@
-import { DisplayData } from '../DisplayData';
+import { Display } from '../Display';
 
 export class ProfileFields {
   private id: string;
-  private display: DisplayData;
-  private description: DisplayData;
+  private display: Display;
+  private description: Display;
   private children: ProfileFields[] = [];
   private isSelected = false;
   private isRequired = false;
   private recommended = false;
   private mustHave: boolean;
-  private referencedProfiles: string[];
+  private referencedProfileUrls: string[];
+  private linkedProfiles: string[];
 
   constructor(
     id: string,
-    display: DisplayData,
-    description: DisplayData,
+    display: Display,
+    description: Display,
     children: ProfileFields[] = [],
     isSelected: boolean = false,
     isRequired: boolean = false,
     recommended: boolean,
     mustHave: boolean,
-    referencedProfiles: string[]
+    referencedProfileUrls: string[]
   ) {
     this.id = id;
     this.display = display;
@@ -30,7 +31,15 @@ export class ProfileFields {
     this.isRequired = isRequired;
     this.recommended = recommended;
     this.mustHave = mustHave;
-    this.referencedProfiles = referencedProfiles;
+    this.referencedProfileUrls = referencedProfileUrls;
+  }
+
+  public getLinkedProfiles(): string[] {
+    return this.linkedProfiles;
+  }
+
+  public setLinkedProfiles(linkedProfiles: string[]): void {
+    this.linkedProfiles = linkedProfiles;
   }
 
   public getId(): string {
@@ -41,19 +50,19 @@ export class ProfileFields {
     this.id = value;
   }
 
-  public getDisplay(): DisplayData {
+  public getDisplay(): Display {
     return this.display;
   }
 
-  public setDisplay(value: DisplayData): void {
+  public setDisplay(value: Display): void {
     this.display = value;
   }
 
-  public getDescription(): DisplayData {
+  public getDescription(): Display {
     return this.description;
   }
 
-  public setDescription(value: DisplayData): void {
+  public setDescription(value: Display): void {
     this.description = value;
   }
 
@@ -97,11 +106,11 @@ export class ProfileFields {
     this.mustHave = mustHave;
   }
 
-  public getReferencedProfiles(): string[] {
-    return this.referencedProfiles;
+  public getReferencedProfileUrls(): string[] {
+    return this.referencedProfileUrls;
   }
 
-  public setReferencedProfiles(referencedProfiles: string[]): void {
-    this.referencedProfiles = referencedProfiles;
+  public setReferencedProfileUrls(referencedProfileUrls: string[]): void {
+    this.referencedProfileUrls = referencedProfileUrls;
   }
 }

@@ -1,6 +1,7 @@
+import { DisplayData } from '../../Interface/DisplayData';
 import { Translation } from './Translation';
 
-export class DisplayData {
+export class Display {
   private originals: string[];
   private original: string;
   private translations: Translation[];

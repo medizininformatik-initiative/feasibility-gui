@@ -1,21 +1,22 @@
 import { AbstractProfileFilter } from './Filter/AbstractProfileFilter';
 import { ProfileFields } from './Fields/ProfileFields';
-import { DisplayData } from './DisplayData';
+import { Display } from './Display';
 import { TranslateService } from '@ngx-translate/core';
 import { ProfileReference } from './Reference/ProfileReference';
 
 export class DataSelectionProfileProfile {
   private id: string;
   private url: string;
-  private display: DisplayData;
+  private display: Display;
   private fields: ProfileFields[] = [];
   private filters: AbstractProfileFilter[] = [];
+  private label: string;
   private reference: ProfileReference;
 
   constructor(
     id: string,
     url: string,
-    display: DisplayData,
+    display: Display,
     fields: ProfileFields[] = [],
     filters: AbstractProfileFilter[] = [],
     reference: ProfileReference
@@ -26,6 +27,14 @@ export class DataSelectionProfileProfile {
     this.fields = fields;
     this.filters = filters;
     this.reference = reference;
+  }
+
+  public getLabel(): string {
+    return this.label;
+  }
+
+  public setLabel(label: string): void {
+    this.label = label;
   }
 
   public getId(): string {
@@ -40,11 +49,11 @@ export class DataSelectionProfileProfile {
     this.url = value;
   }
 
-  public getDisplay(): DisplayData {
+  public getDisplay(): Display {
     return this.display;
   }
 
-  public setDisplay(value: DisplayData): void {
+  public setDisplay(value: Display): void {
     this.display = value;
   }
 

@@ -8,6 +8,7 @@ import { SearchUrlBuilder } from '../../UrlBuilder/SearchUrlBuilder';
 import { TerminologyPaths } from 'src/app/service/Backend/Paths/TerminologyPaths';
 import { Injectable } from '@angular/core';
 import { SearchResultSetterService } from '../../Result/SearchResultSetter.service';
+import { CriteriaSetSearchUrlStrategy } from './Url/CriteriaSetSearchUrlStrategy';
 
 @Injectable({
   providedIn: 'root',
@@ -38,10 +39,7 @@ export class CriteriaSetSearchEngineService {
   }
 
   private createUrl(searchText: string, criteriaSetUrls: string): string {
-    return new SearchUrlBuilder(this.path)
-      .withSearchTerm(searchText)
-      .withFiltertUrl(ElasticSearchFilterPaths.CRITERIASETS, criteriaSetUrls)
-      .buildUrl();
+    return new CriteriaSetSearchUrlStrategy(searchText, criteriaSetUrls).getSearchUrl();
   }
 
   private getMapping(): CriteriaSetResultMapperStrategy {

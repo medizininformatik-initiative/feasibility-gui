@@ -7,7 +7,6 @@ import { AttributeFiltersBuilder } from './AttributeFilter/AttributeFiltersBuild
 import { BetweenFilter } from './TimeRestriction/BetweenFilter';
 import { Criterion } from './Criterion';
 import { CritGroupPosition } from '../CritGroupPosition';
-import { DisplayData } from '../../DataSelection/Profile/DisplayData';
 import { FilterTypes } from '../../Utilities/FilterTypes';
 import { ReferenceCriterion } from './ReferenceCriterion';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
@@ -15,6 +14,7 @@ import { TimeRestrictionNotSet } from './TimeRestriction/TimeRestrictionNotSet';
 import { v4 as uuidv4 } from 'uuid';
 import { ValueDefinition } from '../../Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
+import { Display } from '../../DataSelection/Profile/Display';
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
@@ -24,7 +24,7 @@ export class CriterionBuilder {
   private attributeFilters?: Array<AttributeFilter> = [];
   private context?: TerminologyCode;
   private criterionHash?: string;
-  private display?: DisplayData;
+  private display?: Display;
   private isInvalid?: boolean;
   private isRequiredFilterSet: boolean;
   private parentId: string;
@@ -39,7 +39,7 @@ export class CriterionBuilder {
       isReference: boolean
       context: TerminologyCode
       criterionHash: string
-      display: DisplayData
+      display: Display
       isInvalid: boolean
       isRequiredFilterSet: boolean
       uniqueID: string
@@ -88,7 +88,7 @@ export class CriterionBuilder {
     return this;
   }
 
-  withDisplay(display: DisplayData): CriterionBuilder {
+  withDisplay(display: Display): CriterionBuilder {
     this.display = display;
     return this;
   }
@@ -198,7 +198,7 @@ export class CriterionBuilder {
    * @returns The created AttributeFilter instance.
    */
   buildAttributeFilter(
-    display: DisplayData,
+    display: Display,
     filterType: FilterTypes,
     attributeDefinition: AttributeDefinitions,
     attributeCode?: TerminologyCode
@@ -245,7 +245,7 @@ export class CriterionBuilder {
 
   buildValueFilter(
     valueDefinition: ValueDefinition,
-    display: DisplayData,
+    display: Display,
     filterType: FilterTypes
   ): ValueFilter {
     const valueFilterBuilder = new AttributeFiltersBuilder(

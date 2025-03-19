@@ -1,8 +1,8 @@
-import { map, Observable, switchMap } from 'rxjs';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 import { FeatureService } from '../../Feature.service';
 import { Injectable } from '@angular/core';
+import { map, Observable, switchMap } from 'rxjs';
 import { ObfuscatedResultRateLimitService } from './Obfuscate/ObfuscatedResultRateLimit.service';
 import { ObfuscatedResultService } from './Obfuscate/ObfuscatedResult.service';
 import { PollingManagerService } from './Polling/PollingManager.service';
@@ -27,37 +27,49 @@ export class FeasibilityQueryResultService {
     return this.obfuscatedResultRateLimitService.getRateLimit();
   }
 
+  public refreshResultRateLimit(): void {
+    return this.obfuscatedResultRateLimitService.refreshRateLimit();
+  }
+
   public doSendQueryRequest(): Observable<QueryResult> {
     this.featureService.sendClickEvent(this.featureService.getPollingTime());
     this.obfuscatedResultRateLimitService.refreshRateLimit();
 
-    return this.queryProviderService.getActiveFeasibilityQuery().pipe(
-      switchMap((feasibilityQuery) =>
-        this.pollingManagerService.getPollingResult(feasibilityQuery).pipe(
-          map((queryResult) => {
-            if (queryResult !== null) {
-              this.setQueryResultProvider(queryResult);
-            }
-            return queryResult;
-          })
-        )
-      )
+    return this.activeFeasibilityQuery().pipe(
+      switchMap((feasibilityQuery) => {
+        const result = this.pollingManagerService.getPollingResult(feasibilityQuery);
+        return this.setProvider(result);
+      })
     );
   }
 
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<QueryResult> {
-    return this.queryProviderService.getActiveFeasibilityQuery().pipe(
-      switchMap((feasibilityQuery: FeasibilityQuery) =>
-        this.obfuscatedResultService
-          .getDetailedObfuscatedResult(feasibilityQueryResultId, feasibilityQuery.getId())
-          .pipe(
-            map((queryResult: QueryResult) => {
-              this.setQueryResultProvider(queryResult);
-              return queryResult;
-            })
-          )
-      )
+    return this.activeFeasibilityQuery().pipe(
+      switchMap((feasibilityQuery: FeasibilityQuery) => {
+        const result = this.obfuscatedResultService.getDetailedObfuscatedResult(
+          feasibilityQueryResultId,
+          feasibilityQuery.getId()
+        );
+        return this.setProvider(result);
+      })
     );
+  }
+
+  private setProvider(result: Observable<QueryResult>): Observable<QueryResult> {
+    return result.pipe(
+      map((queryResult: QueryResult) => {
+        if (queryResult?.getTotalNumberOfPatients() !== null && queryResult !== null) {
+          this.setQueryResultProvider(queryResult);
+          return queryResult;
+        } else {
+          return queryResult;
+        }
+      })
+    );
+  }
+
+  private activeFeasibilityQuery(): Observable<FeasibilityQuery> {
+    return this.queryProviderService.getActiveFeasibilityQuery();
   }
 
   private setQueryResultProvider(queryResult: QueryResult): void {

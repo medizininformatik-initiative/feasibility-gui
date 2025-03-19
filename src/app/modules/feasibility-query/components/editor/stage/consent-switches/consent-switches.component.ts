@@ -24,7 +24,7 @@ export class ConsentSwitchesComponent implements OnInit {
   insuranceDataBoolean = false;
   contact = false;
 
-  provisionCodeDisplay: string;
+  provisionCode: string;
 
   consent = true;
 
@@ -70,6 +70,6 @@ export class ConsentSwitchesComponent implements OnInit {
   }
 
   private getProvisionCode(): void {
-    this.provisionCodeDisplay = this.consentService.getConsentTermCode().getDisplay();
+    this.provisionCode = this.consentService.getConsentTermCode().getCode();
   }
 }

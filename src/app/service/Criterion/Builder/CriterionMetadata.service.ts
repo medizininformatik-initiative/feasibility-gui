@@ -1,6 +1,6 @@
-import { CriteriaProfileData } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
+import { CriteriaProfile } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriterionHashService } from '../CriterionHash.service';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,11 +17,11 @@ export class CriterionMetadataService {
    * @param criteriaProfileData The criteria profile data.
    * @returns An object containing the mandatory fields for the criterion.
    */
-  public createMandatoryFields(criteriaProfileData: CriteriaProfileData): {
+  public createMandatoryFields(criteriaProfileData: CriteriaProfile): {
     isReference: false
     context: TerminologyCode
     criterionHash: string
-    display: DisplayData
+    display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
     uniqueID: string
@@ -45,7 +45,7 @@ export class CriterionMetadataService {
     };
   }
 
-  private setIsRequiredFilterSet(criteriaProfileData: CriteriaProfileData) {
+  private setIsRequiredFilterSet(criteriaProfileData: CriteriaProfile) {
     return (
       criteriaProfileData
         .getAttributeDefinitions()

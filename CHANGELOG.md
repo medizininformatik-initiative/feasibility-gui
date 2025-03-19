@@ -1,4 +1,45 @@
 # Changelog
+
+## v6.0.10 (2025-03-19)
+
+### Bug Fixes
+*  Updated hasQueryResult handling in result action bar component to save cohorts ([#365](https://github.com/medizininformatik-initiative/feasibility-gui/issues/365))
+
+
+## v6.0.9 (2025-03-19)
+
+### Bug Fixes
+* Prevent constant openings of modal after downloading query  ([#363](https://github.com/medizininformatik-initiative/feasibility-gui/issues/363))
+
+### Changes
+* Adjustments for german UI translation
+
+
+
+## v6.0.8 (2025-03-11)
+
+### Bug Fixes
+* Increment the details button counter after the modal is closed ([#357](https://github.com/medizininformatik-initiative/feasibility-gui/issues/357))
+* Split URL list of data selection references based on URL length ([#353](https://github.com/medizininformatik-initiative/feasibility-gui/issues/353))
+* UI now continues polling results even after receiving an error from `summary-result`. If the final response contains an error, it will be displayed, while intermediate errors are ignored to ensure uninterrupted polling ([#349](https://github.com/medizininformatik-initiative/feasibility-gui/issues/349))
+
+
+
+## v6.0.7 (2025-02-27)
+
+### Bug Fixes
+* Fixed index increment issue with parentheses ([#313](https://github.com/medizininformatik-initiative/feasibility-gui/issues/313))
+* Reduced container height ([#343](https://github.com/medizininformatik-initiative/feasibility-gui/issues/343))
+* Corrected consent subscription ([#344](https://github.com/medizininformatik-initiative/feasibility-gui/issues/344))
+
+### Features
+* Defined and applied interfaces ([#333](https://github.com/medizininformatik-initiative/feasibility-gui/issues/333))
+* Refactored CriterionValidationService into smaller services ([#332](https://github.com/medizininformatik-initiative/feasibility-gui/issues/332))
+* Merged two criterion creation services into one ([#326](https://github.com/medizininformatik-initiative/feasibility-gui/issues/326))
+* Added translation for consent text ([#263](https://github.com/medizininformatik-initiative/feasibility-gui/issues/263))
+
+
+
 ## v6.0.6 (2025-02-18)
 
 ### Bug Fixes

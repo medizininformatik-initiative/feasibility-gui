@@ -15,7 +15,7 @@
   <div fxLayout="row" fxLayoutAlign="start center">
     <num-button
       type="green"
-      [isDisabled]="!loadedResult"
+      [isDisabled]="!loadedResult || (queryResultRateLimit$ | async)?.getRemaining() === 0"
       matTooltipShowDelay="300"
       [matTooltip]="'QUERYBUILDER.RESULT.DETAILS_TOOLTIP' | translate"
       matTooltipPosition="right"

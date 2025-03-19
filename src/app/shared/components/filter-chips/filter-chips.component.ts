@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
 import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
 import { Observable, of } from 'rxjs';
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe ';
+import { DisplayData } from '../../../model/Interface/DisplayData';
 
 @Component({
   selector: 'num-filter-chips',
@@ -14,7 +15,7 @@ export class FilterChipsComponent implements OnInit {
   @Input()
   filterChips: InterfaceFilterChip[] = [];
 
-  constructor() {}
+  constructor(private translation: DisplayTranslationPipe) {}
 
   ngOnInit(): void {}
 
@@ -23,5 +24,14 @@ export class FilterChipsComponent implements OnInit {
   }
   public toggleTypeExpanded(chip) {
     chip.typeExpanded = !chip.typeExpanded;
+    if (chip.typeExpanded) {
+      chip.twoLineDisplay = this.getLength(chip.type) > 22;
+    } else {
+      chip.twoLineDisplay = false;
+    }
+  }
+
+  public getLength(display: DisplayData): number {
+    return this.translation.transform(display).length;
   }
 }

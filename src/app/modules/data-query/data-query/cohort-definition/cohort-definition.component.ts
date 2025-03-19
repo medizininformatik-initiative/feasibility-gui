@@ -1,17 +1,18 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConsentService } from '../../../../service/Consent/Consent.service';
+import { DownloadCohortComponent } from './download-cohort/download-cohort.component';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { Observable } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 import { StructuredQuery2FeasibilityQueryService } from 'src/app/service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from 'src/app/service/Validation.service';
-import { DownloadCohortComponent } from './download-cohort/download-cohort.component';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
-import { Observable } from 'rxjs';
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Component({
   selector: 'num-cohort-definition',
@@ -22,14 +23,15 @@ export class CohortDefinitionComponent implements OnInit {
   @Input() showActionBar;
   @Output() scrollClick = new EventEmitter();
   fileName: string;
-  isFeasibilityInclusionSet: Observable<boolean>;
-  isFeasibilityExistent: Observable<boolean>;
-  isFeasibilityQueryValid: Observable<boolean>;
+  isFeasibilityInclusionSet$: Observable<boolean>;
+  isFeasibilityExistent$: Observable<boolean>;
+  isFeasibilityQueryValid$: Observable<boolean>;
   totalNumberOfPatients: number;
 
   constructor(
     private routerHelperService: NavigationHelperService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
+    private feasibilityQueryValidation: FeasibilityQueryValidation,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
     private validationService: ValidationService,
     private resultProviderService: ResultProviderService,
@@ -48,9 +50,9 @@ export class CohortDefinitionComponent implements OnInit {
         ?.getTotalNumberOfPatients();
     });
 
-    this.isFeasibilityInclusionSet = this.feasibilityQueryService.getIsInclusionSet();
-    this.isFeasibilityExistent = this.feasibilityQueryService.getIsFeasibilityQuerySet();
-    this.isFeasibilityQueryValid = this.feasibilityQueryService.getIsFeasibilityQueryValid();
+    this.isFeasibilityInclusionSet$ = this.feasibilityQueryValidation.getIsInclusionSet();
+    this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
+    this.isFeasibilityQueryValid$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
   }
 
   public sendQuery() {
@@ -107,7 +109,7 @@ export class CohortDefinitionComponent implements OnInit {
   }
 
   public createNewCohort() {
-    if (this.isFeasibilityExistent) {
+    if (this.isFeasibilityExistent$) {
       const feasibilityQuery = new FeasibilityQuery(uuidv4());
       this.feasibilityQueryService.setFeasibilityQueryByID(
         feasibilityQuery,

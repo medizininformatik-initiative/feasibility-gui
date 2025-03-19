@@ -3,12 +3,12 @@
     <div
       class="block"
       (click)="toggleTypeExpanded(filterChip)"
-      [ngClass]="{ expanded: filterChip.typeExpanded }"
+      [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
     >
       {{ filterChip.type | displayTranslation }}
     </div>
+    <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
 
-    <div class="block-triangle"></div>
     <div fxLayout="row wrap" class="padding-left-20">
       <div
         *ngFor="let chip of filterChip.data"

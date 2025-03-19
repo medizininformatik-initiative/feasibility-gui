@@ -44,7 +44,7 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
     return this;
   }
 
-  public withPageSize(limit: number): this {
+  public withPageSize(limit: number = 50): this {
     this.queryParams.set('page-size', limit.toString());
     return this;
   }

@@ -102,5 +102,6 @@ const SHARED_DECLARATIONS = [
     MatTooltipModule,
   ],
   exports: [...SHARED_DECLARATIONS],
+  providers: [DisplayTranslationPipe],
 })
 export class SharedComponentsModule {}

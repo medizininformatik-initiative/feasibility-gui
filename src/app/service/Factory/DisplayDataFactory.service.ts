@@ -1,4 +1,5 @@
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { DisplayData } from 'src/app/model/Interface/DisplayData';
 import { Injectable } from '@angular/core';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
@@ -8,11 +9,11 @@ import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 export class DisplayDataFactoryService {
   constructor() {}
 
-  public createDisplayData(displayData: any): DisplayData {
+  public createDisplayData(displayData: any): Display {
     const translations = displayData.translations?.map((translation) =>
       this.createTranslation(translation)
     );
-    return new DisplayData(translations, displayData.original);
+    return new Display(translations, displayData.original);
   }
 
   private createTranslation(translation: any): Translation {

@@ -8,11 +8,11 @@ import { Observable, Subscription } from 'rxjs';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
-import { DisplayData } from 'src/app/model/DataSelection/Profile/DisplayData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 interface selectedItem {
   id: string
-  display: DisplayData
+  display: Display
   termCode: TerminologyCode
 }
 @Component({

@@ -1,22 +1,20 @@
+import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { Injectable } from '@angular/core';
+import { PollingService } from './Polling.service';
+import { QueryResult } from 'src/app/model/Result/QueryResult';
+import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service';
 import {
   Observable,
   Subject,
   switchMap,
   takeUntil,
-  map,
-  share,
   interval,
   timer,
-  takeWhile,
   endWith,
-  tap,
-  defaultIfEmpty,
+  mergeMap,
+  map,
 } from 'rxjs';
-import { PollingService } from './Polling.service';
-import { QueryResult } from 'src/app/model/Result/QueryResult';
-import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 
 @Injectable({
   providedIn: 'root',
@@ -30,59 +28,75 @@ export class PollingManagerService {
   ) {}
 
   /**
-   * Initiates polling for the provided feasibility query.
-   * It first retrieves the polling URL (and thus the result ID) from the backend,
-   * adds the result ID to the query, and then starts polling.
-   *
-   * @param feasibilityQuery The feasibility query object.
-   * @returns An Observable that emits QueryResult updates, ending with a null value.
+   * Initiates polling for the feasibility query.
    */
-  public getPollingResult(feasibilityQuery: FeasibilityQuery): Observable<QueryResult> {
-    return this.pollingService.getFeasibilityIdFromPollingUrl(feasibilityQuery).pipe(
-      switchMap((feasibilityQueryResultId) => {
-        feasibilityQuery.addResultId(feasibilityQueryResultId);
-        return this.startPollingProcess(feasibilityQueryResultId, feasibilityQuery.getId()).pipe(
-          takeWhile((result) => result !== null, true)
-        );
-      })
-    );
+  public getPollingResult(
+    feasibilityQuery: FeasibilityQuery
+  ): Observable<QueryResult | ErrorQueryResult> {
+    return this.pollingService
+      .getFeasibilityIdFromPollingUrl(feasibilityQuery)
+      .pipe(switchMap((resultId) => this.startPolling(feasibilityQuery, resultId)));
   }
 
   /**
-   * Starts the polling process for a given result ID.
-   *
-   * @param resultId The result ID to poll.
-   * @param feasibilityQueryId The ID of the originating feasibility query.
-   * @returns An Observable that emits QueryResult updates and ends with null.
+   * Starts polling for the given feasibility query result ID.
    */
-  private startPollingProcess(
+  private startPolling(
+    feasibilityQuery: FeasibilityQuery,
+    resultId: string
+  ): Observable<QueryResult | ErrorQueryResult> {
+    feasibilityQuery.addResultId(resultId);
+    this.resetStopSignal();
+    return this.pollingProcess(resultId, feasibilityQuery.getId());
+  }
+
+  /**
+   * Handles the polling process and error handling.
+   */
+  private pollingProcess(
     resultId: string,
     feasibilityQueryId: string
-  ): Observable<QueryResult> {
-    this.resetStopSignal();
+  ): Observable<QueryResult | ErrorQueryResult | null> {
+    let lastValidResult: QueryResult | null = null;
+    let lastError: ErrorQueryResult | null = null;
+
     return interval(this.pollingService.POLLING_INTERVALL_MILLISECONDS).pipe(
       takeUntil(timer(this.pollingService.POLLING_MAXL_MILLISECONDS + 200)),
-      switchMap(() => this.pollingService.requestSummaryResult(resultId)),
-      map((pollingResult) => this.processPollingResult(pollingResult, feasibilityQueryId)),
+      mergeMap(() =>
+        this.requestPollingResult(resultId).pipe(
+          map((result) => {
+            if (result?.issues) {
+              lastError = this.queryResultMapperService.createErrorQueryResult(
+                result.issues,
+                feasibilityQueryId
+              );
+              return lastError;
+            } else {
+              lastValidResult = this.queryResultMapperService.createQueryResult(
+                false,
+                result,
+                feasibilityQueryId
+              );
+              lastError = null;
+              return lastValidResult;
+            }
+          })
+        )
+      ),
       takeUntil(this.stopPolling$),
-      endWith(null),
-      share()
+      endWith(lastValidResult ?? lastError ?? null)
     );
   }
 
   /**
-   * Processes a raw polling response into a structured QueryResult.
-   *
-   * @param pollingResult The raw result returned by the polling API.
-   * @param feasibilityQueryId The originating feasibility query's ID.
-   * @returns A structured QueryResult.
+   * Requests polling results and handles errors.
    */
-  private processPollingResult(pollingResult: any, feasibilityQueryId: string): QueryResult {
-    return this.queryResultMapperService.createQueryResult(false, pollingResult, feasibilityQueryId);
+  private requestPollingResult(resultId: string): Observable<any> {
+    return this.pollingService.requestSummaryResult(resultId);
   }
 
   /**
-   * Stops the polling process by emitting a value on the stop subject.
+   * Stops polling by emitting a signal.
    */
   public stopPolling(): void {
     this.stopPolling$.next();
