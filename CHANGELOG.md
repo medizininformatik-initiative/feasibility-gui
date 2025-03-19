@@ -1,5 +1,15 @@
 # Changelog
 
+## v6.0.9 (2025-03-19)
+
+### Bug Fixes
+* Prevent constant openings of modal after downloading query  ([#363](https://github.com/medizininformatik-initiative/feasibility-gui/issues/363))
+
+### Changes
+* Adjustments for german UI translation
+
+
+
 ## v6.0.8 (2025-03-11)
 
 ### Bug Fixes
