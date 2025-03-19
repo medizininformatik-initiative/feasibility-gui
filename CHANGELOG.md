@@ -1,5 +1,11 @@
 # Changelog
 
+## v6.0.10 (2025-03-19)
+
+### Bug Fixes
+*  Updated hasQueryResult handling in result action bar component to save cohorts ([#365](https://github.com/medizininformatik-initiative/feasibility-gui/issues/365))
+
+
 ## v6.0.9 (2025-03-19)
 
 ### Bug Fixes
