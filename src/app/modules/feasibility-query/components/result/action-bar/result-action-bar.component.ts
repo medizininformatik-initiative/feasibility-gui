@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -12,7 +12,8 @@ import { SaveQueryModalComponent } from '../save-dialog/save-dialog.component';
   styleUrls: ['./result-action-bar.component.scss'],
 })
 export class ResultActionBarComponent implements OnInit {
-  hasQueryResult: Observable<boolean>;
+  @Input()
+  hasQueryResult: boolean;
 
   constructor(
     private navigationHelperService: NavigationHelperService,
@@ -21,9 +22,7 @@ export class ResultActionBarComponent implements OnInit {
     private feasibilityQueryProvider: FeasibilityQueryProviderService
   ) {}
 
-  ngOnInit() {
-    this.hasQueryResult = this.feasibilityQueryProvider.getHasQueryResult();
-  }
+  ngOnInit() {}
 
   public saveQuery() {
     const dialogConfig = new MatDialogConfig();

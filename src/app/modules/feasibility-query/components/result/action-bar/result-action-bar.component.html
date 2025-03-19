@@ -3,7 +3,7 @@
     {{ 'QUERYBUILDER.RESULT.BUTTON.EDIT_STAGE' | translate }}
   </num-button>
   <num-button
-    [isDisabled]="(hasQueryResult | async) === false"
+    [isDisabled]="hasQueryResult"
     (click)="saveQuery()"
     class="margin-right-10"
     type="green"
