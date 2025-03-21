@@ -1,5 +1,5 @@
 export interface SavedDataQueryListItemData {
-  id: string
+  id: number
   label: string
   comment: string
   content: null

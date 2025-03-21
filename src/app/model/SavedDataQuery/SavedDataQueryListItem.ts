@@ -1,7 +1,7 @@
 import { SavedDataQueryListItemData } from '../Interface/SavedDataQueryListItemData';
 
 export class SavedDataQueryListItem {
-  private id: string;
+  private id: number;
   private label: string;
   private createdAt: string;
   private totalNumberOfResults?: number;
@@ -15,7 +15,7 @@ export class SavedDataQueryListItem {
     isValid: boolean
   };
   constructor(
-    id: string,
+    id: number,
     label: string,
     comment: string,
     createdAt: string,
@@ -40,11 +40,11 @@ export class SavedDataQueryListItem {
     this.comment = comment;
   }
 
-  public getId(): string {
+  public getId(): number {
     return this.id;
   }
 
-  public setId(value: string): void {
+  public setId(value: number): void {
     this.id = value;
   }
 
