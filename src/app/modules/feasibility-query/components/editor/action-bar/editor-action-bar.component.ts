@@ -17,6 +17,8 @@ export class EditorActionBarComponent implements OnInit, OnDestroy {
   stageArray$: Observable<Array<string>> = of([]);
   isFeasibilityQueryValid$: Observable<boolean>;
 
+  validFeasibilityQuery$: Observable<boolean> = of(false);
+
   constructor(
     private feasibilityQueryValidation: FeasibilityQueryValidation,
     private stageProviderService: StageProviderService,
@@ -48,6 +50,7 @@ export class EditorActionBarComponent implements OnInit, OnDestroy {
   }
 
   public saveFeasibilityQuery(): void {
+    this.validFeasibilityQuery$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
     /*  this.createCRDTLService.createCRDTL().pipe(
       map((crdtl) => {
         this.dataQueryApiService.postDataQuery(crdtl);
