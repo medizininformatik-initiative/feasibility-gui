@@ -194,7 +194,7 @@ export class TypeGuard {
   public static isFilterData(obj: unknown): obj is FilterData {
     const filterData = obj as FilterData;
     return (
-      TypeGuard.isObject(filterData) &&
+      TypeGuard.isObject(filterData || null) &&
       TypeGuard.isString(filterData.type) &&
       TypeGuard.isString(filterData.name)
     );
@@ -586,8 +586,9 @@ export class TypeGuard {
     const attributesData = obj as AttributesData;
     return (
       TypeGuard.isObject(attributesData) &&
-      Array.isArray(attributesData.linkedGroups) &&
-      attributesData.linkedGroups.every(TypeGuard.isString) &&
+      (Array.isArray(attributesData.linkedGroups) || attributesData.linkedGroups === null) &&
+      (attributesData.linkedGroups === null ||
+        attributesData.linkedGroups.every(TypeGuard.isString)) &&
       TypeGuard.isBoolean(attributesData.mustHave) &&
       TypeGuard.isString(attributesData.attributeRef)
     );
@@ -602,14 +603,16 @@ export class TypeGuard {
     const attributeGroupsData = obj as AttributeGroupsData;
     return (
       TypeGuard.isObject(attributeGroupsData) &&
-      TypeGuard.isString(attributeGroupsData.id) &&
-      TypeGuard.isBoolean(attributeGroupsData.includeReferenceOnly) &&
+      (TypeGuard.isString(attributeGroupsData.id) || attributeGroupsData.id === null) &&
+      (TypeGuard.isString(attributeGroupsData.name) || attributeGroupsData.name === null) &&
+      (TypeGuard.isBoolean(attributeGroupsData.includeReferenceOnly) ||
+        attributeGroupsData.includeReferenceOnly === null) &&
       TypeGuard.isString(attributeGroupsData.groupReference) &&
-      TypeGuard.isString(attributeGroupsData.name) &&
       Array.isArray(attributeGroupsData.attributes) &&
       attributeGroupsData.attributes.every(TypeGuard.isAttributesData) &&
-      Array.isArray(attributeGroupsData.filter) &&
-      attributeGroupsData.filter.every(TypeGuard.isFilterData)
+      (Array.isArray(attributeGroupsData.filter) || attributeGroupsData.filter === null) &&
+      (attributeGroupsData.filter === null ||
+        attributeGroupsData.filter.every(TypeGuard.isFilterData))
     );
   }
 
