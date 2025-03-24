@@ -22,6 +22,7 @@ export class DisplayFeasibilityQueryComponent implements OnInit {
 
   render(): void {
     const node = document.getElementById('renderCriteria')
-    this.htmlToImageService.toBlob(node)
+    //this.htmlToImageService.toBlob(node)
+    this.htmlToImageService.toPdf(node)
   }
 }

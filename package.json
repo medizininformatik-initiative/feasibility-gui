@@ -51,6 +51,7 @@
     "jest-junit": "^13.0.0",
     "jest-preset-angular": "^11.0.1",
     "jest-sonar-reporter": "^2.0.0",
+    "jspdf": "^3.0.1",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.4",
     "monaco-editor": "0.29.1",
