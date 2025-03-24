@@ -15,17 +15,6 @@
     {{ 'QUERYBUILDER.STAGE.BUTTON.DATA_REQUEST' | translate }}
   </num-button>
   <num-button
-    icon="arrow-up"
-    type="green"
-    class="margin-right-10"
-    (click)="navigateToSearch()"
-    [matBadge]="(stageArray$ | async)?.length"
-    matBadgePosition="above after"
-  >
-    {{ 'QUERYBUILDER.STAGE.BUTTON.BACK_TO_SEARCH' | translate }}
-  </num-button>
-
-  <num-button
     type="green"
     class="margin-right-10"
     (click)="saveDataQuery()"
@@ -34,5 +23,15 @@
     "
   >
     {{ 'QUERYBUILDER.STAGE.BUTTON.SAVE_DATAQUERY' | translate }}
+  </num-button>
+  <num-button
+    icon="arrow-up"
+    type="green"
+    class="margin-right-10"
+    (click)="navigateToSearch()"
+    [matBadge]="(stageArray$ | async)?.length"
+    matBadgePosition="above after"
+  >
+    {{ 'QUERYBUILDER.STAGE.BUTTON.BACK_TO_SEARCH' | translate }}
   </num-button>
 </num-action-bar>
