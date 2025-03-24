@@ -16,17 +16,17 @@
         color="primary"
         disableRipple="true"
         [disabled]="(validatedDataQuery$ | async).feasibilityQuery === false"
-        [checked]="isFeasibilityChecked"
+        [checked]="(validatedDataQuery$ | async).feasibilityQuery"
         (change)="toggleFeasibilityQuery($event)"
-        >Kohorten Selektion</mat-checkbox
+        >{{ 'DATAQUERY.COHORT.HEADER' }}</mat-checkbox
       >
       <mat-checkbox
         color="primary"
         disableRipple="true"
         [disabled]="(validatedDataQuery$ | async).dataSelection === false"
-        [checked]="isDataSelectionChecked"
+        [checked]="(validatedDataQuery$ | async).dataSelection"
         (change)="toggleDataSelection($event)"
-        >Merkmal Selektion</mat-checkbox
+        >{{ 'DATAQUERY.DATASELECTION.HEADER' }}</mat-checkbox
       >
     </div>
   </div>
@@ -36,12 +36,13 @@
 
     <num-button
       type="blue"
-      [isDisabled]="title.length === 0"
+      [isDisabled]="title.length === 0 || (!isFeasibilityChecked && !isDataSelectionChecked)"
       (click)="doSave()"
       class="button-save"
     >
       {{ 'BUTTON.SAVE' | translate }}
     </num-button>
+
     <num-button type="blue" (click)="doDiscard()">
       {{ 'BUTTON.CANCEL' | translate }}
     </num-button>

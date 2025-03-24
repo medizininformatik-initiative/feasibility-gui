@@ -1,25 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModal';
 import { DataQueryValidationService } from '../../../service/DataQuery/DataQueryValidation.service';
-import { map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 
 @Component({
   selector: 'num-save-dataquery-modal',
   templateUrl: './save-dataquery-modal.component.html',
   styleUrls: ['./save-dataquery-modal.component.scss'],
 })
-export class SaveDataQueryModalComponent implements OnInit {
-  constructor(
-    private dialogRef: MatDialogRef<SaveDataQueryModalComponent>,
-    private dataQueryValidation: DataQueryValidationService
-  ) {}
+export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
   validatedDataQuery$: Observable<{ feasibilityQuery: boolean; dataSelection: boolean }>;
-  ngOnInit(): void {
-    this.validatedDataQuery$ = this.dataQueryValidation.validateDataQuery();
-  }
+
   @Input()
   isCommentRequired = false;
 
@@ -31,10 +26,36 @@ export class SaveDataQueryModalComponent implements OnInit {
 
   title = '';
   comment = '';
-  isFeasibilityChecked = true;
-  isDataSelectionChecked = true;
+  isFeasibilityChecked = false;
+  isDataSelectionChecked = false;
+
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    private dialogRef: MatDialogRef<SaveDataQueryModalComponent>,
+    private dataQueryValidation: DataQueryValidationService
+  ) {}
+
+  ngOnInit(): void {
+    this.validatedDataQuery$ = this.dataQueryValidation.validateDataQuery();
+
+    this.validatedDataQuery$.pipe(takeUntil(this.destroy$)).subscribe((validation) => {
+      this.isFeasibilityChecked = validation.feasibilityQuery;
+      this.isDataSelectionChecked = validation.dataSelection;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   doSave(): void {
+    if (!this.isFeasibilityChecked && !this.isDataSelectionChecked) {
+      console.warn('Save aborted: At least one option must be selected.');
+      return;
+    }
+
     this.dialogRef.close({
       title: this.title,
       comment: this.comment,
@@ -50,6 +71,7 @@ export class SaveDataQueryModalComponent implements OnInit {
   toggleFeasibilityQuery(checked: MatCheckboxChange) {
     this.isFeasibilityChecked = checked.checked;
   }
+
   toggleDataSelection(checked: MatCheckboxChange) {
     this.isDataSelectionChecked = checked.checked;
   }

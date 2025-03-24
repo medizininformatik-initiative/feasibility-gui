@@ -51,6 +51,13 @@
       }
     }
   },
+  "SAVE_MODAL": {
+    "HEADER": "Abfrage speichern",
+    "TITLE": "Titel",
+    "COMMENT": "Kommentar",
+    "SAVE": "Speichern",
+    "CANCEL": "Abbrechen"
+  },
   "SHAREDFILTER": {
     "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
     "FILTER_SELECTION": "Ausgewählte Elemente",
