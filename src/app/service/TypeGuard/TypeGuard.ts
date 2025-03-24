@@ -92,8 +92,18 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isAttributeFilterBaseData(obj: unknown): obj is AttributeFilterBaseData {
+    const attributeFilterBaseData = obj as AttributeFilterBaseData;
     return (
-      TypeGuard.isObject(obj) && TypeGuard.isString((obj as AttributeFilterBaseData).comparator)
+      TypeGuard.isObject(attributeFilterBaseData) &&
+      (TypeGuard.isString(attributeFilterBaseData.comparator) ||
+        attributeFilterBaseData.comparator === null) &&
+      (TypeGuard.isNumber(attributeFilterBaseData.minValue) ||
+        attributeFilterBaseData.minValue === null) &&
+      (TypeGuard.isNumber(attributeFilterBaseData.maxValue) ||
+        attributeFilterBaseData.maxValue === null) &&
+      (TypeGuard.isQuantityUnitData(attributeFilterBaseData.unit) ||
+        attributeFilterBaseData.unit === null) &&
+      (TypeGuard.isNumber(attributeFilterBaseData.value) || attributeFilterBaseData.value === null)
     );
   }
 
@@ -426,8 +436,7 @@ export class TypeGuard {
     return (
       TypeGuard.isObject(terminologyCodeData) &&
       TypeGuard.isTerminologyCodeBaseData(terminologyCodeData) &&
-      terminologyCodeData.version &&
-      TypeGuard.isString(terminologyCodeData.version)
+      (TypeGuard.isString(terminologyCodeData.version) || terminologyCodeData.version === undefined)
     );
   }
 
@@ -440,7 +449,8 @@ export class TypeGuard {
     const timeRestrictionData = obj as TimeRestrictionData;
     return (
       TypeGuard.isObject(timeRestrictionData) &&
-      TypeGuard.isString(timeRestrictionData.afterDate) &&
+      (TypeGuard.isString(timeRestrictionData.afterDate) ||
+        timeRestrictionData.afterDate === null) &&
       (!timeRestrictionData.beforeDate || TypeGuard.isString(timeRestrictionData.beforeDate))
     );
   }
@@ -587,8 +597,11 @@ export class TypeGuard {
     const attributesData = obj as AttributesData;
     return (
       TypeGuard.isObject(attributesData) &&
-      (Array.isArray(attributesData.linkedGroups) || attributesData.linkedGroups === null) &&
+      (Array.isArray(attributesData.linkedGroups) ||
+        attributesData.linkedGroups === null ||
+        attributesData.linkedGroups === undefined) &&
       (attributesData.linkedGroups === null ||
+        attributesData.linkedGroups === undefined ||
         attributesData.linkedGroups.every(TypeGuard.isString)) &&
       TypeGuard.isBoolean(attributesData.mustHave) &&
       TypeGuard.isString(attributesData.attributeRef)
@@ -604,16 +617,22 @@ export class TypeGuard {
     const attributeGroupsData = obj as AttributeGroupsData;
     return (
       TypeGuard.isObject(attributeGroupsData) &&
-      (TypeGuard.isString(attributeGroupsData.id) || attributeGroupsData.id === null) &&
-      (TypeGuard.isString(attributeGroupsData.name) || attributeGroupsData.name === null) &&
+      (TypeGuard.isString(attributeGroupsData.id) ||
+        attributeGroupsData.id === null ||
+        attributeGroupsData.id === undefined) &&
+      (TypeGuard.isString(attributeGroupsData.name) ||
+        attributeGroupsData.name === null ||
+        attributeGroupsData.name === undefined) &&
       (TypeGuard.isBoolean(attributeGroupsData.includeReferenceOnly) ||
-        attributeGroupsData.includeReferenceOnly === null) &&
+        attributeGroupsData.includeReferenceOnly === null ||
+        attributeGroupsData.includeReferenceOnly === undefined) &&
       TypeGuard.isString(attributeGroupsData.groupReference) &&
       Array.isArray(attributeGroupsData.attributes) &&
       attributeGroupsData.attributes.every(TypeGuard.isAttributesData) &&
-      (Array.isArray(attributeGroupsData.filter) || attributeGroupsData.filter === null) &&
       (attributeGroupsData.filter === null ||
-        attributeGroupsData.filter.every(TypeGuard.isFilterData))
+        attributeGroupsData.filter === undefined ||
+        (Array.isArray(attributeGroupsData.filter) &&
+          attributeGroupsData.filter.every(TypeGuard.isFilterData)))
     );
   }
 
