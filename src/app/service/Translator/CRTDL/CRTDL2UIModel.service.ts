@@ -1,4 +1,4 @@
-import { combineLatest, map, Observable, of } from 'rxjs';
+import { combineLatest, map, Observable, of, take } from 'rxjs';
 import { CreateCRDTLService } from './CreateCRDTL.service';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service';
@@ -15,6 +15,7 @@ import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { UiCRTDL } from 'src/app/model/UiCRTDL';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from '../../Validation.service';
+import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 
 @Injectable({
   providedIn: 'root',
@@ -25,17 +26,14 @@ export class CRTDL2UIModelService {
     private dataSelectionProvider: DataSelectionProviderService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
-    private validationService: ValidationService,
-    private createCRDTLService: CreateCRDTLService
+    private validationService: ValidationService
   ) {}
 
   public createCRDTLFromJson(crtdl: CRTDLData): Observable<UiCRTDL> {
     const cohortDefinition = crtdl.cohortDefinition;
     const dataExtraction = crtdl.dataExtraction;
-
     const translatedCohort = this.translateCohort(cohortDefinition);
-    const translatedDataExtraction = this.translateDataExtraction(dataExtraction);
-
+    const translatedDataExtraction = this.assertDataExtractionAndTranslate(dataExtraction);
     return this.combineFeasibilityAndDataExtraction(translatedCohort, translatedDataExtraction);
   }
 
@@ -43,16 +41,30 @@ export class CRTDL2UIModelService {
     return this.structuredQuery2FeasibilityQueryService.translate(cohortDefinition);
   }
 
-  private translateDataExtraction(dataExtraction: DataExtractionData): Observable<DataSelection> {
-    if (TypeGuard.isDataExtractionData(dataExtraction)) {
+  private assertDataExtractionAndTranslate(
+    dataExtraction: DataExtractionData
+  ): Observable<DataSelection> {
+    if (TypeGuard.isDataExtractionData(dataExtraction) && dataExtraction !== null) {
       try {
         TypeAssertion.assertDataExtractionData(dataExtraction);
-        return this.dataExtraction2UiDataSelectionService.translate(dataExtraction);
+        return this.translateDataExtractionAndSetProvider(dataExtraction);
       } catch (error) {
         console.error(error);
       }
     }
     return of(new DataSelection([], uuidv4()));
+  }
+
+  private translateDataExtractionAndSetProvider(
+    dataExtraction: DataExtractionData
+  ): Observable<DataSelection> {
+    return this.dataExtraction2UiDataSelectionService.translate(dataExtraction).pipe(
+      map((dataSelection) => {
+        this.setDataSelectionProvider(dataSelection);
+        return dataSelection;
+      }),
+      take(1)
+    );
   }
 
   private combineFeasibilityAndDataExtraction(
@@ -66,18 +78,8 @@ export class CRTDL2UIModelService {
 
   public translateToUiModel(importedCrdtl: any) {
     if (importedCrdtl.cohortDefinition?.inclusionCriteria?.length > 0) {
-      this.dataExtraction2UiDataSelectionService
-        .translate(importedCrdtl.dataExtraction)
-        .pipe(
-          map((dataSelection) => {
-            this.dataSelectionProvider.setDataSelectionByUID(
-              dataSelection.getId(),
-              dataSelection,
-              true
-            );
-          })
-        )
-        .subscribe();
+      console.log('Imported CRDTL:', importedCrdtl);
+      this.translateDataExtractionAndSetProvider(importedCrdtl.dataExtraction);
       this.doValidate(importedCrdtl.cohortDefinition);
       return true;
     } else if (importedCrdtl.inclusionCriteria) {
@@ -88,22 +90,37 @@ export class CRTDL2UIModelService {
     }
   }
 
-  doValidate(importedQuery): void {
+  private doValidate(importedQuery): void {
     this.validationService.validateStructuredQuery(importedQuery).subscribe(
       (validatedStructuredQuery) => {
-        this.structuredQuery2FeasibilityQueryService
-          .translate(validatedStructuredQuery)
-          .subscribe((feasibilityQuery) => {
-            this.feasibilityQueryService.setFeasibilityQueryByID(
-              feasibilityQuery,
-              feasibilityQuery.getId(),
-              true
-            );
-          });
+        this.translateValidatedStructuredQuery(validatedStructuredQuery);
       },
       (error) => {
         console.error('Validation error:', error);
       }
     );
+  }
+
+  private translateValidatedStructuredQuery(
+    validatedStructuredQuery: AnnotatedStructuredQuery
+  ): void {
+    this.structuredQuery2FeasibilityQueryService
+      .translate(validatedStructuredQuery)
+      .subscribe((feasibilityQuery) => {
+        this.setFeasibilityQueryProvider(feasibilityQuery);
+      });
+  }
+
+  private setFeasibilityQueryProvider(feasibilityQuery: FeasibilityQuery): void {
+    this.feasibilityQueryService.setFeasibilityQueryByID(
+      feasibilityQuery,
+      feasibilityQuery.getId(),
+      true
+    );
+  }
+
+  private setDataSelectionProvider(dataSelection: DataSelection): void {
+    console.log('Setting data selection provider', dataSelection);
+    this.dataSelectionProvider.setDataSelectionByUID(dataSelection.getId(), dataSelection, true);
   }
 }
