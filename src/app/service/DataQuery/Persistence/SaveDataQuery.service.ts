@@ -1,8 +1,8 @@
 import { CreateCRDTLService } from '../../Translator/CRTDL/CreateCRDTL.service';
 import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service';
-import { Injectable } from '@angular/core';
-import { map, Observable, switchMap } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { map, Observable, switchMap, take } from 'rxjs';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { ResultProviderService } from '../../Provider/ResultProvider.service';
 import { SaveDataModal } from '../../../shared/models/SaveDataModal/SaveDataModal';
@@ -19,9 +19,17 @@ export class SavedDataQueryService {
 
   public saveDataQuery(data: SaveDataModal | null = null): void {
     this.createCRDTLService
-      .createCRDTLForSave(data.feasibilityQuery, data.dataSelection)
-      .pipe(switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)))
-      .subscribe((savedDataQueryData) => this.postDataQuery(savedDataQueryData));
+      .createCRDTLForSave(data?.feasibilityQuery, data?.dataSelection)
+      .pipe(
+        switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)),
+        take(1)
+      )
+      .subscribe(
+        (savedDataQueryData) => {
+          this.postDataQuery(savedDataQueryData);
+        },
+        (error) => console.error('Error saving data query:', error)
+      );
   }
 
   private buildSavedDataQueryData(crtdl: CRTDL, data: SaveDataModal | null): Observable<any> {
