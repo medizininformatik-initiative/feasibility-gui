@@ -29,7 +29,9 @@
     type="green"
     class="margin-right-10"
     (click)="saveDataQuery()"
-    [isDisabled]="(isFeasibilityQueryValid$ | async) === false"
+    [isDisabled]="
+      !((validDataQuery$ | async).feasibilityQuery || (validDataQuery$ | async).dataSelection)
+    "
   >
     {{ 'QUERYBUILDER.STAGE.BUTTON.SAVE_DATAQUERY' | translate }}
   </num-button>
