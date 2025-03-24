@@ -21,7 +21,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   loadSubscription: Subscription;
   constructor(
     private dataQueryStorageService: DataQueryStorageService,
-    private feasibilityQueryService: FeasibilityQueryProviderService,
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     private navigationHelperService: NavigationHelperService,
     private resultProviderService: ResultProviderService,
     private consentService: ConsentService
@@ -86,7 +86,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   }
 
   private saveQueryAndNavigate(feasibilityQuery: FeasibilityQuery): void {
-    this.feasibilityQueryService.setFeasibilityQueryByID(
+    this.feasibilityQueryProviderService.setFeasibilityQueryByID(
       feasibilityQuery,
       feasibilityQuery.getId(),
       true
