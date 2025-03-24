@@ -10,6 +10,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
 
 @Injectable({
   providedIn: 'root',
@@ -44,7 +45,7 @@ export class DataExtraction2UiDataSelectionService {
               externDataSelectionProfile.attributes,
               dataSelectionProfile.getFields()
             );
-            if (externDataSelectionProfile.filter) {
+            if (TypeGuard.isFilterData(externDataSelectionProfile.filter)) {
               const profileTokenFilter = externDataSelectionProfile.filter?.map(
                 (externSingleFilter) => {
                   if (externSingleFilter.type === DataSelectionFilterType.TOKEN) {
