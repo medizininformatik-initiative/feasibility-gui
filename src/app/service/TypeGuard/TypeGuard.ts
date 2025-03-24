@@ -149,7 +149,8 @@ export class TypeGuard {
     const crtdlData = obj as CRTDLData;
     return (
       TypeGuard.isObject(crtdlData) &&
-      TypeGuard.isStructuredQueryData(crtdlData.cohortDefinition) &&
+      (TypeGuard.isStructuredQueryData(crtdlData.cohortDefinition) ||
+        crtdlData.cohortDefinition === null) &&
       TypeGuard.isDataExtractionData(crtdlData.dataExtraction) &&
       TypeGuard.isString(crtdlData.display) &&
       TypeGuard.isString(crtdlData.version)
