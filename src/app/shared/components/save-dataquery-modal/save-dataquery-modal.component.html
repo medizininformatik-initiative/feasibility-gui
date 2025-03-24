@@ -18,7 +18,7 @@
         [disabled]="(validatedDataQuery$ | async).feasibilityQuery === false"
         [checked]="(validatedDataQuery$ | async).feasibilityQuery"
         (change)="toggleFeasibilityQuery($event)"
-        >{{ 'DATAQUERY.COHORT.HEADER' }}</mat-checkbox
+        >{{ 'DATAQUERY.COHORT.HEADER' | translate }}</mat-checkbox
       >
       <mat-checkbox
         color="primary"
@@ -26,9 +26,12 @@
         [disabled]="(validatedDataQuery$ | async).dataSelection === false"
         [checked]="(validatedDataQuery$ | async).dataSelection"
         (change)="toggleDataSelection($event)"
-        >{{ 'DATAQUERY.DATASELECTION.HEADER' }}</mat-checkbox
+        >{{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}</mat-checkbox
       >
     </div>
+    <span *ngIf="(validatedDataQuery$ | async).feasibilityQuery === false" class="filter-warning">
+      Hinweis: Kohorte ungültig
+    </span>
   </div>
 
   <div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
