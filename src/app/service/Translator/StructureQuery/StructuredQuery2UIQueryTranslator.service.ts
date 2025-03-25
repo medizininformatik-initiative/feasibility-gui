@@ -19,6 +19,7 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
 
 @Injectable({
   providedIn: 'root',
@@ -125,13 +126,17 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private processAttributeFilters(attributeFilters, criterion: Criterion) {
-    attributeFilters?.forEach((structuredQueryAttributeFilter) => {
-      const foundAttributeFilter = this.findMatchingAttributeFilter(
-        criterion,
-        structuredQueryAttributeFilter
-      );
-      this.handleFilterByType(foundAttributeFilter, structuredQueryAttributeFilter, criterion);
-    });
+    if (attributeFilters.length > 0) {
+      attributeFilters?.forEach((structuredQueryAttributeFilter) => {
+        const foundAttributeFilter = this.findMatchingAttributeFilter(
+          criterion,
+          structuredQueryAttributeFilter
+        );
+        this.handleFilterByType(foundAttributeFilter, structuredQueryAttributeFilter, criterion);
+      });
+    } else {
+      return [];
+    }
   }
 
   private findMatchingAttributeFilter(criterion, structuredQueryAttributeFilter) {
@@ -146,8 +151,12 @@ export class StructuredQuery2UIQueryTranslatorService {
       );
   }
 
-  private processValueFilter(StructuredQueryValueFilter, criterion) {
-    this.handleFilterByType(criterion.getValueFilters()[0], StructuredQueryValueFilter, criterion);
+  private processValueFilter(structuredQueryValueFilter, criterion) {
+    if (TypeGuard.isValueFilterData(structuredQueryValueFilter)) {
+      this.handleFilterByType(criterion.getValueFilters()[0], structuredQueryValueFilter, criterion);
+    } else {
+      return null;
+    }
   }
 
   private handleFilterByType(foundAttributeFilter, structuredQueryAttributeFilter, criterion) {
