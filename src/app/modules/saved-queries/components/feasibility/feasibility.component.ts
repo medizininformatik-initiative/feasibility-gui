@@ -10,6 +10,7 @@ import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.s
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { v4 as uuidv4 } from 'uuid';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'num-feasibility',
@@ -51,13 +52,19 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   public loadQueryIntoEditor(id: string) {
     this.loadSubscription = this.dataQueryStorageService
       .readDataQueryById(Number(id))
-      .subscribe((savedQuery: SavedDataQuery) => {
-        const feasibilityQuery = this.extractFeasibilityQuery(savedQuery);
-        const queryResult = this.createQueryResult(feasibilityQuery, savedQuery);
-        this.resultProviderService.setResultByID(queryResult, queryResult.getId());
-        feasibilityQuery.setResultIds([queryResult.getId()]);
-
-        this.handleConsent(feasibilityQuery);
+      .pipe(
+        map((savedQuery: SavedDataQuery) => {
+          const feasibilityQuery = this.extractFeasibilityQuery(savedQuery);
+          const queryResult = this.createQueryResult(feasibilityQuery, savedQuery);
+          feasibilityQuery.setResultIds([queryResult.getId()]);
+          return { feasibilityQuery, queryResult };
+        }),
+        tap(({ feasibilityQuery, queryResult }) => {
+          this.resultProviderService.setResultByID(queryResult, queryResult.getId());
+          this.handleConsent(feasibilityQuery);
+        })
+      )
+      .subscribe(({ feasibilityQuery }) => {
         this.saveQueryAndNavigate(feasibilityQuery);
       });
   }
