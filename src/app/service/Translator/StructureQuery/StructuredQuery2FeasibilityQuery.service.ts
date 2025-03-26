@@ -13,7 +13,7 @@ export class StructuredQuery2FeasibilityQueryService {
   constructor(private translator: StructuredQuery2UIQueryTranslatorService) {}
 
   public translate(structuredQuery: StructuredQueryData | any): Observable<FeasibilityQuery> {
-    const feasibilityQuery = new FeasibilityQuery(uuidv4(), structuredQuery.display);
+    const feasibilityQuery = new FeasibilityQuery(uuidv4(), structuredQuery?.display ?? '');
     if (!TypeGuard.isStructuredQueryData(structuredQuery)) {
       console.warn('ERROR: No inclusion criteria');
       return of(feasibilityQuery);

@@ -59,11 +59,11 @@ export class CRTDL2UIModelService {
     dataExtraction: DataExtractionData
   ): Observable<DataSelection> {
     return this.dataExtraction2UiDataSelectionService.translate(dataExtraction).pipe(
+      take(1),
       map((dataSelection) => {
         this.setDataSelectionProvider(dataSelection);
         return dataSelection;
-      }),
-      take(1)
+      })
     );
   }
 

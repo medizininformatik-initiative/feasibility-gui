@@ -185,8 +185,9 @@ export class UIQuery2StructuredQueryService {
     attributeCode: TerminologyCode,
     conceptFilter: ConceptFilter
   ): ConceptAttributeFilter {
+    console.log('attributeCode', attributeCode);
     const conceptAttributeFilter = new ConceptAttributeFilter(
-      attributeCode,
+      this.createStructuredQueryAttributeCode(attributeCode),
       conceptFilter.getSelectedConcepts().map((concept) => concept.getTerminologyCode())
     );
     return conceptAttributeFilter;
@@ -203,7 +204,7 @@ export class UIQuery2StructuredQueryService {
     referenceFilter: ReferenceFilterFQ
   ): ReferenceFilterSQ {
     const translatedRefrenceFilter: ReferenceFilterSQ = new ReferenceFilterSQ(
-      attributeCode,
+      this.createStructuredQueryAttributeCode(attributeCode),
       this.setEachLinkedCriteria(referenceFilter.getSelectedReferences())
     );
     return translatedRefrenceFilter;
@@ -219,5 +220,13 @@ export class UIQuery2StructuredQueryService {
 
   private getConsent(): StructuredQueryCriterion[] {
     return [this.consentService.getConsentStructuredQueryCriterion()];
+  }
+
+  private createStructuredQueryAttributeCode(attributeCode: TerminologyCode): TerminologyCode {
+    return new TerminologyCode(
+      attributeCode.getCode(),
+      attributeCode.getSystem(),
+      attributeCode.getDisplay()
+    );
   }
 }
