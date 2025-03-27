@@ -16,7 +16,7 @@ export class DataSelectionProviderService {
     this.initializeDataSelectionInstance();
   }
 
-  private initializeDataSelectionInstance(): void {
+  public initializeDataSelectionInstance(): void {
     const dataSelection: DataSelection = new DataSelection([], uuidv4());
     this.setDataSelectionByUID(dataSelection.getId(), dataSelection);
     this.activeDataSelection.setActiveDataSelectionID(dataSelection.getId());

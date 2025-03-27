@@ -1,18 +1,35 @@
 .container {
-  width: 60em;
-  height: 25vh;
-  background-color: rgb(90, 121, 175, 0.1);
+  width: 40em;
+  min-height: 18vh;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
 }
 
 .content-container {
   overflow: auto;
-  min-height: 90%;
-  max-height: 90%;
-  height: 90%;
+  flex-grow: 1;
   padding: 1rem;
+  font-size: 1rem;
+  color: #555;
 }
 
 .select-button {
-  margin-left: 2%;
-  margin-top: 2%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
 }

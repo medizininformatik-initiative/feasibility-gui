@@ -10,8 +10,8 @@ export class CRTDL {
   constructor(
     display: string,
     version: string,
-    cohortDefinition: StructuredQuery,
-    dataExtraction: DataExtraction
+    cohortDefinition: StructuredQuery = null,
+    dataExtraction: DataExtraction = null
   ) {
     this.display = display;
     this.version = version;

@@ -9,7 +9,7 @@ import { SearchResult } from 'src/app/model/Interface/SearchResult';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
-import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData ';
+import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
 
 export class CodeableConceptResultMapperStrategy
   implements MappingStrategy<CodeableConceptResultListEntry, CodeableConceptResultList>

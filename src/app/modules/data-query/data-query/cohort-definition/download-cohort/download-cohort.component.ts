@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModalInterface';
-import { SaveQueryModalComponent } from 'src/app/modules/feasibility-query/components/result/save-dialog/save-dialog.component';
+import { SaveFileModalComponent } from '../../../../../shared/components/save-file-modal/save-file-modal.component';
+import { SaveFileDataModal } from '../../../../../shared/models/SaveDataModal/SaveFileDataModal';
 
 @Component({
   selector: 'num-download-cohort',
@@ -11,11 +11,11 @@ import { SaveQueryModalComponent } from 'src/app/modules/feasibility-query/compo
 })
 export class DownloadCohortComponent {
   constructor(
-    private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
+    private dialogRef: MatDialogRef<SaveFileModalComponent, void>,
     private downloadCCDLService: DownloadCCDLService
   ) {}
 
-  public saveCohort(data: SaveDataModal) {
+  public saveCohort(data: SaveFileDataModal) {
     this.downloadCCDLService.downloadActiveFeasibilityQueryAsFile(data.title);
     this.doDiscard();
   }

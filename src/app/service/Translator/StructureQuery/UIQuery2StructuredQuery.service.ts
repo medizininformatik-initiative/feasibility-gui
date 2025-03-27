@@ -18,6 +18,7 @@ import { TerminologyCode } from '../../../model/Terminology/TerminologyCode';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { ObjectHelper } from 'src/app/modules/feasibility-query/controller/ObjectHelper';
+import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData';
 
 @Injectable({
   providedIn: 'root',
@@ -185,7 +186,7 @@ export class UIQuery2StructuredQueryService {
     conceptFilter: ConceptFilter
   ): ConceptAttributeFilter {
     const conceptAttributeFilter = new ConceptAttributeFilter(
-      attributeCode,
+      this.createStructuredQueryAttributeCode(attributeCode),
       conceptFilter.getSelectedConcepts().map((concept) => concept.getTerminologyCode())
     );
     return conceptAttributeFilter;
@@ -202,7 +203,7 @@ export class UIQuery2StructuredQueryService {
     referenceFilter: ReferenceFilterFQ
   ): ReferenceFilterSQ {
     const translatedRefrenceFilter: ReferenceFilterSQ = new ReferenceFilterSQ(
-      attributeCode,
+      this.createStructuredQueryAttributeCode(attributeCode),
       this.setEachLinkedCriteria(referenceFilter.getSelectedReferences())
     );
     return translatedRefrenceFilter;
@@ -218,5 +219,13 @@ export class UIQuery2StructuredQueryService {
 
   private getConsent(): StructuredQueryCriterion[] {
     return [this.consentService.getConsentStructuredQueryCriterion()];
+  }
+
+  private createStructuredQueryAttributeCode(attributeCode: TerminologyCode): TerminologyCode {
+    return new TerminologyCode(
+      attributeCode.getCode(),
+      attributeCode.getSystem(),
+      attributeCode.getDisplay()
+    );
   }
 }

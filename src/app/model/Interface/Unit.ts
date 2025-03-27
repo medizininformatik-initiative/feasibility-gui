@@ -1,5 +1,5 @@
-export interface Unit {
+export interface QuantityUnitData {
   code: string
-  system: string
   display: string
+  system?: string
 }

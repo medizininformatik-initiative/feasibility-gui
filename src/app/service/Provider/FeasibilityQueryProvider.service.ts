@@ -19,9 +19,7 @@ export class FeasibilityQueryProviderService {
 
   constructor(
     @Inject(LOCAL_STORAGE) private storage: StorageService,
-    private activeFeasibilityQuery: ActiveFeasibilityQueryService,
-    private criterionService: CriterionProviderService,
-    private resultProvider: ResultProviderService
+    private activeFeasibilityQuery: ActiveFeasibilityQueryService
   ) {
     this.loadInitialQuery();
   }

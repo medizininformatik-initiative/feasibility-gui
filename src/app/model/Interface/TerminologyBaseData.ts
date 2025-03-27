@@ -1,6 +1,5 @@
-export interface Context {
+export interface TerminologyCodeBaseData {
   code: string
   system: string
-  version: string
   display: string
 }

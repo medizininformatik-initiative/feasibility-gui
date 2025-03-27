@@ -51,6 +51,20 @@
       }
     }
   },
+  "DELETE_MODAL": {
+    "HEADER": "Löschen bestätigen",
+    "TITLE": "Möchten Sie die Datenafrage wirklich löschen?",
+    "DELETE": "Löschen",
+    "CANCEL": "Abbrechen"
+  },
+  "SAVE_MODAL": {
+    "HEADER": "Abfrage speichern",
+    "TITLE": "Titel",
+    "COMMENT": "Kommentar",
+    "SAVE": "Speichern",
+    "CANCEL": "Abbrechen",
+    "COHORT_WARNING": "Hinweis: Kohorte ungültig "
+  },
   "SHAREDFILTER": {
     "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
     "FILTER_SELECTION": "Ausgewählte Elemente",
@@ -147,7 +161,9 @@
       "ADD": "Zur Merkmalselektion hinzufügen",
       "JUMP_TO_DATASELECTION_TREE": "Merkmal hinzufügen",
       "JUMP_TO_DATASELECTION": "Selektion anzeigen",
-      "DATA_REQUEST": "Daten beantragen"
+      "DATA_REQUEST": "Daten beantragen",
+      "SAVE_DATAQUERY": "Datenanfrage speichern"
+
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -246,6 +262,9 @@
         "BACK_TO_SEARCH":"Kriterien hinzufügen",
         "VIEW_STAGE": "Kohortenselektion anzeigen",
         "SEND_QUERY": "Machbarkeitsabfrage",
+
+        "SAVE_DATAQUERY": "Daten Definition speichern"
+
         "DATA_REQUEST": "Datendefinition"
       },
       "MESSAGE": {

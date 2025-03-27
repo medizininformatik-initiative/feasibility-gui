@@ -1,3 +1,5 @@
+import { DataExtraction } from '../CRTDL/DataExtraction/DataExtraction';
+import { DataExtractionData } from '../Interface/DataExtractionData';
 import { DataSelectionProfileProfile } from './Profile/DataSelectionProfileProfile';
 
 /**

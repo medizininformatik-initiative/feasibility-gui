@@ -1,13 +1,14 @@
 import { InterfaceSavedQueryTile } from './InterfaceSavedQueryTile';
+import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQueryListItem';
 
 export class SavedFeasibilityQueryAdapter {
-  public static adapt(savedFeasibilityQuery: any): InterfaceSavedQueryTile {
+  public static adapt(savedFeasibilityQuery: SavedDataQueryListItem): InterfaceSavedQueryTile {
     return {
-      comment: savedFeasibilityQuery.comment || undefined,
-      date: new Date(savedFeasibilityQuery.createdAt).toISOString(),
-      id: savedFeasibilityQuery.id.toString(),
-      label: savedFeasibilityQuery.label,
-      totalNumberOfPatients: savedFeasibilityQuery.totalNumberOfPatients,
+      comment: savedFeasibilityQuery.getComment() || undefined,
+      id: savedFeasibilityQuery.getId().toString(),
+      date: savedFeasibilityQuery.getCreatedAt(),
+      label: savedFeasibilityQuery.getLabel(),
+      totalNumberOfPatients: savedFeasibilityQuery.getTotalNumberOfResults(),
     };
   }
 }
