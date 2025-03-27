@@ -114,7 +114,7 @@
       "REQUIRED": "required"
     },
     "FILTER": {
-      "HEADER": "Coding/Name"
+      "TOKEN": "Coding/Name"
     },
     "EDIT": {
       "HEADER": "Selected features",

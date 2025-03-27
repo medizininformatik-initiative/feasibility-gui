@@ -29,7 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
 import { LogicSwitchComponent } from './logic-switch/logic-switch.component';
-import { DisplayTranslationPipe } from '../pipes/DisplayTranslationPipe ';
+import { DisplayTranslationPipe } from '../pipes/DisplayTranslationPipe';
 import { SnackbarComponent } from './snack-bar/snackbar.component';
 import { BreadcrumbComponent } from './breadcrumbs/breadcrumbs.component';
 import { PlaceholderBoxComponent } from './placeholder-box/placeholder-box.component';

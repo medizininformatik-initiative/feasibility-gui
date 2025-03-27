@@ -149,7 +149,7 @@
       "REQUIRED": "erforderlich"
     },
     "FILTER": {
-      "HEADER": "Kodierung/Name"
+      "TOKEN": "Kodierung/Name"
     },
     "EDIT": {
       "HEADER": "Ausgewählte Merkmale",
