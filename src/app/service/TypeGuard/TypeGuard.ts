@@ -73,17 +73,79 @@ export class TypeGuard {
     return typeof obj === 'object' && obj !== null;
   }
 
+  public static isOptionalString(val: unknown): boolean {
+    return TypeGuard.isString(val) || val === undefined;
+  }
+
+  public static isOptionalNumber(val: unknown): boolean {
+    return TypeGuard.isNumber(val) || val === undefined;
+  }
+
+  public static isOptionalBoolean(val: unknown): boolean {
+    return TypeGuard.isBoolean(val) || val === undefined;
+  }
+
+  public static isOptionalObject(val: unknown): boolean {
+    return TypeGuard.isObject(val) || val === undefined;
+  }
+
+  /**
+   * Checks if a value is an array.
+   * Optionally, validates each element using a provided type-checking function.
+   *
+   * @param val - The value to check.
+   * @param checkFn - (Optional) A function to validate each element.
+   * @returns boolean
+   */
+  public static isArray<T>(val: unknown, checkFn?: (item: unknown) => boolean): val is T[] {
+    if (!Array.isArray(val)) {
+      return false;
+    }
+    return checkFn ? val.every(checkFn) : true;
+  }
+
+  /**
+   * Checks if a value is an optional array.
+   * Optionally, validates each element using a provided type-checking function.
+   *
+   * @param val - The value to check.
+   * @param checkFn - (Optional) A function to validate each element.
+   * @returns boolean
+   */
+  public static isOptionalArray<T>(val: unknown, checkFn?: (item: unknown) => boolean): boolean {
+    return val === undefined || this.isArray<T>(val, checkFn);
+  }
+
+  private static isOptionalAttributeFilterData(obj: unknown): obj is AttributeFilterData {
+    return obj === undefined || TypeGuard.isArray(obj, TypeGuard.isAttributeFilterData);
+  }
+
   /**
    * Checks if the object is an instance of AttributeFilterData.
    * @param obj
    * @returns boolean
    */
   public static isAttributeFilterData(obj: unknown): obj is AttributeFilterData {
+    const attributeFilterData = obj as AttributeFilterData;
     return (
       TypeGuard.isObject(obj) &&
-      TypeGuard.isString((obj as AttributeFilterData).type) &&
+      TypeGuard.isOptionalArray(
+        attributeFilterData.criteria,
+        TypeGuard.isStructuredQueryCriterionData
+      ) &&
+      TypeGuard.isOptionalSelectedConcepts(attributeFilterData.selectedConcepts) &&
+      TypeGuard.isAttributeCode(attributeFilterData.attributeCode) &&
+      TypeGuard.isString(attributeFilterData.type) &&
       TypeGuard.isAttributeFilterBaseData(obj)
     );
+  }
+
+  private static isSelectedConcepts(obj: unknown): obj is TerminologyCodeData[] {
+    return TypeGuard.isArray<TerminologyCodeData>(obj, TypeGuard.isTerminologyCodeData);
+  }
+
+  private static isOptionalSelectedConcepts(obj: unknown): obj is TerminologyCodeData[] {
+    return obj === undefined || TypeGuard.isArray(obj, TypeGuard.isTerminologyCodeBaseData);
   }
 
   /**
@@ -95,15 +157,11 @@ export class TypeGuard {
     const attributeFilterBaseData = obj as AttributeFilterBaseData;
     return (
       TypeGuard.isObject(attributeFilterBaseData) &&
-      (TypeGuard.isString(attributeFilterBaseData.comparator) ||
-        attributeFilterBaseData.comparator === null) &&
-      (TypeGuard.isNumber(attributeFilterBaseData.minValue) ||
-        attributeFilterBaseData.minValue === null) &&
-      (TypeGuard.isNumber(attributeFilterBaseData.maxValue) ||
-        attributeFilterBaseData.maxValue === null) &&
-      (TypeGuard.isQuantityUnitData(attributeFilterBaseData.unit) ||
-        attributeFilterBaseData.unit === null) &&
-      (TypeGuard.isNumber(attributeFilterBaseData.value) || attributeFilterBaseData.value === null)
+      TypeGuard.isOptionalString(attributeFilterBaseData.comparator) &&
+      TypeGuard.isOptionalNumber(attributeFilterBaseData.minValue) &&
+      TypeGuard.isOptionalNumber(attributeFilterBaseData.maxValue) &&
+      TypeGuard.isOptionalObject(attributeFilterBaseData.unit) &&
+      TypeGuard.isOptionalNumber(attributeFilterBaseData.value)
     );
   }
 
@@ -159,12 +217,20 @@ export class TypeGuard {
     const crtdlData = obj as CRTDLData;
     return (
       TypeGuard.isObject(crtdlData) &&
-      (TypeGuard.isStructuredQueryData(crtdlData.cohortDefinition) ||
-        crtdlData.cohortDefinition === null) &&
-      TypeGuard.isDataExtractionData(crtdlData.dataExtraction) &&
-      TypeGuard.isString(crtdlData.display) &&
-      TypeGuard.isString(crtdlData.version)
+      TypeGuard.isOptionalCohortDefinition(crtdlData.cohortDefinition) &&
+      TypeGuard.isOptionalDataExtraction(crtdlData.dataExtraction) &&
+      TypeGuard.isOptionalString(crtdlData.display) &&
+      TypeGuard.isOptionalString(crtdlData.version)
     );
+  }
+
+  /**
+   * Checks if the object is an instance of DataExtractionData or undefined.
+   * @param obj
+   * @returns
+   */
+  private static isOptionalDataExtraction(obj: unknown): obj is DataExtractionData {
+    return obj === undefined || TypeGuard.isDataExtractionData(obj);
   }
 
   /**
@@ -175,10 +241,11 @@ export class TypeGuard {
   public static isDataExtractionData(obj: unknown): obj is DataExtractionData {
     const dataExtractionData = obj as DataExtractionData;
     return (
-      dataExtractionData === null ||
-      (TypeGuard.isObject(dataExtractionData) &&
-        Array.isArray(dataExtractionData.attributeGroups) &&
-        dataExtractionData.attributeGroups.every(TypeGuard.isAttributeGroupsData))
+      TypeGuard.isObject(dataExtractionData) &&
+      TypeGuard.isArray<AttributeGroupsData>(
+        dataExtractionData.attributeGroups,
+        TypeGuard.isAttributeGroupsData
+      )
     );
   }
 
@@ -197,6 +264,11 @@ export class TypeGuard {
     );
   }
 
+  public static isOptionalFilterData(obj: unknown): obj is FilterData {
+    console.log(obj);
+    return obj !== undefined ? TypeGuard.isFilterData(obj) : undefined;
+  }
+
   /**
    * Checks if the object is an instance of FilterData.
    * @param obj
@@ -205,9 +277,12 @@ export class TypeGuard {
   public static isFilterData(obj: unknown): obj is FilterData {
     const filterData = obj as FilterData;
     return (
-      TypeGuard.isObject(filterData || null) &&
-      TypeGuard.isString(filterData.type) &&
-      TypeGuard.isString(filterData.name)
+      TypeGuard.isOptionalObject(filterData) &&
+      TypeGuard.isString(filterData?.type) &&
+      TypeGuard.isString(filterData?.name) &&
+      TypeGuard.isOptionalArray(filterData?.codes, TypeGuard.isTerminologyCodeBaseData) &&
+      TypeGuard.isOptionalString(filterData?.start) &&
+      TypeGuard.isOptionalString(filterData?.end)
     );
   }
 
@@ -305,7 +380,7 @@ export class TypeGuard {
       TypeGuard.isObject(savedDataQueryData) &&
       TypeGuard.isNumber(savedDataQueryData.id) &&
       TypeGuard.isCRTDLData(savedDataQueryData.content) &&
-      TypeGuard.isString(savedDataQueryData.comment) &&
+      TypeGuard.isOptionalString(savedDataQueryData.comment) &&
       TypeGuard.isString(savedDataQueryData.label) &&
       TypeGuard.isNumber(savedDataQueryData.resultSize) &&
       TypeGuard.isString(savedDataQueryData.lastModified) &&
@@ -313,7 +388,7 @@ export class TypeGuard {
       TypeGuard.isObject(savedDataQueryData.ccdl) &&
       TypeGuard.isBoolean(savedDataQueryData.ccdl.exists) &&
       TypeGuard.isBoolean(savedDataQueryData.ccdl.isValid) &&
-      TypeGuard.isObject(savedDataQueryData.dataExtraction) &&
+      TypeGuard.isOptionalObject(savedDataQueryData.dataExtraction) &&
       TypeGuard.isBoolean(savedDataQueryData.dataExtraction.exists) &&
       TypeGuard.isBoolean(savedDataQueryData.dataExtraction.isValid)
     );
@@ -325,13 +400,20 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isSavedDataQueryListItemData(obj: unknown): obj is SavedDataQueryListItemData {
-    const savedDataQueryListItemData = obj as SavedDataQueryListItemData;
+    const item = obj as SavedDataQueryListItemData;
     return (
-      TypeGuard.isObject(savedDataQueryListItemData) &&
-      TypeGuard.isNumber(savedDataQueryListItemData.id) &&
-      TypeGuard.isString(savedDataQueryListItemData.label) &&
-      TypeGuard.isString(savedDataQueryListItemData.comment) &&
-      TypeGuard.isString(savedDataQueryListItemData.lastModified)
+      TypeGuard.isObject(item) &&
+      TypeGuard.isNumber(item.id) &&
+      TypeGuard.isString(item.label) &&
+      (TypeGuard.isString(item.comment) || item.comment === undefined) &&
+      TypeGuard.isNumber(item.resultSize) &&
+      TypeGuard.isString(item.lastModified) &&
+      TypeGuard.isObject(item.ccdl) &&
+      TypeGuard.isBoolean(item.ccdl.exists) &&
+      TypeGuard.isBoolean(item.ccdl.isValid) &&
+      TypeGuard.isObject(item.dataExtraction) &&
+      TypeGuard.isBoolean(item.dataExtraction.exists) &&
+      TypeGuard.isBoolean(item.dataExtraction.isValid)
     );
   }
 
@@ -364,6 +446,12 @@ export class TypeGuard {
     );
   }
 
+  private static isOptionalStructuredQueryCriterionData(
+    obj: unknown
+  ): obj is StructuredQueryCriterionData {
+    return obj === undefined || TypeGuard.isStructuredQueryCriterionData(obj);
+  }
+
   /**
    * Checks if the object is an instance of StructuredQueryCriterionData.
    * @param obj
@@ -373,41 +461,46 @@ export class TypeGuard {
     const structuredQueryCriterionData = obj as StructuredQueryCriterionData;
     return (
       TypeGuard.isObject(structuredQueryCriterionData) &&
-      (!structuredQueryCriterionData.attributeFilters ||
-        (Array.isArray(structuredQueryCriterionData.attributeFilters) &&
-          structuredQueryCriterionData.attributeFilters.every(TypeGuard.isAttributeFilterData))) &&
+      TypeGuard.isOptionalAttributeFilterData(structuredQueryCriterionData.attributeFilters) &&
       TypeGuard.isContextData(structuredQueryCriterionData.context) &&
-      Array.isArray(structuredQueryCriterionData.termCodes) &&
-      structuredQueryCriterionData.termCodes.every(TypeGuard.isTerminologyCodeData) &&
-      (!structuredQueryCriterionData.timeRestriction ||
-        TypeGuard.isTimeRestrictionData(structuredQueryCriterionData.timeRestriction)) &&
-      (!structuredQueryCriterionData.valueFilter ||
-        TypeGuard.isValueFilterData(structuredQueryCriterionData.valueFilter))
+      TypeGuard.isArray(structuredQueryCriterionData.termCodes, TypeGuard.isTerminologyCodeData) &&
+      TypeGuard.isOptionalTimeRestrictionData(structuredQueryCriterionData.timeRestriction) &&
+      TypeGuard.isOptionalValueFilterData(structuredQueryCriterionData.valueFilter)
     );
   }
 
+  private static isOptionalCohortDefinition(obj: unknown): obj is StructuredQueryData {
+    return obj === undefined || TypeGuard.isStructuredQueryData(obj);
+  }
   /**
    * Checks if the object is an instance of StructuredQueryData.
    * @param obj
-   * @returns boolean
+   * @returns
    */
   public static isStructuredQueryData(obj: unknown): obj is StructuredQueryData {
     const structuredQueryData = obj as StructuredQueryData;
     return (
       TypeGuard.isObject(structuredQueryData) &&
       TypeGuard.isString(structuredQueryData.version) &&
-      TypeGuard.isString(structuredQueryData.display) &&
-      Array.isArray(structuredQueryData.inclusionCriteria) &&
-      structuredQueryData.inclusionCriteria.every(
-        (criteria) =>
-          Array.isArray(criteria) && criteria.every(TypeGuard.isStructuredQueryCriterionData)
-      ) &&
-      (!structuredQueryData.exclusionCriteria ||
-        (Array.isArray(structuredQueryData.exclusionCriteria) &&
-          structuredQueryData.exclusionCriteria.every(
-            (criteria) =>
-              Array.isArray(criteria) && criteria.every(TypeGuard.isStructuredQueryCriterionData)
-          )))
+      TypeGuard.isOptionalString(structuredQueryData.display) &&
+      TypeGuard.isInclusionOrExclusionCriteria(structuredQueryData.inclusionCriteria) &&
+      TypeGuard.isInclusionOrExclusionCriteria(structuredQueryData.exclusionCriteria)
+    );
+  }
+
+  /**
+   * Checks if the given value is a valid inclusionCriteria array.
+   * @param val
+   * @returns boolean
+   */
+  /**
+   * Checks if the given value is a valid inclusion or exclusion criteria array.
+   * @param val - The value to check.
+   * @returns boolean
+   */
+  public static isInclusionOrExclusionCriteria(val: unknown): boolean {
+    return TypeGuard.isOptionalArray(val, (criteria) =>
+      TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData)
     );
   }
 
@@ -436,8 +529,13 @@ export class TypeGuard {
     return (
       TypeGuard.isObject(terminologyCodeData) &&
       TypeGuard.isTerminologyCodeBaseData(terminologyCodeData) &&
-      (TypeGuard.isString(terminologyCodeData.version) || terminologyCodeData.version === undefined)
+      (TypeGuard.isOptionalString(terminologyCodeData.version) ||
+        terminologyCodeData.version === '')
     );
+  }
+
+  private static isOptionalTimeRestrictionData(obj: unknown): obj is TimeRestrictionData {
+    return obj === undefined || TypeGuard.isTimeRestrictionData(obj);
   }
 
   /**
@@ -449,9 +547,8 @@ export class TypeGuard {
     const timeRestrictionData = obj as TimeRestrictionData;
     return (
       TypeGuard.isObject(timeRestrictionData) &&
-      (TypeGuard.isString(timeRestrictionData.afterDate) ||
-        timeRestrictionData.afterDate === null) &&
-      (!timeRestrictionData.beforeDate || TypeGuard.isString(timeRestrictionData.beforeDate))
+      TypeGuard.isString(timeRestrictionData.afterDate) &&
+      TypeGuard.isOptionalString(timeRestrictionData.beforeDate)
     );
   }
 
@@ -480,8 +577,10 @@ export class TypeGuard {
       TypeGuard.isObject(uiProfileData) &&
       TypeGuard.isDisplayData(uiProfileData.display) &&
       TypeGuard.isBoolean(uiProfileData.timeRestrictionAllowed) &&
-      Array.isArray(uiProfileData.attributeDefinitions) &&
-      uiProfileData.attributeDefinitions.every(TypeGuard.isAttributeDefinitionData) &&
+      TypeGuard.isOptionalArray(
+        uiProfileData.attributeDefinitions,
+        TypeGuard.isAttributeDefinitionData
+      ) &&
       TypeGuard.isValueDefinitionData(uiProfileData.valueDefinition)
     );
   }
@@ -497,15 +596,20 @@ export class TypeGuard {
       TypeGuard.isObject(valueDefinitionData) &&
       TypeGuard.isDisplayData(valueDefinitionData.display) &&
       TypeGuard.isString(valueDefinitionData.type) &&
-      Array.isArray(valueDefinitionData.selectableConcepts) &&
-      valueDefinitionData.selectableConcepts.every(TypeGuard.isString) &&
+      TypeGuard.isOptionalArray<string>(
+        valueDefinitionData.selectableConcepts,
+        TypeGuard.isString
+      ) &&
       TypeGuard.isBoolean(valueDefinitionData.optional) &&
-      Array.isArray(valueDefinitionData.allowedUnits) &&
-      valueDefinitionData.allowedUnits.every(TypeGuard.isQuantityUnitData) &&
-      TypeGuard.isNumber(valueDefinitionData.precision) &&
-      TypeGuard.isNumber(valueDefinitionData.max) &&
-      TypeGuard.isNumber(valueDefinitionData.min)
+      TypeGuard.isOptionalArray<string>(valueDefinitionData.allowedUnits) &&
+      TypeGuard.isOptionalNumber(valueDefinitionData.precision) &&
+      TypeGuard.isOptionalNumber(valueDefinitionData.max) &&
+      TypeGuard.isOptionalNumber(valueDefinitionData.min)
     );
+  }
+
+  private static isOptionalValueFilterData(obj: unknown): obj is ValueFilterData {
+    return obj === undefined || TypeGuard.isValueFilterData(obj);
   }
 
   /**
@@ -597,12 +701,7 @@ export class TypeGuard {
     const attributesData = obj as AttributesData;
     return (
       TypeGuard.isObject(attributesData) &&
-      (Array.isArray(attributesData.linkedGroups) ||
-        attributesData.linkedGroups === null ||
-        attributesData.linkedGroups === undefined) &&
-      (attributesData.linkedGroups === null ||
-        attributesData.linkedGroups === undefined ||
-        attributesData.linkedGroups.every(TypeGuard.isString)) &&
+      TypeGuard.isOptionalArray<string>(attributesData.linkedGroups, TypeGuard.isString) &&
       TypeGuard.isBoolean(attributesData.mustHave) &&
       TypeGuard.isString(attributesData.attributeRef)
     );
@@ -615,25 +714,23 @@ export class TypeGuard {
    */
   public static isAttributeGroupsData(obj: unknown): obj is AttributeGroupsData {
     const attributeGroupsData = obj as AttributeGroupsData;
+    console.log(TypeGuard.isOptionalFilterDataArray(attributeGroupsData.filter));
     return (
       TypeGuard.isObject(attributeGroupsData) &&
-      (TypeGuard.isString(attributeGroupsData.id) ||
-        attributeGroupsData.id === null ||
-        attributeGroupsData.id === undefined) &&
-      (TypeGuard.isString(attributeGroupsData.name) ||
-        attributeGroupsData.name === null ||
-        attributeGroupsData.name === undefined) &&
-      (TypeGuard.isBoolean(attributeGroupsData.includeReferenceOnly) ||
-        attributeGroupsData.includeReferenceOnly === null ||
-        attributeGroupsData.includeReferenceOnly === undefined) &&
+      TypeGuard.isOptionalString(attributeGroupsData.id) &&
+      TypeGuard.isOptionalString(attributeGroupsData.name) &&
+      TypeGuard.isOptionalBoolean(attributeGroupsData.includeReferenceOnly) &&
       TypeGuard.isString(attributeGroupsData.groupReference) &&
-      Array.isArray(attributeGroupsData.attributes) &&
-      attributeGroupsData.attributes.every(TypeGuard.isAttributesData) &&
-      (attributeGroupsData.filter === null ||
-        attributeGroupsData.filter === undefined ||
-        (Array.isArray(attributeGroupsData.filter) &&
-          attributeGroupsData.filter.every(TypeGuard.isFilterData)))
+      TypeGuard.isOptionalArray<string>(
+        attributeGroupsData.attributes,
+        TypeGuard.isAttributesData
+      ) &&
+      TypeGuard.isOptionalFilterDataArray(attributeGroupsData.filter)
     );
+  }
+
+  private static isOptionalFilterDataArray(obj: unknown): obj is FilterData[] | undefined {
+    return obj === undefined || TypeGuard.isOptionalArray(obj, TypeGuard.isFilterData);
   }
 
   /**
