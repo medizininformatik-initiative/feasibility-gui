@@ -48,4 +48,9 @@ export class StageProviderService {
     this.stageUIDArray = this.stageUIDArray.filter((item) => item !== uid);
     this.StageUIDArraySubject.next(this.stageUIDArray);
   }
+
+  public clearStage(): void {
+    this.stageUIDArray = [];
+    this.StageUIDArraySubject.next(this.stageUIDArray);
+  }
 }
