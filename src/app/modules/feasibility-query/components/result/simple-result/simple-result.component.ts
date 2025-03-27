@@ -102,8 +102,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
    * Handles the logic for processing the query results.
    */
   private handleQueryResults(prev: QueryResponseType, current: QueryResponseType): void {
-    console.log('Received query result:', current);
-    console.log('Previous query result:', prev);
     if (this.shouldFinalize(prev, current)) {
       this.finalize();
       this.handleResult(prev as QueryResult);
