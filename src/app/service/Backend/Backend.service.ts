@@ -43,4 +43,19 @@ export class BackendService {
     }
     return chunks;
   }
+  public chunkArrayForStrings(array: string[], maxUrlLength: number = 1900): string[][] {
+    const chunks = [[]];
+    let i = 0;
+    let length = 0;
+    array.forEach((url) => {
+      if (length + url.length > maxUrlLength) {
+        i++;
+        chunks.push([]);
+        length = 0;
+      }
+      length += url.length;
+      chunks[i].push(url);
+    });
+    return chunks;
+  }
 }

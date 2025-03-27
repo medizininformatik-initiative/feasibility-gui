@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { IssueData } from '../Interface/IssueData'
 
 export class Issue {

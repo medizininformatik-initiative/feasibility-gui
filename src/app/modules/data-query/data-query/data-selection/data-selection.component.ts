@@ -8,9 +8,17 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subscription, take } from 'rxjs';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 
 @Component({
@@ -18,13 +26,15 @@ import { FeasibilityQueryValidation } from 'src/app/service/Criterion/Feasibilit
   templateUrl: './data-selection.component.html',
   styleUrls: ['./data-selection.component.scss'],
 })
-export class DataSelectionComponent implements OnInit {
+export class DataSelectionComponent implements OnInit, OnDestroy {
   @Input() showActionBar;
   @Output()
   scrollClick = new EventEmitter();
 
   isDataSelectionExistent$: Observable<boolean>;
   isCohortExistent$: Observable<boolean>;
+
+  downloadSubscription: Subscription;
 
   fileName: string;
   constructor(
@@ -48,6 +58,10 @@ export class DataSelectionComponent implements OnInit {
     this.isCohortExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
   }
 
+  ngOnDestroy(): void {
+    this.downloadSubscription?.unsubscribe();
+  }
+
   public editDataSelection() {
     this.navigationHelperService.navigateToDataSelectionEditor();
   }
@@ -65,14 +79,16 @@ export class DataSelectionComponent implements OnInit {
   public downloadCRDTL(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-
-    this.isCohortExistent$
+    this.downloadSubscription?.unsubscribe();
+    this.downloadSubscription = this.isCohortExistent$
       .pipe(
+        take(1),
         map((isCohortExistent) => {
           if (isCohortExistent) {
             this.dialog
               .open(DownloadDataSelectionComponent, dialogConfig)
               .afterClosed()
+              .pipe(take(1))
               .subscribe(() => {
                 this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
               });

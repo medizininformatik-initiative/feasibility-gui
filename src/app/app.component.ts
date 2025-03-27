@@ -9,9 +9,9 @@ import { TerminologySystemProvider } from './service/Provider/TerminologySystemP
 })
 export class AppComponent implements OnInit {
   title = 'num-portal-webapp';
-  constructor(private tabTitleService: TabTitleService) {}
+  constructor(private tabTitleService1: TabTitleService) {}
 
   ngOnInit() {
-    //this.tabTitleService.initializeTitleListener();
+    //this.tabTitleService1.initializeTitleListener();
   }
 }

@@ -10,6 +10,7 @@ export class QueryResult {
   private feasibilityQueryId: string;
   private totalNumberOfPatients: number;
   private resultLines: QueryResultLine[] = [];
+
   private issues: Issue[];
 
   constructor(
