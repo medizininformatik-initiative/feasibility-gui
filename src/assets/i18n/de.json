@@ -51,12 +51,19 @@
       }
     }
   },
+  "DELETE_MODAL": {
+    "HEADER": "Löschen bestätigen",
+    "TITLE": "Möchten Sie die Datenafrage wirklich löschen?",
+    "DELETE": "Löschen",
+    "CANCEL": "Abbrechen"
+  },
   "SAVE_MODAL": {
     "HEADER": "Abfrage speichern",
     "TITLE": "Titel",
     "COMMENT": "Kommentar",
     "SAVE": "Speichern",
-    "CANCEL": "Abbrechen"
+    "CANCEL": "Abbrechen",
+    "COHORT_WARNING": "Hinweis: Kohorte ungültig "
   },
   "SHAREDFILTER": {
     "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",

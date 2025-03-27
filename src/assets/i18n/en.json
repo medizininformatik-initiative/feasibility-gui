@@ -49,6 +49,14 @@
         "APPLY": "Apply",
         "CANCEL": "Cancel"
       }
+    },
+    "SAVE_MODAL": {
+      "HEADER": "Save",
+      "TITLE": "Titel",
+      "COMMENT": "Comment",
+      "SAVE": "Save",
+      "CANCEL": "Cancel",
+      "COHORT_WARNING": "Cohort is undefined"
     }
   },
   "SHAREDFILTER": {
