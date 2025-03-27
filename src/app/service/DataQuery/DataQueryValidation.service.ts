@@ -1,7 +1,9 @@
+import { combineLatest, map, Observable } from 'rxjs';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { Injectable } from '@angular/core';
-import { map, Observable, combineLatest } from 'rxjs';
 import { FeasibilityQueryValidation } from '../Criterion/FeasibilityQueryValidation.service';
+import { Injectable } from '@angular/core';
+import { ValidDataQuery } from 'src/app/model/Types/ValidDataQuery';
 
 @Injectable({
   providedIn: 'root',
@@ -12,23 +14,21 @@ export class DataQueryValidationService {
     private criterionValidationService: FeasibilityQueryValidation
   ) {}
 
-  public validateDataQuery(): Observable<{ feasibilityQuery: boolean; dataSelection: boolean }> {
+  public validateDataQuery(): Observable<ValidDataQuery> {
     const feasibility$ = this.criterionValidationService.getIsFeasibilityQueryValid();
-    const dse$ = this.hasValidDataSelection();
-    return combineLatest([feasibility$, dse$]).pipe(
+    const dataSelection$ = this.hasValidDataSelection();
+    return this.combineFeasiblityQueryAndDataSelection(feasibility$, dataSelection$);
+  }
+
+  private combineFeasiblityQueryAndDataSelection(
+    feasibility$: Observable<boolean>,
+    dataSelection$: Observable<boolean>
+  ): Observable<ValidDataQuery> {
+    return combineLatest([feasibility$, dataSelection$]).pipe(
       map(([feasibilityQuery, dataSelection]) => ({
         feasibilityQuery,
         dataSelection,
       }))
-    );
-  }
-
-  private isFeasibilityQueryValid(): Observable<boolean> {
-    return combineLatest([
-      this.criterionValidationService.getIsFeasibilityQuerySet(),
-      this.criterionValidationService.getIsFeasibilityQueryValid(),
-    ]).pipe(
-      map(([isSet, isValid]) => isSet && isValid) // AND logic applied here
     );
   }
 
@@ -38,7 +38,7 @@ export class DataQueryValidationService {
       .pipe(map((dataSelection) => this.isDataSelectionValid(dataSelection)));
   }
 
-  private isDataSelectionValid(dataSelection: any): boolean {
-    return dataSelection && dataSelection.getProfiles().length > 0;
+  private isDataSelectionValid(dataSelection: DataSelection): boolean {
+    return !!dataSelection && dataSelection.getProfiles().length > 0;
   }
 }

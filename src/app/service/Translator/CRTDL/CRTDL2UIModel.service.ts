@@ -44,7 +44,7 @@ export class CRTDL2UIModelService {
   private assertDataExtractionAndTranslate(
     dataExtraction: DataExtractionData
   ): Observable<DataSelection> {
-    if (TypeGuard.isDataExtractionData(dataExtraction) && dataExtraction !== null) {
+    if (TypeGuard.isDataExtractionData(dataExtraction)) {
       try {
         TypeAssertion.assertDataExtractionData(dataExtraction);
         return this.translateDataExtractionAndSetProvider(dataExtraction);
@@ -120,7 +120,7 @@ export class CRTDL2UIModelService {
   }
 
   private setDataSelectionProvider(dataSelection: DataSelection): void {
-    console.log('Setting data selection provider', dataSelection);
+    console.log('DataSelection:', dataSelection);
     this.dataSelectionProvider.setDataSelectionByUID(dataSelection.getId(), dataSelection, true);
   }
 }

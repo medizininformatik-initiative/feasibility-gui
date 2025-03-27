@@ -126,7 +126,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private processAttributeFilters(attributeFilters, criterion: Criterion) {
-    if (attributeFilters.length > 0) {
+    if (TypeGuard.isArray(attributeFilters)) {
       attributeFilters?.forEach((structuredQueryAttributeFilter) => {
         const foundAttributeFilter = this.findMatchingAttributeFilter(
           criterion,
