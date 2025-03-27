@@ -16,11 +16,9 @@ import { SavedDataQueryListItemData } from 'src/app/model/Interface/SavedDataQue
 export class DataQueryApiService {
   constructor(private http: HttpClient, private backendService: BackendService) {}
 
-  public postDataQuery(
-    dataQuery: SavedDataQueryData
-  ): Observable<HttpResponse<SavedDataQueryData>> {
+  public postDataQuery(dataQuery: SavedDataQueryData): Observable<HttpResponse<any>> {
     const url = this.backendService.createUrl(DataqueryPaths.DATA);
-    return this.http.post<SavedDataQueryData>(url, dataQuery, {
+    return this.http.post<any>(url, dataQuery, {
       headers: this.backendService.getHeaders(),
       observe: 'response',
     });

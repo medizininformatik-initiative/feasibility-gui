@@ -6,6 +6,7 @@ import { map, Observable, switchMap, take } from 'rxjs';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { ResultProviderService } from '../../Provider/ResultProvider.service';
 import { SaveDataModal } from '../../../shared/models/SaveDataModal/SaveDataModal';
+import { SavedUsageStats } from 'src/app/model/Types/SavedUsageStats';
 
 @Injectable({
   providedIn: 'root',
@@ -17,18 +18,13 @@ export class SavedDataQueryService {
     private dataQueryApiService: DataQueryApiService
   ) {}
 
-  public saveDataQuery(data: SaveDataModal | null = null): void {
-    this.createCRDTLService
+  public saveDataQuery(data: SaveDataModal | null = null): Observable<SavedUsageStats> {
+    return this.createCRDTLService
       .createCRDTLForSave(data?.feasibilityQuery, data?.dataSelection)
       .pipe(
         switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)),
+        switchMap((savedDataQueryData) => this.postDataQuery(savedDataQueryData)),
         take(1)
-      )
-      .subscribe(
-        (savedDataQueryData) => {
-          this.postDataQuery(savedDataQueryData);
-        },
-        (error) => console.error('Error saving data query:', error)
       );
   }
 
@@ -56,10 +52,10 @@ export class SavedDataQueryService {
     return this.resultProvider.getResultOfActiveFeasibilityQuery();
   }
 
-  private postDataQuery(data: any): void {
-    this.dataQueryApiService.postDataQuery(data).subscribe(
-      (response) => console.log('Response:', response),
-      (error) => console.error('Error posting data query:', error)
+  private postDataQuery(data: any): Observable<SavedUsageStats> {
+    return this.dataQueryApiService.postDataQuery(data).pipe(
+      take(1),
+      map((response) => response.body)
     );
   }
 }
