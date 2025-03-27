@@ -50,6 +50,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   }
 
   public loadQueryIntoEditor(id: string) {
+    this.consentService.clearConsent();
     this.loadSubscription = this.dataQueryStorageService
       .readDataQueryById(Number(id))
       .pipe(
@@ -61,7 +62,6 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
         }),
         tap(({ feasibilityQuery, queryResult }) => {
           this.resultProviderService.setResultByID(queryResult, queryResult.getId());
-          this.handleConsent(feasibilityQuery);
         })
       )
       .subscribe(({ feasibilityQuery }) => {
@@ -83,13 +83,6 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
       savedQuery.getTotalNumberOfPatients(),
       uuidv4()
     );
-  }
-
-  private handleConsent(feasibilityQuery: FeasibilityQuery): void {
-    if (!feasibilityQuery.getConsent()) {
-      this.consentService.setProvisionCode(false, false, false, false);
-      this.consentService.setConsent(false);
-    }
   }
 
   private saveQueryAndNavigate(feasibilityQuery: FeasibilityQuery): void {

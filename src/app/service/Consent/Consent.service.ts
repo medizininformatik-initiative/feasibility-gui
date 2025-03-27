@@ -195,4 +195,8 @@ export class ConsentService implements OnDestroy {
 
     return null;
   }
+  public clearConsent(): void {
+    this.setProvisionCode(false, true, false, false);
+    this.setConsent(false);
+  }
 }

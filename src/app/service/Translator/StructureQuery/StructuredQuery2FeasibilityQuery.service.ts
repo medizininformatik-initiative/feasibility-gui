@@ -5,12 +5,16 @@ import { StructuredQuery2UIQueryTranslatorService } from './StructuredQuery2UIQu
 import { v4 as uuidv4 } from 'uuid';
 import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
+import { ConsentService } from '../../Consent/Consent.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2FeasibilityQueryService {
-  constructor(private translator: StructuredQuery2UIQueryTranslatorService) {}
+  constructor(
+    private translator: StructuredQuery2UIQueryTranslatorService,
+    private consentService: ConsentService
+  ) {}
 
   public translate(structuredQuery: StructuredQueryData | any): Observable<FeasibilityQuery> {
     const feasibilityQuery = new FeasibilityQuery(uuidv4(), structuredQuery?.display ?? '');
@@ -41,6 +45,7 @@ export class StructuredQuery2FeasibilityQueryService {
     return forkJoin([inclusion$, exclusion$]).pipe(
       map(([inclusion, exclusion]) => {
         feasibilityQuery.setInclusionCriteria(inclusion);
+        feasibilityQuery.setConsent(this.consentService.getConsent());
         if (exclusion) {
           feasibilityQuery.setExclusionCriteria(exclusion);
         }
