@@ -185,7 +185,6 @@ export class UIQuery2StructuredQueryService {
     attributeCode: TerminologyCode,
     conceptFilter: ConceptFilter
   ): ConceptAttributeFilter {
-    console.log('attributeCode', attributeCode);
     const conceptAttributeFilter = new ConceptAttributeFilter(
       this.createStructuredQueryAttributeCode(attributeCode),
       conceptFilter.getSelectedConcepts().map((concept) => concept.getTerminologyCode())

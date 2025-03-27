@@ -30,7 +30,7 @@
       >
     </div>
     <span *ngIf="(validatedDataQuery$ | async).feasibilityQuery === false" class="filter-warning">
-      Hinweis: Kohorte ungültig
+      {{ 'SHARECOMPONENTS.SAVED_MODAL.COHORT_WARNING' | translate }}
     </span>
   </div>
 
