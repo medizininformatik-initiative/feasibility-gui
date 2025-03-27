@@ -45,7 +45,7 @@ export class DataExtraction2UiDataSelectionService {
               externDataSelectionProfile.attributes,
               dataSelectionProfile.getFields()
             );
-            if (TypeGuard.isFilterData(externDataSelectionProfile.filter)) {
+            if (TypeGuard.isFilterDataArray(externDataSelectionProfile.filter)) {
               const profileTokenFilter = externDataSelectionProfile.filter?.map(
                 (externSingleFilter) => {
                   if (externSingleFilter.type === DataSelectionFilterType.TOKEN) {
@@ -65,12 +65,20 @@ export class DataExtraction2UiDataSelectionService {
                       )
                     );
                   }
-
                   if (externSingleFilter.type === DataSelectionFilterType.DATE) {
                     const timeRestriction =
                       this.uITimeRestrictionFactoryService.createTimeRestrictionForDataSelection(
                         externSingleFilter
                       );
+
+                    console.log(
+                      'timeRestriction',
+                      new ProfileTimeRestrictionFilter(
+                        externSingleFilter.name,
+                        externSingleFilter.type,
+                        timeRestriction
+                      )
+                    );
                     return new ProfileTimeRestrictionFilter(
                       externSingleFilter.name,
                       externSingleFilter.type,

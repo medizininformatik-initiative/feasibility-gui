@@ -727,8 +727,12 @@ export class TypeGuard {
     );
   }
 
-  private static isOptionalFilterDataArray(obj: unknown): obj is FilterData[] | undefined {
+  public static isOptionalFilterDataArray(obj: unknown): obj is FilterData[] | undefined {
     return obj === undefined || TypeGuard.isOptionalArray(obj, TypeGuard.isFilterData);
+  }
+
+  public static isFilterDataArray(obj: unknown): obj is FilterData[] | undefined {
+    return TypeGuard.isArray(obj, TypeGuard.isFilterData);
   }
 
   /**
