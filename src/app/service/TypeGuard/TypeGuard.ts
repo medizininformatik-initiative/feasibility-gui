@@ -265,7 +265,6 @@ export class TypeGuard {
   }
 
   public static isOptionalFilterData(obj: unknown): obj is FilterData {
-    console.log(obj);
     return obj !== undefined ? TypeGuard.isFilterData(obj) : undefined;
   }
 
@@ -714,7 +713,6 @@ export class TypeGuard {
    */
   public static isAttributeGroupsData(obj: unknown): obj is AttributeGroupsData {
     const attributeGroupsData = obj as AttributeGroupsData;
-    console.log(TypeGuard.isOptionalFilterDataArray(attributeGroupsData.filter));
     return (
       TypeGuard.isObject(attributeGroupsData) &&
       TypeGuard.isOptionalString(attributeGroupsData.id) &&

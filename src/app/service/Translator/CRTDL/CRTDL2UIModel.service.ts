@@ -78,7 +78,6 @@ export class CRTDL2UIModelService {
 
   public translateToUiModel(importedCrdtl: any) {
     if (importedCrdtl.cohortDefinition?.inclusionCriteria?.length > 0) {
-      console.log('Imported CRDTL:', importedCrdtl);
       this.translateDataExtractionAndSetProvider(importedCrdtl.dataExtraction);
       this.doValidate(importedCrdtl.cohortDefinition);
       return true;
@@ -120,7 +119,6 @@ export class CRTDL2UIModelService {
   }
 
   private setDataSelectionProvider(dataSelection: DataSelection): void {
-    console.log('DataSelection:', dataSelection);
     this.dataSelectionProvider.setDataSelectionByUID(dataSelection.getId(), dataSelection, true);
   }
 }
