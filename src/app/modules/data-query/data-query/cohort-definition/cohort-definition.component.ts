@@ -82,6 +82,7 @@ export class CohortDefinitionComponent implements OnInit {
   }
 
   doValidate(importedQuery): void {
+    this.consentService.clearConsent();
     this.validationService.validateStructuredQuery(importedQuery).subscribe(
       (validatedStructuredQuery) => {
         this.structuredQuery2FeasibilityQueryService
