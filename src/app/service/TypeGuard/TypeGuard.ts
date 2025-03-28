@@ -449,9 +449,9 @@ export class TypeGuard {
     );
   }
 
-  private static isOptionalStructuredQueryCriterionData(
+  public static isOptionalStructuredQueryCriterionData(
     obj: unknown
-  ): obj is StructuredQueryCriterionData {
+  ): obj is StructuredQueryCriterionData | undefined {
     return obj === undefined || TypeGuard.isStructuredQueryCriterionData(obj);
   }
 
@@ -472,7 +472,7 @@ export class TypeGuard {
     );
   }
 
-  private static isOptionalCohortDefinition(obj: unknown): obj is StructuredQueryData | undefined {
+  public static isOptionalCohortDefinition(obj: unknown): obj is StructuredQueryData | undefined {
     return obj === undefined || TypeGuard.isStructuredQueryData(obj);
   }
   /**

@@ -1,4 +1,4 @@
-import { combineLatest, map, Observable, of, take } from 'rxjs';
+import { combineLatest, map, Observable, of, take, tap } from 'rxjs';
 import { CreateCRDTLService } from './CreateCRDTL.service';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service';
@@ -32,13 +32,34 @@ export class CRTDL2UIModelService {
   public createCRDTLFromJson(crtdl: CRTDLData): Observable<UiCRTDL> {
     const cohortDefinition = crtdl.cohortDefinition;
     const dataExtraction = crtdl.dataExtraction;
-    const translatedCohort = this.translateCohort(cohortDefinition);
+    const translatedCohort = this.assertCohortAndTranslate(cohortDefinition);
     const translatedDataExtraction = this.assertDataExtractionAndTranslate(dataExtraction);
     return this.combineFeasibilityAndDataExtraction(translatedCohort, translatedDataExtraction);
   }
 
-  private translateCohort(cohortDefinition: StructuredQueryData): Observable<FeasibilityQuery> {
-    return this.structuredQuery2FeasibilityQueryService.translate(cohortDefinition);
+  private assertCohortAndTranslate(
+    cohortDefinition: StructuredQueryData
+  ): Observable<FeasibilityQuery> {
+    if (cohortDefinition !== undefined) {
+      try {
+        TypeAssertion.assertStructuredQueryData(cohortDefinition);
+        return this.translateStructuredQueryAndSetProvider(cohortDefinition);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    return of(new FeasibilityQuery(uuidv4()));
+  }
+
+  private translateStructuredQueryAndSetProvider(
+    cohortDefinition: StructuredQueryData
+  ): Observable<FeasibilityQuery> {
+    return this.structuredQuery2FeasibilityQueryService.translate(cohortDefinition).pipe(
+      take(1),
+      tap((feasibilityQuery) => {
+        this.setFeasibilityQueryProvider(feasibilityQuery);
+      })
+    );
   }
 
   private assertDataExtractionAndTranslate(
@@ -71,6 +92,9 @@ export class CRTDL2UIModelService {
     cohortDefinition: Observable<FeasibilityQuery>,
     dataExtraction: Observable<DataSelection>
   ): Observable<UiCRTDL> {
+    console.log('combineFeasibilityAndDataExtraction', cohortDefinition, dataExtraction);
+    cohortDefinition.subscribe((data) => console.log('cohortDefinition', data));
+    dataExtraction.subscribe((data) => console.log('dataExtraction', data));
     return combineLatest([cohortDefinition, dataExtraction]).pipe(
       map(([cohort, data]) => new UiCRTDL(uuidv4(), cohort, data))
     );
