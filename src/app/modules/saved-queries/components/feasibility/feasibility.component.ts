@@ -10,7 +10,7 @@ import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.s
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { v4 as uuidv4 } from 'uuid';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'num-feasibility',
@@ -58,15 +58,13 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
           const feasibilityQuery = this.extractFeasibilityQuery(savedQuery);
           const queryResult = this.createQueryResult(feasibilityQuery, savedQuery);
           feasibilityQuery.setResultIds([queryResult.getId()]);
-          return { feasibilityQuery, queryResult };
+          return queryResult;
         }),
-        tap(({ feasibilityQuery, queryResult }) => {
+        tap((queryResult) => {
           this.resultProviderService.setResultByID(queryResult, queryResult.getId());
         })
       )
-      .subscribe(({ feasibilityQuery }) => {
-        this.saveQueryAndNavigate(feasibilityQuery);
-      });
+      .subscribe(() => this.navigate());
   }
 
   private extractFeasibilityQuery(savedQuery: SavedDataQuery): FeasibilityQuery {
@@ -85,12 +83,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
     );
   }
 
-  private saveQueryAndNavigate(feasibilityQuery: FeasibilityQuery): void {
-    this.feasibilityQueryProviderService.setFeasibilityQueryByID(
-      feasibilityQuery,
-      feasibilityQuery.getId(),
-      true
-    );
+  private navigate(): void {
     this.navigationHelperService.navigateToDataQueryCohortDefinition();
   }
 }
