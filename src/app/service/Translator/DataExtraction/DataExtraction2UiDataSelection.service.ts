@@ -11,6 +11,8 @@ import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFact
 import { v4 as uuidv4 } from 'uuid';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
+import { Concept } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
+import { Display } from '../../../model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',
@@ -61,7 +63,10 @@ export class DataExtraction2UiDataSelectionService {
                       codeFilter.getValueSetUrls(),
                       externSingleFilter.codes.map(
                         (code) =>
-                          new TerminologyCode(code.code, code.display, code.system, code.version)
+                          new Concept(
+                            new Display([], code.display),
+                            new TerminologyCode(code.code, code.display, code.system, code.version)
+                          )
                       )
                     );
                   }
