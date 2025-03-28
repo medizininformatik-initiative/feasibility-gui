@@ -104,4 +104,8 @@ export class DataSelectionProviderService {
   public resetDataSelectionMap(): void {
     this.dataSelectionUIDMapSubject.next(new Map());
   }
+  public clearDataSelection(): void {
+    const dataSelection: DataSelection = new DataSelection([], uuidv4());
+    this.setDataSelectionByUID(dataSelection.getId(), dataSelection, true);
+  }
 }

@@ -150,4 +150,7 @@ export class FeasibilityQueryProviderService {
   public getHasQueryResult(): Observable<boolean> {
     return this.hasQueryResult.asObservable();
   }
+  public clearFeasibilityQuery(): void {
+    this.loadInitialQuery();
+  }
 }

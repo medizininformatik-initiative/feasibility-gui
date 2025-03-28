@@ -16,6 +16,7 @@ import { UiCRTDL } from 'src/app/model/UiCRTDL';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from '../../Validation.service';
 import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { DataSelectionProfileProviderService } from '../../../modules/data-selection/services/DataSelectionProfileProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,8 @@ export class CRTDL2UIModelService {
     private dataSelectionProvider: DataSelectionProviderService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
-    private validationService: ValidationService
+    private validationService: ValidationService,
+    private dataSelectionProfileProviderService: DataSelectionProfileProviderService
   ) {}
 
   public createCRDTLFromJson(crtdl: CRTDLData): Observable<UiCRTDL> {
@@ -54,6 +56,7 @@ export class CRTDL2UIModelService {
   private translateStructuredQueryAndSetProvider(
     cohortDefinition: StructuredQueryData
   ): Observable<FeasibilityQuery> {
+    this.feasibilityQueryService.clearFeasibilityQuery();
     return this.structuredQuery2FeasibilityQueryService.translate(cohortDefinition).pipe(
       take(1),
       tap((feasibilityQuery) => {
@@ -79,6 +82,8 @@ export class CRTDL2UIModelService {
   private translateDataExtractionAndSetProvider(
     dataExtraction: DataExtractionData
   ): Observable<DataSelection> {
+    this.dataSelectionProvider.clearDataSelection();
+    this.dataSelectionProfileProviderService.resetDataSelectionProfileMap();
     return this.dataExtraction2UiDataSelectionService.translate(dataExtraction).pipe(
       take(1),
       map((dataSelection) => {
