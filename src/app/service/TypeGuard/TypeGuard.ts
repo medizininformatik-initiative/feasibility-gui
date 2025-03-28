@@ -116,7 +116,9 @@ export class TypeGuard {
     return val === undefined || this.isArray<T>(val, checkFn);
   }
 
-  private static isOptionalAttributeFilterData(obj: unknown): obj is AttributeFilterData {
+  private static isOptionalAttributeFilterData(
+    obj: unknown
+  ): obj is AttributeFilterData | undefined {
     return obj === undefined || TypeGuard.isArray(obj, TypeGuard.isAttributeFilterData);
   }
 
@@ -144,7 +146,9 @@ export class TypeGuard {
     return TypeGuard.isArray<TerminologyCodeData>(obj, TypeGuard.isTerminologyCodeData);
   }
 
-  private static isOptionalSelectedConcepts(obj: unknown): obj is TerminologyCodeData[] {
+  private static isOptionalSelectedConcepts(
+    obj: unknown
+  ): obj is TerminologyCodeData[] | undefined {
     return obj === undefined || TypeGuard.isArray(obj, TypeGuard.isTerminologyCodeBaseData);
   }
 
@@ -468,7 +472,7 @@ export class TypeGuard {
     );
   }
 
-  private static isOptionalCohortDefinition(obj: unknown): obj is StructuredQueryData {
+  private static isOptionalCohortDefinition(obj: unknown): obj is StructuredQueryData | undefined {
     return obj === undefined || TypeGuard.isStructuredQueryData(obj);
   }
   /**
@@ -533,7 +537,9 @@ export class TypeGuard {
     );
   }
 
-  private static isOptionalTimeRestrictionData(obj: unknown): obj is TimeRestrictionData {
+  private static isOptionalTimeRestrictionData(
+    obj: unknown
+  ): obj is TimeRestrictionData | undefined {
     return obj === undefined || TypeGuard.isTimeRestrictionData(obj);
   }
 
@@ -607,7 +613,7 @@ export class TypeGuard {
     );
   }
 
-  private static isOptionalValueFilterData(obj: unknown): obj is ValueFilterData {
+  private static isOptionalValueFilterData(obj: unknown): obj is ValueFilterData | undefined {
     return obj === undefined || TypeGuard.isValueFilterData(obj);
   }
 
