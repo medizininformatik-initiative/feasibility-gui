@@ -1,5 +1,7 @@
 import { CRTDL } from '../CRTDL/DataExtraction/CRTDL';
 import { SavedDataQueryData } from '../Interface/SavedDataQueryData';
+import { CohortDefinitionStatus } from '../Types/CohortDefinitionStatus';
+import { DataExtractionStatus } from '../Types/DataExtractionStatus';
 import { UiCRTDL } from '../UiCRTDL';
 
 export class SavedDataQuery {
@@ -7,12 +9,23 @@ export class SavedDataQuery {
   private comment: string;
   private label: string;
   private totalNumberOfPatients?: number;
+  private cohortDefinitionStatus: CohortDefinitionStatus;
+  private dataExtractionStatus: DataExtractionStatus;
 
-  constructor(crtdl: UiCRTDL, comment: string, label: string, totalNumberOfPatients: number) {
+  constructor(
+    crtdl: UiCRTDL,
+    comment: string,
+    label: string,
+    totalNumberOfPatients: number,
+    cohortDefinitionStatus: CohortDefinitionStatus,
+    dataExtractionStatus: DataExtractionStatus
+  ) {
     this.crtdl = crtdl;
     this.comment = comment;
     this.label = label;
     this.totalNumberOfPatients = totalNumberOfPatients;
+    this.cohortDefinitionStatus = cohortDefinitionStatus;
+    this.dataExtractionStatus = dataExtractionStatus;
   }
 
   public getComment(): string {
@@ -47,7 +60,30 @@ export class SavedDataQuery {
     this.crtdl = crtdl;
   }
 
+  public getCohortDefinitionStatus(): CohortDefinitionStatus {
+    return this.cohortDefinitionStatus;
+  }
+
+  public setCohortDefinitionStatus(cohortDefinitionStatus: CohortDefinitionStatus): void {
+    this.cohortDefinitionStatus = cohortDefinitionStatus;
+  }
+
+  public getDataExtractionStatus(): DataExtractionStatus {
+    return this.dataExtractionStatus;
+  }
+
+  public setDataExtractionStatus(dataExtractionStatus: DataExtractionStatus): void {
+    this.dataExtractionStatus = dataExtractionStatus;
+  }
+
   public static fromJson(json: SavedDataQueryData, crtdl: UiCRTDL): SavedDataQuery {
-    return new SavedDataQuery(crtdl, json.comment, json.label, json.resultSize);
+    return new SavedDataQuery(
+      crtdl,
+      json.comment,
+      json.label,
+      json.resultSize,
+      json.ccdl,
+      json.dataExtraction
+    );
   }
 }

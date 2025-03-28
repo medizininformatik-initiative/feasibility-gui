@@ -1,3 +1,5 @@
+import { CohortDefinitionStatus } from '../Types/CohortDefinitionStatus';
+import { DataExtractionStatus } from '../Types/DataExtractionStatus';
 import { CRTDLData } from './CRTDLData';
 
 export interface SavedDataQueryData {
@@ -9,12 +11,6 @@ export interface SavedDataQueryData {
   resultSize: number
   lastModified: string // ISO date string
   createdBy: string
-  ccdl: {
-    exists: boolean
-    isValid: boolean
-  }
-  dataExtraction: {
-    exists: boolean
-    isValid: boolean
-  }
+  ccdl: CohortDefinitionStatus
+  dataExtraction: DataExtractionStatus
 }
