@@ -139,7 +139,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
   }
 
-  private findMatchingAttributeFilter(criterion, structuredQueryAttributeFilter) {
+  private findMatchingAttributeFilter(criterion: Criterion, structuredQueryAttributeFilter) {
     return criterion
       .getAttributeFilters()
       .find(

@@ -18,7 +18,6 @@ import { TerminologyCode } from '../../../model/Terminology/TerminologyCode';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { ObjectHelper } from 'src/app/modules/feasibility-query/controller/ObjectHelper';
-import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData';
 
 @Injectable({
   providedIn: 'root',
@@ -224,8 +223,8 @@ export class UIQuery2StructuredQueryService {
   private createStructuredQueryAttributeCode(attributeCode: TerminologyCode): TerminologyCode {
     return new TerminologyCode(
       attributeCode.getCode(),
-      attributeCode.getSystem(),
-      attributeCode.getDisplay()
+      attributeCode.getDisplay(),
+      attributeCode.getSystem()
     );
   }
 }
