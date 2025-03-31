@@ -1,7 +1,7 @@
 {
   "SHAREDCOMPONENTS": {
-    "KDS_MODULE": "KDS Module",
-    "KONTEXT": "Kontext / KDS Profil",
+    "KDS_MODULE": "KDS-Module",
+    "KONTEXT": "Kontext / KDS-Profil",
     "Availability": "Anzahl",
     "Terminology": "Terminologie",
     "Termcode": "Terminologie-Code",
@@ -18,16 +18,16 @@
         "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt",
         "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt"
       },
-      "ADDED_CRITERIA":{
-        "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohorten Selektion hinzugefügt",
-        "PLURAL": "Sie haben {{amount}} Kriterien zur Kohorten Selektion hinzugefügt"
+      "ADDED_CRITERIA": {
+        "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohortenselektion hinzugefügt",
+        "PLURAL": "Sie haben {{amount}} Kriterien zur Kohortenselektion hinzugefügt"
       }
     },
     "FILTER": {
       "CONTEXT": "Kontext",
       "AVAILABILITY": "Verfügbarkeit",
       "TERMINOLOGY": "Terminologie",
-      "KDS_MODULE": "KDS Module"
+      "KDS_MODULE": "KDS-Module"
     },
     "MENU": {
       "DUPLICATE": "Duplizieren",
@@ -36,28 +36,60 @@
       "APPLY_FILTERS": "Filter anwenden",
       "DEFINE_FIELDS": "Felder selektieren",
       "SEARCH": "Als Suchbegriff nutzen",
-      "SHOW_CRITERIA":"Kriterium anzeigen",
-      "ADD": "Zur Kohorten Selektion hinzufügen",
+      "SHOW_CRITERIA": "Kriterium anzeigen",
+      "ADD": "Zur Kohortenselektion hinzufügen",
       "OPTIONS": "Optionen"
     },
-    "LIST_ITEM_DETAILS":{
+    "LIST_ITEM_DETAILS": {
       "PARENTS": "Elternelement",
-      "CHILDREN": "Kinderelement"
+      "CHILDREN": "Kindelement"
     },
     "MODAL": {
       "BUTTON": {
         "APPLY": "Auswählen",
         "CANCEL": "Abbrechen"
       }
+    },
+    "DELETE_MODAL": {
+      "HEADER": "Löschen bestätigen",
+      "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?",
+      "DELETE": "Löschen",
+      "CANCEL": "Abbrechen"
+    },
+    "SAVE_MODAL": {
+      "HEADER": "Abfrage speichern",
+      "TITLE": "Titel",
+      "COMMENT": "Kommentar",
+      "SAVE": "Speichern",
+      "CANCEL": "Abbrechen",
+      "COHORT_WARNING": "Hinweis: Kohorte ist leer oder ungültig "
     }
   },
   "SHAREDFILTER": {
-    "EMPTY":"Entschuldigung, wir konnten keine Ergebnisse finden für ",
+    "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
     "FILTER_SELECTION": "Ausgewählte Elemente",
     "BUTTON": {
       "ADD": "Hinzufügen",
       "REMOVE": "Entfernen"
     }
+  },
+  "CONSENT": {
+    "yes-yes-yes-yes": "Verteilte, EU-DSGVO konforme Analyse, mit Krankenkassendaten, und mit Rekontaktierung",
+    "yes-yes-yes-no": "Verteilte, EU-DSGVO konforme Analyse, mit Krankenkassendaten, und ohne Rekontaktierung",
+    "yes-yes-no-yes": "Verteilte, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und mit Rekontaktierung",
+    "yes-yes-no-no": "Verteilte, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung",
+    "yes-no-yes-yes": "Verteilte, nicht EU-DSGVO konforme Analyse, mit Krankenkassendaten, und mit Rekontaktierung",
+    "yes-no-yes-no": "Verteilte, nicht EU-DSGVO konforme Analyse, mit Krankenkassendaten, und ohne Rekontaktierung",
+    "yes-no-no-yes": "Verteilte, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und mit Rekontaktierung",
+    "yes-no-no-no": "Verteilte, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung",
+    "no-yes-yes-yes": "Zentrale, EU-DSGVO konforme Analyse, mit Krankenkassendaten, und mit Rekontaktierung",
+    "no-yes-yes-no": "Zentrale, EU-DSGVO konforme Analyse, mit Krankenkassendaten, und ohne Rekontaktierung",
+    "no-yes-no-yes": "Zentrale, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und mit Rekontaktierung",
+    "no-yes-no-no": "Zentrale, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung",
+    "no-no-yes-yes": "Zentrale, nicht EU-DSGVO konforme Analyse, mit Krankenkassendaten, und mit Rekontaktierung",
+    "no-no-yes-no": "Zentrale, nicht EU-DSGVO konforme Analyse, mit Krankenkassendaten, und ohne Rekontaktierung",
+    "no-no-no-yes": "Zentrale, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und mit Rekontaktierung",
+    "no-no-no-no": "Zentrale, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung"
   },
   "DASHBOARD": {
     "HEADER": "Willkommen im Bereich „Daten und Bioproben finden“ des Forschungsdatenportals für Gesundheit",
@@ -68,13 +100,13 @@
     "PARAGRAPH3_3": " haben Sie die Möglichkeit, eine neue Suchabfrage auf Basis des ",
     "PARAGRAPH3_4": " zu formulieren und abzuschicken, um einen Überblick über die verfügbaren Datensätze zu erhalten.",
     "PARAGRAPH3_LINK": "Kerndatensatzes der MII",
-    "PARAGRAPH4_1":"Gespeicherte Abfragen oder gespeicherte Entwürfe können Sie über ",
-    "PARAGRAPH4_2":"Meine Abfragen",
+    "PARAGRAPH4_1": "Gespeicherte Abfragen oder gespeicherte Entwürfe können Sie über ",
+    "PARAGRAPH4_2": "Meine Abfragen",
     "PARAGRAPH4_3": " einsehen und weiter bearbeiten.",
     "PARAGRAPH5_1": "Sobald Ihnen alle relevanten Informationen für Ihr Forschungsvorhaben zur Verfügung stehen, können Sie über ",
     "PARAGRAPH5_2": "Antrag stellen",
     "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen.",
-    "INFO":{
+    "INFO": {
       "TEXT": " Wir arbeiten gerade am Machbarkeitsportal, sodass es bei manchen abfragen zu Verzögerungen und abweichenden Ergebnissen kommen kann."
     },
     "DATAQUERY": {
@@ -82,8 +114,8 @@
       "BUTTON": "Zum Datenantrag"
     },
     "DATASELECTION": {
-      "HEADER": "Merkmal Selektion zusammenstellen",
-      "BUTTON": "Zur Merkmal Selektion"
+      "HEADER": "Merkmalselektion zusammenstellen",
+      "BUTTON": "Zur Merkmalselektion"
     },
     "NEWQUERY": {
       "HEADER": "Machbarkeitsabfrage stellen",
@@ -99,17 +131,19 @@
     }
   },
   "DATASELECTION": {
-    "HEADER": "Merkmal Selektion",
-    "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Kerndatensatz (KDS) Module deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und Sie haben die Möglichkeit anzugeben welche Datenpunkte zwingen erforderlich sind für Ihre Forschungsfrage.",
-    "DATASELECTION": "Merkmal Selektion",
+    "REQUIRED": "Erforderlich",
+    "OPTIONAL": "Optional",
+    "HEADER": "Merkmalselektion",
+    "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Module des Kerndatensatzes (KDS) deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und Sie haben die Möglichkeit anzugeben, welche Datenpunkte zwingend erforderlich sind für Ihre Forschungsfrage.",
+    "DATASELECTION": "Merkmalselektion",
     "SELECTION_BOX":{
-      "FIELDS_MISSING": "Wählen Sie mindestens ein Feld für die Selektion durch Verwendung der Stift Taste in der oberen rechten Ecke dieser Box.",
+      "FIELDS_MISSING": "Wählen Sie mindestens ein Feld für die Selektion durch Verwendung der Stifttaste in der oberen rechten Ecke dieser Box.",
       "SELECTED_FIELDS": "Selektierte Felder",
       "APPLIED_FILTER": "Angewandte Filter",
       "REQUIRED": "erforderlich",
       "OPTIONAL": "optional"
     },
-    "FIELD_SELECTION":{
+    "FIELD_SELECTION": {
       "FIELD_SELECTION": "Ausgewählte Elemente",
       "HEADER": "Selektieren Sie Merkmale für ",
       "REQUIRED": "erforderlich"
@@ -119,15 +153,17 @@
     },
     "EDIT": {
       "HEADER": "Ausgewählte Merkmale",
-      "HEADER_DESCRIPTION":"Hier können Sie definieren, welche Merkmale von Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll/ Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z.b. auf bestimmte Diagnosecodes) hinzu",
+      "HEADER_DESCRIPTION":"Hier können Sie definieren, welche Merkmale von Patientinnen und Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll / Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z.b. auf bestimmte Diagnosecodes) hinzu",
       "SECTION": "Ausgewählte Kriterien"
     },
     "BUTTON": {
-      "DOWNLOAD": "Merkmal Selektion herunterladen",
-      "ADD": "Zur Merkmal Selektion hinzufügen",
+      "DOWNLOAD": "Merkmalselektion herunterladen",
+      "ADD": "Zur Merkmalselektion hinzufügen",
       "JUMP_TO_DATASELECTION_TREE": "Merkmal hinzufügen",
       "JUMP_TO_DATASELECTION": "Selektion anzeigen",
-      "DATA_REQUEST": "Daten beantragen"
+      "DATA_REQUEST": "Daten beantragen",
+      "SAVE_DATAQUERY": "Datenanfrage speichern"
+
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -135,50 +171,49 @@
     },
     "DISPLAY": {
       "LABEL": "Ausgewählte Merkmale",
-      "REFERENCE": "nur wenn Referenziert"
+      "REFERENCE": "nur wenn referenziert"
     },
-    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie erforschen möchten und laden Sie die Daten Definition herunter. Sie können die Datei dann als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen. Diese Datei ist maschinenlesbar und darf nicht verändert werden.",
-    "REQUIRED":"Variable muss an allen Standorten vorliegen"
+    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie erforschen möchten und laden Sie die Datendefinition herunter. Sie können die Datei dann als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen. Diese Datei ist maschinenlesbar und darf nicht verändert werden."
   },
   "DATAQUERY": {
     "COHORT": {
-      "HEADER":"Kohorten Selektion",
+      "HEADER":"Kohortenselektion",
       "BUTTON": {
-        "UPLOAD": "Kohorten Selektion hochladen",
-        "DOWNLOAD": "Kohorten Selektion herunterladen",
-        "EDIT":"Kohorten Selektion bearbeiten",
+        "UPLOAD": "Kohortenselektion hochladen",
+        "DOWNLOAD": "Kohortenselektion herunterladen",
+        "EDIT":"Kohortenselektion bearbeiten",
         "NEW_COHORT":"Neue Kohorte",
-        "JUMP_TO_DATASELECTION": "zur Merkmal Selektion",
+        "JUMP_TO_DATASELECTION": "zur Merkmalselektion",
         "SEND_QUERY": "Machbarkeitsabfrage"
       },
       "SAVE": {
-        "HEADER": "Aktuelle Kohorten Selektion herunterladen"
+        "HEADER": "Aktuelle Kohortenselektion herunterladen"
       },
       "ERROR": {
-        "UPLOAD": "Kohorten Selektion nicht valide"
+        "UPLOAD": "Kohortenselektion nicht valide"
       },
-      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohorten Selektion oder kreieren Sie eine neue Kohorte"
+      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohortenselektion oder erstellen Sie eine neue Kohorte"
     },
     "DATASELECTION": {
-      "HEADER": "Merkmal Selektion",
+      "HEADER": "Merkmalselektion",
       "BUTTON":{
-        "EDIT":"Merkmal Selektion bearbeiten",
-        "DOWNLOAD":"Daten Definition herunterladen",
-        "UPLOAD": "Daten Definition hochladen",
-        "NEW_DATASELECTION":"Neue Merkmal Selektion",
-        "JUMP_TO_COHORT_SELECTION": "zur Kohorten Selektion"
+        "EDIT":"Merkmalselektion bearbeiten",
+        "DOWNLOAD":"Datendefinition herunterladen",
+        "UPLOAD": "Datendefinition hochladen",
+        "NEW_DATASELECTION":"Neue Merkmalselektion",
+        "JUMP_TO_COHORT_SELECTION": "zur Kohortenselektion"
       },
       "SAVE": {
-        "HEADER": "Aktuelle Daten Definition herunterladen"
+        "HEADER": "Aktuelle Datendefinition herunterladen"
       },
-      "EMPTY":"Sie haben noch keine Merkmal Selektion definiert. Laden Sie eine existierende Merkmal Selektion oder erstellen Sie eine neue Merkmal Selektion",
+      "EMPTY":"Sie haben noch keine Merkmalselektion definiert. Laden Sie eine existierende Merkmalselektion oder erstellen Sie eine neue Merkmalselektion",
       "ERROR": {
         "UPLOAD":"In der hochgeladenen Datei wurde keine Kohorte definiert",
-        "DOWNLOAD": "Es wurden keine Kohorte definiert, download nicht möglich"
+        "DOWNLOAD": "Es wurde keine Kohorte definiert, Download nicht möglich"
       },
       "SUCCESS": {
-        "UPLOAD": "Daten Definition wurde hochgeladen",
-        "DOWNLOAD": "Daten Definition wurde erfolgreich heruntergeladen"
+        "UPLOAD": "Datendefinition wurde hochgeladen",
+        "DOWNLOAD": "Datendefinition wurde erfolgreich heruntergeladen"
       }
     }
   },
@@ -197,11 +232,11 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Startseite",
-    "QUERYBUILDER_EDITOR": "Kohorten Selektion",
+    "QUERYBUILDER_EDITOR": "Kohortenselektion",
     "QUERYBUILDER_OVERVIEW": "Gespeichert Abfragen",
     "QUERYBUILDER_RESULT": "Machbarkeitsabfrage",
-    "DATASELECTION": "Merkmal Selektion",
-    "DATAQUERY": "Daten Definition",
+    "DATASELECTION": "Merkmalselektion",
+    "DATAQUERY": "Datendefinition",
     "OPTIONS": "Einstellungen",
     "SIGNOUT": "Abmelden"
   },
@@ -220,19 +255,18 @@
     "DRAG_AND_DROP": "Zum Sortieren “Drag & Drop” nutzen",
     "STAGE": {
       "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl",
-      "HEADER": "Kriterien Editor",
-      "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen Sie Ihre Kohorten Selektion zusammen. Die Kohorten Selektion kann verwendet werden um direkt eine standortübergreifende Machbarkeitsabfrage zu stellen.",
+      "HEADER": "Kriterieneditor",
+      "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen Sie Ihre Kohortenselektion zusammen. Die Kohortenselektion kann verwendet werden, um direkt eine standortübergreifende Machbarkeitsabfrage zu stellen.",
       "BUTTON": {
-        "ADD_TO_STAGE": "Zur Kohorten Selektion hinzufügen",
+        "ADD_TO_STAGE": "Zur Kohortenselektion hinzufügen",
         "BACK_TO_SEARCH":"Kriterien hinzufügen",
-        "VIEW_STAGE": "Kohorten Selektion anzeigen",
+        "VIEW_STAGE": "Kohortenselektion anzeigen",
         "SEND_QUERY": "Machbarkeitsabfrage",
-        "DATA_REQUEST": "Daten Definition"
-
-
+        "SAVE_DATAQUERY": "Daten Definition speichern",
+        "DATA_REQUEST": "Datendefinition"
       },
       "MESSAGE": {
-        "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Kohorten Selektion hinzugefügt"
+        "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Kohortenselektion hinzugefügt"
       },
       "CONSENT": {
         "WITH_CONSENT": "Mit Einwilligung",
@@ -241,7 +275,7 @@
         "CENTRAL": "Zentral",
         "DISTRIBUTED": "Verteilt",
         "EU_GDPR": "Alle Datenempfänger in Ländern mit Datenschutzniveau konform zur EU DSGVO",
-        "NON_EU_GDPR": "Datenempfänger im Ausland mit Datenschutzniveau unterhalb EU DSGVO",
+        "NON_EU_GDPR": "Datenempfänger im Ausland mit Datenschutzniveau geringer als EU DSGVO",
         "WITHOUT_DATA": "ohne Krankenkassendaten",
         "WITH_DATA": "mit Krankenkassendaten",
         "WITHOUT_CONTACT": "ohne Rekontaktierung",
@@ -250,11 +284,11 @@
     },
     "HEADER_TITLE": "Ausgewählte Kriterien",
     "SEARCH": {
-      "MIN_LENGTH":"Bitte mindestens 3 Buchstaben eingeben",
-      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohorten Selektion direkt verwenden um die Patientenzahl deutschlandweit abzuschätzen.",
+      "MIN_LENGTH":"Bitte mindestens drei Buchstaben eingeben",
+      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen.",
       "SEARCH_BUTTON": "Suchen",
       "SEARCHBAR":"Suchen nach Begriff oder Terminologiecode",
-      "HEADER": "Kriterien Suche",
+      "HEADER": "Kriteriensuche",
       "CLOSE_DETAILS": "Schließen",
       "BUTTON": {
         "RESET": "Filter zurücksetzen"
@@ -266,11 +300,11 @@
       "ALL": "Alle",
       "CATEGORY_FILTER": "Filtern nach",
       "CONSENT_HEADER": "Art der Datennutzung",
-      "CONSENT_CENTRAL_TOOLTIP": "For the central analysis you will recieve patient data pseudonymised by the MII, which fit your research project proposal. Pseudonymised data can only be used, if patients have consented to their use.The researches will recieve the pseudonymised data in form of a Download. They will then be able to conduct their analysis with greater flexibility and depths as well as faster speed compared to decentral analyis. The collection of the consent is currently underway across all sites. However it can be expected, that for most queries less patients will be found for central than de-central analysis.",
-      "CONSENT_DISTRIBUTED_TOOLTIP": "  For distributed analyses the analysis is carried out at the sites. The researchers recieve anonymous result data. For many sites a de-central analysis can be based on a different legal other than a consent. This often leads to larger numbers of patients found, which fulfill the requirements for your research proposal. Some sites also require the consent of a patient for feasibility queries. These sites will answer feasibility queries with comparatively lower number. The actual number of patients available from these site for distributed analyses might be higher. The actual number of available patients will not be clear until after the research proposal has been processed..",
-      "CONSENT_CENTRAL": " is assumed (Data consolidated centrally)",
+      "CONSENT_CENTRAL_TOOLTIP": "For the central analysis you will recieve patient data pseudonymised by the MII, which fit your research project proposal. Pseudonymised data can only be used, if patients have consented to their use.The researchers will recieve the pseudonymised data in form of a download. They will then be able to conduct their analysis with greater flexibility and depth as well as faster speed compared to decentral analyis. The collection of consents is currently ongoing across all sites. However it can be expected that for most queries less patients will be found for central than de-central analysis.",
+      "CONSENT_DISTRIBUTED_TOOLTIP": "  For distributed analyses the analysis is carried out at the sites. The researchers recieve anonymous result data. For many sites a de-central analysis can be based on a different legal basis other than a consent. This often leads to larger numbers of patients found, which fulfill the requirements for your research proposal. Some sites also require the consent of a patient for feasibility queries. These sites will answer feasibility queries with comparatively lower numbers. The actual number of patients available from these site for distributed analyses might be higher. The actual number of available patients will not be clear until after the research proposal has been processed.",
+      "CONSENT_CENTRAL": " is assumed (data consolidated centrally)",
       "CONSENT_CENTRAL_LINK": "„Broad Consent“ (MII or compatible with MII)",
-      "CONSENT_DISTRIBUTED": "No „Broad Consent“ requested (data available for „federated analysis“)"
+      "CONSENT_DISTRIBUTED": "No „Broad Consent“ requested (data available for „Federated Analysis“)"
     },
     "SWITCH": {
       "LABEL_AND": "UND",
@@ -288,12 +322,13 @@
         "BOTH": "zwischen {{ from }} und {{ to }}",
         "FROM": "nach {{ from }}",
         "TO": "vor {{ to }}",
-        "NONE": "keine zeitliche Einschränkung"
+        "NONE": "keine zeitliche Einschränkung",
+        "WARNING": "Das Anfangsdatum muss kleiner sein als das Enddatum"
       }
     },
     "OVERVIEW": {
       "COHORT": {
-        "LOAD": "Kohorten Selektion laden",
+        "LOAD": "Kohortenselektion laden",
         "PATIENTS": "Anzahl der Patienten:"
       },
       "TITLE_LABEL": "Titel",
@@ -307,7 +342,7 @@
       "FILENAME": "Dateiname",
       "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
       "SAVED_TEMPLATES": "Gespeicherte Vorlagen",
-      "MAXIMUM_QUERY_SLOT": "Sie haben das maximale Limit an verfügbaren freien Speicherplätzen für Abfragen erreicht",
+      "MAXIMUM_QUERY_SLOT": "Sie haben die maximale Anzahl an verfügbaren freien Speicherplätzen für Abfragen erreicht",
       "INVALID_WARNING1": "Abfrage konnte nicht vollständig geladen werden: Ein oder mehrere Kriterien Ihrer Abfrage sind nicht gültig. Bitte ersetzen Sie alle durch folgendes Symbol ",
       "INVALID_WARNING2": " gekennzeichneten Kriterien oder kontaktieren Sie ",
       "SAVE_BUTTON": "speichern"
@@ -348,7 +383,7 @@
         "AFTER_OR_AT": "nach oder am",
         "BETWEEN": "zwischen",
         "TITLE": "Zeitraum (optional)",
-        "NONE":"kein Filter"
+        "NONE": "kein Filter"
       }
     },
     "HINT": {
@@ -362,7 +397,7 @@
     "RESULT": {
       "BUTTON": {
         "DETAILS": "Details",
-        "EDIT_STAGE": "Kohorten Selektion bearbeiten",
+        "EDIT_STAGE": "Kohortenselektion bearbeiten",
         "SAVE_QUERY":"Kohorte speichern",
         "DOWNLOAD": "Kohorte herunterladen"
       },
@@ -372,15 +407,15 @@
       },
       "SAVE_DIALOG": {
         "HEADER": "Anzahl der Patienten",
-        "HEADER_DESCRIPTION":"Die Anzahl an Patientinnen und Patienten, die die Kriterien Ihrer Kohorte erfüllen wird standortübergreifend ermittelt. Dieses Ergebnis ist nicht exakt."
+        "HEADER_DESCRIPTION": "Die Anzahl an Patientinnen und Patienten, die die Kriterien Ihrer Kohorte erfüllen wird standortübergreifend ermittelt. Dieses Ergebnis ist nicht exakt."
       },
       "HEADER_DESCRIPTION": "Die Anzahl an Patientinnen und Patienten, die die Kriterien Ihrer Kohorte erfüllen wird standortübergreifend ermittelt. Dieses Ergebnis ist nicht exakt.",
       "PATIENT_NUMBER": "Anzahl der Patienten",
-      "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsabfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Abfrage werden anonymisiert. In dem Prozess werden Abweichungen zum exakten Ergebnis bewusst eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts. Sie sollte nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
+      "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsabfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Abfrage werden anonymisiert und es werden bewusst Abweichungen zum exakten Ergebnis eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts. Sie sollte nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
       "TOTAL": "Gesamt",
       "SITE": "Standort",
       "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
-      "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen wieviele Ihrere Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
+      "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen, wie viele Ihrer Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
     }
   },
   "LEGAL": {
@@ -402,7 +437,7 @@
     "DOWNLOAD": "Herunterladen",
     "EDIT": "Speichern",
     "IMPORT": "Query laden",
-    "IMPORT_DATASELECTION":"Merkmal Selektion hochladen",
+    "IMPORT_DATASELECTION":"Merkmalselektion hochladen",
     "IMPORT_FROM_FILE": "Datei auswählen",
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
@@ -413,12 +448,12 @@
   },
   "TAB_TITLE": {
     "DATA_QUERY": {
-      "COHORT_DEFINITION": "Daten Definition - Kohorten Selektion",
-      "DATA_SELECTION": "Daten Definition - Merkmal Selektion"
+      "COHORT_DEFINITION": "Datendefinition - Kohortenselektion",
+      "DATA_SELECTION": "Datendefinition - Merkmalselektion"
     },
     "DATA_SELECTION": {
-      "SEARCH": "Merkmal Selektion - Suche",
-      "EDITOR": "Merkmal Selektion - Editor"
+      "SEARCH": "Merkmalselektion - Suche",
+      "EDITOR": "Merkmalselektion - Editor"
     },
     "FEASIBILITY_QUERY": {
       "SEARCH": "Machbarkeitsabfrage - Suche",
@@ -427,15 +462,16 @@
     }
   },
   "ERROR": {
-    "FEAS-10001": "Ihr Benutzer wurde wegen zu vielen Abfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
-    "FEAS-10005"  :"Die Anzahl der Standorte die geantwortet haben ist zu klein -> Detailergebnis wird nicht angezeigt",
+    "FEAS-10001": "Ihr Account wurde wegen zu vielen Abfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
+    "FEAS-10005"  :"Die Anzahl der Standorte, die geantwortet haben, ist zu klein -> Detailergebnis wird nicht angezeigt",
     "FEAS-10004"  :"Die Ergebnismenge ist zu klein -> Ergebnis wird nicht angezeigt",
     "FEAS-10002"  :"Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut",
-    "FEAS-10006"  :"Sie haben zu viele Kohorten gespeichert, bitte löschen Sie Kohorten Selektionen, bevor Sie weitere speichern",
+    "FEAS-10003"  :"Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut",
+    "FEAS-10006"  :"Sie haben zu viele Kohorten gespeichert, bitte löschen Sie Kohortenselektionen, bevor Sie weitere speichern",
     "404"         :"Standort wurde nicht gefunden",
     "VAL-20001"   :"Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden"
   },
   "INFO":{
-    "UPDATE_NOTE": "Aufgrund von Updates zentral und an den Standorten ist das Portal aktuell nur eingeschränkt nutzbar. Wir bedanken uns für Ihr Verständnis."
+    "UPDATE_NOTE": "Aufgrund von Updates am FDPG und an den Standorten ist das Portal aktuell nur eingeschränkt nutzbar. Wir bedanken uns für Ihr Verständnis."
   }
 }

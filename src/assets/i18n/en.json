@@ -50,13 +50,19 @@
         "CANCEL": "Cancel"
       }
     },
+    "DELETE_MODAL": {
+      "HEADER": "Confirm deletion",
+      "TITLE": "Do you really want to delete the data query?",
+      "DELETE": "Delete",
+      "CANCEL": "Cancel"
+    },
     "SAVE_MODAL": {
       "HEADER": "Save",
       "TITLE": "Titel",
       "COMMENT": "Comment",
       "SAVE": "Save",
       "CANCEL": "Cancel",
-      "COHORT_WARNING": "Cohort is undefined"
+      "COHORT_WARNING": "Note: Cohort is empty or invalid"
     }
   },
   "SHAREDFILTER": {
