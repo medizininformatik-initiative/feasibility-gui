@@ -1,6 +1,32 @@
 <div fxLayout="column" fxLayoutAlign="start start" fxFill>
-  <num-header>
-    {{ 'SAVED_QUERIES.HEADER' | translate }}
-  </num-header>
-  <num-feasibility></num-feasibility>
+  <num-header> {{ 'SAVED_QUERIES.HEADER' | translate }} ({{ savedQueriesLength }}) </num-header>
+  <div style="padding-bottom: 20px">
+    <mat-select [(value)]="selectedValues" (selectionChange)="onSelectionChange()">
+      <mat-option *ngFor="let value of t" [value]="value.title">
+        {{ value.title }} {{ value.length }}
+      </mat-option>
+    </mat-select>
+  </div>
+  <num-feasibility
+    *ngIf="selectedValues === 'cohort'"
+    [totalNumberOfPatients]="totalNumberOfPatients"
+    [savedQueries]="cohortDefinitions"
+    (deleteQuery)="deleteSavedFeasibility($event)"
+    (loadQuery)="loadQueryIntoEditor($event)"
+  >
+  </num-feasibility>
+  <num-feasibility
+    *ngIf="selectedValues === 'datadefinition'"
+    [savedQueries]="dataDefinitions"
+    (deleteQuery)="deleteSavedFeasibility($event)"
+    (loadQuery)="loadQueryIntoEditor($event)"
+  >
+  </num-feasibility>
+  <num-feasibility
+    *ngIf="selectedValues === 'dataselection'"
+    [savedQueries]="dataSelection"
+    (deleteQuery)="deleteSavedFeasibility($event)"
+    (loadQuery)="loadQueryIntoEditor($event)"
+  >
+  </num-feasibility>
 </div>

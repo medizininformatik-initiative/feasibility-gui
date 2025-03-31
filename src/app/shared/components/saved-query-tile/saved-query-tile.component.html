@@ -14,9 +14,8 @@
   <div class="width-10">
     {{ ('SAVED_QUERIES.CREATED_AT' | translate) + ' ' + (savedQuery.date | date : 'dd.MM.yyyy') }}
   </div>
-  <div class="width-20">
-    {{ 'QUERYBUILDER.OVERVIEW.COHORT.PATIENTS' | translate }} {{ savedQuery.totalNumberOfPatients }}
-  </div>
+
+  <ng-content></ng-content>
   <div>
     <num-button type="blue" (click)="onNavigate(savedQuery?.id)">
       {{ 'QUERYBUILDER.OVERVIEW.COHORT.LOAD' | translate }}
