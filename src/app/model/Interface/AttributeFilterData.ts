@@ -5,6 +5,6 @@ import { TerminologyCodeBaseData } from './TerminologyBaseData';
 
 export interface AttributeFilterData extends AttributeFilterBaseData {
   type: AttributeFilterTypeData
-  criteria: StructuredQueryCriterionData
+  criteria: StructuredQueryCriterionData[]
   attributeCode: TerminologyCodeBaseData
 }
