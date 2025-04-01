@@ -97,9 +97,6 @@ export class CRTDL2UIModelService {
     cohortDefinition: Observable<FeasibilityQuery>,
     dataExtraction: Observable<DataSelection>
   ): Observable<UiCRTDL> {
-    console.log('combineFeasibilityAndDataExtraction', cohortDefinition, dataExtraction);
-    cohortDefinition.subscribe((data) => console.log('cohortDefinition', data));
-    dataExtraction.subscribe((data) => console.log('dataExtraction', data));
     return combineLatest([cohortDefinition, dataExtraction]).pipe(
       map(([cohort, data]) => new UiCRTDL(uuidv4(), cohort, data))
     );
