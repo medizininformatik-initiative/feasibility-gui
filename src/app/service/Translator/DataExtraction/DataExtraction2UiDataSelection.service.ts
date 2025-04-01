@@ -75,15 +75,6 @@ export class DataExtraction2UiDataSelectionService {
                       this.uITimeRestrictionFactoryService.createTimeRestrictionForDataSelection(
                         externSingleFilter
                       );
-
-                    console.log(
-                      'timeRestriction',
-                      new ProfileTimeRestrictionFilter(
-                        externSingleFilter.name,
-                        externSingleFilter.type,
-                        timeRestriction
-                      )
-                    );
                     return new ProfileTimeRestrictionFilter(
                       externSingleFilter.name,
                       externSingleFilter.type,
