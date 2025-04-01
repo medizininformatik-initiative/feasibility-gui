@@ -552,7 +552,7 @@ export class TypeGuard {
     const timeRestrictionData = obj as TimeRestrictionData;
     return (
       TypeGuard.isObject(timeRestrictionData) &&
-      TypeGuard.isString(timeRestrictionData.afterDate) &&
+      TypeGuard.isOptionalString(timeRestrictionData.afterDate) &&
       TypeGuard.isOptionalString(timeRestrictionData.beforeDate)
     );
   }
