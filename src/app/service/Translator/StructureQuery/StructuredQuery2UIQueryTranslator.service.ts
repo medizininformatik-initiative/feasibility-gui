@@ -117,8 +117,6 @@ export class StructuredQuery2UIQueryTranslatorService {
   public setStructuredQueryCriterionFilter(structuredQueryCriterion) {
     const structuredQueryCriterionHash = this.createSQHash(structuredQueryCriterion);
     const criterion = this.findCriterionInMapByHash(structuredQueryCriterionHash);
-    console.log('Criterion', criterion);
-    console.log('StructuredQueryCriterion', structuredQueryCriterion);
     this.setFilter(structuredQueryCriterion, criterion);
   }
 
@@ -241,7 +239,6 @@ export class StructuredQuery2UIQueryTranslatorService {
     this.createCriterionService
       .createReferenceCriteriaFromHashes(referenceCriterionHashes, criterion.getId())
       .subscribe((referenceCriteria: ReferenceCriterion[]) => {
-        console.log('ReferenceCriteria', referenceCriteria);
         foundAttributeFilter.getReference().setSelectedReferences(referenceCriteria);
         this.updateCriterionHashMap(referenceCriteria);
         this.processSubCriteria(structuredQueryAttributeFilter.criteria, criterion);
@@ -253,8 +250,6 @@ export class StructuredQuery2UIQueryTranslatorService {
       this.criterionProvider.setCriterionByUID(referenceCriterion, referenceCriterion.getId());
       this.setCriterionHashMap(referenceCriterion);
     });
-    console.log(this.hashMap.forEach((t) => console.log(t)));
-    console.log(this.hashMap.length);
   }
 
   private processSubCriteria(subCriteria, criterion) {
