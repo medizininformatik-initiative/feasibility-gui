@@ -10,7 +10,7 @@ import { ReferenceCriterionProviderService } from '../../../../service/Provider/
 })
 export class RefrenceCriterionMenuFunctionsService {
   constructor(
-    private criterionService: CriterionProviderService,
+    private criterionProviderService: CriterionProviderService,
     private editCriterionService: CriterionModalService,
     private referenceCriterionProvider: ReferenceCriterionProviderService,
     private stageService: StageProviderService,
@@ -24,7 +24,7 @@ export class RefrenceCriterionMenuFunctionsService {
     this.criterionService.deleteCriterionFromMapByUID(uid);*/
 
     const parentID = this.referenceCriterionProvider.getReferenceCriterionByUID(uid).getParentId();
-    this.criterionService
+    this.criterionProviderService
       .getCriterionByUID(parentID)
       .getAttributeFilters()
       .forEach((attributeFilter) => {
@@ -41,7 +41,7 @@ export class RefrenceCriterionMenuFunctionsService {
   }
 
   duplicateCriterion(uid: string) {
-    const originalElement = this.criterionService.getCriterionByUID(uid);
+    const originalElement = this.criterionProviderService.getCriterionByUID(uid);
     if (originalElement) {
       const duplicateElement = { ...originalElement };
     }
@@ -49,7 +49,8 @@ export class RefrenceCriterionMenuFunctionsService {
 
   applyReferenceCriterionFilter(uid: string) {
     this.editCriterionService.openCriterionModal(
-      this.referenceCriterionProvider.getReferenceCriterionByUID(uid)
+      this.criterionProviderService.getCriterionByUID(uid) ??
+        this.referenceCriterionProvider.getReferenceCriterionByUID(uid)
     );
   }
 }

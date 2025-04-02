@@ -20,12 +20,18 @@ import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilte
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
+import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
+import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2UIQueryTranslatorService {
-  private hashMap: Map<string, AbstractCriterion> = new Map();
+  private hashMap: Array<{
+    hash: string
+    abstractCriterion: AbstractCriterion
+    structuredQueryCriterion?: StructuredQueryCriterionData
+  }> = [];
 
   private emptyDisplayData = {
     original: 'test',
@@ -52,6 +58,7 @@ export class StructuredQuery2UIQueryTranslatorService {
 
   public translateInExclusion(inexclusion: any[]): Observable<string[][]> {
     const hashes = [];
+    this.hashMap = [];
 
     inexclusion.forEach((criterionArray) => {
       hashes.push(...this.innerCriterion(criterionArray));
@@ -69,8 +76,8 @@ export class StructuredQuery2UIQueryTranslatorService {
 
             if (!this.isConsent(termCode)) {
               this.setStructuredQueryCriterionFilter(structuredQueryCriterion);
-              const structuredQueryCriterionHash = this.createSQHash(structuredQueryCriterion);
-              const criterion = this.hashMap.get(structuredQueryCriterionHash);
+              const hash = this.createSQHash(structuredQueryCriterion);
+              const criterion = this.findCriterionInMapByHash(hash);
               idArray[index][innerIndex] = criterion.getId();
             } else {
               const flags = this.consentService.getBooleanFlags(termCode.getCode());
@@ -85,7 +92,8 @@ export class StructuredQuery2UIQueryTranslatorService {
           });
         });
 
-        this.hashMap.forEach((criterion) => {
+        this.hashMap.forEach((element) => {
+          const criterion: Criterion = element.abstractCriterion;
           criterion.setIsRequiredFilterSet(
             this.criterionValidationService.setIsFilterRequired(criterion)
           );
@@ -108,8 +116,17 @@ export class StructuredQuery2UIQueryTranslatorService {
 
   public setStructuredQueryCriterionFilter(structuredQueryCriterion) {
     const structuredQueryCriterionHash = this.createSQHash(structuredQueryCriterion);
-    const criterion = this.hashMap.get(structuredQueryCriterionHash);
+    const criterion = this.findCriterionInMapByHash(structuredQueryCriterionHash);
+    console.log('Criterion', criterion);
+    console.log('StructuredQueryCriterion', structuredQueryCriterion);
+    this.setFilter(structuredQueryCriterion, criterion);
+  }
 
+  public setStructuredQueryRefrenceCriterionFilter(structuredQueryCriterion, referenceCriterion) {
+    this.setFilter(structuredQueryCriterion, referenceCriterion);
+  }
+
+  private setFilter(structuredQueryCriterion, criterion) {
     this.applyTimeRestrictionIfPresent(structuredQueryCriterion, criterion);
     this.processAttributeFilters(structuredQueryCriterion.attributeFilters, criterion);
     this.processValueFilter(structuredQueryCriterion.valueFilter, criterion);
@@ -132,6 +149,9 @@ export class StructuredQuery2UIQueryTranslatorService {
           criterion,
           structuredQueryAttributeFilter
         );
+        if (!foundAttributeFilter) {
+          return;
+        }
         this.handleFilterByType(foundAttributeFilter, structuredQueryAttributeFilter, criterion);
       });
     } else {
@@ -221,21 +241,25 @@ export class StructuredQuery2UIQueryTranslatorService {
     this.createCriterionService
       .createReferenceCriteriaFromHashes(referenceCriterionHashes, criterion.getId())
       .subscribe((referenceCriteria: ReferenceCriterion[]) => {
+        console.log('ReferenceCriteria', referenceCriteria);
         foundAttributeFilter.getReference().setSelectedReferences(referenceCriteria);
         this.updateCriterionHashMap(referenceCriteria);
-        this.processSubCriteria(structuredQueryAttributeFilter.criteria);
+        this.processSubCriteria(structuredQueryAttributeFilter.criteria, criterion);
       });
   }
 
   private updateCriterionHashMap(referenceCriteria) {
     referenceCriteria?.forEach((referenceCriterion) => {
+      this.criterionProvider.setCriterionByUID(referenceCriterion, referenceCriterion.getId());
       this.setCriterionHashMap(referenceCriterion);
     });
+    console.log(this.hashMap.forEach((t) => console.log(t)));
+    console.log(this.hashMap.length);
   }
 
-  private processSubCriteria(subCriteria) {
+  private processSubCriteria(subCriteria, criterion) {
     subCriteria.map((structuredQueryReferenceCriterion) =>
-      this.setStructuredQueryCriterionFilter(structuredQueryReferenceCriterion)
+      this.setStructuredQueryRefrenceCriterionFilter(structuredQueryReferenceCriterion, criterion)
     );
   }
 
@@ -284,7 +308,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private setCriterionHashMap(criterion: AbstractCriterion) {
-    this.hashMap.set(criterion.getCriterionHash(), criterion);
+    this.hashMap.push({ hash: criterion.getCriterionHash(), abstractCriterion: criterion });
   }
 
   private createSQHash(structuredQueryCriterion) {
@@ -340,5 +364,18 @@ export class StructuredQuery2UIQueryTranslatorService {
     } else {
       return value;
     }
+  }
+
+  private findCriterionInMapByHash(hash: string): AbstractCriterion {
+    return this.hashMap.find((value) => value.hash === hash)?.abstractCriterion;
+  }
+
+  private findCriterionInMapByHashAndRemove(hash: string): AbstractCriterion {
+    const element = this.hashMap.find((value) => value.hash === hash)?.abstractCriterion;
+    const index = this.hashMap.findIndex((value) => value.hash === hash);
+    if (index > -1) {
+      this.hashMap.splice(index, 1);
+    }
+    return element;
   }
 }
