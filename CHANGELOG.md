@@ -1,5 +1,21 @@
 # Changelog
 
+## v6.1.0 (2025-04-04)
+
+### Changes
+* switch to API v5
+* switch date display to european format ([#371](https://github.com/medizininformatik-initiative/feasibility-gui/issues/371))
+
+### Feature
+* new save dialog with checkboxes for cohort and data selection ([#354](https://github.com/medizininformatik-initiative/feasibility-gui/issues/354))
+* new TypeGuard and Type Assertion functionality for type safety during compiling time ([#360](https://github.com/medizininformatik-initiative/feasibility-gui/issues/360))
+
+### Bug Fixes
+* fixes for various minor issues and clean up code
+
+
+
+
 ## v6.0.10 (2025-03-19)
 
 ### Bug Fixes
