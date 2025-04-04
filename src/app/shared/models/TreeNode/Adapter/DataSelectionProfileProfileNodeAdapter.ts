@@ -12,7 +12,7 @@ export class FieldsTreeAdapter {
 
   static toTreeNode(node: ProfileFields): TreeNode {
     return {
-      id: node?.getId(),
+      id: node?.getElementId(),
       data: {
         name: node.getDisplay(),
         display: node.getDisplay(),

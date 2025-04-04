@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
+import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +21,9 @@ export class DataSelectionFilterChipsService {
   constructor(public translate: TranslateService) {}
 
   public generateFilterChipsFromDataSelectionFields(
-    dataSelectionProfileProfileNode: ProfileFields[]
+    selectedFields: SelectedField[]
   ): Observable<InterfaceFilterChip[]> {
-    const filterChips = FilterChipDataSelectionAdapter.adaptFields(dataSelectionProfileProfileNode);
+    const filterChips = FilterChipDataSelectionAdapter.adaptFields(selectedFields);
     const squashedFilterChips = this.squashFilterChips(filterChips);
     this.filterChipsSubject.next(squashedFilterChips);
     return this.filterChipsSubject.asObservable();

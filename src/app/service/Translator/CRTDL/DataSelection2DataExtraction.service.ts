@@ -4,22 +4,21 @@ import { AttributeGroup } from 'src/app/model/CRTDL/DataExtraction/AttributeGroo
 import { Attributes } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Attributes/Attribute';
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { DateFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/DateFilter';
 import { Injectable } from '@angular/core';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/TokenFilter ';
+import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelection2DataExtraction {
-  private attributes = [];
   constructor(
     private timeRestrictionTranslation: TimeRestrictionTranslationService,
     private terminologyCodeTranslator: TerminologyCodeTranslator
@@ -32,9 +31,8 @@ export class DataSelection2DataExtraction {
     return attribuetGroups.length > 0 ? new DataExtraction(attribuetGroups) : undefined;
   }
 
-  private translateAttributeGroups(profile: DataSelectionProfileProfile): AttributeGroup {
-    const attributes = this.translateAttributes(profile.getFields());
-    this.attributes = [];
+  private translateAttributeGroups(profile: DataSelectionProfile): AttributeGroup {
+    const attributes = this.translateSelectedFields(profile.getSelectedFields());
     const filters = this.translateFilters(profile.getFilters());
     return new AttributeGroup(
       profile.getUrl(),
@@ -44,20 +42,15 @@ export class DataSelection2DataExtraction {
     );
   }
 
-  private translateAttributes(fields: ProfileFields[]): Attributes[] {
-    fields.forEach((field) => {
-      if (field.getIsSelected()) {
-        this.attributes.push(this.translateAttribute(field));
-      }
-      if (field.getChildren().length > 0) {
-        this.translateAttributes(field.getChildren());
-      }
-    });
-    return this.attributes.length > 0 ? this.attributes : undefined;
+  private translateSelectedFields(selectedFields: SelectedField[]): Attributes[] | undefined {
+    const attributes: Attributes[] = selectedFields.map((field) => this.translateAttributes(field));
+    return attributes.length > 0 ? attributes : undefined;
   }
 
-  private translateAttribute(field: ProfileFields): Attributes {
-    return new Attributes(field.getId(), field.getMustHave());
+  private translateAttributes(field: SelectedField): Attributes {
+    const linkedGroups =
+      field.getLinkedProfiles().length > 0 ? field.getLinkedProfiles() : undefined;
+    return new Attributes(field.getElementId(), field.getMustHave(), linkedGroups);
   }
 
   private translateFilters(

@@ -37,8 +37,8 @@ export class MenuServiceDataSelection {
         disabled: false,
         icon: 'clipboard-list',
         label: 'DEFINE_FIELDS',
-        action: (url: string) =>
-          this.menuServiceDataSelectionFunctions.openDataSelectionFieldModal(url),
+        action: (id: string) =>
+          this.menuServiceDataSelectionFunctions.openDataSelectionFieldModal(id),
       },
     ];
   }
