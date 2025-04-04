@@ -69,10 +69,7 @@ export class CriterionComponent implements OnInit, AfterViewInit {
       )
       .subscribe();
     this.criterion$ = this.createCriterionService.createCriteriaFromHashes([this.id]).pipe(
-      map((criteria) => {
-        console.log('Criteria retrieved:', criteria);
-        return criteria[0];
-      })
+      map((criteria) => criteria[0])
     );
 
     this.criterion$.subscribe((criterion) => {
@@ -84,8 +81,6 @@ export class CriterionComponent implements OnInit, AfterViewInit {
           this.currentTemplates.push(this.conceptTemplate);
           this.currentTemplates.push(this.conceptTemplate1);
           this.currentTemplates.push(this.conceptTemplate2);
-          console.log(this.conceptTemplate);
-          console.log(this.concept);
         }
       });
 

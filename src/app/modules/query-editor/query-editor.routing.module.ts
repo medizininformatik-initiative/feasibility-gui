@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PathSegments } from 'src/app/app-paths';
-import { QueryEditorComponent } from './editor/query-editor.component';
+import { QueryEditorComponent } from './components/query-editor.component';
 
 const routes: Routes = [
   {

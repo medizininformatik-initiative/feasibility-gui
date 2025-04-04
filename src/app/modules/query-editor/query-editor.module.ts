@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { QueryEditorComponent } from './editor/query-editor.component';
 import { CommonModule } from '@angular/common';
-import { QueryEditorRoutingModule } from './query-editor.routing.module';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { SharedFilterModule } from '../shared-filter/shared-filter.module';
+import { CriterionComponent } from './components/criterion/criterion.component';
+import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
+import { FilterTabsComponent } from './components/filter-tabs/filter-tabs.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from 'src/app/layout/material/material.module';
-import { CriterionComponent } from './criterion/criterion.component';
-import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
-import { FilterTabsComponent } from './filter-tabs/filter-tabs.component';
+import { NgModule } from '@angular/core';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { QueryEditorComponent } from './components/query-editor.component';
+import { QueryEditorRoutingModule } from './query-editor.routing.module';
+import { SharedFilterModule } from '../shared-filter/shared-filter.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
