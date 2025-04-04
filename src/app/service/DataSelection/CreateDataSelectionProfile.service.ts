@@ -2,8 +2,7 @@ import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filte
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { concatMap, map, Observable } from 'rxjs';
 import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
@@ -14,15 +13,17 @@ import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profil
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CreateDataSelectionProfileService {
-  private referencedProfiles: string[] = [];
+  private selectedFields: SelectedField[] = [];
   constructor(
     private dataSelectionApiService: DataSelectionApiService,
-    private dataSelectionProvider: DataSelectionProfileProviderService,
+    private profileProvider: ProfileProviderService,
     private displayDataFactoryService: DisplayDataFactoryService
   ) {}
 
@@ -30,34 +31,25 @@ export class CreateDataSelectionProfileService {
     urls: string[],
     markAsReference: boolean = false,
     loadReferences: boolean = true
-  ): Observable<DataSelectionProfileProfile[]> {
-    const profilesToFetch: string[] = [];
-    for (const url of urls) {
-      if (!this.dataSelectionProvider.getDataSelectionProfileByUrl(url)) {
-        profilesToFetch.push(url);
-      }
-    }
-
-    if (profilesToFetch.length === 0) {
+  ): Observable<DataSelectionProfile[]> {
+    if (urls.length === 0) {
       return new Observable((observer) => {
         observer.next([]);
         observer.complete();
       });
     }
-    return this.dataSelectionApiService.getDataSelectionProfileData(profilesToFetch).pipe(
+    return this.dataSelectionApiService.getDataSelectionProfileData(urls).pipe(
       map((data: any[]) =>
         data.map((item: any) => {
           const fields = this.mapFields(item.fields);
           const filters = this.createFilters(item.filters);
-          return this.instanceOfDataSelectionProfileProfile(item, fields, filters, markAsReference);
+          return this.instanceOfDataSelectionProfile(item, fields, filters, markAsReference);
         })
       ),
       concatMap((profiles) => {
-        profiles.forEach((profile) =>
-          this.dataSelectionProvider.setDataSelectionProfileByUrl(profile.getUrl(), profile)
-        );
+        profiles.forEach((profile) => this.profileProvider.setProfileById(profile.getId(), profile));
 
-        if (this.referencedProfiles.length > 0 && loadReferences) {
+        /*         if (this.referencedProfiles.length > 0 && loadReferences) {
           const uniqueReferencedProfiles = [...new Set(this.referencedProfiles)];
           this.referencedProfiles = [];
           return this.fetchDataSelectionProfileData(uniqueReferencedProfiles, true).pipe(
@@ -65,7 +57,8 @@ export class CreateDataSelectionProfileService {
           );
         } else {
           return [profiles]; // End recursion
-        }
+        } */
+        return [profiles];
       })
     );
   }
@@ -94,21 +87,21 @@ export class CreateDataSelectionProfileService {
    * @param markAsReference
    * @returns
    */
-  private instanceOfDataSelectionProfileProfile(
+  private instanceOfDataSelectionProfile(
     item: any,
     fields: ProfileFields[],
     filters: AbstractProfileFilter[],
     markAsReference: boolean
-  ): DataSelectionProfileProfile {
-    const dataSelectionProfileProfile: DataSelectionProfileProfile =
-      new DataSelectionProfileProfile(
-        uuidv4(),
-        item.url,
-        this.instantiateDisplayData(item.display),
-        fields,
-        filters,
-        new ProfileReference(true, markAsReference)
-      );
+  ): DataSelectionProfile {
+    const dataSelectionProfileProfile: DataSelectionProfile = new DataSelectionProfile(
+      uuidv4(),
+      item.url,
+      this.instantiateDisplayData(item.display),
+      fields,
+      filters,
+      new ProfileReference(true, markAsReference),
+      this.selectedFields
+    );
     return dataSelectionProfileProfile;
   }
 
@@ -116,12 +109,15 @@ export class CreateDataSelectionProfileService {
     return nodes?.map((node) => this.mapField(node));
   }
 
+  /**
+   * @todo check if referenceProfiles are needed fron the node and what to do with them?!
+   * @param node
+   * @returns
+   */
   private mapField(node: any): ProfileFields {
     const children = node.children ? this.mapFields(node.children) : [];
-    if (node.referencedProfiles.length > 0 && (node.required || node.recommended)) {
-      node.referencedProfiles.map((referencedProfile) =>
-        this.referencedProfiles.push(referencedProfile)
-      );
+    if (node.required || node.recommended) {
+      this.selectedFields.push(new SelectedField(node.display, node.id, false, []));
     }
     return new ProfileFields(
       node.id,
@@ -131,7 +127,6 @@ export class CreateDataSelectionProfileService {
       node.isSelected || node.recommended || node.required || false,
       node.required,
       node.recommended,
-      false,
       node.referencedProfiles
     );
   }
