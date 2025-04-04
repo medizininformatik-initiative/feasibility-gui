@@ -1,53 +1,41 @@
 import { Display } from '../Display';
 
 export class ProfileFields {
-  private id: string;
+  private elementId: string;
   private display: Display;
   private description: Display;
   private children: ProfileFields[] = [];
   private isSelected = false;
   private isRequired = false;
   private recommended = false;
-  private mustHave: boolean;
   private referencedProfileUrls: string[];
-  private linkedProfiles: string[];
 
   constructor(
-    id: string,
+    elementId: string,
     display: Display,
     description: Display,
     children: ProfileFields[] = [],
     isSelected: boolean = false,
     isRequired: boolean = false,
     recommended: boolean,
-    mustHave: boolean,
     referencedProfileUrls: string[]
   ) {
-    this.id = id;
+    this.elementId = elementId;
     this.display = display;
     this.description = description;
     this.children = children;
     this.isSelected = isSelected;
     this.isRequired = isRequired;
     this.recommended = recommended;
-    this.mustHave = mustHave;
     this.referencedProfileUrls = referencedProfileUrls;
   }
 
-  public getLinkedProfiles(): string[] {
-    return this.linkedProfiles;
+  public getElementId(): string {
+    return this.elementId;
   }
 
-  public setLinkedProfiles(linkedProfiles: string[]): void {
-    this.linkedProfiles = linkedProfiles;
-  }
-
-  public getId(): string {
-    return this.id;
-  }
-
-  public setId(value: string): void {
-    this.id = value;
+  public setElementId(elementId: string): void {
+    this.elementId = elementId;
   }
 
   public getDisplay(): Display {
@@ -96,14 +84,6 @@ export class ProfileFields {
 
   public setRecommended(recommended: boolean): void {
     this.recommended = recommended;
-  }
-
-  public getMustHave(): boolean {
-    return this.mustHave;
-  }
-
-  public setMustHave(mustHave: boolean): void {
-    this.mustHave = mustHave;
   }
 
   public getReferencedProfileUrls(): string[] {
