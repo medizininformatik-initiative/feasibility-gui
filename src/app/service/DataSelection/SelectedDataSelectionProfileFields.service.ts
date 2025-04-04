@@ -26,27 +26,14 @@ export class SelectedDataSelectionProfileFieldsService {
       ? this.deepCopyProfileFields(profileField.getChildren())
       : [];
     return new ProfileFields(
-      profileField.getId(),
+      profileField.getElementId(),
       this.instantiateDisplayData(profileField.getDisplay()),
-      this.instantiateDisplayDataForDescription(profileField.getDescription()),
+      this.instantiateDisplayData(profileField.getDescription()),
       children,
       profileField.getIsSelected(),
       profileField.getIsRequired(),
       profileField.getRecommended(),
-      profileField.getMustHave(),
       profileField.getReferencedProfileUrls()
-    );
-  }
-
-  private instantiateDisplayDataForDescription(displayData: Display): Display {
-    return new Display(
-      displayData
-        .getTranslations()
-        .map(
-          (translation) => new Translation(translation.getLanguage(), '', translation.getValues())
-        ),
-      '',
-      displayData.getOriginals()
     );
   }
 
@@ -78,25 +65,27 @@ export class SelectedDataSelectionProfileFieldsService {
 
   private setSelectedChildrenFields(fields: ProfileFields[]): void {
     fields.forEach((field) => {
-      this.fieldIds.add(field.getId());
+      this.fieldIds.add(field.getElementId());
       this.setSelectedChildrenFields(field.getChildren());
     });
   }
 
   public addToSelection(field: ProfileFields): void {
     const currentSelection = this.selectedFields.getValue();
-    if (!this.fieldIds.has(field.getId())) {
+    if (!this.fieldIds.has(field.getElementId())) {
       this.selectedFields.next([...currentSelection, field]);
-      this.fieldIds.add(field.getId());
+      this.fieldIds.add(field.getElementId());
       this.updateDeepCopyField(field);
     }
   }
 
   public removeFromSelection(field: ProfileFields): void {
     const currentSelection = this.selectedFields.getValue();
-    const updatedSelection = currentSelection.filter((f) => f.getId() !== field.getId());
+    const updatedSelection = currentSelection.filter(
+      (f) => f.getElementId() !== field.getElementId()
+    );
     this.selectedFields.next(updatedSelection);
-    this.fieldIds.delete(field.getId());
+    this.fieldIds.delete(field.getElementId());
     this.updateDeepCopyField(field, false); // Mark as unselected
   }
 
@@ -116,7 +105,7 @@ export class SelectedDataSelectionProfileFieldsService {
     isSelected: boolean
   ): ProfileFields[] {
     return fields.map((field) => {
-      if (field.getId() === updatedField.getId()) {
+      if (field.getElementId() === updatedField.getElementId()) {
         field.setIsSelected(isSelected);
         return field;
       }

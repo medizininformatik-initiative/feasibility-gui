@@ -6,6 +6,7 @@ import { SearchConceptComponent } from './components/shared-concept-filter/searc
 import { SharedConceptFilterComponent } from './components/shared-concept-filter/shared-concept-filter.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StagedConceptsComponent } from './components/shared-concept-filter/staged-concepts/staged-concepts.component';
+import { EditFieldsComponent } from './components/edit-fields/edit-fields.component';
 
 @NgModule({
   declarations: [
@@ -13,8 +14,9 @@ import { StagedConceptsComponent } from './components/shared-concept-filter/stag
     StagedConceptsComponent,
     ConceptFilterTableComponent,
     SearchConceptComponent,
+    EditFieldsComponent,
   ],
   imports: [CommonModule, LayoutModule, SharedModule],
-  exports: [SharedConceptFilterComponent],
+  exports: [SharedConceptFilterComponent, EditFieldsComponent],
 })
 export class SharedFilterModule {}
