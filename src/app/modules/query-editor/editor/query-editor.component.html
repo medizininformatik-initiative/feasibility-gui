@@ -1,4 +1,7 @@
-<div fxLayout="row" fxLayoutAlign="space-around start">
-  <num-button>Vor</num-button>
-  <num-button>Zurück</num-button>
+<div fxLayout="column" fxLayoutAlign="start start">
+  <div style="width: 100%" fxLayout="row" fxLayoutAlign="space-around start">
+    <num-button>Vor</num-button>
+    <num-button>Zurück</num-button>
+  </div>
+  <num-criterion [id]="id"></num-criterion>
 </div>

@@ -56,6 +56,10 @@ export class CohortDefinitionComponent implements OnInit {
     this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
     this.isFeasibilityQueryValid$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
   }
+  test() {
+    console.log('test');
+    this.navigationHelperService.test();
+  }
 
   public sendQuery() {
     this.routerHelperService.navigateToFeasibilityQueryResult();

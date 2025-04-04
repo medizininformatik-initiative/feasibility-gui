@@ -25,6 +25,7 @@ export class ConceptComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    console.log('ConceptFilter:', this.display);
     if (!this.display) {
       this.expanded = true;
     }

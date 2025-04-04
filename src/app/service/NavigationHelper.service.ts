@@ -15,6 +15,10 @@ export class NavigationHelperService {
     });
   }
 
+  test(): void {
+    this.router.navigate([`${UrlPaths.queryEditor.criteria}`, 'dqwwqd']);
+  }
+
   public navigateToFeasibilityQueryEditor(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.editor]);
   }

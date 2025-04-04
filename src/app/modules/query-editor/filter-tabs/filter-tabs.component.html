@@ -1,0 +1,7 @@
+<div style="height: 1000px; width: 1000px">
+  <mat-tab-group color="primary" *ngIf="content && content.length > 0">
+    <mat-tab *ngFor="let template of content; let i = index" [label]="'Tab ' + (i + 1)">
+      <ng-container [ngTemplateOutlet]="template"></ng-container>
+    </mat-tab>
+  </mat-tab-group>
+</div>

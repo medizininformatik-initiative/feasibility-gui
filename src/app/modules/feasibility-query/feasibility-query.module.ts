@@ -103,6 +103,7 @@ export const FORMATS_GERMAN = {
     FeasibilityQuerySearchComponent,
     DisplayCriteriaComponent,
     DisplayFeasibilityQueryComponent,
+    ConceptComponent,
   ],
   providers: [
     {

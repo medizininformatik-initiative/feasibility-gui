@@ -5,9 +5,13 @@ import { QueryEditorComponent } from './editor/query-editor.component';
 
 const routes: Routes = [
   {
-    path: PathSegments.criteria,
-    component: QueryEditorComponent,
+    path: '',
+    redirectTo: PathSegments.criteria,
     pathMatch: 'full',
+  },
+  {
+    path: `${PathSegments.criteria}/:id`,
+    component: QueryEditorComponent,
   },
 ];
 
