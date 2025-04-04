@@ -10,7 +10,6 @@ import { MaterialModule } from 'src/app/layout/material/material.module';
 import { CriterionComponent } from './criterion/criterion.component';
 import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
 import { FilterTabsComponent } from './filter-tabs/filter-tabs.component';
-import { EditTimeRestrictionComponent } from '../feasibility-query/components/editor/criterion-modal/time-restriction/edit-time-restriction.component';
 
 @NgModule({
   imports: [

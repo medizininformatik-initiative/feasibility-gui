@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
+import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
 
 @Component({
   selector: 'num-criterion',
@@ -38,9 +39,14 @@ export class CriterionComponent implements OnInit, AfterViewInit {
   conceptTemplate2: TemplateRef<any>;
 
   criterion$: Observable<Criterion>;
+
+  dseElement: any;
   currentTemplates: TemplateRef<any>[] = [];
 
-  constructor(private createCriterionService: CreateCriterionService) {}
+  constructor(
+    private dse: CreateDataSelectionProfileService,
+    private createCriterionService: CreateCriterionService
+  ) {}
 
   ngOnInit() {}
 
@@ -50,6 +56,18 @@ export class CriterionComponent implements OnInit, AfterViewInit {
 
   private getCriterionFromProviderById(id: string) {
     this.id = '77720c97-fbd3-32e2-baa4-5787c2ab777d';
+    const dseId =
+      'https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert';
+    this.dseElement = this.dse
+      .fetchDataSelectionProfileData([dseId])
+      .pipe(
+        map((data) => {
+          console.log('Data retrieved:', data);
+          this.dseElement = data[0];
+          return data[0];
+        })
+      )
+      .subscribe();
     this.criterion$ = this.createCriterionService.createCriteriaFromHashes([this.id]).pipe(
       map((criteria) => {
         console.log('Criteria retrieved:', criteria);
