@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionFilterChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFilterChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
 import { Observable, of } from 'rxjs';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
+import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -17,7 +17,7 @@ import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/
   providers: [DataSelectionFilterChipsService],
 })
 export class DataSelectionBoxesComponent implements OnInit {
-  @Input() profile: DataSelectionProfileProfile;
+  @Input() profile: DataSelectionProfile;
   @Input() isEditable: boolean;
 
   menuItems: MenuItemInterface[] = [];
@@ -42,23 +42,14 @@ export class DataSelectionBoxesComponent implements OnInit {
   }
 
   public getFilterChips(): void {
-    const profileNodes = this.profile.getFields();
-
-    if (
-      profileNodes.some(
-        (item) => item.getIsSelected() === true || item.getIsRequired() || item.getRecommended()
-      )
-    ) {
-      this.filterChipsSelected = true;
-    }
-
-    this.generateAndStoreFilterChips(profileNodes);
+    const selectedFields = this.profile.getSelectedFields();
+    this.generateAndStoreFilterChips(selectedFields);
     this.getFilterChipsForProfileFilters();
   }
 
-  private generateAndStoreFilterChips(profileNodes: ProfileFields[]): void {
+  private generateAndStoreFilterChips(selectedFields: SelectedField[]): void {
     this.$fieldsFilterChips =
-      this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(profileNodes);
+      this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(selectedFields);
   }
 
   private getFilterChipsForProfileFilters() {

@@ -1,12 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { DataQueryStorageService } from 'src/app/service/DataQuery/DataQueryStorage.service';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
 import { map, Observable, Subscription } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import { ProfileProviderService } from '../../../services/ProfileProvider.service';
 
 @Component({
   selector: 'num-display-data-selection',
@@ -16,12 +15,12 @@ import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologyS
 export class DisplayDataSelectionComponent implements OnInit, OnDestroy {
   @Input() isEditable: boolean;
   @Input() showActionBar;
-  $dataSelectionProfileArray: Observable<Array<DataSelectionProfileProfile>>;
+  $dataSelectionProfileArray: Observable<Array<DataSelectionProfile>>;
 
   saveDataQueryModalSubscription: Subscription;
 
   constructor(
-    private dataSelectionProfileProvider: DataSelectionProfileProviderService,
+    private profileProvider: ProfileProviderService,
     private dataSelectionProvider: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
     private saveDataQueryModalService: SaveDataQueryModalService,
@@ -46,9 +45,7 @@ export class DisplayDataSelectionComponent implements OnInit, OnDestroy {
         map((dataSelection) =>
           dataSelection
             .getProfiles()
-            .map((profile) =>
-              this.dataSelectionProfileProvider.getDataSelectionProfileByUrl(profile.getUrl())
-            )
+            .map((profile) => this.profileProvider.getProfileById(profile.getId()))
         )
       )
       .subscribe();

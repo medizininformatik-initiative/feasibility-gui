@@ -2,9 +2,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProviderService } from '../../data-selection/services/DataSelectionProfileProvider.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Observable, of } from 'rxjs';
+import { ProfileProviderService } from '../../data-selection/services/ProfileProvider.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -16,14 +16,14 @@ export class QueryEditorComponent implements OnInit {
 
   criterion$: Observable<Criterion>;
 
-  profile$: Observable<DataSelectionProfileProfile>;
+  profile$: Observable<DataSelectionProfile>;
 
   id: string;
 
   type: string;
 
   constructor(
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
+    private profileProviderService: ProfileProviderService,
     private criterionProviderService: CriterionProviderService,
     private route: ActivatedRoute
   ) {}
@@ -37,6 +37,6 @@ export class QueryEditorComponent implements OnInit {
   }
 
   private getProfileFromProviderById(id: string): void {
-    this.profile$ = of(this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(id));
+    this.profile$ = of(this.profileProviderService.getProfileById(id));
   }
 }
