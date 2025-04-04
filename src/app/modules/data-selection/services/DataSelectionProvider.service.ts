@@ -1,7 +1,7 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 @Injectable({
@@ -63,26 +63,23 @@ export class DataSelectionProviderService {
     }
   }
 
-  public removeProfileFromDataSelection(dataSelectionId: string, profileUrl: string): void {
+  public removeProfileFromDataSelection(dataSelectionId: string, profileId: string): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
 
     if (dataSelection) {
       const updatedElements = dataSelection
         .getProfiles()
-        .filter((profile: DataSelectionProfileProfile) => profile.getUrl() !== profileUrl);
+        .filter((profile: DataSelectionProfile) => profile.getId() !== profileId);
       this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
     }
   }
 
-  public setProfileInDataSelection(
-    dataSelectionId: string,
-    profile: DataSelectionProfileProfile
-  ): void {
+  public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
     if (dataSelection) {
       const updatedElements = dataSelection
         .getProfiles()
-        .map((existingProfile: DataSelectionProfileProfile) =>
+        .map((existingProfile: DataSelectionProfile) =>
           existingProfile.getUrl() === profile.getUrl() ? profile : existingProfile
         );
       if (!updatedElements.includes(profile)) {
@@ -93,7 +90,7 @@ export class DataSelectionProviderService {
   }
 
   private createDataSelectionInstanceAndSetMap(
-    updatedElements: DataSelectionProfileProfile[],
+    updatedElements: DataSelectionProfile[],
     dataSelectionId: string
   ) {
     const updatedDataSelection = new DataSelection(updatedElements, dataSelectionId);

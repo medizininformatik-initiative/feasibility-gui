@@ -1,5 +1,4 @@
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileProfileNodeAdapter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -8,12 +7,13 @@ import { SelectedDataSelectionProfileFieldsService } from 'src/app/service/DataS
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
-import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
 import { first, map, of, switchMap } from 'rxjs';
-import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfileProfile.service';
+import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { ProfileProviderService } from '../../../services/ProfileProvider.service';
 
 export class EnterDataSelectionProfileProfileComponentData {
-  url: string;
+  id: string;
 }
 
 @Component({
@@ -31,9 +31,9 @@ export class EditFieldsModalComponent implements OnInit {
   arrayOfSelectedFields: ProfileFields[] = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public url: string,
+    @Inject(MAT_DIALOG_DATA) public id: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
+    private profileProviderService: ProfileProviderService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
     private selectedDataSelectionProfileFieldsService: SelectedDataSelectionProfileFieldsService,
@@ -45,8 +45,7 @@ export class EditFieldsModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    const dataSelectionProfile =
-      this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
+    const dataSelectionProfile = this.profileProviderService.getProfileById(this.id);
     this.profileName = dataSelectionProfile.getDisplay();
     this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(
       dataSelectionProfile.getFields()
@@ -92,12 +91,14 @@ export class EditFieldsModalComponent implements OnInit {
   }
 
   public setFieldAsRequired(field: ProfileFields) {
-    field.setMustHave(!field.getMustHave());
+    //field.setMustHave(!field.getMustHave());
     this.selectedDataSelectionProfileFieldsService.updateField(field);
   }
 
   private getIndexInSelectedFields(node: ProfileFields): number {
-    return this.selectedDataSelectionProfileFieldsService.getSelectedIds().indexOf(node.getId());
+    return this.selectedDataSelectionProfileFieldsService
+      .getSelectedIds()
+      .indexOf(node.getElementId());
   }
 
   private addNodeToSelectedFields(node: ProfileFields): void {
@@ -134,7 +135,7 @@ export class EditFieldsModalComponent implements OnInit {
   }
 
   public saveFields(): void {
-    const profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
+    const profile = this.profileProviderService.getProfileById(this.id);
 
     this.selectedDataSelectionProfileFieldsService
       .getDeepCopyProfileFields()
@@ -145,15 +146,11 @@ export class EditFieldsModalComponent implements OnInit {
             profile,
             profileFields
           );
-          this.dataSelectionProfileProviderService.setDataSelectionProfileByUrl(
-            profile.getUrl(),
-            dataSelectionProfile
-          );
+          this.profileProviderService.setProfileById(profile.getId(), dataSelectionProfile);
           this.setDataSelectionProvider(dataSelectionProfile);
           return this.selectedDataSelectionProfileFieldsService.getSelectedFields().pipe(
-            first(), // Ensure only the latest selected fields are processed
+            first(),
             switchMap((selectedFields) => {
-              // Extract referenced profiles and flatten the array
               const referencedProfiles = selectedFields
                 .map((field) =>
                   field.getReferencedProfileUrls().length > 0
@@ -174,7 +171,7 @@ export class EditFieldsModalComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (fetchedProfiles: DataSelectionProfileProfile[]) => {
+        next: (fetchedProfiles: DataSelectionProfile[]) => {
           fetchedProfiles.forEach((fetchedProfile) => this.setDataSelectionProvider(fetchedProfile));
         },
         error: (error) => {
@@ -186,22 +183,23 @@ export class EditFieldsModalComponent implements OnInit {
       });
   }
 
-  private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
+  private setDataSelectionProvider(newProfile: DataSelectionProfile) {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProviderService.setProfileInDataSelection(dataSelectionId, newProfile);
   }
 
   private createInstanceOfDataSelectionProfile(
-    profile: DataSelectionProfileProfile,
+    profile: DataSelectionProfile,
     profileFields: ProfileFields[]
   ) {
-    return new DataSelectionProfileProfile(
+    return new DataSelectionProfile(
       profile.getId(),
       profile.getUrl(),
       profile.getDisplay(),
       profileFields,
       profile.getFilters(),
-      profile.getReference()
+      profile.getReference(),
+      profile.getSelectedFields()
     );
   }
 

@@ -17,10 +17,10 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { map, Observable, Subscription, take } from 'rxjs';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { CRTDLData } from '../../../../model/Interface/CRTDLData';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -47,7 +47,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
+    private profileProviderService: ProfileProviderService,
     private feasibilityQueryValidation: FeasibilityQueryValidation
   ) {}
 
@@ -117,7 +117,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
 
   public uploadDataSelection(crtdl: CRTDLData) {
     this.translatedCRTLDSubscription?.unsubscribe();
-    this.dataSelectionProfileProviderService.resetDataSelectionProfileMap();
+    this.profileProviderService.resetProfileMap();
     if (crtdl.cohortDefinition?.inclusionCriteria?.length > 0) {
       this.translatedCRTLDSubscription = this.crdtlTranslatorService
         .createCRDTLFromJson(crtdl)

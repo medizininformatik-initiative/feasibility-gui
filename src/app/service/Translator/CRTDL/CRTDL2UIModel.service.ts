@@ -16,7 +16,7 @@ import { UiCRTDL } from 'src/app/model/UiCRTDL';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from '../../Validation.service';
 import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
-import { DataSelectionProfileProviderService } from '../../../modules/data-selection/services/DataSelectionProfileProvider.service';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class CRTDL2UIModelService {
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
     private validationService: ValidationService,
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService
+    private profileProviderService: ProfileProviderService
   ) {}
 
   public createCRDTLFromJson(crtdl: CRTDLData): Observable<UiCRTDL> {
@@ -83,7 +83,7 @@ export class CRTDL2UIModelService {
     dataExtraction: DataExtractionData
   ): Observable<DataSelection> {
     this.dataSelectionProvider.clearDataSelection();
-    this.dataSelectionProfileProviderService.resetDataSelectionProfileMap();
+    this.profileProviderService.resetProfileMap();
     return this.dataExtraction2UiDataSelectionService.translate(dataExtraction).pipe(
       take(1),
       map((dataSelection) => {

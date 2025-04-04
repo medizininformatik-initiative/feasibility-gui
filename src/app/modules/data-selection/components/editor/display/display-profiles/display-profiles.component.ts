@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { map, Observable } from 'rxjs';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 
 @Component({
   selector: 'num-display-profiles',
@@ -13,10 +13,10 @@ export class DisplayProfilesComponent implements OnInit {
   @Input()
   isEditable: boolean;
 
-  $dataSelectionProfileArray: Observable<Array<DataSelectionProfileProfile>>;
+  $dataSelectionProfileArray: Observable<Array<DataSelectionProfile>>;
 
   constructor(
-    private dataSelectionProfileProvider: DataSelectionProfileProviderService,
+    private profileProvider: ProfileProviderService,
     private dataSelectionProvider: DataSelectionProviderService
   ) {}
 
@@ -34,9 +34,7 @@ export class DisplayProfilesComponent implements OnInit {
         map((dataSelection) =>
           dataSelection
             .getProfiles()
-            .map((profile) =>
-              this.dataSelectionProfileProvider.getDataSelectionProfileByUrl(profile.getUrl())
-            )
+            .map((profile) => this.profileProvider.getProfileById(profile.getId()))
         )
       );
   }

@@ -11,7 +11,7 @@ import {
   ElementRef,
   EventEmitter,
 } from '@angular/core';
-import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfileProfile.service';
+import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeService } from 'src/app/service/DataSelection/CreateDataselectionProfileTree';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
@@ -19,7 +19,7 @@ import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelecti
 import { map, Observable, Subscription, take } from 'rxjs';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 
@@ -42,7 +42,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
 
   selectedDataSelectionProfileUrls: Set<string> = new Set();
 
-  $dataSelectionProfileArray: Observable<DataSelectionProfileProfile[]>;
+  $dataSelectionProfileArray: Observable<DataSelectionProfile[]>;
 
   $dataSelectionProfileTreeNodeArray: Observable<DataSelectionProfileTreeNode[]>;
 
