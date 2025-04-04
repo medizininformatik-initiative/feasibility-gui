@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
 import { Observable, of } from 'rxjs';
-import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe ';
 import { DisplayData } from '../../../model/Interface/DisplayData';
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe';
 
 @Component({
   selector: 'num-filter-chips',

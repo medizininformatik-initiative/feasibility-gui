@@ -16,7 +16,7 @@ export class DataSelectionProviderService {
     this.initializeDataSelectionInstance();
   }
 
-  private initializeDataSelectionInstance(): void {
+  public initializeDataSelectionInstance(): void {
     const dataSelection: DataSelection = new DataSelection([], uuidv4());
     this.setDataSelectionByUID(dataSelection.getId(), dataSelection);
     this.activeDataSelection.setActiveDataSelectionID(dataSelection.getId());
@@ -103,5 +103,9 @@ export class DataSelectionProviderService {
 
   public resetDataSelectionMap(): void {
     this.dataSelectionUIDMapSubject.next(new Map());
+  }
+  public clearDataSelection(): void {
+    const dataSelection: DataSelection = new DataSelection([], uuidv4());
+    this.setDataSelectionByUID(dataSelection.getId(), dataSelection, true);
   }
 }

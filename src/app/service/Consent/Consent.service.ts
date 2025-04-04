@@ -112,7 +112,7 @@ export class ConsentService implements OnDestroy {
     'false:false:false:false': {
       code: 'no-no-no-no',
       display:
-        'Zentrale, nicht EU-DSGVO konforme Analyse, ohne Krankenassendaten, und ohne Rekontaktierung',
+        'Zentrale, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung',
       system: 'fdpg.consent.combined',
     },
   };
@@ -194,5 +194,9 @@ export class ConsentService implements OnDestroy {
     }
 
     return null;
+  }
+  public clearConsent(): void {
+    this.setProvisionCode(false, true, false, false);
+    this.setConsent(false);
   }
 }

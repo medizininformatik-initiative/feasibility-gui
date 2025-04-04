@@ -18,10 +18,10 @@
         "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt",
         "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt"
       },
-      "ADDED_CRITERIA":{
-         "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohortenselektion hinzugefügt",
-         "PLURAL": "Sie haben {{amount}} Kriterien zur Kohortenselektion hinzugefügt"
-       }
+      "ADDED_CRITERIA": {
+        "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohortenselektion hinzugefügt",
+        "PLURAL": "Sie haben {{amount}} Kriterien zur Kohortenselektion hinzugefügt"
+      }
     },
     "FILTER": {
       "CONTEXT": "Kontext",
@@ -36,7 +36,7 @@
       "APPLY_FILTERS": "Filter anwenden",
       "DEFINE_FIELDS": "Felder selektieren",
       "SEARCH": "Als Suchbegriff nutzen",
-      "SHOW_CRITERIA":"Kriterium anzeigen",
+      "SHOW_CRITERIA": "Kriterium anzeigen",
       "ADD": "Zur Kohortenselektion hinzufügen",
       "OPTIONS": "Optionen"
     },
@@ -49,6 +49,20 @@
         "APPLY": "Auswählen",
         "CANCEL": "Abbrechen"
       }
+    },
+    "DELETE_MODAL": {
+      "HEADER": "Löschen bestätigen",
+      "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?",
+      "DELETE": "Löschen",
+      "CANCEL": "Abbrechen"
+    },
+    "SAVE_MODAL": {
+      "HEADER": "Abfrage speichern",
+      "TITLE": "Titel",
+      "COMMENT": "Kommentar",
+      "SAVE": "Speichern",
+      "CANCEL": "Abbrechen",
+      "COHORT_WARNING": "Hinweis: Kohorte ist leer oder ungültig "
     }
   },
   "SHAREDFILTER": {
@@ -135,7 +149,7 @@
       "REQUIRED": "erforderlich"
     },
     "FILTER": {
-      "HEADER": "Kodierung/Name"
+      "TOKEN": "Kodierung/Name"
     },
     "EDIT": {
       "HEADER": "Ausgewählte Merkmale",
@@ -147,7 +161,9 @@
       "ADD": "Zur Merkmalselektion hinzufügen",
       "JUMP_TO_DATASELECTION_TREE": "Merkmal hinzufügen",
       "JUMP_TO_DATASELECTION": "Selektion anzeigen",
-      "DATA_REQUEST": "Daten beantragen"
+      "DATA_REQUEST": "Daten beantragen",
+      "SAVE_DATAQUERY": "Datenanfrage speichern"
+
     },
     "SEARCH": {
       "LABEL": "Code oder Suchbegriff eingeben",
@@ -246,6 +262,7 @@
         "BACK_TO_SEARCH":"Kriterien hinzufügen",
         "VIEW_STAGE": "Kohortenselektion anzeigen",
         "SEND_QUERY": "Machbarkeitsabfrage",
+        "SAVE_DATAQUERY": "Daten Definition speichern",
         "DATA_REQUEST": "Datendefinition"
       },
       "MESSAGE": {

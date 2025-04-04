@@ -20,7 +20,7 @@ export class FilterChipConceptAdapter {
    */
   public static adaptCodeableConcept(
     selectedConcepts: Concept[] = [],
-    display?: Display
+    display?: Display | string
   ): InterfaceFilterChip[] {
     this.resetFilterChips();
 
@@ -68,7 +68,7 @@ export class FilterChipConceptAdapter {
    * @param selectedConcepts A Set of TerminologyCode
    * @param type The filter type
    */
-  private static buildFilterChips(selectedConcepts: Concept[], type: Display): void {
+  private static buildFilterChips(selectedConcepts: Concept[], type: Display | string): void {
     const builder = new FilterChipBuilder(type);
     selectedConcepts.forEach((concept) => {
       this.createFilterChip(concept, builder);

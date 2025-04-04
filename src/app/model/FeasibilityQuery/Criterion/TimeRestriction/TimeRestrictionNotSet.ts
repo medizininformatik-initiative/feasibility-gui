@@ -5,7 +5,7 @@ export class TimeRestrictionNotSet extends AbstractTimeRestriction {
   protected type: TimeRestrictionType = TimeRestrictionType.NONE;
 
   constructor() {
-    super(null, null);
+    super(undefined, undefined);
   }
 
   /**

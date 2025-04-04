@@ -20,6 +20,7 @@ import {
 import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { map, Observable, Subscription, take } from 'rxjs';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { CRTDLData } from '../../../../model/Interface/CRTDLData';
 
 @Component({
   selector: 'num-data-selection',
@@ -35,7 +36,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   isCohortExistent$: Observable<boolean>;
 
   downloadSubscription: Subscription;
-
+  translatedCRTLDSubscription: Subscription;
   fileName: string;
   constructor(
     private terminologySystemProvider: TerminologySystemProvider,
@@ -60,6 +61,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.downloadSubscription?.unsubscribe();
+    this.translatedCRTLDSubscription?.unsubscribe();
   }
 
   public editDataSelection() {
@@ -113,13 +115,23 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     }
   }
 
-  public uploadDataSelection(crtdl: string) {
+  public uploadDataSelection(crtdl: CRTDLData) {
+    this.translatedCRTLDSubscription?.unsubscribe();
     this.dataSelectionProfileProviderService.resetDataSelectionProfileMap();
-    const isDataSelectionValid = this.crdtlTranslatorService.translateToUiModel(crtdl);
-    if (!isDataSelectionValid) {
-      this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');
+    if (crtdl.cohortDefinition?.inclusionCriteria?.length > 0) {
+      this.translatedCRTLDSubscription = this.crdtlTranslatorService
+        .createCRDTLFromJson(crtdl)
+        .subscribe((uiCRTDL) => {
+          if (uiCRTDL?.getFeasibilityQuery()?.getInclusionCriteria()?.length > 0) {
+            this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD');
+          } else {
+            this.snackbarService.displayErrorMessageWithNoCode(
+              'DATAQUERY.DATASELECTION.ERROR.UPLOAD'
+            );
+          }
+        });
     } else {
-      this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD');
+      this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');
     }
   }
 

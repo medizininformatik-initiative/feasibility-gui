@@ -1,8 +1,8 @@
-import { Display } from './DisplayData';
+import { DisplayData } from './DisplayData';
 import { Relatives } from './Relatives';
 
 export interface Relations {
-  display: Display
+  display: DisplayData
   parents: Relatives[]
   children: Relatives[]
   relatedTerms: Relatives[]

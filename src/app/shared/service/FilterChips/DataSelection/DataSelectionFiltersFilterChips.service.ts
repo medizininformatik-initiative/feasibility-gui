@@ -40,6 +40,9 @@ export class DataSelectionFiltersFilterChips {
   }
 
   private getCodeFilterChips(filter: ProfileTokenFilter): InterfaceFilterChip[] {
-    return FilterChipConceptAdapter.adaptCodeableConcept(filter.getSelectedTokens());
+    return FilterChipConceptAdapter.adaptCodeableConcept(
+      filter.getSelectedTokens(),
+      'DATASELECTION.FILTER.' + filter.getType().toUpperCase()
+    );
   }
 }

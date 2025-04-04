@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { SaveQueryModalComponent } from 'src/app/modules/feasibility-query/components/result/save-dialog/save-dialog.component';
 import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
-import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModalInterface';
+import { SaveFileModalComponent } from '../../../../../shared/components/save-file-modal/save-file-modal.component';
+import { SaveFileDataModal } from '../../../../../shared/models/SaveDataModal/SaveFileDataModal';
 
 @Component({
   selector: 'num-download-data-selection',
@@ -11,11 +11,11 @@ import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModal
 })
 export class DownloadDataSelectionComponent {
   constructor(
-    private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
+    private dialogRef: MatDialogRef<SaveFileModalComponent, void>,
     private downloadCRDTLService: DownloadCRDTLService
   ) {}
 
-  public saveDataSelection(data: SaveDataModal) {
+  public saveDataSelection(data: SaveFileDataModal) {
     this.downloadCRDTLService.downloadActiveDataSelectionAsFile(data.title);
     this.doDiscard();
   }

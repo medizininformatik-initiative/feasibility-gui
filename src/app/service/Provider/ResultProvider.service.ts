@@ -1,4 +1,7 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service';
+import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { FeasibilityQueryProviderService } from './FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
 import { QueryResult } from '../../model/Result/QueryResult';
 
@@ -11,7 +14,7 @@ export class ResultProviderService {
     new Map()
   );
 
-  constructor() {}
+  constructor(private feasibilityQueryProvider: FeasibilityQueryProviderService) {}
 
   /**
    * Retrieves the observable of the Result UID map.
@@ -50,5 +53,21 @@ export class ResultProviderService {
   public deleteResultByID(id: string): void {
     this.resultMap.delete(id);
     this.resultMapSubject.next(new Map(this.resultMap));
+  }
+
+  public getResultOfActiveFeasibilityQuery(): Observable<QueryResult | undefined> {
+    return this.feasibilityQueryProvider
+      .getActiveFeasibilityQuery()
+      .pipe(switchMap((feasibilityQuery: FeasibilityQuery) => this.getLastResult(feasibilityQuery)));
+  }
+
+  private getLastResult(feasibilityQuery: FeasibilityQuery): Observable<QueryResult | undefined> {
+    const resultIds = feasibilityQuery.getResultIds();
+
+    if (!resultIds || resultIds.length === 0) {
+      return of(undefined);
+    }
+    const lastResultId = resultIds[resultIds.length - 1];
+    return of(this.getResultByID(lastResultId));
   }
 }

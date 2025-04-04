@@ -36,11 +36,11 @@
       "APPLY_FILTERS": "Apply filter",
       "DEFINE_FIELDS": "Select fields",
       "SEARCH": "Use as searchterm",
-      "SHOW_CRITERIA":"Show criteria",
+      "SHOW_CRITERIA": "Show criteria",
       "ADD": "Add to Cohort Selection",
       "OPTIONS": "Options"
     },
-    "LIST_ITEM_DETAILS":{
+    "LIST_ITEM_DETAILS": {
       "PARENTS": "Parent element",
       "CHILDREN": "Child element"
     },
@@ -49,6 +49,20 @@
         "APPLY": "Apply",
         "CANCEL": "Cancel"
       }
+    },
+    "DELETE_MODAL": {
+      "HEADER": "Confirm deletion",
+      "TITLE": "Do you really want to delete the data query?",
+      "DELETE": "Delete",
+      "CANCEL": "Cancel"
+    },
+    "SAVE_MODAL": {
+      "HEADER": "Save",
+      "TITLE": "Titel",
+      "COMMENT": "Comment",
+      "SAVE": "Save",
+      "CANCEL": "Cancel",
+      "COHORT_WARNING": "Note: Cohort is empty or invalid"
     }
   },
   "SHAREDFILTER": {
@@ -57,6 +71,24 @@
       "ADD": "Add",
       "REMOVE": "Remove"
     }
+  },
+  "CONSENT": {
+    "yes-yes-yes-yes": "Distributed, EU-GDPR compliant analysis, with health insurance data, and with recontacting",
+    "yes-yes-yes-no": "Distributed, EU-GDPR compliant analysis, with health insurance data, and without recontacting",
+    "yes-yes-no-yes": "Distributed, EU-GDPR compliant analysis, without health insurance data, and with recontacting",
+    "yes-yes-no-no": "Distributed, EU-GDPR compliant analysis, without health insurance data, and without recontacting",
+    "yes-no-yes-yes": "Distributed, non-EU GDPR-compliant analysis, with health insurance data, and with recontacting",
+    "yes-no-yes-no": "Distributed, non-EU GDPR-compliant analysis, with health insurance data, and without recontacting",
+    "yes-no-no-yes": "Distributed, non-EU GDPR-compliant analysis, without health insurance data, and with recontacting",
+    "yes-no-no-no": "Distributed, non-EU GDPR-compliant analysis, without health insurance data, and without recontacting",
+    "no-yes-yes-yes": "Central, EU-GDPR compliant analysis, with health insurance data, and with recontacting",
+    "no-yes-yes-no": "Central, EU-GDPR compliant analysis, with health insurance data, and without recontacting",
+    "no-yes-no-yes": "Central, EU-GDPR compliant analysis, without health insurance data, and with recontacting",
+    "no-yes-no-no": "Central, EU-GDPR compliant analysis, without health insurance data, and without recontacting",
+    "no-no-yes-yes": "Central, non-EU GDPR-compliant analysis, with health insurance data, and with recontacting",
+    "no-no-yes-no": "Central, non-EU GDPR-compliant analysis, with health insurance data, and without recontacting",
+    "no-no-no-yes": "Central, non-EU GDPR-compliant analysis, without health insurance data, and with recontacting",
+    "no-no-no-no": "Central, non-EU GDPR-compliant analysis, without health insurance data, and without recontacting"
   },
   "DASHBOARD": {
     "HEADER": "Welcome to the „Find data and biospecimens“ service of the German Research Data Portal for Health",
@@ -67,13 +99,13 @@
     "PARAGRAPH3_3": " you have the possibility to formulate and send a new query based on the ",
     "PARAGRAPH3_4": " to get an overview of the available patient data records.",
     "PARAGRAPH3_LINK": "core data set of the MII",
-    "PARAGRAPH4_1":"You can view and further edit saved queries or saved drafts via ",
-    "PARAGRAPH4_2":"My Queries",
+    "PARAGRAPH4_1": "You can view and further edit saved queries or saved drafts via ",
+    "PARAGRAPH4_2": "My Queries",
     "PARAGRAPH4_3": ".",
     "PARAGRAPH5_1": "Once you have all the relevant information for your research project, you can submit an application for data use in the proposal portal of the German Research Data Portal for Health via",
     "PARAGRAPH5_2": "Submit Application",
     "PARAGRAPH5_3": ".",
-    "INFO":{
+    "INFO": {
       "TEXT": " We are currently working on the feasibility portal. This can lead to slow responses and deviating results for some queries."
     },
     "DATAQUERY": {
@@ -98,6 +130,8 @@
     }
   },
   "DATASELECTION": {
+    "REQUIRED": "Required",
+    "OPTIONAL": "Optional",
     "HEADER": "Feature Selection",
     "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. The available data is standardized throughout Germany using core data set (CDS) modules. You can also filter data points, e.g. if only certain laboratory values are of interest, and you have the option of specifying which data points are absolutely necessary for your research question.",
     "DATASELECTION": "Feature Selection",
@@ -114,7 +148,7 @@
       "REQUIRED": "required"
     },
     "FILTER": {
-      "HEADER": "Coding/Name"
+      "TOKEN": "Coding/Name"
     },
     "EDIT": {
       "HEADER": "Selected features",
@@ -126,7 +160,8 @@
       "DOWNLOAD": "Download Feature Selection",
       "JUMP_TO_DATASELECTION_TREE": "Add Feature",
       "JUMP_TO_DATASELECTION": "Show Selection",
-      "DATA_REQUEST": "Data Request"
+      "DATA_REQUEST": "Data Request",
+      "SAVE_DATAQUERY": "Save Data Request"
     },
     "SEARCH": {
       "LABEL": "Insert code or search text",
@@ -136,8 +171,7 @@
       "LABEL": "Selected criteria",
       "REFERENCE": "only if referenced"
     },
-    "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal.",
-    "REQUIRED": "required from all sites"
+    "INFOTEXT": "Please select the criteria you would like to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
   },
   "DATAQUERY": {
     "COHORT": {
@@ -149,7 +183,6 @@
         "NEW_COHORT": "New Cohort",
         "JUMP_TO_DATASELECTION": "To Feature Selection",
         "SEND_QUERY": "Feasibility Query"
-
       },
       "SAVE": {
         "HEADER": "Download current Cohort Selection"
@@ -160,7 +193,7 @@
       "EMPTY": "You have not defined a cohort yet. Upload an existing Cohort Selection or create a new one."
     },
     "DATASELECTION": {
-      "HEADER":"Feature Selection",
+      "HEADER": "Feature Selection",
       "BUTTON": {
         "EDIT": "Edit Feature Selection",
         "DOWNLOAD": "Download Data Request",
@@ -179,8 +212,6 @@
         "UPLOAD": "Data Definition has been uploaded",
         "DOWNLOAD": "Data Definition has been successfully downloaded"
       }
-
-
     }
   },
   "LANGUAGE": {
@@ -225,7 +256,7 @@
       "HEADER_INFO": "Edit your criteria here and build your request",
       "BUTTON": {
         "ADD_TO_STAGE": "Add to Cohort Selection",
-        "BACK_TO_SEARCH":"Add Criteria",
+        "BACK_TO_SEARCH": "Add Criteria",
         "VIEW_STAGE": "View Cohort Selection",
         "SEND_QUERY": "Feasibility Query",
         "DATA_REQUEST": "Data Request"
@@ -249,14 +280,14 @@
     },
     "HEADER_TITLE": "Selected Criteria",
     "SEARCH": {
-      "MIN_LENGTH":"Required length of 3 letters",
-      "BUTTON":{
+      "MIN_LENGTH": "Required length of 3 letters",
+      "BUTTON": {
         "RESET": "Reset filter"
       },
-      "EMPTY":"Sorry we couldn't find any results for ",
+      "EMPTY": "Sorry we couldn't find any results for ",
       "SEARCH_BUTTON": "Search",
       "HEADER": "Criteria Search",
-      "SEARCHBAR":"Search by term or terminology code",
+      "SEARCHBAR": "Search by term or terminology code",
       "HEADER_INFO": "Define your cohort based on criteria that you can select using the search field. For targeted searches, you can restrict your search to certain terminologies (e.g. ICD10, LOINC, OPS) or KDS modules. You can use the cohort selection directly to determine the number of cases across Germany.",
       "INCLUSION": "Inclusion criteria",
       "EXCLUSION": "Exclusion criteria",
@@ -287,7 +318,8 @@
         "BOTH": "between {{ from }} and {{ to }}",
         "FROM": "later than {{ from }}",
         "TO": "before {{ to }}",
-        "NONE": "no time restriction"
+        "NONE": "no time restriction",
+        "WARNING": "The start date must be earlier than the end date"
       }
     },
     "OVERVIEW": {
@@ -320,7 +352,7 @@
       "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Choose one or more valid values ({{ label }}):",
       "HEADER_FILTER_REFERENCE": "observed diagnosis",
       "HEADER_FILTER_VALUE": "Value restriction",
-      "CHOOSE_GROUP":"Choose a group",
+      "CHOOSE_GROUP": "Choose a group",
       "MANDATORY_HINT": "Mandatory field",
       "UNIT": "Unit",
       "MIN": "Min",
@@ -346,7 +378,6 @@
         "BETWEEN": "between",
         "TITLE": "Time constraint (optional)",
         "NONE": "no time restriction"
-
       }
     },
     "HINT": {
@@ -425,15 +456,16 @@
     }
   },
   "ERROR": {
-    "FEAS-10001"  : "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
-    "FEAS-10002"  : "You sent too many queries, please wait and try again",
-    "FEAS-10004"  : "The number of sites which answered is too small -> detailed results are not shown",
-    "FEAS-10005"  : "The result size is too small -> result will not be shown",
-    "FEAS-10006"  : "Saved query limit reached. Please delete old saved queries before trying to create new ones.",
-    "404" :        "Site not found",
-    "VAL-20001"   :"The combination of context and termcode(s) is not found"
+    "FEAS-10001": "Your user was blacklisted because you send to many queries, please contact info@forschen-fuer-gesundheit.de",
+    "FEAS-10002": "You sent too many queries, please wait and try again",
+    "FEAS-10003": "You sent too many queries, please wait and try again",
+    "FEAS-10004": "The number of sites which answered is too small -> detailed results are not shown",
+    "FEAS-10005": "The result size is too small -> result will not be shown",
+    "FEAS-10006": "Saved query limit reached. Please delete old saved queries before trying to create new ones.",
+    "404": "Site not found",
+    "VAL-20001": "The combination of context and termcode(s) is not found"
   },
-  "INFO":{
+  "INFO": {
     "UPDATE_NOTE": "Due to updates centrally and at the sites, the portal is of limited use. We thank you for your understanding."
   }
 }

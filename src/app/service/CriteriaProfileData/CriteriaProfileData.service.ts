@@ -11,7 +11,7 @@ import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
-import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData ';
+import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
 

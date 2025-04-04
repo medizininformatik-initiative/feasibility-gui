@@ -50,62 +50,11 @@ export class FeasibilityQueryApiService {
     });
   }
 
-  /**
-   *
-   * @param validate
-   * @todo parameters need to be outsourced in to own structured or enum or builder
-   * @returns
-   */
-  public getSavedFeasibilityQueries(validate?: boolean): Observable<any> {
-    const url = validate === false ? '&skip-validation=true' : '';
-    return this.http.get<Array<any>>(
-      this.backendService.createUrl(FeasibilityQueryPaths.EXECUTE_QUERY, 'filter=saved' + url),
-      {
-        headers: this.backendService.getHeaders(),
-      }
-    );
-  }
-  /*
-      public loadSavedTemplates(validate?: boolean): Observable<StructuredQueryTemplate[]> {
-        if (this.feature.mockLoadnSave()) {
-          return of(this.queryProviderService.loadQueries());
-        } else {
-          const headers = this.headers;
-          const url = validate === false ? '?skip-validation=true' : '';
-          return this.http.get<Array<StructuredQueryTemplate>>(
-            this.createUrl(BackendService.PATH_STORED_QUERY + url),
-            {
-              headers,
-            }
-          );
-        }
-      }
-
-
-        public deleteSavedTemplate(id: number) {
-    const headers = this.headers;
-    const url = this.createUrl(BackendService.PATH_STORED_QUERY + '/' + id);
-    return this.http.delete<any>(url, {
-      headers,
-    });
-  }
-
-    */
-
   public getStructuredQueryById(id: number): Observable<any> {
     const url = this.backendService.createUrl(
       FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id.toString()
     );
     return this.http.get<any>(url, {
-      headers: this.backendService.getHeaders(),
-    });
-  }
-
-  public deleteSavedQuery(id: number): Observable<any> {
-    const url = this.backendService.createUrl(
-      FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id + FeasibilityQueryPaths.SAVE_QUERY
-    );
-    return this.http.delete<any>(url, {
       headers: this.backendService.getHeaders(),
     });
   }

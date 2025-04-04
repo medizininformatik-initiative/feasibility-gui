@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModalInterface';
+import { SaveFileDataModal } from '../../models/SaveDataModal/SaveFileDataModal';
 
 @Component({
   selector: 'num-save-file-modal',
@@ -11,16 +11,17 @@ export class SaveFileModalComponent {
   isCommentRequired = false;
 
   @Output()
-  save = new EventEmitter<SaveDataModal>();
+  save = new EventEmitter<SaveFileDataModal>();
 
   @Output()
   cancel = new EventEmitter<void>();
 
   title = '';
-  comment = '';
 
   doSave(): void {
-    this.save.emit({ title: this.title, comment: this.comment });
+    this.save.emit({
+      title: this.title,
+    });
   }
 
   doDiscard(): void {

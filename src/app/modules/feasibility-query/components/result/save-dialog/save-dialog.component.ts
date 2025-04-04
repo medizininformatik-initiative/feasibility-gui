@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FeasibilityQueryApiService } from 'src/app/service/Backend/Api/FeasibilityQueryApi.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModalInterface';
+import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModal';
 import { SaveFeasibilityQueryModalService } from 'src/app/service/SaveFeasibilityQueryModal.service';
 import { Subscription } from 'rxjs';
 

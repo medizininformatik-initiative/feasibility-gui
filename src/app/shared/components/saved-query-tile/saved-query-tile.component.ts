@@ -24,14 +24,10 @@ export class SavedQueryTileComponent {
   }
 
   public onDelete(id: string) {
-    this.deleteQuery.emit(id);
-    /**
-this.confirmDeleteService.confirmDelete().subscribe((result) => {
-  console.log(result)
-  if (result) {
-    this.deleteQuery.emit(id)
-  }
-})
-     */
+    this.confirmDeleteService.confirmDelete().subscribe((result) => {
+      if (result) {
+        this.deleteQuery.emit(id);
+      }
+    });
   }
 }

@@ -13,6 +13,7 @@ import { StructuredQuery2FeasibilityQueryService } from 'src/app/service/Transla
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from 'src/app/service/Validation.service';
+import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
 
 @Component({
   selector: 'num-cohort-definition',
@@ -39,7 +40,8 @@ export class CohortDefinitionComponent implements OnInit {
     private consentService: ConsentService,
     private dialog: MatDialog,
     private terminologySystemProvider: TerminologySystemProvider,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private stageProviderService: StageProviderService
   ) {}
 
   ngOnInit() {
@@ -80,6 +82,7 @@ export class CohortDefinitionComponent implements OnInit {
   }
 
   doValidate(importedQuery): void {
+    this.consentService.clearConsent();
     this.validationService.validateStructuredQuery(importedQuery).subscribe(
       (validatedStructuredQuery) => {
         this.structuredQuery2FeasibilityQueryService
@@ -116,6 +119,7 @@ export class CohortDefinitionComponent implements OnInit {
         feasibilityQuery.getId(),
         true
       );
+      this.stageProviderService.clearStage();
       this.consentService.setConsent(false);
       this.consentService.setProvisionCode(false, false, false, false);
     }

@@ -1,12 +1,12 @@
-import { FilterTypes } from '../Utilities/FilterTypes';
 import { AttributeCode } from './AttributeCode';
 import { DisplayData } from './DisplayData';
-import { Unit } from './Unit';
+import { FilterTypes } from '../Utilities/FilterTypes';
+import { QuantityUnitData } from './Unit';
 
 export interface AttributeDefinitionData {
   min: number
   max: number
-  allowedUnits: Unit[]
+  allowedUnits: QuantityUnitData[]
   attributeCode: AttributeCode
   display: DisplayData
   optional: boolean

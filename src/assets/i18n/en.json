@@ -49,6 +49,20 @@
         "APPLY": "Apply",
         "CANCEL": "Cancel"
       }
+    },
+    "DELETE_MODAL": {
+      "HEADER": "Confirm deletion",
+      "TITLE": "Do you really want to delete the data query?",
+      "DELETE": "Delete",
+      "CANCEL": "Cancel"
+    },
+    "SAVE_MODAL": {
+      "HEADER": "Save",
+      "TITLE": "Titel",
+      "COMMENT": "Comment",
+      "SAVE": "Save",
+      "CANCEL": "Cancel",
+      "COHORT_WARNING": "Note: Cohort is empty or invalid"
     }
   },
   "SHAREDFILTER": {
@@ -134,7 +148,7 @@
       "REQUIRED": "required"
     },
     "FILTER": {
-      "HEADER": "Coding/Name"
+      "TOKEN": "Coding/Name"
     },
     "EDIT": {
       "HEADER": "Selected features",
@@ -146,7 +160,8 @@
       "DOWNLOAD": "Download Feature Selection",
       "JUMP_TO_DATASELECTION_TREE": "Add Feature",
       "JUMP_TO_DATASELECTION": "Show Selection",
-      "DATA_REQUEST": "Data Request"
+      "DATA_REQUEST": "Data Request",
+      "SAVE_DATAQUERY": "Save Data Request"
     },
     "SEARCH": {
       "LABEL": "Insert code or search text",

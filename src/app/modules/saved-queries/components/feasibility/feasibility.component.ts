@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ConsentService } from '../../../../service/Consent/Consent.service';
+import { DataQueryStorageService } from 'src/app/service/DataQuery/DataQueryStorage.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { first, Observable, Subscription } from 'rxjs';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SavedFeasibilityQueryService } from '../../services/SavedFeasibilityQuery.service';
-import { StructuredQuery2FeasibilityQueryService } from '../../../../service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
-import { v4 as uuidv4 } from 'uuid';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
-import { StructuredQuery2UIQueryTranslatorService } from '../../../../service/Translator/StructureQuery/StructuredQuery2UIQueryTranslator.service';
-import { ConsentService } from '../../../../service/Consent/Consent.service';
+import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
+import { v4 as uuidv4 } from 'uuid';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { filter, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'num-feasibility',
@@ -20,10 +21,8 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   savedQueries$: Observable<InterfaceSavedQueryTile[]>;
   loadSubscription: Subscription;
   constructor(
-    private savedFeasibilityQueryService: SavedFeasibilityQueryService,
-    private SQToFQTranslator: StructuredQuery2FeasibilityQueryService,
-    private SQToUIQueryTranslator: StructuredQuery2UIQueryTranslatorService,
-    private feasibilityQueryService: FeasibilityQueryProviderService,
+    private dataQueryStorageService: DataQueryStorageService,
+    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     private navigationHelperService: NavigationHelperService,
     private resultProviderService: ResultProviderService,
     private consentService: ConsentService
@@ -36,49 +35,55 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.loadSubscription?.unsubscribe();
   }
+
   private loadSavedQueries() {
-    this.savedQueries$ = this.savedFeasibilityQueryService.loadSavedQueries();
+    this.savedQueries$ = this.dataQueryStorageService.readDataQueries();
   }
 
   public deleteSavedFeasibility(id: string) {
-    this.savedFeasibilityQueryService
-      .deleteQuery(Number(id))
+    this.dataQueryStorageService
+      .deleteDataQueryById(Number(id))
       .pipe(first())
       .subscribe(() => {
         this.loadSavedQueries();
       });
   }
 
-  loadQueryIntoEditor(id: string) {
-    this.loadSubscription = this.savedFeasibilityQueryService
-      .loadQueryIntoEditor(Number(id))
-      .subscribe((savedFeasibilityQuery) => {
-        this.SQToFQTranslator.translate(savedFeasibilityQuery.content).subscribe(
-          (feasibilityQuery) => {
-            const queryResult = new QueryResult(
-              false,
-              feasibilityQuery.getId(),
-              savedFeasibilityQuery.totalNumberOfPatients,
-              uuidv4()
-            );
-            this.resultProviderService.setResultByID(queryResult, queryResult.getId());
-            feasibilityQuery.setResultIds([queryResult.getId()]);
-            const consent = this.SQToUIQueryTranslator.getConsent(savedFeasibilityQuery.content);
-            if (consent !== null && consent !== undefined) {
-              feasibilityQuery.setConsent(true);
-            } else {
-              feasibilityQuery.setConsent(false);
-              this.consentService.setProvisionCode(false, false, false, false);
-              this.consentService.setConsent(false);
-            }
-            this.feasibilityQueryService.setFeasibilityQueryByID(
-              feasibilityQuery,
-              feasibilityQuery.getId(),
-              true
-            );
-          }
-        );
-        this.navigationHelperService.navigateToDataQueryCohortDefinition();
-      });
+  public loadQueryIntoEditor(id: string) {
+    this.consentService.clearConsent();
+    this.loadSubscription = this.dataQueryStorageService
+      .readDataQueryById(Number(id))
+      .pipe(
+        map((savedQuery: SavedDataQuery) => {
+          const feasibilityQuery = this.extractFeasibilityQuery(savedQuery);
+          const queryResult = this.createQueryResult(feasibilityQuery, savedQuery);
+          feasibilityQuery.setResultIds([queryResult.getId()]);
+          return queryResult;
+        }),
+        tap((queryResult) => {
+          this.resultProviderService.setResultByID(queryResult, queryResult.getId());
+        })
+      )
+      .subscribe(() => this.navigate());
+  }
+
+  private extractFeasibilityQuery(savedQuery: SavedDataQuery): FeasibilityQuery {
+    return savedQuery.getCrtdl().getFeasibilityQuery();
+  }
+
+  private createQueryResult(
+    feasibilityQuery: FeasibilityQuery,
+    savedQuery: SavedDataQuery
+  ): QueryResult {
+    return new QueryResult(
+      false,
+      feasibilityQuery.getId(),
+      savedQuery.getTotalNumberOfPatients(),
+      uuidv4()
+    );
+  }
+
+  private navigate(): void {
+    this.navigationHelperService.navigateToDataQueryCohortDefinition();
   }
 }
