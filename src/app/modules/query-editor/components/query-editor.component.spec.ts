@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { QueryEditorComponent } from 'query-editor/query-editor.component';
+import { QueryEditorComponent } from './query-editor.component';
 
 describe('QueryEditorComponent', () => {
   let component: QueryEditorComponent;

@@ -1,7 +1,24 @@
-<div fxLayout="column" fxLayoutAlign="start start">
-  <div style="width: 100%" fxLayout="row" fxLayoutAlign="space-around start">
-    <num-button>Vor</num-button>
-    <num-button>Zurück</num-button>
+<div class="container" fxLayout="column">
+  <div class="button-container" fxLayout="row" fxLayoutAlign="space-between start">
+    <num-button>
+      {{ 'QUERYEDITOR.PREVIOUS' | translate }}
+    </num-button>
+    <num-button>
+      {{ 'QUERYEDITOR.NEXT' | translate }}
+    </num-button>
   </div>
-  <num-criterion [id]="id"></num-criterion>
+  <div class="background">
+    <ng-container>
+      <!-- <num-criterion [id]="id"></num-criterion> -->
+    </ng-container>
+    <ng-container *ngIf="profile$ | async as profile">
+      <num-profile
+        class="width-100"
+        (profileChanged)="updateProfile($event)"
+        [profile]="profile"
+      ></num-profile>
+    </ng-container>
+  </div>
 </div>
+
+<num-edit-action-bar (save)="onSave()" (cancel)="onCancel()"></num-edit-action-bar>
