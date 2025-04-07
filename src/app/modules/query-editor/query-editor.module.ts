@@ -13,6 +13,7 @@ import { QueryEditorRoutingModule } from './query-editor.routing.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DataSelectionModule } from '../data-selection/data-selection.module';
+import { ProfileHeaderComponent } from './components/profile/header/profile-header.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { DataSelectionModule } from '../data-selection/data-selection.module';
     CriterionComponent,
     FilterTabsComponent,
     ProfileComponent,
+    ProfileHeaderComponent,
     QueryEditorComponent,
   ],
   exports: [],
