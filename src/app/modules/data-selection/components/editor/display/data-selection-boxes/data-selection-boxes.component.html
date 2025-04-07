@@ -20,6 +20,7 @@
     <div fxLayout="row wrap" fxLayoutAlign="space-between">
       {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
       <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
+      <num-button (click)="editProfile(profile.getId())" type="blue"></num-button>
     </div>
     <div
       fxLayout="row"
@@ -35,8 +36,8 @@
         (change)="toggleIsReferenceSet(profile.getReference())"
       ></mat-checkbox>
     </div>
-    <div class="filter-chips-container">
-      <num-filter-chips [filterChips]="filtersFilterChips"> </num-filter-chips>
+    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container">
+      <num-filter-chips [filterChips]="chips"> </num-filter-chips>
     </div>
   </div>
 </div>

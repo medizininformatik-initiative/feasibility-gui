@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { DataSelectionFilterChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFilterChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
@@ -6,9 +6,11 @@ import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -17,8 +19,13 @@ import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/Select
   providers: [DataSelectionFilterChipsService],
 })
 export class DataSelectionBoxesComponent implements OnInit {
-  @Input() profile: DataSelectionProfile;
-  @Input() isEditable: boolean;
+  @Input()
+  profile: DataSelectionProfile;
+
+  @Input()
+  isEditable: boolean;
+
+  profile$: Observable<DataSelectionProfile>;
 
   menuItems: MenuItemInterface[] = [];
 
@@ -28,17 +35,28 @@ export class DataSelectionBoxesComponent implements OnInit {
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
 
   filtersFilterChips: InterfaceFilterChip[] = [];
+  filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
 
   constructor(
     private fieldsFilterChipsService: DataSelectionFilterChipsService,
     private menuService: MenuServiceDataSelection,
-    private filtersFilterChipsService: DataSelectionFiltersFilterChips
+    private filtersFilterChipsService: DataSelectionFiltersFilterChips,
+    private navigationHelperService: NavigationHelperService,
+    private cdr: ChangeDetectorRef,
+    private profileProviderService: ProfileProviderService
   ) {}
 
   ngOnInit(): void {
     this.getFilterChips();
     this.getMenuItems();
     this.display = this.profile.getDisplay();
+    this.profile$ = this.profileProviderService.getProfileIdMap().pipe(
+      tap((profileMap) => (this.profile = profileMap.get(this.profile.getId()))),
+      map(
+        (profileMap) => profileMap.get(this.profile.getId()),
+        tap(() => this.getFilterChips())
+      )
+    );
   }
 
   public getFilterChips(): void {
@@ -52,18 +70,25 @@ export class DataSelectionBoxesComponent implements OnInit {
       this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(selectedFields);
   }
 
-  private getFilterChipsForProfileFilters() {
+  private getFilterChipsForProfileFilters(): void {
     if (this.profile.getFilters()) {
-      this.filtersFilterChips.push(
-        ...this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(
+      this.filtersFilterChips$ = of(
+        this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(
           this.profile.getFilters()
         )
       );
+    } else {
+      this.filtersFilterChips$ = of([]); // Emit an empty array if no filters are present
     }
   }
 
   private getMenuItems() {
     this.menuItems = this.menuService.getMenuItemsForDataSelection();
+  }
+
+  public editProfile(id: string): void {
+    console.log('Edit Profile:', id);
+    this.navigationHelperService.navigateToEditProfile(id);
   }
 
   public toggleIsReferenceSet(reference: ProfileReference): void {
