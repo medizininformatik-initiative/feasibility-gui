@@ -13,8 +13,8 @@ export const PathSegments = {
   result: 'result',
   cohortDefinition: 'cohort-definition',
   dataSelection: 'data-selection',
-  criteria: 'criteria',
-  feature: 'feature',
+  criterion: 'criterion',
+  profile: 'profile',
 };
 
 export const UrlPaths = {
@@ -32,7 +32,7 @@ export const UrlPaths = {
     dataSelection: `${BasePaths.dataQuery}/${PathSegments.dataSelection}`,
   },
   queryEditor: {
-    criteria: `${BasePaths.queryEditor}/${PathSegments.criteria}`,
-    feature: `${BasePaths.queryEditor}/${PathSegments.feature}`,
+    criteria: `${BasePaths.queryEditor}/${PathSegments.criterion}`,
+    profile: `${BasePaths.queryEditor}/${PathSegments.profile}`,
   },
 };

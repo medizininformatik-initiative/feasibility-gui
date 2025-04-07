@@ -15,8 +15,8 @@ export class NavigationHelperService {
     });
   }
 
-  test(): void {
-    this.router.navigate([`${UrlPaths.queryEditor.criteria}`, 'dqwwqd']);
+  navigateToEditProfile(id: string): void {
+    this.router.navigate([`${UrlPaths.queryEditor.profile}`, id]);
   }
 
   public navigateToFeasibilityQueryEditor(): void {
