@@ -3,7 +3,6 @@ import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRest
 import { concatMap, map, Observable } from 'rxjs';
 import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
-import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { Injectable } from '@angular/core';
@@ -15,6 +14,7 @@ import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 
 @Injectable({
   providedIn: 'root',
@@ -117,7 +117,8 @@ export class CreateDataSelectionProfileService {
   private mapField(node: any): ProfileFields {
     const children = node.children ? this.mapFields(node.children) : [];
     if (node.required || node.recommended) {
-      this.selectedFields.push(new SelectedField(node.display, node.id, false, []));
+      const display = this.instantiateDisplayData(node.display);
+      this.selectedFields.push(new SelectedField(display, node.id, false, []));
     }
     return new ProfileFields(
       node.id,
