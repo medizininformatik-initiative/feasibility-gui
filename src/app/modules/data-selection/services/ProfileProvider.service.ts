@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ProfileProviderService {
-  private profileUrlMap: Map<string, DataSelectionProfile> = new Map();
+  private profileIdMap: Map<string, DataSelectionProfile> = new Map();
   private profileUrlMapSubject: BehaviorSubject<Map<string, DataSelectionProfile>> =
     new BehaviorSubject(new Map());
 
@@ -16,24 +16,24 @@ export class ProfileProviderService {
     return this.profileUrlMapSubject.asObservable();
   }
 
-  public getProfileById(url: string): DataSelectionProfile | undefined {
-    return this.profileUrlMap.get(url);
+  public getProfileById(id: string): DataSelectionProfile {
+    return this.profileIdMap.get(id);
   }
 
   public setProfileById(url: string, profile: DataSelectionProfile): void {
-    this.profileUrlMap.set(url, profile);
-    this.profileUrlMapSubject.next(new Map(this.profileUrlMap));
+    this.profileIdMap.set(url, profile);
+    this.profileUrlMapSubject.next(new Map(this.profileIdMap));
   }
 
   public removeProfileById(url: string): void {
-    if (this.profileUrlMap.has(url)) {
-      this.profileUrlMap.delete(url);
-      this.profileUrlMapSubject.next(new Map(this.profileUrlMap));
+    if (this.profileIdMap.has(url)) {
+      this.profileIdMap.delete(url);
+      this.profileUrlMapSubject.next(new Map(this.profileIdMap));
     }
   }
 
   public resetProfileMap(): void {
-    this.profileUrlMap.clear();
+    this.profileIdMap.clear();
     this.profileUrlMapSubject.next(new Map());
   }
 }
