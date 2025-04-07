@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-between start" class="width-100">
-  <num-data-selection-boxes class="width-100" [profile]="profile"></num-data-selection-boxes>
-  <num-filter-tabs [content]="filterTemplates"></num-filter-tabs>
+  <num-profile-header class="width-100" [profile]="profile"> </num-profile-header>
+  <num-filter-tabs *ngIf="filterTemplates.length > 0" [content]="filterTemplates"></num-filter-tabs>
 
   <ng-template #fields>
     <num-edit-fields style="width: 100%" [profile]="profile"></num-edit-fields>
@@ -19,7 +19,6 @@
       [preSelectedConcepts]="profileTokenFilter.getSelectedTokens()"
       (changedSelectedConcepts)="updateSelectedConcepts($event)"
     >
-    </num-shared-concept-filter
-    >>
+    </num-shared-concept-filter>
   </ng-template>
 </div>

@@ -1,29 +1,34 @@
+import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { EditProfileService } from 'src/app/service/EditProfile.service';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
+  SimpleChanges,
   Output,
   TemplateRef,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
-import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { DataSelectionCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionCloner';
 
 @Component({
   selector: 'num-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [EditProfileService],
 })
-export class ProfileComponent implements AfterViewInit {
+export class ProfileComponent implements AfterViewInit, OnChanges {
   @Input()
   profile: DataSelectionProfile;
 
@@ -45,31 +50,32 @@ export class ProfileComponent implements AfterViewInit {
 
   profileTokenFilter: ProfileTokenFilter;
 
-  constructor(
-    private editProfileService: EditProfileService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private editProfileService: EditProfileService) {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.updateTemplatesArrray();
-    this.changeDetectorRef.detectChanges();
   }
 
-  private updateTemplatesArrray() {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.profile && changes.profile.currentValue) {
+      this.updateTemplatesArrray();
+    }
+  }
+
+  private updateTemplatesArrray(): void {
     this.filterTemplates = [];
     this.setConceptTemplate();
     this.setFieldsTemplate();
     this.setTimeRestrictionTemplate();
   }
 
-  private setTimeRestrictionTemplate(): AbstractProfileFilter {
+  private setTimeRestrictionTemplate(): void {
     const index = this.editProfileService.getTimeRestrictionFilterIndex(this.profile);
     if (index !== -1) {
       const filter = this.profile.getFilters()[index] as ProfileTimeRestrictionFilter;
       this.profileTimeRestriction = filter.getTimeRestriction();
       this.filterTemplates.push(this.timeRestrictionTemplate);
     }
-    return null;
   }
 
   private setFieldsTemplate(): void {
@@ -88,13 +94,17 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   public updateSelectedConcepts(concepts: Concept[]): void {
-    console.log(concepts);
     this.editProfileService.updateProfileTokenFilter(this.profile, concepts);
-    this.onProfileChange.emit(this.profile);
+    this.emitProfileInstance();
   }
 
   public updateTimeRestriction(timeRestriction: AbstractTimeRestriction): void {
     this.editProfileService.updateTimeRestriction(this.profile, timeRestriction);
-    this.onProfileChange.emit(this.profile);
+    this.emitProfileInstance();
+  }
+
+  private emitProfileInstance(): void {
+    this.profile = this.editProfileService.createNewProfileInstance(this.profile);
+    this.profileChanged.emit(this.profile);
   }
 }
