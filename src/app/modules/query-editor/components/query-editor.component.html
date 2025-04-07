@@ -1,9 +1,9 @@
 <div class="container" fxLayout="column">
   <div class="button-container" fxLayout="row" fxLayoutAlign="space-between start">
-    <num-button>
+    <num-button (click)="previousElement()">
       {{ 'QUERYEDITOR.PREVIOUS' | translate }}
     </num-button>
-    <num-button>
+    <num-button (click)="nextElement()">
       {{ 'QUERYEDITOR.NEXT' | translate }}
     </num-button>
   </div>
@@ -20,5 +20,4 @@
     </ng-container>
   </div>
 </div>
-
-<num-edit-action-bar (save)="onSave()" (cancel)="onCancel()"></num-edit-action-bar>
+<num-edit-action-bar (save)="saveElement()" (cancel)="onCancel()"></num-edit-action-bar>
