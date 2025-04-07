@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { ProfileTimeRestrictionFilter } from '../model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { Concept } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { CloneTimeRestriction } from '../model/Utilities/CriterionCloner/TimeRestriction/CloneTimeRestriction';
+import { DataSelectionCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionCloner';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +50,12 @@ export class EditProfileService {
     filter: ProfileTimeRestrictionFilter,
     timeRestriction: AbstractTimeRestriction
   ): ProfileTimeRestrictionFilter {
-    return new ProfileTimeRestrictionFilter(filter.getName(), filter.getType(), timeRestriction);
+    CloneTimeRestriction.deepCopyTimeRestriction(timeRestriction);
+    return new ProfileTimeRestrictionFilter(
+      filter.getName(),
+      filter.getType(),
+      CloneTimeRestriction.deepCopyTimeRestriction(timeRestriction)
+    );
   }
 
   public getProfileTokenFilterIndex(profile: DataSelectionProfile): number {
@@ -73,5 +80,9 @@ export class EditProfileService {
       filter.getValueSetUrls(),
       tokenFilter
     );
+  }
+
+  public createNewProfileInstance(profile: DataSelectionProfile): DataSelectionProfile {
+    return DataSelectionCloner.deepCopyProfile(profile);
   }
 }
