@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
@@ -29,18 +31,9 @@ export class CriterionComponent implements OnInit, AfterViewInit {
   @ViewChild('timeRestriction', { static: false, read: TemplateRef })
   timeRestrictionTemplate: TemplateRef<any>;
 
-  @ViewChild('concept1', { static: false, read: TemplateRef })
-  conceptTemplate1: TemplateRef<any>;
-
-  @ViewChild('concept', { static: false, read: TemplateRef })
-  conceptTemplate: TemplateRef<any>;
-
-  @ViewChild('concept2', { static: false, read: TemplateRef })
-  conceptTemplate2: TemplateRef<any>;
-
   criterion$: Observable<Criterion>;
 
-  dseElement: any;
+  dseElement$: Observable<DataSelectionProfile>;
   currentTemplates: TemplateRef<any>[] = [];
 
   constructor(
@@ -58,16 +51,7 @@ export class CriterionComponent implements OnInit, AfterViewInit {
     this.id = '77720c97-fbd3-32e2-baa4-5787c2ab777d';
     const dseId =
       'https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert';
-    this.dseElement = this.dse
-      .fetchDataSelectionProfileData([dseId])
-      .pipe(
-        map((data) => {
-          console.log('Data retrieved:', data);
-          this.dseElement = data[0];
-          return data[0];
-        })
-      )
-      .subscribe();
+    this.dseElement$ = this.dse.fetchDataSelectionProfileData([dseId]).pipe(map((data) => data[0]));
     this.criterion$ = this.createCriterionService.createCriteriaFromHashes([this.id]).pipe(
       map((criteria) => criteria[0])
     );
@@ -78,9 +62,6 @@ export class CriterionComponent implements OnInit, AfterViewInit {
       criterion.getAttributeFilters().forEach((attributeFilter) => {
         if (attributeFilter.getConcept() !== undefined) {
           this.concept = attributeFilter.getConcept();
-          this.currentTemplates.push(this.conceptTemplate);
-          this.currentTemplates.push(this.conceptTemplate1);
-          this.currentTemplates.push(this.conceptTemplate2);
         }
       });
 
