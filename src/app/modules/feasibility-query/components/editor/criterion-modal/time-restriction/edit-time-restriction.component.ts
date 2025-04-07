@@ -18,7 +18,9 @@ export class EditTimeRestrictionComponent implements OnInit {
   selectedTimeRestrictionType: TimeRestrictionType;
 
   ngOnInit() {
-    this.selectedTimeRestrictionType = this.timeRestriction.getType();
+    if (this.timeRestriction) {
+      this.selectedTimeRestrictionType = this.timeRestriction.getType();
+    }
   }
 
   public onTimeRestrictionOptionChange(timeRestriction: string) {
