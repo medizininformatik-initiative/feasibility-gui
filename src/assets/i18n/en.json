@@ -65,6 +65,13 @@
       "COHORT_WARNING": "Note: Cohort is empty or invalid"
     }
   },
+  "QUERYEDITOR": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "PREVIOUS": "Previous Element",
+    "NEXT": "Next Element"
+  
+  },
   "SHAREDFILTER": {
     "FILTER_SELECTION": "Selected items",
     "BUTTON": {
