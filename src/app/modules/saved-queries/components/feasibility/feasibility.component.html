@@ -1,12 +1,20 @@
-<div class="container" *ngFor="let query of savedQueries">
-  <num-saved-query-tile
-    class="width-100"
-    [savedQuery]="query"
-    (navigate)="onLoad($event)"
-    (deleteQuery)="onDelete($event)"
-  >
-    <div *ngIf="totalNumberOfPatients" class="width-20">
-      {{ 'QUERYBUILDER.OVERVIEW.COHORT.PATIENTS' | translate }} {{ totalNumberOfPatients }}
-    </div></num-saved-query-tile
-  >
+<div class="container">
+  <mat-tab-group>
+    <mat-tab
+      *ngFor="let query of savedQueries"
+      [label]="
+        ('SAVED_QUERIES.' + query.title.toUpperCase() | translate) + ' (' + query.data.length + ')'
+      "
+    >
+      <div *ngFor="let item of query.data">
+        <num-saved-query-tile
+          class="width-100"
+          [savedQuery]="item"
+          (navigate)="onLoad($event)"
+          (deleteQuery)="onDelete($event)"
+        >
+        </num-saved-query-tile>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

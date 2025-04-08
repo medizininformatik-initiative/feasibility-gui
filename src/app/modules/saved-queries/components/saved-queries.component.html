@@ -1,32 +1,45 @@
 <div fxLayout="column" fxLayoutAlign="start start" fxFill>
-  <num-header> {{ 'SAVED_QUERIES.HEADER' | translate }} ({{ savedQueriesLength }}) </num-header>
-  <div style="padding-bottom: 20px">
+  <num-header>
+    {{ 'SAVED_QUERIES.HEADER' | translate }} ({{ savedQueriesLength$ | async }})
+  </num-header>
+
+  <num-feasibility
+    [savedQueries]="queryCategories$ | async"
+    (deleteQuery)="deleteSavedFeasibility($event)"
+    (loadQuery)="loadQueryIntoEditor($event)"
+  >
+  </num-feasibility>
+</div>
+
+<!--<div style="padding-bottom: 20px">
     <mat-select [(value)]="selectedCategory" (selectionChange)="onSelectionChange()">
       <mat-option *ngFor="let value of queryCategories" [value]="value.title">
         {{ value.title }} {{ value.length }}
       </mat-option>
     </mat-select>
-  </div>
-  <num-feasibility
+  </div>-->
+<!--
+    <num-feasibility
     *ngIf="selectedCategory === 'cohort'"
     [totalNumberOfPatients]="totalNumberOfPatients"
     [savedQueries]="cohortDefinitions"
     (deleteQuery)="deleteSavedFeasibility($event)"
     (loadQuery)="loadQueryIntoEditor($event)"
   >
-  </num-feasibility>
-  <num-feasibility
-    *ngIf="selectedCategory === 'datadefinition'"
+</num-feasibility>
+<num-feasibility
+*ngIf="selectedCategory === 'datadefinition'"
     [savedQueries]="dataDefinitions"
     (deleteQuery)="deleteSavedFeasibility($event)"
     (loadQuery)="loadQueryIntoEditor($event)"
-  >
+    >
   </num-feasibility>
   <num-feasibility
-    *ngIf="selectedCategory === 'dataselection'"
-    [savedQueries]="dataSelection"
-    (deleteQuery)="deleteSavedFeasibility($event)"
-    (loadQuery)="loadQueryIntoEditor($event)"
+  *ngIf="selectedCategory === 'dataselection'"
+  [savedQueries]="dataSelection"
+  (deleteQuery)="deleteSavedFeasibility($event)"
+  (loadQuery)="loadQueryIntoEditor($event)"
   >
-  </num-feasibility>
+</num-feasibility>
 </div>
+-->

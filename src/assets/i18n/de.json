@@ -426,7 +426,11 @@
   "SAVED_QUERIES": {
     "HEADER": "Gespeicherte Abfragen",
     "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen",
-    "CREATED_AT": "Erstellt am"
+    "CREATED_AT": "Erstellt am",
+    "COHORT": "Kohorte",
+    "DATASELECTION":"Datenselektion",
+    "DATADEFINITION": "Datendefinition",
+    "LOAD": "laden"
   },
   "BUTTON": {
     "ADD": "Hinzufügen",

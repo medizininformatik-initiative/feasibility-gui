@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
+import { SavedQueryType } from 'src/app/model/Types/SavedQuery';
 
 @Component({
   selector: 'num-feasibility',
@@ -8,7 +8,7 @@ import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/In
 })
 export class FeasibilityComponent implements OnInit {
   @Input()
-  savedQueries: InterfaceSavedQueryTile[];
+  savedQueries: SavedQueryType[];
 
   @Input()
   totalNumberOfPatients: number;

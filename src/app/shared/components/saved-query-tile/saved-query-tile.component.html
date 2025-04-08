@@ -14,11 +14,16 @@
   <div class="width-10">
     {{ ('SAVED_QUERIES.CREATED_AT' | translate) + ' ' + (savedQuery.date | date : 'dd.MM.yyyy') }}
   </div>
-
-  <ng-content></ng-content>
+  <div class="width-20">
+    <span *ngIf="savedQuery.totalNumberOfPatients && savedQuery.totalNumberOfPatients > 0">
+      {{ 'QUERYBUILDER.OVERVIEW.COHORT.PATIENTS' | translate }}
+      {{ savedQuery.totalNumberOfPatients }}
+    </span>
+  </div>
   <div>
     <num-button type="blue" (click)="onNavigate(savedQuery?.id)">
-      {{ 'QUERYBUILDER.OVERVIEW.COHORT.LOAD' | translate }}
+      {{ 'SAVED_QUERIES.' + savedQuery.type.toUpperCase() | translate }}
+      {{ 'SAVED_QUERIES.LOAD' | translate }}
     </num-button>
   </div>
   <div class="height-100" fxFlex="row" fxLayoutAlign="end start" fxFlex="4">
