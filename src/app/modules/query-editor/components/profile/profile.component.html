@@ -5,20 +5,24 @@
   <ng-template #fields>
     <num-edit-fields style="width: 100%" [profile]="profile"></num-edit-fields>
   </ng-template>
-  <ng-template #timeRestriction>
-    <num-edit-time-restriction
-      [timeRestriction]="profileTimeRestriction"
-      (timeRestrictionChanged)="updateTimeRestriction($event)"
-    ></num-edit-time-restriction>
-  </ng-template>
 
-  <ng-template #concept>
-    <<num-shared-concept-filter
-      [conceptFilterId]="profileTokenFilter.getId()"
-      [valueSetUrl]="profileTokenFilter.getValueSetUrls()"
-      [preSelectedConcepts]="profileTokenFilter.getSelectedTokens()"
-      (changedSelectedConcepts)="updateSelectedConcepts($event)"
-    >
-    </num-shared-concept-filter>
+  <ng-template #filter>
+    <mat-tab-group color="primary">
+      <mat-tab *ngFor="let profileTokenFilter of profileTokenFilters">
+        <num-shared-concept-filter
+          [conceptFilterId]="profileTokenFilter.getId()"
+          [valueSetUrl]="profileTokenFilter.getValueSetUrls()"
+          [preSelectedConcepts]="profileTokenFilter.getSelectedTokens()"
+          (changedSelectedConcepts)="updateSelectedConcepts($event)"
+        >
+        </num-shared-concept-filter>
+      </mat-tab>
+      <mat-tab *ngFor="let timeRestriction of profileTimeRestriction">
+        <num-edit-time-restriction
+          [timeRestriction]="timeRestriction.getTimeRestriction()"
+          (timeRestrictionChanged)="updateTimeRestriction($event, timeRestriction)"
+        ></num-edit-time-restriction>
+      </mat-tab>
+    </mat-tab-group>
   </ng-template>
 </div>

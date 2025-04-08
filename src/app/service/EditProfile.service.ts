@@ -6,6 +6,7 @@ import { Concept } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Con
 import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { CloneTimeRestriction } from '../model/Utilities/CriterionCloner/TimeRestriction/CloneTimeRestriction';
 import { DataSelectionCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionCloner';
+import { AbstractProfileFilter } from '../model/DataSelection/Profile/Filter/AbstractProfileFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +21,17 @@ export class EditProfileService {
    */
   public updateTimeRestriction(
     profile: DataSelectionProfile,
-    timeRestriction: AbstractTimeRestriction
+    timeRestriction: AbstractTimeRestriction,
+    filterName: string
   ): void {
-    const index = this.getTimeRestrictionFilterIndex(profile);
+    const index = this.getTimeRestrictionFilter(profile).findIndex(
+      (filter) => filter.getName() === filterName
+    );
+    console.log('hier');
+    console.log(profile);
+    console.log(filterName);
+    console.log(timeRestriction);
+    console.log(index);
     if (index !== -1) {
       profile.getFilters()[index] = this.createProfileTimeRestriction(
         profile.getFilters()[index] as ProfileTimeRestrictionFilter,
@@ -40,6 +49,9 @@ export class EditProfileService {
     return profile.getFilters().findIndex((filter) => filter.getType() === 'date');
   }
 
+  public getTimeRestrictionFilter(profile: DataSelectionProfile): AbstractProfileFilter[] {
+    return profile.getFilters().filter((filter) => filter.getType() === 'date');
+  }
   /**
    * Creates a new ProfileTimeRestrictionFilter with the given time restriction.
    * @param filter The existing filter to update.
@@ -61,7 +73,9 @@ export class EditProfileService {
   public getProfileTokenFilterIndex(profile: DataSelectionProfile): number {
     return profile.getFilters().findIndex((filter) => filter.getType() === 'token');
   }
-
+  public getProfileTokenFilter(profile: DataSelectionProfile): AbstractProfileFilter[] {
+    return profile.getFilters().filter((filter) => filter.getType() === 'token');
+  }
   public updateProfileTokenFilter(profile: DataSelectionProfile, tokenFilter: Concept[]): void {
     const index = this.getProfileTokenFilterIndex(profile);
     if (index !== -1) {

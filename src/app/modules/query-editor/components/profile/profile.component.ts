@@ -12,8 +12,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  SimpleChanges,
   Output,
   TemplateRef,
   ViewChild,
@@ -28,7 +26,7 @@ import { DataSelectionCloner } from 'src/app/model/Utilities/DataSelecionCloner/
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [EditProfileService],
 })
-export class ProfileComponent implements AfterViewInit, OnChanges {
+export class ProfileComponent implements AfterViewInit {
   @Input()
   profile: DataSelectionProfile;
 
@@ -45,37 +43,40 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('concept', { static: false, read: TemplateRef })
   conceptTemplate: TemplateRef<any>;
+  @ViewChild('filter', { static: false, read: TemplateRef })
+  filterTemplate: TemplateRef<any>;
+  profileTimeRestriction: ProfileTimeRestrictionFilter[] = [];
 
-  profileTimeRestriction: AbstractTimeRestriction;
+  profileTokenFilters: ProfileTokenFilter[] = [];
 
-  profileTokenFilter: ProfileTokenFilter;
-
-  constructor(private editProfileService: EditProfileService) {}
+  constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
-    this.updateTemplatesArrray();
+    this.updateTemplatesArray();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.profile && changes.profile.currentValue) {
-      this.updateTemplatesArrray();
-    }
-  }
-
-  private updateTemplatesArrray(): void {
+  private updateTemplatesArray(): void {
     this.filterTemplates = [];
     this.setConceptTemplate();
     this.setFieldsTemplate();
     this.setTimeRestrictionTemplate();
+    this.setFilterTemplate();
+    this.cdr.detectChanges();
   }
 
-  private setTimeRestrictionTemplate(): void {
-    const index = this.editProfileService.getTimeRestrictionFilterIndex(this.profile);
-    if (index !== -1) {
-      const filter = this.profile.getFilters()[index] as ProfileTimeRestrictionFilter;
-      this.profileTimeRestriction = filter.getTimeRestriction();
-      this.filterTemplates.push(this.timeRestrictionTemplate);
+  private setFilterTemplate(): void {
+    if (this.profile.getFilters().length > 0) {
+      this.filterTemplates.push(this.filterTemplate);
     }
+  }
+  private setTimeRestrictionTemplate(): void {
+    const timeRestrictionFilter = this.editProfileService.getTimeRestrictionFilter(this.profile);
+    timeRestrictionFilter.forEach((filter: ProfileTimeRestrictionFilter) => {
+      this.profileTimeRestriction.push(filter);
+    });
+    console.log('bla');
+    console.log(this.profileTimeRestriction);
+    console.log(this.filterTemplates);
   }
 
   private setFieldsTemplate(): void {
@@ -86,11 +87,10 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   }
 
   private setConceptTemplate(): void {
-    const index = this.editProfileService.getProfileTokenFilterIndex(this.profile);
-    if (index !== -1) {
-      this.profileTokenFilter = this.profile.getFilters()[index] as ProfileTokenFilter;
-      this.filterTemplates.push(this.conceptTemplate);
-    }
+    const tokenFilter = this.editProfileService.getProfileTokenFilter(this.profile);
+    tokenFilter.forEach((filter: ProfileTokenFilter) => {
+      this.profileTokenFilters.push(filter);
+    });
   }
 
   public updateSelectedConcepts(concepts: Concept[]): void {
@@ -98,8 +98,19 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
     this.emitProfileInstance();
   }
 
-  public updateTimeRestriction(timeRestriction: AbstractTimeRestriction): void {
-    this.editProfileService.updateTimeRestriction(this.profile, timeRestriction);
+  public updateTimeRestriction(
+    timeRestriction: AbstractTimeRestriction,
+    profileFilter: ProfileTimeRestrictionFilter
+  ): void {
+    console.log('update');
+    console.log(this.profile);
+    console.log(timeRestriction);
+    console.log(profileFilter);
+    this.editProfileService.updateTimeRestriction(
+      this.profile,
+      timeRestriction,
+      profileFilter.getName()
+    );
     this.emitProfileInstance();
   }
 
