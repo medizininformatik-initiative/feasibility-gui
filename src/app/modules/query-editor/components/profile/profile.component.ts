@@ -52,7 +52,6 @@ export class ProfileComponent implements AfterViewInit {
   profileTokenFilter: ProfileTokenFilter;
 
   constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
-  constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     this.updateTemplatesArray();
