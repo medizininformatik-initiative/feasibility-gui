@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { DataSelectionFilterChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFilterChips.service';
+import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
@@ -16,7 +16,7 @@ import { ProfileProviderService } from 'src/app/modules/data-selection/services/
   selector: 'num-data-selection-boxes',
   templateUrl: './data-selection-boxes.component.html',
   styleUrls: ['./data-selection-boxes.component.scss'],
-  providers: [DataSelectionFilterChipsService],
+  providers: [DataSelectionFieldsChipsService],
 })
 export class DataSelectionBoxesComponent implements OnInit {
   @Input()
@@ -38,7 +38,7 @@ export class DataSelectionBoxesComponent implements OnInit {
   filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
 
   constructor(
-    private fieldsFilterChipsService: DataSelectionFilterChipsService,
+    private fieldsFilterChipsService: DataSelectionFieldsChipsService,
     private menuService: MenuServiceDataSelection,
     private filtersFilterChipsService: DataSelectionFiltersFilterChips,
     private navigationHelperService: NavigationHelperService,

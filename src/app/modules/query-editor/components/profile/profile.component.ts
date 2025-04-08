@@ -49,6 +49,9 @@ export class ProfileComponent implements AfterViewInit {
 
   profileTokenFilters: ProfileTokenFilter[] = [];
 
+  profileTokenFilter: ProfileTokenFilter;
+
+  constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
   constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {

@@ -12,7 +12,7 @@ import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/Select
 @Injectable({
   providedIn: 'root',
 })
-export class DataSelectionFilterChipsService {
+export class DataSelectionFieldsChipsService {
   private filterChipsSubject: BehaviorSubject<InterfaceFilterChip[]> = new BehaviorSubject<
     InterfaceFilterChip[]
   >([]);

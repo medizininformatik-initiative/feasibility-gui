@@ -1,6 +1,6 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { DataSelectionFilterChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFilterChips.service';
+import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
@@ -11,7 +11,7 @@ import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/Select
   selector: 'num-profile-header',
   templateUrl: './profile-header.component.html',
   styleUrls: ['./profile-header.component.scss'],
-  providers: [DataSelectionFilterChipsService, DataSelectionFiltersFilterChips],
+  providers: [DataSelectionFieldsChipsService, DataSelectionFiltersFilterChips],
 })
 export class ProfileHeaderComponent implements OnChanges, OnInit {
   profile$: Observable<DataSelectionProfile>;
@@ -26,7 +26,7 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
 
   constructor(
-    private fieldsFilterChipsService: DataSelectionFilterChipsService,
+    private fieldsFilterChipsService: DataSelectionFieldsChipsService,
     private filtersFilterChipsService: DataSelectionFiltersFilterChips
   ) {}
 
@@ -37,6 +37,7 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     this.getFilterChips();
     if (changes.profile.currentValue?.getFilters()) {
+      console.log('Profile filters changed:', changes.profile.currentValue.getFields());
       this.getFilterChipsForProfileFilters(changes.profile.currentValue.getFilters());
       this.generateAndStoreFilterChips(changes.profile.currentValue?.getSelectedFields());
     }
