@@ -1,22 +1,25 @@
 <div class="container" fxLayout="column">
   <div class="button-container" fxLayout="row" fxLayoutAlign="space-between start">
-    <num-button (click)="previousElement()">
+    <num-button
+      (click)="navigateToPreviousProfile()"
+      [isDisabled]="!(previousElementExists$ | async)"
+    >
       {{ 'QUERYEDITOR.PREVIOUS' | translate }}
     </num-button>
-    <num-button (click)="nextElement()">
+    <num-button (click)="navigateToNextProfile()" [isDisabled]="!(nextElementExists$ | async)">
       {{ 'QUERYEDITOR.NEXT' | translate }}
     </num-button>
   </div>
   <div class="background">
-    <ng-container>
-      <!-- <num-criterion [id]="id"></num-criterion> -->
-    </ng-container>
     <ng-container *ngIf="profile$ | async as profile">
       <num-profile
         class="width-100"
         (profileChanged)="updateProfile($event)"
         [profile]="profile"
       ></num-profile>
+    </ng-container>
+    <ng-container *ngIf="criterion$ | async as criterion">
+      <num-criterion class="width-100" [criterion]="criterion"></num-criterion>
     </ng-container>
   </div>
 </div>
