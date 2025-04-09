@@ -7,6 +7,7 @@ import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/Profil
 import { CloneTimeRestriction } from '../model/Utilities/CriterionCloner/TimeRestriction/CloneTimeRestriction';
 import { DataSelectionCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionCloner';
 import { AbstractProfileFilter } from '../model/DataSelection/Profile/Filter/AbstractProfileFilter';
+import { TokenFilterCloner } from '../model/Utilities/DataSelecionCloner/TokenFilterCloner';
 
 @Injectable({
   providedIn: 'root',
@@ -80,15 +81,16 @@ export class EditProfileService {
   }
   private createProfileTokenFilter(
     filter: ProfileTokenFilter,
-    tokenFilter: Concept[]
+    concepts: Concept[]
   ): ProfileTokenFilter {
-    return new ProfileTokenFilter(
+    const newTokenFilter = new ProfileTokenFilter(
       filter.getId(),
       filter.getName(),
       filter.getType(),
       filter.getValueSetUrls(),
-      tokenFilter
+      concepts
     );
+    return TokenFilterCloner.deepCopyTokenFilter(newTokenFilter);
   }
 
   public createNewProfileInstance(profile: DataSelectionProfile): DataSelectionProfile {
