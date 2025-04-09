@@ -1,34 +1,45 @@
 <div fxLayout="column" fxLayoutAlign="space-between start" class="width-100">
   <num-profile-header class="width-100" [profile]="profile"> </num-profile-header>
-  <num-filter-tabs *ngIf="templates.length > 0" [content]="templates"></num-filter-tabs>
+  <num-filter-tabs
+    class="width-100"
+    *ngIf="templates.length > 0"
+    [content]="templates"
+  ></num-filter-tabs>
 
   <ng-template #fields>
     <num-edit-fields style="width: 100%" [profile]="profile"></num-edit-fields>
   </ng-template>
 
   <ng-template #filter>
-    <mat-tab-group color="primary" animationDuration="0ms">
-      <mat-tab
-        *ngFor="let profileTokenFilter of profileTokenFilters"
-        label="{{ profileTokenFilter.getName() }}"
+    <div class="profile-tab-group-container">
+      <mat-tab-group
+        animationDuration="0ms"
+        class="inenr-tab-group"
+        disableRipple="true"
+        mat-stretch-tabs="false"
       >
-        <num-shared-concept-filter-copy
-          [conceptFilterId]="profileTokenFilter.getId()"
-          [valueSetUrl]="profileTokenFilter.getValueSetUrls()"
-          [preSelectedConcepts]="profileTokenFilter.getSelectedTokens()"
-          (changedSelectedConcepts)="updateSelectedConcepts($event)"
+        <mat-tab
+          *ngFor="let profileTokenFilter of profileTokenFilters"
+          label="{{ profileTokenFilter.getName() }}"
         >
-        </num-shared-concept-filter-copy>
-      </mat-tab>
-      <mat-tab
-        *ngFor="let timeRestriction of profileTimeRestriction"
-        label="{{ timeRestriction.getName() }}"
-      >
-        <num-edit-time-restriction
-          [timeRestriction]="timeRestriction.getTimeRestriction()"
-          (timeRestrictionChanged)="updateTimeRestriction($event, timeRestriction)"
-        ></num-edit-time-restriction>
-      </mat-tab>
-    </mat-tab-group>
+          <num-shared-concept-filter-copy
+            [conceptFilterId]="profileTokenFilter.getId()"
+            [valueSetUrl]="profileTokenFilter.getValueSetUrls()"
+            [preSelectedConcepts]="profileTokenFilter.getSelectedTokens()"
+            (changedSelectedConcepts)="updateSelectedConcepts($event)"
+          >
+          </num-shared-concept-filter-copy>
+        </mat-tab>
+        <mat-tab
+          *ngFor="let timeRestriction of profileTimeRestriction"
+          label="{{ timeRestriction.getName() }}"
+        >
+          <num-edit-time-restriction
+            [timeRestriction]="timeRestriction.getTimeRestriction()"
+            (timeRestrictionChanged)="updateTimeRestriction($event, timeRestriction)"
+          ></num-edit-time-restriction>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
   </ng-template>
 </div>

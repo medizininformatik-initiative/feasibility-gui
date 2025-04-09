@@ -31,7 +31,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   @Output() profileChanged: EventEmitter<DataSelectionProfile> =
     new EventEmitter<DataSelectionProfile>();
 
-  templates: TemplateRef<any>[] = [];
+  templates: { template: TemplateRef<any>; name: string }[] = [];
 
   @ViewChild('fields', { static: false, read: TemplateRef }) fieldsTemplate: TemplateRef<any>;
   @ViewChild('filter', { static: false, read: TemplateRef }) filterTemplate: TemplateRef<any>;
@@ -77,7 +77,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   private setFieldsTemplate(): void {
     const fields: ProfileFields[] = this.profile.getFields();
     if (fields.length > 0) {
-      this.templates.push(this.fieldsTemplate);
+      this.templates.push({ template: this.fieldsTemplate, name: 'Fields' });
     }
   }
 
@@ -85,7 +85,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
     if (this.profile.getFilters().length > 0) {
       this.setProfileTokenFilter();
       this.setTimeRestrictionFilter();
-      this.templates.push(this.filterTemplate);
+      this.templates.push({ template: this.filterTemplate, name: 'Filters' });
     }
   }
 

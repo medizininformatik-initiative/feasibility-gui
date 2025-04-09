@@ -7,7 +7,7 @@ import { Component, Input, TemplateRef } from '@angular/core';
 })
 export class FilterTabsComponent {
   @Input()
-  content: TemplateRef<any>[];
+  content: { template: TemplateRef<any>; name: string }[];
 
   constructor() {}
 }
