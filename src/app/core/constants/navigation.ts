@@ -32,12 +32,6 @@ export const mainNavItems: INavItem[] = [
     icon: 'wrench',
     translationKey: 'NAVIGATION.OPTIONS',
   },
-  {
-    routeTo: BasePaths.queryEditor,
-    roles: ['main'],
-    icon: 'wrench',
-    translationKey: 'Egal',
-  },
 ];
 
 export const secondaryNavItems: INavItem[] = [
