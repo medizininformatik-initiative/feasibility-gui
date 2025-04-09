@@ -27,11 +27,6 @@ export class EditProfileService {
     const index = this.getTimeRestrictionFilter(profile).findIndex(
       (filter) => filter.getName() === filterName
     );
-    console.log('hier');
-    console.log(profile);
-    console.log(filterName);
-    console.log(timeRestriction);
-    console.log(index);
     if (index !== -1) {
       profile.getFilters()[index] = this.createProfileTimeRestriction(
         profile.getFilters()[index] as ProfileTimeRestrictionFilter,
