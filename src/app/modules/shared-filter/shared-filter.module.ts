@@ -7,7 +7,6 @@ import { SearchConceptComponent } from './components/shared-concept-filter/searc
 import { SharedConceptFilterComponent } from './components/shared-concept-filter/shared-concept-filter.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StagedConceptsComponent } from './components/shared-concept-filter/staged-concepts/staged-concepts.component';
-import { StagedConceptsComponentCopy } from './components/shared-concept-filter copy/staged-concepts/copy_staged-concepts.component';
 import { CopyConceptFilterTableComponent } from './components/shared-concept-filter copy/concept-filter-table/copy_concept-filter-table.component';
 import { CopySearchConceptComponent } from './components/shared-concept-filter copy/search-concept/copy_search-concept.component';
 import { CopySharedConceptFilterComponent } from './components/shared-concept-filter copy/copy_shared-concept-filter.component';
@@ -19,7 +18,6 @@ import { CopySharedConceptFilterComponent } from './components/shared-concept-fi
     ConceptFilterTableComponent,
     SearchConceptComponent,
     EditFieldsComponent,
-    StagedConceptsComponentCopy,
     CopyConceptFilterTableComponent,
     CopySearchConceptComponent,
     CopySharedConceptFilterComponent,
