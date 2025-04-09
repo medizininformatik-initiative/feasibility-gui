@@ -7,17 +7,23 @@
   </ng-template>
 
   <ng-template #filter>
-    <mat-tab-group color="primary">
-      <mat-tab *ngFor="let profileTokenFilter of profileTokenFilters">
-        <num-shared-concept-filter
+    <mat-tab-group color="primary" animationDuration="0ms">
+      <mat-tab
+        *ngFor="let profileTokenFilter of profileTokenFilters"
+        label="{{ profileTokenFilter.getName() }}"
+      >
+        <num-shared-concept-filter-copy
           [conceptFilterId]="profileTokenFilter.getId()"
           [valueSetUrl]="profileTokenFilter.getValueSetUrls()"
           [preSelectedConcepts]="profileTokenFilter.getSelectedTokens()"
           (changedSelectedConcepts)="updateSelectedConcepts($event)"
         >
-        </num-shared-concept-filter>
+        </num-shared-concept-filter-copy>
       </mat-tab>
-      <mat-tab *ngFor="let timeRestriction of profileTimeRestriction">
+      <mat-tab
+        *ngFor="let timeRestriction of profileTimeRestriction"
+        label="{{ timeRestriction.getName() }}"
+      >
         <num-edit-time-restriction
           [timeRestriction]="timeRestriction.getTimeRestriction()"
           (timeRestrictionChanged)="updateTimeRestriction($event, timeRestriction)"

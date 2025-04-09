@@ -35,9 +35,7 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.getFilterChips();
     if (changes.profile.currentValue?.getFilters()) {
-      console.log('Profile filters changed:', changes.profile.currentValue.getFields());
       this.getFilterChipsForProfileFilters(changes.profile.currentValue.getFilters());
       this.generateAndStoreFilterChips(changes.profile.currentValue?.getSelectedFields());
     }
