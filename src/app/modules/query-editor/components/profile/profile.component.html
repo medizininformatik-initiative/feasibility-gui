@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-between start" class="width-100">
   <num-profile-header class="width-100" [profile]="profile"> </num-profile-header>
-  <num-filter-tabs *ngIf="filterTemplates.length > 0" [content]="filterTemplates"></num-filter-tabs>
+  <num-filter-tabs *ngIf="templates.length > 0" [content]="templates"></num-filter-tabs>
 
   <ng-template #fields>
     <num-edit-fields style="width: 100%" [profile]="profile"></num-edit-fields>

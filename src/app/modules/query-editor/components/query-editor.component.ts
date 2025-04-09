@@ -65,9 +65,9 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   private getProfileFromProviderById(id: string): void {
-    this.profile$ = this.profileProviderService.getProfileIdMap().pipe(
-      map((profileMap) => profileMap.get(id))
-    );
+    this.profile$ = this.profileProviderService
+      .getProfileIdMap()
+      .pipe(map((profileMap) => profileMap.get(id)));
   }
 
   public updateProfile(profile: DataSelectionProfile) {
@@ -128,7 +128,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   public onCancel() {
-    console.log('Cancelling query...');
+    this.navigationHelperService.navigateToDataSelectionEditor();
   }
 
   private isProfile(): boolean {
