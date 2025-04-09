@@ -43,7 +43,14 @@ export class CreateDataSelectionProfileService {
         data.map((item: any) => {
           const fields = this.mapFields(item.fields);
           const filters = this.createFilters(item.filters);
-          return this.instanceOfDataSelectionProfile(item, fields, filters, markAsReference);
+          const profile = this.instanceOfDataSelectionProfile(
+            item,
+            fields,
+            filters,
+            markAsReference
+          );
+          this.selectedFields = [];
+          return profile;
         })
       ),
       concatMap((profiles) => {

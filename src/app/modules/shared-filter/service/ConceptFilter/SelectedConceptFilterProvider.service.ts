@@ -38,6 +38,8 @@ export class SelectedConceptFilterProviderService {
       currentArray.push(concept);
       this.selectedConceptsSubject.next(currentArray);
       this.terminologyCodeService.addTerminologyCode(concept.getTerminologyCode());
+    } else {
+      this.removeConcept(concept);
     }
   }
 
