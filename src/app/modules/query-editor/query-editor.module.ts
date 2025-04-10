@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { CriterionComponent } from './components/editor-content/criterion/criterion.component';
 import { DataSelectionModule } from '../data-selection/data-selection.module';
 import { EditActionBarComponent } from './components/action-bar/edit-action-bar.component';
+import { EditorContentComponent } from './components/editor-content/editor-content.component';
 import { EditorHeaderComponent } from './components/editor-header/editor-header.component';
 import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
 import { FilterTabsComponent } from './components/editor-content/filter-tabs/filter-tabs.component';
@@ -31,6 +32,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [
     EditorHeaderComponent,
     EditActionBarComponent,
+    EditorContentComponent,
     CriterionComponent,
     FilterTabsComponent,
     ProfileComponent,
