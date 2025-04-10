@@ -16,6 +16,7 @@ import { QueryEditorComponent } from './components/query-editor.component';
 import { QueryEditorRoutingModule } from './query-editor.routing.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TokenFilterComponent } from './components/editor-content/profile/token-filter/token-filter.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ProfileComponent,
     ProfileHeaderComponent,
     QueryEditorComponent,
+    TokenFilterComponent,
   ],
   exports: [],
 })

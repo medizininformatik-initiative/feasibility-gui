@@ -1,0 +1,9 @@
+<div class="token-filter">
+  <num-shared-concept-filter-copy
+    [conceptFilterId]="tokenFilter.getId()"
+    [valueSetUrl]="tokenFilter.getValueSetUrls()"
+    [preSelectedConcepts]="tokenFilter.getSelectedTokens()"
+    (changedSelectedConcepts)="updateSelectedConcepts($event)"
+  >
+  </num-shared-concept-filter-copy>
+</div>
