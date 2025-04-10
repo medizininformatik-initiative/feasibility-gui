@@ -129,6 +129,15 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
     this.emitProfileInstance();
   }
 
+  /**
+   * Used for fields as we emit the whole profile
+   * @param updatedProfile
+   */
+  public updateProfile(updatedProfile: DataSelectionProfile): void {
+    this.profile = updatedProfile;
+    this.emitProfileInstance();
+  }
+
   private emitProfileInstance(): void {
     this.profile = this.editProfileService.createNewProfileInstance(this.profile);
     this.profileChanged.emit(this.profile);
