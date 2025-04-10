@@ -38,6 +38,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.routeSubscription?.unsubscribe();
     this.routeSubscription = combineLatest([this.activatedRoute.paramMap, this.activatedRoute.url])
       .pipe(
         tap(([paramMap, url]) => {

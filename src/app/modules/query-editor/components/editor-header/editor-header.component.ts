@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { ProfileProviderIteratorService } from 'src/app/service/ProfileProviderIteratorService.service';
 
 @Component({
@@ -7,9 +7,12 @@ import { ProfileProviderIteratorService } from 'src/app/service/ProfileProviderI
   templateUrl: './editor-header.component.html',
   styleUrls: ['./editor-header.component.scss'],
 })
-export class EditorHeaderComponent implements OnChanges {
+export class EditorHeaderComponent implements OnChanges, OnDestroy {
   @Input() id: string;
   @Input() type: string;
+
+  nextProfile: Subscription;
+  previousProfile: Subscription;
 
   nextElementExists$: Observable<boolean>;
   previousElementExists$: Observable<boolean>;
@@ -25,11 +28,22 @@ export class EditorHeaderComponent implements OnChanges {
     }
   }
 
+  ngOnDestroy(): void {
+    this.nextProfile?.unsubscribe();
+    this.previousProfile?.unsubscribe();
+  }
+
   public navigateToNextProfile(): void {
-    this.profileProviderIteratorService.navigateToNextProfile(this.id);
+    this.nextProfile?.unsubscribe();
+    this.nextProfile = this.profileProviderIteratorService
+      .navigateToNextProfile(this.id)
+      .subscribe();
   }
 
   public navigateToPreviousProfile(): void {
-    this.profileProviderIteratorService.navigateToPreviousProfile(this.id);
+    this.previousProfile?.unsubscribe();
+    this.previousProfile = this.profileProviderIteratorService
+      .navigateToPreviousProfile(this.id)
+      .subscribe();
   }
 }

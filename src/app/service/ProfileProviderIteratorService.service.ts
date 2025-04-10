@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
 import { ProviderNavigationService } from './ProviderNavigation.service';
 import { NavigationHelperService } from './NavigationHelper.service';
@@ -53,41 +53,37 @@ export class ProfileProviderIteratorService {
    * Navigates to the next profile.
    * @param currentId The current profile ID.
    */
-  public navigateToNextProfile(currentId: string): void {
-    this.profileProviderService
-      .getProfileIdMap()
-      .pipe(
-        map((profileMap) => {
-          const nextProfile = this.providerNavigationService.getNextElementFromMap(
-            profileMap,
-            currentId
-          );
-          if (nextProfile) {
-            this.navigationHelperService.navigateToEditProfile(nextProfile.getId());
-          }
-        })
-      )
-      .subscribe();
+  public navigateToNextProfile(currentId: string): Observable<void> {
+    return this.profileProviderService.getProfileIdMap().pipe(
+      take(1),
+      map((profileMap) => {
+        const nextProfile = this.providerNavigationService.getNextElementFromMap(
+          profileMap,
+          currentId
+        );
+        if (nextProfile) {
+          this.navigationHelperService.navigateToEditProfile(nextProfile.getId());
+        }
+      })
+    );
   }
 
   /**
    * Navigates to the previous profile.
    * @param currentId The current profile ID.
    */
-  public navigateToPreviousProfile(currentId: string): void {
-    this.profileProviderService
-      .getProfileIdMap()
-      .pipe(
-        map((profileMap) => {
-          const previousProfile = this.providerNavigationService.getPreviousElementFromMap(
-            profileMap,
-            currentId
-          );
-          if (previousProfile) {
-            this.navigationHelperService.navigateToEditProfile(previousProfile.getId());
-          }
-        })
-      )
-      .subscribe();
+  public navigateToPreviousProfile(currentId: string): Observable<void> {
+    return this.profileProviderService.getProfileIdMap().pipe(
+      take(1),
+      map((profileMap) => {
+        const previousProfile = this.providerNavigationService.getPreviousElementFromMap(
+          profileMap,
+          currentId
+        );
+        if (previousProfile) {
+          this.navigationHelperService.navigateToEditProfile(previousProfile.getId());
+        }
+      })
+    );
   }
 }
