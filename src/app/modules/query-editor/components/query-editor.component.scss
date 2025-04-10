@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   width: 95%;
-  height: 90%;
+  height: 88%;
 }
 
 .button-container {
@@ -17,4 +17,11 @@
   background-color: rgba(90, 121, 175, 0.1);
   border-radius: 10px;
   padding: 20px;
+  height: 92%;
+}
+.bottom {
+  position: fixed;
+  bottom: 20px;
+  width: 92%;
+  z-index: 100;
 }

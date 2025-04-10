@@ -1,5 +1,5 @@
-<div class="width-100" *ngIf="content && content.length > 0">
-  <mat-tab-group color="primary" animationDuration="0ms">
+<div class="full" *ngIf="content && content.length > 0">
+  <mat-tab-group color="primary" animationDuration="0ms" class="full">
     <mat-tab *ngFor="let item of content" [label]="item.name">
       <ng-container [ngTemplateOutlet]="item.template"></ng-container>
     </mat-tab>
