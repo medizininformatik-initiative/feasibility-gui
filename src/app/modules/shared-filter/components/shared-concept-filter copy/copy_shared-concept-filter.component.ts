@@ -4,6 +4,7 @@ import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilte
 import { Observable, Subscription } from 'rxjs';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
+import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
 
 @Component({
   selector: 'num-shared-concept-filter-copy',
@@ -55,6 +56,6 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
   }
 
   private updateAndEmitConceptFilter(selectedConcepts: Concept[]): void {
-    this.changedSelectedConcepts.emit(selectedConcepts);
+    this.changedSelectedConcepts.emit(CloneConcept.deepCopyConcepts(selectedConcepts));
   }
 }

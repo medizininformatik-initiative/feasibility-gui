@@ -1,8 +1,6 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { EditProfileService } from 'src/app/service/EditProfile.service';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import {
@@ -17,6 +15,8 @@ import {
   ChangeDetectionStrategy,
   SimpleChanges,
   OnChanges,
+  ViewChildren,
+  QueryList,
 } from '@angular/core';
 
 @Component({
@@ -36,8 +36,13 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   @ViewChild('fields', { static: false, read: TemplateRef }) fieldsTemplate: TemplateRef<any>;
   @ViewChild('filter', { static: false, read: TemplateRef }) filterTemplate: TemplateRef<any>;
 
+  @ViewChildren('testTemplates', { read: TemplateRef })
+  testTemplates: QueryList<TemplateRef<any>>;
+
   profileTimeRestriction: ProfileTimeRestrictionFilter[] = [];
   profileTokenFilters: ProfileTokenFilter[] = [];
+
+  tests: ProfileTokenFilter[] = [];
 
   constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
 
@@ -48,6 +53,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   ngAfterViewInit(): void {
     this.resetComponentState();
     this.updateTemplatesArray();
+    console.log(this.testTemplates.toArray());
   }
 
   /**
@@ -75,7 +81,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   }
 
   private setFieldsTemplate(): void {
-    const fields: ProfileFields[] = this.profile.getFields();
+    const fields = this.profile.getFields();
     if (fields.length > 0) {
       this.templates.push({ template: this.fieldsTemplate, name: 'Fields' });
     }
@@ -104,11 +110,11 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   }
 
   /**
-   * Updates the selected concepts in the profile and emits the updated profile.
-   * @param concepts - The updated list of selected concepts.
+   * Updates the token filter in the profile and emits the updated profile.
+   * @param updatedTokenFilter - The updated token filter instance.
    */
-  public updateSelectedConcepts(concepts: Concept[]): void {
-    this.editProfileService.updateProfileTokenFilter(this.profile, concepts);
+  public updateTokenFilter(updatedTokenFilter: ProfileTokenFilter): void {
+    this.editProfileService.updateProfileTokenFilter(this.profile, updatedTokenFilter);
     this.emitProfileInstance();
   }
 
@@ -130,8 +136,8 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   }
 
   /**
-   * Used for fields as we emit the whole profile
-   * @param updatedProfile
+   * Updates the profile fields and emits the updated profile.
+   * @param updatedProfile - The updated profile instance.
    */
   public updateProfile(updatedProfile: DataSelectionProfile): void {
     this.profile = updatedProfile;

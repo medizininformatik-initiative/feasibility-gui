@@ -66,31 +66,22 @@ export class EditProfileService {
     );
   }
 
-  public getProfileTokenFilterIndex(profile: DataSelectionProfile): number {
-    return profile.getFilters().findIndex((filter) => filter.getType() === 'token');
-  }
   public getProfileTokenFilter(profile: DataSelectionProfile): AbstractProfileFilter[] {
     return profile.getFilters().filter((filter) => filter.getType() === 'token');
   }
-  public updateProfileTokenFilter(profile: DataSelectionProfile, tokenFilter: Concept[]): void {
+
+  public updateProfileTokenFilter(
+    profile: DataSelectionProfile,
+    tokenFilter: ProfileTokenFilter
+  ): void {
     const index = this.getProfileTokenFilterIndex(profile);
     if (index !== -1) {
-      const filter = profile.getFilters()[index] as ProfileTokenFilter;
-      profile.getFilters()[index] = this.createProfileTokenFilter(filter, tokenFilter);
+      profile.getFilters()[index] = tokenFilter;
     }
   }
-  private createProfileTokenFilter(
-    filter: ProfileTokenFilter,
-    concepts: Concept[]
-  ): ProfileTokenFilter {
-    const newTokenFilter = new ProfileTokenFilter(
-      filter.getId(),
-      filter.getName(),
-      filter.getType(),
-      filter.getValueSetUrls(),
-      concepts
-    );
-    return TokenFilterCloner.deepCopyTokenFilter(newTokenFilter);
+
+  public getProfileTokenFilterIndex(profile: DataSelectionProfile): number {
+    return profile.getFilters().findIndex((filter) => filter.getType() === 'token');
   }
 
   public createNewProfileInstance(profile: DataSelectionProfile): DataSelectionProfile {

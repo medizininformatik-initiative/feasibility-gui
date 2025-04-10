@@ -14,6 +14,13 @@
     ></num-edit-fields>
   </ng-template>
 
+  <ng-template *ngFor="let test of tests" #testTemplates>
+    <num-token-filter
+      [tokenFilter]="profileTokenFilter"
+      (tokenFilterChanged)="updateTokenFilter($event)"
+    ></num-token-filter>
+  </ng-template>
+
   <ng-template #filter>
     <div class="profile-tab-group-container">
       <mat-tab-group
@@ -26,13 +33,10 @@
           *ngFor="let profileTokenFilter of profileTokenFilters"
           label="{{ profileTokenFilter.getName() }}"
         >
-          <num-shared-concept-filter-copy
-            [conceptFilterId]="profileTokenFilter.getId()"
-            [valueSetUrl]="profileTokenFilter.getValueSetUrls()"
-            [preSelectedConcepts]="profileTokenFilter.getSelectedTokens()"
-            (changedSelectedConcepts)="updateSelectedConcepts($event)"
-          >
-          </num-shared-concept-filter-copy>
+          <num-token-filter
+            [tokenFilter]="profileTokenFilter"
+            (tokenFilterChanged)="updateTokenFilter($event)"
+          ></num-token-filter>
         </mat-tab>
         <mat-tab
           *ngFor="let timeRestriction of profileTimeRestriction"
