@@ -130,27 +130,12 @@ export class CreateDataSelectionProfileService {
     return new ProfileFields(
       node.id,
       this.instantiateDisplayData(node.display),
-      this.instantiateDisplayDataForFields(node.description),
+      this.instantiateDisplayData(node.description),
       children,
       node.isSelected || node.recommended || node.required || false,
       node.required,
       node.recommended,
       node.referencedProfiles
-    );
-  }
-
-  public instantiateDisplayDataForFields(displayData: any): Display {
-    return new Display(
-      displayData.translations.map(
-        (translation) =>
-          new Translation(
-            translation.language,
-            undefined,
-            this.checkValuesForTypeString(translation.value)
-          )
-      ),
-      undefined,
-      this.checkValuesForTypeString(displayData.original)
     );
   }
 
