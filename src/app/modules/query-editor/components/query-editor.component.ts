@@ -22,6 +22,8 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
 
   deepCopyProfile: DataSelectionProfile;
 
+  deepCopyCriterion: Criterion;
+
   id: string;
   type: string;
 
@@ -74,6 +76,10 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
 
   public updateProfile(profile: DataSelectionProfile): void {
     this.deepCopyProfile = profile;
+  }
+
+  public updateCriterion(criterion: Criterion): void {
+    this.deepCopyCriterion = criterion;
   }
 
   public saveElement(): void {

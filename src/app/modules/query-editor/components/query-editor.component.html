@@ -1,16 +1,12 @@
 <div class="container" fxLayout="column">
   <num-editor-header [id]="id" [type]="type"></num-editor-header>
   <div class="background">
-    <ng-container *ngIf="profile$ | async as profile">
-      <num-profile
-        class="width-100"
-        (profileChanged)="updateProfile($event)"
-        [profile]="profile"
-      ></num-profile>
-    </ng-container>
-    <ng-container *ngIf="criterion$ | async as criterion">
-      <num-criterion class="width-100" [criterion]="criterion"></num-criterion>
-    </ng-container>
+    <num-editor-content
+      [profile]="profile$ | async"
+      [criterion]="criterion$ | async"
+      (profileChanged)="updateProfile($event)"
+      (criterionChanged)="updateCriterion($event)"
+    ></num-editor-content>
   </div>
 </div>
 <num-edit-action-bar (save)="saveElement()" (cancel)="onCancel()"></num-edit-action-bar>
