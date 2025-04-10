@@ -82,6 +82,10 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     this.profileProviderIteratorService.navigateToPreviousProfile(this.id);
   }
 
+  public updateProfile(profile: DataSelectionProfile): void {
+    this.deepCopyProfile = profile;
+  }
+
   public saveElement(): void {
     if (this.isProfile() && this.deepCopyProfile) {
       this.profileProviderService.setProfileById(this.deepCopyProfile.getId(), this.deepCopyProfile);
