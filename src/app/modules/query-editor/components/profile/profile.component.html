@@ -7,7 +7,11 @@
   ></num-filter-tabs>
 
   <ng-template #fields>
-    <num-edit-fields style="width: 100%" [profile]="profile"></num-edit-fields>
+    <num-edit-fields
+      style="width: 100%"
+      [profile]="profile"
+      (updatedProfile)="test($event)"
+    ></num-edit-fields>
   </ng-template>
 
   <ng-template #filter>
