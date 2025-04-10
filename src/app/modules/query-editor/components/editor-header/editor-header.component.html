@@ -1,0 +1,11 @@
+<div class="button-container" fxLayout="row" fxLayoutAlign="space-between start">
+  <num-button
+    (click)="navigateToPreviousProfile()"
+    [isDisabled]="!(previousElementExists$ | async)"
+  >
+    {{ 'QUERYEDITOR.PREVIOUS' | translate }}
+  </num-button>
+  <num-button (click)="navigateToNextProfile()" [isDisabled]="!(nextElementExists$ | async)">
+    {{ 'QUERYEDITOR.NEXT' | translate }}
+  </num-button>
+</div>
