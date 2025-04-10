@@ -1,12 +1,12 @@
 <mat-drawer-container>
-  <mat-drawer opened="true">
+  <mat-drawer opened="true" #drawer position="end" mode="side">
     <div *ngIf="profile.getSelectedFields().length > 0" class="selected-fields">
       <div class="filter-title">
         {{ 'DATASELECTION.FIELD_SELECTION.FIELD_SELECTION' | translate }}
       </div>
       <div class="selected-fields-box">
         <div
-          *ngFor="let selectedField of arrayOfSelectedFields; let index = index"
+          *ngFor="let selectedField of profile.getSelectedFields(); let index = index"
           fxLayout="row"
           fxLayoutAlign="start center"
           class="selectedFilterBox"
@@ -15,8 +15,8 @@
             <span
               matTooltipPosition="below"
               matTooltipShowDelay="300"
-              [matTooltip]="selectedField.display | displayTranslation"
-              >{{ selectedField.display | displayTranslation }}</span
+              [matTooltip]="selectedField.getDisplay() | displayTranslation"
+              >{{ selectedField.getDisplay() | displayTranslation }}</span
             >
           </div>
           <div>
@@ -29,10 +29,10 @@
           </div>
           <div fxLayout="row" fxFlex="10" fxLayoutAlign="end center" class="padding-right-10">
             <fa-icon
-              *ngIf="isFieldRequired(selectedField)"
+              [icon]="'exclamation-triangle'"
               [icon]="'times'"
               size="1x"
-              (click)="removeNodeFromSelectedFields2(selectedField)"
+              (click)="removeSelectedField(selectedField)"
               class="delete-button"
             ></fa-icon>
           </div>

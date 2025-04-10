@@ -1,5 +1,5 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
@@ -8,8 +8,8 @@ import { first, map, of, switchMap } from 'rxjs';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { SelectedDataSelectionProfileFieldsService } from 'src/app/service/DataSelection/SelectedDataSelectionProfileFields.service';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 
 @Component({
   selector: 'num-edit-fields',
@@ -20,6 +20,9 @@ import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/Select
 export class EditFieldsComponent implements OnInit {
   @Input()
   profile: DataSelectionProfile;
+
+  @Output()
+  updatedProfile: EventEmitter<DataSelectionProfile> = new EventEmitter<DataSelectionProfile>();
 
   tree: TreeNode[] = [];
 
@@ -32,7 +35,7 @@ export class EditFieldsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('Profile:', this.profile);
+    this.traversAndUpddateTree();
     this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.profile.getFields());
 
     this.selectedDataSelectionProfileFieldsService
@@ -45,11 +48,6 @@ export class EditFieldsComponent implements OnInit {
         })
       )
       .subscribe();
-
-    /*       this.selectedDataSelectionProfileFieldsService.getSelectedFields().subscribe((fields) => {
-        fields.every((field) => this.profile.setSelectedFields(field))
-
-      }); */
   }
 
   public setSelectedChildrenFields(fields: ProfileFields[]) {
@@ -61,25 +59,45 @@ export class EditFieldsComponent implements OnInit {
     });
   }
 
+  public traversAndUpddateTree() {
+    this.selectedDataSelectionProfileFieldsService.updateSelectionStatus(
+      this.profile.getFields(),
+      this.profile.getSelectedFields()
+    );
+  }
+
   public setSelectedFieldElement(element) {
     const node: ProfileFields = element.originalEntry as ProfileFields;
-    const index = this.getIndexInSelectedFields(node);
+    const index = this.getIndexInSelectedFields(node.getElementId());
     if (index !== -1) {
-      this.removeNodeFromSelectedFields(node);
+      this.spliceAndEmit(index);
     } else {
       this.addNodeToSelectedFields(node);
     }
+    this.traversAndUpddateTree();
   }
 
-  private getIndexInSelectedFields(node: ProfileFields): number {
-    return this.selectedDataSelectionProfileFieldsService
-      .getSelectedIds()
-      .indexOf(node.getElementId());
+  private getIndexInSelectedFields(elementId: string): number {
+    return this.profile
+      .getSelectedFields()
+      .findIndex((selectedField) => selectedField.getElementId() === elementId);
   }
 
   public setFieldAsRequired(selectedField: SelectedField) {
     selectedField.setMustHave(!selectedField.getMustHave());
-    // this.selectedDataSelectionProfileFieldsService.updateField(selectedField);
+  }
+
+  public removeSelectedField(node: ProfileFields): void {
+    const index = this.getIndexInSelectedFields(node.getElementId());
+    if (index !== -1) {
+      this.spliceAndEmit(index);
+    }
+  }
+
+  private spliceAndEmit(index: number): void {
+    this.profile.getSelectedFields().splice(index, 1);
+    this.traversAndUpddateTree();
+    this.emitUpdatedSelectedFields();
   }
 
   private addNodeToSelectedFields(node: ProfileFields): void {
@@ -87,13 +105,11 @@ export class EditFieldsComponent implements OnInit {
     const selectedField = new SelectedField(node.getDisplay(), node.getElementId(), false, []);
     this.profile.getSelectedFields().push(selectedField);
     this.selectedDataSelectionProfileFieldsService.addToSelection(node);
+    this.emitUpdatedSelectedFields();
   }
 
-  private removeNodeFromSelectedFields(node: ProfileFields): void {
-    if (!node.getIsRequired()) {
-      node.setIsSelected(false);
-      this.selectedDataSelectionProfileFieldsService.removeFromSelection(node);
-    }
+  private emitUpdatedSelectedFields(): void {
+    this.updatedProfile.emit(this.profile); // Emit the updated fields
   }
 
   public saveFields(): void {
@@ -108,6 +124,7 @@ export class EditFieldsComponent implements OnInit {
           );
           this.profileProviderService.setProfileById(this.profile.getId(), dataSelectionProfile);
           this.setDataSelectionProvider(dataSelectionProfile);
+          console.log('Saving profile');
           return this.selectedDataSelectionProfileFieldsService.getSelectedFields().pipe(
             first(),
             switchMap((selectedFields) => {
