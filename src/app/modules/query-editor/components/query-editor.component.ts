@@ -1,14 +1,13 @@
 import { ActivatedRoute } from '@angular/router';
+import { combineLatest, Observable, of, Subscription, tap } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
-import { Observable, of, Subscription } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { PathSegments } from 'src/app/app-paths';
 import { ProfileProviderService } from '../../data-selection/services/ProfileProvider.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
-import { ProfileProviderIteratorService } from 'src/app/service/ProfileProviderIteratorService.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -28,34 +27,33 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
 
   routeSubscription: Subscription;
 
-  nextElementExists$: Observable<boolean>;
-  previousElementExists$: Observable<boolean>;
-
   constructor(
     private terminologySystemProvider: TerminologySystemProvider,
     private criterionProviderService: CriterionProviderService,
     private navigationHelperService: NavigationHelperService,
-    private route: ActivatedRoute,
-    private profileProviderIteratorService: ProfileProviderIteratorService,
+    private activatedRoute: ActivatedRoute,
     private profileProviderService: ProfileProviderService
   ) {}
 
   ngOnInit(): void {
-    this.routeSubscription = this.route.paramMap.subscribe(() => {
-      const url = this.route.snapshot.url;
-      this.type = url[0].path;
-      this.id = url[1].path;
-      this.getElementFromProvider();
+    this.routeSubscription = combineLatest([this.activatedRoute.paramMap, this.activatedRoute.url])
+      .pipe(
+        tap(([paramMap, url]) => {
+          const id = paramMap.get('id');
+          const type = url[0]?.path; // first segment of the URL
 
-      this.nextElementExists$ = this.profileProviderIteratorService.getNextElementExists(this.id);
-      this.previousElementExists$ = this.profileProviderIteratorService.getPreviousElementExists(
-        this.id
-      );
-    });
+          if (id && type) {
+            this.id = id;
+            this.type = type;
+            this.getElementFromProvider();
+          }
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
-    this.routeSubscription.unsubscribe();
+    this.routeSubscription?.unsubscribe();
   }
 
   private getElementFromProvider(): void {
@@ -72,14 +70,6 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
 
   private getProfileFromProviderById(id: string): void {
     this.profile$ = of(this.profileProviderService.getProfileById(id));
-  }
-
-  public navigateToNextProfile(): void {
-    this.profileProviderIteratorService.navigateToNextProfile(this.id);
-  }
-
-  public navigateToPreviousProfile(): void {
-    this.profileProviderIteratorService.navigateToPreviousProfile(this.id);
   }
 
   public updateProfile(profile: DataSelectionProfile): void {

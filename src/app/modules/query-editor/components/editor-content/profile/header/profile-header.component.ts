@@ -19,6 +19,8 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   @Input()
   profile: DataSelectionProfile;
 
+  myInput = '';
+
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
 

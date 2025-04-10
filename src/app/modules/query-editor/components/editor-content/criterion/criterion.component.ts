@@ -52,9 +52,9 @@ export class CriterionComponent implements OnInit, AfterViewInit {
     const dseId =
       'https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert';
     this.dseElement$ = this.dse.fetchDataSelectionProfileData([dseId]).pipe(map((data) => data[0]));
-    this.criterion$ = this.createCriterionService.createCriteriaFromHashes([this.id]).pipe(
-      map((criteria) => criteria[0])
-    );
+    this.criterion$ = this.createCriterionService
+      .createCriteriaFromHashes([this.id])
+      .pipe(map((criteria) => criteria[0]));
 
     this.criterion$.subscribe((criterion) => {
       this.currentTemplates = [];
