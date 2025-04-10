@@ -13,6 +13,7 @@ export const routes: Routes = [
     path: BasePaths.queryEditor,
     canLoad: [RoleGuard],
     data: {
+      hideSideNav: false,
       navId: BasePaths.queryEditor,
       roles: ['main'],
       breadcrumb: 'Query Editor',

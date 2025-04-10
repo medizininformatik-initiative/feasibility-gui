@@ -16,6 +16,7 @@ const routes: Routes = [
   {
     path: `${PathSegments.profile}/:id`,
     component: QueryEditorComponent,
+    data: { hideSideNav: false },
   },
 ];
 
