@@ -1,96 +1,59 @@
-import { Display } from '../Display';
+import { BasicField } from './BasicFields/BasicField';
+import { ReferenceField } from './RefrenceFields/ReferenceField';
+import { SelectedBasicField } from './BasicFields/SelectedBasicField';
+import { SelectedReferenceField } from './RefrenceFields/SelectedReferenceField';
 
 export class ProfileFields {
-  private elementId: string;
-  private display: Display;
-  private description: Display;
-  private children: ProfileFields[] = [];
-  private isSelected = false;
-  private isRequired = false;
-  private recommended = false;
-  private referencedProfileUrls: string[];
+  private fieldTree: BasicField[] = [];
+  private referenceFields: ReferenceField[] = [];
+  private selectedFields: SelectedBasicField[] = [];
+  private selectedReferenceFields: SelectedReferenceField[] = [];
 
   constructor(
-    elementId: string,
-    display: Display,
-    description: Display,
-    children: ProfileFields[] = [],
-    isSelected: boolean = false,
-    isRequired: boolean = false,
-    recommended: boolean,
-    referencedProfileUrls: string[]
+    fieldTree: BasicField[],
+    referenceFields: ReferenceField[],
+    selectedFields: SelectedBasicField[],
+    selectedReferenceFields: SelectedReferenceField[]
   ) {
-    this.elementId = elementId;
-    this.display = display;
-    this.description = description;
-    this.children = children;
-    this.isSelected = isSelected;
-    this.isRequired = isRequired;
-    this.recommended = recommended;
-    this.referencedProfileUrls = referencedProfileUrls;
+    this.fieldTree = fieldTree;
+    this.referenceFields = referenceFields;
+    this.selectedFields = selectedFields;
+    this.selectedReferenceFields = selectedReferenceFields;
   }
 
-  public getElementId(): string {
-    return this.elementId;
+  public getFieldTree(): BasicField[] {
+    return this.fieldTree;
   }
 
-  public setElementId(elementId: string): void {
-    this.elementId = elementId;
+  public setFieldTree(fieldTree: BasicField[]): void {
+    this.fieldTree = fieldTree;
   }
 
-  public getDisplay(): Display {
-    return this.display;
+  public getReferenceFields(): ReferenceField[] {
+    return this.referenceFields;
   }
 
-  public setDisplay(value: Display): void {
-    this.display = value;
+  public setReferenceFields(referenceFields: ReferenceField[]): void {
+    this.referenceFields = referenceFields;
   }
 
-  public getDescription(): Display {
-    return this.description;
+  public getSelectedFields(): SelectedBasicField[] {
+    return this.selectedFields;
   }
 
-  public setDescription(value: Display): void {
-    this.description = value;
+  public setSelectedFields(selectedFields: SelectedBasicField[]): void {
+    this.selectedFields = selectedFields;
   }
 
-  public getChildren(): ProfileFields[] {
-    return this.children;
+  public getSelectedReferenceFields(): SelectedReferenceField[] {
+    return this.selectedReferenceFields;
   }
 
-  public setChildren(value: ProfileFields[]): void {
-    this.children = value;
+  public setSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {
+    this.selectedReferenceFields = selectedReferenceFields;
   }
 
-  public getIsSelected(): boolean {
-    return this.isSelected;
-  }
-
-  public setIsSelected(isSelected: boolean): void {
-    this.isSelected = isSelected;
-  }
-
-  public getIsRequired(): boolean {
-    return this.isRequired;
-  }
-
-  public setIsRequired(value: boolean): void {
-    this.isRequired = value;
-  }
-
-  public getRecommended(): boolean {
-    return this.recommended;
-  }
-
-  public setRecommended(recommended: boolean): void {
-    this.recommended = recommended;
-  }
-
-  public getReferencedProfileUrls(): string[] {
-    return this.referencedProfileUrls;
-  }
-
-  public setReferencedProfileUrls(referencedProfileUrls: string[]): void {
-    this.referencedProfileUrls = referencedProfileUrls;
+  public addField(field: BasicField): void {
+    this.fieldTree.push(field);
   }
 }

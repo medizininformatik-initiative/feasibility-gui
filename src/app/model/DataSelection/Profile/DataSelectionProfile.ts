@@ -1,42 +1,32 @@
+import { AbstractField } from './Fields/AbstractField';
 import { AbstractProfileFilter } from './Filter/AbstractProfileFilter';
 import { Display } from './Display';
 import { ProfileFields } from './Fields/ProfileFields';
 import { ProfileReference } from './Reference/ProfileReference';
-import { SelectedField } from './Fields/SelectedField';
 
 export class DataSelectionProfile {
   private id: string;
   private display: Display;
-  private fields: ProfileFields[] = [];
+  private profileFields: ProfileFields[] = [];
   private filters: AbstractProfileFilter[] = [];
   private label: string;
   private reference: ProfileReference;
-  private selectedFields: SelectedField[] = [];
   private url: string;
 
   constructor(
     id: string,
     url: string,
     display: Display,
-    fields: ProfileFields[] = [],
+    profileFields: ProfileFields[] = [],
     filters: AbstractProfileFilter[] = [],
-    reference: ProfileReference,
-    selectedFields: SelectedField[]
+    reference: ProfileReference
   ) {
     this.id = id;
     this.url = url;
     this.display = display;
-    this.fields = fields;
+    this.profileFields = profileFields;
     this.filters = filters;
     this.reference = reference;
-    this.selectedFields = selectedFields;
-  }
-
-  public getSelectedFields(): SelectedField[] {
-    return this.selectedFields;
-  }
-  public setSelectedFields(selectedFields: SelectedField[]): void {
-    this.selectedFields = selectedFields;
   }
 
   public getLabel(): string {
@@ -67,12 +57,12 @@ export class DataSelectionProfile {
     this.display = value;
   }
 
-  public getFields(): ProfileFields[] {
-    return this.fields;
+  public getProfileFields(): ProfileFields[] {
+    return this.profileFields;
   }
 
-  public setFields(value: ProfileFields[]): void {
-    this.fields = value;
+  public setProfileFields(value: ProfileFields[]): void {
+    this.profileFields = value;
   }
 
   public getFilters(): AbstractProfileFilter[] {
