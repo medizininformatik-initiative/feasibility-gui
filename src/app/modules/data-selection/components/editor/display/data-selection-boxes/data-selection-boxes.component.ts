@@ -50,13 +50,6 @@ export class DataSelectionBoxesComponent implements OnInit {
     this.getFilterChips();
     this.getMenuItems();
     this.display = this.profile.getDisplay();
-    this.profile$ = this.profileProviderService.getProfileIdMap().pipe(
-      tap((profileMap) => (this.profile = profileMap.get(this.profile.getId()))),
-      map(
-        (profileMap) => profileMap.get(this.profile.getId()),
-        tap(() => this.getFilterChips())
-      )
-    );
   }
 
   public getFilterChips(): void {
@@ -87,7 +80,6 @@ export class DataSelectionBoxesComponent implements OnInit {
   }
 
   public editProfile(id: string): void {
-    console.log('Edit Profile:', id);
     this.navigationHelperService.navigateToEditProfile(id);
   }
 
