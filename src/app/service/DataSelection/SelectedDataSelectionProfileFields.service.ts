@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,30 @@ export class SelectedDataSelectionProfileFieldsService {
   private selectedFields = new BehaviorSubject<ProfileFields[]>([]);
   private deepCopyOfProfileFields = new BehaviorSubject<ProfileFields[]>([]);
   private fieldIds = new Set<string>();
+
+  public updateSelectionStatus(
+    profileFields: ProfileFields[],
+    selectedFields: SelectedField[]
+  ): void {
+    const selectedElementIds = new Set(selectedFields.map((field) => field.getElementId()));
+
+    const traverseAndUpdate = (fields: ProfileFields[]): void => {
+      fields.forEach((field) => {
+        if (selectedElementIds.has(field.getElementId())) {
+          field.setIsSelected(true);
+        } else {
+          field.setIsSelected(false);
+        }
+
+        // Recursively traverse children
+        if (field.getChildren().length > 0) {
+          traverseAndUpdate(field.getChildren());
+        }
+      });
+    };
+
+    traverseAndUpdate(profileFields);
+  }
 
   public setDeepCopyFields(fields: ProfileFields[]): void {
     const deepCopy = this.deepCopyProfileFields(fields);
