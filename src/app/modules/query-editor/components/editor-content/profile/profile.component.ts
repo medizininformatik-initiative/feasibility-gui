@@ -37,8 +37,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('fields', { static: false, read: TemplateRef }) fieldsTemplate: TemplateRef<any>;
   @ViewChild('filter', { static: false, read: TemplateRef }) filterTemplate: TemplateRef<any>;
-  @ViewChild('profileReferences', { static: false, read: TemplateRef })
-  referenceTemplate: TemplateRef<any>;
+  @ViewChild('references', { static: false, read: TemplateRef }) referenceTemplate: TemplateRef<any>;
 
   @ViewChildren('testTemplates', { read: TemplateRef })
   testTemplates: QueryList<TemplateRef<any>>;
