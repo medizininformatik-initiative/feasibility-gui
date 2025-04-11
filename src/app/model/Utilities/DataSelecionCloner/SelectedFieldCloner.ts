@@ -1,8 +1,8 @@
+import { SelectedBasicField } from '../../DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { CloneDisplayData } from '../DisplayData/CloneDisplayData';
-import { SelectedField } from '../../DataSelection/Profile/Fields/SelectedField';
 
 export class SelectedFieldCloner {
-  public static deepCopySelectedFields(selectedFields: SelectedField[]): SelectedField[] {
+  public static deepCopySelectedFields(selectedFields: SelectedBasicField[]): SelectedBasicField[] {
     if (!selectedFields || selectedFields.length === 0) {
       return [];
     }
@@ -16,17 +16,21 @@ export class SelectedFieldCloner {
    * @param selectedField The SelectedField to clone.
    * @returns A deep copy of the SelectedField.
    */
-  public static deepCopySelectedField(selectedField: SelectedField): SelectedField | undefined {
+  public static deepCopySelectedField(
+    selectedField: SelectedBasicField
+  ): SelectedBasicField | undefined {
     if (!selectedField) {
       return undefined;
     }
     const clonedDisplay = CloneDisplayData.deepCopyDisplayData(selectedField.getDisplay());
-    const clonedLinkedProfiles = [...(selectedField.getLinkedProfiles() || [])];
-    return new SelectedField(
+    const clonedDescription = CloneDisplayData.deepCopyDisplayData(selectedField.getDescription());
+
+    return new SelectedBasicField(
       clonedDisplay,
+      clonedDescription,
       selectedField.getElementId(),
       selectedField.getMustHave(),
-      clonedLinkedProfiles
+      selectedField.getType()
     );
   }
 }

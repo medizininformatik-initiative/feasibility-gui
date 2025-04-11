@@ -10,20 +10,21 @@ export class DataSelectionCloner {
    * @returns A deep copy of the DataSelectionProfile.
    */
   public static deepCopyProfile(profile: DataSelectionProfile): DataSelectionProfile {
-    const clonedFields = ProfileFieldsCloner.deepCopyFields(profile.getFields());
+    const clonedFields = ProfileFieldsCloner.deepCopyProfileFields(profile.getProfileFields());
     const clonedFilters = ProfileFilterCloner.deepCopyFilters(profile.getFilters());
     const clonedSelectedFields = SelectedFieldCloner.deepCopySelectedFields(
-      profile.getSelectedFields()
+      profile.getProfileFields().getSelectedBasicFields()
     );
+
+    const profileFields = profile.getProfileFields();
 
     return new DataSelectionProfile(
       profile.getId(),
       profile.getUrl(),
       profile.getDisplay(),
-      clonedFields,
+      profileFields,
       clonedFilters,
-      profile.getReference(),
-      clonedSelectedFields
+      profile.getReference()
     );
   }
 }

@@ -113,10 +113,9 @@ export class EditFilterModalComponent implements OnInit {
       profile.getId(),
       profile.getUrl(),
       profile.getDisplay(),
-      profile.getFields(),
+      profile.getProfileFields(),
       result,
-      profile.getReference(),
-      profile.getSelectedFields()
+      profile.getReference()
     );
   }
 

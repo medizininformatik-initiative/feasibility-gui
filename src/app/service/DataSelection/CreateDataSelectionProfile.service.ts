@@ -3,24 +3,29 @@ import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRest
 import { concatMap, map, Observable } from 'rxjs';
 import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { Injectable } from '@angular/core';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
-import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
-import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
+import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CreateDataSelectionProfileService {
-  private selectedFields: SelectedField[] = [];
+  private selectedBasicFields: SelectedBasicField[] = [];
+  private selectedReferenceFields: SelectedReferenceField[] = [];
   constructor(
     private dataSelectionApiService: DataSelectionApiService,
     private profileProvider: ProfileProviderService,
@@ -41,19 +46,22 @@ export class CreateDataSelectionProfileService {
     return this.dataSelectionApiService.getDataSelectionProfileData(urls).pipe(
       map((data: any[]) =>
         data.map((item: any) => {
-          const fields = this.mapFields(item.fields);
           const filters = this.createFilters(item.filters);
+          const profileFields = this.mapAndConstructProfileFields(item.fields);
           const profile = this.instanceOfDataSelectionProfile(
             item,
-            fields,
+            profileFields,
             filters,
             markAsReference
           );
-          this.selectedFields = [];
+          this.selectedBasicFields = [];
+          this.selectedReferenceFields = [];
+          console.log('Fetched profiles:', profile);
           return profile;
         })
       ),
       concatMap((profiles) => {
+        console.log('Fetched profiles:', profiles);
         profiles.forEach((profile) => this.profileProvider.setProfileById(profile.getId(), profile));
 
         /*         if (this.referencedProfiles.length > 0 && loadReferences) {
@@ -96,7 +104,7 @@ export class CreateDataSelectionProfileService {
    */
   private instanceOfDataSelectionProfile(
     item: any,
-    fields: ProfileFields[],
+    fields: ProfileFields,
     filters: AbstractProfileFilter[],
     markAsReference: boolean
   ): DataSelectionProfile {
@@ -106,36 +114,78 @@ export class CreateDataSelectionProfileService {
       this.instantiateDisplayData(item.display),
       fields,
       filters,
-      new ProfileReference(true, markAsReference),
-      this.selectedFields
+      new ProfileReference(true, markAsReference)
     );
     return dataSelectionProfileProfile;
   }
 
-  private mapFields(nodes: any[]): ProfileFields[] {
-    return nodes?.map((node) => this.mapField(node));
+  private mapAndConstructProfileFields(node: any): ProfileFields {
+    const fields: (BasicField | ReferenceField)[] = [];
+    this.traverseAndMapFields(node, fields);
+    return this.constructProfileFields(fields);
   }
 
-  /**
-   * @todo check if referenceProfiles are needed fron the node and what to do with them?!
-   * @param node
-   * @returns
-   */
-  private mapField(node: any): ProfileFields {
-    const children = node.children ? this.mapFields(node.children) : [];
-    if (node.required || node.recommended) {
-      const display = this.instantiateDisplayData(node.display);
-      this.selectedFields.push(new SelectedField(display, node.id, false, []));
+  private traverseAndMapFields(node: any, fields: (BasicField | ReferenceField)[]): void {
+    node.map((nodeEntry) => {
+      fields.push(this.mapField(nodeEntry));
+    });
+  }
+
+  private mapField(node: any): BasicField | ReferenceField {
+    const children = node.children ? node.children.map((child) => this.mapField(child)) : [];
+    const display = this.instantiateDisplayData(node?.display);
+    const description = this.instantiateDisplayData(node?.description);
+    const isRequiredOrRecommended: boolean = node.required || node.recommended;
+    if (node.type === ProfileFieldTypes.reference) {
+      if (isRequiredOrRecommended) {
+        this.selectedReferenceFields.push(
+          new SelectedReferenceField(node.id, display, description, false, [])
+        );
+      }
+      return new ReferenceField(
+        node.id,
+        display,
+        description,
+        node.required,
+        node.recommended,
+        node.referencedProfiles || []
+      );
+    } else {
+      if (isRequiredOrRecommended) {
+        this.selectedBasicFields.push(
+          new SelectedBasicField(display, description, node.id, false, node.type)
+        );
+      }
+      return new BasicField(
+        node.id,
+        display,
+        description,
+        children as BasicField[],
+        node.recommended,
+        isRequiredOrRecommended,
+        node.required,
+        node.type
+      );
     }
+  }
+
+  private constructProfileFields(fields: (BasicField | ReferenceField)[]): ProfileFields {
+    const basicFields: BasicField[] = [];
+    const referenceFields: ReferenceField[] = [];
+    fields.forEach((field) => {
+      if (field instanceof ReferenceField) {
+        referenceFields.push(field);
+      } else if (field instanceof BasicField) {
+        basicFields.push(field);
+      }
+    });
+
     return new ProfileFields(
-      node.id,
-      this.instantiateDisplayData(node.display),
-      this.instantiateDisplayData(node.description),
-      children,
-      node.isSelected || node.recommended || node.required || false,
-      node.required,
-      node.recommended,
-      node.referencedProfiles
+      uuidv4(),
+      basicFields.length > 0 ? basicFields : null,
+      referenceFields.length > 0 ? referenceFields : null,
+      this.selectedBasicFields,
+      this.selectedReferenceFields
     );
   }
 

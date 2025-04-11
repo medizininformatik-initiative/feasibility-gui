@@ -3,7 +3,6 @@ import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -13,7 +12,8 @@ import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { Concept } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Display } from '../../../model/DataSelection/Profile/Display';
-import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 
 @Injectable({
   providedIn: 'root',
@@ -43,11 +43,11 @@ export class DataExtraction2UiDataSelectionService {
             if (externDataSelectionProfile === undefined) {
               return;
             }
-            const selectedFields: SelectedField[] = this.setDataSectionProfileFields(
+            /*  const selectedFields: SelectedField[] = this.setDataSectionProfileFields(
               externDataSelectionProfile.attributes,
-              dataSelectionProfile.getFields()
+              dataSelectionProfile.getProfileFields().getSelectedBasicFields()
             );
-            dataSelectionProfile.setSelectedFields(selectedFields);
+            dataSelectionProfile.getProfileFields().setSelectedBasicFields(selectedFields); */
             if (TypeGuard.isFilterDataArray(externDataSelectionProfile.filter)) {
               const profileTokenFilter = externDataSelectionProfile.filter?.map(
                 (externSingleFilter) => {
@@ -99,17 +99,17 @@ export class DataExtraction2UiDataSelectionService {
     }
   }
 
-  private setDataSectionProfileFields(attributes: any[], fields: ProfileFields[]): SelectedField[] {
-    return attributes.map((attribute) => new SelectedField(
+  /*   private setDataSectionProfileFields(attributes: any[], fields: ProfileFields): SelectedBasicField[] {
+    return attributes.map((attribute) => new SelectedBasicField(
         this.getDataSectionProfileDisplay(attributes, fields),
         attribute.attributeRef,
         attribute.mustHave,
         attribute.linkedProfiles
       ));
-  }
+  } */
 
-  private getDataSectionProfileDisplay(attributes: any[], fields: ProfileFields[]): Display {
-    for (const field of fields) {
+  /*  private getDataSectionProfileDisplay(attributes: any[], fields: ProfileFields): Display {
+    for (const field of fields.getFieldTree()) {
       const foundAttribute = attributes.find(
         (attribute) => attribute.attributeRef === field.getElementId()
       );
@@ -123,5 +123,5 @@ export class DataExtraction2UiDataSelectionService {
         }
       }
     }
-  }
+  } */
 }

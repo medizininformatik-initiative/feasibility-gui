@@ -1,8 +1,7 @@
 import { CloneDisplayData } from 'src/app/model/Utilities/DisplayData/CloneDisplayData';
 import { FilterChipBuilder } from '../../FilterChipBuilder';
 import { InterfaceFilterChip } from '../../InterfaceFilterChip';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
-import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 
 export class FilterChipDataSelectionAdapter {
   /**
@@ -10,10 +9,10 @@ export class FilterChipDataSelectionAdapter {
    * @param fields
    * @returns
    */
-  public static adaptFields(fields: SelectedField[]): InterfaceFilterChip[] {
+  public static adaptFields(fields: SelectedBasicField[]): InterfaceFilterChip[] {
     const filterChips: InterfaceFilterChip[] = [];
 
-    fields.forEach((field: SelectedField) => {
+    fields.forEach((field: SelectedBasicField) => {
       const type = field.getMustHave() ? 'DATASELECTION.REQUIRED' : 'DATASELECTION.OPTIONAL';
       const builder = new FilterChipBuilder(type);
       builder.addData(

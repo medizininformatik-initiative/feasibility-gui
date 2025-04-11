@@ -1,5 +1,4 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipDataSelectionAdapter';
 import { Injectable } from '@angular/core';
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
@@ -7,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
-import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +20,7 @@ export class DataSelectionFieldsChipsService {
   constructor(public translate: TranslateService) {}
 
   public generateFilterChipsFromDataSelectionFields(
-    selectedFields: SelectedField[]
+    selectedFields: SelectedBasicField[]
   ): Observable<InterfaceFilterChip[]> {
     const filterChips = FilterChipDataSelectionAdapter.adaptFields(selectedFields);
     const squashedFilterChips = this.squashFilterChips(filterChips);

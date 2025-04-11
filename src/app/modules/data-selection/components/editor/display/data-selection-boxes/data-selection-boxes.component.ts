@@ -8,9 +8,9 @@ import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
 import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
 import { map, Observable, of, tap } from 'rxjs';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
-import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -53,12 +53,12 @@ export class DataSelectionBoxesComponent implements OnInit {
   }
 
   public getFilterChips(): void {
-    const selectedFields = this.profile.getSelectedFields();
+    const selectedFields = this.profile.getProfileFields().getSelectedBasicFields();
     this.generateAndStoreFilterChips(selectedFields);
     this.getFilterChipsForProfileFilters();
   }
 
-  private generateAndStoreFilterChips(selectedFields: SelectedField[]): void {
+  private generateAndStoreFilterChips(selectedFields: SelectedBasicField[]): void {
     this.$fieldsFilterChips =
       this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(selectedFields);
   }

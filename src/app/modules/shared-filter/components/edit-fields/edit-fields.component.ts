@@ -1,14 +1,14 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileProfileNodeAdapter';
-import { first, map, of, switchMap } from 'rxjs';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { first, map } from 'rxjs';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedDataSelectionProfileFieldsService } from 'src/app/service/DataSelection/SelectedDataSelectionProfileFields.service';
-import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 
 @Component({
@@ -20,6 +20,9 @@ import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 export class EditFieldsComponent implements OnInit {
   @Input()
   profile: DataSelectionProfile;
+
+  @Input()
+  fieldTree: BasicField[];
 
   @Output()
   updatedProfile: EventEmitter<DataSelectionProfile> = new EventEmitter<DataSelectionProfile>();
@@ -36,38 +39,37 @@ export class EditFieldsComponent implements OnInit {
 
   ngOnInit() {
     this.traversAndUpddateTree();
-    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.profile.getFields());
+    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(
+      this.profile.getProfileFields().getFieldTree()
+    );
 
     this.selectedDataSelectionProfileFieldsService
-      .getDeepCopyProfileFields()
+      .getDeepCopyBasicFields()
       .pipe(
         first(),
         map((profileFields) => {
-          this.setSelectedChildrenFields(profileFields); // Initialize selected fields
+          this.setSelectedChildrenFields(this.profile.getProfileFields().getSelectedBasicFields()); // Initialize selected fields
           this.tree = FieldsTreeAdapter.fromTree(profileFields); // Build the tree
         })
       )
       .subscribe();
   }
 
-  public setSelectedChildrenFields(fields: ProfileFields[]) {
+  public setSelectedChildrenFields(fields: SelectedBasicField[]) {
     fields.forEach((field) => {
-      if (field.getIsSelected() || field.getIsRequired()) {
-        this.selectedDataSelectionProfileFieldsService.addToSelection(field);
-      }
-      this.setSelectedChildrenFields(field.getChildren());
+      this.selectedDataSelectionProfileFieldsService.addToSelection(field);
     });
   }
 
   public traversAndUpddateTree() {
     this.selectedDataSelectionProfileFieldsService.updateSelectionStatus(
-      this.profile.getFields(),
-      this.profile.getSelectedFields()
+      this.profile.getProfileFields().getFieldTree(),
+      this.profile.getProfileFields().getSelectedBasicFields()
     );
   }
 
   public setSelectedFieldElement(element) {
-    const node: ProfileFields = element.originalEntry as ProfileFields;
+    const node: BasicField = element.originalEntry as BasicField;
     const index = this.getIndexInSelectedFields(node.getElementId());
     if (index !== -1) {
       this.spliceAndEmit(index);
@@ -79,15 +81,16 @@ export class EditFieldsComponent implements OnInit {
 
   private getIndexInSelectedFields(elementId: string): number {
     return this.profile
-      .getSelectedFields()
+      .getProfileFields()
+      .getSelectedBasicFields()
       .findIndex((selectedField) => selectedField.getElementId() === elementId);
   }
 
-  public setFieldAsRequired(selectedField: SelectedField) {
+  public setFieldAsRequired(selectedField: SelectedBasicField) {
     selectedField.setMustHave(!selectedField.getMustHave());
   }
 
-  public removeSelectedField(node: ProfileFields): void {
+  public removeSelectedField(node: BasicField): void {
     const index = this.getIndexInSelectedFields(node.getElementId());
     if (index !== -1) {
       this.spliceAndEmit(index);
@@ -95,86 +98,26 @@ export class EditFieldsComponent implements OnInit {
   }
 
   private spliceAndEmit(index: number): void {
-    this.profile.getSelectedFields().splice(index, 1);
+    this.profile.getProfileFields().getSelectedBasicFields().splice(index, 1);
     this.traversAndUpddateTree();
     this.emitUpdatedSelectedFields();
   }
 
-  private addNodeToSelectedFields(node: ProfileFields): void {
+  private addNodeToSelectedFields(node: BasicField): void {
     node.setIsSelected(true);
-    const selectedField = new SelectedField(node.getDisplay(), node.getElementId(), false, []);
-    this.profile.getSelectedFields().push(selectedField);
-    this.selectedDataSelectionProfileFieldsService.addToSelection(node);
+    const selectedField = new SelectedBasicField(
+      node.getDisplay(),
+      node.getDescription(),
+      node.getElementId(),
+      false,
+      node.getType()
+    );
+    this.profile.getProfileFields().getSelectedBasicFields().push(selectedField);
+    this.selectedDataSelectionProfileFieldsService.addToSelection(selectedField);
     this.emitUpdatedSelectedFields();
   }
 
   private emitUpdatedSelectedFields(): void {
     this.updatedProfile.emit(this.profile); // Emit the updated fields
-  }
-
-  public saveFields(): void {
-    this.selectedDataSelectionProfileFieldsService
-      .getDeepCopyProfileFields()
-      .pipe(
-        first(),
-        switchMap((profileFields) => {
-          const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(
-            this.profile,
-            profileFields
-          );
-          this.profileProviderService.setProfileById(this.profile.getId(), dataSelectionProfile);
-          this.setDataSelectionProvider(dataSelectionProfile);
-          console.log('Saving profile');
-          return this.selectedDataSelectionProfileFieldsService.getSelectedFields().pipe(
-            first(),
-            switchMap((selectedFields) => {
-              const referencedProfiles = selectedFields
-                .map((field) =>
-                  field.getReferencedProfileUrls().length > 0
-                    ? field.getReferencedProfileUrls()
-                    : []
-                )
-                .reduce((acc, curr) => acc.concat(curr), []);
-              if (referencedProfiles.length === 0) {
-                return of([]);
-              }
-              // Fetch referenced profiles
-              return this.createDataSelectionProfileService.fetchDataSelectionProfileData(
-                referencedProfiles,
-                true
-              );
-            })
-          );
-        })
-      )
-      .subscribe({
-        next: (fetchedProfiles: DataSelectionProfile[]) => {
-          fetchedProfiles.forEach((fetchedProfile) => this.setDataSelectionProvider(fetchedProfile));
-        },
-        error: (error) => {
-          console.error('Error saving fields:', error);
-        },
-        complete: () => {},
-      });
-  }
-
-  private setDataSelectionProvider(newProfile: DataSelectionProfile) {
-    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-    this.dataSelectionProviderService.setProfileInDataSelection(dataSelectionId, newProfile);
-  }
-
-  private createInstanceOfDataSelectionProfile(
-    profile: DataSelectionProfile,
-    profileFields: ProfileFields[]
-  ) {
-    return new DataSelectionProfile(
-      profile.getId(),
-      profile.getUrl(),
-      profile.getDisplay(),
-      profileFields,
-      profile.getFilters(),
-      profile.getReference(),
-      profile.getSelectedFields()
-    );
   }
 }

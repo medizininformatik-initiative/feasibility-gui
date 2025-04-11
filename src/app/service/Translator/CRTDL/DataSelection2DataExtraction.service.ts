@@ -13,7 +13,10 @@ import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/P
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/TokenFilter ';
-import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { AbstractSelectedField } from 'src/app/model/DataSelection/Profile/Fields/AbstractSelectedField';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
+import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipDataSelectionAdapter';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +35,9 @@ export class DataSelection2DataExtraction {
   }
 
   private translateAttributeGroups(profile: DataSelectionProfile): AttributeGroup {
-    const attributes = this.translateSelectedFields(profile.getSelectedFields());
+    const attributes = this.translateSelectedFields(
+      profile.getProfileFields().getSelectedBasicFields()
+    );
     const filters = this.translateFilters(profile.getFilters());
     return new AttributeGroup(
       profile.getUrl(),
@@ -42,15 +47,27 @@ export class DataSelection2DataExtraction {
     );
   }
 
-  private translateSelectedFields(selectedFields: SelectedField[]): Attributes[] | undefined {
-    const attributes: Attributes[] = selectedFields.map((field) => this.translateAttributes(field));
+  private translateSelectedFields(
+    selectedFields: AbstractSelectedField[]
+  ): Attributes[] | undefined {
+    const attributes: Attributes[] = selectedFields.map((field) =>
+      this.translateReferenceAttributes(field as SelectedReferenceField)
+    );
+    const selectedBasicFields = selectedFields.map((selectedField) =>
+      this.translateBasicAttributes(selectedField as SelectedBasicField)
+    );
+    attributes.push(...selectedBasicFields);
     return attributes.length > 0 ? attributes : undefined;
   }
 
-  private translateAttributes(field: SelectedField): Attributes {
+  private translateReferenceAttributes(field: SelectedReferenceField): Attributes {
     const linkedGroups =
       field.getLinkedProfiles().length > 0 ? field.getLinkedProfiles() : undefined;
     return new Attributes(field.getElementId(), field.getMustHave(), linkedGroups);
+  }
+
+  private translateBasicAttributes(field: SelectedBasicField): Attributes {
+    return new Attributes(field.getElementId(), field.getMustHave(), []);
   }
 
   private translateFilters(

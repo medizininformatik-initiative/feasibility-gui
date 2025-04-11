@@ -5,7 +5,7 @@ import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterCh
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { map, Observable, of } from 'rxjs';
-import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 
 @Component({
   selector: 'num-profile-header',
@@ -39,16 +39,17 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.profile.currentValue?.getFilters()) {
       this.getFilterChipsForProfileFilters(changes.profile.currentValue.getFilters());
-      this.generateAndStoreFilterChips(changes.profile.currentValue?.getSelectedFields());
+      const profile: DataSelectionProfile = changes.profile.currentValue;
+      this.generateAndStoreFilterChips(profile.getProfileFields().getSelectedBasicFields());
     }
   }
 
   public getFilterChips(): void {
-    const selectedFields = this.profile.getSelectedFields();
+    const selectedFields = this.profile.getProfileFields().getSelectedBasicFields();
     this.generateAndStoreFilterChips(selectedFields);
   }
 
-  private generateAndStoreFilterChips(selectedFields: SelectedField[]): void {
+  private generateAndStoreFilterChips(selectedFields: SelectedBasicField[]): void {
     this.$fieldsFilterChips =
       this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(selectedFields);
   }

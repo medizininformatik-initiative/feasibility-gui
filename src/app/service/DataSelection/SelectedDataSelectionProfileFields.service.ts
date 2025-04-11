@@ -1,25 +1,25 @@
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { SelectedField } from 'src/app/model/DataSelection/Profile/Fields/SelectedField';
+import { Injectable } from '@angular/core';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SelectedDataSelectionProfileFieldsService {
-  private selectedFields = new BehaviorSubject<ProfileFields[]>([]);
-  private deepCopyOfProfileFields = new BehaviorSubject<ProfileFields[]>([]);
+  private selectedFields = new BehaviorSubject<SelectedBasicField[]>([]);
+  private deepCopyOfBasicFields = new BehaviorSubject<BasicField[]>([]);
   private fieldIds = new Set<string>();
 
   public updateSelectionStatus(
-    profileFields: ProfileFields[],
-    selectedFields: SelectedField[]
+    BasicFields: BasicField[],
+    selectedFields: SelectedBasicField[]
   ): void {
     const selectedElementIds = new Set(selectedFields.map((field) => field.getElementId()));
 
-    const traverseAndUpdate = (fields: ProfileFields[]): void => {
+    const traverseAndUpdate = (fields: BasicField[]): void => {
       fields.forEach((field) => {
         if (selectedElementIds.has(field.getElementId())) {
           field.setIsSelected(true);
@@ -34,31 +34,31 @@ export class SelectedDataSelectionProfileFieldsService {
       });
     };
 
-    traverseAndUpdate(profileFields);
+    traverseAndUpdate(BasicFields);
   }
 
-  public setDeepCopyFields(fields: ProfileFields[]): void {
-    const deepCopy = this.deepCopyProfileFields(fields);
-    this.deepCopyOfProfileFields.next(deepCopy);
+  public setDeepCopyFields(fields: BasicField[]): void {
+    const deepCopy = this.deepCopyBasicFields(fields);
+    this.deepCopyOfBasicFields.next(deepCopy);
   }
 
-  private deepCopyProfileFields(fields: ProfileFields[]): ProfileFields[] {
+  private deepCopyBasicFields(fields: BasicField[]): BasicField[] {
     return fields.map((field) => this.mapNode(field));
   }
 
-  private mapNode(profileField: ProfileFields): ProfileFields {
-    const children = profileField.getChildren()
-      ? this.deepCopyProfileFields(profileField.getChildren())
+  private mapNode(basicField: BasicField): BasicField {
+    const children = basicField.getChildren()
+      ? this.deepCopyBasicFields(basicField.getChildren())
       : [];
-    return new ProfileFields(
-      profileField.getElementId(),
-      this.instantiateDisplayData(profileField.getDisplay()),
-      this.instantiateDisplayData(profileField.getDescription()),
+    return new BasicField(
+      basicField.getElementId(),
+      this.instantiateDisplayData(basicField.getDisplay()),
+      this.instantiateDisplayData(basicField.getDescription()),
       children,
-      profileField.getIsSelected(),
-      profileField.getIsRequired(),
-      profileField.getRecommended(),
-      profileField.getReferencedProfileUrls()
+      basicField.getRecommended(),
+      basicField.getIsSelected(),
+      basicField.getIsRequired(),
+      basicField.getType()
     );
   }
 
@@ -74,37 +74,37 @@ export class SelectedDataSelectionProfileFieldsService {
     );
   }
 
-  public getDeepCopyProfileFields(): Observable<ProfileFields[]> {
-    return this.deepCopyOfProfileFields.asObservable();
+  public getDeepCopyBasicFields(): Observable<BasicField[]> {
+    return this.deepCopyOfBasicFields.asObservable();
   }
 
-  public getSelectedFields(): Observable<ProfileFields[]> {
+  public getSelectedFields(): Observable<SelectedBasicField[]> {
     return this.selectedFields.asObservable();
   }
 
-  public setSelectedFields(fields: ProfileFields[]): void {
+  public setSelectedFields(fields: SelectedBasicField[]): void {
     this.selectedFields.next(fields);
     this.fieldIds.clear();
-    this.setSelectedChildrenFields(fields);
+    //this.setSelectedChildrenFields(fields);
   }
 
-  private setSelectedChildrenFields(fields: ProfileFields[]): void {
+  private setSelectedChildrenFields(fields: BasicField[]): void {
     fields.forEach((field) => {
       this.fieldIds.add(field.getElementId());
       this.setSelectedChildrenFields(field.getChildren());
     });
   }
 
-  public addToSelection(field: ProfileFields): void {
+  public addToSelection(field: SelectedBasicField): void {
     const currentSelection = this.selectedFields.getValue();
     if (!this.fieldIds.has(field.getElementId())) {
       this.selectedFields.next([...currentSelection, field]);
       this.fieldIds.add(field.getElementId());
-      this.updateDeepCopyField(field);
+      //this.updateDeepCopyField(field);
     }
   }
 
-  public removeFromSelection(field: ProfileFields): void {
+  public removeFromSelection(field: BasicField): void {
     const currentSelection = this.selectedFields.getValue();
     const updatedSelection = currentSelection.filter(
       (f) => f.getElementId() !== field.getElementId()
@@ -114,21 +114,21 @@ export class SelectedDataSelectionProfileFieldsService {
     this.updateDeepCopyField(field, false); // Mark as unselected
   }
 
-  public updateField(field: ProfileFields): void {
+  public updateField(field: BasicField): void {
     this.updateDeepCopyField(field);
   }
 
-  private updateDeepCopyField(field: ProfileFields, isSelected = true): void {
-    const deepCopy = this.deepCopyOfProfileFields.getValue();
+  private updateDeepCopyField(field: BasicField, isSelected = true): void {
+    const deepCopy = this.deepCopyOfBasicFields.getValue();
     const updatedDeepCopy = this.updateNodeInDeepCopy(deepCopy, field, isSelected);
-    this.deepCopyOfProfileFields.next(updatedDeepCopy);
+    this.deepCopyOfBasicFields.next(updatedDeepCopy);
   }
 
   private updateNodeInDeepCopy(
-    fields: ProfileFields[],
-    updatedField: ProfileFields,
+    fields: BasicField[],
+    updatedField: BasicField,
     isSelected: boolean
-  ): ProfileFields[] {
+  ): BasicField[] {
     return fields.map((field) => {
       if (field.getElementId() === updatedField.getElementId()) {
         field.setIsSelected(isSelected);
@@ -152,12 +152,12 @@ export class SelectedDataSelectionProfileFieldsService {
   }
 
   private clearDeepCopySelection(): void {
-    const deepCopy = this.deepCopyOfProfileFields.getValue();
+    const deepCopy = this.deepCopyOfBasicFields.getValue();
     const clearedDeepCopy = this.clearSelectionInDeepCopy(deepCopy);
-    this.deepCopyOfProfileFields.next(clearedDeepCopy);
+    this.deepCopyOfBasicFields.next(clearedDeepCopy);
   }
 
-  private clearSelectionInDeepCopy(fields: ProfileFields[]): ProfileFields[] {
+  private clearSelectionInDeepCopy(fields: BasicField[]): BasicField[] {
     return fields.map((field) => {
       field.setIsSelected(false);
       if (field.getChildren()) {
