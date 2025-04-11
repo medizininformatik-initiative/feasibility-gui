@@ -18,6 +18,8 @@ import {
   ViewChildren,
   QueryList,
 } from '@angular/core';
+import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 
 @Component({
   selector: 'num-profile',
@@ -35,12 +37,16 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('fields', { static: false, read: TemplateRef }) fieldsTemplate: TemplateRef<any>;
   @ViewChild('filter', { static: false, read: TemplateRef }) filterTemplate: TemplateRef<any>;
+  @ViewChild('profileReferences', { static: false, read: TemplateRef })
+  referenceTemplate: TemplateRef<any>;
 
   @ViewChildren('testTemplates', { read: TemplateRef })
   testTemplates: QueryList<TemplateRef<any>>;
 
   profileTimeRestriction: ProfileTimeRestrictionFilter[] = [];
   profileTokenFilters: ProfileTokenFilter[] = [];
+
+  urlTree: TreeNode[];
 
   tests: ProfileTokenFilter[] = [];
 
@@ -53,7 +59,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   ngAfterViewInit(): void {
     this.resetComponentState();
     this.updateTemplatesArray();
-    console.log(this.testTemplates.toArray());
   }
 
   /**
@@ -77,14 +82,23 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   private updateTemplatesArray(): void {
     this.setFieldsTemplate();
     this.setFilterTemplate();
+    this.setProfileReferencesTemplate();
     this.cdr.detectChanges();
   }
 
   private setFieldsTemplate(): void {
-    const fields = this.profile.getFields();
+    const fields = this.profile.getProfileFields().getFieldTree();
     if (fields.length > 0) {
       this.templates.push({ template: this.fieldsTemplate, name: 'Fields' });
     }
+  }
+
+  public normalizeRefrenceUrl(url: string): string {
+    const lastPart = url.split('/').pop();
+    const words = lastPart.split('-');
+    const capitalizedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+    const result = capitalizedWords.join(' ');
+    return result;
   }
 
   private setFilterTemplate(): void {
@@ -92,6 +106,19 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
       this.setProfileTokenFilter();
       this.setTimeRestrictionFilter();
       this.templates.push({ template: this.filterTemplate, name: 'Filters' });
+    }
+  }
+
+  private setProfileReferencesTemplate(): void {
+    if (this.profile.getProfileFields().getReferenceFields().length > 0) {
+      const urls = this.profile
+        .getProfileFields()
+        .getReferenceFields()[0]
+        ?.getReferencedProfileUrls();
+      const test = ProfileReferenceAdapter.adapt(urls);
+      if (test.length > 0) {
+        this.templates.push({ template: this.referenceTemplate, name: 'References' });
+      }
     }
   }
 

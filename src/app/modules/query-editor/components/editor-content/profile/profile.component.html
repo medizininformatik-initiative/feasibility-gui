@@ -50,4 +50,20 @@
       </mat-tab-group>
     </div>
   </ng-template>
+
+  <ng-template #profileReferences>
+    <mat-tab-group>
+      <mat-tab
+        *ngFor="let reference of profile.getProfileFields().getReferenceFields()"
+        class="inner-tab-group"
+        label="{{ reference.getDisplay() | displayTranslation }}"
+      >
+        <num-button type="blue">Neues Merkmal hinzufügen</num-button>
+
+        <div *ngFor="let tree of urlTree">
+          <num-tree [treeData]="tree"></num-tree>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-template>
 </div>
