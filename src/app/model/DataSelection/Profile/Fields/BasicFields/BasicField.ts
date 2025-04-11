@@ -3,7 +3,7 @@ import { AbstractField } from '../AbstractField';
 
 export class BasicField extends AbstractField {
   private children: BasicField[] = [];
-  private isSelected = false;
+  private isSelected: boolean;
 
   constructor(
     elementId: string,
@@ -11,10 +11,11 @@ export class BasicField extends AbstractField {
     description: Display,
     children: BasicField[] = [],
     recommended: boolean,
-    isSelected: boolean = false,
-    isRequired: boolean = false
+    isSelected: boolean,
+    isRequired: boolean,
+    type: string
   ) {
-    super(elementId, display, description, isRequired, recommended);
+    super(elementId, display, description, isRequired, recommended, type);
     this.children = children;
     this.isSelected = isSelected;
   }

@@ -1,6 +1,7 @@
 import { Display } from '../Display';
 
 export abstract class AbstractField {
+  private readonly type: string;
   private elementId: string;
   private display: Display;
   private description: Display;
@@ -12,13 +13,15 @@ export abstract class AbstractField {
     display: Display,
     description: Display,
     isRequired: boolean = false,
-    recommended: boolean
+    recommended: boolean,
+    type: string
   ) {
     this.elementId = elementId;
     this.display = display;
     this.description = description;
     this.isRequired = isRequired;
     this.recommended = recommended;
+    this.type = type;
   }
 
   public getElementId(): string {
@@ -59,5 +62,9 @@ export abstract class AbstractField {
 
   public setRecommended(recommended: boolean): void {
     this.recommended = recommended;
+  }
+
+  public getType(): string {
+    return this.type;
   }
 }

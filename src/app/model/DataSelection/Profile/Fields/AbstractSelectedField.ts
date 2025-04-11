@@ -9,10 +9,9 @@ export abstract class AbstractSelectedField extends AbstractField {
     description: Display,
     elementId: string,
     mustHave: boolean,
-    isRequired: boolean = false,
-    recommended: boolean = false
+    type: string
   ) {
-    super(elementId, display, description, isRequired, recommended);
+    super(elementId, display, description, null, null, type);
     this.mustHave = mustHave;
   }
 

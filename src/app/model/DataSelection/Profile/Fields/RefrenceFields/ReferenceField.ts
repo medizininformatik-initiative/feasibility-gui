@@ -1,3 +1,4 @@
+import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
 import { Display } from '../../Display';
 import { AbstractField } from '../AbstractField';
 import { SelectedReferenceField } from './SelectedReferenceField';
@@ -11,10 +12,9 @@ export class ReferenceField extends AbstractField {
     description: Display,
     isRequired: boolean = false,
     recommended: boolean = false,
-    selectedReferenceProfiles: SelectedReferenceField[] = [],
     referencedProfileUrls: string[] = []
   ) {
-    super(elementId, display, description, isRequired, recommended);
+    super(elementId, display, description, isRequired, recommended, ProfileFieldTypes.reference);
     this.referencedProfileUrls = referencedProfileUrls;
   }
 

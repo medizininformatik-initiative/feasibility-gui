@@ -1,4 +1,3 @@
-import { AbstractField } from './Fields/AbstractField';
 import { AbstractProfileFilter } from './Filter/AbstractProfileFilter';
 import { Display } from './Display';
 import { ProfileFields } from './Fields/ProfileFields';
@@ -7,7 +6,7 @@ import { ProfileReference } from './Reference/ProfileReference';
 export class DataSelectionProfile {
   private id: string;
   private display: Display;
-  private profileFields: ProfileFields[] = [];
+  private profileFields: ProfileFields;
   private filters: AbstractProfileFilter[] = [];
   private label: string;
   private reference: ProfileReference;
@@ -17,7 +16,7 @@ export class DataSelectionProfile {
     id: string,
     url: string,
     display: Display,
-    profileFields: ProfileFields[] = [],
+    profileFields: ProfileFields,
     filters: AbstractProfileFilter[] = [],
     reference: ProfileReference
   ) {
@@ -57,12 +56,12 @@ export class DataSelectionProfile {
     this.display = value;
   }
 
-  public getProfileFields(): ProfileFields[] {
+  public getProfileFields(): ProfileFields {
     return this.profileFields;
   }
 
-  public setProfileFields(value: ProfileFields[]): void {
-    this.profileFields = value;
+  public setProfileFields(profileFields: ProfileFields): void {
+    this.profileFields = profileFields;
   }
 
   public getFilters(): AbstractProfileFilter[] {

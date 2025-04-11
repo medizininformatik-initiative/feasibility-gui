@@ -1,17 +1,18 @@
 import { AbstractSelectedField } from '../AbstractSelectedField';
 import { Display } from '../../Display';
+import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
 
 export class SelectedReferenceField extends AbstractSelectedField {
   private linkedProfiles: string[] = [];
 
   constructor(
+    elementId: string,
     display: Display,
     description: Display,
-    elementId: string,
     mustHave: boolean,
     linkedProfiles: string[]
   ) {
-    super(display, description, elementId, mustHave);
+    super(display, description, elementId, mustHave, ProfileFieldTypes.reference);
     this.linkedProfiles = linkedProfiles;
   }
 

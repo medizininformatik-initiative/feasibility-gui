@@ -4,20 +4,23 @@ import { SelectedBasicField } from './BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from './RefrenceFields/SelectedReferenceField';
 
 export class ProfileFields {
+  private readonly id: string;
   private fieldTree: BasicField[] = [];
   private referenceFields: ReferenceField[] = [];
-  private selectedFields: SelectedBasicField[] = [];
+  private selectedBasicFields: SelectedBasicField[] = [];
   private selectedReferenceFields: SelectedReferenceField[] = [];
 
   constructor(
+    id: string,
     fieldTree: BasicField[],
     referenceFields: ReferenceField[],
-    selectedFields: SelectedBasicField[],
+    selectedBasicFields: SelectedBasicField[],
     selectedReferenceFields: SelectedReferenceField[]
   ) {
+    this.id = id;
     this.fieldTree = fieldTree;
     this.referenceFields = referenceFields;
-    this.selectedFields = selectedFields;
+    this.selectedBasicFields = selectedBasicFields;
     this.selectedReferenceFields = selectedReferenceFields;
   }
 
@@ -37,12 +40,12 @@ export class ProfileFields {
     this.referenceFields = referenceFields;
   }
 
-  public getSelectedFields(): SelectedBasicField[] {
-    return this.selectedFields;
+  public getSelectedBasicFields(): SelectedBasicField[] {
+    return this.selectedBasicFields;
   }
 
-  public setSelectedFields(selectedFields: SelectedBasicField[]): void {
-    this.selectedFields = selectedFields;
+  public setSelectedBasicFields(selectedFields: SelectedBasicField[]): void {
+    this.selectedBasicFields = selectedFields;
   }
 
   public getSelectedReferenceFields(): SelectedReferenceField[] {
@@ -55,5 +58,8 @@ export class ProfileFields {
 
   public addField(field: BasicField): void {
     this.fieldTree.push(field);
+  }
+  public getId(): string {
+    return this.id;
   }
 }
