@@ -19,13 +19,15 @@ import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 })
 export class EditFieldsComponent implements OnInit {
   @Input()
-  profile: DataSelectionProfile;
-
-  @Input()
   fieldTree: BasicField[];
 
+  @Input()
+  selectedBasicFields: SelectedBasicField[];
+
   @Output()
-  updatedProfile: EventEmitter<DataSelectionProfile> = new EventEmitter<DataSelectionProfile>();
+  updatedSelectedBasicFields: EventEmitter<SelectedBasicField[]> = new EventEmitter<
+    SelectedBasicField[]
+  >();
 
   tree: TreeNode[] = [];
 
@@ -39,32 +41,30 @@ export class EditFieldsComponent implements OnInit {
 
   ngOnInit() {
     this.traversAndUpddateTree();
-    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(
-      this.profile.getProfileFields().getFieldTree()
-    );
+    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.fieldTree);
 
     this.selectedDataSelectionProfileFieldsService
       .getDeepCopyBasicFields()
       .pipe(
         first(),
         map((profileFields) => {
-          this.setSelectedChildrenFields(this.profile.getProfileFields().getSelectedBasicFields()); // Initialize selected fields
+          this.setSelectedChildrenFields(); // Initialize selected fields
           this.tree = FieldsTreeAdapter.fromTree(profileFields); // Build the tree
         })
       )
       .subscribe();
   }
 
-  public setSelectedChildrenFields(fields: SelectedBasicField[]) {
-    fields.forEach((field) => {
+  public setSelectedChildrenFields() {
+    this.selectedBasicFields.forEach((field) => {
       this.selectedDataSelectionProfileFieldsService.addToSelection(field);
     });
   }
 
   public traversAndUpddateTree() {
     this.selectedDataSelectionProfileFieldsService.updateSelectionStatus(
-      this.profile.getProfileFields().getFieldTree(),
-      this.profile.getProfileFields().getSelectedBasicFields()
+      this.fieldTree,
+      this.selectedBasicFields
     );
   }
 
@@ -80,10 +80,9 @@ export class EditFieldsComponent implements OnInit {
   }
 
   private getIndexInSelectedFields(elementId: string): number {
-    return this.profile
-      .getProfileFields()
-      .getSelectedBasicFields()
-      .findIndex((selectedField) => selectedField.getElementId() === elementId);
+    return this.selectedBasicFields.findIndex(
+      (selectedField) => selectedField.getElementId() === elementId
+    );
   }
 
   public setFieldAsRequired(selectedField: SelectedBasicField) {
@@ -98,7 +97,7 @@ export class EditFieldsComponent implements OnInit {
   }
 
   private spliceAndEmit(index: number): void {
-    this.profile.getProfileFields().getSelectedBasicFields().splice(index, 1);
+    this.selectedBasicFields.splice(index, 1);
     this.traversAndUpddateTree();
     this.emitUpdatedSelectedFields();
   }
@@ -112,12 +111,12 @@ export class EditFieldsComponent implements OnInit {
       false,
       node.getType()
     );
-    this.profile.getProfileFields().getSelectedBasicFields().push(selectedField);
+    this.selectedBasicFields.push(selectedField);
     this.selectedDataSelectionProfileFieldsService.addToSelection(selectedField);
     this.emitUpdatedSelectedFields();
   }
 
   private emitUpdatedSelectedFields(): void {
-    this.updatedProfile.emit(this.profile); // Emit the updated fields
+    this.updatedSelectedBasicFields.emit(this.selectedBasicFields); // Emit the updated fields
   }
 }
