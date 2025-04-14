@@ -4,16 +4,27 @@ import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
 
 export class SelectedReferenceField extends AbstractSelectedField {
   private linkedProfiles: string[] = [];
+  private referencedProfileUrls: string[] = [];
 
   constructor(
     elementId: string,
     display: Display,
     description: Display,
     mustHave: boolean,
-    linkedProfiles: string[]
+    linkedProfiles: string[],
+    referencedProfileUrls: string[] = []
   ) {
     super(display, description, elementId, mustHave, ProfileFieldTypes.reference);
     this.linkedProfiles = linkedProfiles;
+    this.referencedProfileUrls = referencedProfileUrls;
+  }
+
+  public getReferencedProfileUrls(): string[] {
+    return this.referencedProfileUrls;
+  }
+
+  public setReferencedProfileUrls(referencedProfileUrls: string[]): void {
+    this.referencedProfileUrls = referencedProfileUrls;
   }
 
   public getLinkedProfiles(): string[] {
