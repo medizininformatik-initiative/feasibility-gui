@@ -42,11 +42,9 @@ export class DisplayDataSelectionComponent implements OnInit, OnDestroy {
     this.dataSelectionProvider
       .getActiveDataSelection()
       .pipe(
-        map((dataSelection) =>
-          dataSelection
+        map((dataSelection) => dataSelection
             .getProfiles()
-            .map((profile) => this.profileProvider.getProfileById(profile.getId()))
-        )
+            .map((profile) => this.profileProvider.getProfileById(profile.getId())))
       )
       .subscribe();
   }
