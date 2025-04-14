@@ -1,5 +1,6 @@
 import {
   faAngleDoubleLeft,
+  faArrowRight,
   faExclamation,
   faExclamationTriangle,
   faFolderOpen,
@@ -96,6 +97,7 @@ export const FONT_AWESOME_ICONS = [
   faUnlink,
   faArrowUp,
   faArrowDown,
+  faArrowRight,
   faFolder,
   faWindowClose,
   faLessThan,
