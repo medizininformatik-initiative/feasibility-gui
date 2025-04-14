@@ -56,13 +56,15 @@ export class CreateDataSelectionProfileService {
           );
           this.selectedBasicFields = [];
           this.selectedReferenceFields = [];
-          console.log('Fetched profiles:', profile);
           return profile;
         })
       ),
       concatMap((profiles) => {
         console.log('Fetched profiles:', profiles);
         profiles.forEach((profile) => this.profileProvider.setProfileById(profile.getId(), profile));
+        this.profileProvider
+          .getProfileIdMap()
+          .subscribe((profileMap) => console.log('Profile Map:', profileMap));
 
         /*         if (this.referencedProfiles.length > 0 && loadReferences) {
           const uniqueReferencedProfiles = [...new Set(this.referencedProfiles)];
@@ -139,7 +141,14 @@ export class CreateDataSelectionProfileService {
     if (node.type === ProfileFieldTypes.reference) {
       if (isRequiredOrRecommended) {
         this.selectedReferenceFields.push(
-          new SelectedReferenceField(node.id, display, description, false, [])
+          new SelectedReferenceField(
+            node.id,
+            display,
+            description,
+            false,
+            [],
+            node.referencedProfiles || []
+          )
         );
       }
       return new ReferenceField(
@@ -172,21 +181,38 @@ export class CreateDataSelectionProfileService {
   private constructProfileFields(fields: (BasicField | ReferenceField)[]): ProfileFields {
     const basicFields: BasicField[] = [];
     const referenceFields: ReferenceField[] = [];
-    fields.forEach((field) => {
+
+    const processField = (field: BasicField | ReferenceField): void => {
       if (field instanceof ReferenceField) {
-        referenceFields.push(field);
+        if (!referenceFields.includes(field)) {
+          referenceFields.push(field);
+        }
       } else if (field instanceof BasicField) {
+        const filteredChildren: BasicField[] = [];
+        field.getChildren().forEach((child) => {
+          if (child instanceof ReferenceField) {
+            referenceFields.push(child);
+          } else {
+            filteredChildren.push(child);
+          }
+          processField(child);
+        });
+        field.setChildren(filteredChildren);
         basicFields.push(field);
       }
-    });
+    };
 
-    return new ProfileFields(
+    // Process each field in the top-level array
+    fields.forEach((field) => processField(field));
+
+    const profileFields = new ProfileFields(
       uuidv4(),
       basicFields.length > 0 ? basicFields : null,
       referenceFields.length > 0 ? referenceFields : null,
       this.selectedBasicFields,
       this.selectedReferenceFields
     );
+    return profileFields;
   }
 
   public instantiateDisplayData(displayData: any): Display {
