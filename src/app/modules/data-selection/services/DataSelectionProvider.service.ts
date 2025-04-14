@@ -77,14 +77,8 @@ export class DataSelectionProviderService {
   public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
     if (dataSelection) {
-      const updatedElements = dataSelection
-        .getProfiles()
-        .map((existingProfile: DataSelectionProfile) =>
-          existingProfile.getUrl() === profile.getUrl() ? profile : existingProfile
-        );
-      if (!updatedElements.includes(profile)) {
-        updatedElements.push(profile);
-      }
+      const updatedElements = dataSelection.getProfiles();
+      updatedElements.push(profile);
       this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
     }
   }
