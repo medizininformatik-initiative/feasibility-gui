@@ -12,7 +12,7 @@ export class ProfileReferenceAdapter {
           description: ProfileReferenceAdapter.normalizeRefrenceUrl(url),
           selectable: true,
           isCheckboxSelected: false,
-          isDisabled: false,
+          isDisabled: true,
         },
         children: [],
         originalEntry: url,
