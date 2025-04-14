@@ -1,15 +1,12 @@
 <mat-drawer-container>
   <mat-drawer opened="true" #drawer position="end" mode="side">
-    <div *ngIf="profile.getProfileFields().getSelectedBasicFields()" class="selected-fields">
+    <div *ngIf="selectedBasicFields" class="selected-fields">
       <div class="filter-title">
         {{ 'DATASELECTION.FIELD_SELECTION.FIELD_SELECTION' | translate }}
       </div>
       <div class="selected-fields-box">
         <div
-          *ngFor="
-            let selectedField of profile.getProfileFields().getSelectedBasicFields();
-            let index = index
-          "
+          *ngFor="let selectedField of selectedBasicFields; let index = index"
           fxLayout="row"
           fxLayoutAlign="start center"
           class="selectedFilterBox"
@@ -46,7 +43,6 @@
   <mat-drawer-content>
     <div class="filter-title">
       {{ 'DATASELECTION.FIELD_SELECTION.HEADER' | translate }}
-      {{ profile.getDisplay() | displayTranslation }}
     </div>
     <div class="tree-container">
       <div *ngFor="let singleTree of tree">

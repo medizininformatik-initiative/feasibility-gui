@@ -15,11 +15,10 @@ import {
   ChangeDetectionStrategy,
   SimpleChanges,
   OnChanges,
-  ViewChildren,
-  QueryList,
 } from '@angular/core';
 import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 
 @Component({
   selector: 'num-profile',
@@ -39,13 +38,10 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   @ViewChild('filter', { static: false, read: TemplateRef }) filterTemplate: TemplateRef<any>;
   @ViewChild('references', { static: false, read: TemplateRef }) referenceTemplate: TemplateRef<any>;
 
-  @ViewChildren('testTemplates', { read: TemplateRef })
-  testTemplates: QueryList<TemplateRef<any>>;
-
   profileTimeRestriction: ProfileTimeRestrictionFilter[] = [];
   profileTokenFilters: ProfileTokenFilter[] = [];
 
-  urlTree: TreeNode[];
+  urlTree: TreeNode[][] = [];
 
   tests: ProfileTokenFilter[] = [];
 
@@ -108,16 +104,18 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  private setProfileReferencesTemplate(): void {
-    if (this.profile.getProfileFields().getReferenceFields().length > 0) {
-      const urls = this.profile
-        .getProfileFields()
-        .getReferenceFields()[0]
-        ?.getReferencedProfileUrls();
-      const test = ProfileReferenceAdapter.adapt(urls);
-      if (test.length > 0) {
-        this.templates.push({ template: this.referenceTemplate, name: 'References' });
-      }
+  private setProfileReferencesTemplate() {
+    this.profile
+      .getProfileFields()
+      ?.getReferenceFields()
+      .forEach((field) => {
+        const urls = field.getReferencedProfileUrls();
+        const adaptedUrls = ProfileReferenceAdapter.adapt(urls);
+        this.urlTree.push(adaptedUrls);
+        console.log(this.urlTree);
+      });
+    if (this.urlTree.length > 0) {
+      this.templates.push({ template: this.referenceTemplate, name: 'References' });
     }
   }
 
@@ -165,8 +163,8 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
    * Updates the profile fields and emits the updated profile.
    * @param updatedProfile - The updated profile instance.
    */
-  public updateProfile(updatedProfile: DataSelectionProfile): void {
-    this.profile = updatedProfile;
+  public updateSelectedFields(updatedSelectedBasicFields: SelectedBasicField[]): void {
+    this.profile.getProfileFields().setSelectedBasicFields(updatedSelectedBasicFields);
     this.emitProfileInstance();
   }
 

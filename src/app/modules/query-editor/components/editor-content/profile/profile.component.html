@@ -1,70 +1,72 @@
-< fxLayout="column" class="full">
-<num-profile-header class="width-100 height-25" [profile]="profile"> </num-profile-header>
-<num-filter-tabs
-  class="width-100 height-75"
-  *ngIf="templates.length > 0"
-  [content]="templates"
-></num-filter-tabs>
+<div fxLayout="column" class="full">
+  <num-profile-header class="width-100 height-25" [profile]="profile"> </num-profile-header>
+  <num-filter-tabs
+    class="width-100 height-75"
+    *ngIf="templates.length > 0"
+    [content]="templates"
+  ></num-filter-tabs>
 
-<ng-template #fields>
-  <num-edit-fields
-    style="width: 100%; height: 100%"
-    [profile]="profile"
-    (updatedProfile)="updateProfile($event)"
-  ></num-edit-fields>
-</ng-template>
+  <ng-template #fields>
+    <num-edit-fields
+      style="width: 100%; height: 100%"
+      [fieldTree]="profile.getProfileFields().getFieldTree()"
+      [selectedBasicFields]="profile.getProfileFields().getSelectedBasicFields()"
+      (updatedSelectedBasicFields)="updateProfile($event)"
+    ></num-edit-fields>
+  </ng-template>
 
-<ng-template *ngFor="let test of tests" #testTemplates>
-  <num-token-filter
-    [tokenFilter]="profileTokenFilter"
-    (tokenFilterChanged)="updateTokenFilter($event)"
-  ></num-token-filter>
-</ng-template>
+  <ng-template *ngFor="let test of tests" #testTemplates>
+    <num-token-filter
+      [tokenFilter]="profileTokenFilter"
+      (tokenFilterChanged)="updateTokenFilter($event)"
+    ></num-token-filter>
+  </ng-template>
 
-<ng-template #filter>
-  <div class="profile-tab-group-container full">
-    <mat-tab-group
-      animationDuration="0ms"
-      class="inner-tab-group"
-      disableRipple="true"
-      mat-stretch-tabs="false"
-    >
-      <mat-tab
-        *ngFor="let profileTokenFilter of profileTokenFilters"
-        label="{{ profileTokenFilter.getName() }}"
-      >
-        <num-token-filter
-          [tokenFilter]="profileTokenFilter"
-          (tokenFilterChanged)="updateTokenFilter($event)"
-        ></num-token-filter>
-      </mat-tab>
-      <mat-tab
-        *ngFor="let timeRestriction of profileTimeRestriction"
-        label="{{ timeRestriction.getName() }}"
-      >
-        <num-edit-time-restriction
-          [timeRestriction]="timeRestriction.getTimeRestriction()"
-          (timeRestrictionChanged)="updateTimeRestriction($event, timeRestriction)"
-        ></num-edit-time-restriction>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
-</ng-template>
-
-<ng-template #references>
-  <div class="profile-tab-group-container full">
-    <mat-tab-group>
-      <mat-tab
-        *ngFor="let reference of profile.getProfileFields().getReferenceFields()"
+  <ng-template #filter>
+    <div class="profile-tab-group-container full">
+      <mat-tab-group
+        animationDuration="0ms"
         class="inner-tab-group"
-        label="{{ reference.getDisplay() | displayTranslation }}"
+        disableRipple="true"
+        mat-stretch-tabs="false"
       >
-        <num-button type="blue">Neues Merkmal hinzufügen</num-button>
+        <mat-tab
+          *ngFor="let profileTokenFilter of profileTokenFilters"
+          label="{{ profileTokenFilter.getName() }}"
+        >
+          <num-token-filter
+            [tokenFilter]="profileTokenFilter"
+            (tokenFilterChanged)="updateTokenFilter($event)"
+          ></num-token-filter>
+        </mat-tab>
+        <mat-tab
+          *ngFor="let timeRestriction of profileTimeRestriction"
+          label="{{ timeRestriction.getName() }}"
+        >
+          <num-edit-time-restriction
+            [timeRestriction]="timeRestriction.getTimeRestriction()"
+            (timeRestrictionChanged)="updateTimeRestriction($event, timeRestriction)"
+          ></num-edit-time-restriction>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </ng-template>
 
-        <div *ngFor="let tree of urlTree">
-          <num-tree [treeData]="tree"></num-tree>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
-</ng-template>
+  <ng-template #references>
+    <div class="profile-tab-group-container full">
+      <mat-tab-group>
+        <mat-tab
+          *ngFor="let reference of profile.getProfileFields().getReferenceFields(); index as i"
+          class="inner-tab-group"
+          label="{{ reference.getDisplay() | displayTranslation }} ({{ urlTree[i].length }})"
+        >
+          <num-button type="blue">Neues Merkmal hinzufügen</num-button>
+
+          <div *ngFor="let tree of urlTree[i]">
+            <num-tree [treeData]="tree"></num-tree>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </ng-template>
+</div>
