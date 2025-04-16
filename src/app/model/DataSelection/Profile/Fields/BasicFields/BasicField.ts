@@ -9,7 +9,7 @@ export class BasicField extends AbstractField {
     elementId: string,
     display: Display,
     description: Display,
-    children: BasicField[] = [],
+    children: BasicField[],
     recommended: boolean,
     isSelected: boolean,
     isRequired: boolean,

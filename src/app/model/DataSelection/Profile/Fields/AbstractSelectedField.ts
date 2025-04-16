@@ -1,17 +1,10 @@
 import { Display } from '../Display';
 import { AbstractField } from './AbstractField';
 
-export abstract class AbstractSelectedField extends AbstractField {
+export abstract class AbstractSelectedField {
   private mustHave = false;
 
-  constructor(
-    display: Display,
-    description: Display,
-    elementId: string,
-    mustHave: boolean,
-    type: string
-  ) {
-    super(elementId, display, description, null, null, type);
+  constructor(mustHave: boolean) {
     this.mustHave = mustHave;
   }
 

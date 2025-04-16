@@ -1,7 +1,6 @@
 import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
 import { Display } from '../../Display';
 import { AbstractField } from '../AbstractField';
-import { SelectedReferenceField } from './SelectedReferenceField';
 
 export class ReferenceField extends AbstractField {
   private referencedProfileUrls: string[] = [];
@@ -21,6 +20,7 @@ export class ReferenceField extends AbstractField {
   public getReferencedProfileUrls(): string[] {
     return this.referencedProfileUrls;
   }
+
   public setReferencedProfileUrls(referencedProfileUrls: string[]): void {
     this.referencedProfileUrls = referencedProfileUrls;
   }
