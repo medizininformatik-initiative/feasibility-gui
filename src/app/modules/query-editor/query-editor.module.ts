@@ -17,7 +17,6 @@ import { QueryEditorRoutingModule } from './query-editor.routing.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TokenFilterComponent } from './components/editor-content/profile/token-filter/token-filter.component';
-import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ProfileReferenceComponent } from './components/editor-content/profile/reference/profile-reference.component';
 
 @NgModule({
