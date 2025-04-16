@@ -8,6 +8,7 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { PathSegments } from 'src/app/app-paths';
 import { ProfileProviderService } from '../../data-selection/services/ProfileProvider.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import { StagedReferenceProfileUrlsProviderService } from 'src/app/service/Provider/StagedReferenceProfileUrlsProvider.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -34,10 +35,14 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     private criterionProviderService: CriterionProviderService,
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
-    private profileProviderService: ProfileProviderService
+    private profileProviderService: ProfileProviderService,
+    private stagedReferenceProfileUrlsProviderService: StagedReferenceProfileUrlsProviderService
   ) {}
 
   ngOnInit(): void {
+    this.stagedReferenceProfileUrlsProviderService
+      .getStagedReferenceProfileUrlsMap()
+      .subscribe((map) => console.log(map));
     this.routeSubscription?.unsubscribe();
     this.routeSubscription = combineLatest([this.activatedRoute.paramMap, this.activatedRoute.url])
       .pipe(
