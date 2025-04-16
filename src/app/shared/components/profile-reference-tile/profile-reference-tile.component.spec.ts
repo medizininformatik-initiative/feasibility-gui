@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileReferenceComponent } from './profile-reference.component';
+import { ProfileReferenceTileComponent } from './profile-reference-tile.component';
 
 describe('ProfileReferenceComponent', () => {
-  let component: ProfileReferenceComponent;
-  let fixture: ComponentFixture<ProfileReferenceComponent>;
+  let component: ProfileReferenceTileComponent;
+  let fixture: ComponentFixture<ProfileReferenceTileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ProfileReferenceComponent],
+      declarations: [ProfileReferenceTileComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ProfileReferenceComponent);
+    fixture = TestBed.createComponent(ProfileReferenceTileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
