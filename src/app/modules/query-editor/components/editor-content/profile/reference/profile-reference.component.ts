@@ -1,9 +1,11 @@
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
+import { map, take } from 'rxjs';
 import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { StagedReferenceProfileUrlsProviderService } from 'src/app/service/Provider/StagedReferenceProfileUrlsProvider.service';
-import { map, take } from 'rxjs';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 
 @Component({
   selector: 'num-profile-reference',
@@ -20,12 +22,17 @@ export class ProfileReferenceComponent implements OnInit {
 
   urlTree: TreeNode[][] = [];
 
+  possibleReferences: TreeNode[][] = [];
+
   constructor(
-    private stagedReferenceProfileUrlsProviderService: StagedReferenceProfileUrlsProviderService
+    private stagedReferenceProfileUrlsProviderService: StagedReferenceProfileUrlsProviderService,
+    private dataSelectionProviderService: DataSelectionProviderService,
+    private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
   ngOnInit(): void {
     this.initializeUrlTree();
+    this.getPossibleReferences();
   }
 
   private initializeUrlTree(): void {
@@ -89,5 +96,24 @@ export class ProfileReferenceComponent implements OnInit {
     return this.referencedFields.find((field) =>
       field.getReferencedProfileUrls().some((url) => url === selectedNode.originalEntry)
     );
+  }
+
+  getPossibleReferences() {
+    this.possibleReferences = [];
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
+    this.dataSelectionProviderService.getActiveDataSelection().subscribe((dataSelection) => {
+      this.urlTree.forEach((urls) => {
+        this.possibleReferences.push(
+          urls.filter(
+            (referencedUrl) =>
+              dataSelection.getProfiles().filter(
+                (profile) => profile.getUrl() === referencedUrl.id
+                //&&
+                //profile.getUrl() !== this.profile.getUrl()
+              ).length > 0
+          )
+        );
+      });
+    });
   }
 }
