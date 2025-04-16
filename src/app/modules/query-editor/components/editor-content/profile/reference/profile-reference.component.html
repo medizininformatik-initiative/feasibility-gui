@@ -1,0 +1,17 @@
+<div class="profile-tab-group-container full">
+  <mat-tab-group>
+    <mat-tab
+      *ngFor="let reference of referencedFields; index as i"
+      class="inner-tab-group"
+      label="{{ reference.getDisplay() | displayTranslation }} ({{ urlTree[i]?.length || 0 }})"
+    >
+      <div *ngFor="let tree of urlTree[i]">
+        <num-tree
+          (selectedCheckbox)="updateSelectedReferenceFields($event)"
+          [treeData]="tree"
+        ></num-tree>
+      </div>
+      <num-button type="blue">Neues Merkmal hinzufügen</num-button>
+    </mat-tab>
+  </mat-tab-group>
+</div>
