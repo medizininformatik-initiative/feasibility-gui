@@ -14,7 +14,7 @@ export class SelectedDataSelectionProfileFieldsService {
   private fieldIds = new Set<string>();
 
   public updateSelectionStatus(
-    BasicFields: BasicField[],
+    basicFields: BasicField[],
     selectedFields: SelectedBasicField[]
   ): void {
     const selectedElementIds = new Set(selectedFields.map((field) => field.getElementId()));
@@ -27,14 +27,13 @@ export class SelectedDataSelectionProfileFieldsService {
           field.setIsSelected(false);
         }
 
-        // Recursively traverse children
         if (field.getChildren().length > 0) {
           traverseAndUpdate(field.getChildren());
         }
       });
     };
 
-    traverseAndUpdate(BasicFields);
+    traverseAndUpdate(basicFields);
   }
 
   public setDeepCopyFields(fields: BasicField[]): void {
@@ -97,9 +96,9 @@ export class SelectedDataSelectionProfileFieldsService {
 
   public addToSelection(field: SelectedBasicField): void {
     const currentSelection = this.selectedFields.getValue();
-    if (!this.fieldIds.has(field.getElementId())) {
+    if (!this.fieldIds.has(field.getSelectedField().getElementId())) {
       this.selectedFields.next([...currentSelection, field]);
-      this.fieldIds.add(field.getElementId());
+      this.fieldIds.add(field.getSelectedField().getElementId());
       //this.updateDeepCopyField(field);
     }
   }
@@ -107,7 +106,7 @@ export class SelectedDataSelectionProfileFieldsService {
   public removeFromSelection(field: BasicField): void {
     const currentSelection = this.selectedFields.getValue();
     const updatedSelection = currentSelection.filter(
-      (f) => f.getElementId() !== field.getElementId()
+      (f) => f.getSelectedField().getElementId() !== field.getElementId()
     );
     this.selectedFields.next(updatedSelection);
     this.fieldIds.delete(field.getElementId());

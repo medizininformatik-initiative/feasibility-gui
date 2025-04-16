@@ -28,8 +28,7 @@ export class CreateDataSelectionProfileService {
   private selectedReferenceFields: SelectedReferenceField[] = [];
   constructor(
     private dataSelectionApiService: DataSelectionApiService,
-    private profileProvider: ProfileProviderService,
-    private displayDataFactoryService: DisplayDataFactoryService
+    private profileProvider: ProfileProviderService
   ) {}
 
   public fetchDataSelectionProfileData(
@@ -139,18 +138,6 @@ export class CreateDataSelectionProfileService {
     const description = this.instantiateDisplayData(node?.description);
     const isRequiredOrRecommended: boolean = node.required || node.recommended;
     if (node.type === ProfileFieldTypes.reference) {
-      if (isRequiredOrRecommended) {
-        this.selectedReferenceFields.push(
-          new SelectedReferenceField(
-            node.id,
-            display,
-            description,
-            false,
-            [],
-            node.referencedProfiles || []
-          )
-        );
-      }
       return new ReferenceField(
         node.id,
         display,
@@ -160,12 +147,7 @@ export class CreateDataSelectionProfileService {
         node.referencedProfiles || []
       );
     } else {
-      if (isRequiredOrRecommended) {
-        this.selectedBasicFields.push(
-          new SelectedBasicField(display, description, node.id, false, node.type)
-        );
-      }
-      return new BasicField(
+      const basicField = new BasicField(
         node.id,
         display,
         description,
@@ -175,6 +157,10 @@ export class CreateDataSelectionProfileService {
         node.required,
         node.type
       );
+      if (isRequiredOrRecommended) {
+        this.selectedBasicFields.push(new SelectedBasicField(basicField, false));
+      }
+      return basicField;
     }
   }
 
@@ -207,8 +193,8 @@ export class CreateDataSelectionProfileService {
 
     const profileFields = new ProfileFields(
       uuidv4(),
-      basicFields.length > 0 ? basicFields : null,
-      referenceFields.length > 0 ? referenceFields : null,
+      basicFields.length > 0 ? basicFields : [],
+      referenceFields.length > 0 ? referenceFields : [],
       this.selectedBasicFields,
       this.selectedReferenceFields
     );
