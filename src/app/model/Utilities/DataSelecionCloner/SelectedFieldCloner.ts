@@ -1,5 +1,6 @@
 import { SelectedBasicField } from '../../DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { CloneDisplayData } from '../DisplayData/CloneDisplayData';
+import { ProfileFieldsCloner } from './ProfileFieldsCloner';
 
 export class SelectedFieldCloner {
   public static deepCopySelectedFields(selectedFields: SelectedBasicField[]): SelectedBasicField[] {
@@ -15,22 +16,17 @@ export class SelectedFieldCloner {
    * Clones a SelectedField object deeply.
    * @param selectedField The SelectedField to clone.
    * @returns A deep copy of the SelectedField.
-   */
+   * */
   public static deepCopySelectedField(
     selectedField: SelectedBasicField
   ): SelectedBasicField | undefined {
     if (!selectedField) {
       return undefined;
     }
-    const clonedDisplay = CloneDisplayData.deepCopyDisplayData(selectedField.getDisplay());
-    const clonedDescription = CloneDisplayData.deepCopyDisplayData(selectedField.getDescription());
 
     return new SelectedBasicField(
-      clonedDisplay,
-      clonedDescription,
-      selectedField.getElementId(),
-      selectedField.getMustHave(),
-      selectedField.getType()
+      ProfileFieldsCloner.deepCopyField(selectedField.getSelectedField()),
+      selectedField.getMustHave()
     );
   }
 }

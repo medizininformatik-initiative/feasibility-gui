@@ -1,4 +1,6 @@
 import { DataSelectionProfile } from '../../DataSelection/Profile/DataSelectionProfile';
+import { ProfileReference } from '../../DataSelection/Profile/Reference/ProfileReference';
+import { CloneDisplayData } from '../DisplayData/CloneDisplayData';
 import { ProfileFieldsCloner } from './ProfileFieldsCloner';
 import { ProfileFilterCloner } from './ProfileFilterCloner';
 import { SelectedFieldCloner } from './SelectedFieldCloner';
@@ -12,19 +14,15 @@ export class DataSelectionCloner {
   public static deepCopyProfile(profile: DataSelectionProfile): DataSelectionProfile {
     const clonedFields = ProfileFieldsCloner.deepCopyProfileFields(profile.getProfileFields());
     const clonedFilters = ProfileFilterCloner.deepCopyFilters(profile.getFilters());
-    const clonedSelectedFields = SelectedFieldCloner.deepCopySelectedFields(
-      profile.getProfileFields().getSelectedBasicFields()
-    );
-
-    const profileFields = profile.getProfileFields();
-
+    const clonedDisplay = CloneDisplayData.deepCopyDisplayData(profile.getDisplay());
+    const clonedReference = new ProfileReference(true, true);
     return new DataSelectionProfile(
       profile.getId(),
       profile.getUrl(),
-      profile.getDisplay(),
-      profileFields,
+      clonedDisplay,
+      clonedFields,
       clonedFilters,
-      profile.getReference()
+      clonedReference
     );
   }
 }
