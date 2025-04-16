@@ -1,5 +1,5 @@
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileProfileNodeAdapter';
+import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { SelectedDataSelectionProfileFieldsService } from 'src/app/service/DataSelection/SelectedDataSelectionProfileFields.service';
@@ -99,6 +99,7 @@ export class EditFieldsModalComponent implements OnInit {
       .indexOf(node.getElementId());
   }
 
+  /*
   private addNodeToSelectedFields(node: SelectedBasicField): void {
     this.selectedDataSelectionProfileFieldsService.addToSelection(node);
   }
@@ -108,7 +109,7 @@ export class EditFieldsModalComponent implements OnInit {
       node.setIsSelected(false);
       this.selectedDataSelectionProfileFieldsService.removeFromSelection(node);
     }
-  }
+  }*/
 
   public removeNodeFromSelectedFields2(node: BasicField): void {
     if (!node.getIsRequired()) {
