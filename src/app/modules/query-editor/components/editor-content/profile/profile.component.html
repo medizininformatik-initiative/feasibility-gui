@@ -45,7 +45,7 @@
     </div>
   </ng-template>
 
-  <ng-template #references>
+  <ng-template #references2>
     <div class="profile-tab-group-container full">
       <mat-tab-group>
         <mat-tab
@@ -70,5 +70,13 @@
         </mat-tab>
       </mat-tab-group>
     </div>
+  </ng-template>
+
+  <ng-template #references>
+    <num-profile-reference
+      [referencedFields]="profile.getProfileFields().getReferenceFields()"
+      [selectedReferenceFields]="profile.getProfileFields().getReferenceFields()"
+      (selectedReferenceFieldsChanged)="updateSelectedReferenceFields($event)"
+    ></num-profile-reference>
   </ng-template>
 </div>
