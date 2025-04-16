@@ -27,7 +27,13 @@
               {{ 'DATASELECTION.FIELD_SELECTION.REQUIRED' | translate }}
             </mat-checkbox>
           </div>
-          <div fxLayout="row" fxFlex="10" fxLayoutAlign="end center" class="padding-right-10">
+          <div
+            *ngIf="!selectedField.getIsRequired()"
+            fxLayout="row"
+            fxFlex="10"
+            fxLayoutAlign="end center"
+            class="padding-right-10"
+          >
             <fa-icon
               [icon]="'exclamation-triangle'"
               [icon]="'times'"
