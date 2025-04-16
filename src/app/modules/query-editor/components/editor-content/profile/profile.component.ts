@@ -19,6 +19,8 @@ import {
 import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { DataSelectionProviderService } from '../../../../data-selection/services/DataSelectionProvider.service';
+import { ActiveDataSelectionService } from '../../../../../service/Provider/ActiveDataSelection.service';
 
 @Component({
   selector: 'num-profile',
@@ -43,9 +45,15 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
 
   urlTree: TreeNode[][] = [];
 
+  possibleReferences: TreeNode[][] = [];
   tests: ProfileTokenFilter[] = [];
 
-  constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private editProfileService: EditProfileService,
+    private cdr: ChangeDetectorRef,
+    private dataSelectionProviderService: DataSelectionProviderService,
+    private activeDataSelectionService: ActiveDataSelectionService
+  ) {}
 
   /**
    * Lifecycle hook that is called after the component's view has been initialized.
@@ -78,6 +86,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
     this.setFieldsTemplate();
     this.setFilterTemplate();
     this.setProfileReferencesTemplate();
+    this.getPossibleReferences();
     this.cdr.detectChanges();
   }
 
@@ -105,6 +114,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   }
 
   private setProfileReferencesTemplate() {
+    this.urlTree = [];
     this.profile
       .getProfileFields()
       ?.getReferenceFields()
@@ -112,11 +122,32 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
         const urls = field.getReferencedProfileUrls();
         const adaptedUrls = ProfileReferenceAdapter.adapt(urls);
         this.urlTree.push(adaptedUrls);
-        console.log(this.urlTree);
       });
+
     if (this.urlTree.length > 0) {
       this.templates.push({ template: this.referenceTemplate, name: 'References' });
     }
+  }
+
+  getPossibleReferences() {
+    this.possibleReferences = [];
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
+    this.dataSelectionProviderService.getActiveDataSelection().subscribe((dataSelection) => {
+      this.urlTree.forEach((urls) => {
+        this.possibleReferences.push(
+          urls.filter(
+            (referencedUrl) =>
+              dataSelection
+                .getProfiles()
+                .filter(
+                  (profile) =>
+                    profile.getUrl() === referencedUrl.id &&
+                    profile.getUrl() !== this.profile.getUrl()
+                ).length > 0
+          )
+        );
+      });
+    });
   }
 
   private setTimeRestrictionFilter(): void {

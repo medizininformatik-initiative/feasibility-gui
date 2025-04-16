@@ -60,11 +60,20 @@
           class="inner-tab-group"
           label="{{ reference.getDisplay() | displayTranslation }} ({{ urlTree[i].length }})"
         >
-          <num-button type="blue">Neues Merkmal hinzufügen</num-button>
+          <mat-drawer-container>
+            <mat-drawer opened="true" #drawer position="end" mode="side">
+              <num-button type="blue">Neues Merkmal hinzufügen</num-button>
 
-          <div *ngFor="let tree of urlTree[i]">
-            <num-tree [treeData]="tree"></num-tree>
-          </div>
+              <div *ngFor="let tree of urlTree[i]">
+                <num-tree [treeData]="tree"></num-tree>
+              </div>
+            </mat-drawer>
+            <mat-drawer-content>
+              <div *ngFor="let tree of possibleReferences[i]">
+                <num-tree [treeData]="tree"></num-tree>
+              </div>
+            </mat-drawer-content>
+          </mat-drawer-container>
         </mat-tab>
       </mat-tab-group>
     </div>
