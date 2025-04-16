@@ -11,15 +11,8 @@
       style="width: 100%; height: 100%"
       [fieldTree]="profile.getProfileFields().getFieldTree()"
       [selectedBasicFields]="profile.getProfileFields().getSelectedBasicFields()"
-      (updatedSelectedBasicFields)="updateProfile($event)"
+      (updatedSelectedBasicFields)="updateSelectedFields($event)"
     ></num-edit-fields>
-  </ng-template>
-
-  <ng-template *ngFor="let test of tests" #testTemplates>
-    <num-token-filter
-      [tokenFilter]="profileTokenFilter"
-      (tokenFilterChanged)="updateTokenFilter($event)"
-    ></num-token-filter>
   </ng-template>
 
   <ng-template #filter>

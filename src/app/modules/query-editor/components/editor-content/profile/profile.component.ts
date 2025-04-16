@@ -46,7 +46,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   urlTree: TreeNode[][] = [];
 
   possibleReferences: TreeNode[][] = [];
-  tests: ProfileTokenFilter[] = [];
 
   constructor(
     private editProfileService: EditProfileService,
