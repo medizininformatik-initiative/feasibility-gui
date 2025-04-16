@@ -8,8 +8,8 @@
 .height-25 {
   height: 25%;
 }
-.height-75 {
-  height: 75%;
+.height {
+  height: inherit;
 }
 .header {
   padding-top: 2%;
@@ -23,4 +23,8 @@
 }
 mat-drawer-container {
   height: 100%;
+}
+::ng-deep .mdc-tab {
+  max-width: fit-content;
+  padding: 0 30px;
 }
