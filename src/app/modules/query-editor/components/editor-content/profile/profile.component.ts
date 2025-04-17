@@ -16,11 +16,8 @@ import {
   SimpleChanges,
   OnChanges,
 } from '@angular/core';
-import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { DataSelectionProviderService } from '../../../../data-selection/services/DataSelectionProvider.service';
-import { ActiveDataSelectionService } from '../../../../../service/Provider/ActiveDataSelection.service';
 
 @Component({
   selector: 'num-profile',
@@ -31,6 +28,7 @@ import { ActiveDataSelectionService } from '../../../../../service/Provider/Acti
 })
 export class ProfileComponent implements AfterViewInit, OnChanges {
   @Input() profile: DataSelectionProfile;
+
   @Output() profileChanged: EventEmitter<DataSelectionProfile> =
     new EventEmitter<DataSelectionProfile>();
 
@@ -44,15 +42,11 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   profileTimeRestriction: ProfileTimeRestrictionFilter[] = [];
   profileTokenFilters: ProfileTokenFilter[] = [];
 
-  urlTree: TreeNode[][] = [];
-
   possibleReferences: TreeNode[][] = [];
 
   constructor(
     private editProfileService: EditProfileService,
     private cdr: ChangeDetectorRef,
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
   /**
@@ -87,7 +81,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
     this.setFieldsTemplate();
     this.setFilterTemplate();
     this.setProfileReferencesTemplate();
-    this.getPossibleReferences();
     this.cdr.detectChanges();
   }
 
@@ -96,14 +89,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
     if (fields.length > 0) {
       this.templates.push({ template: this.fieldsTemplate, name: 'Fields' });
     }
-  }
-
-  public normalizeRefrenceUrl(url: string): string {
-    const lastPart = url.split('/').pop();
-    const words = lastPart.split('-');
-    const capitalizedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-    const result = capitalizedWords.join(' ');
-    return result;
   }
 
   private setFilterTemplate(): void {
@@ -115,40 +100,10 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   }
 
   private setProfileReferencesTemplate() {
-    this.urlTree = [];
-    this.profile
-      .getProfileFields()
-      ?.getReferenceFields()
-      .forEach((field) => {
-        const urls = field.getReferencedProfileUrls();
-        const adaptedUrls = ProfileReferenceAdapter.adapt(urls);
-        this.urlTree.push(adaptedUrls);
-      });
-
-    if (this.urlTree.length > 0) {
+    const refernceFields = this.profile.getProfileFields().getReferenceFields();
+    if (refernceFields && refernceFields.length > 0) {
       this.templates.push({ template: this.referenceTemplate, name: 'References' });
     }
-  }
-
-  getPossibleReferences() {
-    this.possibleReferences = [];
-    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-    this.dataSelectionProviderService.getActiveDataSelection().subscribe((dataSelection) => {
-      this.urlTree.forEach((urls) => {
-        this.possibleReferences.push(
-          urls.filter(
-            (referencedUrl) =>
-              dataSelection
-                .getProfiles()
-                .filter(
-                  (profile) =>
-                    profile.getUrl() === referencedUrl.id &&
-                    profile.getUrl() !== this.profile.getUrl()
-                ).length > 0
-          )
-        );
-      });
-    });
   }
 
   private setTimeRestrictionFilter(): void {
