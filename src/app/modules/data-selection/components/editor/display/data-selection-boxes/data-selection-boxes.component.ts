@@ -1,16 +1,15 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
-import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
-import { map, Observable, of, tap } from 'rxjs';
-import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
+import { map, Observable, of } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -25,10 +24,6 @@ export class DataSelectionBoxesComponent implements OnInit {
   @Input()
   isEditable: boolean;
 
-  profile$: Observable<DataSelectionProfile>;
-
-  menuItems: MenuItemInterface[] = [];
-
   display: Display;
 
   filterChipsSelected = false;
@@ -37,18 +32,20 @@ export class DataSelectionBoxesComponent implements OnInit {
   filtersFilterChips: InterfaceFilterChip[] = [];
   filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
 
+  unlinkedRequiredOrRecommendedReferences: ReferenceField[];
+
+  selectedReferenceFields: SelectedReferenceField[] = [];
+
   constructor(
     private fieldsFilterChipsService: DataSelectionFieldsChipsService,
-    private menuService: MenuServiceDataSelection,
     private filtersFilterChipsService: DataSelectionFiltersFilterChips,
-    private navigationHelperService: NavigationHelperService,
-    private cdr: ChangeDetectorRef,
-    private profileProviderService: ProfileProviderService
+    private navigationHelperService: NavigationHelperService
   ) {}
 
   ngOnInit(): void {
     this.getFilterChips();
-    this.getMenuItems();
+    this.getRequiredOrRecommendedReferences();
+    this.getSelectedReferenceFields();
     this.display = this.profile.getDisplay();
   }
 
@@ -71,12 +68,8 @@ export class DataSelectionBoxesComponent implements OnInit {
         )
       );
     } else {
-      this.filtersFilterChips$ = of([]); // Emit an empty array if no filters are present
+      this.filtersFilterChips$ = of([]);
     }
-  }
-
-  private getMenuItems() {
-    this.menuItems = this.menuService.getMenuItemsForDataSelection();
   }
 
   public editProfile(id: string): void {
@@ -85,5 +78,19 @@ export class DataSelectionBoxesComponent implements OnInit {
 
   public toggleIsReferenceSet(reference: ProfileReference): void {
     reference.setIsReferenceSet(!reference.getIsReferenceSet());
+  }
+
+  /**
+   * Retrieves all unlinked required or recommended reference fields from the profiles.
+   */
+  private getRequiredOrRecommendedReferences(): void {
+    const fields = this.profile.getProfileFields();
+    this.unlinkedRequiredOrRecommendedReferences =
+      fields.getUnlinkedRequiredOrRecommendedReferences();
+    console.log(this.unlinkedRequiredOrRecommendedReferences);
+  }
+
+  public getSelectedReferenceFields(): void {
+    this.selectedReferenceFields = this.profile.getProfileFields().getSelectedReferenceFields();
   }
 }

@@ -19,7 +19,6 @@
   <div fxLayout="column" class="filter-container">
     <div fxLayout="row wrap" fxLayoutAlign="space-between">
       {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
-      <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
       <num-button (click)="editProfile(profile.getId())" type="blue"></num-button>
     </div>
     <div
@@ -40,4 +39,20 @@
       <num-filter-chips [filterChips]="chips"> </num-filter-chips>
     </div>
   </div>
+</div>
+<div
+  *ngFor="let reference of unlinkedRequiredOrRecommendedReferences"
+  class="selection-box-container"
+>
+  <num-profile-reference-tile
+    [referenceField]="reference"
+    [parentId]="profile.getId()"
+  ></num-profile-reference-tile>
+</div>
+<div *ngFor="let selectedReference of selectedReferenceFields" class="selection-box-container">
+  <div *ngFor="linkedProfileId; of: selectedReferenceField.getLinkedProfileIds()"></div>
+  <num-profile-reference-tile
+    [referenceField]="selectedReference"
+    [linkedProfileId]="linkedProfileId"
+  ></num-profile-reference-tile>
 </div>
