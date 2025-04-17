@@ -20,15 +20,19 @@ export class SelectedReferenceField extends AbstractSelectedField {
     return this.selectedField.getField();
   }
 
-  public getLinkedProfiles(): string[] {
+  public getLinkedProfileIds(): string[] {
     return this.linkedProfileIds;
   }
 
-  public setLinkedProfiles(linkedProfileIds: string[]): void {
+  public setLinkedProfileIds(linkedProfileIds: string[]): void {
     this.linkedProfileIds = linkedProfileIds;
   }
 
   public addLinkedProfileIds(newIds: string[]): void {
     this.linkedProfileIds.push(...newIds);
+  }
+
+  public getElementId(): string {
+    return this.selectedField.field.getElementId();
   }
 }
