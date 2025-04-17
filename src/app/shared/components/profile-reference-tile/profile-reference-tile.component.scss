@@ -20,6 +20,15 @@
     border-radius: 6px;
     font-size: 14px;
   }
+
+  .warning-badge {
+    background-color: #ffe5e5; // soft light red/pink
+    color: #c62828; // deep red text
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 }
 
 .type-tag {
