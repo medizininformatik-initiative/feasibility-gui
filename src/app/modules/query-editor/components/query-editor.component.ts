@@ -1,14 +1,18 @@
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, of, Subscription, tap } from 'rxjs';
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
+import { combineLatest, map, Observable, of, Subscription, tap } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionProviderService } from '../../data-selection/services/DataSelectionProvider.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { PathSegments } from 'src/app/app-paths';
 import { ProfileProviderService } from '../../data-selection/services/ProfileProvider.service';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { StagedReferenceProfileUrlsProviderService } from 'src/app/service/Provider/StagedReferenceProfileUrlsProvider.service';
+import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -36,13 +40,13 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
     private profileProviderService: ProfileProviderService,
-    private stagedReferenceProfileUrlsProviderService: StagedReferenceProfileUrlsProviderService
+    private dataSelectionProviderService: DataSelectionProviderService,
+    private stagedReferenceProfileUrlsProviderService: StagedReferenceProfileUrlsProviderService,
+    private createDataSelectionProfileService: CreateDataSelectionProfileService,
+    private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
   ngOnInit(): void {
-    this.stagedReferenceProfileUrlsProviderService
-      .getStagedReferenceProfileUrlsMap()
-      .subscribe((map) => console.log(map));
     this.routeSubscription?.unsubscribe();
     this.routeSubscription = combineLatest([this.activatedRoute.paramMap, this.activatedRoute.url])
       .pipe(
@@ -89,6 +93,35 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   public saveElement(): void {
+    this.stagedReferenceProfileUrlsProviderService
+      .getStagedReferenceProfileUrlsMap()
+      .pipe(
+        tap((referenceMap) => {
+          console.log('Reference Map:', referenceMap);
+        }),
+        map((profileMap) => {
+          let urlsForBackend = [];
+          const profileMapForId = profileMap.get(this.id);
+          profileMapForId.forEach((fieldUrls, elementId) => {
+            urlsForBackend = [...urlsForBackend, ...fieldUrls];
+          });
+          this.createDataSelectionProfileService
+            .fetchDataSelectionProfileData(urlsForBackend)
+            .pipe(
+              map((profiles) => {
+                profiles.forEach((dataSelectionProfile) => {
+                  const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
+                  this.dataSelectionProviderService.setProfileInDataSelection(
+                    dataSelectionId,
+                    dataSelectionProfile
+                  );
+                });
+              })
+            )
+            .subscribe((test) => console.log(test));
+        })
+      )
+      .subscribe();
     if (this.isProfile() && this.deepCopyProfile) {
       this.profileProviderService.setProfileById(this.deepCopyProfile.getId(), this.deepCopyProfile);
     } else if (this.isCriterion()) {
