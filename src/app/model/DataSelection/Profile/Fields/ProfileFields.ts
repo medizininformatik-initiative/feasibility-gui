@@ -2,6 +2,7 @@ import { ReferenceField } from './RefrenceFields/ReferenceField';
 import { SelectedBasicField } from './BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from './RefrenceFields/SelectedReferenceField';
 import { BasicField } from './BasicFields/BasicField';
+import { SelectedField } from './SelectedField';
 
 export class ProfileFields {
   private readonly id: string;
@@ -55,5 +56,33 @@ export class ProfileFields {
 
   public getId(): string {
     return this.id;
+  }
+
+  public getRequiredOrRecommendedReferences(): ReferenceField[] {
+    return this.referenceFields.filter(
+      (referenceField) => referenceField.getIsRequired() || referenceField.getRecommended()
+    );
+  }
+
+  /**
+   * This method filters the reference fields to find those that are either required or recommended
+   * and checks if they are not in the selectedReferenceArray.
+   * @returns An array of unlinked required or recommended reference fields.
+   */
+  public getUnlinkedRequiredOrRecommendedReferences(): ReferenceField[] {
+    const requiredOrRecommendedFields = this.getRequiredOrRecommendedReferences();
+
+    return requiredOrRecommendedFields.filter(
+      (referenceField) =>
+        !this.selectedReferenceFields.some(
+          (selectedField) => selectedField.getElementId() === referenceField.getElementId()
+        )
+    );
+  }
+
+  public getUnlinkedSelectedFields(): SelectedReferenceField[] {
+    return this.selectedReferenceFields.filter(
+      (selectedField) => selectedField.getLinkedProfileIds().length === 0
+    );
   }
 }

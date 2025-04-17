@@ -24,4 +24,8 @@ export class ReferenceField extends AbstractField {
   public setReferencedProfileUrls(referencedProfileUrls: string[]): void {
     this.referencedProfileUrls = referencedProfileUrls;
   }
+
+  public isRequiredOrRecomended(referenceField: ReferenceField): boolean {
+    return referenceField.getIsRequired() || referenceField.getRecommended();
+  }
 }
