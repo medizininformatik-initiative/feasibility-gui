@@ -1,7 +1,6 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { map, take } from 'rxjs';
 import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { StagedReferenceProfileUrlsProviderService } from 'src/app/service/Provider/StagedReferenceProfileUrlsProvider.service';
@@ -41,19 +40,18 @@ export class ProfileReferenceComponent implements OnInit {
     );
   }
 
-  public updateSelectedReferenceFields(selectedNode: TreeNode): void {
-    const selectedField = this.findMatchingReferenceField(selectedNode);
-    if (!selectedField) {
-      return;
-    }
-    const url = selectedNode.originalEntry;
-    const elementId = selectedField.getElementId();
+  public updateSelectedReferenceFields(selectedNode: TreeNode, reference: ReferenceField): void {
+    const profileId = this.profileId;
+    const url2 = selectedNode.originalEntry;
+    const elementId2 = reference.getElementId();
+    this.stagedReferenceProfileUrlsProviderService.addUrlToReferenceField(
+      url2,
+      profileId,
+      elementId2
+    );
     this.stagedReferenceProfileUrlsProviderService
       .getStagedReferenceProfileUrlsMap()
-      .pipe(
-        take(1),
-        map((referenceMap) => this.processReferenceField(referenceMap, url, elementId))
-      )
+      .pipe()
       .subscribe();
   }
 
@@ -90,12 +88,6 @@ export class ProfileReferenceComponent implements OnInit {
         elementId
       );
     }
-  }
-
-  private findMatchingReferenceField(selectedNode: TreeNode): ReferenceField | undefined {
-    return this.referencedFields.find((field) =>
-      field.getReferencedProfileUrls().some((url) => url === selectedNode.originalEntry)
-    );
   }
 
   getPossibleReferences() {
