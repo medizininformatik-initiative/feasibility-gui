@@ -13,7 +13,7 @@ export class DisplayProfilesComponent implements OnInit {
   @Input()
   isEditable: boolean;
 
-  $dataSelectionProfileArray: Observable<Array<DataSelectionProfile>>;
+  dataSelectionProfileArray$: Observable<Array<DataSelectionProfile>>;
 
   constructor(
     private profileProvider: ProfileProviderService,
@@ -28,7 +28,7 @@ export class DisplayProfilesComponent implements OnInit {
    * @todo add rerender of ui component
    */
   private getDataSelectionProfiles() {
-    this.$dataSelectionProfileArray = this.dataSelectionProvider
+    this.dataSelectionProfileArray$ = this.dataSelectionProvider
       .getActiveDataSelection()
       .pipe(
         map((dataSelection) =>
