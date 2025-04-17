@@ -26,20 +26,18 @@ export class StagedReferenceProfileUrlsProviderService {
     this.profileProviderService
       .getProfileIdMap()
       .pipe(
-        take(1),
         map((profileIdMap) => {
           const initialMap = new Map<string, Map<string, string[]>>();
-
           profileIdMap.forEach((profile) => {
             const profileId = profile.getId();
-            const elementIdMap = this.createElementIdMap(profile);
+            const elementIdMap = this.initializeElementIdMap(profile);
             initialMap.set(profileId, elementIdMap);
           });
 
           this.stagedReferenceProfileUrlsMapSubject.next(initialMap);
         })
       )
-      .subscribe();
+      .subscribe(() => console.log('init', this.stagedReferenceProfileUrlsMapSubject.value));
   }
 
   /**
@@ -47,20 +45,13 @@ export class StagedReferenceProfileUrlsProviderService {
    * @param profile - The profile to process.
    * @returns A map of element IDs to arrays of URLs.
    */
-  private createElementIdMap(profile: DataSelectionProfile): Map<string, string[]> {
+  private initializeElementIdMap(profile: DataSelectionProfile): Map<string, string[]> {
     const elementIdMap = new Map<string, string[]>();
     const fields = profile.getProfileFields();
-    const selectedReferenceFields = fields.getReferenceFields();
-
     fields.getReferenceFields().forEach((field: ReferenceField) => {
       const elementId = field.getElementId();
-      const selectedField = selectedReferenceFields.find(
-        (selectedReferenceField) => selectedReferenceField.getElementId() === elementId
-      );
-      const urls = selectedField ? selectedField.getReferencedProfileUrls() : [];
-      elementIdMap.set(elementId, urls);
+      elementIdMap.set(elementId, []);
     });
-    console.log('Element ID Map:', elementIdMap);
     return elementIdMap;
   }
 
@@ -70,28 +61,13 @@ export class StagedReferenceProfileUrlsProviderService {
 
   public addUrlToReferenceField(url: string, profileId: string, elementId: string): void {
     const currentMap = this.stagedReferenceProfileUrlsMapSubject.value;
-
-    let profileMap = currentMap.get(profileId);
-    if (!profileMap) {
-      profileMap = new Map();
-      currentMap.set(profileId, profileMap);
-    }
-
-    // Ensure the field (elementId) exists for the profile
-    let fieldUrls = profileMap.get(elementId);
-    if (!fieldUrls) {
-      fieldUrls = [];
-      profileMap.set(elementId, fieldUrls);
-    }
-
-    // Add the URL to the field's URL array if it's not already added
-    if (!fieldUrls.includes(url)) {
-      fieldUrls.push(url); // Adding URL to the list
-      this.stagedReferenceProfileUrlsMapSubject.next(new Map(currentMap)); // Notify subscribers
-    }
+    const profileMap = currentMap.get(profileId);
+    const fieldUrls = profileMap.get(elementId);
+    fieldUrls.push(url);
+    profileMap.set(elementId, fieldUrls);
+    this.stagedReferenceProfileUrlsMapSubject.next(new Map(currentMap));
   }
 
-  // Remove a URL from a specific reference field in a profile
   public removeUrlFromReferenceField(url: string, profileId: string, elementId: string): void {
     const currentMap = this.stagedReferenceProfileUrlsMapSubject.value;
 
