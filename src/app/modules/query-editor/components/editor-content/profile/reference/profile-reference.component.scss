@@ -1,0 +1,12 @@
+mat-drawer-container {
+  height: 100%;
+}
+::ng-deep .mdc-tab {
+  max-width: fit-content;
+  padding: 0 30px;
+}
+
+.full {
+  width: 100%;
+  height: 100%;
+}
