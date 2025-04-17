@@ -36,7 +36,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('fields', { static: false, read: TemplateRef }) fieldsTemplate: TemplateRef<any>;
   @ViewChild('filter', { static: false, read: TemplateRef }) filterTemplate: TemplateRef<any>;
-  @ViewChild('references2', { static: false, read: TemplateRef })
+  @ViewChild('reference', { static: false, read: TemplateRef })
   referenceTemplate: TemplateRef<any>;
 
   profileTimeRestriction: ProfileTimeRestrictionFilter[] = [];
@@ -44,10 +44,7 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
 
   possibleReferences: TreeNode[][] = [];
 
-  constructor(
-    private editProfileService: EditProfileService,
-    private cdr: ChangeDetectorRef,
-  ) {}
+  constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
 
   /**
    * Lifecycle hook that is called after the component's view has been initialized.
