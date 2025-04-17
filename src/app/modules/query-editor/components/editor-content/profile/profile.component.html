@@ -45,36 +45,10 @@
     </div>
   </ng-template>
 
-  <ng-template #references2>
-    <div class="profile-tab-group-container full">
-      <mat-tab-group>
-        <mat-tab
-          *ngFor="let reference of profile.getProfileFields().getReferenceFields(); index as i"
-          class="inner-tab-group"
-          label="{{ reference.getDisplay() | displayTranslation }} ({{ urlTree[i].length }})"
-        >
-          <mat-drawer-container>
-            <mat-drawer opened="true" #drawer position="end" mode="side">
-              <num-button type="blue">Neues Merkmal hinzufügen</num-button>
-
-              <div *ngFor="let tree of urlTree[i]">
-                <num-tree [treeData]="tree"></num-tree>
-              </div>
-            </mat-drawer>
-            <mat-drawer-content>
-              <div *ngFor="let tree of possibleReferences[i]">
-                <num-tree [treeData]="tree"></num-tree>
-              </div>
-            </mat-drawer-content>
-          </mat-drawer-container>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-  </ng-template>
-
-  <ng-template #references>
+  <ng-template #reference>
     <num-profile-reference
       [referencedFields]="profile.getProfileFields().getReferenceFields()"
+      [profileId]="profile.getId()"
       [selectedReferenceFields]="profile.getProfileFields().getReferenceFields()"
       (selectedReferenceFieldsChanged)="updateSelectedReferenceFields($event)"
     ></num-profile-reference>
