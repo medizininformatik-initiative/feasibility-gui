@@ -1,3 +1,4 @@
+import { Display } from '../../Display';
 import { AbstractSelectedField } from '../AbstractSelectedField';
 import { SelectedField } from '../SelectedField';
 import { ReferenceField } from './ReferenceField';
@@ -34,5 +35,13 @@ export class SelectedReferenceField extends AbstractSelectedField {
 
   public getElementId(): string {
     return this.selectedField.field.getElementId();
+  }
+
+  public getDisplay(): Display {
+    return this.selectedField.field.getDisplay();
+  }
+
+  public getType(): string {
+    return this.selectedField.field.getType();
   }
 }
