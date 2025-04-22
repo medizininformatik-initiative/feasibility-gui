@@ -1,8 +1,8 @@
-import { BehaviorSubject, map, Observable, take } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +11,7 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
  * Service to manage URLs associated with reference fields in profiles.
  * This service allows adding, removing, and clearing URLs for specific reference fields within profiles.
  * A map of profileId -> (elementId -> array of URLs)
+ * A profile id is unique in the UI. An element id is only unique within a profile.
  */
 export class StagedReferenceProfileUrlsProviderService {
   private stagedReferenceProfileUrlsMapSubject = new BehaviorSubject<
@@ -18,26 +19,72 @@ export class StagedReferenceProfileUrlsProviderService {
   >(new Map());
   public stagedReferenceProfileUrls$ = this.stagedReferenceProfileUrlsMapSubject.asObservable();
 
-  constructor(private profileProviderService: ProfileProviderService) {
-    this.initialize();
+  constructor(private profileProviderService: ProfileProviderService) {}
+
+  /**
+   * Initializes the staged reference profile URLs map for a given profile ID.
+   * @param profileId - The ID of the profile to initialize.
+   */
+  public initialize(profileId: string): void {
+    const profile = this.profileProviderService.getProfileById(profileId);
+    const initialMap = new Map<string, Map<string, string[]>>();
+    const elementIdMap = this.createElementIdMap(profile);
+    initialMap.set(profileId, elementIdMap);
+    this.updateStagedReferenceProfileUrlsMap(initialMap);
   }
 
-  private initialize(): void {
-    this.profileProviderService
-      .getProfileIdMap()
-      .pipe(
-        map((profileIdMap) => {
-          const initialMap = new Map<string, Map<string, string[]>>();
-          profileIdMap.forEach((profile) => {
-            const profileId = profile.getId();
-            const elementIdMap = this.initializeElementIdMap(profile);
-            initialMap.set(profileId, elementIdMap);
-          });
+  /**
+   * Retrieves the staged reference profile URLs map as an observable.
+   * @returns An observable of the staged reference profile URLs map.
+   */
+  public getStagedReferenceProfileUrlsMap(): Observable<Map<string, Map<string, string[]>>> {
+    return this.stagedReferenceProfileUrls$;
+  }
 
-          this.stagedReferenceProfileUrlsMapSubject.next(initialMap);
-        })
-      )
-      .subscribe(() => console.log('init', this.stagedReferenceProfileUrlsMapSubject.value));
+  /**
+   * Adds a URL to a specific reference field in the staged reference profile URLs map.
+   * @param url - The URL to add.
+   * @param profileId - The ID of the profile containing the reference field.
+   * @param elementId - The ID of the reference field.
+   */
+  public addUrlToReferenceField(url: string, profileId: string, elementId: string): void {
+    const currentMap = this.stagedReferenceProfileUrlsMapSubject.value;
+    const profileMap = this.getOrCreateProfileMap(currentMap, profileId);
+    const fieldUrls = this.getOrCreateFieldUrls(profileMap, elementId);
+
+    if (!fieldUrls.includes(url)) {
+      fieldUrls.push(url);
+      profileMap.set(elementId, fieldUrls);
+      this.updateStagedReferenceProfileUrlsMap(currentMap);
+    }
+  }
+
+  /**
+   * Removes a URL from a specific reference field in the staged reference profile URLs map.
+   * @param url - The URL to remove.
+   * @param profileId - The ID of the profile containing the reference field.
+   * @param elementId - The ID of the reference field.
+   */
+  public removeUrlFromReferenceField(url: string, profileId: string, elementId: string): void {
+    const currentMap = this.stagedReferenceProfileUrlsMapSubject.value;
+    const profileMap = currentMap.get(profileId);
+
+    if (profileMap) {
+      const fieldUrls = profileMap.get(elementId) || [];
+      const updatedUrls = fieldUrls.filter((existingUrl) => existingUrl !== url);
+
+      if (updatedUrls.length !== fieldUrls.length) {
+        profileMap.set(elementId, updatedUrls);
+        this.updateStagedReferenceProfileUrlsMap(currentMap);
+      }
+    }
+  }
+
+  /**
+   * Clears all staged reference profile URLs.
+   */
+  public clearAll(): void {
+    this.updateStagedReferenceProfileUrlsMap(new Map());
   }
 
   /**
@@ -45,51 +92,54 @@ export class StagedReferenceProfileUrlsProviderService {
    * @param profile - The profile to process.
    * @returns A map of element IDs to arrays of URLs.
    */
-  private initializeElementIdMap(profile: DataSelectionProfile): Map<string, string[]> {
+  private createElementIdMap(profile: DataSelectionProfile): Map<string, string[]> {
     const elementIdMap = new Map<string, string[]>();
     const fields = profile.getProfileFields();
+
     fields.getReferenceFields().forEach((field: ReferenceField) => {
       const elementId = field.getElementId();
       elementIdMap.set(elementId, []);
     });
+
     return elementIdMap;
   }
 
-  public getStagedReferenceProfileUrlsMap(): Observable<Map<string, Map<string, string[]>>> {
-    return this.stagedReferenceProfileUrlsMapSubject;
-  }
-
-  public addUrlToReferenceField(url: string, profileId: string, elementId: string): void {
-    const currentMap = this.stagedReferenceProfileUrlsMapSubject.value;
-    const profileMap = currentMap.get(profileId);
-    const fieldUrls = profileMap.get(elementId);
-    fieldUrls.push(url);
-    profileMap.set(elementId, fieldUrls);
-    this.stagedReferenceProfileUrlsMapSubject.next(new Map(currentMap));
-  }
-
-  public removeUrlFromReferenceField(url: string, profileId: string, elementId: string): void {
-    const currentMap = this.stagedReferenceProfileUrlsMapSubject.value;
-
-    // Ensure the profile exists in the map
-    if (currentMap.has(profileId)) {
-      const profileMap = currentMap.get(profileId);
-      if (profileMap && profileMap.has(elementId)) {
-        const fieldUrls = profileMap.get(elementId);
-
-        // Remove the URL from the array of URLs
-        const updatedUrls = fieldUrls.filter((existingUrl) => existingUrl !== url);
-
-        if (updatedUrls.length !== fieldUrls.length) {
-          profileMap.set(elementId, updatedUrls);
-          this.stagedReferenceProfileUrlsMapSubject.next(new Map(currentMap)); // Notify subscribers
-        }
-      }
+  /**
+   * Retrieves or creates a profile map for a given profile ID.
+   * @param currentMap - The current staged reference profile URLs map.
+   * @param profileId - The ID of the profile.
+   * @returns The profile map for the given profile ID.
+   */
+  private getOrCreateProfileMap(
+    currentMap: Map<string, Map<string, string[]>>,
+    profileId: string
+  ): Map<string, string[]> {
+    if (!currentMap.has(profileId)) {
+      currentMap.set(profileId, new Map<string, string[]>());
     }
+    return currentMap.get(profileId);
   }
 
-  // Optional: Clear all data (if you need this functionality)
-  public clearAll(): void {
-    this.stagedReferenceProfileUrlsMapSubject.next(new Map());
+  /**
+   * Retrieves or creates a field URLs array for a given element ID.
+   * @param profileMap - The profile map containing the reference field.
+   * @param elementId - The ID of the reference field.
+   * @returns The array of URLs for the given element ID.
+   */
+  private getOrCreateFieldUrls(profileMap: Map<string, string[]>, elementId: string): string[] {
+    if (!profileMap.has(elementId)) {
+      profileMap.set(elementId, []);
+    }
+    return profileMap.get(elementId);
+  }
+
+  /**
+   * Updates the staged reference profile URLs map.
+   * @param updatedMap - The updated map to set.
+   */
+  private updateStagedReferenceProfileUrlsMap(
+    updatedMap: Map<string, Map<string, string[]>>
+  ): void {
+    this.stagedReferenceProfileUrlsMapSubject.next(new Map(updatedMap));
   }
 }
