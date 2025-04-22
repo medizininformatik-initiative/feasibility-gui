@@ -1,17 +1,16 @@
-import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { SelectedDataSelectionProfileFieldsService } from 'src/app/service/DataSelection/SelectedDataSelectionProfileFields.service';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
-import { first, map, of, switchMap } from 'rxjs';
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import {} from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProfileProviderService } from '../../../services/ProfileProvider.service';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
+import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/SelectedProfileFields.service';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 
 export class EnterDataSelectionProfileProfileComponentData {
   id: string;
@@ -21,7 +20,7 @@ export class EnterDataSelectionProfileProfileComponentData {
   selector: 'num-edit-fields-modal',
   templateUrl: './edit-fields-modal.component.html',
   styleUrls: ['./edit-fields-modal.component.scss'],
-  providers: [SelectedDataSelectionProfileFieldsService],
+  providers: [SelectedProfileFieldsService],
 })
 export class EditFieldsModalComponent implements OnInit {
   dataSelectionProfileProfileNode: BasicField[];
@@ -37,8 +36,7 @@ export class EditFieldsModalComponent implements OnInit {
     private profileProviderService: ProfileProviderService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
-    private selectedDataSelectionProfileFieldsService: SelectedDataSelectionProfileFieldsService,
-    private createDataSelectionProfileService: CreateDataSelectionProfileService
+    private selectedDataSelectionProfileFieldsService: SelectedProfileFieldsService
   ) {}
 
   @HostListener('window:keyup.esc') onKeyUp() {

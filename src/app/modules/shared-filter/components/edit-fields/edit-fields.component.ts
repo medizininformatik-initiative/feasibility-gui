@@ -1,24 +1,16 @@
 import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter';
-import { first, map } from 'rxjs';
+import { map } from 'rxjs';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { SelectedDataSelectionProfileFieldsService } from 'src/app/service/DataSelection/SelectedDataSelectionProfileFields.service';
+import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/SelectedProfileFields.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'num-edit-fields',
   templateUrl: './edit-fields.component.html',
   styleUrls: ['./edit-fields.component.scss'],
-  providers: [SelectedDataSelectionProfileFieldsService],
+  providers: [SelectedProfileFieldsService],
 })
 export class EditFieldsComponent implements OnInit {
   @Input()
@@ -34,9 +26,7 @@ export class EditFieldsComponent implements OnInit {
 
   tree: TreeNode[] = [];
 
-  constructor(
-    private selectedDataSelectionProfileFieldsService: SelectedDataSelectionProfileFieldsService
-  ) {}
+  constructor(private selectedDataSelectionProfileFieldsService: SelectedProfileFieldsService) {}
 
   ngOnInit() {
     this.traversAndUpddateTree();
@@ -46,9 +36,8 @@ export class EditFieldsComponent implements OnInit {
       .getDeepCopyBasicFields()
       .pipe(
         map((profileFields) => {
-          console.log('Fetched fields:', profileFields);
-          this.setSelectedChildrenFields(); // Initialize selected fields
-          this.tree = FieldsTreeAdapter.fromTree(profileFields); // Build the tree
+          this.setSelectedChildrenFields();
+          this.tree = FieldsTreeAdapter.fromTree(profileFields);
         })
       )
       .subscribe();

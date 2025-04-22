@@ -8,7 +8,7 @@ import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 @Injectable({
   providedIn: 'root',
 })
-export class SelectedDataSelectionProfileFieldsService {
+export class SelectedProfileFieldsService {
   private selectedFields = new BehaviorSubject<SelectedBasicField[]>([]);
   private deepCopyOfBasicFields = new BehaviorSubject<BasicField[]>([]);
   private fieldIds = new Set<string>();
