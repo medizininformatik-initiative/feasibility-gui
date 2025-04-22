@@ -3,6 +3,8 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { EditProfileService } from 'src/app/service/EditProfile.service';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -16,8 +18,6 @@ import {
   SimpleChanges,
   OnChanges,
 } from '@angular/core';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 
 @Component({
   selector: 'num-profile',
@@ -42,8 +42,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   profileTimeRestriction: ProfileTimeRestrictionFilter[] = [];
   profileTokenFilters: ProfileTokenFilter[] = [];
 
-  possibleReferences: TreeNode[][] = [];
-
   constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
 
   /**
@@ -60,7 +58,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
    * @param changes - The changes to the input properties.
    */
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changed', changes);
     if (changes.profile && changes.profile.currentValue) {
       this.resetComponentState();
       this.updateTemplatesArray();
@@ -149,35 +146,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
    */
   public updateSelectedFields(updatedSelectedBasicFields: SelectedBasicField[]): void {
     this.profile.getProfileFields().setSelectedBasicFields(updatedSelectedBasicFields);
-    this.emitProfileInstance();
-  }
-  /*
-  public updateSelectedReferences(selectedNode: TreeNode) {
-    console.log('Selected node:', selectedNode);
-
-    // Find the matching reference field
-    const selectedField = this.profile
-      .getProfileFields()
-      .getReferenceFields()
-      .find((field) =>
-        field.getReferencedProfileUrls().some((url) => url === selectedNode.originalEntry)
-      );
-    // Only push the field if it exists
-    if (selectedField) {
-      this.createDataSelectionProfileService.fetchDataSelectionProfileData([selectedNode.originalEntry]).subscribe((data) => {
-        const linkedProfileIds = data.map((item) => item.getId());
-        const newSelectedField = new SelectedReferenceField(selectedField.getElementId(), selectedField.getDisplay(), selectedField.getDescription(), false, linkedProfileIds, selectedField.getReferencedProfileUrls());
-        this.profile.getProfileFields().getSelectedReferenceFields().push(newSelectedField);
-        this.emitProfileInstance();
-      })
-      console.log('Updated selected references:', this.profile.getProfileFields().getSelectedReferenceFields());
-    } else {
-      console.warn('No matching reference field found for the selected node.');
-    }
-  }*/
-
-  public updateSelectedReferenceFields(updatedSelectedFields: any[]): void {
-    //this.profile.getProfileFields().setSelectedReferenceFields(updatedSelectedFields);
     this.emitProfileInstance();
   }
 
