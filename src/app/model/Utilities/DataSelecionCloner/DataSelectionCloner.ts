@@ -1,9 +1,8 @@
-import { DataSelectionProfile } from '../../DataSelection/Profile/DataSelectionProfile';
-import { ProfileReference } from '../../DataSelection/Profile/Reference/ProfileReference';
 import { CloneDisplayData } from '../DisplayData/CloneDisplayData';
+import { DataSelectionProfile } from '../../DataSelection/Profile/DataSelectionProfile';
 import { ProfileFieldsCloner } from './ProfileFieldsCloner';
 import { ProfileFilterCloner } from './ProfileFilterCloner';
-import { SelectedFieldCloner } from './SelectedFieldCloner';
+import { ProfileReference } from '../../DataSelection/Profile/Reference/ProfileReference';
 
 export class DataSelectionCloner {
   /**
