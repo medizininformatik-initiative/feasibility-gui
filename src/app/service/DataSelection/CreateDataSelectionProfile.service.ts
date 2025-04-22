@@ -59,21 +59,7 @@ export class CreateDataSelectionProfileService {
         })
       ),
       concatMap((profiles) => {
-        console.log('Fetched profiles:', profiles);
         profiles.forEach((profile) => this.profileProvider.setProfileById(profile.getId(), profile));
-        this.profileProvider
-          .getProfileIdMap()
-          .subscribe((profileMap) => console.log('Profile Map:', profileMap));
-
-        /*         if (this.referencedProfiles.length > 0 && loadReferences) {
-          const uniqueReferencedProfiles = [...new Set(this.referencedProfiles)];
-          this.referencedProfiles = [];
-          return this.fetchDataSelectionProfileData(uniqueReferencedProfiles, true).pipe(
-            map((referencedProfiles) => profiles.concat(referencedProfiles))
-          );
-        } else {
-          return [profiles]; // End recursion
-        } */
         return [profiles];
       })
     );
