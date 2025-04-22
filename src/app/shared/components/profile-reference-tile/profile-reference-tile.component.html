@@ -1,9 +1,10 @@
-<num-linked-badge></num-linked-badge>
 <div class="link-field-container">
   <div class="link-info">
     <span>{{ display | displayTranslation }} ({{ elementId }})</span>
     <fa-icon icon="arrow-right" class="arrow-icon"></fa-icon>
-    <span *ngIf="linkedProfileId" class="child-badge">Kind</span>
+    <span *ngIf="parentProfile" class="child-badge">{{
+      parentProfile.getDisplay() | displayTranslation
+    }}</span>
     <span *ngIf="!linkedProfileId" class="warning-badge">Nicht Verknüpft </span>
   </div>
 
@@ -14,6 +15,6 @@
   <div class="actions">
     löschen
     <fa-icon (click)="deleteReferenceLink()" class="icon" icon="trash" size="lg"></fa-icon>
-    <num-button type="blue" (click)="navigateToProfile()">bearbeiten</num-button>
+    <!--<num-button type="blue" (click)="navigateToProfile()">bearbeiten</num-button>-->
   </div>
 </div>
