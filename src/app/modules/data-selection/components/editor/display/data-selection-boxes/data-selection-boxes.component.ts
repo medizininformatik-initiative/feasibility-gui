@@ -4,11 +4,11 @@ import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterCh
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
-import { map, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
-import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 
 @Component({
@@ -87,7 +87,6 @@ export class DataSelectionBoxesComponent implements OnInit {
     const fields = this.profile.getProfileFields();
     this.unlinkedRequiredOrRecommendedReferences =
       fields.getUnlinkedRequiredOrRecommendedReferences();
-    console.log(this.unlinkedRequiredOrRecommendedReferences);
   }
 
   public getSelectedReferenceFields(): void {

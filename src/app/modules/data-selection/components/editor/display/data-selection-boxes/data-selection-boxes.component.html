@@ -40,19 +40,23 @@
     </div>
   </div>
 </div>
-<div
-  *ngFor="let reference of unlinkedRequiredOrRecommendedReferences"
-  class="selection-box-container"
->
-  <num-profile-reference-tile
-    [referenceField]="reference"
-    [parentId]="profile.getId()"
-  ></num-profile-reference-tile>
-</div>
-<div *ngFor="let selectedReference of selectedReferenceFields" class="selection-box-container">
-  <div *ngFor="linkedProfileId; of: selectedReferenceField.getLinkedProfileIds()"></div>
-  <num-profile-reference-tile
-    [referenceField]="selectedReference"
-    [linkedProfileId]="linkedProfileId"
-  ></num-profile-reference-tile>
-</div>
+<ng-container *ngIf="selectedReferenceFields.length > 0">
+  <num-linked-badge></num-linked-badge>
+  <div
+    *ngFor="let reference of unlinkedRequiredOrRecommendedReferences"
+    class="selection-box-container"
+  >
+    <num-profile-reference-tile
+      [referenceField]="reference"
+      [parentId]="profile.getId()"
+    ></num-profile-reference-tile>
+  </div>
+  <div *ngFor="let selectedReference of selectedReferenceFields" class="selection-box-container">
+    <div *ngFor="let linkedProfileId of selectedReference.getLinkedProfileIds()">
+      <num-profile-reference-tile
+        [referenceField]="selectedReference"
+        [linkedProfileId]="linkedProfileId"
+      ></num-profile-reference-tile>
+    </div>
+  </div>
+</ng-container>
