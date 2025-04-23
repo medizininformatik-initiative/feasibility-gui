@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
-import { StagedReferenceProfileUrlsProviderService } from 'src/app/service/Provider/StagedReferenceProfileUrlsProvider.service';
+import { StagedReferenceFieldProviderService } from 'src/app/service/Provider/StagedReferenceFieldProvider.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 
 @Component({
@@ -24,7 +24,7 @@ export class ProfileReferenceComponent implements OnInit {
   possibleReferences: TreeNode[][] = [];
 
   constructor(
-    private stagedReferenceProfileUrlsProviderService: StagedReferenceProfileUrlsProviderService,
+    private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService
   ) {}
@@ -42,17 +42,9 @@ export class ProfileReferenceComponent implements OnInit {
 
   public updateSelectedReferenceFields(selectedNode: TreeNode, reference: ReferenceField): void {
     const profileId = this.profileId;
-    const url2 = selectedNode.originalEntry;
-    const elementId2 = reference.getElementId();
-    this.stagedReferenceProfileUrlsProviderService.addUrlToReferenceField(
-      url2,
-      profileId,
-      elementId2
-    );
-    this.stagedReferenceProfileUrlsProviderService
-      .getStagedReferenceProfileUrlsMap()
-      .pipe()
-      .subscribe();
+    const url = selectedNode.originalEntry;
+    const elementId = reference.getElementId();
+    this.stagedReferenceFieldProviderService.addUrlToReferenceField(url, profileId, elementId);
   }
 
   /**
@@ -76,13 +68,13 @@ export class ProfileReferenceComponent implements OnInit {
     const isUrlExisting = existingUrls.includes(url);
 
     if (isUrlExisting) {
-      this.stagedReferenceProfileUrlsProviderService.removeUrlFromReferenceField(
+      this.stagedReferenceFieldProviderService.removeUrlFromReferenceField(
         url,
         this.profileId,
         elementId
       );
     } else {
-      this.stagedReferenceProfileUrlsProviderService.addUrlToReferenceField(
+      this.stagedReferenceFieldProviderService.addUrlToReferenceField(
         url,
         this.profileId,
         elementId
