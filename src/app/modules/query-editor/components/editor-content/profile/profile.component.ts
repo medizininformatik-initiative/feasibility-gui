@@ -1,10 +1,7 @@
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { EditProfileService } from 'src/app/service/EditProfile.service';
-import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -39,9 +36,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   @ViewChild('reference', { static: false, read: TemplateRef })
   referenceTemplate: TemplateRef<any>;
 
-  profileTimeRestriction: ProfileTimeRestrictionFilter[] = [];
-  profileTokenFilters: ProfileTokenFilter[] = [];
-
   constructor(private editProfileService: EditProfileService, private cdr: ChangeDetectorRef) {}
 
   /**
@@ -67,8 +61,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
 
   private resetComponentState(): void {
     this.templates = [];
-    this.profileTimeRestriction = [];
-    this.profileTokenFilters = [];
   }
 
   private updateTemplatesArray(): void {
@@ -87,8 +79,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
 
   private setFilterTemplate(): void {
     if (this.profile.getFilters().length > 0) {
-      this.setProfileTokenFilter();
-      this.setTimeRestrictionFilter();
       this.templates.push({ template: this.filterTemplate, name: 'Filters' });
     }
   }
@@ -98,46 +88,6 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
     if (refernceFields && refernceFields.length > 0) {
       this.templates.push({ template: this.referenceTemplate, name: 'References' });
     }
-  }
-
-  private setTimeRestrictionFilter(): void {
-    const timeRestrictionFilter = this.editProfileService.getTimeRestrictionFilter(this.profile);
-    timeRestrictionFilter.forEach((filter: ProfileTimeRestrictionFilter) => {
-      this.profileTimeRestriction.push(filter);
-    });
-  }
-
-  private setProfileTokenFilter(): void {
-    const tokenFilter = this.editProfileService.getProfileTokenFilter(this.profile);
-    tokenFilter.forEach((filter: ProfileTokenFilter) => {
-      this.profileTokenFilters.push(filter);
-    });
-  }
-
-  /**
-   * Updates the token filter in the profile and emits the updated profile.
-   * @param updatedTokenFilter - The updated token filter instance.
-   */
-  public updateTokenFilter(updatedTokenFilter: ProfileTokenFilter): void {
-    this.editProfileService.updateProfileTokenFilter(this.profile, updatedTokenFilter);
-    this.emitProfileInstance();
-  }
-
-  /**
-   * Updates the time restriction in the profile and emits the updated profile.
-   * @param timeRestriction - The updated time restriction.
-   * @param profileFilter - The profile filter associated with the time restriction.
-   */
-  public updateTimeRestriction(
-    timeRestriction: AbstractTimeRestriction,
-    profileFilter: ProfileTimeRestrictionFilter
-  ): void {
-    this.editProfileService.updateTimeRestriction(
-      this.profile,
-      timeRestriction,
-      profileFilter.getName()
-    );
-    this.emitProfileInstance();
   }
 
   /**
@@ -152,5 +102,10 @@ export class ProfileComponent implements AfterViewInit, OnChanges {
   private emitProfileInstance(): void {
     this.profile = this.editProfileService.createNewProfileInstance(this.profile);
     this.profileChanged.emit(this.profile);
+  }
+
+  public updateProfileFilter(profileFilter: AbstractProfileFilter[]) {
+    this.profile.setFilters(profileFilter);
+    this.emitProfileInstance();
   }
 }
