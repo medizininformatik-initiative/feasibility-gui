@@ -1,6 +1,5 @@
-import { SelectedBasicField } from '../../DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { BasicFieldsCloner } from './ProfileFields/BasicFieldCloner';
-import { ProfileFieldsCloner } from './ProfileFieldsCloner';
+import { SelectedBasicField } from '../../DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 
 export class SelectedFieldCloner {
   public static deepCopySelectedFields(selectedFields: SelectedBasicField[]): SelectedBasicField[] {
