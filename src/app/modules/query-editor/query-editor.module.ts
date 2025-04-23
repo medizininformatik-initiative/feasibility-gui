@@ -11,13 +11,16 @@ import { MaterialModule } from 'src/app/layout/material/material.module';
 import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ProfileComponent } from './components/editor-content/profile/profile.component';
+import { ProfileFilterComponent } from './components/editor-content/profile/profile-filter/profile-filter.component';
 import { ProfileHeaderComponent } from './components/editor-content/profile/header/profile-header.component';
+import { ProfileReferenceComponent } from './components/editor-content/profile/reference/profile-reference.component';
 import { QueryEditorComponent } from './components/query-editor.component';
 import { QueryEditorRoutingModule } from './query-editor.routing.module';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { TokenFilterComponent } from './components/editor-content/profile/token-filter/token-filter.component';
-import { ProfileReferenceComponent } from './components/editor-content/profile/reference/profile-reference.component';
+import { TokenFilterComponent } from './components/editor-content/profile/profile-filter/token-filter/token-filter.component';
+import { ProfileTimeRestrictionComponent } from '../data-selection/components/editor/edit-filter-modal/profile-time-restriction/profile-time-restriction.component';
+import { ProfileTimeFilterComponent } from './components/editor-content/profile/profile-filter/profile-time-restriction/profile-time-filter.component';
 
 @NgModule({
   imports: [
@@ -42,6 +45,8 @@ import { ProfileReferenceComponent } from './components/editor-content/profile/r
     QueryEditorComponent,
     TokenFilterComponent,
     ProfileReferenceComponent,
+    ProfileFilterComponent,
+    ProfileTimeFilterComponent,
   ],
   exports: [],
 })
