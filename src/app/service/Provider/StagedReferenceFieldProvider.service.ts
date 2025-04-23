@@ -1,8 +1,7 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { ElementIdMapService } from '../ElementIdMap.service';
 import { Injectable } from '@angular/core';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
-import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +12,16 @@ import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/Refre
  * A map of profileId -> (elementId -> array of URLs)
  * A profile id is unique in the UI. An element id is only unique within a profile.
  */
-export class StagedReferenceProfileUrlsProviderService {
+export class StagedReferenceFieldProviderService {
   private stagedReferenceProfileUrlsMapSubject = new BehaviorSubject<
     Map<string, Map<string, string[]>>
   >(new Map());
   public stagedReferenceProfileUrls$ = this.stagedReferenceProfileUrlsMapSubject.asObservable();
 
-  constructor(private profileProviderService: ProfileProviderService) {}
+  constructor(
+    private elementIdMapService: ElementIdMapService,
+    private profileProviderService: ProfileProviderService
+  ) {}
 
   /**
    * Initializes the staged reference profile URLs map for a given profile ID.
@@ -28,7 +30,7 @@ export class StagedReferenceProfileUrlsProviderService {
   public initialize(profileId: string): void {
     const profile = this.profileProviderService.getProfileById(profileId);
     const initialMap = new Map<string, Map<string, string[]>>();
-    const elementIdMap = this.createElementIdMap(profile);
+    const elementIdMap = this.elementIdMapService.createElementIdMap(profile);
     initialMap.set(profileId, elementIdMap);
     this.updateStagedReferenceProfileUrlsMap(initialMap);
   }
@@ -85,23 +87,6 @@ export class StagedReferenceProfileUrlsProviderService {
    */
   public clearAll(): void {
     this.updateStagedReferenceProfileUrlsMap(new Map());
-  }
-
-  /**
-   * Creates a map of element IDs to their associated URLs for a given profile.
-   * @param profile - The profile to process.
-   * @returns A map of element IDs to arrays of URLs.
-   */
-  private createElementIdMap(profile: DataSelectionProfile): Map<string, string[]> {
-    const elementIdMap = new Map<string, string[]>();
-    const fields = profile.getProfileFields();
-
-    fields.getReferenceFields().forEach((field: ReferenceField) => {
-      const elementId = field.getElementId();
-      elementIdMap.set(elementId, []);
-    });
-
-    return elementIdMap;
   }
 
   /**
