@@ -1,5 +1,5 @@
 import { SelectedBasicField } from '../../DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { CloneDisplayData } from '../DisplayData/CloneDisplayData';
+import { BasicFieldsCloner } from './ProfileFields/BasicFieldCloner';
 import { ProfileFieldsCloner } from './ProfileFieldsCloner';
 
 export class SelectedFieldCloner {
@@ -25,7 +25,7 @@ export class SelectedFieldCloner {
     }
 
     return new SelectedBasicField(
-      ProfileFieldsCloner.deepCopyField(selectedField.getSelectedField()),
+      BasicFieldsCloner.deepCopyBasicField(selectedField.getSelectedField()),
       selectedField.getMustHave()
     );
   }
