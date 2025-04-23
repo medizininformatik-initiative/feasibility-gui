@@ -2,17 +2,17 @@ import { ActivatedRoute } from '@angular/router';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { combineLatest, map, Observable, of, Subscription, tap } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { DataSelectionCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionCloner';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../../data-selection/services/DataSelectionProvider.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { PathSegments } from 'src/app/app-paths';
 import { ProfileProviderService } from '../../data-selection/services/ProfileProvider.service';
-import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { StagedReferenceProfileUrlsProviderService } from 'src/app/service/Provider/StagedReferenceProfileUrlsProvider.service';
+import { StagedReferenceFieldProviderService } from 'src/app/service/Provider/StagedReferenceFieldProvider.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
+import { CreateSelectedReferenceService } from 'src/app/service/CreateSelectedReference.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -35,15 +35,15 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
 
   constructor(
+    private activeDataSelectionService: ActiveDataSelectionService,
+    private dataSelectionProviderService: DataSelectionProviderService,
     private terminologySystemProvider: TerminologySystemProvider,
     private criterionProviderService: CriterionProviderService,
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
     private profileProviderService: ProfileProviderService,
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private stagedReferenceProfileUrlsProviderService: StagedReferenceProfileUrlsProviderService,
-    private createDataSelectionProfileService: CreateDataSelectionProfileService,
-    private activeDataSelectionService: ActiveDataSelectionService
+    private saveElementService: CreateSelectedReferenceService,
+    private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +52,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
       .pipe(
         tap(([paramMap, url]) => {
           const id = paramMap.get('id');
-          const type = url[0]?.path; // first segment of the URL
+          const type = url[0]?.path;
 
           if (id && type) {
             this.id = id;
@@ -71,6 +71,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   private getElementFromProvider(): void {
     if (this.isProfile()) {
       this.getProfileFromProviderById(this.id);
+      this.stagedReferenceFieldProviderService.initialize(this.id);
     } else if (this.isCriterion()) {
       this.getCriterionFromProviderById(this.id);
     }
@@ -93,40 +94,18 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   public saveElement(): void {
-    this.stagedReferenceProfileUrlsProviderService
-      .getStagedReferenceProfileUrlsMap()
-      .pipe(
-        tap((referenceMap) => {
-          console.log('Reference Map:', referenceMap);
-        }),
-        map((profileMap) => {
-          let urlsForBackend = [];
-          const profileMapForId = profileMap.get(this.id);
-          profileMapForId.forEach((fieldUrls, elementId) => {
-            urlsForBackend = [...urlsForBackend, ...fieldUrls];
-          });
-          this.createDataSelectionProfileService
-            .fetchDataSelectionProfileData(urlsForBackend)
-            .pipe(
-              map((profiles) => {
-                profiles.forEach((dataSelectionProfile) => {
-                  const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-                  this.dataSelectionProviderService.setProfileInDataSelection(
-                    dataSelectionId,
-                    dataSelectionProfile
-                  );
-                });
-              })
-            )
-            .subscribe((test) => console.log(test));
-        })
-      )
-      .subscribe();
-    if (this.isProfile() && this.deepCopyProfile) {
-      this.profileProviderService.setProfileById(this.deepCopyProfile.getId(), this.deepCopyProfile);
-    } else if (this.isCriterion()) {
-      console.log('Saving criterion...');
-    }
+    const profile = this.profileProviderService.getProfileById(this.id);
+    this.saveElementService
+      .getSelectedReferenceFields(profile)
+      .subscribe((selectedReferenceFields) => {
+        const clonedProfile = DataSelectionCloner.deepCopyProfile(profile);
+        const existingFields = clonedProfile.getProfileFields().getSelectedReferenceFields();
+        const mergedFields = [...existingFields, ...selectedReferenceFields];
+        clonedProfile.getProfileFields().setSelectedReferenceFields(mergedFields);
+        this.profileProviderService.setProfileById(clonedProfile.getId(), clonedProfile);
+        const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
+        this.dataSelectionProviderService.setProfileInDataSelection(dataSelectionId, clonedProfile);
+      });
   }
 
   public onCancel(): void {
