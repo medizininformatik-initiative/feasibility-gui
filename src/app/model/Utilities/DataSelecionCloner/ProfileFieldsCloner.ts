@@ -1,7 +1,8 @@
-import { BasicField } from '../../DataSelection/Profile/Fields/BasicFields/BasicField';
+import { BasicFieldsCloner } from './ProfileFields/BasicFieldCloner';
 import { ProfileFields } from '../../DataSelection/Profile/Fields/ProfileFields';
-import { CloneDisplayData } from '../DisplayData/CloneDisplayData';
 import { SelectedFieldCloner } from './SelectedFieldCloner';
+import { SelectedReferenceFieldsCloner } from './ProfileFields/SelectedReferenceFieldsCloner';
+import { ReferenceFieldsCloner } from './ProfileFields/ReferenceFieldsCloner';
 
 export class ProfileFieldsCloner {
   /**
@@ -10,37 +11,23 @@ export class ProfileFieldsCloner {
    * @returns A deep copy of the ProfileField array.
    */
   public static deepCopyProfileFields(profileFields: ProfileFields): ProfileFields {
-    const basicFields = ProfileFieldsCloner.deepCopyFields(profileFields.getFieldTree());
+    const basicFields = BasicFieldsCloner.deepCopyBasicFields(profileFields.getFieldTree());
     const selectedBasicFields = SelectedFieldCloner.deepCopySelectedFields(
       profileFields.getSelectedBasicFields()
+    );
+    const selectedReferenceFields = SelectedReferenceFieldsCloner.deepCopySelectedReferenceFields(
+      profileFields.getSelectedReferenceFields()
+    );
+    const referenceFields = ReferenceFieldsCloner.deepCopyReferenceFields(
+      profileFields.getReferenceFields()
     );
 
     return new ProfileFields(
       profileFields.getId(),
       basicFields,
-      profileFields.getReferenceFields(),
-      selectedBasicFields
-    );
-  }
-
-  public static deepCopyFields(fields: BasicField[]): BasicField[] {
-    if (!fields || fields.length === 0) {
-      return [];
-    }
-
-    return fields.map((field) => ProfileFieldsCloner.deepCopyField(field));
-  }
-
-  public static deepCopyField(basicField: BasicField) {
-    return new BasicField(
-      basicField.getElementId(), // Corrected method name
-      CloneDisplayData.deepCopyDisplayData(basicField.getDisplay()), // Deep copy display
-      CloneDisplayData.deepCopyDisplayData(basicField.getDescription()), // Deep copy description
-      ProfileFieldsCloner.deepCopyFields(basicField.getChildren() || []), // Recursively clone children
-      basicField.getRecommended(),
-      basicField.getIsSelected(),
-      basicField.getIsRequired(),
-      basicField.getType()
+      referenceFields,
+      selectedBasicFields,
+      selectedReferenceFields
     );
   }
 }

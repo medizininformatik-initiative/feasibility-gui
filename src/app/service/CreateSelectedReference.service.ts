@@ -84,7 +84,9 @@ export class CreateSelectedReferenceService {
           flattened,
           urlToProfileId
         );
-        if (profileIds.length === 0) {return null;}
+        if (profileIds.length === 0) {
+          return null;
+        }
         return new SelectedReferenceField(field, profileIds, false);
       })
       .filter((field): field is SelectedReferenceField => field !== null);
