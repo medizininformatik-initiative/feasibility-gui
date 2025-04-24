@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { NavigationHelperService } from './NavigationHelper.service';
+import { Observable } from 'rxjs';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
 import { ProviderNavigationService } from './ProviderNavigation.service';
-import { NavigationHelperService } from './NavigationHelper.service';
+import { StagedProfileService } from './StagedDataSelectionProfile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,8 @@ export class ProfileProviderIteratorService {
   constructor(
     private profileProviderService: ProfileProviderService,
     private providerNavigationService: ProviderNavigationService,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private stagedProfileService: StagedProfileService
   ) {}
 
   /**
@@ -63,6 +65,7 @@ export class ProfileProviderIteratorService {
         );
         if (nextProfile) {
           this.navigationHelperService.navigateToEditProfile(nextProfile.getId());
+          this.stagedProfileService.initialize(nextProfile);
         }
       })
     );
@@ -82,6 +85,7 @@ export class ProfileProviderIteratorService {
         );
         if (previousProfile) {
           this.navigationHelperService.navigateToEditProfile(previousProfile.getId());
+          this.stagedProfileService.initialize(previousProfile);
         }
       })
     );
