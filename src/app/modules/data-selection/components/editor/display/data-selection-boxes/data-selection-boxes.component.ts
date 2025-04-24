@@ -10,6 +10,7 @@ import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
+import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -39,7 +40,8 @@ export class DataSelectionBoxesComponent implements OnInit {
   constructor(
     private fieldsFilterChipsService: DataSelectionFieldsChipsService,
     private filtersFilterChipsService: DataSelectionFiltersFilterChips,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private stagedProfileService: StagedProfileService
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +75,7 @@ export class DataSelectionBoxesComponent implements OnInit {
   }
 
   public editProfile(id: string): void {
+    this.stagedProfileService.initialize(this.profile);
     this.navigationHelperService.navigateToEditProfile(id);
   }
 
