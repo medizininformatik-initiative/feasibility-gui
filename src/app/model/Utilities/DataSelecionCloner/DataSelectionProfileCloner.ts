@@ -4,7 +4,7 @@ import { ProfileFieldsCloner } from './ProfileFieldsCloner';
 import { ProfileFilterCloner } from './ProfileFilterCloner';
 import { ProfileReference } from '../../DataSelection/Profile/Reference/ProfileReference';
 
-export class DataSelectionCloner {
+export class DataSelectionProfileCloner {
   /**
    * Clones a DataSelectionProfile object.
    * @param profile The DataSelectionProfile to clone.
