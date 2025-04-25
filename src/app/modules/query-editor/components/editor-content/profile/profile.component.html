@@ -16,17 +16,16 @@
   </ng-template>
 
   <ng-template #filter>
-    <div class="profile-tab-group-container full">
-      <num-profile-filter
-        [profileFilter]="profile.getFilters()"
-        (profileFiltersChanged)="updateProfileFilter($event)"
-      ></num-profile-filter>
-    </div>
+    <num-profile-filter
+      [profileFilter]="profile.getFilters()"
+      (profileFiltersChanged)="updateProfileFilter($event)"
+    ></num-profile-filter>
   </ng-template>
 
   <ng-template #reference>
     <num-profile-reference
       [referencedFields]="profile.getProfileFields().getReferenceFields()"
+      [selectedReferenceFields]="profile.getProfileFields().getSelectedReferenceFields()"
       [profileId]="profile.getId()"
     ></num-profile-reference>
   </ng-template>
