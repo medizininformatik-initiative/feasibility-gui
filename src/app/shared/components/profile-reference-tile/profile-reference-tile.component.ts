@@ -30,24 +30,30 @@ export class ProfileReferenceTileComponent implements OnInit {
 
   parentProfile: DataSelectionProfile;
 
+  parentProfileSelectedReferences: SelectedReferenceField[] = [];
+
   constructor(
     private profileProviderService: ProfileProviderService,
     private navigationHelperService: NavigationHelperService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.referenceField);
     if (this.referenceField) {
       this.display = this.referenceField.getDisplay();
       this.elementId = this.referenceField.getElementId();
       this.type = this.referenceField.getType();
-      this.getRefrencedProfiles();
+      this.getReferencedProfiles();
     }
   }
 
-  private getRefrencedProfiles() {
+  private getReferencedProfiles() {
     this.parentProfile = this.profileProviderService.getProfileById(this.linkedProfileId);
-    console.log(this.parentProfile);
+    if (this.parentProfile?.getProfileFields().getSelectedReferenceFields().length > 0) {
+      this.parentProfileSelectedReferences = this.parentProfile
+        .getProfileFields()
+        .getSelectedReferenceFields();
+      console.log(this.parentProfileSelectedReferences);
+    }
   }
 
   public navigateToProfile(): void {
