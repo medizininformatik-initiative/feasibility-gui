@@ -2,12 +2,10 @@ import { AbstractTimeRestriction } from '../model/FeasibilityQuery/Criterion/Tim
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
 import { ProfileTimeRestrictionFilter } from '../model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { Concept } from '../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { CloneTimeRestriction } from '../model/Utilities/CriterionCloner/TimeRestriction/CloneTimeRestriction';
-import { DataSelectionCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionCloner';
 import { AbstractProfileFilter } from '../model/DataSelection/Profile/Filter/AbstractProfileFilter';
-import { TokenFilterCloner } from '../model/Utilities/DataSelecionCloner/TokenFilterCloner';
+import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +83,6 @@ export class EditProfileService {
   }
 
   public createNewProfileInstance(profile: DataSelectionProfile): DataSelectionProfile {
-    return DataSelectionCloner.deepCopyProfile(profile);
+    return DataSelectionProfileCloner.deepCopyProfile(profile);
   }
 }
