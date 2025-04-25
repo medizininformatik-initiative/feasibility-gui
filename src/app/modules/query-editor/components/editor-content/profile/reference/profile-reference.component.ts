@@ -5,6 +5,9 @@ import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { StagedReferenceFieldProviderService } from 'src/app/service/Provider/StagedReferenceFieldProvider.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
+import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner';
 
 @Component({
   selector: 'num-profile-reference',
@@ -19,9 +22,12 @@ export class ProfileReferenceComponent implements OnInit {
   @Input()
   profileId: string;
 
+  @Input()
+  selectedReferenceFields: SelectedReferenceField[];
+
   urlTree: TreeNode[][] = [];
 
-  possibleReferences: TreeNode[][] = [];
+  possibleReferences: DataSelectionProfile[][] = [];
 
   constructor(
     private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService,
@@ -30,6 +36,7 @@ export class ProfileReferenceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.selectedReferenceFields);
     this.initializeUrlTree();
     this.getPossibleReferences();
   }
@@ -84,20 +91,32 @@ export class ProfileReferenceComponent implements OnInit {
 
   getPossibleReferences() {
     this.possibleReferences = [];
-    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProviderService.getActiveDataSelection().subscribe((dataSelection) => {
       this.urlTree.forEach((urls) => {
         this.possibleReferences.push(
-          urls.filter(
-            (referencedUrl) =>
-              dataSelection.getProfiles().filter(
-                (profile) => profile.getUrl() === referencedUrl.id
-                //&&
-                //profile.getUrl() !== this.profile.getUrl()
-              ).length > 0
-          )
+          dataSelection.getProfiles().filter((profile) => (
+              urls.filter((referencedUrl) => profile.getUrl() === referencedUrl.id && profile.getId() !== this.profileId).length > 0
+            ))
         );
       });
     });
+    console.log('bla');
+    console.log(this.possibleReferences);
+  }
+
+  test(profileId: string, referencedField: ReferenceField) {
+    console.log(profileId);
+    this.selectedReferenceFields.forEach((selectedReferenceField) => {
+      if (selectedReferenceField.getElementId() === referencedField.getElementId()) {
+        const profileIds = selectedReferenceField.getLinkedProfileIds();
+        const mergedProfileIds = [...profileIds, profileId];
+        selectedReferenceField.setLinkedProfileIds(mergedProfileIds);
+      }
+    });
+    const test = SelectedReferenceFieldsCloner.deepCopySelectedReferenceFields(
+      this.selectedReferenceFields
+    );
+
+    console.log(test);
   }
 }

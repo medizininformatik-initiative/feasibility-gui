@@ -17,8 +17,12 @@
           </div>
         </mat-drawer>
         <mat-drawer-content>
-          <div *ngFor="let tree of possibleReferences[i]">
-            <num-tree [treeData]="tree"></num-tree>
+          <div *ngFor="let profile of possibleReferences[i]">
+            <num-selectable-reference-tile
+              [profile]="profile"
+              (selectedProfile)="test($event, reference)"
+            >
+            </num-selectable-reference-tile>
           </div>
         </mat-drawer-content>
       </mat-drawer-container>
