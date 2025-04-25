@@ -38,6 +38,7 @@ import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-dele
 import { SaveDataQueryModalComponent } from './save-dataquery-modal/save-dataquery-modal.component';
 import { LinkedBadgeComponent } from './linked-badge/linked-badge.component';
 import { ProfileReferenceTileComponent } from './profile-reference-tile/profile-reference-tile.component';
+import { SelectableReferenceTileComponent } from './selectable-reference-tile/selectable-reference-tile.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -69,6 +70,7 @@ const SHARED_DECLARATIONS = [
   DisplayTranslationPipe,
   ProfileReferenceTileComponent,
   LinkedBadgeComponent,
+  SelectableReferenceTileComponent,
 ];
 
 @NgModule({
@@ -98,6 +100,7 @@ const SHARED_DECLARATIONS = [
     ConfirmDeleteModalComponent,
     ProfileReferenceTileComponent,
     LinkedBadgeComponent,
+    SelectableReferenceTileComponent,
   ],
   imports: [
     CommonModule,

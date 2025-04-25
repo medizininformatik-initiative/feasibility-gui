@@ -1,0 +1,16 @@
+.link-field-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 10px 16px;
+  margin: 8px 0;
+  border-radius: 6px;
+  font-family: sans-serif;
+}
+
+.link-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
