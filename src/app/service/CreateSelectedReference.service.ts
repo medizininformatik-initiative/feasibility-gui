@@ -3,7 +3,7 @@ import { CreateDataSelectionProfileService } from './DataSelection/CreateDataSel
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
-import { map, switchMap, take } from 'rxjs/operators';
+import { concatMap, map, switchMap, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
@@ -21,6 +21,7 @@ interface ElementUrlEntry {
 })
 export class CreateSelectedReferenceService {
   constructor(
+    private activeDataSelectionService: ActiveDataSelectionService,
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private elementIdMapService: ElementIdMapService,
@@ -37,10 +38,16 @@ export class CreateSelectedReferenceService {
     const referenceFields = profile.getProfileFields().getReferenceFields();
 
     return this.processStagedReferences(profile.getId()).pipe(
-      switchMap((flattened) => this.fetchProfilesAndMapUrls(flattened)),
-      map(({ flattened, urlToProfileId }) =>
-        this.createSelectedReferenceFieldInstances(referenceFields, flattened, urlToProfileId)
-      )
+      concatMap((flattened) => this.fetchProfilesAndMapUrls(flattened)),
+      map(({ flattened, urlToProfileId }) => {
+        const selectedReferences = this.createSelectedReferenceFieldInstances(
+          referenceFields,
+          flattened,
+          urlToProfileId
+        );
+        this.stagedReferenceFieldProviderService.clearAll();
+        return selectedReferences;
+      })
     );
   }
 
@@ -121,7 +128,6 @@ export class CreateSelectedReferenceService {
 
     profiles.forEach((profile) => {
       urlToProfileIdMap.set(profile.getUrl(), profile.getId());
-      this.profileProviderService.setProfileById(profile.getId(), profile);
     });
 
     this.updateActiveDataSelectionProfiles(profiles);
@@ -132,12 +138,10 @@ export class CreateSelectedReferenceService {
    * Updates the active data selection with the fetched profiles.
    */
   private updateActiveDataSelectionProfiles(profiles: DataSelectionProfile[]): void {
-    this.dataSelectionProviderService
-      .getActiveDataSelection()
-      .pipe(
-        take(1),
-        map((dataSelection) => dataSelection.setProfiles(profiles))
-      )
-      .subscribe();
+    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
+    profiles.forEach((profile) => {
+      this.profileProviderService.setProfileById(profile.getId(), profile);
+      this.dataSelectionProviderService.setProfileInDataSelection(dataSelectionId, profile);
+    });
   }
 }
