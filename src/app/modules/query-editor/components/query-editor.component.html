@@ -2,9 +2,8 @@
   <num-editor-header [id]="id" [type]="type"></num-editor-header>
   <div class="background">
     <num-editor-content
-      [profile]="profile$ | async"
       [criterion]="criterion$ | async"
-      (profileChanged)="updateProfile($event)"
+      [profile]="profile$ | async"
       (criterionChanged)="updateCriterion($event)"
     ></num-editor-content>
   </div>

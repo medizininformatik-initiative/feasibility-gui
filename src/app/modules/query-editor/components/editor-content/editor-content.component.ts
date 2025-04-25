@@ -11,16 +11,11 @@ export class EditorContentComponent implements OnInit {
   @Input() profile: DataSelectionProfile;
   @Input() criterion: Criterion;
 
-  @Output() profileChanged = new EventEmitter<DataSelectionProfile>();
   @Output() criterionChanged = new EventEmitter<Criterion>();
 
   constructor() {}
 
   ngOnInit() {}
-
-  public onProfileChanged(updatedProfile: DataSelectionProfile): void {
-    this.profileChanged.emit(updatedProfile);
-  }
 
   public onCriterionChanged(updatedCriterion: Criterion): void {
     this.criterionChanged.emit(updatedCriterion);
