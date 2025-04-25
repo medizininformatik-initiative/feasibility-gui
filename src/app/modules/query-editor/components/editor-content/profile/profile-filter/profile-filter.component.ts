@@ -1,4 +1,7 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
+import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,10 +10,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
-import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
-import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
 
 @Component({
   selector: 'num-profile-filter',
@@ -28,9 +27,7 @@ export class ProfileFilterComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.profileFilter);
     this.initializeFilters();
-    console.log(this.profileTimeFilters);
   }
 
   /**
@@ -38,7 +35,6 @@ export class ProfileFilterComponent implements OnInit {
    */
   private initializeFilters(): void {
     this.profileFilter.forEach((filter) => {
-      console.log(filter.getType());
       if (filter.getType() === DataSelectionFilterType.TOKEN) {
         this.profileTokenFilter = filter as ProfileTokenFilter;
       } else if (filter.getType() === DataSelectionFilterType.DATE) {

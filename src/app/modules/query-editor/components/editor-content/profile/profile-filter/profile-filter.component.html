@@ -1,30 +1,26 @@
-<div class="profile-tab-group-container full">
-  <mat-tab-group
-    animationDuration="0ms"
-    class="inner-tab-group"
-    disableRipple="true"
-    mat-stretch-tabs="false"
-  >
-    <!-- Token Filter Tab -->
-    <mat-tab *ngIf="profileTokenFilter" label="Token Filter">
-      <div class="token-filter">
-        <num-token-filter
-          [tokenFilter]="profileTokenFilter"
-          (tokenFilterChanged)="updateProfileTokenFilter($event)"
-        ></num-token-filter>
-      </div>
-    </mat-tab>
+<mat-tab-group
+  animationDuration="0ms"
+  class="inner-tab-group"
+  disableRipple="true"
+  mat-stretch-tabs="false"
+>
+  <mat-tab *ngIf="profileTokenFilter" label="Token Filter">
+    <ng-template matTabContent>
+      <num-token-filter
+        [tokenFilter]="profileTokenFilter"
+        (tokenFilterChanged)="updateProfileTokenFilter($event)"
+      ></num-token-filter>
+    </ng-template>
+  </mat-tab>
 
-    <!-- Time Restriction Filters Tab -->
-    <mat-tab *ngIf="profileTimeFilters.length > 0" label="Time Restrictions">
-      <div class="time-filter">
-        <div *ngFor="let profileTimeFilter of profileTimeFilters">
-          <num-profile-time-filter
-            [profileTimeRestrictionFilter]="profileTimeFilter"
-            (changedProfileTimeRestrictionFilter)="updateProfileTimeRestrictionFilter($event)"
-          ></num-profile-time-filter>
-        </div>
+  <mat-tab *ngIf="profileTimeFilters.length > 0" label="Time Restrictions">
+    <ng-template matTabContent>
+      <div *ngFor="let profileTimeFilter of profileTimeFilters">
+        <num-profile-time-filter
+          [profileTimeRestrictionFilter]="profileTimeFilter"
+          (changedProfileTimeRestrictionFilter)="updateProfileTimeRestrictionFilter($event)"
+        ></num-profile-time-filter>
       </div>
-    </mat-tab>
-  </mat-tab-group>
-</div>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
