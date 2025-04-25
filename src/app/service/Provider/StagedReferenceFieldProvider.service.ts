@@ -43,6 +43,10 @@ export class StagedReferenceFieldProviderService {
     return this.stagedReferenceProfileUrls$;
   }
 
+  public getStagegdReferenceProfileUrlsMapValue(): Map<string, Map<string, string[]>> {
+    return this.stagedReferenceProfileUrlsMapSubject.value;
+  }
+
   /**
    * Adds a URL to a specific reference field in the staged reference profile URLs map.
    * @param url - The URL to add.
