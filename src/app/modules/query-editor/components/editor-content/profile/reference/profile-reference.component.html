@@ -7,20 +7,23 @@
     >
       <mat-drawer-container>
         <mat-drawer opened="true" #drawer position="end" mode="side">
-          <num-button type="blue">Neues Merkmal hinzufügen</num-button>
-
-          <div *ngFor="let tree of urlTree[i]">
-            <num-tree
+          <num-button type="blue" (click)="openReferenceModal(urlTree[i], i)"
+            >Neues Merkmal hinzufügen</num-button
+          >
+          <!--
+            <div *ngFor="let tree of urlTree[i]">
+              <num-tree
               [treeData]="tree"
               (selectedCheckbox)="updateSelectedReferenceFields($event, reference)"
-            ></num-tree>
-          </div>
+              ></num-tree>
+            </div>
+            -->
         </mat-drawer>
         <mat-drawer-content>
           <div *ngFor="let profile of possibleReferences[i]">
             <num-selectable-reference-tile
-              [profile]="profile"
-              (selectedProfile)="test($event, reference)"
+              [possibleReferences]="profile"
+              (selectedProfile)="setSelectedReference($event, reference)"
             >
             </num-selectable-reference-tile>
           </div>
