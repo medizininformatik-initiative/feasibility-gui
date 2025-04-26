@@ -27,6 +27,7 @@
       [referencedFields]="profile.getProfileFields().getReferenceFields()"
       [selectedReferenceFields]="profile.getProfileFields().getSelectedReferenceFields()"
       [profileId]="profile.getId()"
+      (updatedSelectedReferenceFields)="updateSelectedReferenceFields($event)"
     ></num-profile-reference>
   </ng-template>
 </div>

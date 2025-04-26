@@ -1,6 +1,7 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
 import {
   AfterViewInit,
@@ -11,6 +12,7 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 @Component({
   selector: 'num-profile',
   templateUrl: './profile.component.html',
@@ -21,16 +23,19 @@ import {
 /**
  * The ProfileComponent is responsible for displaying and managing the data selection profile.
  * It initializes the profile, updates selected fields, and manages filters.
- * References are managed automatically in the StagedProfileService.
+ * Newly added and stagged references are managed automatically in the StagedProfileService.
  */
 export class ProfileComponent implements AfterViewInit {
   @Input() profile: DataSelectionProfile;
 
   templates: { template: TemplateRef<any>; name: string }[] = [];
 
-  @ViewChild('fields', { static: false, read: TemplateRef }) fieldsTemplate: TemplateRef<any>;
-  @ViewChild('filter', { static: false, read: TemplateRef }) filterTemplate: TemplateRef<any>;
-  @ViewChild('reference', { static: false, read: TemplateRef }) referenceTemplate: TemplateRef<any>;
+  @ViewChild('fields', { static: false, read: TemplateRef })
+  readonly fieldsTemplate: TemplateRef<any>;
+  @ViewChild('filter', { static: false, read: TemplateRef })
+  readonly filterTemplate: TemplateRef<any>;
+  @ViewChild('reference', { static: false, read: TemplateRef })
+  readonly referenceTemplate: TemplateRef<any>;
 
   constructor(private cdr: ChangeDetectorRef, private stagedProfileService: StagedProfileService) {}
 
@@ -39,18 +44,14 @@ export class ProfileComponent implements AfterViewInit {
    * Initializes the templates for rendering.
    */
   ngAfterViewInit(): void {
-    this.resetComponentState();
-    this.updateTemplatesArray();
-  }
-
-  private resetComponentState(): void {
     this.templates = [];
+    this.updateTemplatesArray();
   }
 
   private updateTemplatesArray(): void {
     this.setFieldsTemplate();
     this.setFilterTemplate();
-    this.setProfileReferencesTemplate();
+    this.setReferencesTemplate();
     this.cdr.detectChanges();
   }
 
@@ -67,7 +68,7 @@ export class ProfileComponent implements AfterViewInit {
     }
   }
 
-  private setProfileReferencesTemplate() {
+  private setReferencesTemplate(): void {
     const referenceFields = this.profile.getProfileFields().getReferenceFields();
     if (referenceFields && referenceFields.length > 0) {
       this.templates.push({ template: this.referenceTemplate, name: 'References' });
@@ -80,5 +81,9 @@ export class ProfileComponent implements AfterViewInit {
 
   public updateProfileFilter(profileFilter: AbstractProfileFilter[]) {
     this.stagedProfileService.updateFilters(profileFilter);
+  }
+
+  public updateSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {
+    this.stagedProfileService.updateSelectedReferenceFields(selectedReferenceFields);
   }
 }

@@ -9,6 +9,7 @@ import { BehaviorSubject, map, Observable, of, take, tap } from 'rxjs';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { StagedReferenceFieldProviderService } from './Provider/StagedReferenceFieldProvider.service';
+import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 
 @Injectable({
   providedIn: 'root',
@@ -43,8 +44,6 @@ export class StagedProfileService {
     if (profile) {
       profile.getProfileFields().setSelectedBasicFields(selectedBasicFields);
       this.triggerUpdate(profile);
-    } else {
-      console.warn('No profile is staged. Please stage a profile before updating fields.');
     }
   }
 
@@ -53,15 +52,20 @@ export class StagedProfileService {
     if (profile) {
       profile.setFilters(filters);
       this.triggerUpdate(profile);
-    } else {
-      console.warn('No profile is staged. Please stage a profile before updating filters.');
     }
   }
 
-  private updateSelectedReferenceFields(): Observable<DataSelectionProfile> {
+  public updateSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {
+    const profile = this.stagedProfileSubject.value;
+    if (profile) {
+      profile.getProfileFields().setSelectedReferenceFields(selectedReferenceFields);
+      this.triggerUpdate(profile);
+    }
+  }
+
+  private getStagedSelectedReferenceFields(): Observable<DataSelectionProfile> {
     const profile = this.stagedProfileSubject.value;
     if (!profile) {
-      console.warn('No profile is staged. Cannot update reference fields.');
       return of();
     }
 
@@ -88,7 +92,7 @@ export class StagedProfileService {
       .get(profile.getId());
 
     if (referencesExist) {
-      return this.updateSelectedReferenceFields().pipe(
+      return this.getStagedSelectedReferenceFields().pipe(
         tap((finalizedProfile) => this.setProvider(finalizedProfile)),
         map(() => profile)
       );
