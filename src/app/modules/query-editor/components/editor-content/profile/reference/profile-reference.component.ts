@@ -60,7 +60,6 @@ export class ProfileReferenceComponent implements OnInit {
   }
 
   private initializeUrlTree(): void {
-    console.log('referencedFields', this.referencedFields);
     this.urlTree = this.referencedFields.map((field) =>
       ProfileReferenceAdapter.adapt(field.getReferencedProfileUrls())
     );
