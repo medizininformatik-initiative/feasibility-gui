@@ -18,9 +18,7 @@ export class ProfileReferenceModalComponent implements OnInit {
     private dialogRef: MatDialogRef<ProfileReferenceModalComponentData, TreeNode[]>
   ) {}
 
-  ngOnInit(): void {
-    console.log(this.profileIds);
-  }
+  ngOnInit(): void {}
 
   public closeDialog() {
     this.dialogRef.close();
@@ -31,7 +29,6 @@ export class ProfileReferenceModalComponent implements OnInit {
   }
 
   public saveProfileReferences() {
-    console.log('Saving profile references...', this.selectedProfileIds);
     this.dialogRef.close(this.selectedProfileIds);
   }
 }

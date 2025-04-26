@@ -52,7 +52,6 @@ export class ProfileReferenceTileComponent implements OnInit {
       this.parentProfileSelectedReferences = this.parentProfile
         .getProfileFields()
         .getSelectedReferenceFields();
-      console.log(this.parentProfileSelectedReferences);
     }
   }
 
