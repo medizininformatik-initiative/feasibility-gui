@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 
 @Component({
   selector: 'num-selectable-reference-tile',
@@ -9,7 +9,7 @@ import { Display } from 'src/app/model/DataSelection/Profile/Display';
 })
 export class SelectableReferenceTileComponent implements OnInit {
   @Input()
-  profile: DataSelectionProfile;
+  possibleReferences: PossibleProfileReferenceData;
 
   @Output()
   selectedProfile = new EventEmitter<string>();
@@ -21,11 +21,12 @@ export class SelectableReferenceTileComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.display = this.profile.getDisplay();
-    this.label = this.profile.getLabel();
+    this.display = this.possibleReferences.display;
+    this.label = this.possibleReferences.label;
   }
 
   public checkboxSelected(): void {
-    this.selectedProfile.emit(this.profile.getId());
+    const id = this.possibleReferences.id;
+    this.selectedProfile.emit(id);
   }
 }
