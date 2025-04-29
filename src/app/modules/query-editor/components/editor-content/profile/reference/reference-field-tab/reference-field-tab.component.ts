@@ -9,7 +9,9 @@ import {
 } from '@angular/core';
 import { Observable, pipe, Subscription, take, tap } from 'rxjs';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { ProfileReferenceModalService } from 'src/app/service/DataSelection/ProfileReferenceModal.service';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { StagedReferenceFieldProviderService } from 'src/app/service/Provider/StagedReferenceFieldProvider.service';
@@ -28,6 +30,9 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   @Input()
   profileId: string;
 
+  @Input()
+  selectedField: SelectedReferenceField;
+
   @Output()
   selectedProfileAsReference: EventEmitter<PossibleProfileReferenceData> =
     new EventEmitter<PossibleProfileReferenceData>();
@@ -43,7 +48,8 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   constructor(
     private possibleReferencesService: PossibleReferencesService,
     private profileReferenceModalService: ProfileReferenceModalService,
-    private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService
+    private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService,
+    private profileProviderService: ProfileProviderService
   ) {}
 
   ngOnInit(): void {
@@ -81,11 +87,20 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   }
 
   public emitSelectedProfile(profile: PossibleProfileReferenceData): void {
-    this.stagedReferenceFieldProviderService.addUrlToReferenceField(
-      profile.url,
-      this.profileId,
-      this.elementId
-    );
+    const foundProfile = this.profileProviderService.getProfileById(profile.id);
+    if (!foundProfile) {
+      this.stagedReferenceFieldProviderService.addUrlToReferenceField(
+        profile.url,
+        this.profileId,
+        this.elementId
+      );
+    } else {
+      this.stagedReferenceFieldProviderService.addIdToReferenceField(
+        profile.id,
+        this.profileId,
+        this.elementId
+      );
+    }
     this.selectedProfileAsReference.emit(profile);
   }
 }
