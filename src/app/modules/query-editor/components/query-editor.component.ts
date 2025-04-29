@@ -8,7 +8,6 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { PathSegments } from 'src/app/app-paths';
 import { ProfileProviderService } from '../../data-selection/services/ProfileProvider.service';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
-import { StagedReferenceFieldProviderService } from 'src/app/service/Provider/StagedReferenceFieldProvider.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
@@ -39,7 +38,6 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
     private profileProviderService: ProfileProviderService,
-    private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService,
     private stagedProfileService: StagedProfileService
   ) {}
 
