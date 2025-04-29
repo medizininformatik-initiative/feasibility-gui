@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, of, Subscription, tap } from 'rxjs';
+import { combineLatest, Observable, of, Subscription, take, tap } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
@@ -87,7 +87,10 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   public saveElement(): void {
     if (this.isProfile()) {
       this.buildProfileSubscription?.unsubscribe();
-      this.buildProfileSubscription = this.stagedProfileService.buildProfile().subscribe();
+      this.buildProfileSubscription = this.stagedProfileService
+        .buildProfile()
+        .pipe(take(1))
+        .subscribe();
     }
   }
 
