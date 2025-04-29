@@ -1,34 +1,16 @@
 <div class="profile-tab-group-container full">
   <mat-tab-group class="full">
     <mat-tab
-      *ngFor="let reference of referencedFields; index as i"
+      *ngFor="let reference of referenceFields"
       class="inner-tab-group"
-      label="{{ reference.getDisplay() | displayTranslation }} ({{ urlTree[i].length }})"
+      label="{{ reference.getDisplay() | displayTranslation }}"
     >
-      <mat-drawer-container>
-        <mat-drawer opened="true" #drawer position="end" mode="side">
-          <num-button type="blue" (click)="openReferenceModal(urlTree[i], i)"
-            >Neues Merkmal hinzufügen</num-button
-          >
-          <!--
-            <div *ngFor="let tree of urlTree[i]">
-              <num-tree
-              [treeData]="tree"
-              (selectedCheckbox)="updateSelectedReferenceFields($event, reference)"
-              ></num-tree>
-            </div>
-            -->
-        </mat-drawer>
-        <mat-drawer-content>
-          <div *ngFor="let profile of possibleReferences[i]">
-            <num-selectable-reference-tile
-              [possibleReferences]="profile"
-              (selectedProfile)="setSelectedReference($event, reference)"
-            >
-            </num-selectable-reference-tile>
-          </div>
-        </mat-drawer-content>
-      </mat-drawer-container>
+      <num-reference-field-tab
+        [referenceField]="reference"
+        [profileId]="profileId"
+        (selectedProfileAsReference)="setSelectedReference($event, reference)"
+      >
+      </num-reference-field-tab>
     </mat-tab>
   </mat-tab-group>
 </div>
