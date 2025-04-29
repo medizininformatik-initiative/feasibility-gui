@@ -72,8 +72,20 @@ export class StagedProfileService {
     return this.createSelectedReferenceService.getSelectedReferenceFields(profile).pipe(
       tap((selectedReferenceFields) => {
         const existingFields = profile.getProfileFields().getSelectedReferenceFields();
-        const mergedFields = [...existingFields, ...selectedReferenceFields];
-        profile.getProfileFields().setSelectedReferenceFields(mergedFields);
+
+        selectedReferenceFields.map((field) => {
+          const foudnSelectedReferenceField = existingFields.find(
+            (existingField) => field.getElementId() === existingField.getElementId()
+          );
+          if (foudnSelectedReferenceField) {
+            return foudnSelectedReferenceField
+              .getLinkedProfileIds()
+              .push(...field.getLinkedProfileIds());
+          } else {
+            existingFields.push(field);
+          }
+        });
+        profile.getProfileFields().setSelectedReferenceFields(existingFields);
         this.stagedReferenceFieldProviderService.clearAll();
       }),
       map(() => profile)
