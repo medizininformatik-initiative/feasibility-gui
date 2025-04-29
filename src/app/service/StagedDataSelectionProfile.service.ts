@@ -113,7 +113,6 @@ export class StagedProfileService {
    * @param profile
    */
   private setProvider(profile: DataSelectionProfile): void {
-    console.log('provdier', profile);
     this.profileProviderService.setProfileById(profile.getId(), profile);
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProviderService.removeProfileFromDataSelection(
