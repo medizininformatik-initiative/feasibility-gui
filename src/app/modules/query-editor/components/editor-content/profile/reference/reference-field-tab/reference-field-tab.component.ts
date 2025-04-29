@@ -7,7 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, pipe, Subscription, take, tap } from 'rxjs';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 import { ProfileReferenceModalService } from 'src/app/service/DataSelection/ProfileReferenceModal.service';
@@ -68,6 +68,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
     this.openModalWindowSubscription?.unsubscribe();
     this.openModalWindowSubscription = this.profileReferenceModalService
       .openProfileReferenceModal(this.referencedProfileUrls, this.profileId)
+      .pipe(take(1))
       .subscribe((urls: string[]) => {
         urls.map((url) =>
           this.stagedReferenceFieldProviderService.addUrlToReferenceField(
