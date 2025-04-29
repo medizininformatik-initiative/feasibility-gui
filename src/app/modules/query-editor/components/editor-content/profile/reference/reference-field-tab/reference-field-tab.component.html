@@ -1,0 +1,8 @@
+<ng-container *ngFor="let possibleReference of possibleReferences$ | async">
+  <num-possible-references
+    [posssibleReference]="possibleReference"
+    (selectedProfileId)="emitSelectedProfile($event)"
+  >
+  </num-possible-references>
+</ng-container>
+<num-button type="blue" (click)="openReferenceModal()"> Neues Merkmal hinzufügen </num-button>
