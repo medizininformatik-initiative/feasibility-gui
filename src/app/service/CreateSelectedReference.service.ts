@@ -4,7 +4,7 @@ import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelecti
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
 import { concatMap, filter, map, switchMap, take, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { StagedReferenceFieldProviderService } from './Provider/StagedReferenceFieldProvider.service';
@@ -29,10 +29,52 @@ export class CreateSelectedReferenceService {
     private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService
   ) {}
 
+  public getSelectedReferenceFields(
+    profile: DataSelectionProfile
+  ): Observable<SelectedReferenceField[]> {
+    return this.combineSelectedReferences(profile);
+  }
+
+  private combineSelectedReferences(
+    profile: DataSelectionProfile
+  ): Observable<SelectedReferenceField[]> {
+    return combineLatest([
+      this.buildSelectedReferenceFieldFromPossibleProfileReferences(profile),
+      this.buildSelectedReferenceFieldsFromUrls(profile),
+    ]).pipe(
+      map(([possibleReferences, selectedReferences]) => {
+        console.log('Selected References:', selectedReferences);
+        console.log('Possible References:', possibleReferences);
+        return [...possibleReferences, ...selectedReferences];
+      })
+    );
+  }
+
+  private buildSelectedReferenceFieldFromPossibleProfileReferences(
+    profile: DataSelectionProfile
+  ): Observable<SelectedReferenceField[]> {
+    const referenceFields = profile.getProfileFields().getReferenceFields();
+    return this.stagedReferenceFieldProviderService.stagedPossibleProfileRefrences$.pipe(
+      filter((profileMap) => profileMap.has(profile.getId())),
+      map((profileMap) => {
+        const innerMap: Map<string, Set<string>> = profileMap.get(profile.getId());
+        const selectedReferences: SelectedReferenceField[] = [];
+        innerMap.forEach((idSet, elementId) => {
+          const ids = Array.from(idSet);
+          const foundField = referenceFields.find((field) => field.getElementId() === elementId);
+          if (foundField) {
+            selectedReferences.push(new SelectedReferenceField(foundField, ids, false));
+          }
+        });
+        return selectedReferences;
+      })
+    );
+  }
+
   /**
    * Fetches selected reference fields by processing staged references.
    */
-  public getSelectedReferenceFields(
+  private buildSelectedReferenceFieldsFromUrls(
     profile: DataSelectionProfile
   ): Observable<SelectedReferenceField[]> {
     const referenceFields = profile.getProfileFields().getReferenceFields();

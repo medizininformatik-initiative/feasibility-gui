@@ -28,6 +28,20 @@ export class ElementIdMapService {
     return elementIdMap;
   }
 
+  public createElementIdMapForPossibleReferences(
+    profile: DataSelectionProfile
+  ): Map<string, Set<string>> {
+    const elementIdMap = new Map<string, Set<string>>();
+    const fields = profile.getProfileFields();
+
+    fields.getReferenceFields().forEach((field: ReferenceField) => {
+      const elementId = field.getElementId();
+      elementIdMap.set(elementId, new Set<string>());
+    });
+
+    return elementIdMap;
+  }
+
   /**
    * Retrieves or creates a profile map for a given profile ID.
    * @param currentMap - The current staged reference profile URLs map.
@@ -63,7 +77,9 @@ export class ElementIdMapService {
    * @returns A flat list of element-URL entries.
    */
   public flattenUrls(elementIdMap: Map<string, string[]> | undefined): ElementUrlEntry[] {
-    if (!elementIdMap) {return [];}
+    if (!elementIdMap) {
+      return [];
+    }
     const flattened: ElementUrlEntry[] = [];
 
     elementIdMap.forEach((urls, elementId) => {
