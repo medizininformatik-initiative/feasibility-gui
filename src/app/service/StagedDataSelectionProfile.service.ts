@@ -1,15 +1,15 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { ActiveDataSelectionService } from './Provider/ActiveDataSelection.service';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 import { CreateSelectedReferenceService } from './CreateSelectedReference.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of, take, tap } from 'rxjs';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { StagedReferenceFieldProviderService } from './Provider/StagedReferenceFieldProvider.service';
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
+import { StagedReferenceFieldProviderService } from './Provider/StagedReferenceFieldProvider.service';
 
 @Injectable({
   providedIn: 'root',
