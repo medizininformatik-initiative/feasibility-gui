@@ -3,7 +3,7 @@ import { CreateDataSelectionProfileService } from './DataSelection/CreateDataSel
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
-import { concatMap, map, switchMap, take } from 'rxjs/operators';
+import { concatMap, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
@@ -36,7 +36,6 @@ export class CreateSelectedReferenceService {
     profile: DataSelectionProfile
   ): Observable<SelectedReferenceField[]> {
     const referenceFields = profile.getProfileFields().getReferenceFields();
-
     return this.processStagedReferences(profile.getId()).pipe(
       concatMap((flattened) => this.fetchProfilesAndMapUrls(flattened)),
       map(({ flattened, urlToProfileId }) => {
@@ -45,7 +44,6 @@ export class CreateSelectedReferenceService {
           flattened,
           urlToProfileId
         );
-        this.stagedReferenceFieldProviderService.clearAll();
         return selectedReferences;
       })
     );
@@ -55,9 +53,10 @@ export class CreateSelectedReferenceService {
    * Processes staged reference URLs and returns flattened element-URL entries.
    */
   public processStagedReferences(profileId: string): Observable<ElementUrlEntry[]> {
-    return this.stagedReferenceFieldProviderService
-      .getStagedReferenceProfileUrlsMap()
-      .pipe(map((profileMap) => this.elementIdMapService.flattenUrls(profileMap.get(profileId))));
+    return this.stagedReferenceFieldProviderService.getStagedReferenceProfileUrlsMap().pipe(
+      filter((profileMap) => profileMap.has(profileId)),
+      map((profileMap) => this.elementIdMapService.flattenUrls(profileMap.get(profileId)))
+    );
   }
 
   /**
@@ -67,7 +66,6 @@ export class CreateSelectedReferenceService {
     flattened: ElementUrlEntry[]
   ): Observable<{ flattened: ElementUrlEntry[]; urlToProfileId: Map<string, string> }> {
     const uniqueUrls = this.getUniqueUrls(flattened);
-
     return this.createDataSelectionProfileService.fetchDataSelectionProfileData(uniqueUrls).pipe(
       map((profiles) => ({
         flattened,
@@ -125,11 +123,9 @@ export class CreateSelectedReferenceService {
    */
   private mapUrlsToProfileIds(profiles: DataSelectionProfile[]): Map<string, string> {
     const urlToProfileIdMap = new Map<string, string>();
-
     profiles.forEach((profile) => {
       urlToProfileIdMap.set(profile.getUrl(), profile.getId());
     });
-
     this.updateActiveDataSelectionProfiles(profiles);
     return urlToProfileIdMap;
   }
