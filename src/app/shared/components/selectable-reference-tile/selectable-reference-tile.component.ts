@@ -9,10 +9,10 @@ import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossiblePr
 })
 export class SelectableReferenceTileComponent implements OnInit {
   @Input()
-  possibleReferences: PossibleProfileReferenceData;
+  possibleReference: PossibleProfileReferenceData;
 
   @Output()
-  selectedProfile = new EventEmitter<string>();
+  selectedProfile = new EventEmitter<PossibleProfileReferenceData>();
 
   display: Display;
 
@@ -21,12 +21,11 @@ export class SelectableReferenceTileComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.display = this.possibleReferences.display;
-    this.label = this.possibleReferences.label;
+    this.display = this.possibleReference.display;
+    this.label = this.possibleReference.label;
   }
 
   public checkboxSelected(): void {
-    const id = this.possibleReferences.id;
-    this.selectedProfile.emit(id);
+    this.selectedProfile.emit(this.possibleReference);
   }
 }
