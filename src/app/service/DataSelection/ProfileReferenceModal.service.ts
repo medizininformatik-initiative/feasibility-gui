@@ -1,8 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ProfileReferenceModalComponent } from 'src/app/modules/query-editor/components/editor-content/profile/reference/modal-window/profile-reference-modal.component';
 import { Observable, Subscription } from 'rxjs';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import {
+  ProfileReferenceModalComponent,
+  ProfileReferenceModalComponentData,
+} from 'src/app/modules/query-editor/components/editor-content/profile/reference/modal-window/profile-reference-modal.component';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +18,26 @@ export class ProfileReferenceModalService implements OnDestroy {
     this.dialogSubscription.unsubscribe();
   }
 
-  public openProfileReferenceModal(profileIds: TreeNode[]): Observable<any> {
+  public openProfileReferenceModal(
+    referencedProfileUrls: string[],
+    profileId: string
+  ): Observable<any> {
+    const data = this.setModalData(referencedProfileUrls, profileId);
     const dialogRef = this.dialog.open(ProfileReferenceModalComponent, {
       disableClose: true,
-      data: profileIds,
+      data,
     });
 
     return dialogRef.afterClosed();
+  }
+
+  private setModalData(
+    referencedProfileUrls: string[],
+    profileId: string
+  ): ProfileReferenceModalComponentData {
+    return {
+      referenceUrls: referencedProfileUrls,
+      profileId,
+    };
   }
 }
