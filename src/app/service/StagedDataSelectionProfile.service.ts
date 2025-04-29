@@ -74,7 +74,7 @@ export class StagedProfileService {
         const existingFields = profile.getProfileFields().getSelectedReferenceFields();
         const mergedFields = [...existingFields, ...selectedReferenceFields];
         profile.getProfileFields().setSelectedReferenceFields(mergedFields);
-        this.triggerUpdate(profile); // Important: update view after merging
+        this.stagedReferenceFieldProviderService.clearAll();
       }),
       map(() => profile)
     );
@@ -82,7 +82,6 @@ export class StagedProfileService {
 
   public buildProfile(): Observable<DataSelectionProfile | null> {
     const profile = this.stagedProfileSubject.value;
-
     if (!profile) {
       console.warn('No profile is staged. Please stage a profile before building.');
       return of(null);
@@ -93,7 +92,10 @@ export class StagedProfileService {
 
     if (referencesExist) {
       return this.getStagedSelectedReferenceFields().pipe(
-        tap((finalizedProfile) => this.setProvider(finalizedProfile)),
+        tap((finalizedProfile) => {
+          this.triggerUpdate(profile);
+          this.setProvider(finalizedProfile);
+        }),
         map(() => profile)
       );
     } else {
@@ -106,7 +108,12 @@ export class StagedProfileService {
     this.stagedProfileSubject.next(DataSelectionProfileCloner.deepCopyProfile(profile));
   }
 
+  /**
+   * @todo refactor this method
+   * @param profile
+   */
   private setProvider(profile: DataSelectionProfile): void {
+    console.log('provdier', profile);
     this.profileProviderService.setProfileById(profile.getId(), profile);
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProviderService.removeProfileFromDataSelection(
