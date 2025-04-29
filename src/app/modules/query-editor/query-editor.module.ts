@@ -21,6 +21,8 @@ import { TokenFilterComponent } from './components/editor-content/profile/profil
 import { ProfileTimeFilterComponent } from './components/editor-content/profile/profile-filter/profile-time-restriction/profile-time-filter.component';
 import { ProfileReferenceModalComponent } from './components/editor-content/profile/reference/modal-window/profile-reference-modal.component';
 import { ProfileReferenceComponent } from './components/editor-content/profile/reference/profile-reference.component';
+import { ReferenceFieldTabComponent } from './components/editor-content/profile/reference/reference-field-tab/reference-field-tab.component';
+import { PossibleReferencesComponent } from './components/editor-content/profile/reference/possible-references/possible-references.component';
 
 @NgModule({
   imports: [
@@ -48,6 +50,8 @@ import { ProfileReferenceComponent } from './components/editor-content/profile/r
     ProfileTimeFilterComponent,
     ProfileReferenceComponent,
     ProfileReferenceModalComponent,
+    ReferenceFieldTabComponent,
+    PossibleReferencesComponent,
   ],
   exports: [],
 })
