@@ -33,15 +33,8 @@ export class CreateDataSelectionProfileService {
 
   public fetchDataSelectionProfileData(
     urls: string[],
-    markAsReference: boolean = false,
-    loadReferences: boolean = true
+    markAsReference: boolean = false
   ): Observable<DataSelectionProfile[]> {
-    if (urls.length === 0) {
-      return new Observable((observer) => {
-        observer.next([]);
-        observer.complete();
-      });
-    }
     return this.dataSelectionApiService.getDataSelectionProfileData(urls).pipe(
       map((data: any[]) =>
         data.map((item: any) => {
