@@ -46,9 +46,6 @@ export class PossibleReferencesService {
     );
   }
 
-  //profileid --> provider das prifl holen -> über alle selected profiles iterieren und das eine feld anhand elmentId
-  //
-
   private getLinkedProfilesIdsFromSelectedRefrenceFields(
     parentProfile: DataSelectionProfile,
     elementId: string
