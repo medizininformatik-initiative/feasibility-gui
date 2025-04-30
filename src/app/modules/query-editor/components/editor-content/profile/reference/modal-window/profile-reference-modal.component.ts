@@ -15,14 +15,15 @@ export class ProfileReferenceModalComponentData {
 export class ProfileReferenceModalComponent implements OnInit {
   urlTree: TreeNode[] = [];
 
-  selectedProfileIds: TreeNode[] = [];
+  selectedProfileIds: Set<string> = new Set();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ProfileReferenceModalComponentData,
-    private dialogRef: MatDialogRef<ProfileReferenceModalComponentData, TreeNode[]>
+    private dialogRef: MatDialogRef<ProfileReferenceModalComponentData, string[]>
   ) {}
 
   ngOnInit(): void {
+    this.selectedProfileIds.clear();
     this.initializeUrlTree();
   }
 
@@ -31,15 +32,20 @@ export class ProfileReferenceModalComponent implements OnInit {
   }
 
   public closeDialog() {
-    this.dialogRef.close();
+    this.dialogRef.close([]);
   }
 
   public setSelectedReferenceFields(selectedProfile: TreeNode) {
-    this.selectedProfileIds.push(selectedProfile);
+    const url = selectedProfile.originalEntry;
+    if (this.selectedProfileIds.has(url)) {
+      this.selectedProfileIds.delete(url);
+    } else {
+      this.selectedProfileIds.add(selectedProfile.originalEntry);
+    }
   }
 
   public saveProfileReferences() {
-    const urls = this.selectedProfileIds.map((node) => node.originalEntry);
+    const urls = Array.from(this.selectedProfileIds);
     this.dialogRef.close(urls);
   }
 }

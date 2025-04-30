@@ -76,24 +76,14 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
       .openProfileReferenceModal(this.referencedProfileUrls, this.profileId)
       .pipe(take(1))
       .subscribe((urls: string[]) => {
-        urls.map((url) =>
-          this.stagedReferenceFieldProviderService.addUrlToReferenceField(
-            url,
-            this.profileId,
-            this.referenceField.getElementId()
-          )
-        );
+        urls.map((url) => this.addUrlToStagedReferenceFields(url));
       });
   }
 
   public emitSelectedProfile(profile: PossibleProfileReferenceData): void {
     const foundProfile = this.profileProviderService.getProfileById(profile.id);
     if (!foundProfile) {
-      this.stagedReferenceFieldProviderService.addUrlToReferenceField(
-        profile.url,
-        this.profileId,
-        this.elementId
-      );
+      this.addUrlToStagedReferenceFields(profile.url);
     } else {
       this.stagedReferenceFieldProviderService.addIdToReferenceField(
         profile.id,
@@ -102,5 +92,13 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
       );
     }
     this.selectedProfileAsReference.emit(profile);
+  }
+
+  private addUrlToStagedReferenceFields(url: string) {
+    this.stagedReferenceFieldProviderService.addUrlToReferenceField(
+      url,
+      this.profileId,
+      this.elementId
+    );
   }
 }

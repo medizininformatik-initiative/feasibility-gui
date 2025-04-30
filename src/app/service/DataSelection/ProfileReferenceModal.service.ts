@@ -21,7 +21,7 @@ export class ProfileReferenceModalService implements OnDestroy {
   public openProfileReferenceModal(
     referencedProfileUrls: string[],
     profileId: string
-  ): Observable<any> {
+  ): Observable<string[]> {
     const data = this.setModalData(referencedProfileUrls, profileId);
     const dialogRef = this.dialog.open(ProfileReferenceModalComponent, {
       disableClose: true,
