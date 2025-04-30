@@ -78,11 +78,9 @@ export class StagedReferenceFieldProviderService {
     const currentMap = this.stagedReferenceProfileUrlsMapSubject.value;
     const profileMap = this.getOrCreateProfileMap(currentMap, profileId);
     const fieldUrls = this.getOrCreateFieldUrls(profileMap, elementId);
-    if (!fieldUrls.includes(url)) {
-      fieldUrls.push(url);
-      profileMap.set(elementId, fieldUrls);
-      this.updateStagedReferenceProfileUrlsMap(currentMap);
-    }
+    fieldUrls.push(url);
+    profileMap.set(elementId, fieldUrls);
+    this.updateStagedReferenceProfileUrlsMap(currentMap);
   }
 
   public addIdToReferenceField(id: string, profileId: string, elementId: string): void {
