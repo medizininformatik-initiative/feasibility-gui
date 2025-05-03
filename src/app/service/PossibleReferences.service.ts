@@ -1,52 +1,111 @@
-import { combineLatest, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, take } from 'rxjs';
+import { CreateDataSelectionProfileService } from './DataSelection/CreateDataSelectionProfile.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
-import { Display } from '../model/DataSelection/Profile/Display';
+import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
+import { ElementIdMapService } from './ElementIdMap.service';
 import { Injectable } from '@angular/core';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
-import { StagedReferenceFieldProviderService } from './Provider/StagedReferenceFieldProvider.service';
-import { Translation } from '../model/DataSelection/Profile/Translation';
+import { StagedProfileService } from './StagedDataSelectionProfile.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PossibleReferencesService {
+  /**
+   * id vom profile --> elementId --> PossibleProfileReferenceData Array
+   */
+  private possibleReferencesMapSubject = new BehaviorSubject<
+    Map<string, Map<string, PossibleProfileReferenceData[]>>
+  >(new Map());
+  private possibleReferencesMap$ = this.possibleReferencesMapSubject.asObservable();
+
   constructor(
-    private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService,
+    private createDataSelectionProfileService: CreateDataSelectionProfileService,
+    private dataSelectionProviderService: DataSelectionProviderService,
+    private elementIdMapService: ElementIdMapService,
+    private stagedProfileService: StagedProfileService,
     private profileProviderService: ProfileProviderService
   ) {}
 
-  /**
-   * Fetches possible references by combining staged references and existing references.
-   * @param elementId - The ID of the reference field.
-   * @param profileId - The ID of the profile.
-   * @returns An observable of possible profile references.
-   */
-  public filterPossibleReferences(
-    elementId: string,
-    profileId: string,
-    urls: string[]
-  ): Observable<PossibleProfileReferenceData[]> {
-    return combineLatest([
-      this.stagedReferenceFieldProviderService.getStagedReferenceProfileUrlsMap(),
-      this.profileProviderService.getProfileIdMap(),
-    ]).pipe(
-      map(([stagedReferenceMap, profileMap]) => {
-        const stagedUrls = this.getStagedUrls(stagedReferenceMap, profileId, elementId);
-        const linkedIds = this.getLinkedProfilesIdsFromSelectedRefrenceFields(
-          profileMap.get(profileId),
-          elementId
-        );
-        const existingProfiles = this.getExistingProfilesByUrls(urls, profileId, profileMap);
-        return [
-          ...this.mapProfilesToPossibleReferences(existingProfiles, linkedIds),
-          ...this.mapUrlsToReferences(stagedUrls),
-        ];
+  public initialize(profileId: string): Observable<void> {
+    return this.stagedProfileService.getProfileObservable().pipe(
+      switchMap((profile) => {
+        const initialMap = new Map<string, Map<string, PossibleProfileReferenceData[]>>();
+        const elementIdMap =
+          this.elementIdMapService.createElementIdMapForPossibleReferencesNew(profile);
+        initialMap.set(profileId, elementIdMap);
+        this.updateStagePossibleProfileRefrencesMap(initialMap);
+        return this.filterPossibleReferences(profile);
       })
     );
   }
 
-  private getLinkedProfilesIdsFromSelectedRefrenceFields(
+  /**
+   * Updates the staged reference profile URLs map.
+   * @param updatedMap - The updated map to set.
+   */
+  public updateStagePossibleProfileRefrencesMap(
+    updatedMap: Map<string, Map<string, PossibleProfileReferenceData[]>>
+  ): void {
+    this.possibleReferencesMapSubject.next(new Map(updatedMap));
+  }
+
+  public filterPossibleReferences(parentProfile: DataSelectionProfile): Observable<void> {
+    return this.dataSelectionProviderService.getProfilesFromActiveDataSelection().pipe(
+      take(1),
+      map((dataSelectionProfiles) => {
+        dataSelectionProfiles.forEach((profile) => {
+          const profileId = profile.getId();
+          this.profileProviderService.getProfileById(profileId);
+          const currentMap = this.possibleReferencesMapSubject.value;
+          const referencedFields = parentProfile.getProfileFields().getReferenceFields();
+          const innerMap =
+            currentMap.get(profileId) || new Map<string, PossibleProfileReferenceData[]>();
+          const newInnerMap = new Map<string, PossibleProfileReferenceData[]>();
+          innerMap.forEach((possibleReferenceData, elementId) => {
+            const referencedProfileUrls = [
+              ...(referencedFields
+                .find((field) => field.getElementId() === elementId)
+                ?.getReferencedProfileUrls() || []),
+            ];
+            const linkedIds = this.getLinkedProfilesIdsFromSelectedRefrenceFields(
+              parentProfile,
+              elementId
+            );
+            const existingProfiles = this.getExistingProfilesByUrls(
+              referencedProfileUrls,
+              profileId,
+              dataSelectionProfiles
+            );
+            const possibleReferences = this.mapProfilesToPossibleReferences(
+              existingProfiles,
+              linkedIds
+            );
+
+            newInnerMap.set(elementId, possibleReferences);
+          });
+
+          const updatedMap = new Map(currentMap);
+          updatedMap.set(profileId, newInnerMap);
+          this.possibleReferencesMapSubject.next(updatedMap);
+          return updatedMap;
+        });
+      })
+    );
+  }
+
+  /**
+   * Public getter for the possibleReferencesMap$ observable.
+   * @returns An observable of the possible references map.
+   */
+  public getPossibleReferencesMap(): Observable<
+    Map<string, Map<string, PossibleProfileReferenceData[]>>
+  > {
+    return this.possibleReferencesMapSubject.asObservable();
+  }
+
+  public getLinkedProfilesIdsFromSelectedRefrenceFields(
     parentProfile: DataSelectionProfile,
     elementId: string
   ): string[] {
@@ -55,21 +114,6 @@ export class PossibleReferencesService {
       .getSelectedReferenceFields()
       ?.find((field) => field.getElementId() === elementId);
     return foudnSelectedReferenceField?.getLinkedProfileIds() ?? [];
-  }
-
-  /**
-   * Retrieves staged URLs for a specific profile and element ID.
-   * @param stagedReferenceMap - The staged reference profile URLs map.
-   * @param profileId - The ID of the profile.
-   * @param elementId - The ID of the reference field.
-   * @returns An array of staged URLs.
-   */
-  private getStagedUrls(
-    stagedReferenceMap: Map<string, Map<string, string[]>>,
-    profileId: string,
-    elementId: string
-  ): string[] {
-    return stagedReferenceMap.get(profileId)?.get(elementId) ?? [];
   }
 
   /**
@@ -82,14 +126,15 @@ export class PossibleReferencesService {
   private getExistingProfilesByUrls(
     urls: string[],
     profileId: string,
-    profileMap: Map<string, DataSelectionProfile>
+    profileMap: DataSelectionProfile[]
   ): DataSelectionProfile[] {
-    return Array.from(profileMap.values())
+    return profileMap
       .filter((profile) => urls.includes(profile.getUrl()))
       .filter((profile) => profile.getId() !== profileId);
   }
 
   /**
+   * Second use-case for exiting profiles
    * Maps profiles to possible reference data objects.
    * @param profiles - The profiles to map.
    * @returns A list of possible profile references.
@@ -126,43 +171,43 @@ export class PossibleReferencesService {
   }
 
   /**
+   * First use-case for newly selected profiles
    * Maps URLs to possible reference data objects.
    * @param urls - The URLs to map.
    * @returns A list of possible profile references.
    */
-  private mapUrlsToReferences(urls: string[]): PossibleProfileReferenceData[] {
-    return urls.map((url) => ({
-      id: this.normalizeReferenceUrl(url),
-      label: undefined,
-      display: this.createDisplay(this.normalizeReferenceUrl(url)),
-      url,
-      isSelected: true,
-    }));
+  private mapProfilesToReferences(
+    profiles: DataSelectionProfile[]
+  ): PossibleProfileReferenceData[] {
+    return profiles.map((profile) => this.mapProfileToReference(profile, true));
   }
 
-  /**
-   * Normalizes a reference URL into a readable format.
-   * @param url - The URL to normalize.
-   * @returns A normalized string.
-   */
-  public normalizeReferenceUrl(url: string): string {
-    const lastPart = url.split('/').pop() || '';
-    return lastPart
-      .split('-')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+  public fetchProfilesAndMapToPossibleReferences(
+    urls: string[],
+    elementId: string,
+    parentProfileId: string
+  ): Observable<PossibleProfileReferenceData[]> {
+    return this.createDataSelectionProfileService.fetchDataSelectionProfileData(urls).pipe(
+      take(1),
+      map((profiles: DataSelectionProfile[]) => {
+        const possibleReferences = this.mapProfilesToReferences(profiles);
+        const currentMap = this.possibleReferencesMapSubject.getValue();
+        const outerMap =
+          currentMap.get(parentProfileId) || new Map<string, PossibleProfileReferenceData[]>();
+        const existingReferences = outerMap.get(elementId) || [];
+        const updatedReferences = [...existingReferences, ...possibleReferences];
+        const updatedOuterMap = new Map(outerMap);
+        updatedOuterMap.set(elementId, updatedReferences);
+        const updatedMap = new Map(currentMap);
+        updatedMap.set(parentProfileId, updatedOuterMap);
+        this.possibleReferencesMapSubject.next(updatedMap);
+
+        return updatedReferences;
+      })
+    );
   }
 
-  /**
-   * Creates a display object for a reference.
-   * @param display - The display string.
-   * @returns A `Display` object.
-   */
-  private createDisplay(display: string): Display {
-    const translations = [
-      new Translation('de-DE', display, []),
-      new Translation('en-US', display, []),
-    ];
-    return new Display(translations, display, []);
+  public clearPossibleReferencesMap(): void {
+    this.possibleReferencesMapSubject.next(new Map());
   }
 }

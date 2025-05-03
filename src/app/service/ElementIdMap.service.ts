@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { PossibleProfileReferenceData } from '../model/Interface/PossibleProfileReferenceData';
 
 interface ElementUrlEntry {
   elementId: string
@@ -71,23 +72,17 @@ export class ElementIdMapService {
     return profileMap.get(elementId);
   }
 
-  /**
-   * Converts the nested map into a flat element-URL list.
-   * @param elementIdMap - A map of element IDs to arrays of URLs.
-   * @returns A flat list of element-URL entries.
-   */
-  public flattenUrls(elementIdMap: Map<string, string[]> | undefined): ElementUrlEntry[] {
-    if (!elementIdMap) {
-      return [];
-    }
-    const flattened: ElementUrlEntry[] = [];
+  public createElementIdMapForPossibleReferencesNew(
+    profile: DataSelectionProfile
+  ): Map<string, PossibleProfileReferenceData[]> {
+    const elementIdMap = new Map<string, PossibleProfileReferenceData[]>();
+    const fields = profile.getProfileFields();
 
-    elementIdMap.forEach((urls, elementId) => {
-      urls.forEach((url) => {
-        flattened.push({ elementId, url });
-      });
+    fields.getReferenceFields().forEach((field: ReferenceField) => {
+      const elementId = field.getElementId();
+      elementIdMap.set(elementId, []);
     });
 
-    return flattened;
+    return elementIdMap;
   }
 }

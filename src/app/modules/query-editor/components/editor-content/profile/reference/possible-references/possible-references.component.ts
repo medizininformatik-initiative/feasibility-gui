@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 
 @Component({
@@ -10,8 +10,7 @@ export class PossibleReferencesComponent implements OnInit {
   @Input()
   posssibleReference: PossibleProfileReferenceData;
 
-  @Output()
-  selectedProfileId = new EventEmitter<PossibleProfileReferenceData>();
+  selectedProfileId;
 
   constructor() {}
 
