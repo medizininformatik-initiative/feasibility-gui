@@ -6,7 +6,7 @@ import { CriterionProviderService } from 'src/app/service/Provider/CriterionProv
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { PathSegments } from 'src/app/app-paths';
-import { ProfileProviderService } from '../../data-selection/services/ProfileProvider.service';
+import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
 import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
@@ -37,8 +37,8 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     private criterionProviderService: CriterionProviderService,
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
-    private profileProviderService: ProfileProviderService,
-    private stagedProfileService: StagedProfileService
+    private stagedProfileService: StagedProfileService,
+    private possibleReferencesService: PossibleReferencesService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +53,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
             this.id = id;
             this.type = type;
             this.getElementFromProvider();
+            this.possibleReferencesService.initialize(id);
           }
         })
       )
@@ -65,19 +66,13 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   private getElementFromProvider(): void {
-    if (this.isProfile()) {
-      this.getProfileFromProviderById(this.id);
-    } else if (this.isCriterion()) {
+    if (this.isCriterion()) {
       this.getCriterionFromProviderById(this.id);
     }
   }
 
   private getCriterionFromProviderById(id: string): void {
     this.criterion$ = of(this.criterionProviderService.getCriterionByUID(id));
-  }
-
-  private getProfileFromProviderById(id: string): void {
-    this.profile$ = of(this.profileProviderService.getProfileById(id));
   }
 
   public updateCriterion(criterion: Criterion): void {
@@ -90,12 +85,13 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
       this.buildProfileSubscription = this.stagedProfileService
         .buildProfile()
         .pipe(take(1))
-        .subscribe();
+        .subscribe(() => this.possibleReferencesService.clearPossibleReferencesMap());
     }
   }
 
   public onCancel(): void {
     if (this.isProfile()) {
+      this.possibleReferencesService.clearPossibleReferencesMap();
       this.navigationHelperService.navigateToDataSelectionEditor();
     } else if (this.isCriterion()) {
       this.navigationHelperService.navigateToFeasibilityQueryEditor();

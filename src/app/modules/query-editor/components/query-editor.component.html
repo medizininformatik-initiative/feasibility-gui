@@ -3,7 +3,6 @@
   <div class="background">
     <num-editor-content
       [criterion]="criterion$ | async"
-      [profile]="profile$ | async"
       (criterionChanged)="updateCriterion($event)"
     ></num-editor-content>
   </div>
