@@ -1,15 +1,17 @@
+import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
+import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner';
+import { filter, Subscription, switchMap, take } from 'rxjs';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
-import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
-import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner';
-import { StagedReferenceFieldProviderService } from 'src/app/service/Provider/StagedReferenceFieldProvider.service';
 
 @Component({
   selector: 'num-profile-reference',
@@ -17,40 +19,47 @@ import { StagedReferenceFieldProviderService } from 'src/app/service/Provider/St
   templateUrl: './profile-reference.component.html',
   styleUrls: ['./profile-reference.component.scss'],
 })
-export class ProfileReferenceComponent implements OnInit {
+export class ProfileReferenceComponent implements OnInit, OnDestroy {
   @Input() referenceFields: ReferenceField[];
   @Input() profileId: string;
   @Input() selectedReferenceFields: SelectedReferenceField[] = [];
   @Output() updatedSelectedReferenceFields = new EventEmitter<SelectedReferenceField[]>();
 
-  constructor(private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService) {}
+  possibleReferencesServiceSubscription: Subscription;
+
+  constructor(private possibleReferencesService: PossibleReferencesService) {}
 
   ngOnInit(): void {
-    this.stagedReferenceFieldProviderService.initialize(this.profileId);
+    this.possibleReferencesServiceSubscription?.unsubscribe();
+    this.possibleReferencesServiceSubscription = this.possibleReferencesService
+      .getPossibleReferencesMap()
+      .pipe(
+        take(1),
+        filter((possibleReferenceMap) => !possibleReferenceMap.has(this.profileId)),
+        switchMap(() => this.possibleReferencesService.initialize(this.profileId).pipe(take(1)))
+      )
+      .subscribe();
   }
 
-  public setSelectedReference(profileId: string, referencedField: ReferenceField): void {
-    const existingField = this.findSelectedField(referencedField);
-    if (existingField) {
-      this.appendProfileId(existingField, profileId);
+  ngOnDestroy(): void {
+    this.possibleReferencesServiceSubscription?.unsubscribe();
+  }
+
+  public setSelectedReference(
+    selectedReferenceField: SelectedReferenceField,
+    referencedField: ReferenceField
+  ): void {
+    const indexOfSelectedField = this.findSelectedField(referencedField);
+    if (indexOfSelectedField !== -1) {
+      this.selectedReferenceFields[indexOfSelectedField] = selectedReferenceField;
     } else {
-      this.addNewSelectedField(profileId, referencedField);
+      this.selectedReferenceFields.push(selectedReferenceField);
     }
     this.emitUpdatedFields();
   }
 
-  private addNewSelectedField(profileId: string, referencedField: ReferenceField): void {
-    const newField = new SelectedReferenceField(referencedField, [profileId], false);
-    this.selectedReferenceFields.push(newField);
-  }
-
-  private appendProfileId(field: SelectedReferenceField, profileId: string): void {
-    const profileIds = field.getLinkedProfileIds();
-    field.setLinkedProfileIds([...profileIds, profileId]);
-  }
-
-  private findSelectedField(referencedField: ReferenceField): SelectedReferenceField | undefined {
-    return this.selectedReferenceFields.find(
+  private findSelectedField(referencedField: ReferenceField): number | undefined {
+    return this.selectedReferenceFields.findIndex(
       (field) => field.getElementId() === referencedField.getElementId()
     );
   }
