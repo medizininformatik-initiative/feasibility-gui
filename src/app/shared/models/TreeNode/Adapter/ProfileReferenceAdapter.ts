@@ -1,11 +1,12 @@
 import { TreeNode } from '../TreeNodeInterface';
+import { v4 as uuidv4 } from 'uuid';
 
 export class ProfileReferenceAdapter {
   public static adapt(referencedProfileUrls: string[]): TreeNode[] {
     const nodes: TreeNode[] = [];
     referencedProfileUrls.forEach((url: string) => {
       const node: TreeNode = {
-        id: url,
+        id: uuidv4(),
         data: {
           name: ProfileReferenceAdapter.normalizeRefrenceUrl(url),
           display: ProfileReferenceAdapter.normalizeRefrenceUrl(url),
