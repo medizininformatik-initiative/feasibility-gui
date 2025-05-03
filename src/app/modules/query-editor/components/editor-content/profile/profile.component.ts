@@ -11,8 +11,11 @@ import {
   TemplateRef,
   ViewChild,
   ChangeDetectionStrategy,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
-import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
+import { Subscription, take } from 'rxjs';
+import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 @Component({
   selector: 'num-profile',
   templateUrl: './profile.component.html',
@@ -25,8 +28,10 @@ import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossiblePr
  * It initializes the profile, updates selected fields, and manages filters.
  * Newly added and stagged references are managed automatically in the StagedProfileService.
  */
-export class ProfileComponent implements AfterViewInit {
-  @Input() profile: DataSelectionProfile;
+export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
+  profile: DataSelectionProfile;
+
+  stagedProfileServiceSubscription: Subscription;
 
   templates: { template: TemplateRef<any>; name: string }[] = [];
 
@@ -38,6 +43,20 @@ export class ProfileComponent implements AfterViewInit {
   readonly referenceTemplate: TemplateRef<any>;
 
   constructor(private cdr: ChangeDetectorRef, private stagedProfileService: StagedProfileService) {}
+
+  ngOnInit(): void {
+    this.stagedProfileServiceSubscription?.unsubscribe();
+    this.stagedProfileServiceSubscription = this.stagedProfileService
+      .getProfileObservable()
+      .pipe(take(1))
+      .subscribe((profile) => {
+        this.profile = profile;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.stagedProfileServiceSubscription?.unsubscribe();
+  }
 
   /**
    * Lifecycle hook that is called after the component's view has been initialized.
