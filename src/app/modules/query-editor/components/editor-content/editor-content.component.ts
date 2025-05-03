@@ -8,7 +8,6 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
   styleUrls: ['./editor-content.component.scss'],
 })
 export class EditorContentComponent implements OnInit {
-  @Input() profile: DataSelectionProfile;
   @Input() criterion: Criterion;
 
   @Output() criterionChanged = new EventEmitter<Criterion>();
