@@ -16,9 +16,10 @@ export class SelectedReferenceFieldsCloner {
   public static deepCopySelectedReferenceField(
     selectedReferenceField: SelectedReferenceField
   ): SelectedReferenceField {
+    const clonedLinkedProfileIds = [...selectedReferenceField.getLinkedProfileIds()];
     return new SelectedReferenceField(
       ReferenceFieldsCloner.deepCopyReferenceField(selectedReferenceField.getSelectedField()),
-      selectedReferenceField.getLinkedProfileIds(),
+      clonedLinkedProfileIds,
       selectedReferenceField.getMustHave()
     );
   }
