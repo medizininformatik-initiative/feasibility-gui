@@ -44,6 +44,32 @@ export class DataSelectionProviderService {
       );
   }
 
+  public getProfilesFromActiveDataSelection(): Observable<DataSelectionProfile[]> {
+    return this.activeDataSelection
+      .getActiveDataSelectionIdObservable()
+      .pipe(
+        switchMap((id) =>
+          this.dataSelectionUIDMapSubject.pipe(
+            map((dataSelectionUIDMap) => dataSelectionUIDMap.get(id).getProfiles())
+          )
+        )
+      );
+  }
+
+  public setProfilesInActiveDataSelection(profiles: DataSelectionProfile[]): Observable<void> {
+    return this.activeDataSelection
+      .getActiveDataSelectionIdObservable()
+      .pipe(
+        switchMap((id) => profiles.map((profile) => this.setProfileInDataSelection(id, profile)))
+      );
+  }
+
+  public setProfileInActiveDataSelection(profile: DataSelectionProfile): Observable<void> {
+    return this.activeDataSelection
+      .getActiveDataSelectionIdObservable()
+      .pipe(map((id) => this.setProfileInDataSelection(id, profile)));
+  }
+
   public setDataSelectionByUID(
     id: string,
     dataSelection: DataSelection,
@@ -78,8 +104,11 @@ export class DataSelectionProviderService {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
     if (dataSelection) {
       const updatedElements = dataSelection.getProfiles();
-      updatedElements.push(profile);
-      this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
+      if (!dataSelection.getProfiles().some((p) => p.getId() === profile.getId())) {
+        updatedElements.push(profile);
+        console.log('Updated elements:', updatedElements);
+        this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
+      }
     }
   }
 
