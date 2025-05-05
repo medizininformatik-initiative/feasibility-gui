@@ -82,10 +82,10 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   public saveElement(): void {
     if (this.isProfile()) {
       this.buildProfileSubscription?.unsubscribe();
-      this.buildProfileSubscription = this.stagedProfileService
-        .buildProfile()
-        .pipe(take(1))
-        .subscribe(() => this.possibleReferencesService.clearPossibleReferencesMap());
+      //this.buildProfileSubscription =
+      this.stagedProfileService.buildProfile();
+      //.pipe(take(1))
+      //.subscribe(() => this.possibleReferencesService.clearPossibleReferencesMap());
     }
   }
 
