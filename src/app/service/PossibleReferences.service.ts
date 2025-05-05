@@ -24,21 +24,17 @@ export class PossibleReferencesService {
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private elementIdMapService: ElementIdMapService,
-    private stagedProfileService: StagedProfileService,
     private profileProviderService: ProfileProviderService
   ) {}
 
   public initialize(profileId: string): Observable<void> {
-    return this.stagedProfileService.getProfileObservable().pipe(
-      switchMap((profile) => {
-        const initialMap = new Map<string, Map<string, PossibleProfileReferenceData[]>>();
-        const elementIdMap =
-          this.elementIdMapService.createElementIdMapForPossibleReferencesNew(profile);
-        initialMap.set(profileId, elementIdMap);
-        this.updateStagePossibleProfileRefrencesMap(initialMap);
-        return this.filterPossibleReferences(profile);
-      })
-    );
+    const profile = this.profileProviderService.getProfileById(profileId);
+    const initialMap = new Map<string, Map<string, PossibleProfileReferenceData[]>>();
+    const elementIdMap =
+      this.elementIdMapService.createElementIdMapForPossibleReferencesNew(profile);
+    initialMap.set(profileId, elementIdMap);
+    this.updateStagePossibleProfileRefrencesMap(initialMap);
+    return this.filterPossibleReferences(profile);
   }
 
   /**
@@ -78,6 +74,7 @@ export class PossibleReferencesService {
               profileId,
               dataSelectionProfiles
             );
+            console.log('existingProfiles', existingProfiles);
             const possibleReferences = this.mapProfilesToPossibleReferences(
               existingProfiles,
               linkedIds
@@ -209,5 +206,26 @@ export class PossibleReferencesService {
 
   public clearPossibleReferencesMap(): void {
     this.possibleReferencesMapSubject.next(new Map());
+  }
+
+  /**
+   * Sets a specific element in the possibleReferencesMap.
+   * @param profileId - The ID of the profile.
+   * @param elementId - The ID of the element.
+   * @param possibleReferences - The array of possible profile reference data to set.
+   */
+  public setPossibleReferencesMapElement(
+    profileId: string,
+    elementId: string,
+    possibleReferences: PossibleProfileReferenceData[]
+  ): void {
+    const currentMap = this.possibleReferencesMapSubject.getValue();
+    const outerMap = currentMap.get(profileId) || new Map<string, PossibleProfileReferenceData[]>();
+    outerMap.set(elementId, possibleReferences);
+
+    const updatedMap = new Map(currentMap);
+    updatedMap.set(profileId, outerMap);
+
+    this.possibleReferencesMapSubject.next(updatedMap);
   }
 }
