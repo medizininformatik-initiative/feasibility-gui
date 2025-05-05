@@ -1,8 +1,8 @@
+import { Subscription } from 'rxjs';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner';
-import { filter, Subscription, switchMap, take } from 'rxjs';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -32,12 +32,7 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.possibleReferencesServiceSubscription?.unsubscribe();
     this.possibleReferencesServiceSubscription = this.possibleReferencesService
-      .getPossibleReferencesMap()
-      .pipe(
-        take(1),
-        filter((possibleReferenceMap) => !possibleReferenceMap.has(this.profileId)),
-        switchMap(() => this.possibleReferencesService.initialize(this.profileId).pipe(take(1)))
-      )
+      .initialize(this.profileId)
       .subscribe();
   }
 
