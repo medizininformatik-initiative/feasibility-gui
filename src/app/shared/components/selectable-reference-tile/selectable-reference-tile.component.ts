@@ -25,7 +25,7 @@ export class SelectableReferenceTileComponent implements OnInit {
     this.label = this.possibleReference.label;
   }
 
-  public checkboxSelected(): void {
-    this.selectedProfile.emit(this.possibleReference);
+  public checkboxSelected(possibleReference: PossibleProfileReferenceData): void {
+    this.selectedProfile.emit(possibleReference);
   }
 }

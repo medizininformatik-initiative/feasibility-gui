@@ -5,7 +5,7 @@
         <ng-container *ngFor="let possibleReference of possibleReferences">
           <num-possible-references
             [posssibleReference]="possibleReference"
-            (selectedProfileId)="emitSelectedProfile($event)"
+            (selectedProfileId)="updateSelectedPossibleReferences($event)"
           >
           </num-possible-references>
         </ng-container>

@@ -1,5 +1,5 @@
 import { CreateSelectedReferenceService } from 'src/app/service/CreateSelectedReference.service';
-import { filter, map, Observable, Subscription, switchMap, take } from 'rxjs';
+import { filter, map, Observable, Subscription, switchMap, take, tap } from 'rxjs';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { ProfileReferenceModalService } from 'src/app/service/DataSelection/ProfileReferenceModal.service';
@@ -79,18 +79,40 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
             this.profileId
           )
         ),
-        map((references) => {
-          const linkedProfileIds = references
-            .filter((reference) => reference.isSelected)
-            .map((filterdReferences) => filterdReferences.id);
-          return this.createSelectedReferenceService.createSelectedReferenceFieldInstances(
-            this.referenceField,
-            linkedProfileIds
-          );
-        })
+        map((references) => this.createSelectedReferenceService.mapPossibleReferencesToSelectedReferences(
+            references,
+            this.referenceField
+          ))
       )
       .subscribe((selectedReferenceFields: SelectedReferenceField) => {
         this.selectedProfileAsReference.emit(selectedReferenceFields);
       });
+  }
+
+  public updateSelectedPossibleReferences(test: PossibleProfileReferenceData): void {
+    this.possibleReferencesService
+      .getPossibleReferencesMap()
+      .pipe(
+        filter((innerMap) => innerMap.has(this.profileId)),
+        map((innerMap) => innerMap.get(this.profileId).get(this.elementId)),
+        take(1), // Ensure the observable completes after one emission
+        tap((possibleReferences) => {
+          if (possibleReferences) {
+            const foundPossibleRefrence = possibleReferences.find((ref) => ref.id === test.id);
+            if (foundPossibleRefrence) {
+              foundPossibleRefrence.isSelected = !foundPossibleRefrence.isSelected;
+            } else {
+              possibleReferences.push(foundPossibleRefrence);
+            }
+            this.possibleReferencesService.setPossibleReferencesMapElement(
+              this.profileId,
+              this.elementId,
+              possibleReferences
+            );
+          }
+        })
+      )
+      .subscribe();
+    console.log('test', test);
   }
 }

@@ -2,7 +2,7 @@
   <div class="link-info">
     <mat-checkbox
       [checked]="possibleReference.isSelected"
-      (change)="checkboxSelected()"
+      (change)="checkboxSelected(possibleReference)"
     ></mat-checkbox>
     {{ label }} ( {{ display | displayTranslation }})
   </div>
