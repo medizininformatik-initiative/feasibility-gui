@@ -1,7 +1,6 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { ActiveDataSelectionService } from './Provider/ActiveDataSelection.service';
-import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
-import { CreateSelectedReferenceService } from './CreateSelectedReference.service';
+import { BehaviorSubject, filter, map, Observable, of, tap } from 'rxjs';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
@@ -9,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { StagedReferenceFieldProviderService } from './Provider/StagedReferenceFieldProvider.service';
+import { PossibleReferencesService } from './PossibleReferences.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +20,8 @@ export class StagedProfileService {
   constructor(
     private activeDataSelectionService: ActiveDataSelectionService,
     private dataSelectionProviderService: DataSelectionProviderService,
-    private createSelectedReferenceService: CreateSelectedReferenceService,
     private profileProviderService: ProfileProviderService,
-    private stagedReferenceFieldProviderService: StagedReferenceFieldProviderService
+    private possibleReferencesService: PossibleReferencesService
   ) {}
 
   public initialize(profile: DataSelectionProfile): void {
@@ -63,74 +61,47 @@ export class StagedProfileService {
     }
   }
 
-  private getStagedSelectedReferenceFields(): Observable<DataSelectionProfile> {
+  private setLinkedProfillesInDataSelectionProvdier(): void {
     const profile = this.stagedProfileSubject.value;
-    if (!profile) {
-      return of();
+    if (profile) {
+      const selectedReferenceFields = profile.getProfileFields().getSelectedReferenceFields();
+      const linkedProfileIds = this.getReferencedProfileIds(selectedReferenceFields);
+      this.getProfilesFromProviderAndSetInDataSelection(linkedProfileIds);
     }
-
-    return this.createSelectedReferenceService.getSelectedReferenceFields(profile).pipe(
-      tap((selectedReferenceFields) => {
-        const existingFields = profile.getProfileFields().getSelectedReferenceFields();
-
-        selectedReferenceFields.map((field) => {
-          const foudnSelectedReferenceField = existingFields.find(
-            (existingField) => field.getElementId() === existingField.getElementId()
-          );
-          if (foudnSelectedReferenceField) {
-            return foudnSelectedReferenceField
-              .getLinkedProfileIds()
-              .push(...field.getLinkedProfileIds());
-          } else {
-            existingFields.push(field);
-          }
-        });
-        profile.getProfileFields().setSelectedReferenceFields(existingFields);
-        this.stagedReferenceFieldProviderService.clearAll();
-      }),
-      map(() => profile)
-    );
   }
 
-  public buildProfile(): Observable<DataSelectionProfile | null> {
-    const profile = this.stagedProfileSubject.value;
-    if (!profile) {
-      console.warn('No profile is staged. Please stage a profile before building.');
-      return of(null);
-    }
-    const referencesExist = this.stagedReferenceFieldProviderService
-      .getStagegdReferenceProfileUrlsMapValue()
-      .get(profile.getId());
+  private getProfilesFromProviderAndSetInDataSelection(linkedProfileIds: string[]): void {
+    linkedProfileIds.map((id) => this.profileProviderService
+        .getProfileIdMap()
+        .pipe(
+          map((profileMap) => profileMap.get(id)),
+          filter((profile) => !!profile),
+          tap((profile) => this.setProfileInDataSelection(profile))
+        )
+        .subscribe());
+  }
 
-    if (referencesExist) {
-      return this.getStagedSelectedReferenceFields().pipe(
-        tap((finalizedProfile) => {
-          this.triggerUpdate(profile);
-          this.setProvider(finalizedProfile);
-        }),
-        map(() => profile)
-      );
-    } else {
-      this.setProvider(profile);
-      return of(profile);
-    }
+  private getReferencedProfileIds(selectedReferenceFields: SelectedReferenceField[]): string[] {
+    const linkedProfileIds = selectedReferenceFields
+      .map((selectedReferenceField) => selectedReferenceField.getLinkedProfileIds())
+      .reduce((acc, ids) => acc.concat(ids), []);
+    return linkedProfileIds;
+  }
+
+  public buildProfile(): void {
+    const profile = this.stagedProfileSubject.value;
+    this.triggerUpdate(profile);
+    this.profileProviderService.setProfileById(profile.getId(), profile);
+    this.setProfileInDataSelection(profile);
+    return this.setLinkedProfillesInDataSelectionProvdier();
   }
 
   private triggerUpdate(profile: DataSelectionProfile): void {
     this.stagedProfileSubject.next(DataSelectionProfileCloner.deepCopyProfile(profile));
   }
 
-  /**
-   * @todo refactor this method
-   * @param profile
-   */
-  private setProvider(profile: DataSelectionProfile): void {
-    this.profileProviderService.setProfileById(profile.getId(), profile);
+  private setProfileInDataSelection(profile: DataSelectionProfile): void {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-    this.dataSelectionProviderService.removeProfileFromDataSelection(
-      dataSelectionId,
-      profile.getId()
-    );
     this.dataSelectionProviderService.setProfileInDataSelection(dataSelectionId, profile);
   }
 }
