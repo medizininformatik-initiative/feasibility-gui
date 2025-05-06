@@ -1,5 +1,15 @@
 import { CreateSelectedReferenceService } from 'src/app/service/CreateSelectedReference.service';
-import { filter, map, Observable, Subscription, switchMap, take, tap } from 'rxjs';
+import {
+  distinctUntilChanged,
+  distinctUntilKeyChanged,
+  filter,
+  map,
+  Observable,
+  Subscription,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { ProfileReferenceModalService } from 'src/app/service/DataSelection/ProfileReferenceModal.service';
@@ -78,24 +88,29 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
             this.elementId,
             this.profileId
           )
-        ),
-        map((references) => this.createSelectedReferenceService.mapPossibleReferencesToSelectedReferences(
-            references,
-            this.referenceField
-          ))
+        )
       )
-      .subscribe((selectedReferenceFields: SelectedReferenceField) => {
-        this.selectedProfileAsReference.emit(selectedReferenceFields);
-      });
+      .subscribe((possibleProfileReferenceData: PossibleProfileReferenceData[]) =>
+        this.onReferencesConfirmed(possibleProfileReferenceData)
+      );
+  }
+
+  private onReferencesConfirmed(selected: PossibleProfileReferenceData[]) {
+    const selectedFields =
+      this.createSelectedReferenceService.mapPossibleReferencesToSelectedReferences(
+        selected,
+        this.referenceField
+      );
+    this.selectedProfileAsReference.emit(selectedFields);
   }
 
   public updateSelectedPossibleReferences(test: PossibleProfileReferenceData): void {
     this.possibleReferencesService
       .getPossibleReferencesMap()
       .pipe(
+        take(1),
         filter((innerMap) => innerMap.has(this.profileId)),
         map((innerMap) => innerMap.get(this.profileId).get(this.elementId)),
-        take(1), // Ensure the observable completes after one emission
         tap((possibleReferences) => {
           if (possibleReferences) {
             const foundPossibleRefrence = possibleReferences.find((ref) => ref.id === test.id);
@@ -104,15 +119,16 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
             } else {
               possibleReferences.push(foundPossibleRefrence);
             }
-            this.possibleReferencesService.setPossibleReferencesMapElement(
-              this.profileId,
-              this.elementId,
-              possibleReferences
-            );
           }
         })
       )
-      .subscribe();
-    console.log('test', test);
+      .subscribe((possibleReferences) => {
+        this.possibleReferencesService.setPossibleReferencesMapElement(
+          this.profileId,
+          this.elementId,
+          possibleReferences
+        );
+        this.onReferencesConfirmed(possibleReferences);
+      });
   }
 }

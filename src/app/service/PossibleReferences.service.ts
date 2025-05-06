@@ -1,4 +1,4 @@
-import { BehaviorSubject, map, Observable, switchMap, take } from 'rxjs';
+import { BehaviorSubject, map, mapTo, Observable, switchMap, take, tap } from 'rxjs';
 import { CreateDataSelectionProfileService } from './DataSelection/CreateDataSelectionProfile.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
@@ -51,44 +51,31 @@ export class PossibleReferencesService {
     return this.dataSelectionProviderService.getProfilesFromActiveDataSelection().pipe(
       take(1),
       map((dataSelectionProfiles) => {
+        const baseMap = new Map<string, Map<string, PossibleProfileReferenceData[]>>(
+          this.possibleReferencesMapSubject.value
+        );
         dataSelectionProfiles.forEach((profile) => {
-          const profileId = profile.getId();
-          this.profileProviderService.getProfileById(profileId);
-          const currentMap = this.possibleReferencesMapSubject.value;
+          const id = profile.getId();
           const referencedFields = parentProfile.getProfileFields().getReferenceFields();
-          const innerMap =
-            currentMap.get(profileId) || new Map<string, PossibleProfileReferenceData[]>();
-          const newInnerMap = new Map<string, PossibleProfileReferenceData[]>();
-          innerMap.forEach((possibleReferenceData, elementId) => {
-            const referencedProfileUrls = [
-              ...(referencedFields
-                .find((field) => field.getElementId() === elementId)
-                ?.getReferencedProfileUrls() || []),
-            ];
+          const oldInner = baseMap.get(id) ?? new Map<string, PossibleProfileReferenceData[]>();
+          const newInner = new Map<string, PossibleProfileReferenceData[]>();
+
+          oldInner.forEach((_oldRefs, elementId) => {
+            const fieldDef = referencedFields.find((f) => f.getElementId() === elementId);
+            const urls = fieldDef?.getReferencedProfileUrls() ?? [];
             const linkedIds = this.getLinkedProfilesIdsFromSelectedRefrenceFields(
               parentProfile,
               elementId
             );
-            const existingProfiles = this.getExistingProfilesByUrls(
-              referencedProfileUrls,
-              profileId,
-              dataSelectionProfiles
-            );
-            console.log('existingProfiles', existingProfiles);
-            const possibleReferences = this.mapProfilesToPossibleReferences(
-              existingProfiles,
-              linkedIds
-            );
-
-            newInnerMap.set(elementId, possibleReferences);
+            const existing = this.getExistingProfilesByUrls(urls, pid, dataSelectionProfiles);
+            newInner.set(elementId, this.mapProfilesToPossibleReferences(existing, linkedIds));
           });
-
-          const updatedMap = new Map(currentMap);
-          updatedMap.set(profileId, newInnerMap);
-          this.possibleReferencesMapSubject.next(updatedMap);
-          return updatedMap;
+          baseMap.set(id, newInner);
         });
-      })
+        return baseMap;
+      }),
+      tap((updatedMap) => this.possibleReferencesMapSubject.next(updatedMap)),
+      mapTo(void 0)
     );
   }
 
@@ -198,7 +185,6 @@ export class PossibleReferencesService {
         const updatedMap = new Map(currentMap);
         updatedMap.set(parentProfileId, updatedOuterMap);
         this.possibleReferencesMapSubject.next(updatedMap);
-
         return updatedReferences;
       })
     );
@@ -225,7 +211,6 @@ export class PossibleReferencesService {
 
     const updatedMap = new Map(currentMap);
     updatedMap.set(profileId, outerMap);
-
     this.possibleReferencesMapSubject.next(updatedMap);
   }
 }
