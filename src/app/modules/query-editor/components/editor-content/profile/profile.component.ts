@@ -48,10 +48,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     this.stagedProfileServiceSubscription?.unsubscribe();
     this.stagedProfileServiceSubscription = this.stagedProfileService
       .getProfileObservable()
-      .pipe(take(1))
-      .subscribe((profile) => {
-        this.profile = profile;
-      });
+      .subscribe((profile) => (this.profile = profile));
   }
 
   ngOnDestroy(): void {
