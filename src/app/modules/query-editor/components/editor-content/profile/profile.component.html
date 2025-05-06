@@ -1,5 +1,9 @@
 <div fxLayout="column" class="full">
-  <num-profile-header class="width-100" [profile]="profile" (updatedLabel)="updateLabel($event)">
+  <num-profile-header
+    style="width: 100%; height: 160px"
+    [profile]="profile"
+    (updatedLabel)="updateLabel($event)"
+  >
   </num-profile-header>
   <num-filter-tabs
     class="width-100 height"
