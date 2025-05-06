@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PathSegments } from 'src/app/app-paths';
 import { QueryEditorComponent } from './components/query-editor.component';
+import { RouteGuard } from 'src/app/core/auth/guards/route.guard.service';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: PathSegments.criterion,
+    redirectTo: PathSegments.search,
     pathMatch: 'full',
   },
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
     path: `${PathSegments.profile}/:id`,
     component: QueryEditorComponent,
     data: { hideSideNav: false },
+    canActivate: [RouteGuard],
   },
 ];
 
