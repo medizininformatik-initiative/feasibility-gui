@@ -1,9 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
   <div class="display-container">
+    <div *ngIf="label !== ''">{{ label }}</div>
     <span
       matTooltipShowDelay="300"
       matTooltipPosition="below"
       [matTooltip]="display | displayTranslation"
+      [ngClass]="{ 'text-small': label !== '' }"
       >{{ display | displayTranslation }}</span
     >
   </div>

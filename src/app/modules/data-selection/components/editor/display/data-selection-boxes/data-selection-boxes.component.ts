@@ -26,6 +26,7 @@ export class DataSelectionBoxesComponent implements OnInit {
   isEditable: boolean;
 
   display: Display;
+  label: string;
 
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
@@ -49,6 +50,7 @@ export class DataSelectionBoxesComponent implements OnInit {
     this.getRequiredOrRecommendedReferences();
     this.getSelectedReferenceFields();
     this.display = this.profile.getDisplay();
+    this.label = this.profile.getLabel();
   }
 
   public getFilterChips(): void {

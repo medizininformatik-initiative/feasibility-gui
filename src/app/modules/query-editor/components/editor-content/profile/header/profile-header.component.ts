@@ -1,5 +1,13 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
@@ -19,7 +27,10 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   @Input()
   profile: DataSelectionProfile;
 
-  myInput = '';
+  @Output()
+  updatedLabel: EventEmitter<string> = new EventEmitter<string>();
+
+  label = '';
 
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
@@ -34,6 +45,7 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     this.getFilterChips();
+    this.label = this.profile.getLabel();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -64,5 +76,8 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
     } else {
       this.filtersFilterChips$ = of([]); // Emit an empty array if no filters are present
     }
+  }
+  setLabel() {
+    this.updatedLabel.emit(this.label);
   }
 }

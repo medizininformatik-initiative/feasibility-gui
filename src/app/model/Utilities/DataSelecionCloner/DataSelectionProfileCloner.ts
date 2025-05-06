@@ -21,7 +21,8 @@ export class DataSelectionProfileCloner {
       clonedDisplay,
       clonedFields,
       clonedFilters,
-      clonedReference
+      clonedReference,
+      profile.getLabel()
     );
   }
 }

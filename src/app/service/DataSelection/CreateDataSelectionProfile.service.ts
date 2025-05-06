@@ -94,7 +94,8 @@ export class CreateDataSelectionProfileService {
       this.instantiateDisplayData(item.display),
       fields,
       filters,
-      new ProfileReference(true, markAsReference)
+      new ProfileReference(true, markAsReference),
+      ''
     );
     return dataSelectionProfileProfile;
   }

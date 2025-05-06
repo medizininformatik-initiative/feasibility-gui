@@ -23,6 +23,7 @@ import { ProfileReferenceModalComponent } from './components/editor-content/prof
 import { ProfileReferenceComponent } from './components/editor-content/profile/reference/profile-reference.component';
 import { ReferenceFieldTabComponent } from './components/editor-content/profile/reference/reference-field-tab/reference-field-tab.component';
 import { PossibleReferencesComponent } from './components/editor-content/profile/reference/possible-references/possible-references.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { PossibleReferencesComponent } from './components/editor-content/profile
     MaterialModule,
     FeasibilityQueryModule,
     DataSelectionModule,
+    FontAwesomeModule,
   ],
   declarations: [
     EditorHeaderComponent,

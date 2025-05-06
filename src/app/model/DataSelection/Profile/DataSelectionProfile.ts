@@ -18,7 +18,8 @@ export class DataSelectionProfile {
     display: Display,
     profileFields: ProfileFields,
     filters: AbstractProfileFilter[] = [],
-    reference: ProfileReference
+    reference: ProfileReference,
+    label: string
   ) {
     this.id = id;
     this.url = url;
@@ -26,6 +27,7 @@ export class DataSelectionProfile {
     this.profileFields = profileFields;
     this.filters = filters;
     this.reference = reference;
+    this.label = label;
   }
 
   public getLabel(): string {

@@ -61,6 +61,13 @@ export class StagedProfileService {
     }
   }
 
+  public updateLabel(label: string): void {
+    const profile = this.stagedProfileSubject.value;
+    if (profile) {
+      profile.setLabel(label);
+      this.triggerUpdate(profile);
+    }
+  }
   private setLinkedProfillesInDataSelectionProvdier(): void {
     const profile = this.stagedProfileSubject.value;
     if (profile) {
@@ -71,14 +78,16 @@ export class StagedProfileService {
   }
 
   private getProfilesFromProviderAndSetInDataSelection(linkedProfileIds: string[]): void {
-    linkedProfileIds.map((id) => this.profileProviderService
+    linkedProfileIds.map((id) =>
+      this.profileProviderService
         .getProfileIdMap()
         .pipe(
           map((profileMap) => profileMap.get(id)),
           filter((profile) => !!profile),
           tap((profile) => this.setProfileInDataSelection(profile))
         )
-        .subscribe());
+        .subscribe()
+    );
   }
 
   private getReferencedProfileIds(selectedReferenceFields: SelectedReferenceField[]): string[] {

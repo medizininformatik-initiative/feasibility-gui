@@ -1,5 +1,6 @@
 <div fxLayout="column" class="full">
-  <num-profile-header class="width-100" [profile]="profile"> </num-profile-header>
+  <num-profile-header class="width-100" [profile]="profile" (updatedLabel)="updateLabel($event)">
+  </num-profile-header>
   <num-filter-tabs
     class="width-100 height"
     *ngIf="templates.length > 0"
