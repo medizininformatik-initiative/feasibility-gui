@@ -39,6 +39,7 @@ import { SaveDataQueryModalComponent } from './save-dataquery-modal/save-dataque
 import { LinkedBadgeComponent } from './linked-badge/linked-badge.component';
 import { ProfileReferenceTileComponent } from './profile-reference-tile/profile-reference-tile.component';
 import { SelectableReferenceTileComponent } from './selectable-reference-tile/selectable-reference-tile.component';
+import { ProfileReferenceChipComponent } from './profile-reference-chip/profile-reference-chip.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -100,6 +101,7 @@ const SHARED_DECLARATIONS = [
     ConfirmDeleteModalComponent,
     ProfileReferenceTileComponent,
     LinkedBadgeComponent,
+    ProfileReferenceChipComponent,
     SelectableReferenceTileComponent,
   ],
   imports: [
