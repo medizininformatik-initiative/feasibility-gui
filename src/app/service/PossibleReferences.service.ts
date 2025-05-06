@@ -67,7 +67,7 @@ export class PossibleReferencesService {
               parentProfile,
               elementId
             );
-            const existing = this.getExistingProfilesByUrls(urls, pid, dataSelectionProfiles);
+            const existing = this.getExistingProfilesByUrls(urls, id, dataSelectionProfiles);
             newInner.set(elementId, this.mapProfilesToPossibleReferences(existing, linkedIds));
           });
           baseMap.set(id, newInner);

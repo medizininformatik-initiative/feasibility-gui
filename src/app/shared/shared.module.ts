@@ -7,7 +7,6 @@ import { SharedComponentsModule } from './components/shared-components.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { ProfileReferenceChipComponent } from './components/profile-reference-chip/profile-reference-chip.component';
 
 export const FORMATS_GERMAN = {
   parse: {

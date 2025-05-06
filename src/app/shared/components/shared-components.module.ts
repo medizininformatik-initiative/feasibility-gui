@@ -101,7 +101,6 @@ const SHARED_DECLARATIONS = [
     ConfirmDeleteModalComponent,
     ProfileReferenceTileComponent,
     LinkedBadgeComponent,
-    ProfileReferenceChipComponent,
     SelectableReferenceTileComponent,
   ],
   imports: [
