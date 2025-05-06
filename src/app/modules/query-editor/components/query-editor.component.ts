@@ -48,7 +48,6 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
         tap(([paramMap, url]) => {
           const id = paramMap.get('id');
           const type = url[0]?.path;
-
           if (id && type) {
             this.id = id;
             this.type = type;
