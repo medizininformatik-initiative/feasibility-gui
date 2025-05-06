@@ -12,8 +12,13 @@ import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterCh
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
-import { map, Observable, of } from 'rxjs';
+import { groupBy, map, Observable, of } from 'rxjs';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/FilterChipProfileRefrenceAdapter';
+import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData';
 
 @Component({
   selector: 'num-profile-header',
@@ -38,14 +43,20 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   filtersFilterChips: InterfaceFilterChip[] = [];
   filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
 
+  profileRefrenceChips$: Observable<InterfaceFilterChip[]> = of([]);
+
   constructor(
+    private stagedProfileService: StagedProfileService,
+    private profileProviderService: ProfileProviderService,
     private fieldsFilterChipsService: DataSelectionFieldsChipsService,
     private filtersFilterChipsService: DataSelectionFiltersFilterChips
   ) {}
 
   ngOnInit(): void {
+    this.profile$ = this.stagedProfileService.getProfileObservable();
     this.getFilterChips();
     this.label = this.profile.getLabel();
+    this.getProfileReferenceChips();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -79,5 +90,37 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   }
   setLabel() {
     this.updatedLabel.emit(this.label);
+  }
+
+  private getProfileReferenceChips(): void {
+    this.profileRefrenceChips$ = this.profileProviderService.getProfileIdMap().pipe(
+      map((profileMap) => {
+        const selectedReferenceFields = this.profile.getProfileFields().getSelectedReferenceFields();
+        const groupedByElementId = selectedReferenceFields.reduce((acc, ref) => {
+          const key = ref.getElementId();
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+          const linkedProfiles = ref
+            .getLinkedProfileIds()
+            .map((id) => profileMap.get(id).getDisplay())
+            .filter((profileDisplay): profileDisplay is Display => !!profileDisplay); // Type-safe filter
+
+          acc[key].push(...linkedProfiles);
+          return acc;
+        }, {} as ProfileReferenceGroup);
+        const groups: ProfileReferenceGroup[] = Object.entries(groupedByElementId).map(
+          ([elementId, profiles]) => ({ elementId, profiles })
+        );
+        return groups;
+      }),
+      map((groupedProfiles: ProfileReferenceGroup[]) => {
+        console.log('Grouped Profiles:', groupedProfiles);
+        const test =
+          FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(groupedProfiles);
+        console.log('Test:', test);
+        return test;
+      })
+    );
   }
 }
