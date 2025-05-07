@@ -5,6 +5,7 @@ import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/B
 import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/SelectedProfileFields.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedFieldCloner';
 
 @Component({
   selector: 'num-edit-fields',
@@ -75,6 +76,7 @@ export class EditFieldsComponent implements OnInit {
 
   public setFieldAsRequired(selectedField: SelectedBasicField) {
     selectedField.setMustHave(!selectedField.getMustHave());
+    this.emitUpdatedSelectedFields();
   }
 
   public removeSelectedField(node: SelectedBasicField): void {
@@ -97,7 +99,10 @@ export class EditFieldsComponent implements OnInit {
   }
 
   private emitUpdatedSelectedFields(): void {
-    this.updatedSelectedBasicFields.emit(this.selectedBasicFields);
+    const clonedSelectedFields = SelectedBasicFieldCloner.deepCopySelectedBasicFields(
+      this.selectedBasicFields
+    );
+    this.updatedSelectedBasicFields.emit(clonedSelectedFields);
     this.traversAndUpddateTree();
     this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.fieldTree);
   }
