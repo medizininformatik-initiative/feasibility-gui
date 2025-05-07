@@ -14,7 +14,7 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { groupBy, map, Observable, of } from 'rxjs';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/FilterChipProfileRefrenceAdapter';
+import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
@@ -35,7 +35,7 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   @Output()
   updatedLabel: EventEmitter<string> = new EventEmitter<string>();
 
-  label = '';
+  label: Display;
 
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
@@ -88,8 +88,8 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
       this.filtersFilterChips$ = of([]); // Emit an empty array if no filters are present
     }
   }
-  setLabel() {
-    this.updatedLabel.emit(this.label);
+  public setLabel(label: string) {
+    this.updatedLabel.emit(label);
   }
 
   private getProfileReferenceChips(): void {
@@ -115,10 +115,7 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
         return groups;
       }),
       map((groupedProfiles: ProfileReferenceGroup[]) => {
-        console.log('Grouped Profiles:', groupedProfiles);
-        const test =
-          FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(groupedProfiles);
-        console.log('Test:', test);
+        const test = groupedProfiles.map((group) => FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(group));
         return test;
       })
     );

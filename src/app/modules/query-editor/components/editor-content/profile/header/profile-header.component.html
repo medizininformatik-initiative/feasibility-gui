@@ -1,19 +1,18 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
   <div class="display-container">
-    <div fxLayout="row" class="form-design">
-      <fa-icon class="icon-design fa-icon" [icon]="'pencil-alt'" size="m" [fixedWidth]="true">
-      </fa-icon>
-      <input placeholder="Label" [(ngModel)]="label" (input)="setLabel()" class="input-design" />
-    </div>
+    <num-searchbar
+      icon="pencil-alt"
+      [label]="label.getOriginal()"
+      [minLength]="0"
+      [searchText]="label.getOriginal()"
+      (searchTextChange)="setLabel($event)"
+    >
+    </num-searchbar>
     <div class="profile-display">
       <span>Type: </span>{{ profile.getDisplay() | displayTranslation }}
     </div>
   </div>
   <div class="display-selected-fields-container">
-    {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
-    <!--     <div *ngIf="filterChipsSelected === false" class="filterChipsInfo">
-      {{ 'DATASELECTION.SELECTION_BOX.FIELDS_MISSING' | translate }}
-    </div> -->
     <div class="filter-chips-container">
       <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
     </div>
