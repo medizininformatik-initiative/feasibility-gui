@@ -11,6 +11,7 @@ import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/Refre
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
+import { RemoveReferenceService } from 'src/app/service/RemoveReference.service';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -26,13 +27,15 @@ export class DataSelectionBoxesComponent implements OnInit {
   isEditable: boolean;
 
   display: Display;
-  label: string;
+  label: Display;
 
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
 
   filtersFilterChips: InterfaceFilterChip[] = [];
   filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
+
+  profileRefrenceChips: InterfaceFilterChip[] = [];
 
   unlinkedRequiredOrRecommendedReferences: ReferenceField[];
 
@@ -42,7 +45,8 @@ export class DataSelectionBoxesComponent implements OnInit {
     private fieldsFilterChipsService: DataSelectionFieldsChipsService,
     private filtersFilterChipsService: DataSelectionFiltersFilterChips,
     private navigationHelperService: NavigationHelperService,
-    private stagedProfileService: StagedProfileService
+    private stagedProfileService: StagedProfileService,
+    private removeReferenceService: RemoveReferenceService
   ) {}
 
   ngOnInit(): void {
@@ -96,5 +100,9 @@ export class DataSelectionBoxesComponent implements OnInit {
 
   public getSelectedReferenceFields(): void {
     this.selectedReferenceFields = this.profile.getProfileFields().getSelectedReferenceFields();
+  }
+
+  public deleteProfile(id: string): void {
+    this.removeReferenceService.delete(id);
   }
 }

@@ -1,13 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
   <div class="display-container">
-    <div *ngIf="label !== ''">{{ label }}</div>
-    <span
-      matTooltipShowDelay="300"
-      matTooltipPosition="below"
-      [matTooltip]="display | displayTranslation"
-      [ngClass]="{ 'text-small': label !== '' }"
-      >{{ display | displayTranslation }}</span
-    >
+    {{ label | displayTranslation }}
   </div>
   <div class="display-selected-fields-container">
     {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
@@ -22,6 +15,7 @@
     <div fxLayout="row wrap" fxLayoutAlign="space-between">
       {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
       <num-button (click)="editProfile(profile.getId())" type="blue"></num-button>
+      <num-button (click)="deleteProfile(profile.getId())" type="red"></num-button>
     </div>
     <div
       fxLayout="row"
@@ -53,17 +47,28 @@
     *ngFor="let reference of unlinkedRequiredOrRecommendedReferences"
     class="selection-box-container"
   >
-    <num-profile-reference-tile [referenceField]="reference" [parentId]="profile.getId()">
+    <num-profile-reference-tile
+      [unlinkedRequiredOrRecommendedReferences]="reference"
+      [parentId]="profile.getId()"
+    >
     </num-profile-reference-tile>
   </div>
 </ng-container>
 <ng-container *ngIf="selectedReferenceFields.length > 0">
   <div *ngFor="let selectedReference of selectedReferenceFields" class="selection-box-container">
+    <!---
     <div *ngFor="let linkedProfileId of selectedReference.getLinkedProfileIds()">
       <num-profile-reference-tile
-        [referenceField]="selectedReference"
-        [linkedProfileId]="linkedProfileId"
+      [referenceField]="selectedReference"
+      [linkedProfileId]="linkedProfileId"
       ></num-profile-reference-tile>
     </div>
+      -->
+
+    <num-profile-reference-tile
+      [filterChips]="profileRefrenceChips"
+      [referenceField]="selectedReference"
+      [linkedProfileId]="linkedProfileId"
+    ></num-profile-reference-tile>
   </div>
 </ng-container>
