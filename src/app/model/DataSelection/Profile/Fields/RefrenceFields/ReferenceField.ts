@@ -1,9 +1,10 @@
-import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
-import { Display } from '../../Display';
 import { AbstractField } from '../AbstractField';
+import { Display } from '../../Display';
+import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
+import { ReferencedProfile } from './ReferencedProfile';
 
 export class ReferenceField extends AbstractField {
-  private referencedProfileUrls: string[] = [];
+  private referencedProfiles: ReferencedProfile[] = [];
 
   constructor(
     elementId: string,
@@ -11,18 +12,18 @@ export class ReferenceField extends AbstractField {
     description: Display,
     isRequired: boolean = false,
     recommended: boolean = false,
-    referencedProfileUrls: string[] = []
+    referencedProfiles: ReferencedProfile[] = []
   ) {
     super(elementId, display, description, isRequired, recommended, ProfileFieldTypes.reference);
-    this.referencedProfileUrls = referencedProfileUrls;
+    this.referencedProfiles = referencedProfiles;
   }
 
-  public getReferencedProfileUrls(): string[] {
-    return this.referencedProfileUrls;
+  public getReferencedProfiles(): ReferencedProfile[] {
+    return this.referencedProfiles;
   }
 
-  public setReferencedProfileUrls(referencedProfileUrls: string[]): void {
-    this.referencedProfileUrls = referencedProfileUrls;
+  public setReferencedProfiles(referencedProfiles: ReferencedProfile[]): void {
+    this.referencedProfiles = referencedProfiles;
   }
 
   public isRequiredOrRecomended(referenceField: ReferenceField): boolean {
