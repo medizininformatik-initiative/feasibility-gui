@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 
 @Component({
