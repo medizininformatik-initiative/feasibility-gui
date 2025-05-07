@@ -29,6 +29,7 @@ export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() minLength = 3;
   @Input() searchText = '';
   @Output() searchTextChange = new EventEmitter();
+  @Input() icon: string;
 
   showWarning = false;
 
