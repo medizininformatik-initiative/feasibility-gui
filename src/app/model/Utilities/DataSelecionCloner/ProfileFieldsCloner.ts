@@ -1,8 +1,8 @@
-import { BasicFieldsCloner } from './ProfileFields/BasicFieldCloner';
+import { BasicFieldCloner } from './ProfileFields/BasicFieldCloner';
 import { ProfileFields } from '../../DataSelection/Profile/Fields/ProfileFields';
-import { SelectedFieldCloner } from './SelectedFieldCloner';
-import { SelectedReferenceFieldsCloner } from './ProfileFields/SelectedReferenceFieldsCloner';
 import { ReferenceFieldsCloner } from './ProfileFields/ReferenceFieldsCloner';
+import { SelectedBasicFieldCloner } from './ProfileFields/SelectedFieldCloner';
+import { SelectedReferenceFieldsCloner } from './ProfileFields/SelectedReferenceFieldsCloner';
 
 export class ProfileFieldsCloner {
   /**
@@ -11,8 +11,8 @@ export class ProfileFieldsCloner {
    * @returns A deep copy of the ProfileField array.
    */
   public static deepCopyProfileFields(profileFields: ProfileFields): ProfileFields {
-    const basicFields = BasicFieldsCloner.deepCopyBasicFields(profileFields.getFieldTree());
-    const selectedBasicFields = SelectedFieldCloner.deepCopySelectedFields(
+    const basicFields = BasicFieldCloner.deepCopyBasicFields(profileFields.getFieldTree());
+    const selectedBasicFields = SelectedBasicFieldCloner.deepCopySelectedBasicFields(
       profileFields.getSelectedBasicFields()
     );
     const selectedReferenceFields = SelectedReferenceFieldsCloner.deepCopySelectedReferenceFields(

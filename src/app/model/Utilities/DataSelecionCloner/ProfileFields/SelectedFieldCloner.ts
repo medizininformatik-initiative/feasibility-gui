@@ -1,13 +1,15 @@
-import { BasicFieldsCloner } from './ProfileFields/BasicFieldCloner';
-import { SelectedBasicField } from '../../DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { SelectedBasicField } from '../../../DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { BasicFieldCloner } from './BasicFieldCloner';
 
-export class SelectedFieldCloner {
-  public static deepCopySelectedFields(selectedFields: SelectedBasicField[]): SelectedBasicField[] {
+export class SelectedBasicFieldCloner {
+  public static deepCopySelectedBasicFields(
+    selectedFields: SelectedBasicField[]
+  ): SelectedBasicField[] {
     if (!selectedFields || selectedFields.length === 0) {
       return [];
     }
     return selectedFields.map((selectedField) =>
-      SelectedFieldCloner.deepCopySelectedField(selectedField)
+      SelectedBasicFieldCloner.deepCopySelectedBasicField(selectedField)
     );
   }
 
@@ -16,7 +18,7 @@ export class SelectedFieldCloner {
    * @param selectedField The SelectedField to clone.
    * @returns A deep copy of the SelectedField.
    * */
-  public static deepCopySelectedField(
+  public static deepCopySelectedBasicField(
     selectedField: SelectedBasicField
   ): SelectedBasicField | undefined {
     if (!selectedField) {
@@ -24,7 +26,7 @@ export class SelectedFieldCloner {
     }
 
     return new SelectedBasicField(
-      BasicFieldsCloner.deepCopyBasicField(selectedField.getSelectedField()),
+      BasicFieldCloner.deepCopyBasicField(selectedField.getSelectedField()),
       selectedField.getMustHave()
     );
   }

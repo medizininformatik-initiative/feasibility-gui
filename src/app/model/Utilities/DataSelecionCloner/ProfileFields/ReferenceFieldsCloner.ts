@@ -1,5 +1,6 @@
 import { CloneDisplayData } from '../../DisplayData/CloneDisplayData';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { ReferencedProfileCloner } from './ReferencedProfilesCloner';
 
 export class ReferenceFieldsCloner {
   public static deepCopyReferenceFields(referenceFields: ReferenceField[]): ReferenceField[] {
@@ -16,7 +17,7 @@ export class ReferenceFieldsCloner {
       CloneDisplayData.deepCopyDisplayData(referenceField.getDescription()),
       referenceField.getIsRequired(),
       referenceField.getRecommended(),
-      referenceField.getReferencedProfileUrls()
+      ReferencedProfileCloner.deepCopyReferencedProfiles(referenceField.getReferencedProfiles())
     );
   }
 }
