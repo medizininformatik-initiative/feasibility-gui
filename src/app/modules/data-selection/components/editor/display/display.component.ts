@@ -20,8 +20,6 @@ export class DisplayDataSelectionComponent implements OnInit, OnDestroy {
   saveDataQueryModalSubscription: Subscription;
 
   constructor(
-    private profileProvider: ProfileProviderService,
-    private dataSelectionProvider: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
     private saveDataQueryModalService: SaveDataQueryModalService,
     private terminologySystemProvider: TerminologySystemProvider
@@ -31,23 +29,7 @@ export class DisplayDataSelectionComponent implements OnInit, OnDestroy {
     this.saveDataQueryModalSubscription?.unsubscribe();
   }
 
-  ngOnInit(): void {
-    this.getDataSelectionProfiles();
-  }
-
-  /**
-   * @todo add rerender of ui component
-   */
-  private getDataSelectionProfiles(): void {
-    this.dataSelectionProvider
-      .getActiveDataSelection()
-      .pipe(
-        map((dataSelection) => dataSelection
-            .getProfiles()
-            .map((profile) => this.profileProvider.getProfileById(profile.getId())))
-      )
-      .subscribe();
-  }
+  ngOnInit(): void {}
 
   public navigateToDataSelectionSearch(): void {
     this.navigationHelperService.navigateToDataSelectionSearch();
