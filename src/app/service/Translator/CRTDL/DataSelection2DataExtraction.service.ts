@@ -8,16 +8,12 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { DateFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/DateFilter';
 import { Injectable } from '@angular/core';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
 import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/TokenFilter ';
-import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { AbstractSelectedField } from 'src/app/model/DataSelection/Profile/Fields/AbstractSelectedField';
-import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipDataSelectionAdapter';
-import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 
 @Injectable({
   providedIn: 'root',
@@ -36,12 +32,14 @@ export class DataSelection2DataExtraction {
   }
 
   private translateAttributeGroups(profile: DataSelectionProfile): AttributeGroup {
-    const attributes = []; //this.translateSelectedFields(profile.getProfileFields().getSelectedBasicFields());
+    const attributes = this.translateSelectedFields(profile.getProfileFields());
     const filters = this.translateFilters(profile.getFilters());
     return new AttributeGroup(
+      profile.getId(),
       profile.getUrl(),
       attributes,
       filters,
+      profile.getLabel().getOriginal(),
       profile.getReference().getIsReferenceSet() && profile.getReference().getIncludeReferenceOnly()
     );
   }
@@ -51,26 +49,22 @@ export class DataSelection2DataExtraction {
    * @param selectedFields
    * @returns
    */
-  private translateSelectedFields(selectedFields: ProfileFields[]): Attributes[] | undefined {
-    const attributes: Attributes[] = selectedFields.map(
-      (field) => new Attributes('field.getElementId()', false, [])
-      //this.translateReferenceAttributes(field.getReferenceFields())
-    );
-    /**const selectedBasicFields = selectedFields.map((selectedField) =>
-      this.translateBasicAttributes(selectedField as SelectedBasicField)
-    );*/
-    //attributes.push(...selectedBasicFields);
-    return attributes.length > 0 ? attributes : undefined;
-  }
-  /*
-  private translateReferenceAttributes(field: ReferenceField[]): Attributes {
-    const linkedGroups =
-      field.map(getLinkedProfileIds().length > 0 ? field.getLinkedProfileIds() : undefined;
-    return new Attributes(field.getElementId(), field.getMustHave(), linkedGroups);
-  }
-*/
-  private translateBasicAttributes(field: SelectedBasicField): Attributes {
-    return new Attributes(field.getSelectedField().getElementId(), field.getMustHave(), []);
+  private translateSelectedFields(profileFields: ProfileFields): Attributes[] | undefined {
+    const selectedBasicFields = profileFields.getSelectedBasicFields();
+    const selectedReferenceFields = profileFields.getSelectedReferenceFields();
+
+    const basicFieldAttributes = selectedBasicFields.map((selectedBasicField) => new Attributes(
+        selectedBasicField.getElementId(),
+        selectedBasicField.getMustHave(),
+        undefined
+      ));
+    const referenceFieldAttributes = selectedReferenceFields.map((selectedReferenceField) => new Attributes(
+        selectedReferenceField.getElementId(),
+        selectedReferenceField.getMustHave(),
+        selectedReferenceField.getLinkedProfileIds()
+      ));
+    const combinedAttributes = [...basicFieldAttributes, ...referenceFieldAttributes];
+    return combinedAttributes.length > 0 ? combinedAttributes : undefined;
   }
 
   private translateFilters(
