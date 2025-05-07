@@ -2,13 +2,14 @@ import { AbstractProfileFilter } from './Filter/AbstractProfileFilter';
 import { Display } from './Display';
 import { ProfileFields } from './Fields/ProfileFields';
 import { ProfileReference } from './Reference/ProfileReference';
+import { CloneDisplayData } from '../../Utilities/DisplayData/CloneDisplayData';
 
 export class DataSelectionProfile {
   private id: string;
   private display: Display;
   private profileFields: ProfileFields;
   private filters: AbstractProfileFilter[] = [];
-  private label: string;
+  private label: Display;
   private reference: ProfileReference;
   private url: string;
 
@@ -19,7 +20,7 @@ export class DataSelectionProfile {
     profileFields: ProfileFields,
     filters: AbstractProfileFilter[] = [],
     reference: ProfileReference,
-    label: string
+    label: Display
   ) {
     this.id = id;
     this.url = url;
@@ -30,12 +31,17 @@ export class DataSelectionProfile {
     this.label = label;
   }
 
-  public getLabel(): string {
+  public getLabel(): Display {
     return this.label;
   }
 
   public setLabel(label: string): void {
-    this.label = label;
+    const newLabel = CloneDisplayData.deepCopyDisplayData(this.getLabel());
+    newLabel.setOriginal(label);
+    newLabel.getTranslations().forEach((translation) => {
+      translation.setValue(label);
+    });
+    this.label = newLabel;
   }
 
   public getId(): string {
