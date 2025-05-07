@@ -5,7 +5,15 @@
     <span *ngIf="parentProfile" class="child-badge">{{
       parentProfile.getDisplay() | displayTranslation
     }}</span>
-    <span *ngIf="!linkedProfileId" class="warning-badge">Nicht Verknüpft </span>
+    <ng-container *ngIf="filterChips">
+      <num-filter-chips
+        [displayBlockTriangle]="false"
+        [filterChips]="filterChips"
+      ></num-filter-chips>
+    </ng-container>
+    <span *ngIf="unlinkedRequiredOrRecommendedReferences" class="warning-badge"
+      >Nicht Verknüpft
+    </span>
   </div>
 
   <div class="type-tag">
@@ -18,17 +26,3 @@
     <!--<num-button type="blue" (click)="navigateToProfile()">bearbeiten</num-button>-->
   </div>
 </div>
-<ng-container *ngIf="parentProfileSelectedReferences.length > 0">
-  <div
-    style="padding-left: 100px"
-    *ngFor="let parentProfileSelectedReference of parentProfileSelectedReferences"
-  >
-    <div *ngFor="let profileId of parentProfileSelectedReference.getLinkedProfileIds()">
-      <num-profile-reference-tile
-        [referenceField]="parentProfileSelectedReference"
-        [linkedProfileId]="profileId"
-      >
-      </num-profile-reference-tile>
-    </div>
-  </div>
-</ng-container>

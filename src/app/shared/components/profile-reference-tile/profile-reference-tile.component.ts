@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileReferenceChipData } from '../../models/FilterChips/ProfileReferenceChipData';
+import { ProfileReferenceChipsService } from '../../service/FilterChips/DataSelection/ProfileReferenceChips.service';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 
 @Component({
   selector: 'num-profile-reference-tile',
@@ -17,7 +18,9 @@ export class ProfileReferenceTileComponent implements OnInit {
   referenceField: SelectedReferenceField;
 
   @Input()
-  linkedProfileId: string | undefined;
+  unlinkedRequiredOrRecommendedReferences: ReferenceField;
+
+  filterChips: ProfileReferenceChipData[] = [];
 
   @Input()
   parentId: string | undefined;
@@ -34,20 +37,32 @@ export class ProfileReferenceTileComponent implements OnInit {
 
   constructor(
     private profileProviderService: ProfileProviderService,
+    private profileReferenceChipsService: ProfileReferenceChipsService,
     private navigationHelperService: NavigationHelperService
   ) {}
 
   ngOnInit(): void {
+    this.initialize();
+    this.getReferencedProfiles();
+  }
+
+  private initialize(): void {
     if (this.referenceField) {
       this.display = this.referenceField.getDisplay();
       this.elementId = this.referenceField.getElementId();
       this.type = this.referenceField.getType();
-      this.getReferencedProfiles();
+      this.filterChips.push(
+        this.profileReferenceChipsService.getProfileReferenceChips(this.referenceField)
+      );
+    } else if (this.unlinkedRequiredOrRecommendedReferences) {
+      this.display = this.unlinkedRequiredOrRecommendedReferences.getDisplay();
+      this.elementId = this.unlinkedRequiredOrRecommendedReferences.getElementId();
+      this.type = this.unlinkedRequiredOrRecommendedReferences.getType();
     }
   }
 
   private getReferencedProfiles() {
-    this.parentProfile = this.profileProviderService.getProfileById(this.linkedProfileId);
+    this.parentProfile = this.profileProviderService.getProfileById('');
     if (this.parentProfile?.getProfileFields().getSelectedReferenceFields().length > 0) {
       this.parentProfileSelectedReferences = this.parentProfile
         .getProfileFields()
@@ -56,8 +71,8 @@ export class ProfileReferenceTileComponent implements OnInit {
   }
 
   public navigateToProfile(): void {
-    if (this.linkedProfileId) {
-      this.navigationHelperService.navigateToEditProfile(this.linkedProfileId);
+    if (true) {
+      this.navigationHelperService.navigateToEditProfile('');
     } else {
       this.navigationHelperService.navigateToEditProfile(this.parentId);
     }
