@@ -15,6 +15,9 @@ export class FilterChipsComponent implements OnInit {
   @Input()
   filterChips: InterfaceFilterChip[] = [];
 
+  @Input()
+  displayBlockTriangle = true;
+
   constructor(private translation: DisplayTranslationPipe) {}
 
   ngOnInit(): void {}
