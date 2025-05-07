@@ -102,6 +102,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   public updateSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {
     this.stagedProfileService.updateSelectedReferenceFields(selectedReferenceFields);
   }
+
   public updateLabel(label: string): void {
     this.stagedProfileService.updateLabel(label);
   }
