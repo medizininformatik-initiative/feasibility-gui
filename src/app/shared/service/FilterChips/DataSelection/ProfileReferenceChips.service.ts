@@ -1,4 +1,3 @@
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter';
 import { Injectable } from '@angular/core';
