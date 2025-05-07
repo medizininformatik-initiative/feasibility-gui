@@ -62,7 +62,10 @@ export class PossibleReferencesService {
 
           oldInner.forEach((_oldRefs, elementId) => {
             const fieldDef = referencedFields.find((f) => f.getElementId() === elementId);
-            const urls = fieldDef?.getReferencedProfileUrls() ?? [];
+            const urls =
+              fieldDef
+                ?.getReferencedProfiles()
+                .map((referencedProfile) => referencedProfile.getUrl()) ?? [];
             const linkedIds = this.getLinkedProfilesIdsFromSelectedRefrenceFields(
               parentProfile,
               elementId
@@ -147,7 +150,7 @@ export class PossibleReferencesService {
   ): PossibleProfileReferenceData {
     return {
       id: profile.getId(),
-      label: profile.getLabel(),
+      label: profile.getLabel().getOriginal(),
       display: profile.getDisplay(),
       url: profile.getUrl(),
       isSelected: isSelectd,
