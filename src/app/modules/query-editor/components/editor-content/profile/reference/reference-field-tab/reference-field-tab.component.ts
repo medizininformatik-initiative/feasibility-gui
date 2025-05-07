@@ -60,7 +60,9 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.referencedProfileUrls = this.referenceField.getReferencedProfileUrls();
+    this.referencedProfileUrls = this.referenceField
+      .getReferencedProfiles()
+      .map((profile) => profile.getUrl());
     this.elementId = this.referenceField.getElementId();
     this.loadPossibleReferences();
   }
