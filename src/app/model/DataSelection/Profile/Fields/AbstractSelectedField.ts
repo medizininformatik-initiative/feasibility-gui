@@ -1,6 +1,3 @@
-import { Display } from '../Display';
-import { AbstractField } from './AbstractField';
-
 export abstract class AbstractSelectedField {
   private mustHave = false;
 

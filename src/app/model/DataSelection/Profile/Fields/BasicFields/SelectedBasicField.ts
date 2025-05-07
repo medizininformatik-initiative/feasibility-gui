@@ -30,10 +30,6 @@ export class SelectedBasicField extends AbstractSelectedField {
     return this.selectedField.field.getElementId();
   }
 
-  public getMustHave(): boolean {
-    return this.selectedField.getMustHave();
-  }
-
   public getIsRequired(): boolean {
     return this.selectedField.field.getIsRequired();
   }
