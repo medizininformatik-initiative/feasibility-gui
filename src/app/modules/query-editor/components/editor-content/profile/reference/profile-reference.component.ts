@@ -44,12 +44,19 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
     selectedReferenceField: SelectedReferenceField,
     referencedField: ReferenceField
   ): void {
-    const indexOfSelectedField = this.findSelectedField(referencedField);
-    if (indexOfSelectedField !== -1) {
-      this.selectedReferenceFields[indexOfSelectedField] = selectedReferenceField;
-    } else {
-      this.selectedReferenceFields.push(selectedReferenceField);
+    const linkedProfileIds = selectedReferenceField.getLinkedProfileIds();
+    const len = linkedProfileIds.length;
+    const index = this.findSelectedField(referencedField);
+    if (len > 0) {
+      if (index !== -1) {
+        this.selectedReferenceFields[index] = selectedReferenceField;
+      } else {
+        this.selectedReferenceFields.push(selectedReferenceField);
+      }
+    } else if (index !== -1) {
+      this.selectedReferenceFields.splice(index, 1);
     }
+
     this.emitUpdatedFields();
   }
 
@@ -63,6 +70,7 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
     const clonedFields = SelectedReferenceFieldsCloner.deepCopySelectedReferenceFields(
       this.selectedReferenceFields
     );
+    console.log('emitting updated selected reference fields', clonedFields);
     this.updatedSelectedReferenceFields.emit(clonedFields);
   }
 }
