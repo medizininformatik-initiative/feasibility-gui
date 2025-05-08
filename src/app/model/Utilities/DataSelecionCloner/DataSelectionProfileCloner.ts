@@ -14,7 +14,10 @@ export class DataSelectionProfileCloner {
     const clonedFields = ProfileFieldsCloner.deepCopyProfileFields(profile.getProfileFields());
     const clonedFilters = ProfileFilterCloner.deepCopyFilters(profile.getFilters());
     const clonedDisplay = CloneDisplayData.deepCopyDisplayData(profile.getDisplay());
-    const clonedReference = new ProfileReference(true, true);
+    const clonedReference = new ProfileReference(
+      profile.getReference().getIncludeReferenceOnly(),
+      profile.getReference().getIsReferenceSet()
+    );
     return new DataSelectionProfile(
       profile.getId(),
       profile.getUrl(),

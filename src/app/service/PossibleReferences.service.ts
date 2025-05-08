@@ -174,7 +174,7 @@ export class PossibleReferencesService {
     elementId: string,
     parentProfileId: string
   ): Observable<PossibleProfileReferenceData[]> {
-    return this.createDataSelectionProfileService.fetchDataSelectionProfileData(urls).pipe(
+    return this.createDataSelectionProfileService.fetchDataSelectionProfileData(urls, true).pipe(
       take(1),
       map((profiles: DataSelectionProfile[]) => {
         const possibleReferences = this.mapProfilesToReferences(profiles);
