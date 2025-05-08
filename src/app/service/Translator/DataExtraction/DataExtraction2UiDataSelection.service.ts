@@ -1,9 +1,8 @@
-import { CreateDataSelectionProfileService } from '../../DataSelection/CreateDataSelectionProfileProfile.service';
+import { CreateDataSelectionProfileService } from '../../DataSelection/CreateDataSelectionProfile.service';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -13,6 +12,8 @@ import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { Concept } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Display } from '../../../model/DataSelection/Profile/Display';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class DataExtraction2UiDataSelectionService {
       const urls = dataExtraction.attributeGroups.map(
         (attributeGroup) => attributeGroup.groupReference
       );
-      return this.createDataSelection.fetchDataSelectionProfileData(urls, false, false).pipe(
+      return this.createDataSelection.fetchDataSelectionProfileData(urls, false).pipe(
         map((dataSelectionProfiles) => {
           dataSelectionProfiles.forEach((dataSelectionProfile) => {
             const externDataSelectionProfile = dataExtraction.attributeGroups.find(
@@ -42,11 +43,11 @@ export class DataExtraction2UiDataSelectionService {
             if (externDataSelectionProfile === undefined) {
               return;
             }
-
-            this.setDataSectionProfileFields(
+            /*  const selectedFields: SelectedField[] = this.setDataSectionProfileFields(
               externDataSelectionProfile.attributes,
-              dataSelectionProfile.getFields()
+              dataSelectionProfile.getProfileFields().getSelectedBasicFields()
             );
+            dataSelectionProfile.getProfileFields().setSelectedBasicFields(selectedFields); */
             if (TypeGuard.isFilterDataArray(externDataSelectionProfile.filter)) {
               const profileTokenFilter = externDataSelectionProfile.filter?.map(
                 (externSingleFilter) => {
@@ -98,20 +99,29 @@ export class DataExtraction2UiDataSelectionService {
     }
   }
 
-  private setDataSectionProfileFields(attributes: any[], fields: ProfileFields[]) {
-    fields.forEach((field) => {
-      const foundattribute = attributes.find(
-        (attribute) => attribute.attributeRef === field.getId()
+  /*   private setDataSectionProfileFields(attributes: any[], fields: ProfileFields): SelectedBasicField[] {
+    return attributes.map((attribute) => new SelectedBasicField(
+        this.getDataSectionProfileDisplay(attributes, fields),
+        attribute.attributeRef,
+        attribute.mustHave,
+        attribute.linkedProfiles
+      ));
+  } */
+
+  /*  private getDataSectionProfileDisplay(attributes: any[], fields: ProfileFields): Display {
+    for (const field of fields.getFieldTree()) {
+      const foundAttribute = attributes.find(
+        (attribute) => attribute.attributeRef === field.getElementId()
       );
-      if (foundattribute) {
-        field.setIsSelected(true);
-        field.setMustHave(foundattribute.mustHave);
-      } else {
-        field.setIsSelected(false);
+      if (foundAttribute) {
+        return field.getDisplay();
       }
       if (field.getChildren().length > 0) {
-        this.setDataSectionProfileFields(attributes, field.getChildren());
+        const childDisplay = this.getDataSectionProfileDisplay(attributes, field.getChildren());
+        if (childDisplay) {
+          return childDisplay;
+        }
       }
-    });
-  }
+    }
+  } */
 }

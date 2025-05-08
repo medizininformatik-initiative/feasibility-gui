@@ -65,6 +65,13 @@
       "COHORT_WARNING": "Note: Cohort is empty or invalid"
     }
   },
+  "QUERYEDITOR": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "PREVIOUS": "Previous Element",
+    "NEXT": "Next Element"
+  
+  },
   "SHAREDFILTER": {
     "FILTER_SELECTION": "Selected items",
     "BUTTON": {
@@ -138,6 +145,8 @@
     "SELECTION_BOX": {
       "FIELDS_MISSING": "Please select at least one field using the pen symbol on the top right corner of this box.",
       "SELECTED_FIELDS": "Selected Fields",
+      "DELETE": "Delete",
+      "EDIT": "Edit",
       "APPLIED_FILTER": "Applied Filters",
       "REQUIRED": "required",
       "OPTIONAL": "optional"

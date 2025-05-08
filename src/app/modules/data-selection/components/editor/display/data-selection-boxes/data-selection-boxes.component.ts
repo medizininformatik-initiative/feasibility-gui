@@ -1,81 +1,108 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DataSelectionFilterChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFilterChips.service';
+import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
-import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
 import { Observable, of } from 'rxjs';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
+import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
+import { RemoveReferenceService } from 'src/app/service/RemoveReference.service';
 
 @Component({
   selector: 'num-data-selection-boxes',
   templateUrl: './data-selection-boxes.component.html',
   styleUrls: ['./data-selection-boxes.component.scss'],
-  providers: [DataSelectionFilterChipsService],
+  providers: [DataSelectionFieldsChipsService],
 })
 export class DataSelectionBoxesComponent implements OnInit {
-  @Input() profile: DataSelectionProfileProfile;
-  @Input() isEditable: boolean;
+  @Input()
+  profile: DataSelectionProfile;
 
-  menuItems: MenuItemInterface[] = [];
+  @Input()
+  isEditable: boolean;
 
   display: Display;
+  label: Display;
 
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
 
   filtersFilterChips: InterfaceFilterChip[] = [];
+  filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
+
+  profileRefrenceChips: InterfaceFilterChip[] = [];
+
+  unlinkedRequiredOrRecommendedReferences: ReferenceField[];
+
+  selectedReferenceFields: SelectedReferenceField[] = [];
 
   constructor(
-    private fieldsFilterChipsService: DataSelectionFilterChipsService,
-    private menuService: MenuServiceDataSelection,
-    private filtersFilterChipsService: DataSelectionFiltersFilterChips
+    private fieldsFilterChipsService: DataSelectionFieldsChipsService,
+    private filtersFilterChipsService: DataSelectionFiltersFilterChips,
+    private navigationHelperService: NavigationHelperService,
+    private stagedProfileService: StagedProfileService,
+    private removeReferenceService: RemoveReferenceService
   ) {}
 
   ngOnInit(): void {
     this.getFilterChips();
-    this.getMenuItems();
+    this.getRequiredOrRecommendedReferences();
+    this.getSelectedReferenceFields();
     this.display = this.profile.getDisplay();
+    this.label = this.profile.getLabel();
   }
 
   public getFilterChips(): void {
-    const profileNodes = this.profile.getFields();
-
-    if (
-      profileNodes.some(
-        (item) => item.getIsSelected() === true || item.getIsRequired() || item.getRecommended()
-      )
-    ) {
-      this.filterChipsSelected = true;
-    }
-
-    this.generateAndStoreFilterChips(profileNodes);
+    const selectedFields = this.profile.getProfileFields().getSelectedBasicFields();
+    this.generateAndStoreFilterChips(selectedFields);
     this.getFilterChipsForProfileFilters();
   }
 
-  private generateAndStoreFilterChips(profileNodes: ProfileFields[]): void {
+  private generateAndStoreFilterChips(selectedFields: SelectedBasicField[]): void {
     this.$fieldsFilterChips =
-      this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(profileNodes);
+      this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(selectedFields);
   }
 
-  private getFilterChipsForProfileFilters() {
+  private getFilterChipsForProfileFilters(): void {
     if (this.profile.getFilters()) {
-      this.filtersFilterChips.push(
-        ...this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(
+      this.filtersFilterChips$ = of(
+        this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(
           this.profile.getFilters()
         )
       );
+    } else {
+      this.filtersFilterChips$ = of([]);
     }
   }
 
-  private getMenuItems() {
-    this.menuItems = this.menuService.getMenuItemsForDataSelection();
+  public editProfile(id: string): void {
+    this.stagedProfileService.initialize(this.profile);
+    this.navigationHelperService.navigateToEditProfile(id);
   }
 
   public toggleIsReferenceSet(reference: ProfileReference): void {
     reference.setIsReferenceSet(!reference.getIsReferenceSet());
+  }
+
+  /**
+   * Retrieves all unlinked required or recommended reference fields from the profiles.
+   */
+  private getRequiredOrRecommendedReferences(): void {
+    const fields = this.profile.getProfileFields();
+    this.unlinkedRequiredOrRecommendedReferences =
+      fields.getUnlinkedRequiredOrRecommendedReferences();
+  }
+
+  public getSelectedReferenceFields(): void {
+    this.selectedReferenceFields = this.profile.getProfileFields().getSelectedReferenceFields();
+  }
+
+  public deleteProfile(id: string): void {
+    this.removeReferenceService.delete(id);
   }
 }

@@ -38,7 +38,7 @@ export class DataSelectionProfileTreeService {
           new DataSelectionProfileTreeNode(
             child.id,
             child.name,
-            this.instantiateDisplayDataForDisplay(child.display),
+            this.instantiateDisplayDataForFields(child.display),
             this.instantiateDisplayDataForFields(child.fields),
             child.module,
             child.url,
@@ -65,19 +65,6 @@ export class DataSelectionProfileTreeService {
       ),
       undefined,
       this.checkValuesForTypeString(displayData.original)
-    );
-  }
-
-  public instantiateDisplayDataForDisplay(displayData: any): Display {
-    return new Display(
-      displayData.translations.map(
-        (translation) =>
-          new Translation(
-            translation.language,
-            translation.value.length > 0 ? translation.value : undefined
-          )
-      ),
-      displayData.original
     );
   }
 

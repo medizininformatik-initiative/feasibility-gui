@@ -1,10 +1,20 @@
 export class Attributes {
   attributeRef: string;
   mustHave: boolean;
+  linkedGroups: string[];
 
-  constructor(attributeRef: string, mustHave: boolean) {
+  constructor(attributeRef: string, mustHave: boolean, linkedGroups: string[]) {
     this.attributeRef = attributeRef;
     this.mustHave = mustHave;
+    this.linkedGroups = linkedGroups;
+  }
+
+  public getLinkedGroups(): string[] {
+    return this.linkedGroups;
+  }
+
+  public setLinkedGroups(linkedGroups: string[]): void {
+    this.linkedGroups = linkedGroups;
   }
 
   public getAttributeRef(): string {
@@ -24,6 +34,6 @@ export class Attributes {
   }
 
   public static fromJson(json: any): Attributes {
-    return new Attributes(json.attributeRef, json.mustHave);
+    return new Attributes(json.attributeRef, json.mustHave, json.linkedGroups);
   }
 }

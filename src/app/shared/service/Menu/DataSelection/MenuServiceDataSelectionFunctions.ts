@@ -1,11 +1,11 @@
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { EditDataSelectionFields } from 'src/app/service/DataSelection/ModalWindowServices/EditDataSelectionFields.service';
 import { EditDataSelectionFilter } from 'src/app/service/DataSelection/ModalWindowServices/EditDataSelectionFilter.service';
 import { Injectable } from '@angular/core';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { v4 as uuidv4 } from 'uuid';
-import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +14,13 @@ export class MenuServiceDataSelectionFunctions {
   constructor(
     private dataSelectionFieldsModalService: EditDataSelectionFields,
     private dataSelectionFilterModalService: EditDataSelectionFilter,
-    private dataSelectionProfileProvider: DataSelectionProfileProviderService,
+    private profileProvider: ProfileProviderService,
     private dataSelectionProvider: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
-  public openDataSelectionFieldModal(url: string) {
-    this.dataSelectionFieldsModalService.ediDataSelectionFields(url);
+  public openDataSelectionFieldModal(id: string) {
+    this.dataSelectionFieldsModalService.ediDataSelectionFields(id);
   }
 
   public openDataSelectionFilterModal(url: string) {
@@ -28,28 +28,28 @@ export class MenuServiceDataSelectionFunctions {
   }
 
   /**
-   * Wont work as we need a unique id for the DataSelectionProfileProfile
+   * Wont work as we need a unique id for the DataSelectionProfile
    *
    * @param id
    */
   public cloneDataSelectionObject(url: string) {
-    const profile = this.dataSelectionProfileProvider.getDataSelectionProfileByUrl(url);
-    const copiedProfile = new DataSelectionProfileProfile(
+    const profile = this.profileProvider.getProfileById(url);
+    const copiedProfile = new DataSelectionProfile(
       uuidv4(),
       profile.getUrl(),
       profile.getDisplay(),
-      profile.getFields(),
+      profile.getProfileFields(),
       profile.getFilters(),
       profile.getReference()
     );
-    this.dataSelectionProfileProvider.setDataSelectionProfileByUrl(copiedProfile.getUrl(), profile);
+    this.profileProvider.setProfileById(copiedProfile.getId(), profile);
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile);
   }
 
-  public deleteDataSelectionObject(url: string) {
+  public deleteDataSelectionObject(id: string) {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-    this.dataSelectionProvider.removeProfileFromDataSelection(dataSelectionId, url);
-    this.dataSelectionProfileProvider.removeDataSelectionProfileByUrl(url);
+    this.dataSelectionProvider.removeProfileFromDataSelection(dataSelectionId, id);
+    this.profileProvider.removeProfileById(id);
   }
 }

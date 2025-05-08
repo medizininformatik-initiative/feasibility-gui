@@ -1,13 +1,15 @@
 <div *ngIf="filterChips.length > 0">
   <div *ngFor="let filterChip of filterChips" fxLayout="row" fxLayoutAlign="start start">
-    <div
-      class="block"
-      (click)="toggleTypeExpanded(filterChip)"
-      [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
-    >
-      {{ filterChip.type | displayTranslation }}
-    </div>
-    <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
+    <ng-container *ngIf="displayBlockTriangle">
+      <div
+        class="block"
+        (click)="toggleTypeExpanded(filterChip)"
+        [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
+      >
+        {{ filterChip.type | displayTranslation }}
+      </div>
+      <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
+    </ng-container>
 
     <div fxLayout="row wrap" class="padding-left-20">
       <div

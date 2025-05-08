@@ -1,10 +1,10 @@
 import { DataExtraction } from '../CRTDL/DataExtraction/DataExtraction';
 import { DataExtractionData } from '../Interface/DataExtractionData';
-import { DataSelectionProfileProfile } from './Profile/DataSelectionProfileProfile';
+import { DataSelectionProfile } from './Profile/DataSelectionProfile';
 
 /**
  * @todo
- *   private profiles: DataSelectionProfileProfile[] = [];
+ *   private profiles: DataSelectionProfile[] = [];
  *    sollte nicht die profiles als Array speichern sondern nur deren urls
  *    private profileUrls: string[] = []
  *
@@ -12,18 +12,18 @@ import { DataSelectionProfileProfile } from './Profile/DataSelectionProfileProfi
 export class DataSelection {
   private id: string;
 
-  private profiles: DataSelectionProfileProfile[] = [];
+  private profiles: DataSelectionProfile[] = [];
 
-  constructor(profiles: DataSelectionProfileProfile[], id: string) {
+  constructor(profiles: DataSelectionProfile[], id: string) {
     this.profiles = profiles;
     this.id = id;
   }
 
-  public getProfiles(): DataSelectionProfileProfile[] {
+  public getProfiles(): DataSelectionProfile[] {
     return this.profiles;
   }
 
-  public setProfiles(profiles: DataSelectionProfileProfile[]): void {
+  public setProfiles(profiles: DataSelectionProfile[]): void {
     this.profiles = profiles;
   }
 

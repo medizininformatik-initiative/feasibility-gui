@@ -1,11 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
   <div class="display-container">
-    <span
-      matTooltipShowDelay="300"
-      matTooltipPosition="below"
-      [matTooltip]="display | displayTranslation"
-      >{{ display | displayTranslation }}</span
-    >
+    {{ label | displayTranslation }}
   </div>
   <div class="display-selected-fields-container">
     {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
@@ -17,10 +12,7 @@
     </div>
   </div>
   <div fxLayout="column" class="filter-container">
-    <div fxLayout="row wrap" fxLayoutAlign="space-between">
-      {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
-      <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="profile.getUrl()"></num-menu>
-    </div>
+    {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
     <div
       fxLayout="row"
       fxLayoutAlign="start center"
@@ -35,8 +27,57 @@
         (change)="toggleIsReferenceSet(profile.getReference())"
       ></mat-checkbox>
     </div>
-    <div class="filter-chips-container">
-      <num-filter-chips [filterChips]="filtersFilterChips"> </num-filter-chips>
+    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container">
+      <num-filter-chips [filterChips]="chips"></num-filter-chips>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <div>
+      <num-button (click)="editProfile(profile.getId())" type="blue">
+        {{ 'DATASELECTION.SELECTION_BOX.EDIT' | translate }}
+      </num-button>
+    </div>
+    <div>
+      <num-button (click)="deleteProfile(profile.getId())" type="red">
+        {{ 'DATASELECTION.SELECTION_BOX.DELETE' | translate }}
+      </num-button>
     </div>
   </div>
 </div>
+<ng-container
+  *ngIf="unlinkedRequiredOrRecommendedReferences.length > 0 || selectedReferenceFields.length > 0"
+>
+  <num-linked-badge></num-linked-badge>
+</ng-container>
+
+<ng-container *ngIf="unlinkedRequiredOrRecommendedReferences.length > 0">
+  <div
+    *ngFor="let reference of unlinkedRequiredOrRecommendedReferences"
+    class="selection-box-container"
+  >
+    <num-profile-reference-tile
+      [unlinkedRequiredOrRecommendedReferences]="reference"
+      [parentId]="profile.getId()"
+    >
+    </num-profile-reference-tile>
+  </div>
+</ng-container>
+<ng-container *ngIf="selectedReferenceFields.length > 0">
+  <div *ngFor="let selectedReference of selectedReferenceFields" class="selection-box-container">
+    <!---
+    <div *ngFor="let linkedProfileId of selectedReference.getLinkedProfileIds()">
+      <num-profile-reference-tile
+      [referenceField]="selectedReference"
+      [linkedProfileId]="linkedProfileId"
+      ></num-profile-reference-tile>
+    </div>
+      -->
+
+    <num-profile-reference-tile
+      [filterChips]="profileRefrenceChips"
+      [referenceField]="selectedReference"
+      [linkedProfileId]="linkedProfileId"
+      [parentId]="profile.getId()"
+    ></num-profile-reference-tile>
+  </div>
+</ng-container>

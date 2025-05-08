@@ -1,0 +1,21 @@
+.link-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+
+  &.child-badge {
+    background-color: #e0e9ff;
+    color: #0045ad;
+    border: 1px solid #b4c8f5;
+  }
+
+  &.warning-badge {
+    background-color: #ffe5e5;
+    color: #c62828;
+    border: 1px solid #f5bcbc;
+  }
+}

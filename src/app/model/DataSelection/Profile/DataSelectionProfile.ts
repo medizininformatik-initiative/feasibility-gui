@@ -1,40 +1,47 @@
 import { AbstractProfileFilter } from './Filter/AbstractProfileFilter';
-import { ProfileFields } from './Fields/ProfileFields';
 import { Display } from './Display';
-import { TranslateService } from '@ngx-translate/core';
+import { ProfileFields } from './Fields/ProfileFields';
 import { ProfileReference } from './Reference/ProfileReference';
+import { CloneDisplayData } from '../../Utilities/DisplayData/CloneDisplayData';
 
-export class DataSelectionProfileProfile {
+export class DataSelectionProfile {
   private id: string;
-  private url: string;
   private display: Display;
-  private fields: ProfileFields[] = [];
+  private profileFields: ProfileFields;
   private filters: AbstractProfileFilter[] = [];
-  private label: string;
+  private label: Display;
   private reference: ProfileReference;
+  private url: string;
 
   constructor(
     id: string,
     url: string,
     display: Display,
-    fields: ProfileFields[] = [],
+    profileFields: ProfileFields,
     filters: AbstractProfileFilter[] = [],
-    reference: ProfileReference
+    reference: ProfileReference,
+    label: Display
   ) {
     this.id = id;
     this.url = url;
     this.display = display;
-    this.fields = fields;
+    this.profileFields = profileFields;
     this.filters = filters;
     this.reference = reference;
+    this.label = label;
   }
 
-  public getLabel(): string {
+  public getLabel(): Display {
     return this.label;
   }
 
   public setLabel(label: string): void {
-    this.label = label;
+    const newLabel = CloneDisplayData.deepCopyDisplayData(this.getLabel());
+    newLabel.setOriginal(label);
+    newLabel.getTranslations().forEach((translation) => {
+      translation.setValue(label);
+    });
+    this.label = newLabel;
   }
 
   public getId(): string {
@@ -57,12 +64,12 @@ export class DataSelectionProfileProfile {
     this.display = value;
   }
 
-  public getFields(): ProfileFields[] {
-    return this.fields;
+  public getProfileFields(): ProfileFields {
+    return this.profileFields;
   }
 
-  public setFields(value: ProfileFields[]): void {
-    this.fields = value;
+  public setProfileFields(profileFields: ProfileFields): void {
+    this.profileFields = profileFields;
   }
 
   public getFilters(): AbstractProfileFilter[] {

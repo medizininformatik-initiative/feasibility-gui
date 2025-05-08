@@ -1,0 +1,33 @@
+<div class="link-field-container">
+  <div class="link-info">
+    <span>{{ display | displayTranslation }} ({{ elementId }})</span>
+    <fa-icon icon="arrow-right" class="arrow-icon"></fa-icon>
+    <span *ngIf="parentProfile" class="child-badge">{{
+      parentProfile.getDisplay() | displayTranslation
+    }}</span>
+    <ng-container *ngIf="filterChips">
+      <num-filter-chips
+        [displayBlockTriangle]="false"
+        [filterChips]="filterChips"
+      ></num-filter-chips>
+    </ng-container>
+    <span *ngIf="unlinkedRequiredOrRecommendedReferences" class="warning-badge"
+      >Nicht Verknüpft
+    </span>
+  </div>
+
+  <div class="type-tag">
+    <span class="type-label">{{ type }}</span>
+  </div>
+  <mat-checkbox
+    *ngIf="referenceField"
+    [checked]="referenceField.getMustHave()"
+    (change)="setMustHave()"
+  >
+  </mat-checkbox>
+  <div class="actions">
+    löschen
+    <fa-icon (click)="deleteReferenceLink()" class="icon" icon="trash" size="lg"></fa-icon>
+    <!--<num-button type="blue" (click)="navigateToProfile()">bearbeiten</num-button>-->
+  </div>
+</div>

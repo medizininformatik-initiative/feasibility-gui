@@ -1,0 +1,23 @@
+<div class="container" fxLayout="column" fxLayoutAlign="space-between stretch" style="height: 100%">
+  <div fxFlex="90" style="width: 100%; overflow-y: auto">
+    <ng-container *ngIf="possibleReferences$ | async as possibleReferences; else placeholder">
+      <ng-container *ngIf="possibleReferences.length > 0; else placeholder">
+        <ng-container *ngFor="let possibleReference of possibleReferences">
+          <num-possible-references
+            [posssibleReference]="possibleReference"
+            (selectedProfileId)="updateSelectedPossibleReferences($event)"
+          >
+          </num-possible-references>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #placeholder>
+      <num-placeholder-box style="width: 100%; height: 100%">
+        Klicken Sie auf neues Merkmal hinzufügen, um ein neues Merkmal zu erstellen. <br />
+      </num-placeholder-box>
+    </ng-template>
+  </div>
+  <div fxFlex="10" fxLayoutAlign="end center">
+    <num-button type="blue" (click)="openReferenceModal()"> Neues Merkmal hinzufügen </num-button>
+  </div>
+</div>

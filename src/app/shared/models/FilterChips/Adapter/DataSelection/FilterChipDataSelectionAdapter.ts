@@ -1,7 +1,7 @@
 import { CloneDisplayData } from 'src/app/model/Utilities/DisplayData/CloneDisplayData';
 import { FilterChipBuilder } from '../../FilterChipBuilder';
 import { InterfaceFilterChip } from '../../InterfaceFilterChip';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 
 export class FilterChipDataSelectionAdapter {
   /**
@@ -9,22 +9,17 @@ export class FilterChipDataSelectionAdapter {
    * @param fields
    * @returns
    */
-  public static adaptFields(fields: ProfileFields[]): InterfaceFilterChip[] {
+  public static adaptFields(fields: SelectedBasicField[]): InterfaceFilterChip[] {
     const filterChips: InterfaceFilterChip[] = [];
 
-    fields.forEach((field: ProfileFields) => {
-      if (field.getIsSelected() || field.getIsRequired()) {
-        const type = field.getMustHave() ? 'DATASELECTION.REQUIRED' : 'DATASELECTION.OPTIONAL';
-        const builder = new FilterChipBuilder(type);
-
-        builder.addData(field.getId(), CloneDisplayData.deepCopyDisplayData(field.getDisplay()));
-        filterChips.push(builder.buildFilterChip());
-      }
-
-      if (field.getChildren().length > 0) {
-        const childChips = FilterChipDataSelectionAdapter.adaptFields(field.getChildren());
-        filterChips.push(...childChips);
-      }
+    fields.forEach((field: SelectedBasicField) => {
+      const type = field.getMustHave() ? 'DATASELECTION.REQUIRED' : 'DATASELECTION.OPTIONAL';
+      const builder = new FilterChipBuilder(type);
+      builder.addData(
+        field.getElementId(),
+        CloneDisplayData.deepCopyDisplayData(field.getDisplay())
+      );
+      filterChips.push(builder.buildFilterChip());
     });
     return filterChips;
   }

@@ -1,0 +1,14 @@
+<div class="container" fxLayout="column">
+  <num-editor-header [id]="id" [type]="type"></num-editor-header>
+  <div class="background">
+    <num-editor-content
+      [criterion]="criterion$ | async"
+      (criterionChanged)="updateCriterion($event)"
+    ></num-editor-content>
+  </div>
+</div>
+<num-edit-action-bar
+  (save)="saveElement()"
+  (cancel)="onCancel()"
+  class="bottom"
+></num-edit-action-bar>

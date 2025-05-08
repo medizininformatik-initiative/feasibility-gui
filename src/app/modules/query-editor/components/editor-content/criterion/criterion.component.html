@@ -1,0 +1,7 @@
+<num-filter-tabs [content]="currentTemplates"></num-filter-tabs>
+
+<ng-template #timeRestriction>
+  <num-edit-time-restriction
+    [timeRestriction]="(criterion$ | async)?.getTimeRestriction()"
+  ></num-edit-time-restriction>
+</ng-template>

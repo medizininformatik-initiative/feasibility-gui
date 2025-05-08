@@ -16,6 +16,10 @@ export class Display {
     return this.original;
   }
 
+  public setOriginal(orginal: string): string {
+    return (this.original = orginal);
+  }
+
   public getOriginals(): string[] {
     return this.originals;
   }

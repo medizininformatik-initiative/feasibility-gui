@@ -15,10 +15,10 @@ export class EditDataSelectionFields implements OnDestroy {
     this.dialogSubscription.unsubscribe();
   }
 
-  public ediDataSelectionFields(url: string) {
+  public ediDataSelectionFields(id: string) {
     const dialogRef = this.dialog.open(EditFieldsModalComponent, {
       disableClose: true,
-      data: url,
+      data: id,
     });
 
     dialogRef.afterClosed().subscribe();

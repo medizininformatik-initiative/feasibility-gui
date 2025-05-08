@@ -1,0 +1,12 @@
+<div class="background">
+  <ng-container>
+    <num-profile class="width-100"></num-profile>
+  </ng-container>
+  <ng-container *ngIf="criterion">
+    <num-criterion
+      class="width-100"
+      [criterion]="criterion"
+      (criterionChanged)="onCriterionChanged($event)"
+    ></num-criterion>
+  </ng-container>
+</div>

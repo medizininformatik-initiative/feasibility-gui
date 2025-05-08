@@ -1,7 +1,7 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 @Injectable({
@@ -22,10 +22,6 @@ export class DataSelectionProviderService {
     this.activeDataSelection.setActiveDataSelectionID(dataSelection.getId());
   }
 
-  public getDataSelectionUIDMap(): Observable<Map<string, DataSelection>> {
-    return this.dataSelectionUIDMapSubject.asObservable();
-  }
-
   public getDataSelectionByUID(id: string): Observable<DataSelection> {
     return this.dataSelectionUIDMapSubject.pipe(
       map((dataSelectionUIDMap) => dataSelectionUIDMap.get(id))
@@ -42,6 +38,32 @@ export class DataSelectionProviderService {
           )
         )
       );
+  }
+
+  public getProfilesFromActiveDataSelection(): Observable<DataSelectionProfile[]> {
+    return this.activeDataSelection
+      .getActiveDataSelectionIdObservable()
+      .pipe(
+        switchMap((id) =>
+          this.dataSelectionUIDMapSubject.pipe(
+            map((dataSelectionUIDMap) => dataSelectionUIDMap.get(id).getProfiles())
+          )
+        )
+      );
+  }
+
+  public setProfilesInActiveDataSelection(profiles: DataSelectionProfile[]): Observable<void> {
+    return this.activeDataSelection
+      .getActiveDataSelectionIdObservable()
+      .pipe(
+        switchMap((id) => profiles.map((profile) => this.setProfileInDataSelection(id, profile)))
+      );
+  }
+
+  public setProfileInActiveDataSelection(profile: DataSelectionProfile): Observable<void> {
+    return this.activeDataSelection
+      .getActiveDataSelectionIdObservable()
+      .pipe(map((id) => this.setProfileInDataSelection(id, profile)));
   }
 
   public setDataSelectionByUID(
@@ -63,47 +85,43 @@ export class DataSelectionProviderService {
     }
   }
 
-  public removeProfileFromDataSelection(dataSelectionId: string, profileUrl: string): void {
+  public removeProfileFromDataSelection(dataSelectionId: string, profileId: string): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
 
     if (dataSelection) {
       const updatedElements = dataSelection
         .getProfiles()
-        .filter((profile: DataSelectionProfileProfile) => profile.getUrl() !== profileUrl);
+        .filter((profile: DataSelectionProfile) => profile.getId() !== profileId);
       this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
     }
   }
 
-  public setProfileInDataSelection(
-    dataSelectionId: string,
-    profile: DataSelectionProfileProfile
-  ): void {
+  public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
     if (dataSelection) {
-      const updatedElements = dataSelection
-        .getProfiles()
-        .map((existingProfile: DataSelectionProfileProfile) =>
-          existingProfile.getUrl() === profile.getUrl() ? profile : existingProfile
-        );
-      if (!updatedElements.includes(profile)) {
+      const updatedElements = dataSelection.getProfiles();
+      if (!dataSelection.getProfiles().some((p) => p.getId() === profile.getId())) {
         updatedElements.push(profile);
+        this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
+      } else {
+        this.removeProfileFromDataSelection(dataSelectionId, profile.getId());
+        this.setProfileInDataSelection(dataSelectionId, profile);
       }
-      this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
     }
   }
 
   private createDataSelectionInstanceAndSetMap(
-    updatedElements: DataSelectionProfileProfile[],
+    updatedElements: DataSelectionProfile[],
     dataSelectionId: string
   ) {
     const updatedDataSelection = new DataSelection(updatedElements, dataSelectionId);
-    this.dataSelectionUIDMap.set(dataSelectionId, updatedDataSelection);
-    this.dataSelectionUIDMapSubject.next(new Map(this.dataSelectionUIDMap));
+    this.setDataSelectionByUID(updatedDataSelection.getId(), updatedDataSelection, true);
   }
 
   public resetDataSelectionMap(): void {
     this.dataSelectionUIDMapSubject.next(new Map());
   }
+
   public clearDataSelection(): void {
     const dataSelection: DataSelection = new DataSelection([], uuidv4());
     this.setDataSelectionByUID(dataSelection.getId(), dataSelection, true);

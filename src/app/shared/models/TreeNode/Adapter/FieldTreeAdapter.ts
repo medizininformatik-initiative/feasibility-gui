@@ -1,8 +1,8 @@
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
 import { TreeNode } from '../TreeNodeInterface';
 
 export class FieldsTreeAdapter {
-  static fromTree(trees: ProfileFields[]): TreeNode[] {
+  static fromTree(trees: BasicField[]): TreeNode[] {
     const result = [];
     trees.forEach((tree) => {
       result.push(FieldsTreeAdapter.toTreeNode(tree));
@@ -10,9 +10,9 @@ export class FieldsTreeAdapter {
     return result;
   }
 
-  static toTreeNode(node: ProfileFields): TreeNode {
+  static toTreeNode(node: BasicField): TreeNode {
     return {
-      id: node?.getId(),
+      id: node?.getElementId(),
       data: {
         name: node.getDisplay(),
         display: node.getDisplay(),

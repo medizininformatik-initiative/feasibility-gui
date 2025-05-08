@@ -2,13 +2,13 @@ import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filte
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { DataSelectionProfileProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfileProfile';
-import { DataSelectionProfileProviderService } from '../../../services/DataSelectionProfileProvider.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ProfileProviderService } from '../../../services/ProfileProvider.service';
 
 export class EnterDataSelectionProfileProfileComponentData {
   url: string;
@@ -22,7 +22,7 @@ export class EnterDataSelectionProfileProfileComponentData {
 export class EditFilterModalComponent implements OnInit {
   timeRestriction: BetweenFilter;
 
-  profile: DataSelectionProfileProfile;
+  profile: DataSelectionProfile;
 
   profileCodeFilters: ProfileTokenFilter[] = [];
 
@@ -33,9 +33,9 @@ export class EditFilterModalComponent implements OnInit {
   dummyArrayCode: ProfileTokenFilter[] = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public url: string,
+    @Inject(MAT_DIALOG_DATA) public id: string,
     private dialogRef: MatDialogRef<EnterDataSelectionProfileProfileComponentData, string>,
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
+    private profileProviderService: ProfileProviderService,
     private service: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService
   ) {}
@@ -45,7 +45,7 @@ export class EditFilterModalComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
+    this.profile = this.profileProviderService.getProfileById(this.id);
     this.profile.getFilters().forEach((filter) => {
       this.setInitialFilterType(filter);
     });
@@ -92,19 +92,16 @@ export class EditFilterModalComponent implements OnInit {
   }
 
   public saveDataSelection() {
-    const profile = this.dataSelectionProfileProviderService.getDataSelectionProfileByUrl(this.url);
+    const profile = this.profileProviderService.getProfileById(this.id);
 
     const dataSelectionProfile = this.createInstanceOfDataSelectionProfile(profile);
     dataSelectionProfile.getReference().setIsReferenceSet(false);
-    this.dataSelectionProfileProviderService.setDataSelectionProfileByUrl(
-      profile.getUrl(),
-      dataSelectionProfile
-    );
+    this.profileProviderService.setProfileById(profile.getId(), dataSelectionProfile);
     this.setDataSelectionProvider(dataSelectionProfile);
     this.dialogRef.close();
   }
 
-  private createInstanceOfDataSelectionProfile(profile: DataSelectionProfileProfile) {
+  private createInstanceOfDataSelectionProfile(profile: DataSelectionProfile) {
     const result: AbstractProfileFilter[] = [];
     result.push(...this.dummyArrayCode);
     if (this.dummyArray.length > 0) {
@@ -112,17 +109,18 @@ export class EditFilterModalComponent implements OnInit {
     } else {
       result.push(...this.profileTimeFilters);
     }
-    return new DataSelectionProfileProfile(
+    return new DataSelectionProfile(
       profile.getId(),
       profile.getUrl(),
       profile.getDisplay(),
-      profile.getFields(),
+      profile.getProfileFields(),
       result,
-      profile.getReference()
+      profile.getReference(),
+      profile.getLabel()
     );
   }
 
-  private setDataSelectionProvider(newProfile: DataSelectionProfileProfile) {
+  private setDataSelectionProvider(newProfile: DataSelectionProfile) {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.service.setProfileInDataSelection(dataSelectionId, newProfile);
   }

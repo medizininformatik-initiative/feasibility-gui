@@ -1,0 +1,50 @@
+<div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
+  <div class="display-container">
+    <num-searchbar
+      icon="pencil-alt"
+      [label]="label.getOriginal()"
+      [minLength]="0"
+      [searchText]="label.getOriginal()"
+      (searchTextChange)="setLabel($event)"
+    >
+    </num-searchbar>
+    <div class="profile-display">
+      <span>Type: </span>{{ profile.getDisplay() | displayTranslation }}
+    </div>
+  </div>
+  <div class="display-selected-fields-container">
+    <div class="filter-chips-container">
+      <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
+    </div>
+  </div>
+  <div fxLayout="column" class="filter-container">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
+    </div>
+    <!--       <div
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        *ngIf="profile.getReference().getIncludeReferenceOnly()"
+        class="reference-chip-padding-30"
+      >
+        <div class="block">{{ 'DATASELECTION.DISPLAY.REFERENCE' | translate }}</div>
+        <div class="block-triangle"></div>
+        <mat-checkbox
+          [disabled]="!isEditable"
+          [checked]="profile.getReference().getIsReferenceSet()"
+          (change)="toggleIsReferenceSet(profile.getReference())"
+        ></mat-checkbox>
+      </div> -->
+    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container">
+      <num-filter-chips [filterChips]="chips"> </num-filter-chips>
+    </div>
+  </div>
+  <div fxLayout="column" class="filter-container">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
+    </div>
+    <div *ngIf="profileRefrenceChips$ | async as chips" class="filter-chips-container">
+      <num-filter-chips [filterChips]="chips"> </num-filter-chips>
+    </div>
+  </div>
+</div>

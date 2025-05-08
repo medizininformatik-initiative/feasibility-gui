@@ -1,0 +1,16 @@
+<div class="full" *ngIf="content && content.length > 0">
+  <mat-tab-group
+    color="primary"
+    animationDuration="0ms"
+    class="full"
+    [(selectedIndex)]="selectedIndex"
+  >
+    <mat-tab *ngFor="let item of content; let i = index" [label]="item.name">
+      <ng-template matTabContent>
+        <ng-container *ngIf="selectedIndex === i">
+          <ng-container [ngTemplateOutlet]="item.template"></ng-container>
+        </ng-container>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
