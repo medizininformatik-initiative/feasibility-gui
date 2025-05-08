@@ -19,7 +19,12 @@
   <div class="type-tag">
     <span class="type-label">{{ type }}</span>
   </div>
-
+  <mat-checkbox
+    *ngIf="referenceField"
+    [checked]="referenceField.getMustHave()"
+    (change)="setMustHave()"
+  >
+  </mat-checkbox>
   <div class="actions">
     löschen
     <fa-icon (click)="deleteReferenceLink()" class="icon" icon="trash" size="lg"></fa-icon>

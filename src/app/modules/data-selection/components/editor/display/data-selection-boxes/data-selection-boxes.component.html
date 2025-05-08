@@ -14,8 +14,12 @@
   <div fxLayout="column" class="filter-container">
     <div fxLayout="row wrap" fxLayoutAlign="space-between">
       {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
-      <num-button (click)="editProfile(profile.getId())" type="blue"></num-button>
-      <num-button (click)="deleteProfile(profile.getId())" type="red"></num-button>
+      <num-button (click)="editProfile(profile.getId())" type="blue">
+        {{ 'DATASELECTION.SELECTION_BOX.EDIT' | translate }}
+      </num-button>
+      <num-button (click)="deleteProfile(profile.getId())" type="red">
+        {{ 'DATASELECTION.SELECTION_BOX.DELETE' | translate }}
+      </num-button>
     </div>
     <div
       fxLayout="row"
@@ -69,6 +73,7 @@
       [filterChips]="profileRefrenceChips"
       [referenceField]="selectedReference"
       [linkedProfileId]="linkedProfileId"
+      [parentId]="profile.getId()"
     ></num-profile-reference-tile>
   </div>
 </ng-container>

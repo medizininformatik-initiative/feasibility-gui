@@ -137,11 +137,13 @@
     "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Module des Kerndatensatzes (KDS) deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und Sie haben die Möglichkeit anzugeben, welche Datenpunkte zwingend erforderlich sind für Ihre Forschungsfrage.",
     "DATASELECTION": "Merkmalselektion",
     "SELECTION_BOX":{
-      "FIELDS_MISSING": "Wählen Sie mindestens ein Feld für die Selektion durch Verwendung der Stifttaste in der oberen rechten Ecke dieser Box.",
-      "SELECTED_FIELDS": "Selektierte Felder",
       "APPLIED_FILTER": "Angewandte Filter",
+      "FIELDS_MISSING": "Wählen Sie mindestens ein Feld für die Selektion durch Verwendung der Stifttaste in der oberen rechten Ecke dieser Box.",
+      "DELETE": "Löschen",
+      "EDIT": "Bearbeiten",
+      "OPTIONAL": "optional",
       "REQUIRED": "erforderlich",
-      "OPTIONAL": "optional"
+      "SELECTED_FIELDS": "Selektierte Felder"
     },
     "FIELD_SELECTION": {
       "FIELD_SELECTION": "Ausgewählte Elemente",

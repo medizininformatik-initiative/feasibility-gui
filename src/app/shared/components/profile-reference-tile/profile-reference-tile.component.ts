@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
@@ -7,32 +8,21 @@ import { ProfileReferenceChipData } from '../../models/FilterChips/ProfileRefere
 import { ProfileReferenceChipsService } from '../../service/FilterChips/DataSelection/ProfileReferenceChips.service';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-
 @Component({
   selector: 'num-profile-reference-tile',
   templateUrl: './profile-reference-tile.component.html',
   styleUrls: ['./profile-reference-tile.component.scss'],
 })
 export class ProfileReferenceTileComponent implements OnInit {
-  @Input()
-  referenceField: SelectedReferenceField;
-
-  @Input()
-  unlinkedRequiredOrRecommendedReferences: ReferenceField;
+  @Input() referenceField: SelectedReferenceField;
+  @Input() unlinkedRequiredOrRecommendedReferences: ReferenceField;
+  @Input() parentId?: string;
 
   filterChips: ProfileReferenceChipData[] = [];
-
-  @Input()
-  parentId: string | undefined;
-
   type: string;
-
   display: Display;
-
   elementId: string;
-
   parentProfile: DataSelectionProfile;
-
   parentProfileSelectedReferences: SelectedReferenceField[] = [];
 
   constructor(
@@ -42,41 +32,60 @@ export class ProfileReferenceTileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.initialize();
-    this.getReferencedProfiles();
+    this.initiliazeDisplayData();
+    this.initiliazeDisplayDataFiletrChips();
   }
 
-  private initialize(): void {
+  private initiliazeDisplayData(): void {
+    const field = this.referenceField || this.unlinkedRequiredOrRecommendedReferences;
+
+    if (!field) {
+      return;
+    }
+
+    this.display = field.getDisplay();
+    this.elementId = field.getElementId();
+    this.type = field.getType();
+  }
+
+  private initiliazeDisplayDataFiletrChips() {
     if (this.referenceField) {
-      this.display = this.referenceField.getDisplay();
-      this.elementId = this.referenceField.getElementId();
-      this.type = this.referenceField.getType();
       this.filterChips.push(
         this.profileReferenceChipsService.getProfileReferenceChips(this.referenceField)
       );
-    } else if (this.unlinkedRequiredOrRecommendedReferences) {
-      this.display = this.unlinkedRequiredOrRecommendedReferences.getDisplay();
-      this.elementId = this.unlinkedRequiredOrRecommendedReferences.getElementId();
-      this.type = this.unlinkedRequiredOrRecommendedReferences.getType();
-    }
-  }
-
-  private getReferencedProfiles() {
-    this.parentProfile = this.profileProviderService.getProfileById('');
-    if (this.parentProfile?.getProfileFields().getSelectedReferenceFields().length > 0) {
-      this.parentProfileSelectedReferences = this.parentProfile
-        .getProfileFields()
-        .getSelectedReferenceFields();
     }
   }
 
   public navigateToProfile(): void {
-    if (true) {
-      this.navigationHelperService.navigateToEditProfile('');
-    } else {
-      this.navigationHelperService.navigateToEditProfile(this.parentId);
+    const idToUse = this.parentId ?? '';
+    this.navigationHelperService.navigateToEditProfile(idToUse);
+  }
+
+  public setMustHave() {
+    if (this.referenceField) {
+      this.referenceField.setMustHave(!this.referenceField.getMustHave());
     }
   }
 
-  public deleteReferenceLink(): void {}
+  public deleteReferenceLink(): void {
+    if (!this.parentId || !this.referenceField) {
+      return;
+    }
+    const profile = this.profileProviderService.getProfileById(this.parentId);
+    const selectedReferences = profile.getProfileFields().getSelectedReferenceFields();
+    const index = this.getIndexOfSelectedReferenceField(selectedReferences);
+
+    if (index !== -1) {
+      selectedReferences.splice(index, 1);
+      const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
+      this.profileProviderService.setProfileById(this.parentId, updatedProfile);
+    }
+  }
+
+  private getIndexOfSelectedReferenceField(selectedReferences: SelectedReferenceField[]): number {
+    const index = selectedReferences.findIndex(
+      (field: SelectedReferenceField) => field.getElementId() === this.referenceField.getElementId()
+    );
+    return index;
+  }
 }
