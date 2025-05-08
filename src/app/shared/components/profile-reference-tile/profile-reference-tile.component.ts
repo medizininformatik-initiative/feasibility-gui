@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
@@ -26,6 +27,7 @@ export class ProfileReferenceTileComponent implements OnInit {
   parentProfileSelectedReferences: SelectedReferenceField[] = [];
 
   constructor(
+    private dataSelectionProviderService: DataSelectionProviderService,
     private profileProviderService: ProfileProviderService,
     private profileReferenceChipsService: ProfileReferenceChipsService,
     private navigationHelperService: NavigationHelperService
@@ -68,18 +70,32 @@ export class ProfileReferenceTileComponent implements OnInit {
   }
 
   public deleteReferenceLink(): void {
-    if (!this.parentId || !this.referenceField) {
-      return;
-    }
     const profile = this.profileProviderService.getProfileById(this.parentId);
-    const selectedReferences = profile.getProfileFields().getSelectedReferenceFields();
-    const index = this.getIndexOfSelectedReferenceField(selectedReferences);
+    if (this.unlinkedRequiredOrRecommendedReferences) {
+      const profileFields = profile.getProfileFields().getReferenceFields();
+      const foundField = profileFields.find(
+        (field: ReferenceField) =>
+          field.getElementId() === this.unlinkedRequiredOrRecommendedReferences.getElementId()
+      );
+      if (foundField) {
+        foundField.setRecommended(false);
+        this.updateProfile(profile);
+      }
+    } else if (this.referenceField) {
+      const selectedReferences = profile.getProfileFields().getSelectedReferenceFields();
+      const index = this.getIndexOfSelectedReferenceField(selectedReferences);
 
-    if (index !== -1) {
-      selectedReferences.splice(index, 1);
-      const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
-      this.profileProviderService.setProfileById(this.parentId, updatedProfile);
+      if (index !== -1) {
+        selectedReferences.splice(index, 1);
+        this.updateProfile(profile);
+      }
     }
+  }
+
+  private updateProfile(profile: DataSelectionProfile): void {
+    const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
+    this.profileProviderService.setProfileById(this.parentId, updatedProfile);
+    this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile);
   }
 
   private getIndexOfSelectedReferenceField(selectedReferences: SelectedReferenceField[]): number {
