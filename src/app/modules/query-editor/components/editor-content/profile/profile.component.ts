@@ -33,6 +33,8 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   stagedProfileServiceSubscription: Subscription;
 
+  possibleReferencesServiceSubscription: Subscription;
+
   templates: { template: TemplateRef<any>; name: string }[] = [];
 
   @ViewChild('fields', { static: false, read: TemplateRef })
@@ -42,7 +44,11 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('reference', { static: false, read: TemplateRef })
   readonly referenceTemplate: TemplateRef<any>;
 
-  constructor(private cdr: ChangeDetectorRef, private stagedProfileService: StagedProfileService) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private stagedProfileService: StagedProfileService,
+    private possibleReferencesService: PossibleReferencesService
+  ) {}
 
   ngOnInit(): void {
     this.stagedProfileServiceSubscription?.unsubscribe();
@@ -53,6 +59,8 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.stagedProfileServiceSubscription?.unsubscribe();
+    this.possibleReferencesServiceSubscription?.unsubscribe();
+    this.possibleReferencesService.clearPossibleReferencesMap();
   }
 
   /**
@@ -87,6 +95,10 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   private setReferencesTemplate(): void {
     const referenceFields = this.profile.getProfileFields().getReferenceFields();
     if (referenceFields && referenceFields.length > 0) {
+      this.possibleReferencesServiceSubscription?.unsubscribe();
+      this.possibleReferencesServiceSubscription = this.possibleReferencesService
+        .initialize(this.profile.getId())
+        .subscribe();
       this.templates.push({ template: this.referenceTemplate, name: 'References' });
     }
   }

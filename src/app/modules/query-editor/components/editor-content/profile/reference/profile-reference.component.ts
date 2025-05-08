@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
@@ -31,9 +31,18 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.possibleReferencesServiceSubscription?.unsubscribe();
-    this.possibleReferencesServiceSubscription = this.possibleReferencesService
-      .initialize(this.profileId)
-      .subscribe();
+    /*
+    this.possibleReferencesServiceSubscription = this.possibleReferencesService.getPossibleReferencesMap().pipe(
+      map((possibleRefrenceMap) =>{
+        const exists = possibleRefrenceMap.get(this.profileId)
+        if(!exists) {
+          return this.possibleReferencesService.initialize(this.profileId)
+        } else {
+          return possibleRefrenceMap.get(this.profileId)
+        }
+
+      }),
+    ).subscribe()*/
   }
 
   ngOnDestroy(): void {
@@ -70,7 +79,6 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
     const clonedFields = SelectedReferenceFieldsCloner.deepCopySelectedReferenceFields(
       this.selectedReferenceFields
     );
-    console.log('emitting updated selected reference fields', clonedFields);
     this.updatedSelectedReferenceFields.emit(clonedFields);
   }
 }
