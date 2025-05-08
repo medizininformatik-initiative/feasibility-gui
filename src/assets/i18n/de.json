@@ -145,6 +145,8 @@
     "SELECTION_BOX":{
       "FIELDS_MISSING": "Wählen Sie mindestens ein Feld für die Selektion durch Verwendung der Stifttaste in der oberen rechten Ecke dieser Box.",
       "SELECTED_FIELDS": "Selektierte Felder",
+      "DELETE": "Löschen",
+      "EDIT": "Bearbeiten",
       "APPLIED_FILTER": "Angewandte Filter",
       "REQUIRED": "erforderlich",
       "OPTIONAL": "optional"
