@@ -1,7 +1,7 @@
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 export class ProfileReferenceModalComponentData {
   referenceUrls: string[];
   profileId: string;
