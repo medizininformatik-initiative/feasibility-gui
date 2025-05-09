@@ -1,31 +1,48 @@
-<mat-drawer-container>
-  <mat-drawer opened="true" #drawer position="end" mode="side">
-    <div *ngIf="selectedBasicFields" class="selected-fields">
-      <div class="filter-title">
-        {{ 'DATASELECTION.FIELD_SELECTION.FIELD_SELECTION' | translate }}
+<div fxLayout="row" fxLayoutAlign="start" class="container">
+  <div fxLayout="column" style="width: 100%">
+    <num-section-name>
+      {{ 'DATASELECTION.FIELD_SELECTION.HEADER' | translate }}
+    </num-section-name>
+    <div class="main-content">
+      <div class="width-70">
+        <div *ngFor="let singleTree of tree">
+          <num-tree
+            [treeData]="singleTree"
+            (selectedCheckbox)="setSelectedFieldElement($event)"
+          ></num-tree>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar" *ngIf="selectedBasicFields">
+    <div fxLayout="column" class="height-100">
+      <div fxLayout="row">
+        <num-section-name>
+          {{ 'DATASELECTION.FIELD_SELECTION.REQUIRED' | translate }}
+        </num-section-name>
       </div>
       <div class="selected-fields-box">
         <div
           *ngFor="let selectedField of selectedBasicFields; let index = index"
           fxLayout="row"
           fxLayoutAlign="start center"
-          class="selectedFilterBox"
+          class="selected-filter-container"
         >
-          <div class="display-part">
-            <span
-              matTooltipPosition="below"
-              matTooltipShowDelay="300"
-              [matTooltip]="selectedField.getDisplay() | displayTranslation"
-              >{{ selectedField.getDisplay() | displayTranslation }}</span
-            >
-          </div>
           <div>
             <mat-checkbox
               [checked]="selectedField.getMustHave()"
               (change)="setFieldAsRequired(selectedField)"
             >
-              {{ 'DATASELECTION.FIELD_SELECTION.REQUIRED' | translate }}
             </mat-checkbox>
+          </div>
+          <div class="display-part">
+            <span
+              matTooltipPosition="below"
+              matTooltipShowDelay="300"
+              [matTooltip]="selectedField.getDisplay() | displayTranslation"
+            >
+              {{ selectedField.getDisplay() | displayTranslation }}
+            </span>
           </div>
           <div
             *ngIf="!selectedField.getIsRequired()"
@@ -35,7 +52,6 @@
             class="padding-right-10"
           >
             <fa-icon
-              [icon]="'exclamation-triangle'"
               [icon]="'times'"
               size="1x"
               (click)="removeSelectedField(selectedField)"
@@ -45,18 +61,5 @@
         </div>
       </div>
     </div>
-  </mat-drawer>
-  <mat-drawer-content>
-    <div class="filter-title">
-      {{ 'DATASELECTION.FIELD_SELECTION.HEADER' | translate }}
-    </div>
-    <div class="tree-container">
-      <div *ngFor="let singleTree of tree">
-        <num-tree
-          [treeData]="singleTree"
-          (selectedCheckbox)="setSelectedFieldElement($event)"
-        ></num-tree>
-      </div>
-    </div>
-  </mat-drawer-content>
-</mat-drawer-container>
+  </div>
+</div>
