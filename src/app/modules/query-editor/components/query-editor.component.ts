@@ -16,12 +16,7 @@ import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologyS
   styleUrls: ['./query-editor.component.scss'],
 })
 export class QueryEditorComponent implements OnInit, OnDestroy {
-  currentUrl = '';
-
   criterion$: Observable<Criterion>;
-  profile$: Observable<DataSelectionProfile>;
-
-  deepCopyProfile: DataSelectionProfile;
 
   deepCopyCriterion: Criterion;
 

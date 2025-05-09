@@ -1,21 +1,20 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
+import { Subscription } from 'rxjs';
 import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  Input,
   TemplateRef,
   ViewChild,
   ChangeDetectionStrategy,
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { Subscription, take } from 'rxjs';
-import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 @Component({
   selector: 'num-profile',
   templateUrl: './profile.component.html',
