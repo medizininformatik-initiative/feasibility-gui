@@ -81,13 +81,13 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   private setFieldsTemplate(): void {
     const fields = this.profile.getProfileFields().getFieldTree();
     if (fields.length > 0) {
-      this.templates.push({ template: this.fieldsTemplate, name: 'Fields' });
+      this.templates.push({ template: this.fieldsTemplate, name: 'FIELD' });
     }
   }
 
   private setFilterTemplate(): void {
     if (this.profile.getFilters().length > 0) {
-      this.templates.push({ template: this.filterTemplate, name: 'Filters' });
+      this.templates.push({ template: this.filterTemplate, name: 'FILTER' });
     }
   }
 
@@ -98,7 +98,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
       this.possibleReferencesServiceSubscription = this.possibleReferencesService
         .initialize(this.profile.getId())
         .subscribe();
-      this.templates.push({ template: this.referenceTemplate, name: 'References' });
+      this.templates.push({ template: this.referenceTemplate, name: 'REFERENCE' });
     }
   }
 

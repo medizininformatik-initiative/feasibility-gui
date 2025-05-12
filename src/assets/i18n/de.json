@@ -151,10 +151,13 @@
       "REQUIRED": "erforderlich",
       "OPTIONAL": "optional"
     },
+    "REFERENCE_BOX": {
+      "APPLIED_REFERENCES": "Referenzierte Merkmale"
+    },
     "FIELD_SELECTION": {
       "FIELD_SELECTION": "Ausgewählte Elemente",
       "HEADER": "Selektieren Sie Merkmale für ",
-      "REQUIRED": "erforderlich"
+      "REQUIRED": "Erforderlich"
     },
     "FILTER": {
       "TOKEN": "Kodierung/Name"
@@ -224,6 +227,28 @@
         "DOWNLOAD": "Datendefinition wurde erfolgreich heruntergeladen"
       }
     }
+  },
+  "EDITOR": {
+    "HEADER": {},
+    "CONTENT": {
+      "PROFILE": {
+        "FILTER": {
+          "TAB_LABEL": {
+            "FILTER": "Token Filter",
+            "TIMERESTRICTION": "Zeiteinschränkung"
+          }
+        }
+      },
+      "CRITERION": {
+
+      },
+      "TAB_LABEL": {
+        "FIELD": "Felder",
+        "FILTER": "Filter",
+        "REFERENCE": "Referenzen"
+      }
+    },
+    "ACTION_BAR": {}
   },
   "LANGUAGE": {
     "GERMAN": "Deutsch",

@@ -5,7 +5,10 @@
     class="full"
     [(selectedIndex)]="selectedIndex"
   >
-    <mat-tab *ngFor="let item of content; let i = index" [label]="item.name">
+    <mat-tab
+      *ngFor="let item of content; let i = index"
+      label="{{ 'EDITOR.CONTENT.TAB_LABEL.' + item.name | translate }}"
+    >
       <ng-template matTabContent>
         <ng-container *ngIf="selectedIndex === i">
           <ng-container [ngTemplateOutlet]="item.template"></ng-container>

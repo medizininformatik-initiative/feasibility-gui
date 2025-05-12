@@ -4,7 +4,10 @@
   disableRipple="true"
   mat-stretch-tabs="false"
 >
-  <mat-tab *ngIf="profileTokenFilter" label="Token Filter">
+  <mat-tab
+    *ngIf="profileTokenFilter"
+    label="{{ 'EDITOR.CONTENT.PROFILE.FILTER.TAB_LABEL.FILTER' | translate }}"
+  >
     <ng-template matTabContent>
       <num-token-filter
         [tokenFilter]="profileTokenFilter"
@@ -13,7 +16,10 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab *ngIf="profileTimeFilters.length > 0" label="Time Restrictions">
+  <mat-tab
+    *ngIf="profileTimeFilters.length > 0"
+    label="{{ 'EDITOR.CONTENT.PROFILE.FILTER.TAB_LABEL.TIMERESTRICTION' | translate }}"
+  >
     <ng-template matTabContent>
       <div *ngFor="let profileTimeFilter of profileTimeFilters">
         <num-profile-time-filter

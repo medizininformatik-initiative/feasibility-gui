@@ -70,7 +70,7 @@
     "CANCEL": "Cancel",
     "PREVIOUS": "Previous Element",
     "NEXT": "Next Element"
-  
+
   },
   "SHAREDFILTER": {
     "FILTER_SELECTION": "Selected items",
@@ -151,10 +151,13 @@
       "REQUIRED": "required",
       "OPTIONAL": "optional"
     },
+    "REFERENCE_BOX": {
+      "APPLIED_REFERENCES": "Referenced Features"
+    },
     "FIELD_SELECTION": {
       "FIELD_SELECTION": "Selected features",
       "HEADER": "Select fields to extract for ",
-      "REQUIRED": "required"
+      "REQUIRED": "Required"
     },
     "FILTER": {
       "TOKEN": "Coding/Name"
@@ -222,6 +225,28 @@
         "DOWNLOAD": "Data Definition has been successfully downloaded"
       }
     }
+  },
+  "EDITOR": {
+    "HEADER": {},
+    "CONTENT": {
+      "PROFILE": {
+        "FILTER": {
+          "TAB_LABEL": {
+            "FILTER": "Token Filter",
+            "TIMERESTRICTION": "Time Restriction"
+          }
+        }
+      },
+      "CRITERION": {
+
+      },
+      "TAB_LABEL": {
+        "FIELD": "Fields",
+        "FILTER": "Filter",
+        "REFERENCE": "References"
+      }
+    },
+    "ACTION_BAR": {}
   },
   "LANGUAGE": {
     "GERMAN": "German",

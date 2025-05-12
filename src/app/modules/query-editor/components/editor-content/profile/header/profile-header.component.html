@@ -39,9 +39,9 @@
       <num-filter-chips [filterChips]="chips"> </num-filter-chips>
     </div>
   </div>
-  <div fxLayout="column" class="filter-container">
+  <div fxLayout="column" class="reference-container">
     <div fxLayout="row wrap" fxLayoutAlign="space-between">
-      {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
+      {{ 'DATASELECTION.REFERENCE_BOX.APPLIED_REFERENCES' | translate }}
     </div>
     <div *ngIf="profileRefrenceChips$ | async as chips" class="filter-chips-container">
       <num-filter-chips [filterChips]="chips"> </num-filter-chips>
