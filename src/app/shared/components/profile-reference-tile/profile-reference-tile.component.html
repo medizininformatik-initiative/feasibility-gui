@@ -12,21 +12,19 @@
       ></num-filter-chips>
     </ng-container>
     <span *ngIf="unlinkedRequiredOrRecommendedReferences" class="warning-badge"
-      >Nicht Verknüpft
+      >{{ 'SHAREDCOMPONENTS.REFERENCE_TILE.NOTLINKED' | translate }}
     </span>
   </div>
 
-  <div class="type-tag">
-    <span class="type-label">{{ type }}</span>
-  </div>
   <mat-checkbox
     *ngIf="referenceField"
     [checked]="referenceField.getMustHave()"
     (change)="setMustHave()"
   >
+    {{ 'SHAREDCOMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}
   </mat-checkbox>
   <div class="actions">
-    löschen
+    {{ 'SHAREDCOMPONENTS.REFERENCE_TILE.DELETE' | translate }}
     <fa-icon (click)="deleteReferenceLink()" class="icon" icon="trash" size="lg"></fa-icon>
     <!--<num-button type="blue" (click)="navigateToProfile()">bearbeiten</num-button>-->
   </div>

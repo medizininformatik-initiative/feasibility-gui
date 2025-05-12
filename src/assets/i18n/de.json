@@ -63,6 +63,11 @@
       "SAVE": "Speichern",
       "CANCEL": "Abbrechen",
       "COHORT_WARNING": "Hinweis: Kohorte ist leer oder ungültig "
+    },
+    "REFERENCE_TILE": {
+      "REQUIRED": "Erforderlich",
+      "NOTLINKED": "Nicht verknüpft",
+      "DELETE": "Löschen"
     }
   },
   "QUERYEDITOR": {
