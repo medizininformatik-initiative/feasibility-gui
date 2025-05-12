@@ -1,5 +1,22 @@
 # Changelog
 
+## v6.2.0-alpha (2025-05-12)
+
+### Feature
+* Added new editor pages for Criterion and Profile ([#373](https://github.com/medizininformatik-initiative/feasibility-gui/issues/373))
+* Implemented reference solution as per related issue ([#309](https://github.com/medizininformatik-initiative/feasibility-gui/issues/309))
+
+### Changes
+* Introduced updated data model ([#373](https://github.com/medizininformatik-initiative/feasibility-gui/issues/373))
+* Adjusted CSS for indentation in tree view ([#350](https://github.com/medizininformatik-initiative/feasibility-gui/issues/350))
+* Increased ElasticSearch visualization limit from 20 to 50 matches ([#352](https://github.com/medizininformatik-initiative/feasibility-gui/issues/352))
+
+### Bug Fixes
+* fixes for various minor issues and clean up code
+
+
+
+
 ## v6.1.0 (2025-04-04)
 
 ### Changes
