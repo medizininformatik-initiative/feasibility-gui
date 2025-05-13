@@ -9,7 +9,6 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFieldsCloner';
-import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
@@ -17,6 +16,7 @@ import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fiel
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { v4 as uuidv4 } from 'uuid';
+import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service';
 
 @Injectable({
   providedIn: 'root',

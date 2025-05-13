@@ -1,3 +1,4 @@
+import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
@@ -10,13 +11,12 @@ import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/P
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { v4 as uuidv4 } from 'uuid';
-import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileFilterTranslatorService {
-  constructor(private readonly uITimeRestrictionFactoryService: UITimeRestrictionFactoryService) {}
+  constructor(private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService) {}
 
   public createProfileFilters(
     externProfile: AttributeGroupsData,
