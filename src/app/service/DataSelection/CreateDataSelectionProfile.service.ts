@@ -1,4 +1,5 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { concatMap, map, Observable } from 'rxjs';
 import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
@@ -7,20 +8,18 @@ import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { Injectable } from '@angular/core';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { ReferencedProfile } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferencedProfile';
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
-import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
-import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
-import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
-import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
-import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter';
-import { ReferencedProfile } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferencedProfile';
 
 @Injectable({
   providedIn: 'root',
@@ -175,14 +174,17 @@ export class CreateDataSelectionProfileService {
   }
 
   private mapAndConstructProfileRefrenceFields(referenceFields: any[]): ReferenceField[] {
-    const insatnces = referenceFields.map((field) => new ReferenceField(
-        field.id,
-        this.instantiateDisplayData(field.display),
-        this.instantiateDisplayData(field.description),
-        field.required,
-        field.recommended,
-        this.mapAndConstructRefrencedProfiles(field.referencedProfiles) || []
-      ));
+    const insatnces = referenceFields.map(
+      (field) =>
+        new ReferenceField(
+          field.id,
+          this.instantiateDisplayData(field.display),
+          this.instantiateDisplayData(field.description),
+          field.required,
+          field.recommended,
+          this.mapAndConstructRefrencedProfiles(field.referencedProfiles) || []
+        )
+    );
     return insatnces;
   }
 
