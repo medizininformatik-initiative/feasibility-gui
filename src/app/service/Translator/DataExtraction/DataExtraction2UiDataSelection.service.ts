@@ -1,26 +1,31 @@
+import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData';
+import { AttributesData } from 'src/app/model/Interface/AttributesData';
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
 import { CreateDataSelectionProfileService } from '../../DataSelection/CreateDataSelectionProfile.service';
+import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { ProfileFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFieldsCloner';
+import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service';
+import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { v4 as uuidv4 } from 'uuid';
-import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
-import { TypeGuard } from '../../TypeGuard/TypeGuard';
-import { Concept } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { Display } from '../../../model/DataSelection/Profile/Display';
-import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataExtraction2UiDataSelectionService {
+  private idMap: { oldId: string; newId: string }[] = [];
   constructor(
     private createDataSelection: CreateDataSelectionProfileService,
+    private profileFilterTranslatorService: ProfileFilterTranslatorService,
     private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService
   ) {}
 
@@ -28,63 +33,35 @@ export class DataExtraction2UiDataSelectionService {
    * @todo Check if version is part of the dataExtraction.attributeGroups.filter.codes
    * @param dataExtraction
    */
-  public translate(dataExtraction: any): Observable<DataSelection> {
+  public translate(dataExtraction: DataExtractionData): Observable<DataSelection> {
     if (dataExtraction.attributeGroups?.length > 0) {
-      const urls = dataExtraction.attributeGroups.map(
-        (attributeGroup) => attributeGroup.groupReference
-      );
+      const urls = this.getGroupReferences(dataExtraction);
       return this.createDataSelection.fetchDataSelectionProfileData(urls, false).pipe(
         map((dataSelectionProfiles) => {
-          dataSelectionProfiles.forEach((dataSelectionProfile) => {
-            const externDataSelectionProfile = dataExtraction.attributeGroups.find(
-              (attributeGroup) => attributeGroup.groupReference === dataSelectionProfile.getUrl()
-            );
+          this.replaceExternalIdsWithFetchedProfileIds(
+            dataSelectionProfiles,
+            dataExtraction.attributeGroups
+          );
 
-            if (externDataSelectionProfile === undefined) {
-              return;
-            }
-            /*  const selectedFields: SelectedField[] = this.setDataSectionProfileFields(
-              externDataSelectionProfile.attributes,
-              dataSelectionProfile.getProfileFields().getSelectedBasicFields()
+          dataSelectionProfiles.forEach((dataSelectionProfile) => {
+            const externDataSelectionProfile = this.findExternalProfileFromIdMap(
+              dataSelectionProfile,
+              dataExtraction
             );
-            dataSelectionProfile.getProfileFields().setSelectedBasicFields(selectedFields); */
+            dataSelectionProfile.setLabel(
+              externDataSelectionProfile.name ?? dataSelectionProfile.getLabel().getOriginal()
+            );
+            const profileFields = dataSelectionProfile.getProfileFields();
+            const attributes = externDataSelectionProfile.attributes;
+            const updatedProfileFields = this.setProfileFields(attributes, profileFields);
+            dataSelectionProfile.setProfileFields(updatedProfileFields);
+
             if (TypeGuard.isFilterDataArray(externDataSelectionProfile.filter)) {
-              const profileTokenFilter = externDataSelectionProfile.filter?.map(
-                (externSingleFilter) => {
-                  if (externSingleFilter.type === DataSelectionFilterType.TOKEN) {
-                    const codeFilter = dataSelectionProfile
-                      .getFilters()
-                      .find(
-                        (singleFilter) => singleFilter.getName() === externSingleFilter.name
-                      ) as ProfileTokenFilter;
-                    return new ProfileTokenFilter(
-                      uuidv4(),
-                      externSingleFilter.name,
-                      externSingleFilter.type,
-                      codeFilter.getValueSetUrls(),
-                      externSingleFilter.codes.map(
-                        (code) =>
-                          new Concept(
-                            new Display([], code.display),
-                            new TerminologyCode(code.code, code.display, code.system, code.version)
-                          )
-                      )
-                    );
-                  }
-                  if (externSingleFilter.type === DataSelectionFilterType.DATE) {
-                    const timeRestriction =
-                      this.uITimeRestrictionFactoryService.createTimeRestrictionForDataSelection(
-                        externSingleFilter
-                      );
-                    return new ProfileTimeRestrictionFilter(
-                      externSingleFilter.name,
-                      externSingleFilter.type,
-                      timeRestriction
-                    );
-                  }
-                }
+              const profileFilter = this.profileFilterTranslatorService.createProfileFilters(
+                externDataSelectionProfile,
+                dataSelectionProfile
               );
-              dataSelectionProfile.setFilters(profileTokenFilter);
+              dataSelectionProfile.setFilters(profileFilter);
             }
 
             if (externDataSelectionProfile.includeReferenceOnly) {
@@ -99,29 +76,102 @@ export class DataExtraction2UiDataSelectionService {
     }
   }
 
-  /*   private setDataSectionProfileFields(attributes: any[], fields: ProfileFields): SelectedBasicField[] {
-    return attributes.map((attribute) => new SelectedBasicField(
-        this.getDataSectionProfileDisplay(attributes, fields),
-        attribute.attributeRef,
-        attribute.mustHave,
-        attribute.linkedProfiles
-      ));
-  } */
+  private findExternalProfileFromIdMap(
+    profile: DataSelectionProfile,
+    dataExtraction: DataExtractionData
+  ): AttributeGroupsData | undefined {
+    const idTupel = this.idMap.find((id) => id.newId === profile.getId());
+    return dataExtraction.attributeGroups.find(
+      (externProfile) => externProfile.id === idTupel.oldId
+    );
+  }
 
-  /*  private getDataSectionProfileDisplay(attributes: any[], fields: ProfileFields): Display {
-    for (const field of fields.getFieldTree()) {
-      const foundAttribute = attributes.find(
-        (attribute) => attribute.attributeRef === field.getElementId()
-      );
-      if (foundAttribute) {
-        return field.getDisplay();
+  private setProfileFields(
+    attributes: AttributesData[],
+    profileFields: ProfileFields
+  ): ProfileFields {
+    const seletectedReferenceFields: SelectedReferenceField[] = [];
+    const seletectedBasicFields: SelectedBasicField[] = [];
+    attributes.forEach((attribute) => {
+      const attributeRef = attribute.attributeRef;
+      if (attribute.linkedGroups && attribute.linkedGroups.length > 0) {
+        const foundField = this.findReferenceField(profileFields.getReferenceFields(), attributeRef);
+        seletectedReferenceFields.push(this.createSelectedReferenceField(attribute, foundField));
+      } else {
+        const foundField = this.findBasicField(profileFields.getFieldTree(), attributeRef);
+        seletectedBasicFields.push(this.createSelecteBasicFields(foundField, attribute));
       }
-      if (field.getChildren().length > 0) {
-        const childDisplay = this.getDataSectionProfileDisplay(attributes, field.getChildren());
-        if (childDisplay) {
-          return childDisplay;
+    });
+    profileFields.setSelectedBasicFields(seletectedBasicFields);
+    profileFields.setSelectedReferenceFields(seletectedReferenceFields);
+    return ProfileFieldsCloner.deepCopyProfileFields(profileFields);
+  }
+
+  private findBasicField(basicFields: BasicField[], attributeRef: string): BasicField | undefined {
+    for (const field of basicFields) {
+      if (field.getElementId() === attributeRef) {
+        return field;
+      } else if (field.getChildren().length > 0) {
+        const result = this.findBasicField(field.getChildren(), attributeRef);
+        if (result) {
+          return result;
         }
       }
     }
-  } */
+    return undefined;
+  }
+
+  private findReferenceField(
+    referenceFields: ReferenceField[],
+    attributeRef: string
+  ): ReferenceField {
+    return referenceFields.find((field) => field.getElementId() === attributeRef);
+  }
+
+  private createSelectedReferenceField(
+    attribute: AttributesData,
+    foundField: ReferenceField
+  ): SelectedReferenceField {
+    const linkedProfileIds = attribute.linkedGroups.map(
+      (linkedGroup) =>
+        this.idMap
+          .map((id) => (id.oldId === linkedGroup ? id.newId : undefined))
+          .filter((id) => id !== undefined)[0]
+    );
+    const selectedReferenceField = new SelectedReferenceField(
+      foundField,
+      linkedProfileIds,
+      attribute.mustHave
+    );
+    return selectedReferenceField;
+  }
+
+  private createSelecteBasicFields(
+    basicField: BasicField,
+    attribute: AttributesData
+  ): SelectedBasicField {
+    const selectedBasicField = new SelectedBasicField(basicField, attribute.mustHave);
+    return selectedBasicField;
+  }
+
+  private getGroupReferences(dataExtraction: DataExtractionData): string[] {
+    return dataExtraction.attributeGroups.map((attributeGroup) => attributeGroup.groupReference);
+  }
+
+  private replaceExternalIdsWithFetchedProfileIds(
+    dataSelectionProfiles: DataSelectionProfile[],
+    externProfiles: AttributeGroupsData[]
+  ): void {
+    const remainingExternProfiles = [...externProfiles];
+
+    dataSelectionProfiles.forEach((profile) => {
+      const url = profile.getUrl();
+      const index = remainingExternProfiles.findIndex((extern) => extern.groupReference === url);
+
+      if (index !== -1) {
+        const matchedExtern = remainingExternProfiles.splice(index, 1)[0];
+        this.idMap.push({ oldId: matchedExtern.id, newId: profile.getId() });
+      }
+    });
+  }
 }
