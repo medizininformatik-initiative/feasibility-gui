@@ -1,8 +1,8 @@
 import { AbstractProfileFilter } from './Filter/AbstractProfileFilter';
+import { CloneDisplayData } from '../../Utilities/DisplayData/CloneDisplayData';
 import { Display } from './Display';
 import { ProfileFields } from './Fields/ProfileFields';
 import { ProfileReference } from './Reference/ProfileReference';
-import { CloneDisplayData } from '../../Utilities/DisplayData/CloneDisplayData';
 
 export class DataSelectionProfile {
   private id: string;
