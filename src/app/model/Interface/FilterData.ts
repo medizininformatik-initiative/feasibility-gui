@@ -1,9 +1,9 @@
-import { TerminologyCodeBaseData } from './TerminologyBaseData';
+import { TerminologyCodeData } from './TerminologyCodeData';
 
 export interface FilterData {
   type: 'token' | 'date'
   name: 'code' | 'date'
-  codes?: TerminologyCodeBaseData[]
+  codes?: TerminologyCodeData[]
   start?: string
   end?: string
 }
