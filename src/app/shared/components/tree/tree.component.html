@@ -38,7 +38,7 @@
         >
         <div *ngIf="node.data.description" class="field-description">
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
-            ({{ node.data.description | displayTranslation }})
+            {{ node.data.description | displayTranslation }}
           </span>
         </div>
         <div
@@ -46,7 +46,7 @@
           class="field-description"
         >
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
-            ({{ node.data.displayFieldsInfo | displayTranslation }})
+            {{ node.data.displayFieldsInfo | displayTranslation }}
           </span>
         </div>
       </div>
