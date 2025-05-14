@@ -51,10 +51,17 @@ export class DataExtraction2UiDataSelectionService {
             dataSelectionProfile.setLabel(
               externDataSelectionProfile.name ?? dataSelectionProfile.getLabel().getOriginal()
             );
-            const profileFields = dataSelectionProfile.getProfileFields();
-            const attributes = externDataSelectionProfile.attributes;
-            const updatedProfileFields = this.setProfileFields(attributes, profileFields);
-            dataSelectionProfile.setProfileFields(updatedProfileFields);
+            if (
+              externDataSelectionProfile.attributes &&
+              externDataSelectionProfile.attributes.length > 0
+            ) {
+              const profileFields = dataSelectionProfile.getProfileFields();
+              const attributes = externDataSelectionProfile.attributes;
+              const updatedProfileFields = this.setProfileFields(attributes, profileFields);
+              dataSelectionProfile.setProfileFields(updatedProfileFields);
+            } else {
+              dataSelectionProfile.getProfileFields().setSelectedBasicFields([]);
+            }
 
             if (TypeGuard.isFilterDataArray(externDataSelectionProfile.filter)) {
               const profileFilter = this.profileFilterTranslatorService.createProfileFilters(
@@ -90,21 +97,45 @@ export class DataExtraction2UiDataSelectionService {
     attributes: AttributesData[],
     profileFields: ProfileFields
   ): ProfileFields {
-    const seletectedReferenceFields: SelectedReferenceField[] = [];
-    const seletectedBasicFields: SelectedBasicField[] = [];
-    attributes.forEach((attribute) => {
-      const attributeRef = attribute.attributeRef;
-      if (attribute.linkedGroups && attribute.linkedGroups.length > 0) {
-        const foundField = this.findReferenceField(profileFields.getReferenceFields(), attributeRef);
-        seletectedReferenceFields.push(this.createSelectedReferenceField(attribute, foundField));
-      } else {
-        const foundField = this.findBasicField(profileFields.getFieldTree(), attributeRef);
-        seletectedBasicFields.push(this.createSelecteBasicFields(foundField, attribute));
-      }
-    });
-    profileFields.setSelectedBasicFields(seletectedBasicFields);
-    profileFields.setSelectedReferenceFields(seletectedReferenceFields);
+    const selectedReferenceFields = this.buildSelectedReferenceFields(attributes, profileFields);
+    const selectedBasicFields = this.buildSelectedBasicFields(attributes, profileFields);
+
+    profileFields.setSelectedBasicFields([]);
+    profileFields.setSelectedReferenceFields([]);
+    profileFields.setSelectedBasicFields(selectedBasicFields);
+    profileFields.setSelectedReferenceFields(selectedReferenceFields);
+
     return ProfileFieldsCloner.deepCopyProfileFields(profileFields);
+  }
+
+  private buildSelectedReferenceFields(
+    attributes: AttributesData[],
+    profileFields: ProfileFields
+  ): SelectedReferenceField[] {
+    return attributes
+      .filter((attribute) => attribute.linkedGroups && attribute.linkedGroups.length > 0)
+      .map((attribute) => {
+        const matchingField = this.findReferenceField(
+          profileFields.getReferenceFields(),
+          attribute.attributeRef
+        );
+        return this.createSelectedReferenceField(attribute, matchingField);
+      });
+  }
+
+  private buildSelectedBasicFields(
+    attributes: AttributesData[],
+    profileFields: ProfileFields
+  ): SelectedBasicField[] {
+    return attributes
+      .filter((attribute) => !attribute.linkedGroups || attribute.linkedGroups.length === 0)
+      .map((attribute) => {
+        const matchingField = this.findBasicField(
+          profileFields.getFieldTree(),
+          attribute.attributeRef
+        );
+        return this.createSelecteBasicFields(matchingField, attribute);
+      });
   }
 
   private findBasicField(basicFields: BasicField[], attributeRef: string): BasicField | undefined {
