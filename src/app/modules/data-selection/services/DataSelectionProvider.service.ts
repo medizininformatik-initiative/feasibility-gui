@@ -99,14 +99,11 @@ export class DataSelectionProviderService {
   public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
     if (dataSelection) {
-      const updatedElements = dataSelection.getProfiles();
-      if (!dataSelection.getProfiles().some((p) => p.getId() === profile.getId())) {
-        updatedElements.push(profile);
-        this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
-      } else {
-        this.removeProfileFromDataSelection(dataSelectionId, profile.getId());
-        this.setProfileInDataSelection(dataSelectionId, profile);
-      }
+      const updatedElements = dataSelection
+        .getProfiles()
+        .filter((existingProfile) => existingProfile.getId() !== profile.getId());
+      updatedElements.push(profile);
+      this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
     }
   }
 

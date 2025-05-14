@@ -170,6 +170,10 @@ export class FeatureService {
     return this.appConfig.getConfig().mock.loadnsave && this.isDevelopMode();
   }
 
+  public getPatientProifleUrl(): string {
+    return this.appConfig.getConfig().options.dsePatientProfileUrl;
+  }
+
   sendClickEvent(pollingTime: number): void {
     this.subject.next(pollingTime);
   }

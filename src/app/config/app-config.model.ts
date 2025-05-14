@@ -41,6 +41,7 @@ export interface IAppConfig {
     pollingintervallinseconds: number
     lowerboundarypatientresult: number
     lowerboundarylocationresult: number
+    dsePatientProfileUrl: string
   }
   mock: {
     terminology: boolean
