@@ -23,9 +23,9 @@
   >
     {{ 'SHAREDCOMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}
   </mat-checkbox>
-  <div class="actions">
+  <div class="actions" (click)="deleteReferenceLink()">
     {{ 'SHAREDCOMPONENTS.REFERENCE_TILE.DELETE' | translate }}
-    <fa-icon (click)="deleteReferenceLink()" class="icon" icon="trash" size="lg"></fa-icon>
+    <fa-icon class="icon" icon="trash" size="lg"></fa-icon>
     <!--<num-button type="blue" (click)="navigateToProfile()">bearbeiten</num-button>-->
   </div>
 </div>
