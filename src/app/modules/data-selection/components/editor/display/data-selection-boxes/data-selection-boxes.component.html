@@ -29,8 +29,9 @@
       <num-filter-chips [filterChips]="chips"></num-filter-chips>
     </div>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <div>
+  <div fxLayout="row" fxLayoutAlign="start start" class="menu-box">
+    <num-menu [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
+    <!--<div>
       <num-button (click)="editProfile(profile.getId())" type="blue">
         {{ 'DATASELECTION.SELECTION_BOX.EDIT' | translate }}
       </num-button>
@@ -39,7 +40,7 @@
       <num-button (click)="deleteProfile(profile.getId())" type="red">
         {{ 'DATASELECTION.SELECTION_BOX.DELETE' | translate }}
       </num-button>
-    </div>
+    </div>-->
   </div>
 </div>
 <ng-container

@@ -65,7 +65,7 @@ export class ProfileProviderIteratorService {
         );
         if (nextProfile) {
           this.navigationHelperService.navigateToEditProfile(nextProfile.getId());
-          this.stagedProfileService.initialize(nextProfile);
+          this.stagedProfileService.initialize(nextProfile.getId());
         }
       })
     );
@@ -85,7 +85,7 @@ export class ProfileProviderIteratorService {
         );
         if (previousProfile) {
           this.navigationHelperService.navigateToEditProfile(previousProfile.getId());
-          this.stagedProfileService.initialize(previousProfile);
+          this.stagedProfileService.initialize(previousProfile.getId());
         }
       })
     );

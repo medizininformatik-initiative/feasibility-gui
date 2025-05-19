@@ -21,7 +21,7 @@ export class DataSelectionMainProfileInitializerService {
   }
 
   public initializePatientProfile(): Observable<DataSelectionProfile[]> {
-    const patientUrl = this.featureService.getPatientProifleUrl();
+    const patientUrl = this.featureService.getPatientProfileUrl();
     return this.createDataSelectionProfileService.fetchDataSelectionProfileData([patientUrl]);
   }
 }

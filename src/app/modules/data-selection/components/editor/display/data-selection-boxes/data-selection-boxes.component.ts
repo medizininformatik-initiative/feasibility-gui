@@ -12,6 +12,9 @@ import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/B
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
 import { RemoveReferenceService } from 'src/app/service/RemoveReference.service';
+import { MenuItemInterface } from '../../../../../../shared/models/Menu/MenuItemInterface';
+import { MenuServiceDataSelection } from '../../../../../../shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
+import { FeatureService } from '../../../../../../service/Feature.service';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -28,7 +31,7 @@ export class DataSelectionBoxesComponent implements OnInit {
 
   display: string;
   label: Display;
-
+  menuItems: MenuItemInterface[] = [];
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
 
@@ -46,13 +49,16 @@ export class DataSelectionBoxesComponent implements OnInit {
     private filtersFilterChipsService: DataSelectionFiltersFilterChips,
     private navigationHelperService: NavigationHelperService,
     private stagedProfileService: StagedProfileService,
-    private removeReferenceService: RemoveReferenceService
+    private removeReferenceService: RemoveReferenceService,
+    private menuService: MenuServiceDataSelection,
+    private featureService: FeatureService
   ) {}
 
   ngOnInit(): void {
     this.getFilterChips();
     this.getRequiredOrRecommendedReferences();
     this.getSelectedReferenceFields();
+    this.getMenuItems();
     this.display = this.profile.getDisplay().getOriginal();
     this.label = this.profile.getLabel();
   }
@@ -80,11 +86,6 @@ export class DataSelectionBoxesComponent implements OnInit {
     }
   }
 
-  public editProfile(id: string): void {
-    this.stagedProfileService.initialize(this.profile);
-    this.navigationHelperService.navigateToEditProfile(id);
-  }
-
   public toggleIsReferenceSet(reference: ProfileReference): void {
     reference.setIsReferenceSet(!reference.getIsReferenceSet());
   }
@@ -105,7 +106,11 @@ export class DataSelectionBoxesComponent implements OnInit {
   public deleteProfile(id: string): void {
     this.removeReferenceService.delete(id);
   }
-  updateRequiredOrRecommendedReferences() {
+  public updateRequiredOrRecommendedReferences() {
     this.getRequiredOrRecommendedReferences();
+  }
+  private getMenuItems() {
+    const isMainProfile = this.featureService.getPatientProfileUrl() === this.profile.getUrl();
+    this.menuItems = this.menuService.getMenuItemsForDataSelection(isMainProfile);
   }
 }

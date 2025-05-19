@@ -170,7 +170,7 @@ export class FeatureService {
     return this.appConfig.getConfig().mock.loadnsave && this.isDevelopMode();
   }
 
-  public getPatientProifleUrl(): string {
+  public getPatientProfileUrl(): string {
     return this.appConfig.getConfig().options.dsePatientProfileUrl;
   }
 

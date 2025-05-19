@@ -11,10 +11,17 @@ export class MenuServiceDataSelection {
   /**
    * @returns Array of Menu functions for a criterion box
    */
-  public getMenuItemsForDataSelection(): MenuItemInterface[] {
+  public getMenuItemsForDataSelection(isMainProfile: boolean): MenuItemInterface[] {
     return [
       {
         disabled: false,
+        icon: 'wrench',
+        label: 'EDIT',
+        action: (id: string) =>
+          this.menuServiceDataSelectionFunctions.redirectToDataSelectionEditPage(id),
+      },
+      {
+        disabled: isMainProfile,
         icon: 'trash',
         label: 'DELETE',
         action: (url: string) =>
@@ -26,7 +33,7 @@ export class MenuServiceDataSelection {
         label: 'DUPLICATE',
         action: (id: string) => this.menuServiceDataSelectionFunctions.cloneDataSelectionObject(id),
       },
-      {
+      /*{
         disabled: false,
         icon: 'filter',
         label: 'APPLY_FILTERS',
@@ -39,7 +46,7 @@ export class MenuServiceDataSelection {
         label: 'DEFINE_FIELDS',
         action: (id: string) =>
           this.menuServiceDataSelectionFunctions.openDataSelectionFieldModal(id),
-      },
+      },*/
     ];
   }
 }

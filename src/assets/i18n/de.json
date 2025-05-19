@@ -32,6 +32,7 @@
     "MENU": {
       "DUPLICATE": "Duplizieren",
       "DELETE": "Löschen",
+      "EDIT": "Bearbeiten",
       "REFERENCE": "Kriterien verknüpfen",
       "APPLY_FILTERS": "Filter anwenden",
       "DEFINE_FIELDS": "Felder selektieren",

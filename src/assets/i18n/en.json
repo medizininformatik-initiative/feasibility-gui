@@ -32,6 +32,7 @@
     "MENU": {
       "DUPLICATE": "Duplicate",
       "DELETE": "Delete",
+      "EDIT": "Edit",
       "REFERENCE": "Link criteria",
       "APPLY_FILTERS": "Apply filter",
       "DEFINE_FIELDS": "Select fields",

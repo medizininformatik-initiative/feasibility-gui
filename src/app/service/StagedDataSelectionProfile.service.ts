@@ -27,7 +27,8 @@ export class StagedProfileService {
     private dataSelection2DataExtractionService: DataSelection2DataExtraction
   ) {}
 
-  public initialize(profile: DataSelectionProfile): void {
+  public initialize(id: string): void {
+    const profile = this.profileProviderService.getProfileById(id);
     const copy = DataSelectionProfileCloner.deepCopyProfile(profile);
     this.stagedProfileSubject.next(copy);
   }
@@ -85,12 +86,14 @@ export class StagedProfileService {
     linkedProfileIds: string[]
   ): Observable<void[]> {
     return this.profileProviderService.getProfileIdMap().pipe(
-      map((profileMap) => linkedProfileIds.map((id) => {
+      map((profileMap) =>
+        linkedProfileIds.map((id) => {
           const profile = profileMap.get(id);
           if (profile) {
             return this.setProfileInDataSelection(profile);
           }
-        }))
+        })
+      )
     );
   }
 
