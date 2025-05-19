@@ -1,6 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
   <div class="display-container">
-    {{ label | displayTranslation }}
+    <div>{{ label | displayTranslation }}</div>
+    <div *ngIf="label !== display" class="text-small">{{ display | displayTranslation }}</div>
   </div>
   <div class="display-selected-fields-container">
     {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
