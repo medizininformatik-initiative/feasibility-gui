@@ -55,6 +55,7 @@
     <num-profile-reference-tile
       [unlinkedRequiredOrRecommendedReferences]="reference"
       [parentId]="profile.getId()"
+      (deleteTrigger)="updateRequiredOrRecommendedReferences()"
     >
     </num-profile-reference-tile>
   </div>
@@ -73,7 +74,6 @@
     <num-profile-reference-tile
       [filterChips]="profileRefrenceChips"
       [referenceField]="selectedReference"
-      [linkedProfileId]="linkedProfileId"
       [parentId]="profile.getId()"
     ></num-profile-reference-tile>
   </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
@@ -18,6 +18,7 @@ export class ProfileReferenceTileComponent implements OnInit {
   @Input() referenceField: SelectedReferenceField;
   @Input() unlinkedRequiredOrRecommendedReferences: ReferenceField;
   @Input() parentId?: string;
+  @Output() deleteTrigger = new EventEmitter<boolean>();
 
   filterChips: ProfileReferenceChipData[] = [];
   type: string;
@@ -90,6 +91,7 @@ export class ProfileReferenceTileComponent implements OnInit {
         this.updateProfile(profile);
       }
     }
+    this.deleteTrigger.emit(true);
   }
 
   private updateProfile(profile: DataSelectionProfile): void {

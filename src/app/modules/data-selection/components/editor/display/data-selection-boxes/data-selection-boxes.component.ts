@@ -105,4 +105,7 @@ export class DataSelectionBoxesComponent implements OnInit {
   public deleteProfile(id: string): void {
     this.removeReferenceService.delete(id);
   }
+  updateRequiredOrRecommendedReferences() {
+    this.getRequiredOrRecommendedReferences();
+  }
 }
