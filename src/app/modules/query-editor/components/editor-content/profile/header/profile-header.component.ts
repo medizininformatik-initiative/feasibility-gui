@@ -19,6 +19,7 @@ import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData';
+import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe';
 
 @Component({
   selector: 'num-profile-header',
@@ -35,7 +36,8 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   @Output()
   updatedLabel: EventEmitter<string> = new EventEmitter<string>();
 
-  label: Display;
+  label: string;
+  placeholder: string;
 
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
@@ -49,13 +51,15 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
     private stagedProfileService: StagedProfileService,
     private profileProviderService: ProfileProviderService,
     private fieldsFilterChipsService: DataSelectionFieldsChipsService,
-    private filtersFilterChipsService: DataSelectionFiltersFilterChips
+    private filtersFilterChipsService: DataSelectionFiltersFilterChips,
+    private translation: DisplayTranslationPipe
   ) {}
 
   ngOnInit(): void {
     this.profile$ = this.stagedProfileService.getProfileObservable();
     this.getFilterChips();
-    this.label = this.profile.getLabel();
+    this.label = this.translation.transform(this.profile.getLabel());
+    this.placeholder = this.translation.transform(this.profile.getDisplay());
     this.getProfileReferenceChips();
   }
 

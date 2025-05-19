@@ -26,7 +26,7 @@ export class DataSelectionBoxesComponent implements OnInit {
   @Input()
   isEditable: boolean;
 
-  display: Display;
+  display: string;
   label: Display;
 
   filterChipsSelected = false;
@@ -53,7 +53,7 @@ export class DataSelectionBoxesComponent implements OnInit {
     this.getFilterChips();
     this.getRequiredOrRecommendedReferences();
     this.getSelectedReferenceFields();
-    this.display = this.profile.getDisplay();
+    this.display = this.profile.getDisplay().getOriginal();
     this.label = this.profile.getLabel();
   }
 

@@ -2,15 +2,13 @@
   <div class="display-container">
     <num-searchbar
       icon="pencil-alt"
-      [label]="label.getOriginal()"
+      [label]="placeholder"
       [minLength]="0"
-      [searchText]="label.getOriginal()"
+      [searchText]="label"
       (searchTextChange)="setLabel($event)"
     >
     </num-searchbar>
-    <div class="profile-display">
-      <span>Type: </span>{{ profile.getDisplay() | displayTranslation }}
-    </div>
+    <div class="profile-display"><span>Type: </span>{{ profile.getDisplay().getOriginal() }}</div>
   </div>
   <div class="display-selected-fields-container">
     <div class="filter-chips-container">
