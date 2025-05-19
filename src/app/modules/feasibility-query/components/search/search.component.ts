@@ -14,7 +14,6 @@ import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTer
 import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { map, Observable, Subscription, switchMap, take, tap } from 'rxjs';
 import {
   AfterViewInit,
@@ -61,7 +60,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   searchWithFilterSubscription: Subscription;
 
   constructor(
-    private terminologySystemProvider: TerminologySystemProvider,
     public elementRef: ElementRef,
     private filterService: SearchFilterService,
     private searchService: SearchService,
@@ -100,17 +98,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
             .subscribe();
         }
       });
-    this.dataSelectionMainProfileInitializerService
-      .initializePatientProfile()
-      .pipe(
-        tap(() => this.dataSelectionProviderService.initializeDataSelectionInstance()),
-        switchMap((profiles) =>
-          this.dataSelectionProviderService.setProfileInActiveDataSelection(profiles[0]).pipe(
-            map(() => profiles) // pass along original profiles if needed
-          )
-        )
-      )
-      .subscribe();
   }
 
   ngOnInit() {

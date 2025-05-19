@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
   selector: 'num-edit-feasibility-query',
@@ -7,7 +6,7 @@ import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologyS
   styleUrls: ['./edit.component.scss'],
 })
 export class EditFeasibilityQueryComponent implements OnInit {
-  constructor(private terminologySystemProvider: TerminologySystemProvider) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }

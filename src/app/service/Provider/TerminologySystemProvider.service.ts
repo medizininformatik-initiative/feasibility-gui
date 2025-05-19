@@ -1,30 +1,25 @@
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { tap, map, catchError } from 'rxjs/operators';
 import {
   CodeSystemEntry,
   TerminologySystemDictionary,
 } from 'src/app/model/Utilities/TerminologySystemDictionary';
 import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TerminologySystemProvider {
-  constructor(private terminologyApiService: TerminologyApiService) {
-    this.initializeTerminologySystems();
-  }
+  constructor(private terminologyApiService: TerminologyApiService) {}
 
-  public initializeTerminologySystems(): void {
-    this.terminologyApiService
-      .getTerminologySystems()
-      .pipe(
-        tap((data: CodeSystemEntry[]) => {
-          TerminologySystemDictionary.initialize(data);
-        })
-      )
-      .subscribe({
-        next: () => console.warn('Terminology systems initialized successfully.'),
-        error: (error) => console.error('Failed to initialize terminology systems:', error),
-      });
+  public initializeTerminologySystems(): Observable<boolean> {
+    return this.terminologyApiService.getTerminologySystems().pipe(
+      tap((data: CodeSystemEntry[]) => {
+        TerminologySystemDictionary.initialize(data);
+      }),
+      map(() => true),
+      catchError(() => of(false))
+    );
   }
 }

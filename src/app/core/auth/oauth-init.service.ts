@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
+import { from, race, of, timer, Observable } from 'rxjs';
+import { mapTo, catchError, map } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class OAuthInitService {
   private readonly TERMINATION_TIMEOUT = 20_000;
-
   private readonly ERROR_INIT_FAIL = 'App was not able to initialize the authentication service';
   private readonly ERROR_TIMEOUT = `${this.ERROR_INIT_FAIL} after waiting for ${this.TERMINATION_TIMEOUT} ms`;
   private readonly ERROR_UNREACHABLE = `${this.ERROR_INIT_FAIL} while connecting to the authentication server`;
@@ -15,43 +14,37 @@ export class OAuthInitService {
   private BASE_URL: string;
   private REALM: string;
   private CLIENT_ID: string;
-
   private AUTH_CONFIG: AuthConfig;
 
   constructor(private oauthService: OAuthService, private appConfig: AppConfigService) {}
 
-  public initOAuth(): Promise<boolean> {
-    let terminationTimer: number;
+  public initOAuth(): Observable<boolean> {
     this.initVariables();
 
-    return new Promise(async (resolve, reject) => {
-      const terminationTimeout = new Promise((_, onTimeout) => {
-        terminationTimer = window.setTimeout(() => {
-          onTimeout(this.ERROR_TIMEOUT);
-        }, this.TERMINATION_TIMEOUT);
-      });
+    this.oauthService.configure(this.AUTH_CONFIG);
 
-      this.oauthService.configure(this.AUTH_CONFIG);
-      const init = this.oauthService
-        .loadDiscoveryDocumentAndLogin()
-        .then(() => {
-          this.oauthService.setupAutomaticSilentRefresh();
-        })
-        .catch(() => reject(this.ERROR_UNREACHABLE));
+    const init$ = from(
+      this.oauthService.loadDiscoveryDocumentAndLogin().then(() => {
+        this.oauthService.setupAutomaticSilentRefresh();
+      })
+    ).pipe(
+      map(() => true),
+      catchError(() => of(false))
+    );
 
-      return Promise.race([init, terminationTimeout])
-        .then(() => {
-          clearTimeout(terminationTimer);
-          return resolve(true);
-        })
-        .catch((err) => reject(err));
-    });
+    const timeout$ = timer(this.TERMINATION_TIMEOUT).pipe(
+      mapTo(false),
+      catchError(() => of(false))
+    );
+
+    return race([init$, timeout$]).pipe(catchError(() => of(false)));
   }
 
   private initVariables(): void {
-    this.BASE_URL = this.appConfig.config.auth.baseUrl;
-    this.REALM = this.appConfig.config.auth.realm;
-    this.CLIENT_ID = this.appConfig.config.auth.clientId;
+    const config = this.appConfig.config.auth;
+    this.BASE_URL = config.baseUrl;
+    this.REALM = config.realm;
+    this.CLIENT_ID = config.clientId;
 
     this.AUTH_CONFIG = {
       issuer: `${this.BASE_URL}/realms/${this.REALM}`,

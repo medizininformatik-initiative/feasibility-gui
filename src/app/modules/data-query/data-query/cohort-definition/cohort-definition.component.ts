@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 import { StructuredQuery2FeasibilityQueryService } from 'src/app/service/Translator/StructureQuery/StructuredQuery2FeasibilityQuery.service';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from 'src/app/service/Validation.service';
 import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
@@ -39,7 +38,6 @@ export class CohortDefinitionComponent implements OnInit {
     private navigationHelperService: NavigationHelperService,
     private consentService: ConsentService,
     private dialog: MatDialog,
-    private terminologySystemProvider: TerminologySystemProvider,
     private snackbarService: SnackbarService,
     private stageProviderService: StageProviderService
   ) {}

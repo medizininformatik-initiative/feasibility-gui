@@ -8,7 +8,6 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { PathSegments } from 'src/app/app-paths';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -28,7 +27,6 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   buildProfileSubscription: Subscription;
 
   constructor(
-    private terminologySystemProvider: TerminologySystemProvider,
     private criterionProviderService: CriterionProviderService,
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,

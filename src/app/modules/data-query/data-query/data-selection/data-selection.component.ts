@@ -6,7 +6,6 @@ import { FeasibilityQueryProviderService } from 'src/app/service/Provider/Feasib
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
 import {
   Component,
@@ -39,7 +38,6 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   translatedCRTLDSubscription: Subscription;
   fileName: string;
   constructor(
-    private terminologySystemProvider: TerminologySystemProvider,
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,

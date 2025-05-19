@@ -1,11 +1,9 @@
-import { inject, Injectable } from '@angular/core';
-import { DataSelectionApiService } from './Backend/Api/DataSelectionApi.service';
-import { FeatureProviderService } from '../modules/feasibility-query/service/feature-provider.service';
-import { FeatureService } from './Feature.service';
-import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { CreateDataSelectionProfileService } from './DataSelection/CreateDataSelectionProfile.service';
-import { Observable, take, tap } from 'rxjs';
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { DataSelectionMainProfileProviderService } from './DataSelectionMainProfileProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +11,18 @@ import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelecti
 export class DataSelectionMainProfileInitializerService {
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
-    private dataSelectionApiService: DataSelectionApiService,
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private featureService: FeatureService
-  ) {
-    this.initializePatientProfile();
-  }
+    private profileProvider: DataSelectionMainProfileProviderService
+  ) {}
 
-  public initializePatientProfile(): Observable<DataSelectionProfile[]> {
-    const patientUrl = this.featureService.getPatientProifleUrl();
-    return this.createDataSelectionProfileService.fetchDataSelectionProfileData([patientUrl]);
+  public initializePatientProfile(patientProfileUrl: string): Observable<DataSelectionProfile[]> {
+    return this.createDataSelectionProfileService
+      .fetchDataSelectionProfileData([patientProfileUrl])
+      .pipe(
+        tap((profiles) => {
+          if (profiles && profiles.length > 0) {
+            this.profileProvider.setPatientProfile(profiles[0]);
+          }
+        })
+      );
   }
 }

@@ -48,9 +48,6 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
 
   downloadDisabled = true;
 
-  /**
-   * @todo     private test1: TerminologySystemProvider, --> TerminologySystemProvider needs to be initial called in the app.moudle.ts
-   */
   constructor(
     public elementRef: ElementRef,
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
@@ -73,7 +70,6 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
       .fetchProfileTree()
       .subscribe((tree) => {
         const treeNodes = tree.getTreeNode();
-        treeNodes.forEach((node) => this.updateSelectionStatus(node));
         const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
         this.trees = rootNode;
       });
