@@ -1,11 +1,11 @@
 import { AppConfigService } from './config/app-config.service';
-import { concatMap, map, tap, catchError } from 'rxjs/operators';
+import { concatMap, map, tap, catchError, timeout } from 'rxjs/operators';
 import { DataSelectionMainProfileInitializerService } from './service/DataSelectionMainProfileInitializerService';
 import { FeatureProviderService } from './modules/feasibility-query/service/feature-provider.service';
 import { FeatureService } from './service/Feature.service';
 import { IAppConfig } from './config/app-config.model';
 import { Injectable } from '@angular/core';
-import { lastValueFrom, Observable, throwError } from 'rxjs';
+import { lastValueFrom, Observable, of, throwError } from 'rxjs';
 import { OAuthInitService } from './core/auth/oauth-init.service';
 import { TerminologySystemProvider } from './service/Provider/TerminologySystemProvider.service';
 
@@ -47,9 +47,9 @@ export class CoreInitService {
 
   private initOAuth(config: IAppConfig): Observable<IAppConfig> {
     return this.oauthInitService.initOAuth(config).pipe(
-      tap((result) => console.log('OAuth initialized:', result === true)),
+      tap((result) => console.log('OAuth initialized:', result)),
       concatMap((result) =>
-        result === true ? [config] : throwError(() => new Error('OAuth initialization failed'))
+        result === true ? of(config) : throwError(() => new Error('OAuth initialization failed'))
       ),
       catchError((err) => {
         console.error('OAuth init failed:', err);

@@ -17,12 +17,23 @@ export class OAuthInitService {
   constructor(private oauthService: OAuthService) {}
 
   public initOAuth(config: IAppConfig): Observable<boolean> {
-    const authConfig = this.initVariables(config);
-    this.oauthService.configure(authConfig);
+    this.initAuthConfig(config);
+    const timeout$ = this.setTimeoOut();
+    const init$ = this.startOAuthLogin();
+    return race([init$, timeout$]).pipe(
+      catchError((err) => throwError(() => new Error(err.message || this.ERROR_INIT_FAIL)))
+    );
+  }
+
+  private startOAuthLogin(): Observable<boolean> {
     const init$ = from(
-      this.oauthService.loadDiscoveryDocumentAndLogin().then(() => {
-        this.oauthService.setupAutomaticSilentRefresh();
-        return true;
+      this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
+        if (this.oauthService.hasValidAccessToken()) {
+          this.oauthService.setupAutomaticSilentRefresh();
+          return true;
+        } else {
+          return false;
+        }
       })
     ).pipe(
       catchError((err) => {
@@ -31,25 +42,25 @@ export class OAuthInitService {
       })
     );
 
-    const timeout$ = timer(this.TERMINATION_TIMEOUT).pipe(
+    return init$;
+  }
+
+  private setTimeoOut(): Observable<boolean> {
+    return timer(this.TERMINATION_TIMEOUT).pipe(
       mapTo(false),
       catchError(() => {
         console.error(this.ERROR_TIMEOUT);
         return of(false);
       })
     );
-
-    return race([init$, timeout$]).pipe(
-      catchError((err) => throwError(() => new Error(err.message || this.ERROR_INIT_FAIL)))
-    );
   }
 
-  private initVariables(config: IAppConfig): AuthConfig {
+  private initAuthConfig(config: IAppConfig) {
     const BASE_URL = config.auth.baseUrl;
     const REALM = config.auth.realm;
     const CLIENT_ID = config.auth.clientId;
 
-    return {
+    const authConfig: AuthConfig = {
       issuer: `${BASE_URL}/realms/${REALM}`,
       clientId: CLIENT_ID,
       responseType: 'code',
@@ -63,5 +74,7 @@ export class OAuthInitService {
       clearHashAfterLogin: false,
       nonceStateSeparator: 'semicolon',
     };
+
+    this.oauthService.configure(authConfig);
   }
 }
