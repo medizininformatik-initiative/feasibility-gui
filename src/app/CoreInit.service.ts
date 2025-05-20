@@ -20,16 +20,14 @@ export class CoreInitService {
     private featureProviderService: FeatureProviderService
   ) {}
 
-  public init(): Promise<IAppConfig> {
-    return lastValueFrom(
-      this.loadConfig().pipe(
-        concatMap((config) => this.initOAuth(config)),
-        concatMap((config) => this.initFeatureService(config)),
-        concatMap((config) => this.initFeatureProviderService(config)),
-        concatMap((config) => this.initTerminologySystems(config)),
-        concatMap((config) => this.initPatientProfile(config)),
-        tap(() => console.log('CoreInitService complete'))
-      )
+  public init(): Observable<IAppConfig> {
+    return this.loadConfig().pipe(
+      concatMap((config) => this.initOAuth(config)),
+      concatMap((config) => this.initFeatureService(config)),
+      concatMap((config) => this.initFeatureProviderService(config)),
+      concatMap((config) => this.initTerminologySystems(config)),
+      concatMap((config) => this.initPatientProfile(config)),
+      tap(() => console.log('CoreInitService complete'))
     );
   }
 
@@ -40,7 +38,7 @@ export class CoreInitService {
   }
 
   private initOAuth(config: IAppConfig): Observable<IAppConfig> {
-    return this.oauthInitService.initOAuth().pipe(
+    return this.oauthInitService.initOAuth(config).pipe(
       tap((result) => console.log('OAuth initialized:', result === true)),
       map(() => config)
     );
