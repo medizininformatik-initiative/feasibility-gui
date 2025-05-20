@@ -17,10 +17,10 @@ export class OAuthInitService {
   constructor(private oauthService: OAuthService) {}
 
   public initOAuth(config: IAppConfig): Observable<boolean> {
-    this.initAuthConfig(config);
+    this.buildAuthConfig(config);
     const timeout$ = this.setTimeoOut();
-    const init$ = this.startOAuthLogin();
-    return race([init$, timeout$]).pipe(
+    const login$ = this.startOAuthLogin();
+    return race([login$, timeout$]).pipe(
       catchError((err) => throwError(() => new Error(err.message || this.ERROR_INIT_FAIL)))
     );
   }
@@ -55,7 +55,7 @@ export class OAuthInitService {
     );
   }
 
-  private initAuthConfig(config: IAppConfig) {
+  private buildAuthConfig(config: IAppConfig) {
     const BASE_URL = config.auth.baseUrl;
     const REALM = config.auth.realm;
     const CLIENT_ID = config.auth.clientId;
