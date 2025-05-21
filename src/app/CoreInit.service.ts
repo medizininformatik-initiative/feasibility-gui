@@ -93,7 +93,6 @@ export class CoreInitService {
 
   private initFeatureProviderService(config: IAppConfig): Observable<IAppConfig> {
     return this.featureProviderService.initFeatures(config).pipe(
-      tap((result) => console.log('FeatureProviderService initialized:', result === true)),
       concatMap((result) =>
         result === true
           ? of(config)
@@ -138,8 +137,6 @@ export class CoreInitService {
     config: IAppConfig,
     patientProfileResult: DataSelectionProfile
   ): Observable<IAppConfig> {
-    console.log('Initializing Providers with patientProfileResult:', patientProfileResult);
-    console.log('Config:', config);
     return this.providersInitService.initializeProviders(patientProfileResult).pipe(
       tap((result) => console.log('Providers initialized:', result === true)),
       concatMap((result) =>

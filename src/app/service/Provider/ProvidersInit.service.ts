@@ -21,7 +21,6 @@ export class ProvidersInitService {
    * Emits true only if both succeed.
    */
   public initializeProviders(patientProfileResult: DataSelectionProfile): Observable<boolean> {
-    console.log('Initializing Providers', patientProfileResult);
     return this.dataSelectionProvider
       .initializeDataSelectionInstance(patientProfileResult)
       .pipe(
