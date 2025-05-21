@@ -20,6 +20,7 @@ import { map, Observable, Subscription, take } from 'rxjs';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { CRTDLData } from '../../../../model/Interface/CRTDLData';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { DataSelectionMainProfileInitializerService } from '../../../../service/DataSelectionMainProfileInitializerService';
 
 @Component({
   selector: 'num-data-selection',
@@ -37,6 +38,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   downloadSubscription: Subscription;
   translatedCRTLDSubscription: Subscription;
   fileName: string;
+  createDSSubscription: Subscription;
   constructor(
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
@@ -46,7 +48,8 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     private profileProviderService: ProfileProviderService,
-    private feasibilityQueryValidation: FeasibilityQueryValidation
+    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private dataSelectionMainInitializer: DataSelectionMainProfileInitializerService
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +63,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.downloadSubscription?.unsubscribe();
     this.translatedCRTLDSubscription?.unsubscribe();
+    this.createDSSubscription?.unsubscribe();
   }
 
   public editDataSelection() {
@@ -67,13 +71,13 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   }
 
   public createNewDataSelection() {
-    const dataSelection = new DataSelection([], uuidv4());
-    this.dataSelectionProviderService.setDataSelectionByUID(
-      dataSelection.getId(),
-      dataSelection,
-      true
-    );
-    this.navigationHelperService.navigateToDataSelectionSearch();
+    this.createDSSubscription?.unsubscribe();
+    this.createDSSubscription = this.dataSelectionMainInitializer
+      .initializePatientProfile()
+      .subscribe((dataSelectionProfile) => {
+        this.dataSelectionProviderService.initializeDataSelectionInstance(dataSelectionProfile);
+        this.navigationHelperService.navigateToDataSelectionSearch();
+      });
   }
 
   public downloadCRDTL(): void {

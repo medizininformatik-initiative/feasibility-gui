@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
+import { FeatureProviderService } from '../modules/feasibility-query/service/feature-provider.service';
+import { FeatureService } from './Feature.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,7 @@ import { DataSelectionProviderService } from '../modules/data-selection/services
 export class DataSelectionMainProfileInitializerService {
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
-    private dataSelectionProvider: DataSelectionProviderService
+    private featureProvider: FeatureService
   ) {}
 
   /**
@@ -19,9 +21,10 @@ export class DataSelectionMainProfileInitializerService {
    * @param patientProfileUrl
    * @returns
    */
-  public initializePatientProfile(patientProfileUrl: string): Observable<DataSelectionProfile> {
+  public initializePatientProfile(): Observable<DataSelectionProfile> {
+    const mainProfileUrl = this.featureProvider.getPatientProfileUrl();
     return this.createDataSelectionProfileService
-      .fetchDataSelectionProfileData([patientProfileUrl])
+      .fetchDataSelectionProfileData([mainProfileUrl])
       .pipe(
         map((profiles) => {
           if (profiles && profiles.length > 0) {

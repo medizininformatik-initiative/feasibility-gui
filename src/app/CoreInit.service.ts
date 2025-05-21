@@ -155,19 +155,15 @@ export class CoreInitService {
   }
 
   private initPatientProfile(config: IAppConfig): Observable<DataSelectionProfile> {
-    return this.dataSelectionMainProfileInitializerService
-      .initializePatientProfile(this.featureService.getPatientProfileUrl())
-      .pipe(
-        tap((result) => console.log('PatientProfile initialized:', !!result)),
-        concatMap((result) =>
-          !!result
-            ? of(result)
-            : throwError(() => new Error('PatientProfile initialization failed'))
-        ),
-        catchError((err) => {
-          console.error('PatientProfile init failed:', err);
-          return throwError(() => err);
-        })
-      );
+    return this.dataSelectionMainProfileInitializerService.initializePatientProfile().pipe(
+      tap((result) => console.log('PatientProfile initialized:', !!result)),
+      concatMap((result) =>
+        !!result ? of(result) : throwError(() => new Error('PatientProfile initialization failed'))
+      ),
+      catchError((err) => {
+        console.error('PatientProfile init failed:', err);
+        return throwError(() => err);
+      })
+    );
   }
 }
