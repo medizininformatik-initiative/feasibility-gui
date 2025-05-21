@@ -27,8 +27,8 @@ export class OAuthInitService {
 
   private startOAuthLogin(): Observable<boolean> {
     const init$ = from(
-      this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
-        if (this.oauthService.hasValidAccessToken()) {
+      this.oauthService.loadDiscoveryDocumentAndLogin().then((loggedIn) => {
+        if (loggedIn && this.oauthService.hasValidAccessToken()) {
           this.oauthService.setupAutomaticSilentRefresh();
           return true;
         } else {
@@ -74,7 +74,6 @@ export class OAuthInitService {
       clearHashAfterLogin: false,
       nonceStateSeparator: 'semicolon',
     };
-
     this.oauthService.configure(authConfig);
   }
 }

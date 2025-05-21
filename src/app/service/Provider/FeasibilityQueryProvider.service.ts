@@ -1,4 +1,4 @@
-import { BehaviorSubject, map, Observable, switchMap, combineLatest } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, combineLatest, of } from 'rxjs';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
@@ -20,21 +20,20 @@ export class FeasibilityQueryProviderService {
   constructor(
     @Inject(LOCAL_STORAGE) private storage: StorageService,
     private activeFeasibilityQuery: ActiveFeasibilityQueryService
-  ) {
-    this.loadInitialQuery();
-  }
+  ) {}
 
   /**
    * Loads the initial feasibility query from local storage.
    * If no query is stored, initializes with a default query.
    */
-  private loadInitialQuery(): void {
+  public loadInitialQuery(): Observable<boolean> {
     const storedQuery = this.storage.get(this.STORAGE_QUERY_KEY);
     const uid = uuidv4();
     if (storedQuery && storedQuery.groups) {
       this.storage.remove(this.STORAGE_QUERY_KEY);
     }
     this.setFeasibilityQueryByID(new FeasibilityQuery(uid), uid, true);
+    return of(true);
   }
 
   /**

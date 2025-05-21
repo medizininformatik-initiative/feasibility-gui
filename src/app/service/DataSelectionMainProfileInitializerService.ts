@@ -1,9 +1,9 @@
 import { CreateDataSelectionProfileService } from './DataSelection/CreateDataSelectionProfile.service';
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { DataSelectionMainProfileProviderService } from './DataSelectionMainProfileProvider.service';
+import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,16 +11,17 @@ import { DataSelectionMainProfileProviderService } from './DataSelectionMainProf
 export class DataSelectionMainProfileInitializerService {
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
-    private profileProvider: DataSelectionMainProfileProviderService
+    private dataSelectionProvider: DataSelectionProviderService
   ) {}
 
-  public initializePatientProfile(patientProfileUrl: string): Observable<DataSelectionProfile[]> {
+  public initializePatientProfile(patientProfileUrl: string): Observable<DataSelectionProfile> {
     return this.createDataSelectionProfileService
       .fetchDataSelectionProfileData([patientProfileUrl])
       .pipe(
-        tap((profiles) => {
+        map((profiles) => {
           if (profiles && profiles.length > 0) {
-            this.profileProvider.setPatientProfile(profiles[0]);
+            const profile = profiles[0];
+            return profile;
           }
         })
       );

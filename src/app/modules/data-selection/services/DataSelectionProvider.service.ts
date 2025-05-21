@@ -1,5 +1,5 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
-import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
@@ -12,14 +12,14 @@ export class DataSelectionProviderService {
   private dataSelectionUIDMapSubject: BehaviorSubject<Map<string, DataSelection>> =
     new BehaviorSubject(new Map());
 
-  constructor(private activeDataSelection: ActiveDataSelectionService) {
-    this.initializeDataSelectionInstance();
-  }
+  constructor(private activeDataSelection: ActiveDataSelectionService) {}
 
-  public initializeDataSelectionInstance(): void {
+  public initializeDataSelectionInstance(mainProfile: DataSelectionProfile): Observable<boolean> {
     const dataSelection: DataSelection = new DataSelection([], uuidv4());
     this.setDataSelectionByUID(dataSelection.getId(), dataSelection);
     this.activeDataSelection.setActiveDataSelectionID(dataSelection.getId());
+    dataSelection.setProfiles([mainProfile]);
+    return of(true);
   }
 
   public getDataSelectionByUID(id: string): Observable<DataSelection> {
@@ -103,6 +103,7 @@ export class DataSelectionProviderService {
         .getProfiles()
         .filter((existingProfile) => existingProfile.getId() !== profile.getId());
       updatedElements.push(profile);
+      console.log('updatedElements', updatedElements);
       this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
     }
   }
