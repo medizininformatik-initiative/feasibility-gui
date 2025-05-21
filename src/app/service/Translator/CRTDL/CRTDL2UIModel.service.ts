@@ -76,14 +76,16 @@ export class CRTDL2UIModelService {
         console.error(error);
       }
     }
-    return of(new DataSelection([], uuidv4()));
+    this.resetDataSelection();
+    const newDataSelection = new DataSelection([], uuidv4());
+    this.setDataSelectionProvider(newDataSelection);
+    return of(newDataSelection);
   }
 
   private translateDataExtractionAndSetProvider(
     dataExtraction: DataExtractionData
   ): Observable<DataSelection> {
-    this.dataSelectionProvider.clearDataSelection();
-    this.profileProviderService.resetProfileMap();
+    this.resetDataSelection();
     return this.dataExtraction2UiDataSelectionService.translate(dataExtraction).pipe(
       take(1),
       map((dataSelection) => {
@@ -133,5 +135,10 @@ export class CRTDL2UIModelService {
 
   private setDataSelectionProvider(dataSelection: DataSelection): void {
     this.dataSelectionProvider.setDataSelectionByUID(dataSelection.getId(), dataSelection, true);
+  }
+
+  private resetDataSelection(): void {
+    this.dataSelectionProvider.clearDataSelection();
+    this.profileProviderService.resetProfileMap();
   }
 }
