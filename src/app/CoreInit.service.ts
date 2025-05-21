@@ -1,15 +1,16 @@
 import { AppConfigService } from './config/app-config.service';
-import { catchError, concatMap, tap, map } from 'rxjs/operators';
+import { catchError, concatMap, map, tap } from 'rxjs/operators';
 import { DataSelectionMainProfileInitializerService } from './service/DataSelectionMainProfileInitializerService';
+import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile';
 import { FeatureProviderService } from './modules/feasibility-query/service/feature-provider.service';
 import { FeatureService } from './service/Feature.service';
+import { HttpClient } from '@angular/common/http';
 import { IAppConfig } from './config/app-config.model';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
 import { OAuthInitService } from './core/auth/oauth-init.service';
+import { Observable, of, throwError } from 'rxjs';
 import { ProvidersInitService } from './service/Provider/ProvidersInit.service';
 import { TerminologySystemProvider } from './service/Provider/TerminologySystemProvider.service';
-import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile';
 
 interface PatientProfileInitResult {
   config: IAppConfig
@@ -25,7 +26,8 @@ export class CoreInitService {
     private terminologySystemProvider: TerminologySystemProvider,
     private featureService: FeatureService,
     private featureProviderService: FeatureProviderService,
-    private providersInitService: ProvidersInitService
+    private providersInitService: ProvidersInitService,
+    private http: HttpClient
   ) {}
 
   public init(): Observable<IAppConfig> {
@@ -33,6 +35,7 @@ export class CoreInitService {
       concatMap((config) => this.initOAuth(config)),
       concatMap((config) => this.initFeatureService(config)),
       concatMap((config) => this.initFeatureProviderService(config)),
+      //concatMap((config) => this.checkBackendHealth(config)),
       concatMap((config) => this.initTerminologySystems(config)),
       concatMap((config) =>
         this.initPatientProfile(config).pipe(
@@ -99,6 +102,19 @@ export class CoreInitService {
       catchError((err) => {
         console.error('FeatureProviderService init failed:', err);
         return throwError(() => err);
+      })
+    );
+  }
+
+  private checkBackendHealth(config: IAppConfig): Observable<IAppConfig> {
+    const healthUrl = config.uiBackendApi.baseUrl + '/actuator/info';
+    console.log('Checking backend health at:', healthUrl);
+    return this.http.get(healthUrl).pipe(
+      tap(() => console.log('Backend is up')),
+      map(() => config),
+      catchError((err) => {
+        console.error('Backend health check failed:', err);
+        return throwError(() => new Error('Backend is not reachable'));
       })
     );
   }

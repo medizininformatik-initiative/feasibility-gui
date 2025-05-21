@@ -11,6 +11,6 @@ platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .catch((err) => {
     console.error(err);
-    const rootElement = document.getElementsByTagName('num-root')[0];
-    rootElement.innerHTML = err;
+    document.getElementById('global-error').style.display = 'flex';
+    document.getElementById('global-error-message').innerText = err;
   });

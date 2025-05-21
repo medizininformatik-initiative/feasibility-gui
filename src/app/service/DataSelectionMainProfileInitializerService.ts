@@ -14,6 +14,11 @@ export class DataSelectionMainProfileInitializerService {
     private dataSelectionProvider: DataSelectionProviderService
   ) {}
 
+  /**
+   * @todo set Profile in DataSelectionProviderService
+   * @param patientProfileUrl
+   * @returns
+   */
   public initializePatientProfile(patientProfileUrl: string): Observable<DataSelectionProfile> {
     return this.createDataSelectionProfileService
       .fetchDataSelectionProfileData([patientProfileUrl])
