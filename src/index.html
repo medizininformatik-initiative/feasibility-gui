@@ -14,6 +14,35 @@
           <circle class="loader" cx="100" cy="100" r="80" stroke-width="8" fill="none" />
         </svg>
       </div>
+      <div id="global-error" style="display: none">
+        <div class="error-indicator">
+          <svg height="120" width="120">
+            <circle cx="60" cy="60" r="50" stroke="#eb576a" stroke-width="8" fill="none" />
+            <line
+              x1="40"
+              y1="40"
+              x2="80"
+              y2="80"
+              stroke="#eb576a"
+              stroke-width="8"
+              stroke-linecap="round"
+            />
+            <line
+              x1="80"
+              y1="40"
+              x2="40"
+              y2="80"
+              stroke="#eb576a"
+              stroke-width="8"
+              stroke-linecap="round"
+            />
+          </svg>
+          <h1>Oops! Something went wrong</h1>
+          <p id="global-error-message">
+            The application could not connect to the backend.<br />Please try again later.
+          </p>
+        </div>
+      </div>
     </num-root>
   </body>
 
@@ -64,6 +93,32 @@
         transform: rotate(360deg);
         stroke: #919191;
       }
+    }
+
+    .error-indicator {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #eb576a;
+      background: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+    }
+    .error-indicator h1 {
+      margin: 24px 0 8px 0;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .error-indicator p {
+      font-size: 1.1rem;
+      color: #444;
+      text-align: center;
+      max-width: 320px;
     }
   </style>
 </html>

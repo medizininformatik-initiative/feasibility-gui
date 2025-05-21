@@ -1,32 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { map, tap, catchError } from 'rxjs/operators';
+import { of, throwError, Observable } from 'rxjs';
 import { IAppConfig } from './app-config.model';
 import { FeatureProviderService } from '../modules/feasibility-query/service/feature-provider.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {
   private readonly CONFIG_URL = `assets/config/config.${environment.name}.json`;
-
   config: IAppConfig = null;
-
-  constructor(private http: HttpClient, private featureProviderService: FeatureProviderService) {}
 
   public getConfig(): IAppConfig {
     return this.config;
   }
+  constructor(private http: HttpClient, private featureProviderService: FeatureProviderService) {}
 
-  public loadConfig(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      this.http
-        .get<IAppConfig>(this.CONFIG_URL)
-        .toPromise()
-        .then((config) => {
-          this.config = config;
-          this.featureProviderService.initFeatures(this.config);
-          return resolve();
-        })
-        .catch((error) => reject(`Could not load AppConfig': ${JSON.stringify(error)}`));
-    });
+  public loadConfig(): Observable<IAppConfig> {
+    return this.http.get<IAppConfig>(this.CONFIG_URL).pipe(
+      tap((config) => {
+        this.config = config;
+        this.featureProviderService.initFeatures(this.config);
+      }),
+      catchError((error) => {
+        console.error('Could not load AppConfig', error);
+        return throwError(() => new Error(`Could not load AppConfig: ${JSON.stringify(error)}`));
+      })
+    );
   }
 }

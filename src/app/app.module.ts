@@ -13,6 +13,7 @@ import { OAuthInitService } from './core/auth/oauth-init.service';
 import { OAuthInterceptor } from './core/interceptors/oauth.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CoreInitService } from './CoreInit.service';
 
 export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   new TranslateHttpLoader(http);
@@ -39,9 +40,8 @@ export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     {
       provide: APP_INITIALIZER,
       multi: true,
-      deps: [AppConfigService, OAuthInitService],
-      useFactory: (configService: AppConfigService, oauthInitService: OAuthInitService) => () =>
-        configService.loadConfig().then(() => oauthInitService.initOAuth()),
+      deps: [CoreInitService],
+      useFactory: (initService: CoreInitService) => () => initService.init(),
     },
     {
       provide: HTTP_INTERCEPTORS,

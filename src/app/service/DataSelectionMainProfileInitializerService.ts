@@ -1,11 +1,9 @@
-import { inject, Injectable } from '@angular/core';
-import { DataSelectionApiService } from './Backend/Api/DataSelectionApi.service';
-import { FeatureProviderService } from '../modules/feasibility-query/service/feature-provider.service';
-import { FeatureService } from './Feature.service';
-import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { CreateDataSelectionProfileService } from './DataSelection/CreateDataSelectionProfile.service';
-import { Observable, take, tap } from 'rxjs';
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +11,24 @@ import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelecti
 export class DataSelectionMainProfileInitializerService {
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
-    private dataSelectionApiService: DataSelectionApiService,
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private featureService: FeatureService
-  ) {
-    this.initializePatientProfile();
-  }
+    private dataSelectionProvider: DataSelectionProviderService
+  ) {}
 
-  public initializePatientProfile(): Observable<DataSelectionProfile[]> {
-    const patientUrl = this.featureService.getPatientProfileUrl();
-    return this.createDataSelectionProfileService.fetchDataSelectionProfileData([patientUrl]);
+  /**
+   * @todo set Profile in DataSelectionProviderService
+   * @param patientProfileUrl
+   * @returns
+   */
+  public initializePatientProfile(patientProfileUrl: string): Observable<DataSelectionProfile> {
+    return this.createDataSelectionProfileService
+      .fetchDataSelectionProfileData([patientProfileUrl])
+      .pipe(
+        map((profiles) => {
+          if (profiles && profiles.length > 0) {
+            const profile = profiles[0];
+            return profile;
+          }
+        })
+      );
   }
 }
