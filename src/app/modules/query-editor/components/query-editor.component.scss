@@ -10,18 +10,18 @@
 }
 
 .button-container {
-  padding-bottom: 2%;
+  padding-bottom: 1%;
 }
 
 .background {
   background-color: rgba(90, 121, 175, 0.1);
   border-radius: 10px;
-  padding: 20px;
-  height: 92%;
+  padding: 1%;
+  height: 100%;
 }
-.bottom {
+.action-bar {
   position: fixed;
   bottom: 20px;
-  width: 92%;
+  width: 93%;
   z-index: 100;
 }
