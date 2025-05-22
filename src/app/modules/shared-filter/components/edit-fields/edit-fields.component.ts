@@ -1,10 +1,19 @@
 import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter';
-import { map } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/SelectedProfileFields.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedFieldCloner';
 
 @Component({
@@ -13,7 +22,7 @@ import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCl
   styleUrls: ['./edit-fields.component.scss'],
   providers: [SelectedProfileFieldsService],
 })
-export class EditFieldsComponent implements OnInit {
+export class EditFieldsComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   fieldTree: BasicField[];
 
@@ -26,14 +35,24 @@ export class EditFieldsComponent implements OnInit {
   >();
 
   tree: TreeNode[] = [];
-
+  deepCopyFieldsSubscription: Subscription;
   constructor(private selectedDataSelectionProfileFieldsService: SelectedProfileFieldsService) {}
 
-  ngOnInit() {
-    this.traversAndUpddateTree();
-    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.fieldTree);
+  ngOnInit() {}
 
-    this.selectedDataSelectionProfileFieldsService
+  ngOnChanges(changes: SimpleChanges): void {
+    this.traversAndUpddateTree();
+    this.buildTreeFromProfileFields();
+  }
+
+  ngOnDestroy(): void {
+    this.deepCopyFieldsSubscription?.unsubscribe();
+  }
+
+  private buildTreeFromProfileFields(): void {
+    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.fieldTree);
+    this.deepCopyFieldsSubscription?.unsubscribe();
+    this.deepCopyFieldsSubscription = this.selectedDataSelectionProfileFieldsService
       .getDeepCopyBasicFields()
       .pipe(
         map((profileFields) => {
