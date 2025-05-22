@@ -3,13 +3,13 @@
     <div>{{ label | displayTranslation }}</div>
     <div class="text-small">{{ display }}</div>
   </div>
-  <div class="display-selected-fields-container">
+  <div class="display-selected-fields-container padding-1">
     {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
-    <div class="filter-chips-container">
+    <div class="filter-chips-container padding-1">
       <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
     </div>
   </div>
-  <div fxLayout="column" class="filter-container">
+  <div fxLayout="column" class="filter-container padding-1">
     {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
     <div
       fxLayout="row"
@@ -25,22 +25,12 @@
         (change)="toggleIsReferenceSet(profile.getReference())"
       ></mat-checkbox>
     </div>
-    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container">
+    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container padding-1">
       <num-filter-chips [filterChips]="chips"></num-filter-chips>
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="start start" class="menu-box">
     <num-menu [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
-    <!--<div>
-      <num-button (click)="editProfile(profile.getId())" type="blue">
-        {{ 'DATASELECTION.SELECTION_BOX.EDIT' | translate }}
-      </num-button>
-    </div>
-    <div>
-      <num-button (click)="deleteProfile(profile.getId())" type="red">
-        {{ 'DATASELECTION.SELECTION_BOX.DELETE' | translate }}
-      </num-button>
-    </div>-->
   </div>
 </div>
 <ng-container
