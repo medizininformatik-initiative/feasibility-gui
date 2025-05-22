@@ -9,7 +9,7 @@ export class MenuServiceDataSelection {
   constructor(private menuServiceDataSelectionFunctions: MenuServiceDataSelectionFunctions) {}
 
   /**
-   * @returns Array of Menu functions for a criterion box
+   * @returns Array of Menu functions for a dataselection profile box
    */
   public getMenuItemsForDataSelection(isMainProfile: boolean): MenuItemInterface[] {
     return [
@@ -33,20 +33,6 @@ export class MenuServiceDataSelection {
         label: 'DUPLICATE',
         action: (id: string) => this.menuServiceDataSelectionFunctions.cloneDataSelectionObject(id),
       },
-      /*{
-        disabled: false,
-        icon: 'filter',
-        label: 'APPLY_FILTERS',
-        action: (url: string) =>
-          this.menuServiceDataSelectionFunctions.openDataSelectionFilterModal(url),
-      },
-      {
-        disabled: false,
-        icon: 'clipboard-list',
-        label: 'DEFINE_FIELDS',
-        action: (id: string) =>
-          this.menuServiceDataSelectionFunctions.openDataSelectionFieldModal(id),
-      },*/
     ];
   }
 }
