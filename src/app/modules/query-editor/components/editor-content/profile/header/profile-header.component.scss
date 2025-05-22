@@ -3,6 +3,7 @@
   min-height: 150px;
   border-radius: 10px;
   margin-bottom: 10px;
+  height: 100%;
 }
 
 .display-container {
@@ -19,16 +20,15 @@
   line-clamp: 6;
   -webkit-box-orient: vertical;
 }
-.display-selected-fields-container {
+.selected-fields-container {
   border-right: 4px solid rgba(90, 121, 175, 0.1);
-  padding: 20px;
+  padding: 0 1% 0 1%;
   font-size: larger;
   width: 100%;
   color: black;
 }
 .filter-container,
 .reference-container {
-  padding: 20px;
   font-size: larger;
   width: 100%;
   color: black;
@@ -42,6 +42,8 @@
 
 .filter-chips-container {
   padding-top: 30px;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .filterChipsInfo {
@@ -148,4 +150,8 @@
   color: #6a7483;
   padding: 3px 4px;
   width: fit-content;
+}
+
+.padding-left-right-1 {
+  padding: 0 1% 0 1%;
 }

@@ -20,7 +20,9 @@ export class FilterChipsComponent implements OnInit {
 
   constructor(private translation: DisplayTranslationPipe) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('FilterChipsComponent ngOnInit', this.filterChips);
+  }
 
   public toggleExpanded(chip) {
     chip.expanded = !chip.expanded;

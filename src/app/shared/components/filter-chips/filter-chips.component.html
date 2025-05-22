@@ -1,25 +1,26 @@
-<div *ngIf="filterChips.length > 0">
-  <div *ngFor="let filterChip of filterChips" fxLayout="row" fxLayoutAlign="start start">
-    <ng-container *ngIf="displayBlockTriangle">
-      <div
-        class="block"
-        (click)="toggleTypeExpanded(filterChip)"
-        [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
-      >
-        {{ filterChip.type | displayTranslation }}
-      </div>
-      <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
-    </ng-container>
+<ng-container *ngIf="filterChips.length > 0">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let filterChip of filterChips">
+    <ng-container class="filter-wrapper">
+      <ng-container *ngIf="displayBlockTriangle">
+        <div
+          class="block margin-left-1"
+          (click)="toggleTypeExpanded(filterChip)"
+          [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
+        >
+          {{ filterChip.type | displayTranslation }}
+        </div>
+        <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
+      </ng-container>
 
-    <div fxLayout="row wrap" class="padding-left-20">
-      <div
-        *ngFor="let chip of filterChip.data"
-        class="chip-container"
-        [ngClass]="{ expanded: chip.expanded }"
-        (click)="toggleExpanded(chip)"
-      >
-        {{ chip.text | displayTranslation }}
-      </div>
-    </div>
+      <ng-container *ngFor="let chip of filterChip.data">
+        <div
+          class="chip-container margin-left-1"
+          [ngClass]="{ expanded: chip.expanded }"
+          (click)="toggleExpanded(chip)"
+        >
+          {{ chip.text | displayTranslation }}
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
-</div>
+</ng-container>

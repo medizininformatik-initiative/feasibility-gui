@@ -2,19 +2,19 @@
   display: block;
   justify-content: center;
   align-items: center;
-  padding: 0 10px; /* Increase padding for better spacing */
+  padding: 0 2%; /* Increase padding for better spacing */
   font-size: 16px;
   border-radius: 5px;
   border: 2px solid rgba(90, 121, 175, 0.2);
   max-width: 150px; /* Fixed initial width */
   color: rgba(90, 121, 175, 1);
-  margin-left: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 1%;
   cursor: pointer;
   white-space: nowrap; /* Prevent text from wrapping */
   overflow: hidden; /* Hide overflow text */
   text-overflow: ellipsis; /* Show ellipsis for overflow text */
   transition: width 0.3s ease; /* Transition for width change */
+  height: fit-content;
 }
 
 .chip-container.expanded,
@@ -70,4 +70,20 @@
 
 .padding-left-20 {
   padding-left: 20px;
+}
+
+.height-100 {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.filter-wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.margin-left-1 {
+  margin-left: 1%;
 }
