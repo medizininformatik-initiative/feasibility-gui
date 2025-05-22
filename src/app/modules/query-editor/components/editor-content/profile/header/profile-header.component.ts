@@ -58,8 +58,6 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this.profile$ = this.stagedProfileService.getProfileObservable();
     this.getFilterChips();
-    this.label = this.translation.transform(this.profile.getLabel());
-    this.placeholder = this.translation.transform(this.profile.getDisplay());
     this.getProfileReferenceChips();
   }
 
@@ -69,6 +67,8 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
       const profile: DataSelectionProfile = changes.profile.currentValue;
       this.generateAndStoreFilterChips(profile.getProfileFields().getSelectedBasicFields());
     }
+    this.label = this.translation.transform(this.profile.getLabel());
+    this.placeholder = this.translation.transform(this.profile.getDisplay());
   }
 
   public getFilterChips(): void {
