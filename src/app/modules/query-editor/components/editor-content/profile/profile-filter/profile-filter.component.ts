@@ -7,9 +7,12 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
+import { DataSelectionProfile } from '../../../../../../model/DataSelection/Profile/DataSelectionProfile';
 
 @Component({
   selector: 'num-profile-filter',
@@ -17,8 +20,9 @@ import {
   templateUrl: './profile-filter.component.html',
   styleUrls: ['./profile-filter.component.scss'],
 })
-export class ProfileFilterComponent implements OnInit {
+export class ProfileFilterComponent implements OnInit, OnChanges {
   @Input() profileFilter: AbstractProfileFilter[] = [];
+  @Input() profile: DataSelectionProfile;
   @Output() profileFiltersChanged = new EventEmitter<AbstractProfileFilter[]>();
 
   profileTokenFilter: ProfileTokenFilter | null = null;
@@ -26,14 +30,19 @@ export class ProfileFilterComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.initializeFilters();
+  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.profile.currentValue.id !== changes.profile.previousValue?.id) {
+      this.initializeFilters();
+    }
   }
 
   /**
    * Initializes the token and time restriction filters from the input profile filters.
    */
   private initializeFilters(): void {
+    this.profileTimeFilters = [];
+    this.profileTokenFilter = null;
     this.profileFilter.forEach((filter) => {
       if (filter.getType() === DataSelectionFilterType.TOKEN) {
         this.profileTokenFilter = filter as ProfileTokenFilter;

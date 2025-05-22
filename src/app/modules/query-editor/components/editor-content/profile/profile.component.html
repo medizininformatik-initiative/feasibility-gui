@@ -22,6 +22,7 @@
 
   <ng-template #filter>
     <num-profile-filter
+      [profile]="profile"
       [profileFilter]="profile.getFilters()"
       (profileFiltersChanged)="updateProfileFilter($event)"
     ></num-profile-filter>
