@@ -103,7 +103,6 @@ export class DataSelectionProviderService {
         .getProfiles()
         .filter((existingProfile) => existingProfile.getId() !== profile.getId());
       updatedElements.push(profile);
-      console.log('updatedElements', updatedElements);
       this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
     }
   }

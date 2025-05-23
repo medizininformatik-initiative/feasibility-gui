@@ -28,13 +28,14 @@ export class DisplayProfilesComponent implements OnInit {
    * @todo add rerender of ui component
    */
   private getDataSelectionProfiles() {
-    this.dataSelectionProfileArray$ = this.dataSelectionProvider.getActiveDataSelection().pipe(
-      map((dataSelection) =>
-        dataSelection
-          .getProfiles()
-          .map((profile) => this.profileProvider.getProfileById(profile.getId()))
-      ),
-      tap((t) => console.log(t))
-    );
+    this.dataSelectionProfileArray$ = this.dataSelectionProvider
+      .getActiveDataSelection()
+      .pipe(
+        map((dataSelection) =>
+          dataSelection
+            .getProfiles()
+            .map((profile) => this.profileProvider.getProfileById(profile.getId()))
+        )
+      );
   }
 }
