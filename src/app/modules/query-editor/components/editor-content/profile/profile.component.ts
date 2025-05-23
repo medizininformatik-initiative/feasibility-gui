@@ -49,14 +49,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     private possibleReferencesService: PossibleReferencesService
   ) {}
 
-  ngOnInit(): void {
-    this.stagedProfileServiceSubscription?.unsubscribe();
-    this.stagedProfileServiceSubscription = this.stagedProfileService
-      .getProfileObservable()
-      .subscribe((profile) => {
-        this.profile = profile;
-      });
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.stagedProfileServiceSubscription?.unsubscribe();
@@ -69,8 +62,14 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
    * Initializes the templates for rendering.
    */
   ngAfterViewInit(): void {
-    this.templates = [];
-    this.updateTemplatesArray();
+    this.stagedProfileServiceSubscription?.unsubscribe();
+    this.stagedProfileServiceSubscription = this.stagedProfileService
+      .getProfileObservable()
+      .subscribe((profile) => {
+        this.profile = profile;
+        this.templates = [];
+        this.updateTemplatesArray();
+      });
   }
 
   private updateTemplatesArray(): void {
@@ -97,7 +96,6 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     const referenceFields = this.profile.getProfileFields().getReferenceFields();
     if (referenceFields && referenceFields.length > 0) {
       this.possibleReferencesServiceSubscription?.unsubscribe();
-      //this.possibleReferencesServiceSubscription = this.possibleReferencesService.initialize(this.profile.getId()).subscribe();
       this.templates.push({ template: this.referenceTemplate, name: 'REFERENCE' });
     }
   }
