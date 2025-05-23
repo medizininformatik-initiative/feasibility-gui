@@ -1,15 +1,5 @@
 import { CreateSelectedReferenceService } from 'src/app/service/CreateSelectedReference.service';
-import {
-  distinctUntilChanged,
-  distinctUntilKeyChanged,
-  filter,
-  map,
-  Observable,
-  Subscription,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { filter, map, Observable, Subscription, switchMap, take, tap } from 'rxjs';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { ProfileReferenceModalService } from 'src/app/service/DataSelection/ProfileReferenceModal.service';

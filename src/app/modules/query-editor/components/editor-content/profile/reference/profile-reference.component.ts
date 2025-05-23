@@ -1,5 +1,3 @@
-import { Subscription } from 'rxjs';
-import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner';
@@ -25,17 +23,11 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
   @Input() selectedReferenceFields: SelectedReferenceField[] = [];
   @Output() updatedSelectedReferenceFields = new EventEmitter<SelectedReferenceField[]>();
 
-  possibleReferencesServiceSubscription: Subscription;
+  constructor() {}
 
-  constructor(private possibleReferencesService: PossibleReferencesService) {}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    this.possibleReferencesServiceSubscription?.unsubscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.possibleReferencesServiceSubscription?.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   public setSelectedReference(
     selectedReferenceField: SelectedReferenceField,

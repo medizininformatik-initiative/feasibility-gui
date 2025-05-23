@@ -1,4 +1,16 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
+import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service';
+import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe';
+import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter';
+import { map, Observable, of } from 'rxjs';
+import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData';
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
 import {
   Component,
   EventEmitter,
@@ -8,18 +20,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service';
-import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
-import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
-import { groupBy, map, Observable, of } from 'rxjs';
-import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter';
-import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData';
-import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe';
 
 @Component({
   selector: 'num-profile-header',
