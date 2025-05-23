@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, of, Subscription, take, tap } from 'rxjs';
+import { combineLatest, Observable, of, Subscription, switchMap, take, tap } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
@@ -38,21 +38,24 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     this.routeSubscription?.unsubscribe();
     this.routeSubscription = combineLatest([this.activatedRoute.paramMap, this.activatedRoute.url])
       .pipe(
-        tap(([paramMap, url]) => {
+        switchMap(([paramMap, url]) => {
           const id = paramMap.get('id');
           const type = url[0]?.path;
+
           if (id && type) {
             this.id = id;
             this.type = type;
             this.getElementFromProvider();
-            this.possibleReferencesService.initialize(id);
+            return this.possibleReferencesService.initialize(id);
           }
+          return of(undefined);
         })
       )
       .subscribe();
   }
 
   ngOnDestroy(): void {
+    console.log('destroy');
     this.routeSubscription?.unsubscribe();
     this.buildProfileSubscription?.unsubscribe();
   }
