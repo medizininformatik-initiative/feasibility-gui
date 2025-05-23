@@ -4,6 +4,7 @@ import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
+import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 @Injectable({
   providedIn: 'root',
 })
@@ -99,11 +100,16 @@ export class DataSelectionProviderService {
   public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
     if (dataSelection) {
-      const updatedElements = dataSelection
-        .getProfiles()
-        .filter((existingProfile) => existingProfile.getId() !== profile.getId());
-      updatedElements.push(profile);
-      this.createDataSelectionInstanceAndSetMap(updatedElements, dataSelectionId);
+      const profiles = DataSelectionProfileCloner.deepCopyProfiles(dataSelection.getProfiles());
+      const index = profiles.findIndex(
+        (existingProfile) => existingProfile.getId() === profile.getId()
+      );
+      if (index !== -1) {
+        profiles[index] = profile;
+      } else {
+        profiles.push(profile);
+      }
+      this.createDataSelectionInstanceAndSetMap(profiles, dataSelectionId);
     }
   }
 
