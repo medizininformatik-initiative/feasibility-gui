@@ -2,10 +2,10 @@ import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttri
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { Observable, Subscription, switchMap } from 'rxjs';
+import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
@@ -24,6 +24,9 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
 
   @Input()
   conceptFilterId: string;
+
+  @Output()
+  selectedConcept = new EventEmitter<Concept>();
 
   adaptedData: TableData;
 
@@ -45,9 +48,8 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
     this.conceptElasticSearchService
       .getCodeableConceptSearchResults(this.conceptFilterId)
       .pipe(
-        switchMap((results) => {
+        map((results) => {
           this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
-          return this.selectedConceptProviderService.getSelectedConcepts();
         })
       )
       .subscribe(() => {
@@ -76,14 +78,8 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
   public addSelectedRow(item: InterfaceTableDataRow) {
     const entry = item.originalEntry as CodeableConceptResultListEntry;
     const concept = CloneConcept.deepCopyConcept(entry.getConcept());
-    this.selectedConceptProviderService.addConcept(concept);
+    this.selectedConcept.emit(concept);
   }
-
-  /*
-  public addSelectedConceptsToStage() {
-    this.selectedConceptProviderService.addConcepts(this.selectedConcepts);
-    this.clearSelectedConceptArray();
-  }*/
 
   private clearSelectedConceptArray() {
     this.selectedConcepts = [];

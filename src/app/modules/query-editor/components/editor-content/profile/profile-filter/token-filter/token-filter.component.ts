@@ -1,3 +1,5 @@
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,8 +8,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 
 @Component({
   selector: 'num-token-filter',
@@ -28,11 +28,11 @@ export class TokenFilterComponent implements OnInit {
    * @param concepts - The updated list of selected concepts.
    */
   public updateSelectedConcepts(concepts: Concept[]): void {
-    const newProfileTokenFilter = this.createProfileTokenFiletrInstance(concepts);
+    const newProfileTokenFilter = this.createProfileTokenFilterInstance(concepts);
     this.tokenFilterChanged.emit(newProfileTokenFilter);
   }
 
-  private createProfileTokenFiletrInstance(concepts: Concept[]): ProfileTokenFilter {
+  private createProfileTokenFilterInstance(concepts: Concept[]): ProfileTokenFilter {
     return new ProfileTokenFilter(
       this.tokenFilter.getId(),
       this.tokenFilter.getName(),

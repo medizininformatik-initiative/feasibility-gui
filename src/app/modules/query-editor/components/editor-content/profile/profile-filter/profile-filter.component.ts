@@ -1,5 +1,6 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
+import { DataSelectionProfile } from '../../../../../../model/DataSelection/Profile/DataSelectionProfile';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import {
@@ -7,12 +8,9 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
-import { DataSelectionProfile } from '../../../../../../model/DataSelection/Profile/DataSelectionProfile';
 
 @Component({
   selector: 'num-profile-filter',
@@ -20,7 +18,7 @@ import { DataSelectionProfile } from '../../../../../../model/DataSelection/Prof
   templateUrl: './profile-filter.component.html',
   styleUrls: ['./profile-filter.component.scss'],
 })
-export class ProfileFilterComponent implements OnInit, OnChanges {
+export class ProfileFilterComponent implements OnInit {
   @Input() profileFilter: AbstractProfileFilter[] = [];
   @Input() profile: DataSelectionProfile;
   @Output() profileFiltersChanged = new EventEmitter<AbstractProfileFilter[]>();
@@ -30,11 +28,8 @@ export class ProfileFilterComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.profile.currentValue.id !== changes.profile.previousValue?.id) {
-      this.initializeFilters();
-    }
+  ngOnInit(): void {
+    this.initializeFilters();
   }
 
   /**

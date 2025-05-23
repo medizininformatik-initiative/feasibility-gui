@@ -41,11 +41,6 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
     this.searchResults$ = this.searchResultProvider.getCodeableConceptSearchResults(
       this.conceptFilterId
     );
-    this.subscription = this.selectedConceptFilterService
-      .getSelectedConcepts()
-      .subscribe((selectedConcepts: Concept[]) => {
-        this.updateAndEmitConceptFilter(selectedConcepts);
-      });
   }
 
   ngOnDestroy(): void {
@@ -53,7 +48,29 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
     this.selectedConceptFilterService.clearSelectedConceptFilter();
   }
 
-  private updateAndEmitConceptFilter(selectedConcepts: Concept[]): void {
-    this.changedSelectedConcepts.emit(CloneConcept.deepCopyConcepts(selectedConcepts));
+  public updateAndEmitConceptFilter(selectedConcept: Concept[]): void {
+    this.changedSelectedConcepts.emit(CloneConcept.deepCopyConcepts(selectedConcept));
+  }
+
+  public addConcept(concept: Concept): void {
+    const currentArray = this.preSelectedConcepts;
+    if (
+      !currentArray.some(
+        (tc) => tc.getTerminologyCode().getCode() === concept.getTerminologyCode().getCode()
+      )
+    ) {
+      currentArray.push(concept);
+      this.updateAndEmitConceptFilter(currentArray);
+    } else {
+      const newConcepts = this.removeConcept(concept);
+      this.updateAndEmitConceptFilter(newConcepts);
+    }
+  }
+
+  public removeConcept(concept: Concept): Concept[] {
+    const currentArray = this.preSelectedConcepts;
+    return currentArray.filter(
+      (tc) => tc.getTerminologyCode().getCode() !== concept.getTerminologyCode().getCode()
+    );
   }
 }

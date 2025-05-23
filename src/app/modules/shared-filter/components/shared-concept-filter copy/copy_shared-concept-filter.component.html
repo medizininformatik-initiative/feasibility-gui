@@ -6,5 +6,6 @@
     *ngIf="searchResults$ | async as searchResults"
     [valueSetUrl]="valueSetUrl"
     [conceptFilterId]="conceptFilterId"
+    (selectedConcept)="addConcept($event)"
   ></num-concept-filter-table-copy>
 </div>
