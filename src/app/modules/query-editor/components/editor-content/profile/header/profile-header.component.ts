@@ -5,21 +5,13 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe';
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter';
-import { map, Observable, of } from 'rxjs';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
+import { map, Observable, of } from 'rxjs';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'num-profile-header',
@@ -27,7 +19,7 @@ import {
   styleUrls: ['./profile-header.component.scss'],
   providers: [DataSelectionFieldsChipsService, DataSelectionFiltersFilterChips],
 })
-export class ProfileHeaderComponent implements OnChanges, OnInit {
+export class ProfileHeaderComponent implements OnInit {
   profile$: Observable<DataSelectionProfile>;
 
   @Input()
@@ -57,32 +49,24 @@ export class ProfileHeaderComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     this.profile$ = this.stagedProfileService.getProfileObservable();
-    this.getFilterChips();
-    this.getProfileReferenceChips();
+    this.stagedProfileService.getProfileObservable().subscribe((profile) => {
+      this.profile = profile;
+      this.label = this.translation.transform(this.profile.getLabel());
+      this.placeholder = this.translation.transform(this.profile.getDisplay());
+      this.getProfileFieldsChips();
+      this.getProfileReferenceChips();
+      this.getProfileFilterChips(this.profile.getFilters());
+    });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.profile.currentValue?.getFilters()) {
-      this.getFilterChipsForProfileFilters(changes.profile.currentValue.getFilters());
-      const profile: DataSelectionProfile = changes.profile.currentValue;
-      this.generateAndStoreFilterChips(profile.getProfileFields().getSelectedBasicFields());
-    }
-    this.label = this.translation.transform(this.profile.getLabel());
-    this.placeholder = this.translation.transform(this.profile.getDisplay());
-  }
-
-  public getFilterChips(): void {
+  public getProfileFieldsChips(): void {
     const selectedFields = this.profile.getProfileFields().getSelectedBasicFields();
-    this.generateAndStoreFilterChips(selectedFields);
-  }
-
-  private generateAndStoreFilterChips(selectedFields: SelectedBasicField[]): void {
     this.$fieldsFilterChips =
       this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(selectedFields);
   }
 
-  private getFilterChipsForProfileFilters(filter: AbstractProfileFilter[]): void {
-    if (this.profile.getFilters()) {
+  private getProfileFilterChips(filter: AbstractProfileFilter[]): void {
+    if (filter.length > 0) {
       this.filtersFilterChips$ = of(
         this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(
           this.profile.getFilters()
