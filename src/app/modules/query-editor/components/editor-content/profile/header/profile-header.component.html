@@ -17,14 +17,9 @@
     </div>
   </div>
   <div fxLayout="column" class="filter-container padding-left-right-1">
-    <div fxLayout="row wrap" fxLayoutAlign="space-between">
-      {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
-    </div>
-    <div
-      *ngIf="filtersFilterChips$ | async as chips"
-      class="filter-chips-container padding-left-right-1"
-    >
-      <num-filter-chips [filterChips]="chips"> </num-filter-chips>
+    {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
+    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container">
+      <num-filter-chips style="padding-top: 1%" [filterChips]="chips"> </num-filter-chips>
     </div>
   </div>
   <div fxLayout="column" class="reference-container">
