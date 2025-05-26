@@ -71,12 +71,6 @@
       "DELETE": "Löschen"
     }
   },
-  "QUERYEDITOR": {
-    "SAVE": "Übernehmen",
-    "CANCEL": "Abbrechen",
-    "NEXT": "Nächstes Element",
-    "PREVIOUS": "Vorheriges Element"
-  },
   "SHAREDFILTER": {
     "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
     "FILTER_SELECTION": "Ausgewählte Elemente",
@@ -235,7 +229,10 @@
     }
   },
   "EDITOR": {
-    "HEADER": {},
+    "HEADER": {
+      "NEXT": "Nächstes Element",
+      "PREVIOUS": "Vorheriges Element"
+    },
     "CONTENT": {
       "PROFILE": {
         "FILTER": {
@@ -254,7 +251,10 @@
         "REFERENCE": "Referenzen"
       }
     },
-    "ACTION_BAR": {}
+    "ACTION_BAR": {
+      "SAVE": "Speichern",
+      "CANCEL": "Schließen"
+    }
   },
   "LANGUAGE": {
     "GERMAN": "Deutsch",

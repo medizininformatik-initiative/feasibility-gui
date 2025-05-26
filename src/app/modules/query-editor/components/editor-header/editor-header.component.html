@@ -3,12 +3,12 @@
     (click)="navigateToPreviousProfile()"
     [isDisabled]="(previousElementExists$ | async) === false"
   >
-    {{ 'QUERYEDITOR.PREVIOUS' | translate }}
+    {{ 'EDITOR.HEADER.PREVIOUS' | translate }}
   </num-button>
   <num-button
     (click)="navigateToNextProfile()"
     [isDisabled]="(nextElementExists$ | async) === false"
   >
-    {{ 'QUERYEDITOR.NEXT' | translate }}
+    {{ 'EDITOR.HEADER.NEXT' | translate }}
   </num-button>
 </div>

@@ -71,13 +71,6 @@
       "DELETE": "Delete"
     }
   },
-  "QUERYEDITOR": {
-    "SAVE": "Save",
-    "CANCEL": "Cancel",
-    "PREVIOUS": "Previous Element",
-    "NEXT": "Next Element"
-
-  },
   "SHAREDFILTER": {
     "FILTER_SELECTION": "Selected items",
     "BUTTON": {
@@ -233,7 +226,10 @@
     }
   },
   "EDITOR": {
-    "HEADER": {},
+    "HEADER": {
+      "PREVIOUS": "Previous Element",
+      "NEXT": "Next Element"
+    },
     "CONTENT": {
       "PROFILE": {
         "FILTER": {
@@ -252,7 +248,10 @@
         "REFERENCE": "References"
       }
     },
-    "ACTION_BAR": {}
+    "ACTION_BAR": {
+      "SAVE": "Save",
+      "CANCEL": "Cancel"
+    }
   },
   "LANGUAGE": {
     "GERMAN": "German",
