@@ -26,8 +26,8 @@
     <div fxLayout="row wrap" fxLayoutAlign="space-between">
       {{ 'DATASELECTION.REFERENCE_BOX.APPLIED_REFERENCES' | translate }}
     </div>
-    <div *ngIf="profileRefrenceChips$ | async as chips" class="filter-chips-container">
-      <num-filter-chips [filterChips]="chips"> </num-filter-chips>
+    <div *ngIf="profileReferenceChips" class="filter-chips-container">
+      <num-filter-chips [filterChips]="profileReferenceChips"> </num-filter-chips>
     </div>
   </div>
 </div>

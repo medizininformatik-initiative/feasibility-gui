@@ -6,12 +6,20 @@ import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe';
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
-import { map, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'num-profile-header',
@@ -19,7 +27,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./profile-header.component.scss'],
   providers: [DataSelectionFieldsChipsService, DataSelectionFiltersFilterChips],
 })
-export class ProfileHeaderComponent implements OnInit {
+export class ProfileHeaderComponent implements OnInit, OnChanges {
   profile$: Observable<DataSelectionProfile>;
 
   @Input()
@@ -37,10 +45,9 @@ export class ProfileHeaderComponent implements OnInit {
   filtersFilterChips: InterfaceFilterChip[] = [];
   filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
 
-  profileRefrenceChips$: Observable<InterfaceFilterChip[]> = of([]);
+  profileReferenceChips: InterfaceFilterChip[] = [];
 
   constructor(
-    private stagedProfileService: StagedProfileService,
     private profileProviderService: ProfileProviderService,
     private fieldsFilterChipsService: DataSelectionFieldsChipsService,
     private filtersFilterChipsService: DataSelectionFiltersFilterChips,
@@ -48,19 +55,29 @@ export class ProfileHeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.profile$ = this.stagedProfileService.getProfileObservable();
-    this.stagedProfileService.getProfileObservable().subscribe((profile) => {
-      this.profile = profile;
-      this.label = this.translation.transform(this.profile.getLabel());
-      this.placeholder = this.translation.transform(this.profile.getDisplay());
-      this.getProfileFieldsChips();
-      this.getProfileReferenceChips();
-      this.getProfileFilterChips(this.profile.getFilters());
-    });
+    this.label = this.translation.transform(this.profile.getLabel());
+    this.placeholder = this.translation.transform(this.profile.getDisplay());
+    this.getProfileFieldsChips(this.profile.getProfileFields().getSelectedBasicFields());
+    this.profileReferenceChips = this.getProfileReferenceChips(
+      this.profile.getProfileFields().getSelectedReferenceFields()
+    );
+    this.getProfileFilterChips(this.profile.getFilters());
   }
 
-  public getProfileFieldsChips(): void {
-    const selectedFields = this.profile.getProfileFields().getSelectedBasicFields();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.profile.currentValue?.getFilters()) {
+      this.getProfileFilterChips(changes.profile.currentValue.getFilters());
+      const profile: DataSelectionProfile = changes.profile.currentValue;
+      this.getProfileFieldsChips(profile.getProfileFields().getSelectedBasicFields());
+    }
+    this.profileReferenceChips = this.getProfileReferenceChips(
+      this.profile.getProfileFields().getSelectedReferenceFields()
+    );
+    this.label = this.translation.transform(this.profile.getLabel());
+    this.placeholder = this.translation.transform(this.profile.getDisplay());
+  }
+
+  public getProfileFieldsChips(selectedFields: SelectedBasicField[]): void {
     this.$fieldsFilterChips =
       this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(selectedFields);
   }
@@ -80,31 +97,29 @@ export class ProfileHeaderComponent implements OnInit {
     this.updatedLabel.emit(label);
   }
 
-  private getProfileReferenceChips(): void {
-    this.profileRefrenceChips$ = this.profile$.pipe(
-      map((profile) => {
-        const selectedReferenceFields = profile.getProfileFields().getSelectedReferenceFields();
-        const groupedByElementId = selectedReferenceFields.reduce((acc, ref) => {
-          const key = ref.getElementId();
-          if (!acc[key]) {
-            acc[key] = [];
-          }
-          const linkedProfiles = ref
-            .getLinkedProfileIds()
-            .map((id) => this.profileProviderService.getProfileById(id).getDisplay())
-            .filter((profileDisplay): profileDisplay is Display => !!profileDisplay); // Type-safe filter
+  public getProfileReferenceChips(
+    selectedReferenceFields: SelectedReferenceField[]
+  ): InterfaceFilterChip[] {
+    const groupedByElementId = selectedReferenceFields.reduce((acc, ref) => {
+      const key = ref.getElementId();
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      const linkedProfiles = ref
+        .getLinkedProfileIds()
+        .map((id) => this.profileProviderService.getProfileById(id).getDisplay())
+        .filter((profileDisplay): profileDisplay is Display => !!profileDisplay);
 
-          acc[key].push(...linkedProfiles);
-          return acc;
-        }, {} as ProfileReferenceGroup);
-        const groups: ProfileReferenceGroup[] = Object.entries(groupedByElementId).map(
-          ([elementId, profiles]) => ({ elementId, profiles })
-        );
-        const chips = groups.map((group) =>
-          FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(group)
-        );
-        return chips;
-      })
+      acc[key].push(...linkedProfiles);
+      return acc;
+    }, {} as ProfileReferenceGroup);
+
+    const groups: ProfileReferenceGroup[] = Object.entries(groupedByElementId).map(
+      ([elementId, profiles]) => ({ elementId, profiles })
     );
+    const chips = groups.map((group) =>
+      FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(group)
+    );
+    return chips;
   }
 }

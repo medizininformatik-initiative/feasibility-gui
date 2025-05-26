@@ -4,7 +4,7 @@ import { PossibleReferencesService } from 'src/app/service/PossibleReferences.se
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
-import { Subscription } from 'rxjs';
+import { distinctUntilChanged, distinctUntilKeyChanged, last, skip, Subscription, tap } from 'rxjs';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -65,8 +65,11 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     this.stagedProfileServiceSubscription?.unsubscribe();
     this.stagedProfileServiceSubscription = this.stagedProfileService
       .getProfileObservable()
-      .subscribe((profile) => {
-        this.profile = profile;
+      .pipe(
+        tap((profile) => (this.profile = profile)),
+        distinctUntilChanged((prev: DataSelectionProfile, next: DataSelectionProfile) => prev.getId() === next.getId())
+      )
+      .subscribe(() => {
         this.templates = [];
         this.updateTemplatesArray();
       });

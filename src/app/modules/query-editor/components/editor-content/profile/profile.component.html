@@ -1,5 +1,6 @@
 <div fxLayout="column" class="full">
   <num-profile-header
+    *ngIf="profile"
     class="profile-header"
     [profile]="profile"
     (updatedLabel)="updateLabel($event)"
