@@ -10,7 +10,7 @@ export class ProfileFilterCloner {
    * @param filters The array of filters to clone.
    * @returns A deep copy of the filters array.
    */
-  public static deepCopyFilters(filters: any[]): any[] {
+  public static deepCopyFilters(filters: AbstractProfileFilter[]): any[] {
     if (!filters || filters.length === 0) {
       return [];
     }
