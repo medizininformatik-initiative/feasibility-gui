@@ -39,7 +39,7 @@ export class TreeComponent implements OnInit {
 
   public calcMarginLeftCheckbox(level: number): string {
     if (level === 0) {
-      return '10px';
+      return '-10px';
     } else {
       if (level > 1) {
         return `calc(${level} * 35px)`;
