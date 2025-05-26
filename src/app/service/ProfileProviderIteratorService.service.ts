@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { debounceTime, map, take } from 'rxjs/operators';
 import { NavigationHelperService } from './NavigationHelper.service';
 import { Observable } from 'rxjs';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
@@ -40,6 +40,8 @@ export class ProfileProviderIteratorService {
   }
   public navigateToNextProfile(currentId: string): Observable<void> {
     return this.dataSelectionProvider.getActiveDataSelection().pipe(
+      debounceTime(150),
+      take(1),
       map((dataSelection) => {
         const profiles = dataSelection.getProfiles();
         const index = profiles.findIndex((profile) => profile.getId() === currentId);
@@ -54,6 +56,8 @@ export class ProfileProviderIteratorService {
   }
   public navigateToPreviousProfile(currentId: string): Observable<void> {
     return this.dataSelectionProvider.getActiveDataSelection().pipe(
+      debounceTime(150),
+      take(1),
       map((dataSelection) => {
         const profiles = dataSelection.getProfiles();
         const index = profiles.findIndex((profile) => profile.getId() === currentId);
