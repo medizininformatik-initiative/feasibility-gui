@@ -1,6 +1,7 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
 import { DataSelectionProfile } from '../../../../../../model/DataSelection/Profile/DataSelectionProfile';
+import { ProfileFilterCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFilterCloner';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import {
@@ -84,6 +85,6 @@ export class ProfileFilterComponent implements OnInit {
    * Emits the updated profile filters.
    */
   private emitProfileFiltersChanged(): void {
-    this.profileFiltersChanged.emit(this.profileFilter);
+    this.profileFiltersChanged.emit(ProfileFilterCloner.deepCopyFilters(this.profileFilter));
   }
 }
