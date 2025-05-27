@@ -21,6 +21,7 @@ import { FeasibilityQueryValidation } from 'src/app/service/Criterion/Feasibilit
 import { CRTDLData } from '../../../../model/Interface/CRTDLData';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { DataSelectionMainProfileInitializerService } from '../../../../service/DataSelectionMainProfileInitializerService';
+import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -31,6 +32,8 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   @Input() showActionBar;
   @Output()
   scrollClick = new EventEmitter();
+
+  saveDataQueryModalSubscription: Subscription;
 
   isDataSelectionExistent$: Observable<boolean>;
   isCohortExistent$: Observable<boolean>;
@@ -49,7 +52,8 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     private profileProviderService: ProfileProviderService,
     private feasibilityQueryValidation: FeasibilityQueryValidation,
-    private dataSelectionMainInitializer: DataSelectionMainProfileInitializerService
+    private dataSelectionMainInitializer: DataSelectionMainProfileInitializerService,
+    private saveDataQueryModalService: SaveDataQueryModalService
   ) {}
 
   ngOnInit(): void {
@@ -135,6 +139,13 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     } else {
       this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');
     }
+  }
+
+  public saveDataQuery(): void {
+    this.saveDataQueryModalSubscription?.unsubscribe();
+    this.saveDataQueryModalSubscription = this.saveDataQueryModalService
+      .openSaveDataQueryModal()
+      .subscribe();
   }
 
   public onReaderLoad(event: ProgressEvent<FileReader>): void {
