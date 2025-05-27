@@ -54,15 +54,6 @@
 </ng-container>
 <ng-container *ngIf="selectedReferenceFields.length > 0">
   <div *ngFor="let selectedReference of selectedReferenceFields" class="selection-box-container">
-    <!---
-    <div *ngFor="let linkedProfileId of selectedReference.getLinkedProfileIds()">
-      <num-profile-reference-tile
-      [referenceField]="selectedReference"
-      [linkedProfileId]="linkedProfileId"
-      ></num-profile-reference-tile>
-    </div>
-      -->
-
     <num-profile-reference-tile
       [filterChips]="profileRefrenceChips"
       [referenceField]="selectedReference"
