@@ -1,5 +1,20 @@
 # Changelog
 
+## v6.2.0 (2025-05-27)
+
+### Feature
+* Implemented loading of reference profile lists ([#381](https://github.com/medizininformatik-initiative/feasibility-gui/issues/381))
+* Added support for single feature patient profiles ([#380](https://github.com/medizininformatik-initiative/feasibility-gui/issues/380))
+* Prevent Maximum Quantity Value from Being Less Than Minimum Quantity ([#374](https://github.com/medizininformatik-initiative/feasibility-gui/issues/374))
+
+### Changes
+* Completed rework of Core Service for improved internal structure ([#387](https://github.com/medizininformatik-initiative/feasibility-gui/issues/387))
+
+### Bug Fixes
+* Fix downloading an uploaded CRTDL with filter again ([#382](https://github.com/medizininformatik-initiative/feasibility-gui/issues/382))
+* Fixing various small issues ([#386](https://github.com/medizininformatik-initiative/feasibility-gui/issues/386))
+
+
 ## v6.2.0-alpha (2025-05-12)
 
 ### Feature
