@@ -1,0 +1,37 @@
+.width-100 {
+  width: 100%;
+}
+.full {
+  width: 100%;
+  height: 100%;
+}
+.height-25 {
+  height: 25%;
+}
+.height {
+  flex: 1;
+  overflow: auto;
+}
+.header {
+  padding-top: 2%;
+  width: 90%;
+}
+
+.profile-tab-group-container .mat-mdc-tab-group {
+  padding: 1.5% 1.5% 0 1.5%;
+  background: white;
+  height: 100%;
+}
+mat-drawer-container {
+  height: 100%;
+}
+::ng-deep .mdc-tab {
+  max-width: fit-content;
+  padding: 0 30px;
+}
+
+.profile-header {
+  width: 100%;
+  height: 20%;
+  overflow-y: auto;
+}

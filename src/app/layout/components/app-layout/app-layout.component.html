@@ -2,6 +2,7 @@
 <mat-sidenav-container autosize fullscreen class="sidenav-container fix-overlay">
   <mat-sidenav
     #drawer
+    *ngIf="showSideNav"
     fixedInViewport
     [attr.role]="isHandset ? 'dialog' : 'navigation'"
     [attr.aria-label]="'APPLAYOUT.SIDENAV.LABEL' | translate"

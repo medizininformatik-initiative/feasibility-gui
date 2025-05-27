@@ -8,6 +8,7 @@
   <div fxLayout="row" fxLayoutAlign="start start" class="searchbar-div">
     <num-searchbar
       fxFlex="50"
+      icon="search"
       [searchText]="searchText$ | async"
       [label]="'QUERYBUILDER.SEARCH.SEARCHBAR'"
       class="padding-right-1 width-100"
@@ -43,7 +44,7 @@
         </num-list-item-details>
       </div>
     </mat-drawer>
-    <mat-drawer-content *ngIf="listItems?.length > 0" class="content-height-88">
+    <mat-drawer-content *ngIf="listItems?.length > 0" class="content-height-100">
       <num-table
         (selectedRow)="setSelectedRowItem($event)"
         (rowClicked)="setClickedRow($event)"

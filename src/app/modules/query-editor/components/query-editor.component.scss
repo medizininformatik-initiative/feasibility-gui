@@ -1,0 +1,27 @@
+.width-100 {
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 88%;
+}
+
+.button-container {
+  padding-bottom: 1%;
+}
+
+.background {
+  background-color: rgba(90, 121, 175, 0.1);
+  border-radius: 10px;
+  padding: 1%;
+  height: 93%;
+}
+.action-bar {
+  position: fixed;
+  bottom: 20px;
+  width: 93%;
+  z-index: 100;
+}

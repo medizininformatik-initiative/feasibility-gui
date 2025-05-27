@@ -1,0 +1,33 @@
+<div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
+  <div class="display-container">
+    <num-searchbar
+      icon="pencil-alt"
+      [label]="placeholder"
+      [minLength]="0"
+      [searchText]="label"
+      (searchTextChange)="setLabel($event)"
+    >
+    </num-searchbar>
+    <div class="profile-display"><span>Type: </span>{{ profile.getDisplay().getOriginal() }}</div>
+  </div>
+  <div class="selected-fields-container padding-left-right-1">
+    {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
+    <div class="filter-chips-container">
+      <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
+    </div>
+  </div>
+  <div fxLayout="column" class="filter-container padding-left-right-1">
+    {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
+    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container">
+      <num-filter-chips style="padding-top: 1%" [filterChips]="chips"> </num-filter-chips>
+    </div>
+  </div>
+  <div fxLayout="column" class="reference-container">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      {{ 'DATASELECTION.REFERENCE_BOX.APPLIED_REFERENCES' | translate }}
+    </div>
+    <div *ngIf="profileReferenceChips" class="filter-chips-container">
+      <num-filter-chips [filterChips]="profileReferenceChips"> </num-filter-chips>
+    </div>
+  </div>
+</div>

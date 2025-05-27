@@ -1,26 +1,16 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
   <div class="display-container">
-    <span
-      matTooltipShowDelay="300"
-      matTooltipPosition="below"
-      [matTooltip]="display | displayTranslation"
-      >{{ display | displayTranslation }}</span
-    >
+    <div>{{ label | displayTranslation }}</div>
+    <div class="text-small">{{ display }}</div>
   </div>
-  <div class="display-selected-fields-container">
+  <div class="display-selected-fields-container padding-1">
     {{ 'DATASELECTION.SELECTION_BOX.SELECTED_FIELDS' | translate }}
-    <div *ngIf="filterChipsSelected === false" class="filterChipsInfo">
-      {{ 'DATASELECTION.SELECTION_BOX.FIELDS_MISSING' | translate }}
-    </div>
-    <div class="filter-chips-container">
+    <div class="filter-chips-container padding-1">
       <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
     </div>
   </div>
-  <div fxLayout="column" class="filter-container">
-    <div fxLayout="row wrap" fxLayoutAlign="space-between">
-      {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
-      <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="profile.getUrl()"></num-menu>
-    </div>
+  <div fxLayout="column" class="filter-container padding-1">
+    {{ 'DATASELECTION.SELECTION_BOX.APPLIED_FILTER' | translate }}
     <div
       fxLayout="row"
       fxLayoutAlign="start center"
@@ -35,8 +25,39 @@
         (change)="toggleIsReferenceSet(profile.getReference())"
       ></mat-checkbox>
     </div>
-    <div class="filter-chips-container">
-      <num-filter-chips [filterChips]="filtersFilterChips"> </num-filter-chips>
+    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container padding-1">
+      <num-filter-chips [filterChips]="chips"></num-filter-chips>
     </div>
   </div>
+  <div fxLayout="row" fxLayoutAlign="start start" class="menu-box">
+    <num-menu [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
+  </div>
 </div>
+<ng-container
+  *ngIf="unlinkedRequiredOrRecommendedReferences.length > 0 || selectedReferenceFields.length > 0"
+>
+  <num-linked-badge></num-linked-badge>
+</ng-container>
+
+<ng-container *ngIf="unlinkedRequiredOrRecommendedReferences.length > 0">
+  <div
+    *ngFor="let reference of unlinkedRequiredOrRecommendedReferences"
+    class="selection-box-container"
+  >
+    <num-profile-reference-tile
+      [unlinkedRequiredOrRecommendedReferences]="reference"
+      [parentId]="profile.getId()"
+      (deleteTrigger)="updateRequiredOrRecommendedReferences()"
+    >
+    </num-profile-reference-tile>
+  </div>
+</ng-container>
+<ng-container *ngIf="selectedReferenceFields.length > 0">
+  <div *ngFor="let selectedReference of selectedReferenceFields" class="selection-box-container">
+    <num-profile-reference-tile
+      [filterChips]="profileRefrenceChips"
+      [referenceField]="selectedReference"
+      [parentId]="profile.getId()"
+    ></num-profile-reference-tile>
+  </div>
+</ng-container>

@@ -1,0 +1,8 @@
+<num-modal-window
+  (saveButtonSelected)="saveProfileReferences()"
+  (cancelButtonSelected)="closeDialog()"
+>
+  <div *ngFor="let tree of urlTree">
+    <num-tree [treeData]="tree" (selectedCheckbox)="setSelectedReferenceFields($event)"></num-tree>
+  </div>
+</num-modal-window>

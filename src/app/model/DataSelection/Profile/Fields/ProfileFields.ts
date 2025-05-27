@@ -1,116 +1,88 @@
-import { Display } from '../Display';
+import { ReferenceField } from './RefrenceFields/ReferenceField';
+import { SelectedBasicField } from './BasicFields/SelectedBasicField';
+import { SelectedReferenceField } from './RefrenceFields/SelectedReferenceField';
+import { BasicField } from './BasicFields/BasicField';
+import { SelectedField } from './SelectedField';
 
 export class ProfileFields {
-  private id: string;
-  private display: Display;
-  private description: Display;
-  private children: ProfileFields[] = [];
-  private isSelected = false;
-  private isRequired = false;
-  private recommended = false;
-  private mustHave: boolean;
-  private referencedProfileUrls: string[];
-  private linkedProfiles: string[];
+  private readonly id: string;
+  private fieldTree: BasicField[] = [];
+  private referenceFields: ReferenceField[] = [];
+
+  private selectedBasicFields: SelectedBasicField[] = [];
+  private selectedReferenceFields: SelectedReferenceField[] = [];
 
   constructor(
     id: string,
-    display: Display,
-    description: Display,
-    children: ProfileFields[] = [],
-    isSelected: boolean = false,
-    isRequired: boolean = false,
-    recommended: boolean,
-    mustHave: boolean,
-    referencedProfileUrls: string[]
+    fieldTree: BasicField[] = [],
+    referenceFields: ReferenceField[] = [],
+    selectedBasicFields: SelectedBasicField[] = [],
+    selectedReferenceFields: SelectedReferenceField[] = []
   ) {
     this.id = id;
-    this.display = display;
-    this.description = description;
-    this.children = children;
-    this.isSelected = isSelected;
-    this.isRequired = isRequired;
-    this.recommended = recommended;
-    this.mustHave = mustHave;
-    this.referencedProfileUrls = referencedProfileUrls;
+    this.fieldTree = fieldTree;
+    this.referenceFields = referenceFields;
+    this.selectedBasicFields = selectedBasicFields;
+    this.selectedReferenceFields = selectedReferenceFields;
   }
 
-  public getLinkedProfiles(): string[] {
-    return this.linkedProfiles;
+  public getFieldTree(): BasicField[] {
+    return this.fieldTree;
   }
 
-  public setLinkedProfiles(linkedProfiles: string[]): void {
-    this.linkedProfiles = linkedProfiles;
+  public getReferenceFields(): ReferenceField[] {
+    return this.referenceFields;
+  }
+
+  public setReferenceFields(referenceFields: ReferenceField[]): void {
+    this.referenceFields = referenceFields;
+  }
+
+  public getSelectedBasicFields(): SelectedBasicField[] {
+    return this.selectedBasicFields;
+  }
+
+  public getSelectedReferenceFields(): SelectedReferenceField[] {
+    return this.selectedReferenceFields;
+  }
+
+  public setSelectedReferenceFields(selectedFields: SelectedReferenceField[]): void {
+    this.selectedReferenceFields = selectedFields;
+  }
+
+  public setSelectedBasicFields(selectedFields: SelectedBasicField[]): void {
+    this.selectedBasicFields = selectedFields;
   }
 
   public getId(): string {
     return this.id;
   }
 
-  public setId(value: string): void {
-    this.id = value;
+  public getRequiredOrRecommendedReferences(): ReferenceField[] {
+    return this.referenceFields.filter(
+      (referenceField) => referenceField.getIsRequired() || referenceField.getRecommended()
+    );
   }
 
-  public getDisplay(): Display {
-    return this.display;
+  /**
+   * This method filters the reference fields to find those that are either required or recommended
+   * and checks if they are not in the selectedReferenceArray.
+   * @returns An array of unlinked required or recommended reference fields.
+   */
+  public getUnlinkedRequiredOrRecommendedReferences(): ReferenceField[] {
+    const requiredOrRecommendedFields = this.getRequiredOrRecommendedReferences();
+
+    return requiredOrRecommendedFields.filter(
+      (referenceField) =>
+        !this.selectedReferenceFields.some(
+          (selectedField) => selectedField.getElementId() === referenceField.getElementId()
+        )
+    );
   }
 
-  public setDisplay(value: Display): void {
-    this.display = value;
-  }
-
-  public getDescription(): Display {
-    return this.description;
-  }
-
-  public setDescription(value: Display): void {
-    this.description = value;
-  }
-
-  public getChildren(): ProfileFields[] {
-    return this.children;
-  }
-
-  public setChildren(value: ProfileFields[]): void {
-    this.children = value;
-  }
-
-  public getIsSelected(): boolean {
-    return this.isSelected;
-  }
-
-  public setIsSelected(isSelected: boolean): void {
-    this.isSelected = isSelected;
-  }
-
-  public getIsRequired(): boolean {
-    return this.isRequired;
-  }
-
-  public setIsRequired(value: boolean): void {
-    this.isRequired = value;
-  }
-
-  public getRecommended(): boolean {
-    return this.recommended;
-  }
-
-  public setRecommended(recommended: boolean): void {
-    this.recommended = recommended;
-  }
-
-  public getMustHave(): boolean {
-    return this.mustHave;
-  }
-
-  public setMustHave(mustHave: boolean): void {
-    this.mustHave = mustHave;
-  }
-
-  public getReferencedProfileUrls(): string[] {
-    return this.referencedProfileUrls;
-  }
-
-  public setReferencedProfileUrls(referencedProfileUrls: string[]): void {
-    this.referencedProfileUrls = referencedProfileUrls;
+  public getUnlinkedSelectedFields(): SelectedReferenceField[] {
+    return this.selectedReferenceFields.filter(
+      (selectedField) => selectedField.getLinkedProfileIds().length === 0
+    );
   }
 }

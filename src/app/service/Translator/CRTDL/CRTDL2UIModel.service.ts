@@ -16,7 +16,7 @@ import { UiCRTDL } from 'src/app/model/UiCRTDL';
 import { v4 as uuidv4 } from 'uuid';
 import { ValidationService } from '../../Validation.service';
 import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
-import { DataSelectionProfileProviderService } from '../../../modules/data-selection/services/DataSelectionProfileProvider.service';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class CRTDL2UIModelService {
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
     private validationService: ValidationService,
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService
+    private profileProviderService: ProfileProviderService
   ) {}
 
   public createCRDTLFromJson(crtdl: CRTDLData): Observable<UiCRTDL> {
@@ -76,14 +76,16 @@ export class CRTDL2UIModelService {
         console.error(error);
       }
     }
-    return of(new DataSelection([], uuidv4()));
+    this.resetDataSelection();
+    const newDataSelection = new DataSelection([], uuidv4());
+    this.setDataSelectionProvider(newDataSelection);
+    return of(newDataSelection);
   }
 
   private translateDataExtractionAndSetProvider(
     dataExtraction: DataExtractionData
   ): Observable<DataSelection> {
-    this.dataSelectionProvider.clearDataSelection();
-    this.dataSelectionProfileProviderService.resetDataSelectionProfileMap();
+    this.resetDataSelection();
     return this.dataExtraction2UiDataSelectionService.translate(dataExtraction).pipe(
       take(1),
       map((dataSelection) => {
@@ -133,5 +135,10 @@ export class CRTDL2UIModelService {
 
   private setDataSelectionProvider(dataSelection: DataSelection): void {
     this.dataSelectionProvider.setDataSelectionByUID(dataSelection.getId(), dataSelection, true);
+  }
+
+  private resetDataSelection(): void {
+    this.dataSelectionProvider.clearDataSelection();
+    this.profileProviderService.resetProfileMap();
   }
 }

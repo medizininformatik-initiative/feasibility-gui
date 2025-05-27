@@ -2,21 +2,27 @@ import { AbstractAttributeGroupFilter } from './AttributeGroup/AbstractAttribute
 import { Attributes } from './AttributeGroup/Attributes/Attribute';
 
 export class AttributeGroup {
+  id: string;
   groupReference: string;
   attributes: Attributes[];
   filter: AbstractAttributeGroupFilter[];
   includeReferenceOnly?: boolean;
+  name: string;
 
   constructor(
+    id: string,
     groupReference: string,
     attributes: Attributes[],
     filter: AbstractAttributeGroupFilter[],
+    name: string,
     includeReferenceOnly?: boolean
   ) {
-    this.groupReference = groupReference;
     this.attributes = attributes;
+    this.id = id;
     this.filter = filter;
     this.includeReferenceOnly = includeReferenceOnly || undefined;
+    this.groupReference = groupReference;
+    this.name = name;
   }
 
   public getGroupReference(): string {
@@ -56,9 +62,11 @@ export class AttributeGroup {
     abstractAttributeGroupFilter: AbstractAttributeGroupFilter[]
   ): AttributeGroup {
     return new AttributeGroup(
+      json.id,
       json.groupReference,
       json.attributes.map((attribute: any) => Attributes.fromJson(attribute)),
       abstractAttributeGroupFilter,
+      json.name,
       json.includeReferenceOnly
     );
   }

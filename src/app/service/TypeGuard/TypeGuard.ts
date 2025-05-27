@@ -70,7 +70,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isObject(obj: unknown): obj is object {
-    return typeof obj === 'object' && obj !== null;
+    return typeof obj === 'object' && obj !== null && obj !== undefined;
   }
 
   public static isOptionalString(val: unknown): boolean {

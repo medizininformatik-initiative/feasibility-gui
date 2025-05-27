@@ -25,7 +25,6 @@ export class FilterChipConceptAdapter {
     this.resetFilterChips();
 
     if (selectedConcepts.length === 0) {
-      console.warn('No selected concepts found in the ConceptFilter');
       return [];
     }
 

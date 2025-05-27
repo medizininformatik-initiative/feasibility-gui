@@ -1,11 +1,6 @@
-<fa-icon
-  [matMenuTriggerFor]="menu"
-  #menuTrigger="matMenuTrigger"
-  class="menu-icon"
-  size="1x"
-  icon="pencil-alt"
->
-</fa-icon>
+<num-button type="blue" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+  {{ 'SHAREDCOMPONENTS.MENU.EDIT' | translate }}
+</num-button>
 <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
   <div class="divider options">{{ 'SHAREDCOMPONENTS.MENU.OPTIONS' | translate }}</div>
   <div *ngFor="let item of menuItems; let isLast = last">

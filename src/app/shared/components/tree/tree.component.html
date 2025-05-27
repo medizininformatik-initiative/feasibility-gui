@@ -11,7 +11,6 @@
           (change)="checkboxSelected(node)"
           [style.marginLeft]="calcMarginLeftCheckbox(level)"
         ></mat-checkbox>
-        <div *ngIf="!node.data.selectable" class="checkbox-placeholder"></div>
       </div>
       <div
         *ngIf="node?.children && node.children.length > 0"
@@ -39,7 +38,7 @@
         >
         <div *ngIf="node.data.description" class="field-description">
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
-            ({{ node.data.description | displayTranslation }})
+            {{ node.data.description | displayTranslation }}
           </span>
         </div>
         <div
@@ -47,7 +46,7 @@
           class="field-description"
         >
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
-            ({{ node.data.displayFieldsInfo | displayTranslation }})
+            {{ node.data.displayFieldsInfo | displayTranslation }}
           </span>
         </div>
       </div>

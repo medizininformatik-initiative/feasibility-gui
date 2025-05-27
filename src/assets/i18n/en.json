@@ -32,6 +32,7 @@
     "MENU": {
       "DUPLICATE": "Duplicate",
       "DELETE": "Delete",
+      "EDIT": "Edit",
       "REFERENCE": "Link criteria",
       "APPLY_FILTERS": "Apply filter",
       "DEFINE_FIELDS": "Select fields",
@@ -63,6 +64,11 @@
       "SAVE": "Save",
       "CANCEL": "Cancel",
       "COHORT_WARNING": "Note: Cohort is empty or invalid"
+    },
+    "REFERENCE_TILE": {
+      "REQUIRED": "Required",
+      "NOTLINKED": "Not linked",
+      "DELETE": "Delete"
     }
   },
   "SHAREDFILTER": {
@@ -138,14 +144,19 @@
     "SELECTION_BOX": {
       "FIELDS_MISSING": "Please select at least one field using the pen symbol on the top right corner of this box.",
       "SELECTED_FIELDS": "Selected Fields",
+      "DELETE": "Delete",
+      "EDIT": "Edit",
       "APPLIED_FILTER": "Applied Filters",
       "REQUIRED": "required",
       "OPTIONAL": "optional"
     },
+    "REFERENCE_BOX": {
+      "APPLIED_REFERENCES": "Referenced Features"
+    },
     "FIELD_SELECTION": {
       "FIELD_SELECTION": "Selected features",
       "HEADER": "Select fields to extract for ",
-      "REQUIRED": "required"
+      "REQUIRED": "Required"
     },
     "FILTER": {
       "TOKEN": "Coding/Name"
@@ -212,6 +223,34 @@
         "UPLOAD": "Data Definition has been uploaded",
         "DOWNLOAD": "Data Definition has been successfully downloaded"
       }
+    }
+  },
+  "EDITOR": {
+    "HEADER": {
+      "PREVIOUS": "Previous Element",
+      "NEXT": "Next Element"
+    },
+    "CONTENT": {
+      "PROFILE": {
+        "FILTER": {
+          "TAB_LABEL": {
+            "FILTER": "Token Filter",
+            "TIMERESTRICTION": "Time Restriction"
+          }
+        }
+      },
+      "CRITERION": {
+
+      },
+      "TAB_LABEL": {
+        "FIELD": "Fields",
+        "FILTER": "Filter",
+        "REFERENCE": "References"
+      }
+    },
+    "ACTION_BAR": {
+      "SAVE": "Save",
+      "CANCEL": "Close"
     }
   },
   "LANGUAGE": {

@@ -15,6 +15,10 @@ export class NavigationHelperService {
     });
   }
 
+  navigateToEditProfile(id: string): void {
+    this.router.navigate([`${UrlPaths.queryEditor.profile}`, id]);
+  }
+
   public navigateToFeasibilityQueryEditor(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.editor]);
   }

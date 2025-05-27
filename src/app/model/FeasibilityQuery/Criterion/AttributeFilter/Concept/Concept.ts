@@ -5,8 +5,9 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
  * @todo the id of a concept needs to be set in the future --> can be system + code or uuid maybe
  */
 export class Concept {
-  private display: Display;
   private id: string;
+  private hash: string;
+  private display: Display;
   private terminologyCode: TerminologyCode;
 
   constructor(display: Display, terminologyCode: TerminologyCode) {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AppConfigService } from 'src/app/config/app-config.service';
 import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
+import { from, race, of, timer, Observable, throwError } from 'rxjs';
+import { catchError, mapTo, map } from 'rxjs/operators';
+import { IAppConfig } from 'src/app/config/app-config.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,60 +14,66 @@ export class OAuthInitService {
   private readonly ERROR_TIMEOUT = `${this.ERROR_INIT_FAIL} after waiting for ${this.TERMINATION_TIMEOUT} ms`;
   private readonly ERROR_UNREACHABLE = `${this.ERROR_INIT_FAIL} while connecting to the authentication server`;
 
-  private BASE_URL: string;
-  private REALM: string;
-  private CLIENT_ID: string;
+  constructor(private oauthService: OAuthService) {}
 
-  private AUTH_CONFIG: AuthConfig;
-
-  constructor(private oauthService: OAuthService, private appConfig: AppConfigService) {}
-
-  public initOAuth(): Promise<boolean> {
-    let terminationTimer: number;
-    this.initVariables();
-
-    return new Promise(async (resolve, reject) => {
-      const terminationTimeout = new Promise((_, onTimeout) => {
-        terminationTimer = window.setTimeout(() => {
-          onTimeout(this.ERROR_TIMEOUT);
-        }, this.TERMINATION_TIMEOUT);
-      });
-
-      this.oauthService.configure(this.AUTH_CONFIG);
-      const init = this.oauthService
-        .loadDiscoveryDocumentAndLogin()
-        .then(() => {
-          this.oauthService.setupAutomaticSilentRefresh();
-        })
-        .catch(() => reject(this.ERROR_UNREACHABLE));
-
-      return Promise.race([init, terminationTimeout])
-        .then(() => {
-          clearTimeout(terminationTimer);
-          return resolve(true);
-        })
-        .catch((err) => reject(err));
-    });
+  public initOAuth(config: IAppConfig): Observable<boolean> {
+    this.buildAuthConfig(config);
+    const timeout$ = this.setTimeoOut();
+    const login$ = this.startOAuthLogin();
+    return race([login$, timeout$]).pipe(
+      catchError((err) => throwError(() => new Error(err.message || this.ERROR_INIT_FAIL)))
+    );
   }
 
-  private initVariables(): void {
-    this.BASE_URL = this.appConfig.config.auth.baseUrl;
-    this.REALM = this.appConfig.config.auth.realm;
-    this.CLIENT_ID = this.appConfig.config.auth.clientId;
+  private startOAuthLogin(): Observable<boolean> {
+    const init$ = from(
+      this.oauthService.loadDiscoveryDocumentAndLogin().then((loggedIn) => {
+        if (loggedIn && this.oauthService.hasValidAccessToken()) {
+          this.oauthService.setupAutomaticSilentRefresh();
+          return true;
+        } else {
+          return false;
+        }
+      })
+    ).pipe(
+      catchError((err) => {
+        console.error('OAuth init error:', err);
+        return of(false);
+      })
+    );
 
-    this.AUTH_CONFIG = {
-      issuer: `${this.BASE_URL}/realms/${this.REALM}`,
-      clientId: this.CLIENT_ID,
+    return init$;
+  }
+
+  private setTimeoOut(): Observable<boolean> {
+    return timer(this.TERMINATION_TIMEOUT).pipe(
+      mapTo(false),
+      catchError(() => {
+        console.error(this.ERROR_TIMEOUT);
+        return of(false);
+      })
+    );
+  }
+
+  private buildAuthConfig(config: IAppConfig) {
+    const BASE_URL = config.auth.baseUrl;
+    const REALM = config.auth.realm;
+    const CLIENT_ID = config.auth.clientId;
+
+    const authConfig: AuthConfig = {
+      issuer: `${BASE_URL}/realms/${REALM}`,
+      clientId: CLIENT_ID,
       responseType: 'code',
       redirectUri: window.location.origin + '/home',
       silentRefreshRedirectUri: window.location.origin + '/assets/silent-refresh.html',
       scope: 'openid profile email roles',
       useSilentRefresh: true,
-      silentRefreshTimeout: 5000,
+      silentRefreshTimeout: 52000,
       timeoutFactor: 0.25,
       sessionChecksEnabled: true,
       clearHashAfterLogin: false,
       nonceStateSeparator: 'semicolon',
     };
+    this.oauthService.configure(authConfig);
   }
 }

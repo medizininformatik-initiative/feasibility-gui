@@ -1,0 +1,11 @@
+<div fxLayout="column" class="container">
+  <div class="attribute-code-display"></div>
+  <num-search-concept-copy [valueSetUrl]="valueSetUrl" [conceptFilterId]="conceptFilterId">
+  </num-search-concept-copy>
+  <num-concept-filter-table-copy
+    *ngIf="searchResults$ | async as searchResults"
+    [valueSetUrl]="valueSetUrl"
+    [conceptFilterId]="conceptFilterId"
+    (selectedConcept)="addConcept($event)"
+  ></num-concept-filter-table-copy>
+</div>

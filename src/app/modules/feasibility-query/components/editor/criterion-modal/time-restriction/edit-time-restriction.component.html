@@ -1,38 +1,34 @@
-<div *ngIf="timeRestriction" fxLayout="row" [@.disabled]="disableAnimation" class="width-100">
-  <mat-expansion-panel togglePosition="before" [expanded]="false" class="width-100">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.TITLE' | translate }}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div fxLayout="row" fxLayoutAlign="start" class="width-100">
-      <!--Time restriction Filter type-->
-      <num-timerestriction-type-selector
-        [type]="this.timeRestriction.getType()"
-        (timeRestrictionTypeChanged)="onTimeRestrictionOptionChange($event)"
-      >
-      </num-timerestriction-type-selector>
+<div *ngIf="timeRestriction" fxLayout="column" [@.disabled]="disableAnimation" class="width-100">
+  <num-header-description>
+    {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.TITLE' | translate }}
+  </num-header-description>
+  <div fxLayout="row" fxLayoutAlign="start" class="width-100">
+    <!--Time restriction Filter type-->
+    <num-timerestriction-type-selector
+      [type]="this.timeRestriction.getType()"
+      (timeRestrictionTypeChanged)="onTimeRestrictionOptionChange($event)"
+    >
+    </num-timerestriction-type-selector>
 
-      <!--Between Filter-->
-      <ng-container *ngIf="selectedTimeRestrictionType === 'BETWEEN'">
-        <num-between-filter
-          class="width-100"
-          (betweenFilterChanged)="emitSelectedTimeRestrictionInstance($event)"
-          [betweenFilter]="timeRestriction"
-        ></num-between-filter>
-      </ng-container>
+    <!--Between Filter-->
+    <ng-container *ngIf="selectedTimeRestrictionType === 'BETWEEN'">
+      <num-between-filter
+        class="width-100"
+        (betweenFilterChanged)="emitSelectedTimeRestrictionInstance($event)"
+        [betweenFilter]="timeRestriction"
+      ></num-between-filter>
+    </ng-container>
 
-      <!--After, At, Before Filter-->
-      <ng-container
-        *ngIf="selectedTimeRestrictionType !== 'BETWEEN' && selectedTimeRestrictionType !== 'NONE'"
-      >
-        <num-before-filter
-          class="width-100"
-          [timeRestrictionType]="selectedTimeRestrictionType"
-          [selectedDate]="timeRestriction.getAfterDate()"
-          (timeRestrictionInstanceChanged)="emitSelectedTimeRestrictionInstance($event)"
-        ></num-before-filter>
-      </ng-container>
-    </div>
-  </mat-expansion-panel>
+    <!--After, At, Before Filter-->
+    <ng-container
+      *ngIf="selectedTimeRestrictionType !== 'BETWEEN' && selectedTimeRestrictionType !== 'NONE'"
+    >
+      <num-before-filter
+        class="width-100"
+        [timeRestrictionType]="selectedTimeRestrictionType"
+        [selectedDate]="timeRestriction.getAfterDate()"
+        (timeRestrictionInstanceChanged)="emitSelectedTimeRestrictionInstance($event)"
+      ></num-before-filter>
+    </ng-container>
+  </div>
 </div>

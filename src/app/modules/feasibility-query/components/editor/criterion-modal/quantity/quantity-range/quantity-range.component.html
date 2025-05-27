@@ -15,3 +15,6 @@
     [label]="'QUERYBUILDER.EDIT.MAX'"
   ></num-value-select>
 </div>
+<div *ngIf="displayWarning" fxLayout="column">
+  <span class="warning">{{ 'QUERYBUILDER.HINT.MINIMUM_GREATER_MAXIMUM' | translate }}</span>
+</div>

@@ -10,6 +10,22 @@ export const routes: Routes = [
     redirectTo: BasePaths.dataQuery,
   },
   {
+    path: BasePaths.queryEditor,
+    canLoad: [RoleGuard],
+    data: {
+      hideSideNav: false,
+      navId: BasePaths.queryEditor,
+      roles: ['main'],
+      breadcrumb: 'Query Editor',
+      title: 'Query Editor',
+      animation: 'QueryEditorPage',
+    },
+    loadChildren: () =>
+      import(
+        /* webpackChunkName: "QueryEditor.Module" */ './modules/query-editor/query-editor.module'
+      ).then((m) => m.QueryEditorModule),
+  },
+  {
     path: BasePaths.dataQuery,
     canLoad: [RoleGuard],
     data: {

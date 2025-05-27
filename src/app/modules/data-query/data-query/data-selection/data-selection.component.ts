@@ -6,7 +6,6 @@ import { FeasibilityQueryProviderService } from 'src/app/service/Provider/Feasib
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
 import { v4 as uuidv4 } from 'uuid';
 import {
   Component,
@@ -17,10 +16,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { DataSelectionProfileProviderService } from 'src/app/modules/data-selection/services/DataSelectionProfileProvider.service';
 import { map, Observable, Subscription, take } from 'rxjs';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { CRTDLData } from '../../../../model/Interface/CRTDLData';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { DataSelectionMainProfileInitializerService } from '../../../../service/DataSelectionMainProfileInitializerService';
+import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -32,14 +33,16 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   @Output()
   scrollClick = new EventEmitter();
 
+  saveDataQueryModalSubscription: Subscription;
+
   isDataSelectionExistent$: Observable<boolean>;
   isCohortExistent$: Observable<boolean>;
 
   downloadSubscription: Subscription;
   translatedCRTLDSubscription: Subscription;
   fileName: string;
+  createDSSubscription: Subscription;
   constructor(
-    private terminologySystemProvider: TerminologySystemProvider,
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
@@ -47,8 +50,10 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    private dataSelectionProfileProviderService: DataSelectionProfileProviderService,
-    private feasibilityQueryValidation: FeasibilityQueryValidation
+    private profileProviderService: ProfileProviderService,
+    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private dataSelectionMainInitializer: DataSelectionMainProfileInitializerService,
+    private saveDataQueryModalService: SaveDataQueryModalService
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +67,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.downloadSubscription?.unsubscribe();
     this.translatedCRTLDSubscription?.unsubscribe();
+    this.createDSSubscription?.unsubscribe();
   }
 
   public editDataSelection() {
@@ -69,13 +75,13 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   }
 
   public createNewDataSelection() {
-    const dataSelection = new DataSelection([], uuidv4());
-    this.dataSelectionProviderService.setDataSelectionByUID(
-      dataSelection.getId(),
-      dataSelection,
-      true
-    );
-    this.navigationHelperService.navigateToDataSelectionSearch();
+    this.createDSSubscription?.unsubscribe();
+    this.createDSSubscription = this.dataSelectionMainInitializer
+      .initializePatientProfile()
+      .subscribe((dataSelectionProfile) => {
+        this.dataSelectionProviderService.initializeDataSelectionInstance(dataSelectionProfile);
+        this.navigationHelperService.navigateToDataSelectionSearch();
+      });
   }
 
   public downloadCRDTL(): void {
@@ -117,7 +123,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
 
   public uploadDataSelection(crtdl: CRTDLData) {
     this.translatedCRTLDSubscription?.unsubscribe();
-    this.dataSelectionProfileProviderService.resetDataSelectionProfileMap();
+    this.profileProviderService.resetProfileMap();
     if (crtdl.cohortDefinition?.inclusionCriteria?.length > 0) {
       this.translatedCRTLDSubscription = this.crdtlTranslatorService
         .createCRDTLFromJson(crtdl)
@@ -133,6 +139,13 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     } else {
       this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');
     }
+  }
+
+  public saveDataQuery(): void {
+    this.saveDataQueryModalSubscription?.unsubscribe();
+    this.saveDataQueryModalSubscription = this.saveDataQueryModalService
+      .openSaveDataQueryModal()
+      .subscribe();
   }
 
   public onReaderLoad(event: ProgressEvent<FileReader>): void {

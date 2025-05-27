@@ -1,139 +1,46 @@
-import { AppConfigService } from '../config/app-config.service';
 import { environment } from '../../environments/environment';
+import { IAppConfig } from '../config/app-config.model';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { FeatureProviderService } from '../modules/feasibility-query/service/feature-provider.service';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeatureService {
-  constructor(
-    private appConfig: AppConfigService,
-    private featureProviderService: FeatureProviderService
-  ) {}
+  private subject = new Subject<number>();
+  private appConfig!: IAppConfig;
+  private showOptionsPage = false;
+  private showDataselectionPage = false;
 
-  private subject = new Subject<any>();
-  private showOptionsPage = this.appConfig.getConfig().features.extra.showoptionspage;
-  private showDataselectionPage = this.appConfig.getConfig().features.extra.showdataselectionpage;
+  constructor() {}
+
+  public initFeatureService(config: IAppConfig): Observable<boolean> {
+    this.showOptionsPage = !!config.features?.extra?.showoptionspage;
+    this.showDataselectionPage = !!config.features?.extra?.showdataselectionpage;
+    this.appConfig = config;
+    return of(true);
+  }
 
   public useFeatureMultipleValueDefinitions(): boolean {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().features.v2.multiplevaluedefinitions;
-    } else {
-      return this.appConfig.getConfig().features.v2.multiplevaluedefinitions;
-    }
+    return !!this.appConfig.features?.v2?.multiplevaluedefinitions;
   }
 
   public useFeatureMultipleGroups(): boolean {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().features.v2.multiplegroups;
-    } else {
-      return this.appConfig.getConfig().features.v2.multiplegroups;
-    }
+    return !!this.appConfig.features?.v2?.multiplegroups;
   }
 
   public useFeatureDependentGroups(): boolean {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().features.v2.dependentgroups;
-    } else {
-      return this.appConfig.getConfig().features.v2.dependentgroups;
-    }
+    return !!this.appConfig.features?.v2?.dependentgroups;
   }
 
   public useFeatureTimeRestriction(): boolean {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().features.v2.timerestriction;
-    } else {
-      return this.appConfig.getConfig().features.v2.timerestriction;
-    }
+    return !!this.appConfig.features?.v2?.timerestriction;
   }
 
   public useFeatureShowDisplayValueFilterIcon(): boolean {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().features.extra.displayvaluefiltericon;
-    } else {
-      return this.appConfig.getConfig().features.extra.displayvaluefiltericon;
-    }
+    return !!this.appConfig.features?.extra?.displayvaluefiltericon;
   }
 
-  public getPollingTime(): number {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().options.pollingtimeinseconds;
-    } else {
-      return this.appConfig.getConfig().options.pollingtimeinseconds;
-    }
-  }
-  public getPollingIntervall(): number {
-    if (this.showOptionsPage) {
-      const pollingIntervallinSeconds =
-        this.featureProviderService.getFeatures().options.pollingintervallinseconds;
-      if (pollingIntervallinSeconds > this.getPollingTime()) {
-        return this.getPollingTime();
-      }
-      return this.featureProviderService.getFeatures().options.pollingintervallinseconds;
-    } else {
-      const pollingIntervallinSeconds = this.appConfig.getConfig().options.pollingintervallinseconds;
-      if (pollingIntervallinSeconds > this.getPollingTime()) {
-        return this.getPollingTime();
-      }
-      return pollingIntervallinSeconds;
-    }
-  }
-  public getPatientResultLowerBoundary(): number {
-    return this.appConfig.getConfig().options.lowerboundarypatientresult;
-  }
-  public getLocationResultLowerBoundary(): number {
-    return this.appConfig.getConfig().options.lowerboundarylocationresult;
-  }
-  public getFhirPort(): string {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().fhirport;
-    } else {
-      return this.appConfig.getConfig().fhirport;
-    }
-  }
-  public getQueryVersion(): string {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().queryVersion;
-    } else {
-      return this.appConfig.getConfig().queryVersion;
-    }
-  }
-  public getStylesheet(): string {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().stylesheet;
-    } else {
-      return this.appConfig.getConfig().stylesheet;
-    }
-  }
-
-  public getSendSQContextToBackend(): boolean {
-    if (this.showOptionsPage) {
-      return this.featureProviderService.getFeatures().options.sendsqcontexttobackend !== undefined
-        ? this.featureProviderService.getFeatures().options.sendsqcontexttobackend
-        : true;
-    } else {
-      return this.appConfig.getConfig().options.sendsqcontexttobackend !== undefined
-        ? this.appConfig.getConfig().options.sendsqcontexttobackend
-        : true;
-    }
-  }
-
-  public getDataset(): string {
-    return this.appConfig.getConfig().dataset;
-  }
-  public getproposalPortalLink(): string {
-    return this.appConfig.getConfig().proposalPortalLink;
-  }
-  public getRoles(site: string): string[] {
-    if (site === 'main') {
-      return this.appConfig.getConfig().auth.roles;
-    }
-    if (site === 'optionpage') {
-      return this.appConfig.getConfig().features.extra.optionpageroles;
-    }
-  }
   public useFeatureOptionsPage(): boolean {
     return this.showOptionsPage;
   }
@@ -142,38 +49,96 @@ export class FeatureService {
     return this.showDataselectionPage;
   }
 
+  public getPollingTime(): number {
+    return this.appConfig.options?.pollingtimeinseconds ?? 0;
+  }
+
+  public getPollingIntervall(): number {
+    const interval = this.appConfig.options?.pollingintervallinseconds ?? 0;
+    const pollingTime = this.getPollingTime();
+    return interval > pollingTime ? pollingTime : interval;
+  }
+
+  public getPatientResultLowerBoundary(): number {
+    return this.appConfig.options?.lowerboundarypatientresult ?? 0;
+  }
+
+  public getLocationResultLowerBoundary(): number {
+    return this.appConfig.options?.lowerboundarylocationresult ?? 0;
+  }
+
+  public getFhirPort(): string {
+    return this.appConfig.fhirport ?? '';
+  }
+
+  public getQueryVersion(): string {
+    return this.appConfig.queryVersion ?? '';
+  }
+
+  public getStylesheet(): string {
+    return this.appConfig.stylesheet ?? '';
+  }
+
+  public getSendSQContextToBackend(): boolean {
+    return this.appConfig.options?.sendsqcontexttobackend ?? true;
+  }
+
+  public getDataset(): string {
+    return this.appConfig.dataset ?? '';
+  }
+
+  public getProposalPortalLink(): string {
+    return this.appConfig.proposalPortalLink ?? '';
+  }
+
+  public getRoles(site: string): string[] {
+    if (site === 'main') {
+      return this.appConfig.auth?.roles ?? [];
+    }
+    if (site === 'optionpage') {
+      return this.appConfig.features?.extra?.optionpageroles ?? [];
+    }
+    return [];
+  }
+
+  public showInfoPage(): boolean {
+    return !!this.appConfig.features?.extra?.displayInfoMessage;
+  }
+
+  public showUpdateInfo(): boolean {
+    return !!this.appConfig.features?.extra?.displayUpdateInfo;
+  }
+
+  // Mock features (only in dev mode)
   public isDevelopMode(): boolean {
     return !environment.production;
   }
 
-  public showInfoPage(): boolean {
-    return this.appConfig.getConfig().features.extra.displayInfoMessage;
-  }
-
-  public showUpdateInfo(): boolean {
-    return this.appConfig.getConfig().features.extra.displayUpdateInfo;
-  }
-
   public mockTerminology(): boolean {
-    return this.appConfig.getConfig().mock.terminology && this.isDevelopMode();
+    return !!this.appConfig.mock?.terminology && this.isDevelopMode();
   }
 
   public mockQuery(): boolean {
-    return this.appConfig.getConfig().mock.query && this.isDevelopMode();
+    return !!this.appConfig.mock?.query && this.isDevelopMode();
   }
 
   public mockResult(): boolean {
-    return this.appConfig.getConfig().mock.result && this.isDevelopMode();
+    return !!this.appConfig.mock?.result && this.isDevelopMode();
   }
 
   public mockLoadnSave(): boolean {
-    return this.appConfig.getConfig().mock.loadnsave && this.isDevelopMode();
+    return !!this.appConfig.mock?.loadnsave && this.isDevelopMode();
   }
 
-  sendClickEvent(pollingTime: number): void {
+  public getPatientProfileUrl(): string {
+    return this.appConfig.options?.dsePatientProfileUrl ?? '';
+  }
+
+  public sendClickEvent(pollingTime: number): void {
     this.subject.next(pollingTime);
   }
-  getClickEvent(): Observable<any> {
+
+  public getClickEvent(): Observable<number> {
     return this.subject.asObservable();
   }
 }

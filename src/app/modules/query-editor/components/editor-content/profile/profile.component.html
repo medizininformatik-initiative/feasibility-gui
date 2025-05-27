@@ -1,0 +1,41 @@
+<div fxLayout="column" class="full">
+  <num-profile-header
+    *ngIf="profile"
+    class="profile-header"
+    [profile]="profile"
+    (updatedLabel)="updateLabel($event)"
+  >
+  </num-profile-header>
+  <num-filter-tabs
+    class="width-100 height"
+    *ngIf="templates.length > 0"
+    [content]="templates"
+  ></num-filter-tabs>
+
+  <ng-template #fields>
+    <num-edit-fields
+      class="full"
+      [fieldTree]="profile.getProfileFields().getFieldTree()"
+      [selectedBasicFields]="profile.getProfileFields().getSelectedBasicFields()"
+      (updatedSelectedBasicFields)="updateSelectedFields($event)"
+    ></num-edit-fields>
+  </ng-template>
+
+  <ng-template #filter>
+    <num-profile-filter
+      [profile]="profile"
+      [profileFilter]="profile.getFilters()"
+      (profileFiltersChanged)="updateProfileFilter($event)"
+    ></num-profile-filter>
+  </ng-template>
+
+  <ng-template #reference>
+    <num-profile-reference
+      class="width-100 height"
+      [referenceFields]="profile.getProfileFields().getReferenceFields()"
+      [selectedReferenceFields]="profile.getProfileFields().getSelectedReferenceFields()"
+      [profileId]="profile.getId()"
+      (updatedSelectedReferenceFields)="updateSelectedReferenceFields($event)"
+    ></num-profile-reference>
+  </ng-template>
+</div>

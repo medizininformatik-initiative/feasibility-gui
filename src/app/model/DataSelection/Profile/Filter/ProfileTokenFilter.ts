@@ -1,7 +1,6 @@
 import { AbstractProfileFilter } from './AbstractProfileFilter';
-import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 
 export class ProfileTokenFilter extends AbstractProfileFilter {
   private readonly id: string;

@@ -36,6 +36,10 @@ import { PlaceholderBoxComponent } from './placeholder-box/placeholder-box.compo
 import { SaveFileModalComponent } from './save-file-modal/save-file-modal.component';
 import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
 import { SaveDataQueryModalComponent } from './save-dataquery-modal/save-dataquery-modal.component';
+import { LinkedBadgeComponent } from './linked-badge/linked-badge.component';
+import { ProfileReferenceTileComponent } from './profile-reference-tile/profile-reference-tile.component';
+import { SelectableReferenceTileComponent } from './selectable-reference-tile/selectable-reference-tile.component';
+import { ProfileReferenceChipComponent } from './profile-reference-chip/profile-reference-chip.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -65,6 +69,9 @@ const SHARED_DECLARATIONS = [
   SaveFileModalComponent,
   SaveDataQueryModalComponent,
   DisplayTranslationPipe,
+  ProfileReferenceTileComponent,
+  LinkedBadgeComponent,
+  SelectableReferenceTileComponent,
 ];
 
 @NgModule({
@@ -92,6 +99,9 @@ const SHARED_DECLARATIONS = [
     PlaceholderBoxComponent,
     SaveFileModalComponent,
     ConfirmDeleteModalComponent,
+    ProfileReferenceTileComponent,
+    LinkedBadgeComponent,
+    SelectableReferenceTileComponent,
   ],
   imports: [
     CommonModule,

@@ -41,6 +41,6 @@ import { DisplayProfilesComponent } from './components/editor/display/display-pr
     FeasibilityQueryModule,
     SharedFilterModule,
   ],
-  exports: [DisplayProfilesComponent],
+  exports: [DisplayProfilesComponent, DataSelectionBoxesComponent],
 })
 export class DataSelectionModule {}

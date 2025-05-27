@@ -14,8 +14,7 @@ import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTer
 import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { TerminologySystemProvider } from 'src/app/service/Provider/TerminologySystemProvider.service';
-import { map, Observable, Subscription, switchMap, take } from 'rxjs';
+import { map, Observable, Subscription, switchMap, take, tap } from 'rxjs';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -27,6 +26,8 @@ import {
   ViewContainerRef,
   TemplateRef,
 } from '@angular/core';
+import { DataSelectionMainProfileInitializerService } from 'src/app/service/DataSelectionMainProfileInitializerService';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -59,7 +60,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   searchWithFilterSubscription: Subscription;
 
   constructor(
-    private terminologySystemProvider: TerminologySystemProvider,
     public elementRef: ElementRef,
     private filterService: SearchFilterService,
     private searchService: SearchService,
@@ -68,7 +68,9 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>,
     private searchTermDetailsService: SearchTermDetailsService,
     private searchResultProviderService: SearchResultProvider,
-    private searchTermDetailsProviderService: SearchTermDetailsProviderService
+    private searchTermDetailsProviderService: SearchTermDetailsProviderService,
+    private dataSelectionMainProfileInitializerService: DataSelectionMainProfileInitializerService,
+    private dataSelectionProviderService: DataSelectionProviderService
   ) {
     this.subscription = this.searchResultProviderService
       .getCriteriaSearchResults()

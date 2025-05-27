@@ -32,6 +32,7 @@
     "MENU": {
       "DUPLICATE": "Duplizieren",
       "DELETE": "Löschen",
+      "EDIT": "Bearbeiten",
       "REFERENCE": "Kriterien verknüpfen",
       "APPLY_FILTERS": "Filter anwenden",
       "DEFINE_FIELDS": "Felder selektieren",
@@ -63,6 +64,11 @@
       "SAVE": "Speichern",
       "CANCEL": "Abbrechen",
       "COHORT_WARNING": "Hinweis: Kohorte ist leer oder ungültig "
+    },
+    "REFERENCE_TILE": {
+      "REQUIRED": "Erforderlich",
+      "NOTLINKED": "Nicht verknüpft",
+      "DELETE": "Löschen"
     }
   },
   "SHAREDFILTER": {
@@ -139,14 +145,19 @@
     "SELECTION_BOX":{
       "FIELDS_MISSING": "Wählen Sie mindestens ein Feld für die Selektion durch Verwendung der Stifttaste in der oberen rechten Ecke dieser Box.",
       "SELECTED_FIELDS": "Selektierte Felder",
+      "DELETE": "Löschen",
+      "EDIT": "Bearbeiten",
       "APPLIED_FILTER": "Angewandte Filter",
       "REQUIRED": "erforderlich",
       "OPTIONAL": "optional"
     },
+    "REFERENCE_BOX": {
+      "APPLIED_REFERENCES": "Referenzierte Merkmale"
+    },
     "FIELD_SELECTION": {
       "FIELD_SELECTION": "Ausgewählte Elemente",
       "HEADER": "Selektieren Sie Merkmale für ",
-      "REQUIRED": "erforderlich"
+      "REQUIRED": "Erforderlich"
     },
     "FILTER": {
       "TOKEN": "Kodierung/Name"
@@ -215,6 +226,34 @@
         "UPLOAD": "Datendefinition wurde hochgeladen",
         "DOWNLOAD": "Datendefinition wurde erfolgreich heruntergeladen"
       }
+    }
+  },
+  "EDITOR": {
+    "HEADER": {
+      "NEXT": "Nächstes Element",
+      "PREVIOUS": "Vorheriges Element"
+    },
+    "CONTENT": {
+      "PROFILE": {
+        "FILTER": {
+          "TAB_LABEL": {
+            "FILTER": "Token Filter",
+            "TIMERESTRICTION": "Zeiteinschränkung"
+          }
+        }
+      },
+      "CRITERION": {
+
+      },
+      "TAB_LABEL": {
+        "FIELD": "Felder",
+        "FILTER": "Filter",
+        "REFERENCE": "Referenzen"
+      }
+    },
+    "ACTION_BAR": {
+      "SAVE": "Speichern",
+      "CANCEL": "Schließen"
     }
   },
   "LANGUAGE": {

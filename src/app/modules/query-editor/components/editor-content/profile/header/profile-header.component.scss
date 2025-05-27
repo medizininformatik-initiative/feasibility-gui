@@ -1,0 +1,157 @@
+.selection-box {
+  width: 100%;
+  min-height: 150px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  height: 100%;
+}
+
+.display-container {
+  border-right: 4px solid rgba(90, 121, 175, 0.1);
+  padding: 20px;
+  font-size: larger;
+  width: 100%;
+  color: black;
+}
+.display-container > span {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 6; /* number of lines to show */
+  line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+.selected-fields-container {
+  border-right: 4px solid rgba(90, 121, 175, 0.1);
+  padding: 0 1% 0 1%;
+  font-size: larger;
+  width: 100%;
+  color: black;
+}
+.filter-container,
+.reference-container {
+  font-size: larger;
+  width: 100%;
+  color: black;
+}
+
+.menu-container {
+  align-self: self-start;
+  padding-top: 20px;
+  margin-left: 20px;
+}
+
+.filter-chips-container {
+  padding-top: 30px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.filterChipsInfo {
+  color: red;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.block-triangle {
+  color: #5a79af;
+  border-left: 13px solid;
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  display: inline-block;
+  content: '';
+  /*position: absolute;
+    right: -13px;
+    top: 0;*/
+}
+.block {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  color: #fff;
+  background-color: #5a79af;
+  width: fit-content;
+  min-width: 100px;
+  height: 26px;
+  display: inline-block;
+  position: relative;
+  padding-left: 4px;
+  padding-right: 10px;
+  padding-top: 2px;
+  cursor: pointer;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Show ellipsis for overflow text */
+  transition: width 0.3s ease; /* Transition for width change */
+}
+
+.reference-chip-padding-30 {
+  padding-top: 30px;
+}
+
+.input-style {
+  height: 32px;
+  background-color: #ffffff;
+  border: 0px 0px 1px 0px;
+  //border-bottom-color: rgb(90 121 175);
+  box-shadow: -3px 2px 1px 0px #bdbdbd;
+}
+
+.form-design {
+  border: 1px solid #c3c7ce;
+  border-radius: 4px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+.form-design:focus-within {
+  outline: none !important;
+  font-weight: 600;
+  border-width: 2px;
+  border-color: #5a79ae;
+  background-color: #eff2f7;
+  box-shadow: 0 0 10px -5px #5a79ae;
+  transition: 0.5s;
+  transition-property: background-color;
+}
+.input-design {
+  height: 42px;
+  color: #333;
+  padding: 0 10px;
+  font-size: 18px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: Titillium Web, serif;
+  border: none;
+  margin-right: 20px;
+}
+
+.input-design:focus {
+  outline: none !important;
+  padding: 0 20px;
+  font-weight: 600;
+  background-color: #eff2f7;
+  transition: 0.5s;
+  transition-property: background-color;
+}
+.icon-design {
+  padding-top: 12px;
+  padding-left: 10px;
+  min-width: 40px;
+  color: #c2c2c2;
+  font-size: medium;
+}
+.input-design:focus + fa-icon {
+  color: #828282;
+}
+.profile-display {
+  border: 1px solid #c3c7ce;
+  border-radius: 4px;
+  font-size: small;
+  color: #6a7483;
+  padding: 3px 4px;
+  width: fit-content;
+}
+
+.padding-left-right-1 {
+  padding: 0 1% 0 1%;
+}
