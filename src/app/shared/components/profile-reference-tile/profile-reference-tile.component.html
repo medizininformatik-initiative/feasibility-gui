@@ -19,7 +19,7 @@
   <mat-checkbox
     *ngIf="referenceField"
     [checked]="referenceField.getMustHave()"
-    (change)="setMustHave()"
+    (change)="setMustHave($event.checked)"
   >
     {{ 'SHAREDCOMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}
   </mat-checkbox>

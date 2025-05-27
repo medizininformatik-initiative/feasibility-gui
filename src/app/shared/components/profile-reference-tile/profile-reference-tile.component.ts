@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
@@ -9,12 +9,14 @@ import { ProfileReferenceChipData } from '../../models/FilterChips/ProfileRefere
 import { ProfileReferenceChipsService } from '../../service/FilterChips/DataSelection/ProfileReferenceChips.service';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
+import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'num-profile-reference-tile',
   templateUrl: './profile-reference-tile.component.html',
   styleUrls: ['./profile-reference-tile.component.scss'],
 })
-export class ProfileReferenceTileComponent implements OnInit {
+export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   @Input() referenceField: SelectedReferenceField;
   @Input() unlinkedRequiredOrRecommendedReferences: ReferenceField;
   @Input() parentId?: string;
@@ -27,6 +29,8 @@ export class ProfileReferenceTileComponent implements OnInit {
   parentProfile: DataSelectionProfile;
   parentProfileSelectedReferences: SelectedReferenceField[] = [];
 
+  dataSelectionProviderSubscription: Subscription;
+
   constructor(
     private dataSelectionProviderService: DataSelectionProviderService,
     private profileProviderService: ProfileProviderService,
@@ -37,6 +41,10 @@ export class ProfileReferenceTileComponent implements OnInit {
   ngOnInit(): void {
     this.initiliazeDisplayData();
     this.initiliazeDisplayDataFiletrChips();
+  }
+
+  ngOnDestroy(): void {
+    this.dataSelectionProviderSubscription?.unsubscribe();
   }
 
   private initiliazeDisplayData(): void {
@@ -64,9 +72,10 @@ export class ProfileReferenceTileComponent implements OnInit {
     this.navigationHelperService.navigateToEditProfile(idToUse);
   }
 
-  public setMustHave() {
+  public setMustHave(checked: boolean) {
     if (this.referenceField) {
-      this.referenceField.setMustHave(!this.referenceField.getMustHave());
+      this.referenceField.setMustHave(checked);
+      this.updateReferenceField();
     }
   }
 
@@ -94,10 +103,26 @@ export class ProfileReferenceTileComponent implements OnInit {
     this.deleteTrigger.emit(true);
   }
 
+  private updateReferenceField(): void {
+    const profile = this.profileProviderService.getProfileById(this.parentId);
+    const selectedReferences = profile.getProfileFields().getSelectedReferenceFields();
+    const index = this.getIndexOfSelectedReferenceField(selectedReferences);
+
+    if (index !== -1) {
+      selectedReferences[index] = SelectedReferenceFieldsCloner.deepCopySelectedReferenceField(
+        this.referenceField
+      );
+      this.updateProfile(profile);
+    }
+  }
+
   private updateProfile(profile: DataSelectionProfile): void {
+    this.dataSelectionProviderSubscription?.unsubscribe();
     const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
     this.profileProviderService.setProfileById(this.parentId, updatedProfile);
-    this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile);
+    this.dataSelectionProviderSubscription = this.dataSelectionProviderService
+      .setProfileInActiveDataSelection(updatedProfile)
+      .subscribe();
   }
 
   private getIndexOfSelectedReferenceField(selectedReferences: SelectedReferenceField[]): number {
