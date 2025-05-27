@@ -10,7 +10,9 @@
   gap: 6px;
   border: 1px solid #d1d5db; // light gray border
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); // soft shadow
-
+  position: relative;
+  top: -15px;
+  margin-left: 3%;
   .icon {
     color: var(--num-color--primary-blue);
     transform: rotate(45deg);
