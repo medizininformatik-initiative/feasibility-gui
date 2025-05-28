@@ -1,6 +1,7 @@
 import { AbstractTermHashContext } from '../AbstractTermHashContext';
 import { SearchTermRelatives } from './SearchTermRelatives';
 import { SearchTermTranslation } from './SearchTermTranslation';
+import { Display } from '../../../DataSelection/Profile/Display';
 
 /**
  * Represents detailed information about a search term, extending the AbstractSearchResult class.
@@ -9,7 +10,7 @@ import { SearchTermTranslation } from './SearchTermTranslation';
  * @see AbstractSearchResult
  */
 export class SearchTermDetails {
-  translations: Array<SearchTermTranslation>;
+  translations: Display;
   parents: SearchTermRelatives[];
   children: SearchTermRelatives[];
   relatedTerms: SearchTermRelatives[];
@@ -25,7 +26,7 @@ export class SearchTermDetails {
     children: Array<SearchTermRelatives>,
     parents: Array<SearchTermRelatives>,
     relatedTerms: Array<SearchTermRelatives>,
-    translations: Array<SearchTermTranslation>
+    translations: Display
   ) {
     this.translations = translations;
     this.parents = parents;

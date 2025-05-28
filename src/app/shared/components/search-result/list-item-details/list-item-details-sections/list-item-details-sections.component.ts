@@ -32,12 +32,12 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   }
 
   public getSelectedRelative(item: SearchTermRelatives) {
-    this.elasticSearchService.searchCriteriaById(item.getId()).subscribe((resultList) => {
+    this.elasticSearchService.searchCriteriaById(item.getTermCodeHash()).subscribe((resultList) => {
       this.selectedRelative.emit(resultList.getResults()[0]);
     });
 
-    this.searchService.searchCriteriaById(item.getId()).subscribe();
-    this.test.getDetailsForListItem(item.getId()).subscribe();
+    this.searchService.searchCriteriaById(item.getTermCodeHash()).subscribe();
+    this.test.getDetailsForListItem(item.getTermCodeHash()).subscribe();
   }
 
   private getMenuItems() {

@@ -6,6 +6,8 @@ import { SearchTermTranslation } from 'src/app/model/ElasticSearch/ElasticSearch
 import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
 import { SearchTermDetailsProviderService } from './SearchTermDetailsProvider.service';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
+import { Display } from '../../../model/DataSelection/Profile/Display';
+import { Translation } from '../../../model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +27,7 @@ export class SearchTermDetailsService {
   public getDetailsForListItem(id: string): Observable<SearchTermDetails> {
     return this.terminologyApiService.getSearchTermEntryRelations(id).pipe(
       map((response: any) => {
-        const translations = this.mapToSearchTermTranslations(response.display.translations);
+        const translations = this.mapToSearchTermTranslationDisplay(response.display);
         const parents = this.mapToSearchTermRelatives(response.parents);
         const children = this.mapToSearchTermRelatives(response.children);
         const relatedTerms = this.mapToSearchTermRelatives(response.relatedTerms);
@@ -48,7 +50,18 @@ export class SearchTermDetailsService {
    * @returns An array of SearchTermTranslation objects.
    */
   private mapToSearchTermTranslations(translations: any[]): SearchTermTranslation[] {
-    return translations.map((t: any) => new SearchTermTranslation(t.lang, t.value));
+    return translations.map((t: any) => new SearchTermTranslation(t.language, t.value));
+  }
+
+  private mapToSearchTermTranslationDisplay(display: any): Display {
+    const translations = display.translations?.map((translation) =>
+      this.createTranslation(translation)
+    );
+    return new Display(translations, display.original);
+  }
+
+  private createTranslation(translation: any): Translation {
+    return new Translation(translation.language, translation.value);
   }
 
   /**
@@ -58,6 +71,12 @@ export class SearchTermDetailsService {
    * @returns An array of SearchTermRelatives objects.
    */
   private mapToSearchTermRelatives(relatives: any[]): SearchTermRelatives[] {
-    return relatives.map((r: any) => new SearchTermRelatives(r.name, r.contextualizedTermcodeHash));
+    return relatives.map(
+      (r: any) =>
+        new SearchTermRelatives(
+          this.mapToSearchTermTranslationDisplay(r.display),
+          r.contextualizedTermcodeHash
+        )
+    );
   }
 }
