@@ -19,23 +19,6 @@ export class OAuthInitService {
 
   public initOAuth(config: IAppConfig): Observable<boolean> {
     this.buildAuthConfig(config);
-    if (environment.name === 'mock') {
-      return from(
-        this.oauthService
-          .loadDiscoveryDocument()
-          .then(() =>
-            this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile('test', 'test1')
-          )
-      ).pipe(
-        map(() => true),
-        catchError((err) => {
-          console.error('Mock login failed:', err);
-          return of(false);
-        })
-      );
-    }
-
-    this.buildAuthConfig(config);
     const timeout$ = this.setTimeoOut();
     const login$ = this.startOAuthLogin();
     return race([login$, timeout$]).pipe(
@@ -91,7 +74,6 @@ export class OAuthInitService {
       sessionChecksEnabled: true,
       clearHashAfterLogin: false,
       nonceStateSeparator: 'semicolon',
-      oidc: false,
     };
     this.oauthService.configure(authConfig);
   }

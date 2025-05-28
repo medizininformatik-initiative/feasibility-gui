@@ -47,7 +47,8 @@ export class RoleGuard implements CanActivate, CanLoad {
       }
     });
 
-    const isLoggedIn = true; // this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
+    const isLoggedIn =
+      this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
 
     if (!isLoggedIn) {
       await this.oauthService.loadDiscoveryDocumentAndLogin({ customRedirectUri: redirectUri });
