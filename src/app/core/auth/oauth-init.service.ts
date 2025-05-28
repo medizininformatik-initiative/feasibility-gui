@@ -3,6 +3,7 @@ import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 import { from, race, of, timer, Observable, throwError } from 'rxjs';
 import { catchError, mapTo, map } from 'rxjs/operators';
 import { IAppConfig } from 'src/app/config/app-config.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,23 @@ export class OAuthInitService {
   constructor(private oauthService: OAuthService) {}
 
   public initOAuth(config: IAppConfig): Observable<boolean> {
+    this.buildAuthConfig(config);
+    if (environment.name === 'mock') {
+      return from(
+        this.oauthService
+          .loadDiscoveryDocument()
+          .then(() =>
+            this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile('test', 'test1')
+          )
+      ).pipe(
+        map(() => true),
+        catchError((err) => {
+          console.error('Mock login failed:', err);
+          return of(false);
+        })
+      );
+    }
+
     this.buildAuthConfig(config);
     const timeout$ = this.setTimeoOut();
     const login$ = this.startOAuthLogin();
@@ -73,6 +91,7 @@ export class OAuthInitService {
       sessionChecksEnabled: true,
       clearHashAfterLogin: false,
       nonceStateSeparator: 'semicolon',
+      oidc: false,
     };
     this.oauthService.configure(authConfig);
   }

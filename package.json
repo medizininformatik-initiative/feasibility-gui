@@ -15,6 +15,7 @@
   },
   "private": true,
   "dependencies": {
+    "20": "^3.1.9",
     "@angular-devkit/build-angular": "^15.2.0",
     "@angular-devkit/core": "^15.2.0",
     "@angular-devkit/schematics": "^15.2.0",
@@ -75,6 +76,7 @@
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "5.53.0",
     "@typescript-eslint/parser": "5.53.0",
+    "cypress": "^14.4.0",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "latest",
