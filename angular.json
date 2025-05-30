@@ -97,23 +97,7 @@
                   "maximumError": "10kb"
                 }
               ]
-            },
-              "mock": {
-                "fileReplacements": [
-                  {
-                    "replace": "src/environments/environment.ts",
-                    "with": "src/environments/environment.mock.ts"
-                  }
-                ],
-                "optimization": false,
-                "outputHashing": "none",
-                "sourceMap": true,
-                "namedChunks": true,
-                "aot": true,
-                "extractLicenses": false,
-                "vendorChunk": true,
-                "buildOptimizer": false
-              }
+            }
           },
           "defaultConfiguration": "development"
           
