@@ -8,6 +8,7 @@ export default defineConfig({
     redirectUrl: 'http://localhost:8080',
   },
   e2e: {
+    testIsolation: false,
     baseUrl: "http://localhost:4200",
     port: 4300,
     viewportHeight: 1080,
