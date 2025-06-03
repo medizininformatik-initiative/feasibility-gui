@@ -1,8 +1,7 @@
 let selectedCriteria:number = 0
 let addedCriteria:number = 0
 
-function gotoAndCheckCohortSelectionSearch() {
-  cy.visit('feasibility-query/search')
+export const gotoAndCheckCohortSelectionSearch = () => {
   cy.get('num-table tbody > tr').should('have.length', 50)
   /*cy.get('num-search-action-bar button').each((button) => cy.wrap(button).should('have.class', 'disabled'))
   cy.get('num-search-action-bar num-button > span.mat-badge-content').each((button) => cy.wrap(button).should('have.text', 0))*/
@@ -24,7 +23,7 @@ function checkButtons() {
   })
 }
 
-function selectCriterion(indices: number[]) {
+export function selectCriterion(indices: number[]) {
   indices.forEach((index) => {
     cy.get('num-table tbody > tr').eq(index).within(() => {
       cy.get('mat-checkbox').click()
@@ -60,7 +59,7 @@ function addCriteria() {
   cy.get('num-search-action-bar num-button > span.mat-badge-content').eq(1).should('have.text', 2)*/
   checkButtons()
 }
-function searchInput(text: string) {
+export function searchInput(text: string) {
   cy.get('num-searchbar input').clear().type(text)
   cy.wait(1000)
 }
@@ -74,7 +73,7 @@ function editGender() {
   //cy.wait(1000)
   cy.get('.mat-mdc-menu-panel button').eq(3).click()
 }
-describe('test', () => {
+/*describe('test', () => {
   it('test', () => {
     cy.login()
     gotoAndCheckCohortSelectionSearch()
@@ -92,4 +91,4 @@ describe('test', () => {
     checkStage()
     editGender()
   })
-})
+})*/
