@@ -1,7 +1,8 @@
 let selectedCriteria:number = 0
 let addedCriteria:number = 0
 
-export const gotoAndCheckCohortSelectionSearch = () => {
+export function gotoAndCheckCohortSelectionSearch() {
+  cy.visit('feasibility-query/search')
   cy.get('num-table tbody > tr').should('have.length', 50)
   /*cy.get('num-search-action-bar button').each((button) => cy.wrap(button).should('have.class', 'disabled'))
   cy.get('num-search-action-bar num-button > span.mat-badge-content').each((button) => cy.wrap(button).should('have.text', 0))*/
@@ -23,40 +24,37 @@ function checkButtons() {
   })
 }
 
-export function selectCriterion(indices: number[]) {
+function selectCheckbox(indices: number[]) {
   indices.forEach((index) => {
     cy.get('num-table tbody > tr').eq(index).within(() => {
       cy.get('mat-checkbox').click()
     })
   })
+}
+export function selectCriterion(indices: number[]) {
+  selectCheckbox(indices)
   selectedCriteria += indices.length
   cy.wait(1000)
-  /*cy.get('num-search-action-bar button').eq(0).should('not.have.class', 'disabled')
-  cy.get('num-search-action-bar button').eq(1).should('have.class', 'disabled')
-  cy.get('num-search-action-bar num-button > span.mat-badge-content').eq(0).should('have.text', indices.length)
-  cy.get('num-search-action-bar num-button > span.mat-badge-content').eq(1).should('have.text', 0)*/
   checkButtons()
 }
 function deselectCriterion(indices: number[]) {
-  indices.forEach((index) => {
-    cy.get('num-table tbody > tr').eq(index).within(() => {
-      cy.get('mat-checkbox').click()
-    })
-  })
+  selectCheckbox(indices)
   selectedCriteria -= indices.length
   cy.wait(1000)
   /*cy.get('num-search-action-bar button').each((button) => cy.wrap(button).should('have.class', 'disabled'))
   cy.get('num-search-action-bar num-button > span.mat-badge-content').each((button) => cy.wrap(button).should('have.text', 0))*/
   checkButtons()
 }
+function selectOption(element: string, optionIndex: number) {
+  cy.get(element).click()
+  cy.get(element +' mat-select').invoke('attr', 'id').then((id) => {
+    cy.get('@root').find('#'+id+'-panel').find('.mat-mdc-option').eq(optionIndex).click()
+  })
+}
 function addCriteria() {
   cy.get('num-search-action-bar button').eq(0).click()
   addedCriteria += selectedCriteria
   selectedCriteria = 0
-  /*cy.get('num-search-action-bar button').eq(0).should('have.class', 'disabled')
-  cy.get('num-search-action-bar button').eq(1).should('not.have.class', 'disabled')
-  cy.get('num-search-action-bar num-button > span.mat-badge-content').eq(0).should('have.text', 0)
-  cy.get('num-search-action-bar num-button > span.mat-badge-content').eq(1).should('have.text', 2)*/
   checkButtons()
 }
 export function searchInput(text: string) {
@@ -66,20 +64,48 @@ export function searchInput(text: string) {
 function checkStage() {
   cy.get('num-criteria-stage .criteria-box').should('have.length', addedCriteria)
 }
+
 function editGender() {
+  cy.get('num-criteria-stage .criteria-box').eq(2).within(() => {
+    cy.get('num-menu > num-button').click()
+  })
+  cy.get('.mat-mdc-menu-panel button').eq(3).click()
+  cy.get('num-edit-criterion-modal').within(() => {
+    cy.get('num-value-filter').within(() => {
+      //cy.get('num-concept').within(() => {
+      cy.get('mat-expansion-panel-header').click()
+      selectCheckbox([1,2])
+      cy.get('num-button.add-button').click()
+      })
+    // })
+    cy.get('num-button.select-button').eq(0).click()
+  })
+}
+function editAge() {
+  cy.get('body').as('root');
   cy.get('num-criteria-stage .criteria-box').eq(3).within(() => {
     cy.get('num-menu > num-button').click()
   })
-  //cy.wait(1000)
   cy.get('.mat-mdc-menu-panel button').eq(3).click()
+  cy.get('num-edit-criterion-modal').within(() => {
+    cy.get('num-value-filter').within(() => {
+      //cy.get('num-concept').within(() => {
+      cy.get('mat-expansion-panel-header').click()
+      selectOption('num-quantity-comparision-select', 2)
+      cy.get('num-quantity-comparator input').clear({force: true}).type('5')
+      selectOption('num-allowed-units', 2)
+    })
+    // })
+    cy.get('num-button.select-button').eq(0).click()
+  })
 }
-/*describe('test', () => {
+describe('test', () => {
   it('test', () => {
     cy.login()
     gotoAndCheckCohortSelectionSearch()
     selectCriterion([1, 2])
-    deselectCriterion([1,2])
-    selectCriterion([1, 2])
+    //deselectCriterion([1,2])
+    //selectCriterion([1, 2])
     addCriteria()
     searchInput('geschlecht')
     selectCriterion([0])
@@ -90,5 +116,6 @@ function editGender() {
     gotoAndCheckCohortSelectionEdit()
     checkStage()
     editGender()
+    editAge()
   })
-})*/
+})
