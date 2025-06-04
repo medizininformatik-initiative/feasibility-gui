@@ -2,14 +2,12 @@ import { gotoAndCheckCohortSelectionSearch, searchInput, selectCriterion } from 
 import { sideNavTests } from "./Tests/sideNav.cy";
 import { NavItem } from "./Utilities/NavItems";
 const { criteriaSearchPage } = require('./Tests/criterion-search.cy');
+import { When, Then, Given } from "@badeball/cypress-cucumber-preprocessor";
 
-describe('App Flow', () => {
-    it('Logins', () => cy.login())
-    it('Loads the app', () => cy.visit('/'))
-    context('Cohort Selection Search', () => {
-    it('loads the cohort page', () => sideNavTests(NavItem.cohort))
-    criteriaSearchPage()
-    })
-
-
+Given ('I login', () => cy.login());
+Then ('I should see the {Cohort Selection}', () => {
+    sideNavTests("Cohort Selection");
+});
+When('I go to the cohort selection search page', () => {
+    gotoAndCheckCohortSelectionSearch();
 });

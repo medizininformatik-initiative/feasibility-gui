@@ -1,7 +1,7 @@
 import { BasePaths, PathSegments } from '../../../src/app/app-paths'
 
 export const NavItem = {
-  cohort: 'Cohort Selection',
+  cohort: 'Kohortenselektion',
   dataSelection: 'Data Selection',
   dataDefinition: 'Data Definition',
   settings: '.settings-link',

@@ -1,3 +1,5 @@
+import { defineStep } from "@badeball/cypress-cucumber-preprocessor"
+
 export class CriterionSearchPage {
   private static selectedCriteria: number = 0
   private static addedCriteria: number = 0
@@ -49,11 +51,16 @@ export class CriterionSearchPage {
     })
   }
 }
+let CriteriaSearchPage = new CriterionSearchPage()
+module.exports = CriteriaSearchPage
 
-const criteriaSearchPage = () => {
-    it('validate search', () => CriterionSearchPage.gotoAndCheckCohortSelectionSearch())
-    it('search for criteria', () => CriterionSearchPage.searchInput('Current chronological age'))
-    it('select criteria', () => CriterionSearchPage.selectCriterion([1]))
-}
-
-module.exports = {criteriaSearchPage}
+defineStep('I go to the cohort selection search page', () => {
+  CriterionSearchPage.gotoAndCheckCohortSelectionSearch()
+})
+defineStep('I search for criteria {string}', (text: string) => {
+  CriterionSearchPage.searchInput(text)
+})
+defineStep('I select criteria {string}', (indices: string) => {
+  const indicesArray = indices.split(',').map(Number)
+  CriterionSearchPage.selectCriterion(indicesArray)
+})
