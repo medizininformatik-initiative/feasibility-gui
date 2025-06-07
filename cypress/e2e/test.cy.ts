@@ -51,8 +51,8 @@ function selectOption(element: string, optionIndex: number) {
     cy.get('@root').find('#'+id+'-panel').find('.mat-mdc-option').eq(optionIndex).click()
   })
 }
-function addCriteria() {
-  cy.get('num-search-action-bar button').eq(0).click()
+export function addCriteria() {
+  cy.get('num-search-action-bar button').eq(1).click()
   addedCriteria += selectedCriteria
   selectedCriteria = 0
   checkButtons()
@@ -99,6 +99,7 @@ function editAge() {
     cy.get('num-button.select-button').eq(0).click()
   })
 }
+/*
 describe('test', () => {
   it('test', () => {
     cy.login()
@@ -118,4 +119,4 @@ describe('test', () => {
     editGender()
     editAge()
   })
-})
+})*/

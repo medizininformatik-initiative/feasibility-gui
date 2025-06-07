@@ -17,4 +17,5 @@
 import './commands'
 export { BasePaths } from '../../src/app/app-paths';
 export { PathSegments } from '../../src/app/app-paths';
+export { UrlPaths } from '../../src/app/app-paths';
 
