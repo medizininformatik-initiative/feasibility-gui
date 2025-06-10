@@ -13,6 +13,7 @@ This documentation provides an overview of the step definitions implemented for 
 - [Navigation Label to URL Mapping](#navigation-label-to-url-mapping)
 - [Examples](#example-usage-in-feature-file)
 - [Helpful Links](#helpful-links)
+- [Utilities](#utilities)
 
 ---
 
@@ -62,6 +63,13 @@ In the following sections, you will find a list of already implemented step defi
 ### Search Input Field
 - `I type {string} in the search input field`
 - `I clear the search input field`
+
+### Utilities
+#### Feasibility
+- `I add the criterium {string} to the editor`
+- `I should see the criterium {string} in the editor`
+- `I see the criterium {string} with filter chip {string} in the block {string}`
+- `I see the criterium {string} with filter chip block {string}`
 
 ---
 

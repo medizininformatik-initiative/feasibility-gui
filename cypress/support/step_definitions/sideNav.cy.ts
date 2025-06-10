@@ -1,7 +1,8 @@
 import { defineStep } from "@badeball/cypress-cucumber-preprocessor";
 import { NavItemValue, NavItemPaths } from "../../e2e/Utilities/NavItems";
 import { UrlPaths } from "../e2e";
-import { getUrlPathByLabel } from "../../e2e/Utilities/pathResolver";
+import { Page } from "../../e2e/Utilities/pages";
+import { getUrlPathByPage } from "../../e2e/Utilities/pathResolver";
 
 /**
  * Class for side navigation component tests.
@@ -18,8 +19,8 @@ export class SideNavTests {
       });
   }
 
-  public visitUrl(url: string) {
-    const resolvedUrl: string = getUrlPathByLabel(url);
+  public visitUrl(url: Page) {
+    const resolvedUrl: string = getUrlPathByPage(url);
     cy.visit(resolvedUrl);
     cy.url().should('include', resolvedUrl);
 
@@ -29,6 +30,6 @@ export const sideNavTests = new SideNavTests();
 defineStep('I navigate to the {string} page', (navItem: NavItemValue) => {
   sideNavTests.navigateTo(navItem);
 })
-defineStep('I am on the {string} page', (url: string) => {
-  sideNavTests.visitUrl(url)
+defineStep('I am on the {string} page', (page: Page) => {
+  sideNavTests.visitUrl(page)
 });

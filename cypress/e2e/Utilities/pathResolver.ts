@@ -1,27 +1,28 @@
+// cypress/support/utils/pageUrlMapper.ts
 import { UrlPaths } from "../../support/e2e";
+import { Page } from "./pages";
 
-export function getUrlPathByLabel(label: string): string | undefined {
-  switch (label) {
-    case 'Feasibility Editor':
+export function getUrlPathByPage(page: Page): string {
+  switch (page) {
+    case Page.FeasibilityEditor:
       return UrlPaths.feasibilityQuery.editor;
-    case 'Feasibility Search':
+    case Page.FeasibilitySearch:
       return UrlPaths.feasibilityQuery.search;
-    case 'Feasibility Result':
+    case Page.FeasibilityResult:
       return UrlPaths.feasibilityQuery.result;
-    case 'Data Selection Editor':
+    case Page.DataSelectionEditor:
       return UrlPaths.dataSelection.editor;
-    case 'Data Selection Search':
+    case Page.DataSelectionSearch:
       return UrlPaths.dataSelection.search;
-    case 'Data Query - Cohort Definition':
+    case Page.DataQueryCohortDefinition:
       return UrlPaths.dataQuery.cohortDefinition;
-    case 'Data Query - Data Selection':
+    case Page.DataQueryDataSelection:
       return UrlPaths.dataQuery.dataSelection;
-    case 'Query Editor - Criteria':
+    case Page.QueryEditorCriteria:
       return UrlPaths.queryEditor.criteria;
-    case 'Query Editor - Profile':
+    case Page.QueryEditorProfile:
       return UrlPaths.queryEditor.profile;
     default:
-      console.warn(`No URL path mapped for label: "${label}"`);
-      return undefined;
+      throw new Error(`No URL path mapped for page: "${page}"`);
   }
 }

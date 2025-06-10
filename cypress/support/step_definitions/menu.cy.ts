@@ -25,4 +25,6 @@ export class MenuTests {
 const menuTests = new MenuTests()
 
 defineStep('I open the menu', () => menuTests.openMenu())
-defineStep('I click on the menu item {string}', (menuItem: string) => menuTests.clickMenuItem(menuItem))
+defineStep('I click on the menu item {string}', (menuItem: string) =>
+  menuTests.clickMenuItem(menuItem)
+)

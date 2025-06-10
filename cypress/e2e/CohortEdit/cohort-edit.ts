@@ -47,11 +47,11 @@ export class CohortEdit {
 
   public shouldSeeCriteriumInListWithSelected(criterium: string, panelName: string, chipValue: string) {
     const filterChip = new FilterChips()
-    filterChip.getFilterChipBlock(panelName)
+    filterChip.getFilterChipBlock(criterium, panelName)
     cy.get('.criteria-box').within(() => {
       cy.get('.content').should('contain', criterium).should('contain', chipValue)
     })
-    filterChip.getFilterChipByName(panelName, chipValue)
+    filterChip.getFilterChipByName(criterium, panelName, chipValue)
   }
 
   public selectValue(value: string) {
@@ -61,14 +61,26 @@ export class CohortEdit {
   public selectUnit(unit: string) {
     cy.get('num-allowed-units').click().then(() => {
       cy.get('.mat-mdc-option').contains(unit).click()
+
     })
+
   }
+
+public dragCriteriumToCohort(criterium: string) {
+  const dataTransfer = new DataTransfer();        
+  cy.get('num-criteria-stage .criteria-box').within(() => {
+    //cy.contains('.criteria-box', criterium)
+      cy.get('.cdk-drag-handle').trigger('dragstart', { dataTransfer });
+  });
+
+  cy.get('.inexclusion').first()
+    .trigger('drop', { dataTransfer });
+}
+
 }
 
 const cohortEdit = new CohortEdit()
 
-defineStep('I am on the Cohort Edit page', () => cohortEdit.goToCohortEditPage())
-defineStep('I have added {string} criterium to the cohort', (criterium: string) => cohortEdit.addCriteriumToCohort(criterium))
 defineStep('I should see {string} modal opening', (modalTitle: string) => cohortEdit.shouldSeeModalOpening(modalTitle))
 defineStep('I open the panel with the name {string}', (panelName: string) => cohortEdit.openPanelByName(panelName))
 defineStep('I should see {string} selected in the panel', (selected: string) => cohortEdit.shouldSeeSelectedInPanel(selected))
@@ -78,3 +90,4 @@ defineStep('I should see {string} modal closing', (modalTitle: string) => cohort
 defineStep('I select a value of {int}', (value: number) => cohortEdit.selectValue(value.toString()))
 defineStep('I select the unit {string}', (unit: string) => cohortEdit.selectUnit(unit))
 defineStep('I should see {string} in the cohort criteria list with {string} and {string} selected', (criterium: string, panelName: string, chipValue: string) => cohortEdit.shouldSeeCriteriumInListWithSelected(criterium, panelName, chipValue))
+defineStep('I drag {string} criterium to the cohort criteria list', (criterium: string) => cohortEdit.dragCriteriumToCohort(criterium))

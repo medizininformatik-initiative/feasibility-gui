@@ -2,12 +2,22 @@ Feature: Cohort editing
 
   Background:
     Given I am logged in as a user
-    And I am on the Feasibility Edit page
+    And I am on the "Feasibility Editor" page
 
 Scenario Outline: I edit <criterium> criterium
-    Given I have added "<criterium>" criterium to the cohort
-    When I click on the menu item "Bearbeiten"
+    Given I add the criterium "<criterium>" to the editor
+    
+    Then I should see the criterium "<criterium>" in the editor
+    When I drag "<criterium>" criterium to the cohort criteria listnoch net
+    When I open the menu
+    When I click on the menu item "Filter anwenden"
     Then I should see "Edit Cohort" modal opening
+    When I set the time restriction filter to before with date "04.04.2045"
+    Then I click on Auswählen button
+    Then I see the criterium "<criterium>" with filter chip "04.04.2045" in the block "vor"
+
+
+
     When I open the panel with the name "<panel_name>"
     Then I should see "<default_filter>" selected in the panel
     When I select "<new_filter>" from the panel with the name "<panel_name>"
@@ -20,6 +30,6 @@ Scenario Outline: I edit <criterium> criterium
 
     Examples:
     | criterium             | default_filter | new_filter | panel_name  | value       | unit | chip_value |
-    | Aktuelles chronologisches Alter | kein Filter    | größer     | Geburtsdatum |5 | a               | 5 |
+    | 17-Keto-Reduktase-Mangel | kein Filter    | größer     | Geburtsdatum |5 | a               | 5 |
 
 
