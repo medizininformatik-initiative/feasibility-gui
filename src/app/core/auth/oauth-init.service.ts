@@ -3,6 +3,7 @@ import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 import { from, race, of, timer, Observable, throwError } from 'rxjs';
 import { catchError, mapTo, map } from 'rxjs/operators';
 import { IAppConfig } from 'src/app/config/app-config.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',

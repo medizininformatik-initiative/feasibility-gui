@@ -114,6 +114,9 @@
             },
             "development": {
               "browserTarget": "studio:build:development"
+            },
+            "mock": {
+              "browserTarget": "num-portal-webapp:build:mock"
             }
           }
         },
