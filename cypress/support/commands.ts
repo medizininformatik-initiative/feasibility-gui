@@ -1,3 +1,4 @@
+require('@4tw/cypress-drag-drop')
 /// <reference types="cypress" />
 declare namespace Cypress {
   interface Chainable<Subject = any> {

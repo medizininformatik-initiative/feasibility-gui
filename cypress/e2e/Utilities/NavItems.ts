@@ -4,7 +4,7 @@ export const NavItem = {
   cohort: 'Kohortenselektion',
   dataSelection: 'Data Selection',
   dataDefinition: 'Data Definition',
-  settings: '.settings-link',
+  savedQueries: 'Saved Queries',
   profile: '.profile-link',
   logout: '.logout-link',
 } as const
@@ -17,7 +17,7 @@ export const NavItemPaths = {
   [NavItem.cohort]: `${BasePaths.feasibilityQuery}/${PathSegments.search}`,
   [NavItem.dataSelection]: `${BasePaths.dataSelection}/${PathSegments.search}`,
   [NavItem.dataDefinition]: `${BasePaths.dataQuery}/${PathSegments.cohortDefinition}`,
-  [NavItem.settings]: BasePaths.options,
+  [NavItem.savedQueries]: BasePaths.savedQueries,
 } as const
 
 export type NavItemPathKey = keyof typeof NavItemPaths

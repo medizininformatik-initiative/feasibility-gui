@@ -1,22 +1,32 @@
 import { defineStep } from '@badeball/cypress-cucumber-preprocessor';
 
 export class ActionBar {
+private getButtonByName(buttonName: string) {
+  return buttonName.trim().toLowerCase();
+}
+
   public clickButtonByName(buttonName: string) {
-    cy.get('num-search-action-bar button').contains(buttonName).click();
+    const normalizedButtonName = this.getButtonByName(buttonName);
+    cy.get('num-action-bar button').contains(normalizedButtonName, { matchCase: false }).click();
   }
 
   public shouldButtonBeDisabled(buttonName: string) {
-    cy.get('num-search-action-bar button')
-      .contains(buttonName)
+    const normalizedButtonName = this.getButtonByName(buttonName);
+
+    cy.get('num-action-bar button')
+      .contains(normalizedButtonName, { matchCase: false })
       .should('be.disabled');
   }
 
   public shouldButtonBeEnabled(buttonName: string) {
-    cy.get('num-search-action-bar button')
-      .contains(buttonName)
+    const normalizedButtonName = this.getButtonByName(buttonName);
+
+    cy.get('num-action-bar button')
+      .contains(normalizedButtonName, { matchCase: false })
       .should('not.be.disabled');
   }
 }
+
 
 const actionBar = new ActionBar();
 

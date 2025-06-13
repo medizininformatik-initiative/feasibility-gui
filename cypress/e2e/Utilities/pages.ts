@@ -8,4 +8,5 @@ export enum Page {
   DataQueryDataSelection = 'Data Query - Data Selection',
   QueryEditorCriteria = 'Query Editor - Criteria',
   QueryEditorProfile = 'Query Editor - Profile',
+  SavedQueries = 'Saved Queries',
 }

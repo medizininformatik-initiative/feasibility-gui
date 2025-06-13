@@ -9,6 +9,11 @@ import { getUrlPathByPage } from "../../e2e/Utilities/pathResolver";
  * @see NavItemValue
  */
 export class SideNavTests {
+
+  /**
+   * "Kohortenselektion" | "Data Selection" | "Data Definition" | ".settings-link" | ".profile-link" | ".logout-link"
+   * @param navItemSelector 
+   */
   public navigateTo(navItemSelector: NavItemValue) {
     cy.get('mat-nav-list')
       .should('be.visible')
@@ -19,12 +24,20 @@ export class SideNavTests {
       });
   }
 
-  public visitUrl(url: Page) {
-    const resolvedUrl: string = getUrlPathByPage(url);
-    cy.visit(resolvedUrl);
-    cy.url().should('include', resolvedUrl);
+public visitUrl(url: Page) {
+  const resolvedUrl: string = getUrlPathByPage(url);
 
-  }
+  cy.url().then((currentUrl) => {
+    if (currentUrl.includes(resolvedUrl)) {
+      // Already on the correct page
+      expect(true).to.be.true;
+    } else {
+      // Navigate to the desired page
+      cy.visit(resolvedUrl);
+      cy.url().should('include', resolvedUrl);
+    }
+  });
+}
 }
 export const sideNavTests = new SideNavTests();
 defineStep('I navigate to the {string} page', (navItem: NavItemValue) => {

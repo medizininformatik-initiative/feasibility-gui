@@ -66,11 +66,12 @@ In the following sections, you will find a list of already implemented step defi
 
 ### Utilities
 #### Feasibility
+  ##### Editor
 - `I add the criterium {string} to the editor`
 - `I should see the criterium {string} in the editor`
 - `I see the criterium {string} with filter chip {string} in the block {string}`
 - `I see the criterium {string} with filter chip block {string}`
-
+- `I drag "{string}" criterium to the {string} list` - (Inclusion | Exlusion)
 ---
 
 ## 🔗 Navigation Label to URL Mapping

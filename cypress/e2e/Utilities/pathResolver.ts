@@ -1,5 +1,5 @@
 // cypress/support/utils/pageUrlMapper.ts
-import { UrlPaths } from "../../support/e2e";
+import { BasePaths, UrlPaths } from "../../support/e2e";
 import { Page } from "./pages";
 
 export function getUrlPathByPage(page: Page): string {
@@ -22,6 +22,8 @@ export function getUrlPathByPage(page: Page): string {
       return UrlPaths.queryEditor.criteria;
     case Page.QueryEditorProfile:
       return UrlPaths.queryEditor.profile;
+    case Page.SavedQueries:
+      return BasePaths.savedQueries
     default:
       throw new Error(`No URL path mapped for page: "${page}"`);
   }
