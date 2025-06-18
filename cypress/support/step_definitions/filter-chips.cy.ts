@@ -1,7 +1,6 @@
 import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
 
 export class FilterChips {
-  // 🔹 Get the criteria box element by its label text
   private getCriteriaBoxByLabel(criterium: string) {
     return cy.contains('num-criteria-stage .criteria-box *', criterium).closest('.criteria-box')
   }

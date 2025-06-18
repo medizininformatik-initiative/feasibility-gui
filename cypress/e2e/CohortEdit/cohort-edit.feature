@@ -3,6 +3,7 @@ Feature: Cohort editing
   Background:
     Given I am logged in as a user
     And I am on the "Feasibility Editor" page
+    And set language to Englisch
 
 Scenario Outline: I edit <criterium> criterium 
     Given I add the criterium "<criterium>" to the editor

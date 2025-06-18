@@ -4,15 +4,18 @@ This documentation provides an overview of the step definitions implemented for 
 
 - [Important Notes](#important-notes)
 - [Feature Files & Gherkin](#feature-files--gherkin)
-- [Authentication & Navigation Steps](#authentication--navigation-steps)
-- [Menu Interaction](#menu-interaction)
-- [Navigation Steps](#navigation-steps)
-- [Table / Row Assertions & Interaction](#table--row-assertions--interaction)
-- [Action Bar Button Steps](#action-bar-button-steps)
-- [Search Input](#search-input-field)
-- [Time Restriction Filter Steps](#time-restriction-filter-steps)
+- [Implemented Step Definitions](#implemented-step-definitions)
+  - [Authentication & Navigation Steps](#authentication--navigation-steps)
+  - [Menu Interaction](#menu-interaction)
+  - [Navigation Steps](#navigation-steps)
+  - [Table / Row Assertions & Interaction](#table--row-assertions--interaction)
+  - [Time Restriction Filter Steps](#time-restriction-filter-steps)
+  - [Action Bar Button Steps](#action-bar-button-steps)
+  - [Search Input Field](#search-input-field)
+  - [Utilities](#utilities)
+  - [Language Steps](#language-steps)
 - [Navigation Label to URL Mapping](#navigation-label-to-url-mapping)
-- [Examples](#example-usage-in-feature-file)
+- [Examples](#example)
 - [Helpful Links](#helpful-links)
 - [Utilities](#utilities)
 
@@ -84,7 +87,13 @@ The following steps are available for setting time restriction filters in your s
 - `I see the criterium {string} with filter chip {string} in the block {string}`
 - `I see the criterium {string} with filter chip block {string}`
 - `I drag "{string}" criterium to the {string} list` - (Inclusion | Exlusion)
----
+
+### Language Steps
+
+The following steps are available for setting the application language in your scenarios:
+
+- `I set the language to English`
+- `I set the language to German`
 
 ## 🔗 Navigation Label to URL Mapping
 
@@ -110,7 +119,7 @@ This table shows the mapping between user-facing labels and the internal route U
 
     Background:
       Given I am logged in as a user
-      And I am on the Feasibility Edit page 
+      And I am on the Feasibility Editor page 
 
     Scenario: Button test
       When I click on the button "Zur Kohortenselektion hinzufügen"
@@ -123,7 +132,7 @@ This table shows the mapping between user-facing labels and the internal route U
 
     Background:
       Given I am logged in as a user
-      And I am on the Cohort Edit page 
+      And I am on the Cohort Editor page 
 
     Scenario: Search for Cohort elements
       Then I see 50 criteria results
@@ -136,7 +145,5 @@ This table shows the mapping between user-facing labels and the internal route U
 
 - [Cypress Documentation](https://docs.cypress.io)  
 - [Cypress Cucumber Preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor)  
-- [Gherkin Language Reference](https://cucumber.io/docs/gherkin/reference/)  
-
----
+- [Gherkin Language Reference](https://cucumber.io/docs/gherkin/reference/)
 

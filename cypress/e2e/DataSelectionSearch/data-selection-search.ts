@@ -39,6 +39,12 @@ export class DataSelectionSearch {
     })
   }
 
+    public getReferenceChip(chipName: string) {
+    cy.get('.reference-container').within(() => {
+      cy.get(`[data-cy="${chipName}"]`).contains(chipName).should('be.visible')
+    })
+  }
+
   public selecteTabByName(tabName: string) {
     cy.get('.mdc-tab__text-label').contains(tabName).should('be.visible').click()
   }
@@ -74,7 +80,7 @@ export class DataSelectionSearch {
 
   saveReference() {
     cy.get('num-modal-window').within(() => {
-      cy.get('num-button').contains(' Auswählen ').should('be.visible').click()
+      cy.get('num-button').first().should('be.visible').click()
     })
   }
 }
@@ -131,3 +137,6 @@ defineStep('I add a reference named {string}', (name: string) => {
 defineStep('I add the reference', () => {
   dataSelectionSearch.saveReference();
 })
+defineStep('a chip labeled {string} should appear in the "Selected Reference" section', (chipName: string) => {
+  dataSelectionSearch.getReferenceChip(chipName);
+});
