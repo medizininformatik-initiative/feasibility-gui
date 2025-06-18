@@ -37,6 +37,7 @@ public visitUrl(url: Page) {
       cy.url().should('include', resolvedUrl);
     }
   });
+  cy.wait(1000);
 }
 }
 export const sideNavTests = new SideNavTests();

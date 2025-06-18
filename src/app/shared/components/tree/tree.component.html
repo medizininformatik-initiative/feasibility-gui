@@ -1,7 +1,11 @@
 <ng-container *ngTemplateOutlet="tree; context: { node: treeData, level: 0 }"> </ng-container>
 
 <ng-template #tree let-node="node" let-level="level">
-  <div class="divider" [style.marginLeft]="calcMarginLeft(level)">
+  <div
+    class="divider"
+    [style.marginLeft]="calcMarginLeft(level)"
+    [attr.data-cy]="node.data.display | displayTranslation"
+  >
     <div fxLayout="row" fxLayoutAlign="start center" style="height: 50px" class="width-100">
       <div>
         <mat-checkbox

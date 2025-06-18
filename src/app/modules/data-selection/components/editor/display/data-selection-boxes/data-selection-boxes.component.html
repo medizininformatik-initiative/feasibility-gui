@@ -1,4 +1,9 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
+<div
+  fxLayout="row"
+  fxLayoutAlign="start stretch"
+  class="selection-box"
+  [attr.data-cy]="label | displayTranslation"
+>
   <div class="display-container">
     <div>{{ label | displayTranslation }}</div>
     <div class="text-small">{{ display }}</div>

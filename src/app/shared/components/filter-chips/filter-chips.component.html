@@ -15,6 +15,7 @@
 
       <ng-container *ngFor="let chip of filterChip.data">
         <div
+          [attr.data-cy]="chip.text | displayTranslation"
           class="chip-container margin-left-1"
           [ngClass]="{ expanded: chip.expanded }"
           (click)="toggleExpanded(chip)"

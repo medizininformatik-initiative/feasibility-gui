@@ -10,6 +10,7 @@ This documentation provides an overview of the step definitions implemented for 
 - [Table / Row Assertions & Interaction](#table--row-assertions--interaction)
 - [Action Bar Button Steps](#action-bar-button-steps)
 - [Search Input](#search-input-field)
+- [Time Restriction Filter Steps](#time-restriction-filter-steps)
 - [Navigation Label to URL Mapping](#navigation-label-to-url-mapping)
 - [Examples](#example-usage-in-feature-file)
 - [Helpful Links](#helpful-links)
@@ -54,6 +55,17 @@ In the following sections, you will find a list of already implemented step defi
 - `I select the checkbox in the row containing {string}` – selects a checkbox in the same row
 - `I select the checkbox of item {string} from the search results`
 - `the table should have {int} rows`
+
+### Time Restriction Filter Steps
+
+The following steps are available for setting time restriction filters in your scenarios:
+
+- `I set the time restriction filter to before with date {string}`
+- `I set the time restriction filter to on with date {string}`
+- `I set the time restriction filter to after with date {string}`
+- `I set the time restriction filter to equal with date {string}`
+- `I set the time restriction filter to between {string} and {string}`
+
 
 ### Action Bar Button Steps
 - `the button {string} should be disabled`

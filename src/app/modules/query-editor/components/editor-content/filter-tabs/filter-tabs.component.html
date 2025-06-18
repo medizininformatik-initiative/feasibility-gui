@@ -7,6 +7,7 @@
   >
     <mat-tab
       *ngFor="let item of content; let i = index"
+      id="item.name"
       label="{{ 'EDITOR.CONTENT.TAB_LABEL.' + item.name | translate }}"
     >
       <ng-template matTabContent>
