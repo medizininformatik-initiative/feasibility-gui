@@ -72,12 +72,13 @@
     "@angular/cli": "^15.2.0",
     "@angular/compiler-cli": "^15.2.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
+    "@cucumber/cucumber": "^11.3.0",
     "@types/lodash-es": "^4.17.5",
     "@types/node": "^16.11.12",
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "5.53.0",
     "@typescript-eslint/parser": "5.53.0",
-    "cypress": "^14.4.0",
+    "cypress": "^14.4.1",
     "esbuild": "^0.25.5",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.3.0",
@@ -115,10 +116,11 @@
     "reportFile": "test-report.xml",
     "indent": 4
   },
- "cypress-cucumber-preprocessor": {
+  "cypress-cucumber-preprocessor": {
     "stepDefinitions": [
-    "cypress/e2e/[filepath]/**/*.{js,ts}",
-    "cypress/e2e/[filepath].{js,ts}",
-    "cypress/support/step_definitions/**/*.{js,ts}"    ]
+      "cypress/e2e/[filepath]/**/*.{js,ts}",
+      "cypress/e2e/[filepath].{js,ts}",
+      "cypress/support/step_definitions/**/*.{js,ts}"
+    ]
   }
 }

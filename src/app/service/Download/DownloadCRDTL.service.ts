@@ -36,7 +36,7 @@ export class DownloadCRDTLService {
       return filename;
     }
   }
-  private createFileData(crdtl: CRTDL) {
+  private createFileData(crdtl: CRTDL): Blob {
     const crdtlString = JSON.stringify(crdtl);
     return new Blob([crdtlString], { type: 'text/plain;charset=utf-8' });
   }
