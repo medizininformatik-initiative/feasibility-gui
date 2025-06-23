@@ -1,6 +1,5 @@
 import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { DataSelectionInstanceService } from 'src/app/service/DataSelection/DataSelectionInstance.Factory.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
 import { DownloadDataSelectionComponent } from '../download-data-selection/download-data-selection.component';
@@ -10,6 +9,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable, Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { DataSelectionFactoryService } from 'src/app/service/DataSelection/DataSelection.factory.service';
 
 @Component({
   selector: 'num-data-selection-action-bar',
@@ -30,7 +30,7 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
     private navigationHelperService: NavigationHelperService,
     private ccdlUploadService: CCDLUploadService,
     private feasibilityQueryValidation: FeasibilityQueryValidation,
-    private dataSelectionInstanceService: DataSelectionInstanceService,
+    private dataSelectionFactoryService: DataSelectionFactoryService,
     private dialog: MatDialog,
     private snackbarService: SnackbarService
   ) {}
@@ -54,7 +54,7 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
   }
 
   public createNewDataSelection() {
-    this.dataSelectionInstanceService.instantiate();
+    this.dataSelectionFactoryService.instantiate();
     this.navigationHelperService.navigateToDataSelectionSearch();
   }
 
