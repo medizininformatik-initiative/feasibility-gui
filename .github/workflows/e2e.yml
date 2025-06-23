@@ -1,0 +1,39 @@
+# .github/workflows/e2e.yml
+name: E2E Tests
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-24.04
+    services:
+      backend:
+        image: ghcr.io/medizininformatik-initiative/feasibility-backend:latest
+        ports:
+          - 8080:8080
+        options: >-
+          --health-cmd="curl -f http://localhost:8080/health || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Wait for backend to be ready
+        run: |
+          for i in {1..30}; do
+            curl -f http://localhost:8080/health && break
+            echo "Waiting for backend..."
+            sleep 5
+          done
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm start
+          browser: chrome
