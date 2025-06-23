@@ -63,7 +63,7 @@
       "COMMENT": "Kommentar",
       "SAVE": "Speichern",
       "CANCEL": "Abbrechen",
-      "COHORT_WARNING": "Hinweis: Kohorte ist leer oder ungültig "
+      "COHORT_WARNING": "Kohortenselektion ist erforderlich"
     },
     "REFERENCE_TILE": {
       "REQUIRED": "Erforderlich",

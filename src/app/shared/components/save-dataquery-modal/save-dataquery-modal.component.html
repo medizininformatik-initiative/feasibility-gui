@@ -15,7 +15,7 @@
       <mat-checkbox
         color="primary"
         disableRipple="true"
-        [disabled]="(validatedDataQuery$ | async).feasibilityQuery === false"
+        [disabled]="true"
         [checked]="(validatedDataQuery$ | async).feasibilityQuery"
         (change)="toggleFeasibilityQuery($event)"
         >{{ 'DATAQUERY.COHORT.HEADER' | translate }}</mat-checkbox
@@ -39,7 +39,7 @@
 
     <num-button
       type="blue"
-      [isDisabled]="title.length === 0 || (!isFeasibilityChecked && !isDataSelectionChecked)"
+      [isDisabled]="title.length === 0 || !isFeasibilityChecked"
       (click)="doSave()"
       class="button-save"
     >

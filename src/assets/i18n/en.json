@@ -63,7 +63,7 @@
       "COMMENT": "Comment",
       "SAVE": "Save",
       "CANCEL": "Cancel",
-      "COHORT_WARNING": "Note: Cohort is empty or invalid"
+      "COHORT_WARNING": "Cohort selection is required"
     },
     "REFERENCE_TILE": {
       "REQUIRED": "Required",
