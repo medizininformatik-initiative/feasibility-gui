@@ -19,7 +19,7 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=10
-            env:
+      env:
       QUERYRESULT_PUBLIC_KEY: ${{ secrets.QUERYRESULT_PUBLIC_KEY }}
       QUERYRESULT_PRIVATE_KEY: ${{ secrets.QUERYRESULT_PRIVATE_KEY }}
       QUERYRESULT_ENCRYPTION_KEY: ${{ secrets.QUERYRESULT_ENCRYPTION_KEY }}
