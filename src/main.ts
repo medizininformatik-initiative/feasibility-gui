@@ -10,7 +10,12 @@ if (environment.production) {
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .catch((err) => {
-    console.error(err);
-    document.getElementById('global-error').style.display = 'flex';
-    document.getElementById('global-error-message').innerText = err;
+    setTimeout(() => {
+      const globalError = document.getElementById('global-error');
+      const errorMessage = document.getElementById('global-error-message');
+      if (globalError && errorMessage) {
+        globalError.style.display = 'flex';
+        errorMessage.innerText = err?.message || String(err);
+      }
+    }, 300);
   });
