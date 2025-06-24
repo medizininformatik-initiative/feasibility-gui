@@ -20,7 +20,6 @@ export class DownloadDataSelectionComponent {
   }
 
   public doDiscard(isCancelled: boolean): void {
-    console.log('Discarding download data selection', isCancelled);
     this.dialogRef.close(isCancelled);
   }
 }
