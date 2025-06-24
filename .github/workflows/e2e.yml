@@ -10,33 +10,16 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     steps:
-     
-      - name: Checkout backend integration test config
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          repository: medizininformatik-initiative/feasibility-backend
-          ref: develop
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: backend-integration-config
 
-      - name: Debug List cloned files
+      - name: Set up Docker Compose
         run: |
-          echo "Root directory:"
-          ls -la
-          echo "backend-integration-config/.github/integration-test:"
-          ls -la backend-integration-config/.github/integration-test
+          docker compose -f cypress/docker/docker-compose.yml up -d --build
 
-
-      - name: Build and start integration services
+      - name: Check backend health with curl
         run: |
-            docker compose -f backend-integration-config/.github/integration-test/docker-compose.yml up -d --build
-      - name: Wait for backend health
-        run: |
-          .github/scripts/wait-for-url.sh http://localhost:8091/actuator/health
-
-      - name: (Optional) Check backend user setup
-        run: |
-          .github/scripts/check-if-running-as-user-10001.sh
+          curl --fail http://localhost:8091/actuator/health
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
