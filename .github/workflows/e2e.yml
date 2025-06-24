@@ -15,7 +15,7 @@ jobs:
 
       - name: Set up Docker Compose
         run: |
-          docker compose -f cypress/docker/docker-compose.yml up -d --build
+          docker compose -f cypress/docker/docker-compose.yml up -d
 
       - name: Check backend health with curl
         run: |
