@@ -25,9 +25,6 @@ jobs:
           ref: develop
           path: backend-integration-config
 
-      - name: Start backend integration test services
-        run: |
-          docker compose -f backend-integration-config/.github/integration-test/docker-compose.yml up -d
       - name: Build and start integration services
         run: |
             docker compose -f backend-integration-config/.github/integration-test/docker-compose.yml up -d --build
