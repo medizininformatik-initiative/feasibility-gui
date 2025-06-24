@@ -9,7 +9,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.service';
+import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.deprecated.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 export class EnterCriterionListComponentData {

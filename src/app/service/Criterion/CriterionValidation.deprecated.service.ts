@@ -103,7 +103,10 @@ export class CriterionValidationService {
       this.getInvalidCriteria().pipe(map((criteria) => criteria.length === 0)),
       this.getIsInclusionSet(),
     ]).pipe(
-      map(([noMissingCriteria, noInvalidCriteria, isInclusionSet]) => noMissingCriteria && noInvalidCriteria && isInclusionSet)
+      map(
+        ([noMissingCriteria, noInvalidCriteria, isInclusionSet]) =>
+          noMissingCriteria && noInvalidCriteria && isInclusionSet
+      )
     );
   }
 }

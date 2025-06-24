@@ -13,15 +13,12 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
-import { CriterionValidationService } from '../../Criterion/CriterionValidation.service';
+import { CriterionValidationService } from '../../Criterion/CriterionValidation.deprecated.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
-import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
-import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData';
 
 @Injectable({
   providedIn: 'root',

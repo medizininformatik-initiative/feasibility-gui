@@ -1,9 +1,9 @@
 import { CohortFileUploadService } from 'src/app/service/Upload/CohortFileUpload.service';
 import { Component, OnInit } from '@angular/core';
-import { CriterionValidationService } from 'src/app/service/Criterion/CriterionValidation.service';
 import { DownloadCohortComponent } from '../download-cohort/download-cohort.component';
 import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
+import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable } from 'rxjs';
@@ -29,7 +29,7 @@ export class CohortDefinitionActionBarComponent implements OnInit {
     private dialog: MatDialog,
     private cohortFileUploadService: CohortFileUploadService,
     private feasibilityQueryFactoryService: FeasibilityQueryFactoryService,
-    private criterionValidationService: CriterionValidationService
+    private feasibilityQueryValidation: FeasibilityQueryValidation
   ) {}
 
   ngOnInit() {
@@ -40,9 +40,9 @@ export class CohortDefinitionActionBarComponent implements OnInit {
         ?.getTotalNumberOfPatients();
     });
 
-    this.isFeasibilityInclusionSet = this.criterionValidationService.getIsInclusionSet();
-    this.isFeasibilityExistent = this.criterionValidationService.getIsFeasibilityQuerySet();
-    this.isFeasibilityQueryValid = this.criterionValidationService.getIsFeasibilityQueryValid();
+    this.isFeasibilityInclusionSet = this.feasibilityQueryValidation.getIsInclusionSet();
+    this.isFeasibilityExistent = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
+    this.isFeasibilityQueryValid = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
   }
 
   public uploadCohort(event: Event): void {

@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
-import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.service';
+import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.deprecated.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 @Component({
   selector: 'num-edit-reference-criteria',
