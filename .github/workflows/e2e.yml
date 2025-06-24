@@ -15,14 +15,12 @@ jobs:
       QUERYRESULT_ENCRYPTION_KEY: ${{ secrets.QUERYRESULT_ENCRYPTION_KEY }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Checkout backend integration test config
         uses: actions/checkout@v4
         with:
           repository: medizininformatik-initiative/feasibility-backend
           ref: develop
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: backend-integration-config
 
       - name: Build and start integration services
