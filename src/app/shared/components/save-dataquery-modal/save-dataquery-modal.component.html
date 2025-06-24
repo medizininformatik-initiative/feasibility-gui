@@ -12,14 +12,16 @@
       </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="space-around center" class="checkbox-box">
-      <mat-checkbox
-        color="primary"
-        disableRipple="true"
-        [disabled]="true"
-        [checked]="(validatedDataQuery$ | async).feasibilityQuery"
-        (change)="toggleFeasibilityQuery($event)"
-        >{{ 'DATAQUERY.COHORT.HEADER' | translate }}</mat-checkbox
-      >
+      <span [matTooltip]="'DATAQUERY.COHORT.REQUIRED' | translate" [matTooltipPosition]="'above'">
+        <mat-checkbox
+          color="primary"
+          disableRipple="true"
+          [disabled]="true"
+          [checked]="(validatedDataQuery$ | async).feasibilityQuery"
+          (change)="toggleFeasibilityQuery($event)"
+          >{{ 'DATAQUERY.COHORT.HEADER' | translate }}</mat-checkbox
+        >
+      </span>
       <mat-checkbox
         color="primary"
         disableRipple="true"

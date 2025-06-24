@@ -188,6 +188,7 @@
   },
   "DATAQUERY": {
     "COHORT": {
+      "REQUIRED":"Kohortenselektion ist ein Pflichtfeld",
       "HEADER":"Kohortenselektion",
       "BUTTON": {
         "UPLOAD": "Kohortenselektion hochladen",
