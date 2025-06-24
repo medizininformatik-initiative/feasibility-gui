@@ -19,15 +19,6 @@ jobs:
           name: backend-image
           path: /tmp
 
-      - name: Install jq
-        uses: dcarbone/install-jq-action@v2.1.0
-
-      - name: Load Dataportal Backend Image
-        run: docker load --input /tmp/dataportalBackend.tar
-
-      - name: Download ontology files from GitHub
-        run: .github/scripts/download-and-unpack-ontology.sh
-
       - name: Run Dataportal Backend with Database, Elasticsearch, Keycloak and Blaze
         run: docker compose -f .github/integration-test/docker-compose.yml up -d
 
@@ -36,6 +27,10 @@ jobs:
 
       - name: Check if Dataportal Backend is correctly running with the user with id 10001
         run: .github/scripts/check-if-running-as-user-10001.sh
+
+        
+      - name: Create Test User in Keycloak
+        run: .github/scripts/create-keycloak-user.sh
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
