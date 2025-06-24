@@ -9,12 +9,13 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
-    env:
-      QUERYRESULT_PUBLIC_KEY: ${{ secrets.QUERYRESULT_PUBLIC_KEY }}
-      QUERYRESULT_PRIVATE_KEY: ${{ secrets.QUERYRESULT_PRIVATE_KEY }}
-      QUERYRESULT_ENCRYPTION_KEY: ${{ secrets.QUERYRESULT_ENCRYPTION_KEY }}
-
     steps:
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm start
+          browser: chrome
       - name: Checkout backend integration test config
         uses: actions/checkout@v4
         with:
@@ -22,6 +23,14 @@ jobs:
           ref: develop
           token: ${{ secrets.GITHUB_TOKEN }}
           path: backend-integration-config
+
+      - name: Debug List cloned files
+        run: |
+          echo "Root directory:"
+          ls -la
+          echo "backend-integration-config/.github/integration-test:"
+          ls -la backend-integration-config/.github/integration-test
+
 
       - name: Build and start integration services
         run: |
@@ -34,9 +43,3 @@ jobs:
         run: |
           .github/scripts/check-if-running-as-user-10001.sh
 
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build
-          start: npm start
-          browser: chrome
