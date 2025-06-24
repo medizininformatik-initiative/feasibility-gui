@@ -4,6 +4,7 @@ import { FileUploadService } from './FileUpload.service';
 import { Injectable } from '@angular/core';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,7 @@ export class CCDLUploadService {
   public uploadDataSelection(crtdl: CRTDLData) {
     this.profileProviderService.resetProfileMap();
     const isDataSelectionExistent = this.crdtlTranslatorService.createCRDTLFromJson(crtdl);
+    isDataSelectionExistent.pipe(take(1)).subscribe();
     if (!isDataSelectionExistent) {
       this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');
     } else {

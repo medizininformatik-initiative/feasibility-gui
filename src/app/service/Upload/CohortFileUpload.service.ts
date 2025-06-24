@@ -22,7 +22,7 @@ export class CohortFileUploadService {
 
   public uploadCohort(file: File): void {
     if (file) {
-      this.fileUploadService.readFile(file, this.onReaderLoad.bind(this));
+      //this.fileUploadService.readFile(file, this.onReaderLoad.bind(this));
     }
   }
 

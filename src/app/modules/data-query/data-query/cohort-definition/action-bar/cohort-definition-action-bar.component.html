@@ -10,17 +10,17 @@
     {{ 'DATAQUERY.COHORT.BUTTON.EDIT' | translate }}
   </num-button>
   <div>
-    <input type="file" class="file-input" (change)="uploadCohort($event)" #fileUpload />
+    <input type="file" class="file-input" (change)="uploadCCDL($event)" #fileUpload />
     <num-button type="green" (click)="fileUpload.click()">
-      {{ 'DATAQUERY.COHORT.BUTTON.UPLOAD' | translate }}
+      {{ 'DATAQUERY.DATASELECTION.BUTTON.UPLOAD' | translate }}
     </num-button>
   </div>
   <num-button
     type="green"
     [isDisabled]="(isFeasibilityQueryValid | async) === false"
-    (click)="downloadCohort()"
+    (click)="downloadCRDTL()"
   >
-    {{ 'DATAQUERY.COHORT.BUTTON.DOWNLOAD' | translate }}
+    {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
   </num-button>
   <num-button
     type="green"

@@ -6,8 +6,11 @@ import { FeasibilityQueryProviderService } from 'src/app/service/Provider/Feasib
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { DownloadDataSelectionComponent } from '../../data-selection/download-data-selection/download-data-selection.component';
+import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
 
 @Component({
   selector: 'num-cohort-definition-action-bar',
@@ -20,6 +23,7 @@ export class CohortDefinitionActionBarComponent implements OnInit {
   isFeasibilityExistent: Observable<boolean>;
   isFeasibilityQueryValid: Observable<boolean>;
   totalNumberOfPatients: number;
+  downloadSubscription: Subscription;
 
   constructor(
     private routerHelperService: NavigationHelperService,
@@ -27,9 +31,10 @@ export class CohortDefinitionActionBarComponent implements OnInit {
     private resultProviderService: ResultProviderService,
     private navigationHelperService: NavigationHelperService,
     private dialog: MatDialog,
-    private cohortFileUploadService: CohortFileUploadService,
+    private ccdlUploadService: CCDLUploadService,
     private feasibilityQueryFactoryService: FeasibilityQueryFactoryService,
-    private feasibilityQueryValidation: FeasibilityQueryValidation
+    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -45,19 +50,27 @@ export class CohortDefinitionActionBarComponent implements OnInit {
     this.isFeasibilityQueryValid = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
   }
 
-  public uploadCohort(event: Event): void {
+  public uploadCCDL(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];
-    this.cohortFileUploadService.uploadCohort(file);
+    this.ccdlUploadService.uploadCCDL(file);
   }
 
   public sendQuery(): void {
     this.routerHelperService.navigateToFeasibilityQueryResult();
   }
 
-  public downloadCohort(): void {
+  public downloadCRDTL(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    this.dialog.open(DownloadCohortComponent, dialogConfig);
+    this.downloadSubscription?.unsubscribe();
+    this.downloadSubscription = this.dialog
+      .open(DownloadDataSelectionComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((isCancelled: boolean) => {
+        if (!isCancelled) {
+          this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
+        }
+      });
   }
 
   public editFeasibilityQuery(): void {
