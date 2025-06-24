@@ -10,12 +10,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     steps:
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build
-          start: npm start
-          browser: chrome
+     
       - name: Checkout backend integration test config
         uses: actions/checkout@v4
         with:
@@ -43,3 +38,9 @@ jobs:
         run: |
           .github/scripts/check-if-running-as-user-10001.sh
 
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm start
+          browser: chrome
