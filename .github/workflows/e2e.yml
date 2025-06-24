@@ -27,8 +27,7 @@ jobs:
 
       - name: Start backend integration test services
         run: |
-          cd backend-integration-config/.github/integration-test
-          docker compose -f .github/integration-test/docker-compose.yml up -d
+          docker compose -f backend-integration-config/.github/integration-test/docker-compose.yml up -d
 
       - name: Start integration services
         run: |
