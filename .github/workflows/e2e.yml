@@ -18,10 +18,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Checkout backend integration test config
+        uses: actions/checkout@v4
+        with:
+          repository: medizininformatik-initiative/feasibility-backend
+          ref: develop
+          path: backend-integration-config
+
+      - name: Start backend integration test services
+        run: |
+          cd backend-integration-config/.github/integration-test
+          docker-compose up -d
+
       - name: Start integration services
         run: |
-          docker-compose -f feasibility-backend/.github/integration-test/docker-compose.yml pull backend
-          docker-compose -f feasibility-backend/.github/integration-test/docker-compose.yml up -d
+          docker-compose -f backend-integration-config/.github/integration-test/docker-compose.yml pull backend
+          docker-compose -f backend-integration-config/.github/integration-test/docker-compose.yml up -d
 
       - name: Wait for backend health
         run: |
