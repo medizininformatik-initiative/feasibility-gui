@@ -1,36 +1,27 @@
-name: E2E Tests
-
-on:
-  push:
-    branches: [develop, main]
-  pull_request:
-    branches: [develop, main]
-
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+    env:
+      QUERYRESULT_PUBLIC_KEY: ${{ secrets.QUERYRESULT_PUBLIC_KEY }}
+      QUERYRESULT_PRIVATE_KEY: ${{ secrets.QUERYRESULT_PRIVATE_KEY }}
+      QUERYRESULT_ENCRYPTION_KEY: ${{ secrets.QUERYRESULT_ENCRYPTION_KEY }}
+
     steps:
-      - name: Check out Git repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Dataportal Backend Image
-        uses: actions/download-artifact@v4
-        with:
-          name: backend-image
-          path: /tmp
+      - name: Start integration services
+        run: |
+          docker-compose -f feasibility-backend/.github/integration-test/docker-compose.yml pull backend
+          docker-compose -f feasibility-backend/.github/integration-test/docker-compose.yml up -d
 
-      - name: Run Dataportal Backend with Database, Elasticsearch, Keycloak and Blaze
-        run: docker compose -f .github/integration-test/docker-compose.yml up -d
+      - name: Wait for backend health
+        run: |
+          .github/scripts/wait-for-url.sh http://localhost:8091/actuator/health
 
-      - name: Wait for Dataportal Backend
-        run: .github/scripts/wait-for-url.sh http://localhost:8091/actuator/health
-
-      - name: Check if Dataportal Backend is correctly running with the user with id 10001
-        run: .github/scripts/check-if-running-as-user-10001.sh
-
-        
-      - name: Create Test User in Keycloak
-        run: .github/scripts/create-keycloak-user.sh
+      - name: (Optional) Check backend user setup
+        run: |
+          .github/scripts/check-if-running-as-user-10001.sh
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
