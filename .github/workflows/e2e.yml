@@ -1,5 +1,5 @@
-# .github/workflows/e2e.yml
 name: E2E Tests
+
 on:
   push:
     branches: [develop, main]
@@ -9,31 +9,33 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
-    services:
-      backend:
-        image: ghcr.io/medizininformatik-initiative/feasibility-backend:latest
-        ports:
-          - 8080:8080
-        options: >-
-          --health-cmd="curl -f http://localhost:8090/actuator/health || exit 1"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=10
-      env:
-      QUERYRESULT_PUBLIC_KEY: ${{ secrets.QUERYRESULT_PUBLIC_KEY }}
-      QUERYRESULT_PRIVATE_KEY: ${{ secrets.QUERYRESULT_PRIVATE_KEY }}
-      QUERYRESULT_ENCRYPTION_KEY: ${{ secrets.QUERYRESULT_ENCRYPTION_KEY }}
     steps:
-      - name: Checkout
+      - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Wait for backend to be ready
-        run: |
-          for i in {1..30}; do
-            curl -f http://localhost:8090/actuator/health && break
-            echo "Waiting for backend..."
-            sleep 5
-          done
+      - name: Download Dataportal Backend Image
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-image
+          path: /tmp
+
+      - name: Install jq
+        uses: dcarbone/install-jq-action@v2.1.0
+
+      - name: Load Dataportal Backend Image
+        run: docker load --input /tmp/dataportalBackend.tar
+
+      - name: Download ontology files from GitHub
+        run: .github/scripts/download-and-unpack-ontology.sh
+
+      - name: Run Dataportal Backend with Database, Elasticsearch, Keycloak and Blaze
+        run: docker compose -f .github/integration-test/docker-compose.yml up -d
+
+      - name: Wait for Dataportal Backend
+        run: .github/scripts/wait-for-url.sh http://localhost:8091/actuator/health
+
+      - name: Check if Dataportal Backend is correctly running with the user with id 10001
+        run: .github/scripts/check-if-running-as-user-10001.sh
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
