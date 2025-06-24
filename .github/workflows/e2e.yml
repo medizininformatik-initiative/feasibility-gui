@@ -1,3 +1,11 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
