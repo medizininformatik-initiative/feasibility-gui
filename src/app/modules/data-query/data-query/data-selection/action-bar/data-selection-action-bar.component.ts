@@ -10,6 +10,7 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { Observable, Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 import { DataSelectionFactoryService } from 'src/app/service/DataSelection/DataSelection.factory.service';
+import { is } from 'cypress/types/bluebird';
 
 @Component({
   selector: 'num-data-selection-action-bar',
@@ -62,26 +63,14 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     this.downloadSubscription?.unsubscribe();
-    this.downloadSubscription = this.isCohortExistent$
-      .pipe(
-        take(1),
-        map((isCohortExistent) => {
-          if (isCohortExistent) {
-            this.dialog
-              .open(DownloadDataSelectionComponent, dialogConfig)
-              .afterClosed()
-              .pipe(take(1))
-              .subscribe(() => {
-                this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
-              });
-          } else {
-            this.snackbarService.displayErrorMessageWithNoCode(
-              'DATAQUERY.DATASELECTION.ERROR.DOWNLOAD'
-            );
-          }
-        })
-      )
-      .subscribe();
+    this.downloadSubscription = this.dialog
+      .open(DownloadDataSelectionComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((isCancelled: boolean) => {
+        if (!isCancelled) {
+          this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
+        }
+      });
   }
 
   public uploadCCDL(event: Event): void {

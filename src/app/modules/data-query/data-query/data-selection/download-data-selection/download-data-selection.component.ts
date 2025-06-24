@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
-import { SaveFileModalComponent } from '../../../../../shared/components/save-file-modal/save-file-modal.component';
 import { SaveFileDataModal } from '../../../../../shared/models/SaveDataModal/SaveFileDataModal';
 
 @Component({
@@ -11,16 +10,17 @@ import { SaveFileDataModal } from '../../../../../shared/models/SaveDataModal/Sa
 })
 export class DownloadDataSelectionComponent {
   constructor(
-    private dialogRef: MatDialogRef<SaveFileModalComponent, void>,
+    private dialogRef: MatDialogRef<DownloadDataSelectionComponent, boolean>,
     private downloadCRDTLService: DownloadCRDTLService
   ) {}
 
   public saveDataSelection(data: SaveFileDataModal) {
     this.downloadCRDTLService.downloadActiveDataSelectionAsFile(data.title);
-    this.doDiscard();
+    this.doDiscard(false);
   }
 
-  public doDiscard(): void {
-    this.dialogRef.close();
+  public doDiscard(isCancelled: boolean): void {
+    console.log('Discarding download data selection', isCancelled);
+    this.dialogRef.close(isCancelled);
   }
 }
