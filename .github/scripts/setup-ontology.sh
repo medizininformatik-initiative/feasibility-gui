@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # Define tag or get from environment
-ONTOLOGY_GIT_TAG="${ONTOLOGY_GIT_TAG:-v1.2.3}"
+ONTOLOGY_GIT_TAG="${ONTOLOGY_GIT_TAG:-v3.8.1}"
 
 echo "Downloading ontology backend.zip for tag: $ONTOLOGY_GIT_TAG"
 
