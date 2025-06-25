@@ -6,6 +6,7 @@ Feature: Data Query Cohort
 
     Scenario Outline: User uploads file "<fileName>"
         Given I upload the file "<fileName>"
+        Then I download the file "<fileName>"
 
 
         Examples:

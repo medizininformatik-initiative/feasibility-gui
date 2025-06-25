@@ -23,6 +23,7 @@
   </div>
   <num-button
     type="green"
+    [attr.data-cy]="'download-ccdl'"
     [isDisabled]="(isFeasibilityQueryValid | async) === false"
     (click)="downloadCRDTL()"
   >

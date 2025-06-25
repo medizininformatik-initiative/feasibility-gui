@@ -24,6 +24,7 @@
   </div>
   <num-button
     class="margin-right-10"
+    [attr.data-cy]="'download-crdtl'"
     (click)="downloadCRDTL()"
     [isDisabled]="!(isDataSelectionExistent$ | async) || !(isCohortExistent$ | async)"
     type="green"

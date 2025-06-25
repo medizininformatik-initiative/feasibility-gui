@@ -18,6 +18,7 @@
 
     <num-button
       type="blue"
+      [attr.data-cy]="'save-file-button'"
       [isDisabled]="title.length === 0"
       (click)="doSave()"
       class="button-save"
