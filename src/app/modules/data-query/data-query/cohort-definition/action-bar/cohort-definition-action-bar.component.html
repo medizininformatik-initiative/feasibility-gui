@@ -10,7 +10,13 @@
     {{ 'DATAQUERY.COHORT.BUTTON.EDIT' | translate }}
   </num-button>
   <div>
-    <input type="file" class="file-input" (change)="uploadCCDL($event)" #fileUpload />
+    <input
+      [attr.data-cy]="'upload-ccdl'"
+      type="file"
+      class="file-input"
+      (change)="uploadCCDL($event)"
+      #fileUpload
+    />
     <num-button type="green" (click)="fileUpload.click()">
       {{ 'DATAQUERY.DATASELECTION.BUTTON.UPLOAD' | translate }}
     </num-button>

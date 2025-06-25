@@ -53,7 +53,7 @@ Feature: Data Selection Search
     When  I add a reference named "Procedure"
     Then I add the reference
     Then I click on the button "Save"
-    Then a chip labeled "Prozedur" should appear in the "Selected Reference" section
+    Then a chip labeled "Procedure" should appear in the "Selected Reference" section
     Then I click on the button "Close"
 
 
@@ -61,3 +61,4 @@ Feature: Data Selection Search
     Examples: Selection Criteria
       | root       | feature                   | button1                  | button2        | field | tabname | concept     |
       | Medication | Medication administration | Add to feature Selection | Show selection | Note  | Filter  | Other tests |
+  | Procedure | Medication administration | Add to feature Selection | Show selection | Note  | Filter  | Other tests |

@@ -12,6 +12,7 @@ This documentation provides an overview of the step definitions implemented for 
   - [Time Restriction Filter Steps](#time-restriction-filter-steps)
   - [Action Bar Button Steps](#action-bar-button-steps)
   - [Search Input Field](#search-input-field)
+  - [Upload File](#upload-files)
   - [Utilities](#utilities)
   - [Language Steps](#language-steps)
 - [Navigation Label to URL Mapping](#navigation-label-to-url-mapping)
@@ -78,6 +79,9 @@ The following steps are available for setting time restriction filters in your s
 ### Search Input Field
 - `I type {string} in the search input field`
 - `I clear the search input field`
+
+### Upload files
+- `I upload the file {string}`
 
 ### Utilities
 #### Feasibility
