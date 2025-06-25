@@ -1,7 +1,10 @@
+version: '3.3'
+
+
 services:
   dataportal-backend:
     container_name: dataportal-backend
-    image: backend:latest
+    image:  ghcr.io/medizininformatik-initiative/feasibility-backend:7.1.2
     ports:
       - "8091:8090"
     depends_on:
@@ -60,7 +63,7 @@ services:
       PRIVACY_THRESHOLD_RESULTS: 0
       PRIVACY_THRESHOLD_SITES: 0
       # ---- Elastic Search
-      ELASTIC_SEARCH_ENABLED: true
+      ELASTIC_SEARCH_ENABLED: "true"
       ELASTIC_SEARCH_HOST: dataportal-elastic:9200
       ELASTIC_SEARCH_FILTER: context,terminology,kds_module
       # ---- logging
@@ -75,6 +78,7 @@ services:
       - ./ontology/dse/profile_tree.json:/opt/dataportal-backend/ontology/dse/profile_tree.json
       - ./ontology/migration/R__Load_latest_ui_profile.sql:/opt/dataportal-backend/ontology/migration/R__Load_latest_ui_profile.sql
       - ./secrets:/opt/dataportal-security
+
   dataportal-postgres:
     image: 'postgres:16-alpine'
     container_name: dataportal-postgres
@@ -86,7 +90,7 @@ services:
       POSTGRES_DB: "dataportal"
 
   dataportal-elastic:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.0.2
     container_name: dataportal-elastic
     ports:
       - '9200:9200'
@@ -101,7 +105,7 @@ services:
       ES_JAVA_OPTS: -Xmx512m -Xms512m
       node.name: es01
       cluster.name: elasticsearch
-      xpack.security.enabled: false
+      xpack.security.enabled: "false"
 
   auth-db:
     image: postgres:16-alpine
@@ -111,7 +115,7 @@ services:
       POSTGRES_USER: "keycloakdbuser"
       POSTGRES_PASSWORD: "keycloakdbpw"
     volumes:
-      - "dataportal-auth-db:/var/lib/postgresql/data"
+      - dataportal-auth-db:/var/lib/postgresql/data
 
   auth:
     image: keycloak/keycloak:26.2
@@ -119,7 +123,7 @@ services:
     restart: unless-stopped
     environment:
       KC_DB: "postgres"
-      KC_DB_URL: "jdbc:postgresql://auth-db:5432/${FEASIBILITY_KC_DB:-keycloakdb}"
+      KC_DB_URL: "jdbc:postgresql://auth-db:5432/keycloakdb"
       KC_DB_USERNAME: "keycloakdbuser"
       KC_DB_PASSWORD: "keycloakdbpw"
       KEYCLOAK_ADMIN: "keycloakadmin"
