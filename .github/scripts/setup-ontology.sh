@@ -1,29 +1,30 @@
 #!/bin/bash -e
 
-# Define tag or get from environment
-ONTOLOGY_GIT_TAG="${ONTOLOGY_GIT_TAG:-v3.8.1}"
+ONTOLOGY_GIT_TAG=${ONTOLOGY_GIT_TAG:-v3.8.1}
 
-echo "Downloading ontology backend.zip for tag: $ONTOLOGY_GIT_TAG"
+BASE_DIR=".github/ontology"
+DSE_DIR="$BASE_DIR/dse"
+MIGRATION_DIR="$BASE_DIR/migration"
 
-# Create necessary folders
-mkdir -p .github/integration-test/ontology/ui_profiles
-mkdir -p .github/integration-test/ontology/migration
+mkdir -p "$BASE_DIR" "$DSE_DIR" "$MIGRATION_DIR"
 
-# Download and unzip
-curl -L "https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download/${ONTOLOGY_GIT_TAG}/backend.zip" -o .github/integration-test/ontology/backend.zip
+echo "Downloading backend.zip for tag $ONTOLOGY_GIT_TAG..."
+curl -fsSL -o "$BASE_DIR/backend.zip" \
+  "https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download/${ONTOLOGY_GIT_TAG}/backend.zip"
 
-# Extract flat into ui_profiles
-unzip -jod .github/integration-test/ontology/ui_profiles/ .github/integration-test/ontology/backend.zip
+echo "Unzipping all files to ontology folder..."
+unzip -oj "$BASE_DIR/backend.zip" -d "$BASE_DIR"
 
-# Move SQL file
-mv .github/integration-test/ontology/ui_profiles/R__Load_latest_ui_profile.sql .github/integration-test/ontology/migration/
+echo "Moving profile_tree.json to ontology/dse/ folder..."
+mv "$BASE_DIR/profile_tree.json" "$DSE_DIR/" 2>/dev/null || true
 
-# Optionally copy to the root-level `ontology/` for Docker compatibility
-mkdir -p ontology/ui_profiles ontology/migration
-cp .github/integration-test/ontology/ui_profiles/* ontology/ui_profiles/
-cp .github/integration-test/ontology/migration/* ontology/migration/
+echo "Moving SQL files to ontology/migration/ folder..."
+mv "$BASE_DIR"/*.sql "$MIGRATION_DIR"/ 2>/dev/null || true
 
-# Clean up
-rm .github/integration-test/ontology/backend.zip
+echo "Cleaning up zip..."
+rm "$BASE_DIR/backend.zip"
 
-echo "Ontology files are ready."
+echo "Final files:"
+ls -l "$BASE_DIR"
+ls -l "$DSE_DIR"
+ls -l "$MIGRATION_DIR"
