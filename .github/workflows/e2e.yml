@@ -39,7 +39,11 @@ jobs:
           done
           echo "Backend is healthy!"
 
+      - name: Check if Dataportal Backend is correctly running with the user with id 10001
+        run: .github/scripts/check-if-running-as-user-10001.sh
 
+      - name: Create Test User in Keycloak
+        run: .github/scripts/create-keycloak-user.sh
 
       - name: Check backend health with curl
         run: |
@@ -51,7 +55,7 @@ jobs:
           build: npm run build
           start: npm start
           browser: chrome
-          
+
       - name: Upload Cypress screenshots
         if: failure() # only upload on test failure (optional)
         uses: actions/upload-artifact@v4
