@@ -39,6 +39,12 @@ jobs:
           done
           echo "Backend is healthy!"
 
+      - name: Make script executable
+        run: chmod +x .github/scripts/check-if-running-as-user-10001.sh
+
+      - name: Make script executable
+        run: chmod +x .github/scripts/create-keycloak-user.sh
+
       - name: Check if Dataportal Backend is correctly running with the user with id 10001
         run: .github/scripts/check-if-running-as-user-10001.sh
 
