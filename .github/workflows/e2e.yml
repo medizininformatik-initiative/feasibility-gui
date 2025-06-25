@@ -21,6 +21,9 @@ jobs:
           chmod +x .github/scripts/setup-ontology.sh
           .github/scripts/setup-ontology.sh
 
+      - name: Start Docker Compose
+        run: docker compose -f cypress/docker/docker-compose.yml up -d
+
       - name: Check backend health with curl (wait until ready)
         run: |
           max_attempts=20
@@ -35,6 +38,7 @@ jobs:
             sleep 5
           done
           echo "Backend is healthy!"
+
 
 
       - name: Check backend health with curl
