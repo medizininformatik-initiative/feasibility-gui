@@ -7,8 +7,11 @@ on:
     branches: [develop, main]
 
 jobs:
+
   cypress-run:
     runs-on: ubuntu-24.04
+    env:
+      ONTOLOGY_GIT_TAG: v3.8.1 # Or dynamically set it
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
