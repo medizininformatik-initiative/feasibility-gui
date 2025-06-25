@@ -51,3 +51,10 @@ jobs:
           build: npm run build
           start: npm start
           browser: chrome
+          
+      - name: Upload Cypress screenshots
+        if: failure() # only upload on test failure (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
