@@ -19,14 +19,20 @@ export default defineConfig({
       config: Cypress.PluginConfigOptions
     ): Promise<Cypress.PluginConfigOptions> {
 
-      on('before:run', () => {
-        const folderToClear = path.join(__dirname, 'cypress', 'downloads');
-        if (fs.existsSync(folderToClear)) {
-          fs.removeSync(folderToClear);
-          console.log(`Cleared folder: ${folderToClear}`);
-        } else {
-          console.log(`Folder not found: ${folderToClear}`);
-        }
+       on('before:run', () => {
+        const foldersToClear = [
+          path.join(__dirname, 'cypress', 'downloads'),
+          path.join(__dirname, 'cypress', 'screenshots'),
+        ];
+
+        foldersToClear.forEach((folder) => {
+          if (fs.existsSync(folder)) {
+            fs.removeSync(folder);
+            console.log(`✅ Cleared folder: ${folder}`);
+          } else {
+            console.log(`ℹ️ Folder not found: ${folder}`);
+          }
+        });
       });
 
       await addCucumberPreprocessorPlugin(on, config);
