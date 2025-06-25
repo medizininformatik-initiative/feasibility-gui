@@ -22,13 +22,15 @@
       *ngIf="profile.getReference().getIncludeReferenceOnly()"
       class="reference-chip-padding-30"
     >
-      <div class="block">{{ 'DATASELECTION.DISPLAY.REFERENCE' | translate }}</div>
-      <div class="block-triangle"></div>
-      <mat-checkbox
-        [disabled]="!isEditable"
-        [checked]="profile.getReference().getIsReferenceSet()"
-        (change)="toggleIsReferenceSet(profile.getReference())"
-      ></mat-checkbox>
+      <ng-container *ngIf="isReferenced">
+        <div class="block">{{ 'DATASELECTION.DISPLAY.REFERENCE' | translate }}</div>
+        <div class="block-triangle"></div>
+        <mat-checkbox
+          [disabled]="!isEditable"
+          [checked]="profile.getReference().getIsReferenceSet()"
+          (change)="toggleIsReferenceSet(profile.getReference())"
+        ></mat-checkbox>
+      </ng-container>
     </div>
     <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container padding-1">
       <num-filter-chips [filterChips]="chips"></num-filter-chips>
