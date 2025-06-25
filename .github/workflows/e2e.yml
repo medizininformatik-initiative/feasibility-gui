@@ -13,6 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Prepare ontology files
+        run: |
+          chmod +x .github/scripts/setup-ontology.sh
+          .github/scripts/setup-ontology.sh
+
       - name: Set up Docker Compose
         run: |
           docker compose -f cypress/docker/docker-compose.yml up -d
