@@ -2,6 +2,8 @@ import { defineConfig } from "cypress";
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
 import { createEsbuildPlugin } from "@badeball/cypress-cucumber-preprocessor/esbuild";
 import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
+import fs from "fs-extra";
+import path from "path";
 
 export default defineConfig({
   env: {
@@ -12,13 +14,22 @@ export default defineConfig({
   },
   e2e: {
     specPattern: "**/*.feature",
-      async setupNodeEvents(
+    async setupNodeEvents(
       on: Cypress.PluginEvents,
       config: Cypress.PluginConfigOptions
     ): Promise<Cypress.PluginConfigOptions> {
-      // This is required for the preprocessor to be able to generate JSON reports after each run, and more,
-      await addCucumberPreprocessorPlugin(on, config);
 
+      on('before:run', () => {
+        const folderToClear = path.join(__dirname, 'cypress', 'downloads');
+        if (fs.existsSync(folderToClear)) {
+          fs.removeSync(folderToClear);
+          console.log(`Cleared folder: ${folderToClear}`);
+        } else {
+          console.log(`Folder not found: ${folderToClear}`);
+        }
+      });
+
+      await addCucumberPreprocessorPlugin(on, config);
       on(
         "file:preprocessor",
         createBundler({
@@ -35,4 +46,3 @@ export default defineConfig({
     viewportWidth: 1920,
   },
 });
-
