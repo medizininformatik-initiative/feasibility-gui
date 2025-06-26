@@ -82,7 +82,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           start: npm start
-          wait-on: 'http://localhost:8083/auth, http://localhost:4200'
+          wait-on: 'http://localhost:8083, http://localhost:4200'
           browser: chrome
 
       - name: Upload Cypress screenshots
