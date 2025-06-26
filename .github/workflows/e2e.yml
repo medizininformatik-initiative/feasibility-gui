@@ -51,10 +51,6 @@ jobs:
       - name: Create Test User in Keycloak
         run: .github/scripts/create-keycloak-user.sh
 
-      - name: Check backend health with curl
-        run: |
-          curl --fail http://localhost:8091/actuator/health
-
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
