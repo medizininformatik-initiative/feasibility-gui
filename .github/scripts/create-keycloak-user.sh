@@ -4,16 +4,15 @@ set -euo pipefail
 # Set the correct container name used by Keycloak
 KEYCLOAK_CONTAINER="keycloak-auth"  # <-- Change this if needed
 
-# Wait for Keycloak to be up inside the container
+# Wait for Keycloak to be up inside the container using wget
 echo "Waiting for Keycloak to be healthy inside container..."
 docker exec -u0 "$KEYCLOAK_CONTAINER" bash -c '
-  until curl -sf http://localhost:8080/auth/health; do
+  until wget --spider -q http://localhost:8080/auth/health; do
     echo "Keycloak not ready yet..."
     sleep 5
   done
   echo "Keycloak is ready!"
 '
-
 # Admin login
 docker exec -u0 "$KEYCLOAK_CONTAINER" /opt/keycloak/bin/kcadm.sh config credentials \
   --server http://localhost:8080/auth \
