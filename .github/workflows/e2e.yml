@@ -60,11 +60,28 @@ jobs:
       - name: Check docker containers
         run: docker ps -a
 
-      - name: Run Cypress tests
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress install
         uses: cypress-io/github-action@v6
         with:
+          # Disable running of tests within install job
+          runTests: false
           build: npm run build
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
           start: npm start
+          wait-on: 'http://localhost:8080, http://localhost:4200'
           browser: chrome
 
       - name: Upload Cypress screenshots
