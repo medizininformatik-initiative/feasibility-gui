@@ -48,6 +48,9 @@ jobs:
       - name: Check if Dataportal Backend is correctly running with the user with id 10001
         run: .github/scripts/check-if-running-as-user-10001.sh
 
+      - name: Make script executable
+        run: chmod +x .github/scripts/wait-for-url.sh
+
       - name: Wait for Keycloak
         run: .github/scripts/wait-for-url.sh  http://localhost:9003/auth/health
 
