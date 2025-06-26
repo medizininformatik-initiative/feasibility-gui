@@ -117,6 +117,7 @@ services:
 
   auth:
     image: keycloak/keycloak:26.2
+    container_name: keycloak-auth
     command: ["start", "--import-realm"]
     restart: unless-stopped
     environment:
