@@ -75,7 +75,8 @@ jobs:
         with:
           name: build
           if-no-files-found: error
-          path: build
+          path: dist/num-portal-webapp
+
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
