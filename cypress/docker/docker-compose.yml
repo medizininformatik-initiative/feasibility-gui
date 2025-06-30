@@ -27,8 +27,8 @@ services:
       KEYCLOAK_ALLOWED_ROLE: "DataportalUser"
       KEYCLOAK_POWER_ROLE: "DataportalPowerUser"
       KEYCLOAK_ADMIN_ROLE: "DataportalAdmin"
-      KEYCLOAK_BASE_URL_ISSUER: "http://auth:8080/auth"
-      KEYCLOAK_BASE_URL_JWK: "http://auth:8080/auth"
+      KEYCLOAK_BASE_URL_ISSUER: "http://localhost:8083/auth"
+      KEYCLOAK_BASE_URL_JWK: "http://localhost:8083/auth"
       KEYCLOAK_REALM: "dataportal"
       #---- Direct broker
       BROKER_CLIENT_DIRECT_ENABLED: "true"
