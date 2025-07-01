@@ -1,5 +1,20 @@
 # Changelog
 
+## v6.3.0 (2025-07-01)
+
+### Feature
+* new e2e testing with Cypress Gherkin 
+
+### Changes
+* Refactor Action-Bar Logic into Separate Components ([#335](https://github.com/medizininformatik-initiative/feasibility-gui/issues/335))
+* Change download behaviour of Cohort selection ([#395](https://github.com/medizininformatik-initiative/feasibility-gui/issues/395))
+* Query without data selection is not saveable anymore ([#396](https://github.com/medizininformatik-initiative/feasibility-gui/issues/396))
+
+### Bug Fixes
+* Fix for mandatory patient feature is added to DSE on query load ([#394](https://github.com/medizininformatik-initiative/feasibility-gui/issues/394))
+* Checkbox for "Only if referenced" is only be visible if feature is referenced ([#397](https://github.com/medizininformatik-initiative/feasibility-gui/issues/397))
+
+
 ## v6.2.0 (2025-05-27)
 
 ### Feature
