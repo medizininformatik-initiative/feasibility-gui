@@ -8,7 +8,7 @@ import { TerminologySystemDictionary } from 'src/app/model/Utilities/Terminology
 
 export class CodeableConceptListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['DISPLAY', 'TERMINOLOGY', 'TERMINOLOGY_CODE'],
+    headers: ['DISPLAY', 'TERMCODE', 'TERMINOLOGY_CODE'],
   };
 
   public static adapt(listEntries: CodeableConceptResultListEntry[]): TableData {
