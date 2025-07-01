@@ -3,18 +3,18 @@
   <num-value-select
     [value]="minValue"
     (selectedValue)="setMinValue($event)"
-    [label]="'QUERYBUILDER.EDIT.MIN'"
+    [label]="'FEASIBILITY.EDITOR.QUANTITY.MIN'"
   ></num-value-select>
 
-  <span>{{ 'QUERYBUILDER.EDIT.AND' | translate }}</span>
+  <span>{{ 'FEASIBILITY.EDITOR.QUANTITY.AND' | translate }}</span>
 
   <!--Max Value-->
   <num-value-select
     [value]="maxValue"
     (selectedValue)="setMaxValue($event)"
-    [label]="'QUERYBUILDER.EDIT.MAX'"
+    [label]="'FEASIBILITY.EDITOR.QUANTITY.MAX'"
   ></num-value-select>
 </div>
 <div *ngIf="displayWarning" fxLayout="column">
-  <span class="warning">{{ 'QUERYBUILDER.HINT.MINIMUM_GREATER_MAXIMUM' | translate }}</span>
+  <span class="warning">{{ 'FEASIBILITY.HINT.MINIMUM_GREATER_MAXIMUM' | translate }}</span>
 </div>

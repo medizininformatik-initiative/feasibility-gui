@@ -7,7 +7,7 @@ import { TerminologySystemDictionary } from 'src/app/model/Utilities/Terminology
 
 export class ReferenceCriteriaListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['Name', 'Terminology'],
+    headers: ['NAME', 'TERMINOLOGY_CODE'],
   };
 
   public static adapt(listEntries: ReferenceCriteriaListEntry[]): TableData {

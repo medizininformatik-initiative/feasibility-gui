@@ -6,9 +6,9 @@
 >
 </num-table>
 <num-placeholder-box *ngIf="adaptedData?.body.rows.length <= 0" class="no-results-text">
-  {{ 'SHAREDFILTER.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+  {{ 'FEASIBILITY.EDITOREMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
   >"</num-placeholder-box
 >
 <num-button (click)="addSelectedConceptsToStage()" type="blue" class="add-button">
-  {{ 'SHAREDFILTER.BUTTON.ADD' | translate }}
+  {{ 'FEASIBILITY.EDITOR.BUTTON.ADD' | translate }}
 </num-button>

@@ -3,11 +3,11 @@
   <div class="save-query-box">
     <div fxLayout="column" fxLayoutAlign="space-around center">
       <mat-form-field class="input-field">
-        <mat-label>{{ 'QUERYBUILDER.OVERVIEW.TITLE_LABEL' | translate }}</mat-label>
+        <mat-label>{{ 'SAVED_QUERIES.TITLE' | translate }}</mat-label>
         <input matInput type="text" [(ngModel)]="title" />
       </mat-form-field>
       <mat-form-field class="input-field" appearance="fill">
-        <mat-label>{{ 'QUERYBUILDER.OVERVIEW.COMMENT_LABEL' | translate }}</mat-label>
+        <mat-label>{{ 'SAVED_QUERIES.COMMENT' | translate }}</mat-label>
         <textarea matInput [(ngModel)]="comment"></textarea>
       </mat-form-field>
     </div>
@@ -32,7 +32,7 @@
       >
     </div>
     <span *ngIf="(validatedDataQuery$ | async).feasibilityQuery === false" class="filter-warning">
-      {{ 'SHAREDCOMPONENTS.SAVE_MODAL.COHORT_WARNING' | translate }}
+      {{ 'SHARED_COMPONENTS.SAVE_MODAL.COHORT_WARNING' | translate }}
     </span>
   </div>
 
@@ -45,11 +45,11 @@
       (click)="doSave()"
       class="button-save"
     >
-      {{ 'BUTTON.SAVE' | translate }}
+      {{ 'SHARED_COMPONENTS.SAVE_MODAL.SAVE' | translate }}
     </num-button>
 
     <num-button type="blue" (click)="doDiscard()">
-      {{ 'BUTTON.CANCEL' | translate }}
+      {{ 'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate }}
     </num-button>
   </div>
 </div>

@@ -10,19 +10,19 @@
         {{ digit }}
       </div>
     </div>
-    {{ 'QUERYBUILDER.RESULT.PATIENT_NUMBER' | translate }}
+    {{ 'FEASIBILITY.RESULT.PATIENT_NUMBER' | translate }}
   </div>
   <div fxLayout="row" fxLayoutAlign="start center">
     <num-button
       type="green"
       [isDisabled]="!loadedResult || (queryResultRateLimit$ | async)?.getRemaining() === 0"
       matTooltipShowDelay="300"
-      [matTooltip]="'QUERYBUILDER.RESULT.DETAILS_TOOLTIP' | translate"
+      [matTooltip]="'FEASIBILITY.RESULT.DETAILS_TOOLTIP' | translate"
       matTooltipPosition="right"
       (click)="openDialogResultDetails()"
       class="button-dialog-result-details"
     >
-      {{ 'QUERYBUILDER.RESULT.BUTTON.DETAILS' | translate }}
+      {{ 'FEASIBILITY.RESULT.DETAILS_BUTTON' | translate }}
       ({{ (queryResultRateLimit$ | async)?.getRemainingCalls() }}/{{
         (queryResultRateLimit$ | async)?.getLimit()
       }})

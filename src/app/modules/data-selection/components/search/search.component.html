@@ -1,8 +1,8 @@
 <div class="container pr4">
   <div style="margin-top: 5px">
-    <num-header>{{ 'DATASELECTION.HEADER' | translate }}</num-header>
+    <num-header>{{ 'DATASELECTION.SEARCH.HEADER' | translate }}</num-header>
     <num-header-description>
-      {{ 'DATASELECTION.HEADER_INFO' | translate }}
+      {{ 'DATASELECTION.SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
   <div class="tree-container">
@@ -20,7 +20,7 @@
       [matBadge]="($dataSelectionProfileTreeNodeArray | async)?.length"
       matBadgePosition="above after"
     >
-      {{ 'DATASELECTION.BUTTON.ADD' | translate }}
+      {{ 'DATASELECTION.SEARCH.ACTION_BAR.ADD' | translate }}
     </num-button>
     <num-button
       [isDisabled]="($dataSelectionProfileArray | async)?.length === 0"
@@ -31,7 +31,7 @@
       [matBadge]="($dataSelectionProfileArray | async)?.length"
       matBadgePosition="above after"
     >
-      {{ 'DATASELECTION.BUTTON.JUMP_TO_DATASELECTION' | translate }}
+      {{ 'DATASELECTION.SEARCH.ACTION_BAR.JUMP_TO_DATASELECTION' | translate }}
     </num-button>
   </num-action-bar>
 </div>

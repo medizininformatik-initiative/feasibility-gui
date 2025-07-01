@@ -1,8 +1,6 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { EditDataSelectionFields } from 'src/app/service/DataSelection/ModalWindowServices/EditDataSelectionFields.service';
-import { EditDataSelectionFilter } from 'src/app/service/DataSelection/ModalWindowServices/EditDataSelectionFilter.service';
 import { Injectable } from '@angular/core';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,8 +13,6 @@ import { StagedProfileService } from '../../../../service/StagedDataSelectionPro
 })
 export class MenuServiceDataSelectionFunctions {
   constructor(
-    private dataSelectionFieldsModalService: EditDataSelectionFields,
-    private dataSelectionFilterModalService: EditDataSelectionFilter,
     private profileProvider: ProfileProviderService,
     private dataSelectionProvider: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
@@ -24,14 +20,6 @@ export class MenuServiceDataSelectionFunctions {
     private removeReferenceService: RemoveReferenceService,
     private stagedProfileService: StagedProfileService
   ) {}
-
-  public openDataSelectionFieldModal(id: string) {
-    this.dataSelectionFieldsModalService.ediDataSelectionFields(id);
-  }
-
-  public openDataSelectionFilterModal(url: string) {
-    this.dataSelectionFilterModalService.ediDataSelectionFilter(url);
-  }
 
   public redirectToDataSelectionEditPage(id: string) {
     this.stagedProfileService.initialize(id);
