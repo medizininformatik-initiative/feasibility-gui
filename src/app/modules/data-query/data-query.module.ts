@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { DataQueryRoutingModule } from './data-query-routing.module';
 import { DataSelectionComponent } from './data-query/data-selection/data-selection.component';
 import { DataSelectionModule } from '../data-selection/data-selection.module';
-import { DownloadCohortComponent } from './data-query/cohort-definition/download-cohort/download-cohort.component';
 import { DownloadDataSelectionComponent } from './data-query/data-selection/download-data-selection/download-data-selection.component';
 import { FeasibilityQueryModule } from '../feasibility-query/feasibility-query.module';
 import { FileSaverModule } from 'ngx-filesaver';
@@ -20,7 +19,6 @@ import { DataSelectionActionBarComponent } from './data-query/data-selection/act
   declarations: [
     CohortDefinitionComponent,
     DataSelectionComponent,
-    DownloadCohortComponent,
     DownloadDataSelectionComponent,
     CohortDefinitionActionBarComponent,
     DataSelectionActionBarComponent,

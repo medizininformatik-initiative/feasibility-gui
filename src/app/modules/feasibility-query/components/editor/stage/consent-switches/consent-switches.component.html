@@ -1,63 +1,63 @@
-{{ 'QUERYBUILDER.STAGE.CONSENT.WITHOUT_CONSENT' | translate }}
+{{ 'FEASIBILITY.EDITOR.CONSENT.WITHOUT_CONSENT' | translate }}
 <num-switch [isChecked]="consent" (change)="toggleConsent()"></num-switch>
-{{ 'QUERYBUILDER.STAGE.CONSENT.WITH_CONSENT' | translate }}
+{{ 'FEASIBILITY.EDITOR.CONSENT.WITH_CONSENT' | translate }}
 
 <!-- Build transition for consent box -->
 
 <div *ngIf="consent" class="consent-container" fxLayout="column" fxLayoutAlign="center start">
   <!-- Analysis Type Toggle -->
-  <num-section-name>{{ 'QUERYBUILDER.STAGE.CONSENT.TITLE' | translate }}</num-section-name>
+  <num-section-name>{{ 'FEASIBILITY.EDITOR.CONSENT.TITLE' | translate }}</num-section-name>
 
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
     <div class="width-30" [ngClass]="{ 'text-blue': !distributedAnalysis }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.CENTRAL' | translate }}
+      {{ 'FEASIBILITY.EDITOR.CONSENT.CENTRAL' | translate }}
     </div>
     <num-switch
       [isChecked]="distributedAnalysis"
       (change)="onToggleChange('analysisType')"
     ></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': distributedAnalysis }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.DISTRIBUTED' | translate }}
+      {{ 'FEASIBILITY.EDITOR.CONSENT.DISTRIBUTED' | translate }}
     </div>
   </div>
 
   <!-- GDPR Compliance Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
     <div class="width-30" [ngClass]="{ 'text-blue': !euGdpr }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.NON_EU_GDPR' | translate }}
+      {{ 'FEASIBILITY.EDITOR.CONSENT.NON_EU_GDPR' | translate }}
     </div>
     <num-switch [isChecked]="euGdpr" (change)="onToggleChange('gdprCompliance')"></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': euGdpr }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.EU_GDPR' | translate }}
+      {{ 'FEASIBILITY.EDITOR.CONSENT.EU_GDPR' | translate }}
     </div>
   </div>
 
   <!-- Insurance Data Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
     <div class="width-30" [ngClass]="{ 'text-blue': !insuranceDataBoolean }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.WITHOUT_DATA' | translate }}
+      {{ 'FEASIBILITY.EDITOR.CONSENT.WITHOUT_DATA' | translate }}
     </div>
     <num-switch
       [isChecked]="insuranceDataBoolean"
       (change)="onToggleChange('insuranceData')"
     ></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': insuranceDataBoolean }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.WITH_DATA' | translate }}
+      {{ 'FEASIBILITY.EDITOR.CONSENT.WITH_DATA' | translate }}
     </div>
   </div>
 
   <!-- Contact Option Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
     <div class="width-30" [ngClass]="{ 'text-blue': !contact }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.WITHOUT_CONTACT' | translate }}
+      {{ 'FEASIBILITY.EDITOR.CONSENT.WITHOUT_CONTACT' | translate }}
     </div>
     <num-switch [isChecked]="contact" (change)="onToggleChange('contactOption')"></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': contact }">
-      {{ 'QUERYBUILDER.STAGE.CONSENT.WITH_CONTACT' | translate }}
+      {{ 'FEASIBILITY.EDITOR.CONSENT.WITH_CONTACT' | translate }}
     </div>
   </div>
 
   <div class="provisionCodeDisplay">
-    {{ 'CONSENT.' + provisionCode | translate }}
+    {{ 'FEASIBILITY.EDITOR.CONSENT.' + provisionCode | translate }}
   </div>
 </div>

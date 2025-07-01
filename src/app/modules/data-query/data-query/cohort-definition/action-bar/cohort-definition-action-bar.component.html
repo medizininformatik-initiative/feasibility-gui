@@ -1,13 +1,13 @@
 <num-action-bar class="bottom">
   <num-button (click)="createNewCohort()" type="green">
-    {{ 'DATAQUERY.COHORT.BUTTON.NEW_COHORT' | translate }}
+    {{ 'DATAQUERY.COHORT.ACTION_BAR.NEW_COHORT' | translate }}
   </num-button>
   <num-button
     [isDisabled]="(isFeasibilityExistent | async) === false"
     type="green"
     (click)="editFeasibilityQuery()"
   >
-    {{ 'DATAQUERY.COHORT.BUTTON.EDIT' | translate }}
+    {{ 'DATAQUERY.COHORT.ACTION_BAR.EDIT' | translate }}
   </num-button>
   <div>
     <input
@@ -18,7 +18,7 @@
       #fileUpload
     />
     <num-button type="green" (click)="fileUpload.click()">
-      {{ 'DATAQUERY.DATASELECTION.BUTTON.UPLOAD' | translate }}
+      {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.UPLOAD' | translate }}
     </num-button>
   </div>
   <num-button
@@ -27,16 +27,16 @@
     [isDisabled]="(isFeasibilityQueryValid | async) === false"
     (click)="downloadCRDTL()"
   >
-    {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
+    {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.DOWNLOAD' | translate }}
   </num-button>
   <num-button
     type="green"
     [isDisabled]="(isFeasibilityQueryValid | async) === false"
     (click)="sendQuery()"
   >
-    {{ 'DATAQUERY.COHORT.BUTTON.SEND_QUERY' | translate }}
+    {{ 'DATAQUERY.COHORT.ACTION_BAR.SEND_QUERY' | translate }}
   </num-button>
   <num-button [icon]="'arrow-down'" (click)="navigatToDataQueryDataSelection()" type="green">
-    {{ 'DATAQUERY.COHORT.BUTTON.JUMP_TO_DATASELECTION' | translate }}
+    {{ 'DATAQUERY.COHORT.ACTION_BAR.JUMP_TO_DATASELECTION' | translate }}
   </num-button>
 </num-action-bar>

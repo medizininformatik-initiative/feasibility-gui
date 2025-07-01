@@ -8,7 +8,7 @@ import { TerminologySystemDictionary } from 'src/app/model/Utilities/Terminology
 
 export class SearchTermListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['Name', 'Availability', 'Terminology', 'Termcode', 'KONTEXT'],
+    headers: ['NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'],
   };
 
   private static changeAvailabilityDisplay(availability: number): string {
