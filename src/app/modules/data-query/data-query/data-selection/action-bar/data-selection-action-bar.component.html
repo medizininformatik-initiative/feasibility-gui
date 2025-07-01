@@ -6,7 +6,7 @@
     type="green"
     (click)="editDataSelection()"
     class="margin-right-10"
-    [isDisabled]="!(isDataSelectionExistent$ | async)"
+    [isDisabled]="(isDataSelectionExistent$ | async) === false"
   >
     {{ 'DATAQUERY.DATASELECTION.BUTTON.EDIT' | translate }}
   </num-button>
@@ -26,7 +26,9 @@
     class="margin-right-10"
     [attr.data-cy]="'download-crdtl'"
     (click)="downloadCRDTL()"
-    [isDisabled]="!(isDataSelectionExistent$ | async) || !(isCohortExistent$ | async)"
+    [isDisabled]="
+      (isDataSelectionExistent$ | async) === false || (isCohortExistent$ | async) === false
+    "
     type="green"
   >
     {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
