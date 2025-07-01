@@ -168,12 +168,12 @@
       "SECTION": "Ausgewählte Kriterien"
     },
     "BUTTON": {
-      "DOWNLOAD": "Merkmalselektion herunterladen",
+      "DOWNLOAD": "Datendefinition herunterladen",
       "ADD": "Zur Merkmalselektion hinzufügen",
       "JUMP_TO_DATASELECTION_TREE": "Merkmal hinzufügen",
       "JUMP_TO_DATASELECTION": "Selektion anzeigen",
       "DATA_REQUEST": "Daten beantragen",
-      "SAVE_DATAQUERY": "Datenanfrage speichern"
+      "SAVE_DATAQUERY": "Datendefinition speichern"
 
     },
     "SEARCH": {
@@ -191,15 +191,15 @@
       "REQUIRED":"Kohortenselektion ist ein Pflichtfeld",
       "HEADER":"Kohortenselektion",
       "BUTTON": {
-        "UPLOAD": "Kohortenselektion hochladen",
-        "DOWNLOAD": "Kohortenselektion herunterladen",
+        "UPLOAD": "Datendefinition hochladen",
+        "DOWNLOAD": "Datendefinition herunterladen",
         "EDIT":"Kohortenselektion bearbeiten",
         "NEW_COHORT":"Neue Kohorte",
         "JUMP_TO_DATASELECTION": "zur Merkmalselektion",
         "SEND_QUERY": "Machbarkeitsabfrage"
       },
       "SAVE": {
-        "HEADER": "Aktuelle Kohortenselektion herunterladen"
+        "HEADER": "Aktuelle Datendefinition herunterladen"
       },
       "ERROR": {
         "UPLOAD": "Kohortenselektion nicht valide"
@@ -302,7 +302,7 @@
         "BACK_TO_SEARCH":"Kriterien hinzufügen",
         "VIEW_STAGE": "Kohortenselektion anzeigen",
         "SEND_QUERY": "Machbarkeitsabfrage",
-        "SAVE_DATAQUERY": "Daten Definition speichern",
+        "SAVE_DATAQUERY": "Datendefinition speichern",
         "DATA_REQUEST": "Datendefinition"
       },
       "MESSAGE": {
@@ -310,7 +310,7 @@
       },
       "CONSENT": {
         "WITH_CONSENT": "Mit Einwilligung",
-        "WITHOUT_CONSENT": "Ohne Einweilligung",
+        "WITHOUT_CONSENT": "Ohne Einwilligung",
         "TITLE": "Vorausgesetzte Einwilligungen zur Datenverarbeitung",
         "CENTRAL": "Zentral",
         "DISTRIBUTED": "Verteilt",
@@ -438,8 +438,8 @@
       "BUTTON": {
         "DETAILS": "Details",
         "EDIT_STAGE": "Kohortenselektion bearbeiten",
-        "SAVE_QUERY":"Kohorte speichern",
-        "DOWNLOAD": "Kohorte herunterladen"
+        "SAVE_QUERY":"Datendefinition speichern",
+        "DOWNLOAD": "Datendefinition herunterladen"
       },
       "HEADER": {
         "RESULT_NOT_LOADED": "Machbarkeitsabfrage wird bearbeitet",
@@ -477,7 +477,7 @@
     "DOWNLOAD": "Herunterladen",
     "EDIT": "Speichern",
     "IMPORT": "Query laden",
-    "IMPORT_DATASELECTION":"Merkmalselektion hochladen",
+    "IMPORT_DATASELECTION":"Datendefinition hochladen",
     "IMPORT_FROM_FILE": "Datei auswählen",
     "RESET": "Zurücksetzen",
     "RESULTDETAILS": "Details",
