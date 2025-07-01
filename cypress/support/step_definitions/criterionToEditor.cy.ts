@@ -1,19 +1,13 @@
 import { defineStep } from "@badeball/cypress-cucumber-preprocessor"
 import { CriterionSearch } from "../../e2e/CohortSearch/cohort-search"
-import { getUrlPathByPage } from "../../e2e/Utilities/pathResolver"
-import { Page } from "../../e2e/Utilities/pages"
-import { SideNavTests } from "./sideNav.cy"
-import { NavItem, NavItemPaths } from "../../e2e/Utilities/NavItems"
 
 export class CriterionToEditor {
   public addCriteriumToEditor(criterium: string) {
-    const sideNavTest = new SideNavTests()
-    sideNavTest.navigateTo("Kohortenselektion")
     const criterionSearchInstance = new CriterionSearch()
     criterionSearchInstance.searchInput(criterium)
     criterionSearchInstance.selectCriterion(criterium)
-    criterionSearchInstance.selectActioBarButton('hinzufügen')
-    criterionSearchInstance.selectActioBarButton('anzeigen')
+    criterionSearchInstance.selectActioBarButton('Add')
+    criterionSearchInstance.selectActioBarButton('Show')
   }
 
   public shouldSeeCriteriumInEditor(criterium: string) {

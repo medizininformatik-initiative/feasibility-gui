@@ -39,7 +39,7 @@ export class CohortEdit {
       })
   }
   public clickAuswaehlenButton() {
-    cy.contains('button', 'Auswählen').click()
+    cy.contains('button', 'Select').click()
   }
   public shouldSeeModalClosing(modalTitle: string) {
     cy.get('.mat-dialog-title').should('not.exist')
