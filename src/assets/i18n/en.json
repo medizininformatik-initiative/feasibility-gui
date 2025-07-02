@@ -52,6 +52,7 @@
    "DISPLAY": {
     "APPLIED_FILTER": "Applied filters",
     "APPLIED_REFERENCES": "Referenced features",
+    "LINKED": "Linked",
     "OPTIONAL": "Optional",
     "REFERENCE": "Only if referenced",
     "REQUIRED": "Required",
@@ -88,12 +89,16 @@
       "FILTER": "Token filter",
       "TIMERESTRICTION": "Time restriction"
      }
+    },
+    "REFERENCE": {
+     "ADD": "Add new reference",
+     "INFO": "Click on 'Add new reference' to create a new reference"
+    },
+    "TAB_LABEL": {
+     "FIELD": "Fields",
+     "FILTER": "Filter",
+     "REFERENCE": "References"
     }
-   },
-   "TAB_LABEL": {
-    "FIELD": "Fields",
-    "FILTER": "Filter",
-    "REFERENCE": "References"
    }
   },
   "HEADER": {
@@ -173,7 +178,8 @@
     "OPERATOR": "Operator",
     "UNIT": "Unit",
     "VALUE": "Value"
-   }
+   },
+   "REQUIRED_FILTERS": "Please set a filter"
   },
   "HINT": {
    "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}",

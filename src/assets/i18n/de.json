@@ -52,6 +52,7 @@
       "DISPLAY": {
         "APPLIED_FILTER": "Angewandte Filter",
         "APPLIED_REFERENCES": "Referenzierte Merkmale",
+        "LINKED": "Verknüpft",
         "OPTIONAL": "Optional",
         "REFERENCE": "Nur wenn referenziert",
         "REQUIRED": "Erforderlich",
@@ -85,15 +86,20 @@
         },
         "FILTER": {
           "TAB_LABEL": {
-            "FILTER": "Token-Filter",
-            "TIMERESTRICTION": "Zeiteinschränkung"
+            "TIMERESTRICTION": "Zeiteinschränkung",
+            "TOKEN": "Token-Filter"
           }
+        },
+        "REFERENCE": {
+          "ADD": "Neues Merkmal hinzufügen",
+          "INFO": "Klicken Sie auf neues Merkmal hinzufügen, um ein neues Merkmal zu erstellen"
+        },
+        "TAB_LABEL": {
+          "FIELD": "Felder",
+          "FILTER": "Filter",
+          "REFERENCE": "Referenzen",
+          "TIMERESTRICTION": "Zeiteinschränkung"
         }
-      },
-      "TAB_LABEL": {
-        "FIELD": "Felder",
-        "FILTER": "Filter",
-        "REFERENCE": "Referenzen"
       }
     },
     "HEADER": {
@@ -171,7 +177,8 @@
         "UNIT": "Einheit",
         "VALUE": "Wert"
       },
-      "REMOVE": "Entfernen"
+      "REMOVE": "Entfernen",
+      "REQUIRED_FILTER": "Bitte einen Filter setzen"
     },
     "HINT": {
       "MAXIMUM_EXCEEDED": "Wert darf höchstens {{ max }} sein",
