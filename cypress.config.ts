@@ -45,7 +45,7 @@ export default defineConfig({
       return config;
     },
 
-    testIsolation: false,
+    testIsolation: true,
     baseUrl: "http://localhost:4200",
     port: 4300,
     viewportHeight: 1080,

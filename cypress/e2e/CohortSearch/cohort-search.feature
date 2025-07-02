@@ -3,6 +3,7 @@ Feature: Cohort Search
   Background: I am logged in and on the Cohort Search page
     Given I am logged in as a user
     And I am on the "Feasibility Search" page
+    And I set the language to German
 
   Scenario Outline: Search for Criterium "<criterium>"
     And the table should have 50 rows

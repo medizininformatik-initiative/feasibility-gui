@@ -13,7 +13,7 @@ export class CohortResult {
     public resultIsVisible(seconds: number) {
         cy.wait(seconds * 1000);
         this.spinnerIsNotVisible();
-        cy.get('div').contains('Anzahl der Patienten').should('be.visible');
+        cy.get('div').contains('Number of patients').should('be.visible');
     }
 
     public openDetailsDialog() {
@@ -29,7 +29,7 @@ export class CohortResult {
     }
 
     public addTitle(title: string) {
-        cy.contains('label', 'Titel')
+        cy.contains('label', 'title')
         .invoke('attr', 'for')
         .then((inputId) => {
             cy.get(`#${inputId}`).type(title);
@@ -37,7 +37,7 @@ export class CohortResult {
     }
 
        public addComment(title: string) {
-        cy.contains('label', 'Kommentar')
+        cy.contains('label', 'comment')
         .invoke('attr', 'for')
         .then((inputId) => {
             cy.get(`#${inputId}`).type(title);

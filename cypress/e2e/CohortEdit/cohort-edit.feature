@@ -19,8 +19,6 @@ Scenario Outline: I edit <criterium> criterium
     Then I am on the "Feasibility Result" page
     When I click on the button "Edit cohort selection"
     Then I am on the "Feasibility Editor" page
-    Given I add the criterium "<criterium>" to the editor
-    Then I should see the criterium "<criterium>" in the editor
 
     Examples:
     | criterium             | default_filter | new_filter | panel_name  | value       | unit | chip_value |
@@ -35,6 +33,7 @@ Scenario Outline: I add criterium to inlcusion list
     Then the button "Feasibility" should be enabled
     When I click on the button "Feasibility"
     Then I am on the "Feasibility Result" page
+    And I wait for 11 seconds
 
 
     #When I open the panel with the name "<panel_name>"

@@ -6,7 +6,6 @@ declare namespace Cypress {
 }
 
 Cypress.Commands.add('login', () => {
-  cy.session('login-session', () => {
     cy.visit('home')
     cy.wait(1000)
     cy.origin(Cypress.env('redirectUrl'), () => {
@@ -16,5 +15,4 @@ Cypress.Commands.add('login', () => {
     })
 
     cy.url({ timeout: 250000 }).should('include', Cypress.env('homeUrl'))
-  })
 })
