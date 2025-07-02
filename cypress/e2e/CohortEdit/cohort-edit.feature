@@ -1,10 +1,8 @@
 Feature: Cohort editing
-
   Background:
     Given I am logged in as a user
     And I am on the "Feasibility Search" page
     And I set the language to English
-
   Scenario Outline: I edit <criterium> criterium
     Given I add the criterium "<criterium>" to the editor
     When I open the menu
@@ -19,26 +17,29 @@ Feature: Cohort editing
     Then I am on the "Feasibility Result" page
     When I click on the button "Edit cohort selection"
     Then I am on the "Feasibility Editor" page
-
     Examples:
       | criterium                    |  
       | 17-keto reductase deficiency |
-      
+      | 11-hydroxylase deficiency    |
+
+
   Scenario Outline: I edit <criterium>
     Given I add the criterium "<criterium>" to the editor
+    When I open the menu
+    When I click on the menu item "Apply filter"
     When I open the panel with the name "<panel_name>"
     Then I should see "<default_filter>" selected in the panel
     When I select "<new_filter>" from the panel with the name "<panel_name>"
     Then I should see "<new_filter>" selected in the panel
-    Then I select a value of 5
-    And  I select the unit "a"
+    Then I select a value of <value>
+    And  I select the unit "<unit>"
     When I click on Auswählen button
     Then I should see "Edit Cohort" modal closing
     And I should see "<criterium>" in the cohort criteria list with "<panel_name>" and "<chip_value>" selected
-
     Examples:
       | criterium                 | default_filter | new_filter | panel_name   | value | unit | chip_value |
-      | Current chronological age | kein Filter    | größer     | Geburtsdatum | 5     | a    | 5          |
+      | Current chronological age | No filter    | greater     | Date of birth | 5     | a    | 5          |
+
 
   Scenario Outline: I add criterium to inlcusion list
     Given I add the criterium "<criterium>" to the editor
@@ -48,7 +49,8 @@ Feature: Cohort editing
     When I click on the button "Feasibility"
     Then I am on the "Feasibility Result" page
     And I wait for 11 seconds
-
     Examples:
       | criterium                    | 
       | 17-keto reductase deficiency |
+
+      
