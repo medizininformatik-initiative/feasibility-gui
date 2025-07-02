@@ -10,7 +10,7 @@ export default defineConfig({
     username: 'testuser',
     password: 'testpassword',
     homeUrl: 'http://localhost:4200/data-query/cohort-definition',
-    redirectUrl: 'http://localhost:8080',
+    redirectUrl: 'http://localhost:8080/auth',
   },
   e2e: {
     specPattern: "**/*.feature",
@@ -45,7 +45,7 @@ export default defineConfig({
       return config;
     },
 
-    testIsolation: false,
+    testIsolation: true,
     baseUrl: "http://localhost:4200",
     port: 4300,
     viewportHeight: 1080,

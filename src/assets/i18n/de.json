@@ -1,267 +1,4 @@
 {
-  "SHAREDCOMPONENTS": {
-    "KDS_MODULE": "KDS-Module",
-    "KONTEXT": "Kontext / KDS-Profil",
-    "Availability": "Anzahl",
-    "Terminology": "Terminologie",
-    "Termcode": "Terminologie-Code",
-    "Name": "Kriterium",
-    "site": "Standort",
-    "patient_number": "Anzahl der Patientinnen und Patienten",
-    "Display": "Name",
-    "Terminology Code": "Terminologie-Code",
-    "CRITERIA_BOX": {
-      "REQUIRED_FILTER": "Bitte einen Filter setzen"
-    },
-    "ACTIONBAR": {
-      "SELECTED_CRITERIA": {
-        "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt",
-        "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt"
-      },
-      "ADDED_CRITERIA": {
-        "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohortenselektion hinzugefügt",
-        "PLURAL": "Sie haben {{amount}} Kriterien zur Kohortenselektion hinzugefügt"
-      }
-    },
-    "FILTER": {
-      "CONTEXT": "Kontext",
-      "AVAILABILITY": "Verfügbarkeit",
-      "TERMINOLOGY": "Terminologie",
-      "KDS_MODULE": "KDS-Module"
-    },
-    "MENU": {
-      "DUPLICATE": "Duplizieren",
-      "DELETE": "Löschen",
-      "EDIT": "Bearbeiten",
-      "REFERENCE": "Kriterien verknüpfen",
-      "APPLY_FILTERS": "Filter anwenden",
-      "DEFINE_FIELDS": "Felder selektieren",
-      "SEARCH": "Als Suchbegriff nutzen",
-      "SHOW_CRITERIA": "Kriterium anzeigen",
-      "ADD": "Zur Kohortenselektion hinzufügen",
-      "OPTIONS": "Optionen"
-    },
-    "LIST_ITEM_DETAILS": {
-      "PARENTS": "Elternelement",
-      "CHILDREN": "Kindelement"
-    },
-    "MODAL": {
-      "BUTTON": {
-        "APPLY": "Auswählen",
-        "CANCEL": "Abbrechen"
-      }
-    },
-    "DELETE_MODAL": {
-      "HEADER": "Löschen bestätigen",
-      "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?",
-      "DELETE": "Löschen",
-      "CANCEL": "Abbrechen"
-    },
-    "SAVE_MODAL": {
-      "HEADER": "Abfrage speichern",
-      "TITLE": "Titel",
-      "COMMENT": "Kommentar",
-      "SAVE": "Speichern",
-      "CANCEL": "Abbrechen",
-      "COHORT_WARNING": "Kohortenselektion ist erforderlich"
-    },
-    "REFERENCE_TILE": {
-      "REQUIRED": "Erforderlich",
-      "NOTLINKED": "Nicht verknüpft",
-      "DELETE": "Löschen"
-    }
-  },
-  "SHAREDFILTER": {
-    "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
-    "FILTER_SELECTION": "Ausgewählte Elemente",
-    "BUTTON": {
-      "ADD": "Hinzufügen",
-      "REMOVE": "Entfernen"
-    }
-  },
-  "CONSENT": {
-    "yes-yes-yes-yes": "Verteilte, EU-DSGVO konforme Analyse, mit Krankenkassendaten, und mit Rekontaktierung",
-    "yes-yes-yes-no": "Verteilte, EU-DSGVO konforme Analyse, mit Krankenkassendaten, und ohne Rekontaktierung",
-    "yes-yes-no-yes": "Verteilte, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und mit Rekontaktierung",
-    "yes-yes-no-no": "Verteilte, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung",
-    "yes-no-yes-yes": "Verteilte, nicht EU-DSGVO konforme Analyse, mit Krankenkassendaten, und mit Rekontaktierung",
-    "yes-no-yes-no": "Verteilte, nicht EU-DSGVO konforme Analyse, mit Krankenkassendaten, und ohne Rekontaktierung",
-    "yes-no-no-yes": "Verteilte, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und mit Rekontaktierung",
-    "yes-no-no-no": "Verteilte, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung",
-    "no-yes-yes-yes": "Zentrale, EU-DSGVO konforme Analyse, mit Krankenkassendaten, und mit Rekontaktierung",
-    "no-yes-yes-no": "Zentrale, EU-DSGVO konforme Analyse, mit Krankenkassendaten, und ohne Rekontaktierung",
-    "no-yes-no-yes": "Zentrale, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und mit Rekontaktierung",
-    "no-yes-no-no": "Zentrale, EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung",
-    "no-no-yes-yes": "Zentrale, nicht EU-DSGVO konforme Analyse, mit Krankenkassendaten, und mit Rekontaktierung",
-    "no-no-yes-no": "Zentrale, nicht EU-DSGVO konforme Analyse, mit Krankenkassendaten, und ohne Rekontaktierung",
-    "no-no-no-yes": "Zentrale, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und mit Rekontaktierung",
-    "no-no-no-no": "Zentrale, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung"
-  },
-  "DASHBOARD": {
-    "HEADER": "Willkommen im Bereich „Daten und Bioproben finden“ des Forschungsdatenportals für Gesundheit",
-    "PARAGRAPH1": "Hier finden Sie ein Unterstützungsangebot für Wissenschaftlerinnen und Wissenschaftler zur Umsetzung Ihres Forschungsvorhabens.",
-    "PARAGRAPH2": "Mit einer Machbarkeitsabfrage erfahren Sie, wie viele Datensätze für Ihre Suchkriterien in den Universitätskliniken bundesweit vorhanden sind. Anhand von Ein- und Ausschlusskriterien kann die Verfügbarkeit von Gesundheitsdaten für medizinische Forschungszwecke abgeschätzt werden.",
-    "PARAGRAPH3_1": "Über ",
-    "PARAGRAPH3_2": "Neue Abfrage",
-    "PARAGRAPH3_3": " haben Sie die Möglichkeit, eine neue Suchabfrage auf Basis des ",
-    "PARAGRAPH3_4": " zu formulieren und abzuschicken, um einen Überblick über die verfügbaren Datensätze zu erhalten.",
-    "PARAGRAPH3_LINK": "Kerndatensatzes der MII",
-    "PARAGRAPH4_1": "Gespeicherte Abfragen oder gespeicherte Entwürfe können Sie über ",
-    "PARAGRAPH4_2": "Meine Abfragen",
-    "PARAGRAPH4_3": " einsehen und weiter bearbeiten.",
-    "PARAGRAPH5_1": "Sobald Ihnen alle relevanten Informationen für Ihr Forschungsvorhaben zur Verfügung stehen, können Sie über ",
-    "PARAGRAPH5_2": "Antrag stellen",
-    "PARAGRAPH5_3": " einen Antrag zur Datennutzung im Antragsportal des Forschungsdatenportals für Gesundheit stellen.",
-    "INFO": {
-      "TEXT": " Wir arbeiten gerade am Machbarkeitsportal, sodass es bei manchen abfragen zu Verzögerungen und abweichenden Ergebnissen kommen kann."
-    },
-    "DATAQUERY": {
-      "HEADER": "Daten beantragen",
-      "BUTTON": "Zum Datenantrag"
-    },
-    "DATASELECTION": {
-      "HEADER": "Merkmalselektion zusammenstellen",
-      "BUTTON": "Zur Merkmalselektion"
-    },
-    "NEWQUERY": {
-      "HEADER": "Machbarkeitsabfrage stellen",
-      "BUTTON": "Zur Machbarkeitsabfrage"
-    },
-    "SAVED_QUERIES": {
-      "HEADER": "Meine Abfragen",
-      "BUTTON": "Zur Übersicht"
-    },
-    "PREPOSALPORTAL": {
-      "HEADER": "Forschungsantrag stellen",
-      "BUTTON": "Zum Antragsportal"
-    }
-  },
-  "DATASELECTION": {
-    "REQUIRED": "Erforderlich",
-    "OPTIONAL": "Optional",
-    "HEADER": "Merkmalselektion",
-    "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Module des Kerndatensatzes (KDS) deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und Sie haben die Möglichkeit anzugeben, welche Datenpunkte zwingend erforderlich sind für Ihre Forschungsfrage.",
-    "DATASELECTION": "Merkmalselektion",
-    "SELECTION_BOX":{
-      "FIELDS_MISSING": "Wählen Sie mindestens ein Feld für die Selektion durch Verwendung der Stifttaste in der oberen rechten Ecke dieser Box.",
-      "SELECTED_FIELDS": "Selektierte Felder",
-      "DELETE": "Löschen",
-      "EDIT": "Bearbeiten",
-      "APPLIED_FILTER": "Angewandte Filter",
-      "REQUIRED": "erforderlich",
-      "OPTIONAL": "optional"
-    },
-    "REFERENCE_BOX": {
-      "APPLIED_REFERENCES": "Referenzierte Merkmale"
-    },
-    "FIELD_SELECTION": {
-      "FIELD_SELECTION": "Ausgewählte Elemente",
-      "HEADER": "Selektieren Sie Merkmale für ",
-      "REQUIRED": "Erforderlich"
-    },
-    "FILTER": {
-      "TOKEN": "Kodierung/Name"
-    },
-    "EDIT": {
-      "HEADER": "Ausgewählte Merkmale",
-      "HEADER_DESCRIPTION":"Hier können Sie definieren, welche Merkmale von Patientinnen und Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll / Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z.b. auf bestimmte Diagnosecodes) hinzu",
-      "SECTION": "Ausgewählte Kriterien"
-    },
-    "BUTTON": {
-      "DOWNLOAD": "Merkmalselektion herunterladen",
-      "ADD": "Zur Merkmalselektion hinzufügen",
-      "JUMP_TO_DATASELECTION_TREE": "Merkmal hinzufügen",
-      "JUMP_TO_DATASELECTION": "Selektion anzeigen",
-      "DATA_REQUEST": "Daten beantragen",
-      "SAVE_DATAQUERY": "Datenanfrage speichern"
-
-    },
-    "SEARCH": {
-      "LABEL": "Code oder Suchbegriff eingeben",
-      "CRITERIA": "Suchkriterien"
-    },
-    "DISPLAY": {
-      "LABEL": "Ausgewählte Merkmale",
-      "REFERENCE": "nur wenn referenziert"
-    },
-    "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie erforschen möchten und laden Sie die Datendefinition herunter. Sie können die Datei dann als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen. Diese Datei ist maschinenlesbar und darf nicht verändert werden."
-  },
-  "DATAQUERY": {
-    "COHORT": {
-      "REQUIRED":"Kohortenselektion ist ein Pflichtfeld",
-      "HEADER":"Kohortenselektion",
-      "BUTTON": {
-        "UPLOAD": "Kohortenselektion hochladen",
-        "DOWNLOAD": "Kohortenselektion herunterladen",
-        "EDIT":"Kohortenselektion bearbeiten",
-        "NEW_COHORT":"Neue Kohorte",
-        "JUMP_TO_DATASELECTION": "zur Merkmalselektion",
-        "SEND_QUERY": "Machbarkeitsabfrage"
-      },
-      "SAVE": {
-        "HEADER": "Aktuelle Kohortenselektion herunterladen"
-      },
-      "ERROR": {
-        "UPLOAD": "Kohortenselektion nicht valide"
-      },
-      "EMPTY":"Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohortenselektion oder erstellen Sie eine neue Kohorte"
-    },
-    "DATASELECTION": {
-      "HEADER": "Merkmalselektion",
-      "BUTTON":{
-        "EDIT":"Merkmalselektion bearbeiten",
-        "DOWNLOAD":"Datendefinition herunterladen",
-        "UPLOAD": "Datendefinition hochladen",
-        "NEW_DATASELECTION":"Neue Merkmalselektion",
-        "JUMP_TO_COHORT_SELECTION": "zur Kohortenselektion"
-      },
-      "SAVE": {
-        "HEADER": "Aktuelle Datendefinition herunterladen"
-      },
-      "EMPTY":"Sie haben noch keine Merkmalselektion definiert. Laden Sie eine existierende Merkmalselektion oder erstellen Sie eine neue Merkmalselektion",
-      "ERROR": {
-        "UPLOAD":"In der hochgeladenen Datei wurde keine Kohorte definiert",
-        "DOWNLOAD": "Es wurde keine Kohorte definiert, Download nicht möglich"
-      },
-      "SUCCESS": {
-        "UPLOAD": "Datendefinition wurde hochgeladen",
-        "DOWNLOAD": "Datendefinition wurde erfolgreich heruntergeladen"
-      }
-    }
-  },
-  "EDITOR": {
-    "HEADER": {
-      "NEXT": "Nächstes Element",
-      "PREVIOUS": "Vorheriges Element"
-    },
-    "CONTENT": {
-      "PROFILE": {
-        "FILTER": {
-          "TAB_LABEL": {
-            "FILTER": "Token Filter",
-            "TIMERESTRICTION": "Zeiteinschränkung"
-          }
-        }
-      },
-      "CRITERION": {
-
-      },
-      "TAB_LABEL": {
-        "FIELD": "Felder",
-        "FILTER": "Filter",
-        "REFERENCE": "Referenzen"
-      }
-    },
-    "ACTION_BAR": {
-      "SAVE": "Speichern",
-      "CANCEL": "Schließen"
-    }
-  },
-  "LANGUAGE": {
-    "GERMAN": "Deutsch",
-    "ENGLISH": "Englisch",
-    "LABEL": "Sprache auswählen"
-  },
   "APPLAYOUT": {
     "SIDENAV": {
       "LABEL": "Seitennavigation"
@@ -270,221 +7,351 @@
       "LABEL": "Seitennavigation umschalten"
     }
   },
-  "NAVIGATION": {
-    "DASHBOARD": "Startseite",
-    "QUERYBUILDER_EDITOR": "Kohortenselektion",
-    "QUERYBUILDER_OVERVIEW": "Gespeichert Abfragen",
-    "QUERYBUILDER_RESULT": "Machbarkeitsabfrage",
-    "DATASELECTION": "Merkmalselektion",
-    "DATAQUERY": "Datendefinition",
-    "OPTIONS": "Einstellungen",
-    "SIGNOUT": "Abmelden"
-  },
-  "OPTIONSPAGE": {
-    "MULTIPLEVALUEDEFINITIONS": "mehrere Einschränkungen pro Kriterium",
-    "MULTIPLEGROUPS": "mehrere Gruppen",
-    "DEPENDENTGROUPS": "abhängige Gruppen",
-    "TIMERESTRICTION": "zeitabhängige Kriterien",
-    "DISPLAYVALUEFILTERICON": "nutze Icons für Vergleichsoperatoren",
-    "POLLINGTIME": "Polling Time",
-    "POLLINGINTERVALL": "Polling Intervall",
-    "CONTEXT_IN_SQ": "Kontext in die SQ einbinden",
-    "FHIRPORT": "FHIR Port"
-  },
-  "QUERYBUILDER": {
-    "DRAG_AND_DROP": "Zum Sortieren “Drag & Drop” nutzen",
-    "STAGE": {
-      "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl",
-      "HEADER": "Kriterieneditor",
-      "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen Sie Ihre Kohortenselektion zusammen. Die Kohortenselektion kann verwendet werden, um direkt eine standortübergreifende Machbarkeitsabfrage zu stellen.",
-      "BUTTON": {
-        "ADD_TO_STAGE": "Zur Kohortenselektion hinzufügen",
-        "BACK_TO_SEARCH":"Kriterien hinzufügen",
-        "VIEW_STAGE": "Kohortenselektion anzeigen",
-        "SEND_QUERY": "Machbarkeitsabfrage",
-        "SAVE_DATAQUERY": "Daten Definition speichern",
-        "DATA_REQUEST": "Datendefinition"
+  "DATAQUERY": {
+    "COHORT": {
+      "ACTION_BAR": {
+        "EDIT": "Kohortenselektion bearbeiten",
+        "JUMP_TO_DATASELECTION": "Zur Merkmalselektion",
+        "NEW_COHORT": "Neue Kohorte",
+        "SEND_QUERY": "Machbarkeitsabfrage"
       },
-      "MESSAGE": {
-        "ADDED_CRITERIA": "Sie haben {{number}} Kriterien zu Ihrer Kohortenselektion hinzugefügt"
+      "EMPTY": "Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohortenselektion oder erstellen Sie eine neue Kohorte.",
+      "HEADER": "Kohortenselektion",
+      "REQUIRED": "Kohortenselektion ist ein Pflichtfeld"
+    },
+    "DATASELECTION": {
+      "ACTION_BAR": {
+        "DOWNLOAD": "Datendefinition herunterladen",
+        "EDIT": "Merkmalselektion bearbeiten",
+        "JUMP_TO_COHORT_SELECTION": "Zur Kohortenselektion",
+        "NEW_DATASELECTION": "Neue Merkmalselektion",
+        "UPLOAD": "Datendefinition hochladen"
       },
-      "CONSENT": {
-        "WITH_CONSENT": "Mit Einwilligung",
-        "WITHOUT_CONSENT": "Ohne Einweilligung",
-        "TITLE": "Vorausgesetzte Einwilligungen zur Datenverarbeitung",
-        "CENTRAL": "Zentral",
-        "DISTRIBUTED": "Verteilt",
-        "EU_GDPR": "Alle Datenempfänger in Ländern mit Datenschutzniveau konform zur EU DSGVO",
-        "NON_EU_GDPR": "Datenempfänger im Ausland mit Datenschutzniveau geringer als EU DSGVO",
-        "WITHOUT_DATA": "ohne Krankenkassendaten",
-        "WITH_DATA": "mit Krankenkassendaten",
-        "WITHOUT_CONTACT": "ohne Rekontaktierung",
-        "WITH_CONTACT": "mit Rekontaktierung"
+      "EMPTY": "Sie haben noch keine Merkmalselektion definiert. Laden Sie eine existierende Merkmalselektion oder erstellen Sie eine neue Merkmalselektion.",
+      "ERROR": {
+        "DOWNLOAD": "Es wurde keine Kohorte definiert, Download nicht möglich.",
+        "UPLOAD": "In der hochgeladenen Datei wurde keine Kohorte definiert."
+      },
+      "HEADER": "Merkmalselektion",
+      "SAVE": {
+        "HEADER": "Aktuelle Datendefinition herunterladen"
+      },
+      "SUCCESS": {
+        "DOWNLOAD": "Datendefinition wurde erfolgreich heruntergeladen.",
+        "UPLOAD": "Datendefinition wurde hochgeladen."
+      }
+    }
+  },
+  "DATASELECTION": {
+    "EDITOR": {
+      "ACTION_BAR": {
+        "DATA_REQUEST": "Daten beantragen",
+        "JUMP_TO_DATASELECTION_TREE": "Merkmal hinzufügen",
+        "SAVE_DATAQUERY": "Datenanfrage speichern"
+      },
+      "DISPLAY": {
+        "APPLIED_FILTER": "Angewandte Filter",
+        "APPLIED_REFERENCES": "Referenzierte Merkmale",
+        "LINKED": "Verknüpft",
+        "OPTIONAL": "Optional",
+        "REFERENCE": "Nur wenn referenziert",
+        "REQUIRED": "Erforderlich",
+        "SELECTED_FIELDS": "Selektierte Felder"
+      },
+      "HEADER": "Ausgewählte Merkmale",
+      "HEADER_DESCRIPTION": "Hier können Sie definieren, welche Merkmale von Patientinnen und Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll / Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z. B. auf bestimmte Diagnosecodes) hinzu.",
+      "SECTION": "Ausgewählte Kriterien"
+    },
+    "SEARCH": {
+      "ACTION_BAR": {
+        "ADD": "Zur Merkmalselektion hinzufügen",
+        "JUMP_TO_DATASELECTION": "Selektion anzeigen"
+      },
+      "HEADER": "Merkmalselektion",
+      "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Module des Kerndatensatzes (KDS) deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich filtern, wenn z. B. nur bestimmte Laborwerte von Interesse sind, und Sie haben die Möglichkeit anzugeben, welche Datenpunkte zwingend erforderlich sind für Ihre Forschungsfrage.",
+      "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie erforschen möchten, und laden Sie die Datendefinition herunter. Sie können die Datei dann als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen. Diese Datei ist maschinenlesbar und darf nicht verändert werden."
+    }
+  },
+  "EDITOR": {
+    "ACTION_BAR": {
+      "CANCEL": "Schließen",
+      "SAVE": "Speichern"
+    },
+    "CONTENT": {
+      "CRITERION": {},
+      "PROFILE": {
+        "FIELDS": {
+          "HEADER": "Selektieren Sie Merkmale für ",
+          "REQUIRED": "Erforderlich"
+        },
+        "FILTER": {
+          "TAB_LABEL": {
+            "TIMERESTRICTION": "Zeiteinschränkung",
+            "TOKEN": "Token-Filter"
+          }
+        },
+        "REFERENCE": {
+          "ADD": "Neues Merkmal hinzufügen",
+          "INFO": "Klicken Sie auf neues Merkmal hinzufügen, um ein neues Merkmal zu erstellen"
+        },
+        "TAB_LABEL": {
+          "FIELD": "Felder",
+          "FILTER": "Filter",
+          "REFERENCE": "Referenzen",
+          "TIMERESTRICTION": "Zeiteinschränkung"
+        }
       }
     },
-    "HEADER_TITLE": "Ausgewählte Kriterien",
+    "HEADER": {
+      "NEXT": "Nächstes Element",
+      "PREVIOUS": "Vorheriges Element"
+    }
+  },
+  "ERROR": {
+    "404": "Standort wurde nicht gefunden",
+    "FEAS-10001": "Ihr Account wurde wegen zu vieler Abfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
+    "FEAS-10002": "Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut.",
+    "FEAS-10003": "Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut.",
+    "FEAS-10004": "Die Ergebnismenge ist zu klein → Ergebnis wird nicht angezeigt.",
+    "FEAS-10005": "Die Anzahl der Standorte, die geantwortet haben, ist zu klein → Detailergebnis wird nicht angezeigt.",
+    "FEAS-10006": "Sie haben zu viele Kohorten gespeichert, bitte löschen Sie Kohortenselektionen, bevor Sie weitere speichern.",
+    "VAL-20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden."
+  },
+  "FEASIBILITY": {
+    "EDITOR": {
+      "ACTION_BAR": {
+        "BACK_TO_SEARCH": "Kriterien hinzufügen",
+        "DATA_REQUEST": "Datendefinition",
+        "SAVE_DATAQUERY": "Datendefinition speichern",
+        "SEND_QUERY": "Machbarkeitsabfrage"
+      },
+      "ADD": "Hinzufügen",
+      "CONSENT": {
+        "CENTRAL": "Zentral",
+        "DISTRIBUTED": "Verteilt",
+        "EU_GDPR": "Alle Datenempfänger in Ländern mit Datenschutzniveau konform zur EU-DSGVO",
+        "NON_EU_GDPR": "Datenempfänger im Ausland mit Datenschutzniveau geringer als EU-DSGVO",
+        "TITLE": "Vorausgesetzte Einwilligungen zur Datenverarbeitung",
+        "WITHOUT_CONSENT": "Ohne Einwilligung",
+        "WITHOUT_CONTACT": "Ohne Rekontaktierung",
+        "WITHOUT_DATA": "Ohne Krankenkassendaten",
+        "WITH_CONSENT": "Mit Einwilligung",
+        "WITH_CONTACT": "Mit Rekontaktierung",
+        "WITH_DATA": "Mit Krankenkassendaten",
+        "no-no-no-no": "Zentrale, nicht EU-DSGVO-konforme Analyse, ohne Krankenkassendaten und ohne Rekontaktierung",
+        "no-no-no-yes": "Zentrale, nicht EU-DSGVO-konforme Analyse, ohne Krankenkassendaten und mit Rekontaktierung",
+        "no-no-yes-no": "Zentrale, nicht EU-DSGVO-konforme Analyse, mit Krankenkassendaten und ohne Rekontaktierung",
+        "no-no-yes-yes": "Zentrale, nicht EU-DSGVO-konforme Analyse, mit Krankenkassendaten und mit Rekontaktierung",
+        "no-yes-no-no": "Zentrale, EU-DSGVO-konforme Analyse, ohne Krankenkassendaten und ohne Rekontaktierung",
+        "no-yes-no-yes": "Zentrale, EU-DSGVO-konforme Analyse, ohne Krankenkassendaten und mit Rekontaktierung",
+        "no-yes-yes-no": "Zentrale, EU-DSGVO-konforme Analyse, mit Krankenkassendaten und ohne Rekontaktierung",
+        "no-yes-yes-yes": "Zentrale, EU-DSGVO-konforme Analyse, mit Krankenkassendaten und mit Rekontaktierung",
+        "yes-no-no-no": "Verteilte, nicht EU-DSGVO-konforme Analyse, ohne Krankenkassendaten und ohne Rekontaktierung",
+        "yes-no-no-yes": "Verteilte, nicht EU-DSGVO-konforme Analyse, ohne Krankenkassendaten und mit Rekontaktierung",
+        "yes-no-yes-no": "Verteilte, nicht EU-DSGVO-konforme Analyse, mit Krankenkassendaten und ohne Rekontaktierung",
+        "yes-no-yes-yes": "Verteilte, nicht EU-DSGVO-konforme Analyse, mit Krankenkassendaten und mit Rekontaktierung",
+        "yes-yes-no-no": "Verteilte, EU-DSGVO-konforme Analyse, ohne Krankenkassendaten und ohne Rekontaktierung",
+        "yes-yes-no-yes": "Verteilte, EU-DSGVO-konforme Analyse, ohne Krankenkassendaten und mit Rekontaktierung",
+        "yes-yes-yes-no": "Verteilte, EU-DSGVO-konforme Analyse, mit Krankenkassendaten und ohne Rekontaktierung",
+        "yes-yes-yes-yes": "Verteilte, EU-DSGVO-konforme Analyse, mit Krankenkassendaten und mit Rekontaktierung"
+      },
+      "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
+      "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
+      "EXCLUSION": "Ausschlusskriterien",
+      "FILTER_SELECTION": "Ausgewählte Elemente",
+      "HEADER": "Kriterieneditor",
+      "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen Sie Ihre Kohortenselektion zusammen. Die Kohortenselektion kann verwendet werden, um direkt eine standortübergreifende Machbarkeitsabfrage zu stellen.",
+      "HEADER_TITLE": "Ausgewählte Kriterien",
+      "INCLUSION": "Einschlusskriterien",
+      "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl",
+      "QUANTITY": {
+        "AND": "und",
+        "EQUAL": "gleich",
+        "GREATER_THAN": "größer",
+        "LESS_THAN": "kleiner",
+        "MANDATORY_HINT": "Pflichtfeld",
+        "MAX": "Max",
+        "MIN": "Min",
+        "NONE": "kein Filter",
+        "OPERATOR": "Operator",
+        "UNIT": "Einheit",
+        "VALUE": "Wert"
+      },
+      "REMOVE": "Entfernen",
+      "REQUIRED_FILTER": "Bitte einen Filter setzen"
+    },
+    "HINT": {
+      "MAXIMUM_EXCEEDED": "Wert darf höchstens {{ max }} sein",
+      "MINIMUM_EXCEEDED": "Wert muss mindestens {{ min }} sein",
+      "MINIMUM_GREATER_MAXIMUM": "Der minimale Wert muss kleiner als der maximale Wert sein",
+      "NO_CRITERIA_SELECTED": "Es muss mindestens ein Einschlusskriterium ausgewählt sein",
+      "NO_VALUE_SELECTED": "Wählen Sie mindestens einen Wert",
+      "SEARCH_TEXT_NO_INPUT": "Geben Sie ein Suchkriterium ein oder öffnen Sie die Übersicht der Kategorien"
+    },
+    "RESULT": {
+      "ACTION_BAR": {
+        "DOWNLOAD": "Kohorte herunterladen",
+        "EDIT_STAGE": "Kohortenselektion bearbeiten",
+        "SAVE_QUERY": "Kohorte speichern"
+      },
+      "DETAILS_BUTTON": "Details",
+      "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen, wie viele Ihrer Detailergebnisaufrufe Sie verbraucht haben – wird täglich zurückgesetzt",
+      "HEADER": {
+        "RESULT_LOADED": "Abfrage abgeschlossen",
+        "RESULT_NOT_LOADED": "Machbarkeitsabfrage wird bearbeitet"
+      },
+      "HEADER_DESCRIPTION": "Die Anzahl an Patientinnen und Patienten, die die Kriterien Ihrer Kohorte erfüllen, wird standortübergreifend ermittelt. Dieses Ergebnis ist nicht exakt.",
+      "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
+      "PATIENT_NUMBER": "Anzahl der Patienten",
+      "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsabfragen lieferten Näherungsergebnisse zurück. Die Ergebnisse der Abfrage werden anonymisiert, und es werden bewusst Abweichungen zum exakten Ergebnis eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung der Machbarkeit Ihres Projekts. Sie sollten nicht für wissenschaftliche Arbeiten eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
+      "SAVE_DIALOG": {
+        "HEADER": "Anzahl der Patienten",
+        "HEADER_DESCRIPTION": "Die Anzahl an Patientinnen und Patienten, die die Kriterien Ihrer Kohorte erfüllen, wird standortübergreifend ermittelt. Dieses Ergebnis ist nicht exakt."
+      },
+      "SITE": "Standort",
+      "TOTAL": "Gesamt"
+    },
     "SEARCH": {
-      "MIN_LENGTH":"Bitte mindestens drei Buchstaben eingeben",
-      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z.b. ICD10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen.",
-      "SEARCH_BUTTON": "Suchen",
-      "SEARCHBAR":"Suchen nach Begriff oder Terminologiecode",
-      "HEADER": "Kriteriensuche",
-      "CLOSE_DETAILS": "Schließen",
+      "ACTION_BAR": {
+        "ADD_TO_STAGE": "Zur Kohortenselektion hinzufügen",
+        "VIEW_STAGE": "Kohortenselektion anzeigen"
+      },
       "BUTTON": {
         "RESET": "Filter zurücksetzen"
       },
+      "CLOSE_DETAILS": "Schließen",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
-      "INCLUSION": "Einschlusskriterien",
-      "EXCLUSION": "Ausschlusskriterien",
+      "HEADER": "Kriteriensuche",
+      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen.",
       "LABEL": "Code oder Suchbegriff eingeben",
-      "ALL": "Alle",
-      "CATEGORY_FILTER": "Filtern nach",
-      "CONSENT_HEADER": "Art der Datennutzung",
-      "CONSENT_CENTRAL_TOOLTIP": "For the central analysis you will recieve patient data pseudonymised by the MII, which fit your research project proposal. Pseudonymised data can only be used, if patients have consented to their use.The researchers will recieve the pseudonymised data in form of a download. They will then be able to conduct their analysis with greater flexibility and depth as well as faster speed compared to decentral analyis. The collection of consents is currently ongoing across all sites. However it can be expected that for most queries less patients will be found for central than de-central analysis.",
-      "CONSENT_DISTRIBUTED_TOOLTIP": "  For distributed analyses the analysis is carried out at the sites. The researchers recieve anonymous result data. For many sites a de-central analysis can be based on a different legal basis other than a consent. This often leads to larger numbers of patients found, which fulfill the requirements for your research proposal. Some sites also require the consent of a patient for feasibility queries. These sites will answer feasibility queries with comparatively lower numbers. The actual number of patients available from these site for distributed analyses might be higher. The actual number of available patients will not be clear until after the research proposal has been processed.",
-      "CONSENT_CENTRAL": " is assumed (data consolidated centrally)",
-      "CONSENT_CENTRAL_LINK": "„Broad Consent“ (MII or compatible with MII)",
-      "CONSENT_DISTRIBUTED": "No „Broad Consent“ requested (data available for „Federated Analysis“)"
-    },
-    "SWITCH": {
-      "LABEL_AND": "UND",
-      "LABEL_OR": "ODER"
-    },
-    "DISPLAY": {
-      "REFERENCED_CRITERIA": "Referenzierte Kriterien",
-      "LABEL": "Ausgewählte Merkmale",
-      "ONE_OF": "",
-      "MORE": "weitere",
-      "BETWEEN": "zwischen {{ min }} und {{ max }} {{ unit }}",
-      "COMPARATOR": "{{ comparator }} {{ value }} {{ unit }}",
-      "TIMERESTRICTION": {
-        "LATEST": "(aktuellstes)",
-        "BOTH": "zwischen {{ from }} und {{ to }}",
-        "FROM": "nach {{ from }}",
-        "TO": "vor {{ to }}",
-        "NONE": "keine zeitliche Einschränkung",
-        "WARNING": "Das Anfangsdatum muss kleiner sein als das Enddatum"
-      }
-    },
-    "OVERVIEW": {
-      "COHORT": {
-        "LOAD": "Kohortenselektion laden",
-        "PATIENTS": "Anzahl der Patienten:"
-      },
-      "TITLE_LABEL": "Titel",
-      "COMMENT_LABEL": "Kommentar",
-      "SAVE_HEADER": "Abspeichern der aktuellen Suchabfrage",
-      "LOAD_HEADER": "Bisherige Suchabfragen",
-      "IMPORT_HEADER": "Suchabfragen importieren",
-      "SAVE_WITH_QUERY": "für Datennutzungsantrag speichern (muss vorher ausgeführt worden sein)",
-      "SAVE_TEMPLATE": "Als Vorlage speichern",
-      "DOWNLOAD_SQ": "Als Datei speichern",
-      "FILENAME": "Dateiname",
-      "SAVED_QUERIES": "Gespeicherte Abfragen (mit Ergebnis)",
-      "SAVED_TEMPLATES": "Gespeicherte Vorlagen",
-      "MAXIMUM_QUERY_SLOT": "Sie haben die maximale Anzahl an verfügbaren freien Speicherplätzen für Abfragen erreicht",
-      "INVALID_WARNING1": "Abfrage konnte nicht vollständig geladen werden: Ein oder mehrere Kriterien Ihrer Abfrage sind nicht gültig. Bitte ersetzen Sie alle durch folgendes Symbol ",
-      "INVALID_WARNING2": " gekennzeichneten Kriterien oder kontaktieren Sie ",
-      "SAVE_BUTTON": "speichern"
-    },
-    "EDIT": {
-      "HEADER": "Einschränkungen der ausgewählten Merkmale",
-      "HEADER_FILTER_QUANTITY": "Geben Sie einen Wertebereich ein:",
-      "HEADER_FILTER_QUANTITY_FOR_DISPLAY": "Geben Sie einen Wertebereich ein ({{ label }}):",
-      "HEADER_FILTER_CONCEPT_OPTIONAL": "Wählen Sie einen oder mehrere zulässige Werte:",
-      "HEADER_FILTER_CONCEPT_MANDATORY": "Geben Sie einen oder mehrere zulässige Werte an:",
-      "HEADER_FILTER_CONCEPT_FOR_DISPLAY": "Geben Sie einen oder mehrere zulässige Werte an ({{ label }}):",
-      "HEADER_FILTER_REFERENCE": "Festgestellte Diagnose",
-      "HEADER_FILTER_VALUE": "Wertebereich",
-      "CHOOSE_GROUP": "Gruppe auswählen",
-      "MANDATORY_HINT": "Pflichtfeld",
-      "UNIT": "Einheit",
-      "MIN": "Min",
-      "MAX": "Max",
-      "VALUE": "Wert",
-      "OPERATOR": "Operator",
-      "AND": "und",
-      "NONE": "kein Filter",
-      "EQUAL": "gleich",
-      "LESS_THAN": "kleiner",
-      "GREATER_THAN": "größer",
-      "BETWEEN": "zwischen",
-      "TIMERESTRICTION": {
-        "LABEL": "Datum",
-        "EVER": "Alle Ereignisse liegen im Zeitraum",
-        "LATEST": "Aktuellstes Ereignis liegt im Zeitraum",
-        "FROM": "von",
-        "TO": "bis",
-        "AT": "am",
-        "NOT_AT": "nicht am",
-        "BEFORE": "vor",
-        "BEFORE_OR_AT": "vor oder am",
-        "AFTER": "nach",
-        "AFTER_OR_AT": "nach oder am",
-        "BETWEEN": "zwischen",
-        "TITLE": "Zeitraum (optional)",
-        "NONE": "kein Filter"
-      }
-    },
-    "HINT": {
-      "NO_VALUE_SELECTED": "Wählen Sie mindestens einen Wert",
-      "MINIMUM_GREATER_MAXIMUM": "Der minimale Wert muss kleiner als der maximale Wert sein",
-      "MINIMUM_EXCEEDED": "Wert muss mindestens {{ min }} sein",
-      "MAXIMUM_EXCEEDED": "Wert darf höchstens {{ max }} sein",
-      "SEARCH_TEXT_NO_INPUT": "Geben Sie ein Suchkriterium ein oder öffnen sie die Übersicht der Kategorien",
-      "NO_CRITERIA_SELECTED": "es muss mindestens ein Einschlusskriterium ausgewählt sein"
-    },
-    "RESULT": {
-      "BUTTON": {
-        "DETAILS": "Details",
-        "EDIT_STAGE": "Kohortenselektion bearbeiten",
-        "SAVE_QUERY":"Kohorte speichern",
-        "DOWNLOAD": "Kohorte herunterladen"
-      },
-      "HEADER": {
-        "RESULT_NOT_LOADED": "Machbarkeitsabfrage wird bearbeitet",
-        "RESULT_LOADED": "Abfrage abgeschlossen"
-      },
-      "SAVE_DIALOG": {
-        "HEADER": "Anzahl der Patienten",
-        "HEADER_DESCRIPTION": "Die Anzahl an Patientinnen und Patienten, die die Kriterien Ihrer Kohorte erfüllen wird standortübergreifend ermittelt. Dieses Ergebnis ist nicht exakt."
-      },
-      "HEADER_DESCRIPTION": "Die Anzahl an Patientinnen und Patienten, die die Kriterien Ihrer Kohorte erfüllen wird standortübergreifend ermittelt. Dieses Ergebnis ist nicht exakt.",
-      "PATIENT_NUMBER": "Anzahl der Patienten",
-      "PATIENT_NUMBER_TOOLTIP": "Die Machbarkeitsabfragen liefen Näherungsergebnisse zurück. Die Ergebnisse der Abfrage werden anonymisiert und es werden bewusst Abweichungen zum exakten Ergebnis eingeführt. Daher eignen sich die Ergebnisse lediglich für die erste Bewertung einer Machbarkeit Ihres Projekts. Sie sollte nicht für die wissenschaftliche Arbeit eingesetzt werden. Das Veröffentlichen der Zahlen ist grundsätzlich nicht gestattet. Die tatsächlich erhältliche Patientenzahl lässt sich erst beziffern, wenn Ihr Projekt über einen Datennutzungsantrag angefragt und durch die zuständigen Use & Access Committees begutachtet wurde.",
-      "TOTAL": "Gesamt",
-      "SITE": "Standort",
-      "MESSAGE429": "Sie haben die maximale Anzahl an Abrufen für die Standortaufschlüsselung erreicht.",
-      "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen, wie viele Ihrer Detailergebnisaufrufe Sie verbraucht haben - wird täglich zurückgesetzt"
+      "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
+      "SEARCH_BUTTON": "Suchen"
     }
   },
+  "LANGUAGE": {
+    "ENGLISH": "Englisch",
+    "GERMAN": "Deutsch",
+    "LABEL": "Sprache auswählen"
+  },
   "LEGAL": {
-    "DISCLOSURE": "Impressum",
+    "CONTACT": "Kontakt",
     "DATAPROTECTION": "Datenschutz",
-    "CONTACT": "Kontakt"
+    "DISCLOSURE": "Impressum"
+  },
+  "NAVIGATION": {
+    "DASHBOARD": "Startseite",
+    "DATAQUERY": "Datendefinition",
+    "DATASELECTION": "Merkmalselektion",
+    "OPTIONS": "Einstellungen",
+    "QUERYBUILDER_EDITOR": "Kohortenselektion",
+    "QUERYBUILDER_OVERVIEW": "Gespeicherte Abfragen",
+    "QUERYBUILDER_RESULT": "Machbarkeitsabfrage",
+    "SIGNOUT": "Abmelden"
+  },
+  "OPTIONSPAGE": {
+    "CONTEXT_IN_SQ": "Kontext in die SQ einbinden",
+    "DEPENDENTGROUPS": "Abhängige Gruppen",
+    "DISPLAYVALUEFILTERICON": "Icons für Vergleichsoperatoren nutzen",
+    "FHIRPORT": "FHIR-Port",
+    "MULTIPLEGROUPS": "Mehrere Gruppen",
+    "MULTIPLEVALUEDEFINITIONS": "Mehrere Einschränkungen pro Kriterium",
+    "POLLINGINTERVALL": "Polling-Intervall",
+    "POLLINGTIME": "Polling-Zeit",
+    "TIMERESTRICTION": "Zeitabhängige Kriterien"
   },
   "SAVED_QUERIES": {
+    "COMMENT": "Kommentar",
+    "CREATED_AT": "Erstellt am",
     "HEADER": "Gespeicherte Abfragen",
+    "LOAD": "Kohortenselektion laden",
+    "PATIENTS": "Anzahl der Patienten:",
     "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen",
-    "CREATED_AT": "Erstellt am"
+    "TITLE": "Titel"
   },
-  "BUTTON": {
-    "ADD": "Hinzufügen",
-    "ADD_TOOLTIP": "Merkmal einschränken",
-    "ADDALL": "Alle hinzufügen",
-    "CANCEL": "Abbrechen",
-    "CLOSE": "Schließen",
-    "DOWNLOAD": "Herunterladen",
-    "EDIT": "Speichern",
-    "IMPORT": "Query laden",
-    "IMPORT_DATASELECTION":"Merkmalselektion hochladen",
-    "IMPORT_FROM_FILE": "Datei auswählen",
-    "RESET": "Zurücksetzen",
-    "RESULTDETAILS": "Details",
-    "SAVE": "Speichern",
-    "SEND": "Abfrage starten",
-    "SAVEQUERY": "Abfrage speichern",
-    "VALIDATE": "Validieren"
+  "SHARED_COMPONENTS": {
+    "ACTIONBAR": {
+      "ADDED_CRITERIA": {
+        "PLURAL": "Sie haben {{amount}} Kriterien zur Kohortenselektion hinzugefügt",
+        "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohortenselektion hinzugefügt"
+      },
+      "SELECTED_CRITERIA": {
+        "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt",
+        "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt"
+      }
+    },
+    "DELETE_MODAL": {
+      "CANCEL": "Abbrechen",
+      "DELETE": "Löschen",
+      "HEADER": "Löschung bestätigen",
+      "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?"
+    },
+    "FILTER": {
+      "AVAILABILITY": "Verfügbarkeit",
+      "CONTEXT": "Kontext",
+      "KDS_MODULE": "KDS-Modul",
+      "TERMINOLOGY": "Terminologie"
+    },
+    "KDS_MODULE": "KDS-Modul",
+    "KONTEXT": "Kontext / KDS-Profil",
+    "LIST_ITEM_DETAILS": {
+      "CHILDREN": "Kindelement",
+      "PARENTS": "Elternelement"
+    },
+    "MENU": {
+      "ADD": "Zur Kohortenselektion hinzufügen",
+      "APPLY_FILTERS": "Filter anwenden",
+      "DEFINE_FIELDS": "Felder selektieren",
+      "DELETE": "Löschen",
+      "DUPLICATE": "Duplizieren",
+      "EDIT": "Bearbeiten",
+      "OPTIONS": "Optionen",
+      "REFERENCE": "Kriterien verknüpfen",
+      "SEARCH": "Als Suchbegriff nutzen",
+      "SHOW_CRITERIA": "Kriterium anzeigen"
+    },
+    "MODAL": {
+      "BUTTON": {
+        "APPLY": "Auswählen",
+        "CANCEL": "Abbrechen"
+      }
+    },
+    "REFERENCE_TILE": {
+      "DELETE": "Löschen",
+      "NOTLINKED": "Nicht verknüpft",
+      "REQUIRED": "Erforderlich"
+    },
+    "SAVE_MODAL": {
+      "CANCEL": "Abbrechen",
+      "COHORT_WARNING": "Kohortenselektion ist erforderlich",
+      "COMMENT": "Kommentar",
+      "HEADER": "Abfrage speichern",
+      "SAVE": "Speichern",
+      "TITLE": "Titel"
+    },
+    "TABLE": {
+      "AVAILABILITY": "Verfügbarkeit",
+      "CONTEXT": "Kontext",
+      "DISPLAY": "Anzeige",
+      "NAME": "Name",
+      "PATIENT_COUNT": "Anzahl der Patienten",
+      "SITE": "Standort",
+      "TERMCODE": "Termcode",
+      "TERMINOLOGY_CODE": "Terminologie"
+    }
+  },
+  "SHARED_FILTER": {
+    "TIMERESTRICTION": {
+      "AFTER": "nach",
+      "AT": "am",
+      "BEFORE": "vor",
+      "BETWEEN": "zwischen",
+      "FROM": "von",
+      "LABEL": "Zeitraum",
+      "NONE": "kein Filter",
+      "TITLE": "Zeitraum (optional)",
+      "TO": "bis",
+      "WARNING": "Das Anfangsdatum muss kleiner sein als das Enddatum"
+    }
   },
   "TAB_TITLE": {
     "DATA_QUERY": {
@@ -492,26 +359,13 @@
       "DATA_SELECTION": "Datendefinition - Merkmalselektion"
     },
     "DATA_SELECTION": {
-      "SEARCH": "Merkmalselektion - Suche",
-      "EDITOR": "Merkmalselektion - Editor"
+      "EDITOR": "Merkmalselektion - Editor",
+      "SEARCH": "Merkmalselektion - Suche"
     },
     "FEASIBILITY_QUERY": {
-      "SEARCH": "Machbarkeitsabfrage - Suche",
       "EDITOR": "Machbarkeitsabfrage - Editor",
-      "RESULT": "Machbarkeitsabfrage - Ergebnis"
+      "RESULT": "Machbarkeitsabfrage - Ergebnis",
+      "SEARCH": "Machbarkeitsabfrage - Suche"
     }
-  },
-  "ERROR": {
-    "FEAS-10001": "Ihr Account wurde wegen zu vielen Abfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
-    "FEAS-10005"  :"Die Anzahl der Standorte, die geantwortet haben, ist zu klein -> Detailergebnis wird nicht angezeigt",
-    "FEAS-10004"  :"Die Ergebnismenge ist zu klein -> Ergebnis wird nicht angezeigt",
-    "FEAS-10002"  :"Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut",
-    "FEAS-10003"  :"Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut",
-    "FEAS-10006"  :"Sie haben zu viele Kohorten gespeichert, bitte löschen Sie Kohortenselektionen, bevor Sie weitere speichern",
-    "404"         :"Standort wurde nicht gefunden",
-    "VAL-20001"   :"Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden"
-  },
-  "INFO":{
-    "UPDATE_NOTE": "Aufgrund von Updates am FDPG und an den Standorten ist das Portal aktuell nur eingeschränkt nutzbar. Wir bedanken uns für Ihr Verständnis."
   }
 }

@@ -8,7 +8,7 @@
     <mat-tab
       *ngFor="let item of content; let i = index"
       id="item.name"
-      label="{{ 'EDITOR.CONTENT.TAB_LABEL.' + item.name | translate }}"
+      label="{{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.' + item.name | translate }}"
     >
       <ng-template matTabContent>
         <ng-container *ngIf="selectedIndex === i">

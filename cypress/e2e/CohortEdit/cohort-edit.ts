@@ -3,8 +3,8 @@ import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
 import { FilterChips } from '../../support/step_definitions/filter-chips.cy'
 import { menuItems } from '../Utilities/menuItems'
 import { MenuTests } from '../../support/step_definitions/menu.cy'
-import { searchInput, selectCriterion } from '../test.cy'
 import { CriterionSearch } from '../CohortSearch/cohort-search'
+import { selectCriterion } from '../../test'
 
 export class CohortEdit {
   public goToCohortEditPage() {
@@ -39,7 +39,7 @@ export class CohortEdit {
       })
   }
   public clickAuswaehlenButton() {
-    cy.contains('button', 'Auswählen').click()
+    cy.contains('button', 'Select').click()
   }
   public shouldSeeModalClosing(modalTitle: string) {
     cy.get('.mat-dialog-title').should('not.exist')
@@ -55,7 +55,7 @@ export class CohortEdit {
     cy.get('.criteria-box').within(() => {
       cy.get('.content').should('contain', criterium).should('contain', chipValue)
     })
-    filterChip.getFilterChipByName(criterium, panelName, chipValue)
+    filterChip.getFilterChipByName(criterium, chipValue, panelName)
   }
 
   public selectValue(value: string) {

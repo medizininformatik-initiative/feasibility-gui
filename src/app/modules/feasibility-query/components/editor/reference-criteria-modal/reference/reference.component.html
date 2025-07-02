@@ -9,7 +9,7 @@
     (selectedRow)="setSelectedRowItem($event)"
   ></num-table>
   <num-placeholder-box class="no-results-text" *ngIf="!searchResultsFound"
-    >{{ 'QUERYBUILDER.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+    >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
     >"</num-placeholder-box
   >
   <button
@@ -19,7 +19,7 @@
     color="white"
     (click)="setSelectedReferenceCriteria()"
   >
-    {{ 'SHAREDFILTER.BUTTON.ADD' | translate }}
+    {{ 'FEASIBILITY.EDITOR.BUTTON.ADD' | translate }}
   </button>
   <div *ngIf="arrayOfSelectedReferences.length > 0" class="filter-selection">
     <div class="filter-title">Filter selection</div>

@@ -1,6 +1,6 @@
-import { CohortFileUploadService } from 'src/app/service/Upload/CohortFileUpload.service';
+import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
 import { Component, OnInit } from '@angular/core';
-import { DownloadCohortComponent } from '../download-cohort/download-cohort.component';
+import { DownloadDataSelectionComponent } from '../../data-selection/download-data-selection/download-data-selection.component';
 import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
@@ -9,8 +9,6 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { Observable, Subscription } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { DownloadDataSelectionComponent } from '../../data-selection/download-data-selection/download-data-selection.component';
-import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
 
 @Component({
   selector: 'num-cohort-definition-action-bar',

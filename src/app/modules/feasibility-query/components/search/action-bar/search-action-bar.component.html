@@ -3,9 +3,9 @@
     <div *ngIf="listItemArray.length > 0" class="display-selected">
       {{
         listItemArray.length === 1
-          ? ('SHAREDCOMPONENTS.ACTIONBAR.SELECTED_CRITERIA.SINGULAR'
+          ? ('SHARED_COMPONENTS.ACTIONBAR.SELECTED_CRITERIA.SINGULAR'
             | translate : { amount: listItemArray.length })
-          : ('SHAREDCOMPONENTS.ACTIONBAR.SELECTED_CRITERIA.PLURAL'
+          : ('SHARED_COMPONENTS.ACTIONBAR.SELECTED_CRITERIA.PLURAL'
             | translate : { amount: listItemArray.length })
       }}
     </div>
@@ -17,7 +17,7 @@
       matBadgePosition="above after"
       class="margin-right-20"
     >
-      {{ 'QUERYBUILDER.STAGE.BUTTON.ADD_TO_STAGE' | translate }}
+      {{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
     </num-button>
   </ng-container>
   <num-button
@@ -29,6 +29,6 @@
     [matBadge]="(stageArray$ | async)?.length"
     matBadgePosition="above after"
   >
-    {{ 'QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate }}
+    {{ 'FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE' | translate }}
   </num-button>
 </num-action-bar>

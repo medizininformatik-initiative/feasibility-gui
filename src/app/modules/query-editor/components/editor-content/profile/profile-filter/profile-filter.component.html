@@ -6,7 +6,7 @@
 >
   <mat-tab
     *ngIf="profileTokenFilter"
-    label="{{ 'EDITOR.CONTENT.PROFILE.FILTER.TAB_LABEL.FILTER' | translate }}"
+    label="{{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.FILTER' | translate }}"
   >
     <num-token-filter
       [tokenFilter]="profileTokenFilter"
@@ -16,7 +16,7 @@
 
   <mat-tab
     *ngIf="profileTimeFilters.length > 0"
-    label="{{ 'EDITOR.CONTENT.PROFILE.FILTER.TAB_LABEL.TIMERESTRICTION' | translate }}"
+    label="{{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.TIMERESTRICTION' | translate }}"
   >
     <div *ngFor="let profileTimeFilter of profileTimeFilters">
       <num-profile-time-filter
