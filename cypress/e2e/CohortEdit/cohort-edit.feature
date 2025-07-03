@@ -4,6 +4,7 @@ Feature: Cohort editing
     And I am on the "Feasibility Search" page
     And I set the language to English
   Scenario Outline: I edit <criterium> criterium
+    When I select the filter 0 and option 2
     Given I add the criterium "<criterium>" to the editor
     When I open the menu
     When I click on the menu item "Apply filter"
@@ -18,7 +19,7 @@ Feature: Cohort editing
     When I click on the button "Edit cohort selection"
     Then I am on the "Feasibility Editor" page
     Examples:
-      | criterium                    |  
+      | criterium                    |
       | 17-keto reductase deficiency |
       | 11-hydroxylase deficiency    |
 
@@ -37,8 +38,8 @@ Feature: Cohort editing
     Then I should see "Edit Cohort" modal closing
     And I should see "<criterium>" in the cohort criteria list with "<panel_name>" and "<chip_value>" selected
     Examples:
-      | criterium                 | default_filter | new_filter | panel_name   | value | unit | chip_value |
-      | Current chronological age | No filter    | greater     | Date of birth | 5     | a    | 5          |
+      | criterium                 | default_filter | new_filter | panel_name    | value | unit | chip_value |
+      | Current chronological age | No filter      | greater    | Date of birth | 5     | a    | 5          |
 
 
   Scenario Outline: I add criterium to inlcusion list
@@ -50,7 +51,6 @@ Feature: Cohort editing
     Then I am on the "Feasibility Result" page
     And I wait for 11 seconds
     Examples:
-      | criterium                    | 
+      | criterium                    |
       | 17-keto reductase deficiency |
 
-      

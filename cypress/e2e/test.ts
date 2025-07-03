@@ -119,7 +119,7 @@ function editAge() {
 }
 function selectAmbulant() {
   cy.get('body').as('root');
-  //selectFilter(0, 8)
+  selectFilter(0, 8)
   searchInput('ambulant')
   selectCriterion([2])
   addCriteria()

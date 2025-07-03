@@ -7,10 +7,10 @@ import path from "path";
 
 export default defineConfig({
   env: {
-    username: 'testuser',
-    password: 'testpassword',
+    username: 'test',
+    password: 'test1',
     homeUrl: 'http://localhost:4200/data-query/cohort-definition',
-    redirectUrl: 'http://localhost:8080/auth',
+    redirectUrl: 'http://localhost:8080',
   },
   e2e: {
     specPattern: "**/*.feature",

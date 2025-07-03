@@ -1,10 +1,8 @@
 import { UrlPaths } from '../../support/e2e'
 import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
 import { FilterChips } from '../../support/step_definitions/filter-chips.cy'
-import { menuItems } from '../Utilities/menuItems'
-import { MenuTests } from '../../support/step_definitions/menu.cy'
 import { CriterionSearch } from '../CohortSearch/cohort-search'
-import { selectCriterion } from '../../test'
+import { selectCriterion } from '../test'
 
 export class CohortEdit {
   public goToCohortEditPage() {
@@ -70,7 +68,7 @@ export class CohortEdit {
       })
   }
 
-  public dragCriteriumRightBy200px(type = "Inclusion") {
+  public dragCriteriumRightBy200px(type = 'Inclusion') {
     const draggableSelector = '.cdk-drag'
     cy.wait(1000) // ensure UI is ready
     cy.get(draggableSelector).trigger('mousedown', {
@@ -83,7 +81,24 @@ export class CohortEdit {
         waitForAnimations: true,
       })
       .click()
-      cy.wait(1000) // wait for the drag to complete
+    cy.wait(1000) // wait for the drag to complete
+  }
+
+  public selectFilter(filterIndex: number, optionIndex: number) {
+    cy.get('body').as('root')
+
+    cy.get('num-search-filter').eq(filterIndex).click()
+    cy.get('num-search-filter mat-select')
+      .eq(filterIndex)
+      .invoke('attr', 'id')
+      .then((id) => {
+        cy.get('@root')
+          .find('#' + id + '-panel')
+          .find('.mat-mdc-option')
+          .eq(optionIndex)
+          .click()
+        cy.get('.cdk-overlay-backdrop').click({ force: true })
+      })
   }
 }
 
@@ -112,4 +127,10 @@ defineStep(
   'I should see {string} in the cohort criteria list with {string} and {string} selected',
   (criterium: string, panelName: string, chipValue: string) =>
     cohortEdit.shouldSeeCriteriumInListWithSelected(criterium, panelName, chipValue)
+)
+defineStep(
+  'I select the filter {int} and option {int}',
+  (filterIndex: number, optionsIndex: number) => {
+    cohortEdit.selectFilter(filterIndex, optionsIndex)
+  }
 )
