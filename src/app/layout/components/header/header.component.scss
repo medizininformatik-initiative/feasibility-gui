@@ -34,3 +34,12 @@
 .margin-right {
   margin-right: 3%;
 }
+
+.circle {
+  color: var(--num-color--primary-blue);
+  margin-right: 10%;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+  width: 100%;
+}

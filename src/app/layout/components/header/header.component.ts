@@ -1,8 +1,11 @@
+import { ActuatorInformationService } from 'src/app/service/Actuator/ActuatorInformation.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { FeatureProviderService } from 'src/app/service/FeatureProvider.service';
 import { FeatureService } from '../../../service/Feature.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
-import { FeatureProviderService } from 'src/app/modules/feasibility-query/service/feature-provider.service';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { MatDialog } from '@angular/material/dialog';
+import { AboutModalComponent } from '../about-modal/about-modal.component';
 
 @Component({
   selector: 'num-dataportal-header',
@@ -18,7 +21,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(
     private oauthService: OAuthService,
     private featureProviderService: FeatureProviderService,
-    public featureService: FeatureService
+    public featureService: FeatureService,
+    private actuatorInformationService: ActuatorInformationService,
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -37,5 +42,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
   public logout() {
     this.oauthService.logOut();
+  }
+
+  public getActuatorInfo() {
+    this.matDialog.open(AboutModalComponent, {});
   }
 }
