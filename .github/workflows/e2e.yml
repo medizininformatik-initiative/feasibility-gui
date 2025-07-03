@@ -54,6 +54,9 @@ jobs:
       - name: Wait for Keycloak
         run: .github/scripts/wait-for-url.sh  http://localhost:9003/auth/health
 
+      - name: Wait for localhost:8080
+        run: .github/scripts/wait-for-url.sh  http://localhost:8080
+
       - name: Create Test User in Keycloak
         run: .github/scripts/create-keycloak-user.sh
       
@@ -84,7 +87,7 @@ jobs:
           DEBUG: '@cypress/github-action'
         with:
           start: npm start
-          wait-on: 'http://localhost:8080/admin/master/console/, http://localhost:4200'
+          wait-on: 'http://127.0.0.1:8080, http://localhost:4200'
           browser: chrome
 
       - name: Upload Cypress screenshots

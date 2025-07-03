@@ -7,8 +7,8 @@ import path from "path";
 
 export default defineConfig({
   env: {
-    username: 'test',
-    password: 'test1',
+    username: 'testuser',
+    password: 'testpassword',
     homeUrl: 'http://localhost:4200/data-query/cohort-definition',
     redirectUrl: 'http://localhost:8080',
   },
