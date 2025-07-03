@@ -80,9 +80,11 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        env:
+          DEBUG: '@cypress/github-action'
         with:
           start: npm start
-          wait-on: 'http://localhost:8080, http://localhost:4200'
+          wait-on: 'http://localhost:8080/admin/master/console/, http://localhost:4200'
           browser: chrome
 
       - name: Upload Cypress screenshots
