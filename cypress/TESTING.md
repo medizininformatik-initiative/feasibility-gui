@@ -4,6 +4,7 @@ This documentation provides an overview of the step definitions implemented for 
 
 ## Table of Contents
 
+- [Installation & Setup](#1-install-cypress)
 - [Important Notes](#important-notes)
 - [Feature Files & Gherkin](#feature-files--gherkin)
 - [Implemented Step Definitions](#implemented-step-definitions)
@@ -40,6 +41,22 @@ npm install --save-dev cypress
 
 ```bash
 npm install --save-dev @badeball/cypress-cucumber-preprocessor
+```
+
+###  3. Install npx
+```bash
+npm install -g npx
+```
+
+### 4. Open the Cypress Test Runner:
+bash
+```bash
+npx cypress open
+```
+
+### 5. Run Tests in Headless Mode:
+```bash
+npx cypress run
 ```
 
 ## Important Notes
