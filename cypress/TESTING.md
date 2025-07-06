@@ -26,6 +26,22 @@ This documentation provides an overview of the step definitions implemented for 
 
 ---
 
+## Installation & Setup
+
+To run the Cypress BDD tests with Cucumber, you need to install Cypress and the official Cucumber preprocessor, along with their dependencies.
+
+### 1. Install Cypress
+
+```bash
+npm install --save-dev cypress
+```
+
+### 2. Install the Cucumber Preprocessor and Dependencies
+
+```bash
+npm install --save-dev @badeball/cypress-cucumber-preprocessor
+```
+
 ## Important Notes
 
 All step strings (e.g., button names or labels) are case-sensitive and must match exactly.  
