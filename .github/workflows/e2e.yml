@@ -59,7 +59,7 @@ jobs:
 
 
       - name: Wait for localhost:8080
-        run: .github/scripts/wait-for-url.sh  http://localhost:8080
+        run: .github/scripts/wait-for-url.sh  http://localhost:8080/realms/master/.well-known/openid-configuration
 
       - name: Create Test User in Keycloak
         run: .github/scripts/create-keycloak-user.sh
