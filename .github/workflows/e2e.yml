@@ -28,7 +28,7 @@ jobs:
         run: |
           max_attempts=20
           attempt=0
-          until curl --fail http://localhost:8091/actuator/health; do
+          until curl --fail http://localhost:8090/api/v5/actuator/health; do
             attempt=$((attempt+1))
             if [ $attempt -ge $max_attempts ]; then
               echo "Backend did not become healthy after $max_attempts attempts"

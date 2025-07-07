@@ -1,9 +1,9 @@
 services:
   dataportal-backend:
     container_name: dataportal-backend
-    image:  ghcr.io/medizininformatik-initiative/feasibility-backend:7.1.2
+    image:  ghcr.io/medizininformatik-initiative/feasibility-backend:pr-548
     ports:
-      - "8091:8090"
+      - "8090:8090"
     depends_on:
       dataportal-postgres:
         condition: service_started
@@ -16,8 +16,8 @@ services:
       QUERY_VALIDATION_ENABLED: "true"
       CQL_TRANSLATE_ENABLED: "false"
       FHIR_TRANSLATE_ENABLED: "false"
-      API_BASE_URL: "http://localhost:8091/api/"
-      ALLOWED_ORIGINS: "http://localhost"
+      API_BASE_URL: "http://localhost:8090/api/"
+      ALLOWED_ORIGINS: "http://localhost:4200"
       QUERYRESULT_EXPIRY_MINUTES: 5
       # ---- db config
       DATABASE_HOST: "dataportal-postgres"

@@ -3,7 +3,7 @@
     "baseUrl": "/api"
   },
   "uiBackendApi": {
-    "baseUrl": "http://localhost:8091/api/v5"
+    "baseUrl": "http://localhost:8090/api/v5"
   },
   "auth": {
     "baseUrl": "http://localhost:8080",
@@ -55,8 +55,5 @@
   },
   "proposalPortalLink": "https://antrag.dev.forschen-fuer-gesundheit.de",
   "queryVersion": "v2",
-  "stylesheet": "FDPGTheme",
-  "uiBackendApi": {
-    "baseUrl": "http://localhost:8090/api/v5"
-  }
+  "stylesheet": "FDPGTheme"
 }
