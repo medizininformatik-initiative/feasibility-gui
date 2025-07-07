@@ -6,7 +6,7 @@ KEYCLOAK_CONTAINER="keycloak-auth"  # <-- Change this if needed
 
 # Admin login
 docker exec -u0 "$KEYCLOAK_CONTAINER" /opt/keycloak/bin/kcadm.sh config credentials \
-  --server http://localhost:8080/auth \
+  --server http://localhost:8080 \
   --realm master \
   --user keycloakadmin \
   --password keycloak
