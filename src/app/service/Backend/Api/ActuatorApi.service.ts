@@ -11,7 +11,15 @@ import { BuildInformationData } from 'src/app/model/Interface/ActuatorInfoIData/
 export class ActuatorApiService {
   constructor(private http: HttpClient, private backendService: BackendService) {}
 
+  public getActuatorInfo(): Observable<any> {
+    return this.http.get<any>(this.backendService.createUrl(ActuatorPaths.INFO_ENDPOINT), {
+      headers: this.backendService.getHeaders(),
+    });
+  }
+
   public getActuatorHealth(): Observable<BuildInformationData> {
-    return this.http.get<any>(this.backendService.createUrl(ActuatorPaths.INFO_ENDPOINT));
+    return this.http.get<any>(this.backendService.createUrl(ActuatorPaths.HEALTH_ENDPOINT), {
+      headers: this.backendService.getHeaders(),
+    });
   }
 }

@@ -54,7 +54,8 @@ import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { faWrench } from '@fortawesome/free-solid-svg-icons';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
-
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import {
   faClone,
   faDatabase,
@@ -130,4 +131,6 @@ export const FONT_AWESOME_ICONS = [
   faFolderOpen,
   faExclamation,
   faExclamationTriangle,
+  faInfoCircle,
+  faInfo,
 ];

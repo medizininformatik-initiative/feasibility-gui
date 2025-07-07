@@ -11,11 +11,10 @@ export class ActuatorInformationService {
   constructor(private actuator: ActuatorApiService) {}
 
   public getActuatorInformation() {
-    return this.actuator.getActuatorHealth().pipe(
+    return this.actuator.getActuatorInfo().pipe(
       map((data) => {
         console.log(data);
-        console.log(BuildInformation.fromJson(data));
-        return BuildInformation.fromJson(data);
+        return data; // BuildInformation.fromJson(data);
       })
     );
   }

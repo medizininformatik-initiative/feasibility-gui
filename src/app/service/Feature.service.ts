@@ -141,4 +141,16 @@ export class FeatureService {
   public getClickEvent(): Observable<number> {
     return this.subject.asObservable();
   }
+
+  public getLegalCopyrightOwner(): string {
+    return this.appConfig.legal.copyrightOwner;
+  }
+
+  public getLegalCopyrightYear(): string {
+    return this.appConfig.legal.copyrightYear;
+  }
+
+  public getLegalVersion(): string {
+    return this.appConfig.legal.version;
+  }
 }

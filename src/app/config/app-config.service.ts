@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { map, tap, catchError } from 'rxjs/operators';
 import { of, throwError, Observable } from 'rxjs';
 import { IAppConfig } from './app-config.model';
-import { FeatureProviderService } from '../modules/feasibility-query/service/feature-provider.service';
 import { environment } from 'src/environments/environment';
+import { FeatureProviderService } from '../service/FeatureProvider.service';
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {

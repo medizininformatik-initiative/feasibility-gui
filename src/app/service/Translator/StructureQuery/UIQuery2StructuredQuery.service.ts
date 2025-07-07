@@ -9,6 +9,7 @@ import { CriterionProviderService } from '../../Provider/CriterionProvider.servi
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeatureService } from '../../Feature.service';
 import { Injectable } from '@angular/core';
+import { ObjectHelper } from 'src/app/service/ObjectHelper';
 import { ReferenceFilter as ReferenceFilterSQ } from '../../../model/StructuredQuery/Criterion/AttributeFilters/ReferenceFilter/ReferenceFilter';
 import { ReferenceFilter as ReferenceFilterFQ } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 import { StructuredQuery } from '../../../model/StructuredQuery/StructuredQuery';
@@ -17,7 +18,6 @@ import { StructuredQueryQuantityFilterTranslatorService } from './Builder/Struct
 import { TerminologyCode } from '../../../model/Terminology/TerminologyCode';
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service';
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service';
-import { ObjectHelper } from 'src/app/modules/feasibility-query/controller/ObjectHelper';
 
 @Injectable({
   providedIn: 'root',

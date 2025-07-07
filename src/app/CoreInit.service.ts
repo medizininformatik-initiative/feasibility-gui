@@ -2,7 +2,7 @@ import { AppConfigService } from './config/app-config.service';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
 import { DataSelectionMainProfileInitializerService } from './service/DataSelectionMainProfileInitializerService';
 import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile';
-import { FeatureProviderService } from './modules/feasibility-query/service/feature-provider.service';
+import { FeatureProviderService } from './service/FeatureProvider.service';
 import { FeatureService } from './service/Feature.service';
 import { HttpClient } from '@angular/common/http';
 import { IAppConfig } from './config/app-config.model';
@@ -11,6 +11,7 @@ import { OAuthInitService } from './core/auth/oauth-init.service';
 import { Observable, of, throwError } from 'rxjs';
 import { ProvidersInitService } from './service/Provider/ProvidersInit.service';
 import { TerminologySystemProvider } from './service/Provider/TerminologySystemProvider.service';
+import { ActuatorApiService } from './service/Backend/Api/ActuatorApi.service';
 
 interface PatientProfileInitResult {
   config: IAppConfig
@@ -27,7 +28,8 @@ export class CoreInitService {
     private featureService: FeatureService,
     private featureProviderService: FeatureProviderService,
     private providersInitService: ProvidersInitService,
-    private http: HttpClient
+    private http: HttpClient,
+    private actuatorApiService: ActuatorApiService
   ) {}
 
   public init(): Observable<IAppConfig> {
@@ -35,7 +37,7 @@ export class CoreInitService {
       concatMap((config) => this.initOAuth(config)),
       concatMap((config) => this.initFeatureService(config)),
       concatMap((config) => this.initFeatureProviderService(config)),
-      //concatMap((config) => this.checkBackendHealth(config)),
+      concatMap((config) => this.checkBackendHealth(config)),
       concatMap((config) => this.initTerminologySystems(config)),
       concatMap((config) =>
         this.initPatientProfile(config).pipe(
@@ -106,9 +108,7 @@ export class CoreInitService {
   }
 
   private checkBackendHealth(config: IAppConfig): Observable<IAppConfig> {
-    const healthUrl = config.uiBackendApi.baseUrl + '/actuator/info';
-    console.log('Checking backend health at:', healthUrl);
-    return this.http.get(healthUrl).pipe(
+    return this.actuatorApiService.getActuatorHealth().pipe(
       tap(() => console.log('Backend is up')),
       map(() => config),
       catchError((err) => {

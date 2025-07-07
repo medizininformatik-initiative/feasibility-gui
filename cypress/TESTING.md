@@ -4,6 +4,7 @@ This documentation provides an overview of the step definitions implemented for 
 
 ## Table of Contents
 
+- [Installation & Setup](#1-install-cypress)
 - [Important Notes](#important-notes)
 - [Feature Files & Gherkin](#feature-files--gherkin)
 - [Implemented Step Definitions](#implemented-step-definitions)
@@ -25,6 +26,38 @@ This documentation provides an overview of the step definitions implemented for 
 - [Utilities](#utilities)
 
 ---
+
+## Installation & Setup
+
+To run the Cypress BDD tests with Cucumber, you need to install Cypress and the official Cucumber preprocessor, along with their dependencies.
+
+### 1. Install Cypress
+
+```bash
+npm install --save-dev cypress
+```
+
+### 2. Install the Cucumber Preprocessor and Dependencies
+
+```bash
+npm install --save-dev @badeball/cypress-cucumber-preprocessor
+```
+
+###  3. Install npx
+```bash
+npm install -g npx
+```
+
+### 4. Open the Cypress Test Runner:
+bash
+```bash
+npx cypress open
+```
+
+### 5. Run Tests in Headless Mode:
+```bash
+npx cypress run
+```
 
 ## Important Notes
 
