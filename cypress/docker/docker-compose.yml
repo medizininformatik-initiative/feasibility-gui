@@ -5,7 +5,10 @@ services:
     ports:
       - "8091:8090"
     depends_on:
-      - dataportal-postgres
+      dataportal-postgres:
+        condition: service_started
+      elastic-search-init:
+        condition: service_completed_successfully
     environment:
       JAVA_OPTS: ""
       QUERYRESULT_PUBLIC_KEY: "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA1lWOfXzE/mUEPitNLxsDMtjERJGVhS8gP1WmuHPvjPxUOQyod4EbJcbJlkBqLqpaIs8Buy3gcbJvIPERdG1N1BSZ8NOKOtRubioKf30JwnLdZAae3vJAzRC3h42OPM3fohZCXMxbrju+KM0ZUIrLEXKEDMHQWfevCQCxeixvXVYpfXlkJIBGaWz4cDgEOiiwhU87AMzGZwjAIHvr4oTF/uHg6+C3Mdx0m8WLtygTiEixJegMb/txR+4gNVYrzpm5BwDUU7Qxy3nTUDYZLlTGeP9MBFWW+W87IHzgP+OFr3ZKMEkAPU0R1lqXFZCYcgZHGA5He2W701isnqkKIQT8ePOH43ZOXo3S34Pqw5oQ4Q2kPubp1wgZWw0VtEiZDtlwqUJ+r3CigU7NAFM5JnC/skiIBKetbWoNm1JPEfGOTrgjHD2uo82jSO8tV45LNH1EaR2+5UWSFZyDvTayLZsxsVlRFXJKgQJDI344R6lhGbLXbhqCuPzeQaHr1XGCKAtdAgMBAAE="
@@ -27,8 +30,8 @@ services:
       KEYCLOAK_ALLOWED_ROLE: "DataportalUser"
       KEYCLOAK_POWER_ROLE: "DataportalPowerUser"
       KEYCLOAK_ADMIN_ROLE: "DataportalAdmin"
-      KEYCLOAK_BASE_URL_ISSUER: "http://auth:8080/auth"
-      KEYCLOAK_BASE_URL_JWK: "http://auth:8080/auth"
+      KEYCLOAK_BASE_URL_ISSUER: "http://localhost:8080"
+      KEYCLOAK_BASE_URL_JWK: "http://auth:8080"
       KEYCLOAK_REALM: "dataportal"
       #---- Direct broker
       BROKER_CLIENT_DIRECT_ENABLED: "true"
@@ -56,10 +59,6 @@ services:
       LOG_LEVEL: "warn"
     restart: unless-stopped
     volumes:
-      - ./ontology/ui_profiles:/opt/dataportal-backend/ontology/ui_profiles
-      - ./ontology/terminology_systems.json:/opt/dataportal-backend/ontology/terminology_systems.json
-      - ./ontology/dse/profile_tree.json:/opt/dataportal-backend/ontology/dse/profile_tree.json
-      - ./ontology/migration/R__Load_latest_ui_profile.sql:/opt/dataportal-backend/ontology/migration/R__Load_latest_ui_profile.sql
       - ./secrets:/opt/dataportal-security
 
   dataportal-postgres:
@@ -90,6 +89,20 @@ services:
       cluster.name: elasticsearch
       xpack.security.enabled: "false"
 
+  elastic-search-init:
+    depends_on:
+      - dataportal-elastic
+    image: ghcr.io/medizininformatik-initiative/dataportal-es-init:1.2
+    container_name: integration-test_elastic-search-init
+    environment:
+      ES_HOST: dataportal-elastic
+      LOCAL_PATH: /tmp/mounted_onto.zip
+    volumes:
+      - type: bind
+        source: "./ontology/elastic.zip"
+        target: "/tmp/mounted_onto.zip"
+        read_only: true
+
   auth-db:
     image: postgres:16-alpine
     restart: unless-stopped
@@ -112,9 +125,7 @@ services:
       KC_DB_PASSWORD: "keycloakdbpw"
       KEYCLOAK_ADMIN: "keycloakadmin"
       KEYCLOAK_ADMIN_PASSWORD: "keycloak"
-      KC_HTTP_RELATIVE_PATH: "/auth"
-      KC_HOSTNAME: "http://localhost:8080/auth"
-      KC_HOSTNAME_ADMIN: "http://localhost:8080/keycloakadmin"
+      KC_HOSTNAME: "http://localhost:8080"
       KC_LOG_LEVEL: "info"
       KC_HTTP_ENABLED: "true"
       KC_HEALTH_ENABLED: "true"

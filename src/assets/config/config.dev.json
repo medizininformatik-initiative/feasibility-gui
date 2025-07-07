@@ -6,13 +6,13 @@
     "baseUrl": "/api"
   },
   "uiBackendApi": {
-    "baseUrl": "http://localhost:8090/api/v5"
+    "baseUrl": "http://localhost:8091/api/v5"
   },
   "auth": {
     "baseUrl": "http://localhost:8080",
-    "realm": "feasibility",
-    "clientId": "feasibility-webapp",
-    "roles": ["FeasibilityUser"]
+    "realm": "dataportal",
+    "clientId": "dataportal-webapp",
+    "roles": ["DataportalUser"]
   },
   "legal": {
     "version": "6.3.0",
