@@ -3,6 +3,8 @@ import { FeasibilityQueryPaths } from '../Paths/FeasibilityQueryPaths';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FeasibilityQueryQuotaData } from 'src/app/model/Interface/FeasibilityQueryQuota';
+import { QuotaLimitData } from 'src/app/model/Interface/QuotaLimitData';
 import { SavedFeasibilityQueryResults } from 'src/app/model/Result/SavedFeasibilityQueryResults';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
 
@@ -62,6 +64,13 @@ export class FeasibilityQueryApiService {
   public getSavedQuerySlotCount(): Observable<any> {
     const url = this.backendService.createUrl(FeasibilityQueryPaths.SAVED_QUERY_SLOTS_ENDPOINT);
     return this.http.get(url, {
+      headers: this.backendService.getHeaders(),
+    });
+  }
+
+  public getFeasibilityQueryQuota(): Observable<FeasibilityQueryQuotaData> {
+    const url = this.backendService.createUrl(FeasibilityQueryPaths.QUOTA_ENDPOINT);
+    return this.http.get<FeasibilityQueryQuotaData>(url, {
       headers: this.backendService.getHeaders(),
     });
   }
