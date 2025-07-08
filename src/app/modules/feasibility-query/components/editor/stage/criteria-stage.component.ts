@@ -44,7 +44,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  public getCriterionArray() {
+  getCriterionArray() {
     this.$criteriaArray = of([]);
     this.$stageUIDMap = this.stageProviderService.getStageUIDArray();
     this.$criterionUIDMap = this.criterionProviderService.getCriterionUIDMap();
@@ -59,7 +59,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
     );
   }
 
-  public subscribeToCriterionUIDMap(): void {
+  subscribeToCriterionUIDMap(): void {
     this.subscription = this.$criterionUIDMap.subscribe(() => {
       this.changeDetectorRef.detectChanges();
       this.getCriterionArray();

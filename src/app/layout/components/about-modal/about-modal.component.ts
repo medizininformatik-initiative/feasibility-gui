@@ -12,11 +12,6 @@ import { FeatureService } from 'src/app/service/Feature.service';
 export class AboutModalComponent implements OnInit {
   actuatorInfo$: Observable<any>;
   text: any;
-  legalVersion: string;
-  legalCopyrightOwner: string;
-  legalCopyrightYear: string;
-  backendBuildTime: string;
-
   constructor(
     private actuatorInformationService: ActuatorInformationService,
     private featureService: FeatureService
@@ -27,13 +22,10 @@ export class AboutModalComponent implements OnInit {
   }
 
   public getActuatorInfo() {
-    this.actuatorInformationService.getActuatorInformation().subscribe((info) => {
-      this.text = info;
-      console.log(this.text);
-      this.backendBuildTime = new Date(info.git?.build?.time).toLocaleString();
+    console.log('bal bla bla');
+    this.actuatorInformationService.getActuatorInformation().subscribe((test) => {
+      this.text = test;
+      console.log(test);
     });
-    this.legalVersion = this.featureService.getLegalVersion();
-    this.legalCopyrightOwner = this.featureService.getLegalCopyrightOwner();
-    this.legalCopyrightYear = this.featureService.getLegalCopyrightYear();
   }
 }
