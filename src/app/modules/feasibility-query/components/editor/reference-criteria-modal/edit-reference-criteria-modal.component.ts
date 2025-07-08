@@ -3,12 +3,12 @@ import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.deprecated.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 @Component({
   selector: 'num-edit-reference-criteria',
   templateUrl: './edit-reference-criteria-modal.component.html',

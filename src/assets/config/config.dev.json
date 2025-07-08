@@ -35,8 +35,8 @@
   },
   "fhirport": "8082",
   "legal": {
-    "copyrightOwner": "MII Team",
-    "copyrightYear": "2024",
+    "copyrightOwner": "FDPG+ Team",
+    "copyrightYear": "2025",
     "version": "6.3.0"
   },
   "mock": {
