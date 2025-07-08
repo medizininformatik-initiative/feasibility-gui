@@ -1,4 +1,9 @@
 <div fxLayout="column" class="container">
+  <div>
+    Sie haben soviel erreicht: ({{ (queryResultQuota$ | async)?.getHardLimit().getUsed() }}/{{
+      (queryResultQuota$ | async)?.getHardLimit().getTotal()
+    }})
+  </div>
   <div
     fxLayout="row"
     fxLayoutAlign="start center"

@@ -11,6 +11,7 @@ import {
   shareReplay,
   Subject,
   Subscription,
+  switchMap,
   takeLast,
 } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -22,6 +23,8 @@ import {
 } from '../result-detail-modal/result-detail-modal.component';
 import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { FeasibilityQueryQuotaService } from 'src/app/service/FeasibilityQuery/Quota/FeasibilityQueryQuota.service';
+import { FeasibilityQueryQuota } from 'src/app/model/FeasibilityQuery/Quota/FeasibilityQueryQuota';
 
 type QueryResponseType = QueryResult | ErrorQueryResult | null;
 
@@ -37,6 +40,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   patientCountArray: string[] = [];
 
   queryResultRateLimit$: Observable<QueryResultRateLimit>;
+  queryResultQuota$: Observable<FeasibilityQueryQuota>;
+
   loadedResult = false;
 
   activeFeasibilityQuerySusbscription: Subscription;
@@ -54,7 +59,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     private feasibilityQueryResultService: FeasibilityQueryResultService,
     private queryProviderService: FeasibilityQueryProviderService,
     private featureService: FeatureService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private feasibilityQuotaService: FeasibilityQueryQuotaService
   ) {
     this.queryResultRateLimit$ = this.feasibilityQueryResultService.getDetailedResultRateLimit();
     this.pollingTime = this.featureService.getPollingTime();
@@ -64,6 +70,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activeFeasibilityQuerySusbscription?.unsubscribe();
+    this.queryResultQuota$ = this.feasibilityQuotaService.getQuotaLimit();
     this.activeFeasibilityQuerySusbscription = this.queryProviderService
       .getActiveFeasibilityQuery()
       .pipe(filter((feasibilityQuery) => feasibilityQuery.getInclusionCriteria().length > 0))
