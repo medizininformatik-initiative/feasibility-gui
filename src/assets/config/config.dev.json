@@ -2,13 +2,14 @@
   "api": {
     "baseUrl": "/api"
   },
+  "uiBackendApi": {
+    "baseUrl": "http://localhost:8090/api/v5"
+  },
   "auth": {
     "baseUrl": "http://localhost:8080",
-    "clientId": "feasibility-webapp",
-    "realm": "feasibility",
-    "roles": [
-      "FeasibilityUser"
-    ]
+    "realm": "dataportal",
+    "clientId": "dataportal-webapp",
+    "roles": ["DataportalUser"]
   },
   "dataset": "codex",
   "env": {
@@ -54,8 +55,5 @@
   },
   "proposalPortalLink": "https://antrag.dev.forschen-fuer-gesundheit.de",
   "queryVersion": "v2",
-  "stylesheet": "FDPGTheme",
-  "uiBackendApi": {
-    "baseUrl": "http://localhost:8090/api/v5"
-  }
+  "stylesheet": "FDPGTheme"
 }

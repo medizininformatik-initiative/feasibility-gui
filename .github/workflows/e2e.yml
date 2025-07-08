@@ -28,7 +28,7 @@ jobs:
         run: |
           max_attempts=20
           attempt=0
-          until curl --fail http://localhost:8091/actuator/health; do
+          until curl --fail http://localhost:8090/api/v5/actuator/health; do
             attempt=$((attempt+1))
             if [ $attempt -ge $max_attempts ]; then
               echo "Backend did not become healthy after $max_attempts attempts"
@@ -55,11 +55,11 @@ jobs:
         run: docker ps -a
         
       - name: Wait for Keycloak
-        run: .github/scripts/wait-for-url.sh  http://localhost:9003/auth/health
+        run: .github/scripts/wait-for-url.sh  http://localhost:9003/health
 
 
       - name: Wait for localhost:8080
-        run: .github/scripts/wait-for-url.sh  http://localhost:8080/auth
+        run: .github/scripts/wait-for-url.sh  http://localhost:8080/realms/master/.well-known/openid-configuration
 
       - name: Create Test User in Keycloak
         run: .github/scripts/create-keycloak-user.sh
@@ -89,7 +89,7 @@ jobs:
           DEBUG: '@cypress/github-action'
         with:
           start: npm start
-          wait-on: 'http://127.0.0.1:8080/auth, http://localhost:4200'
+          wait-on: 'http://127.0.0.1:8080, http://localhost:4200'
           browser: chrome
 
       - name: Upload Cypress screenshots

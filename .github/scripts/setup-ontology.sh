@@ -21,6 +21,10 @@ mv "$BASE_DIR/profile_tree.json" "$DSE_DIR/" 2>/dev/null || true
 echo "Moving SQL files to ontology/migration/ folder..."
 mv "$BASE_DIR"/*.sql "$MIGRATION_DIR"/ 2>/dev/null || true
 
+echo "Downloading elastic.zip for tag $ONTOLOGY_GIT_TAG..."
+curl -fsSL -o "$BASE_DIR/elastic.zip" \
+  "https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download/${ONTOLOGY_GIT_TAG}/elastic.zip"
+
 echo "Cleaning up zip..."
 rm "$BASE_DIR/backend.zip"
 
