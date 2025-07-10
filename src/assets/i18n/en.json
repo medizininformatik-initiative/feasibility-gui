@@ -86,7 +86,7 @@
     },
     "FILTER": {
      "TAB_LABEL": {
-      "FILTER": "Token filter",
+      "TOKEN": "Token filter",
       "TIMERESTRICTION": "Time restriction"
      }
     },
@@ -97,7 +97,8 @@
     "TAB_LABEL": {
      "FIELD": "Fields",
      "FILTER": "Filter",
-     "REFERENCE": "References"
+     "REFERENCE": "References",
+     "TIMERESTRICTION": "Time restriction"
     }
    }
   },
