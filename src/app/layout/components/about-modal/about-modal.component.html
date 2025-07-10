@@ -1,29 +1,29 @@
-<div class="modal-box">
-  <div class="header">UI</div>
-  <div>
-    <span class="label">Version: </span><span>{{ legalVersion }}</span>
+<num-modal-window [displaySaveButtons]="false">
+  <div class="padding-1em">
+    <div class="header">UI</div>
+    <div>
+      <span class="label">Version: </span><span>{{ legalVersion }}</span>
+    </div>
+    <div>
+      <span class="label">Copyright: </span
+      ><span>{{ legalCopyrightOwner }} @{{ legalCopyrightYear }}</span>
+    </div>
+    <div class="header">Backend</div>
+    <div>
+      <span class="label">Version: </span><span>{{ text?.git?.build?.version }}</span>
+    </div>
+    <div>
+      <span class="label">Build time: </span><span>{{ backendBuildTime }}</span>
+    </div>
+    <div>
+      <span class="label">Branch: </span><span>{{ text?.git?.branch }}</span>
+    </div>
+    <div>
+      <span class="label">Commit: </span><span>{{ text?.git?.commit?.id?.abbrev }}</span>
+    </div>
+    <div class="header">Ontology</div>
+    <div>
+      <span class="label">Version: </span><span>{{ text?.terminology?.ontologyTag }}</span>
+    </div>
   </div>
-  <div>
-    <span class="label">Copyright: </span
-    ><span>{{ legalCopyrightOwner }} @{{ legalCopyrightYear }}</span>
-  </div>
-  <div class="spacer"></div>
-  <div class="header">Backend</div>
-  <div>
-    <span class="label">Version: </span><span>{{ text?.git?.build?.version }}</span>
-  </div>
-  <div>
-    <span class="label">Build time: </span><span>{{ backendBuildTime }}</span>
-  </div>
-  <div>
-    <span class="label">Branch: </span><span>{{ text?.git?.branch }}</span>
-  </div>
-  <div>
-    <span class="label">Commit: </span><span>{{ text?.git?.commit?.id?.abbrev }}</span>
-  </div>
-  <div class="spacer"></div>
-  <div class="header">Ontology</div>
-  <div>
-    <span class="label">Version: </span><span>{{ text?.terminology?.ontologyTag }}</span>
-  </div>
-</div>
+</num-modal-window>
