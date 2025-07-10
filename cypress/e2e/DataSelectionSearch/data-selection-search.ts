@@ -61,7 +61,7 @@ export class DataSelectionSearch {
   }
 
   public openReferenceModal() {
-    cy.get('num-button').contains(' Neues Merkmal hinzufügen ').should('be.visible').click()
+    cy.get('num-button').contains(' Add new reference ').should('be.visible').click()
   }
 
   public getReferenceModal() {

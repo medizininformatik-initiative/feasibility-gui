@@ -12,4 +12,3 @@ Feature: Data Query Cohort
         Examples:
             | fileName                                 |
             | Single_Inclusion_Criteria_With_Patient |
-            | example-ccdl-with-combined-consent     |

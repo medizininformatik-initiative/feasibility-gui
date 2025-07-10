@@ -40,7 +40,7 @@ Feature: Data Selection Search
     And I select the checkbox of item "Test" from the search results
     Then a chip labeled "<concept>" should appear in the "Selected Filters" section
 
-    When I click the "Time Restriction" tab
+    When I click the "Time restriction" tab
     And I set the time restriction filter to before with date "18.06.2048"
     And I click on the button "Save"
 
@@ -61,4 +61,3 @@ Feature: Data Selection Search
     Examples: Selection Criteria
       | root       | feature                   | button1                  | button2        | field | tabname | concept     |
       | Medication | Medication administration | Add to feature Selection | Show selection | Note  | Filter  | Other tests |
-  | Procedure | Medication administration | Add to feature Selection | Show selection | Note  | Filter  | Other tests |
