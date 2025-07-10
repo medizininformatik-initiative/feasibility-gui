@@ -168,6 +168,7 @@
    "NO_SELECTED_CRITERIA": "No criteria selected",
    "QUANTITY": {
     "AND": "and",
+    "BETWEEN": "between",
     "EQUAL": "equal",
     "GREATER_THAN": "greater than",
     "LESS_THAN": "less than",
