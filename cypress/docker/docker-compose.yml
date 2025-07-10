@@ -1,7 +1,7 @@
 services:
   dataportal-backend:
     container_name: dataportal-backend
-    image:  ghcr.io/medizininformatik-initiative/feasibility-backend:pr-548
+    image:  ghcr.io/medizininformatik-initiative/feasibility-backend:latest
     ports:
       - "8090:8090"
     depends_on:
@@ -34,7 +34,8 @@ services:
       KEYCLOAK_BASE_URL_JWK: "http://auth:8080"
       KEYCLOAK_REALM: "dataportal"
       #---- Direct broker
-      BROKER_CLIENT_DIRECT_ENABLED: "true"
+      BROKER_CLIENT_MOCK_ENABLED: "true"
+      BROKER_CLIENT_DIRECT_ENABLED: "false"
       BROKER_CLIENT_DIRECT_USE_CQL: "false"
       BROKER_CLIENT_OBFUSCATE_RESULT_COUNT: "false"
       FLARE_WEBSERVICE_BASE_URL: "http://flare:8080"
