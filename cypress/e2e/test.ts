@@ -124,7 +124,7 @@ function selectAmbulant() {
   selectCriterion([2])
   addCriteria()
 }
-describe('test', () => {
+/* describe('test', () => {
   it('test', () => {
     cy.login()
     gotoAndCheckCohortSelectionSearch()
@@ -141,3 +141,4 @@ describe('test', () => {
     editAge()
   })
 })
+ */

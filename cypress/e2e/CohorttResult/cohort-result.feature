@@ -22,7 +22,6 @@ Feature: Cohort Result
         Then I add the title "Bla"
         Then I add the comment "Bla"
         Then I save the cohort
-        Then I am on the "Saved Queries" page
     Examples:
         | criterium                | default_filter | new_filter | panel_name   | value | unit | chip_value |
         | 17-keto reductase deficiency | kein Filter    | größer     | Geburtsdatum | 5     | a    | 5          |

@@ -4,7 +4,6 @@ Feature: Cohort editing
     And I am on the "Feasibility Search" page
     And I set the language to English
   Scenario Outline: I edit <criterium> criterium
-    When I select the filter 0 and option 2
     Given I add the criterium "<criterium>" to the editor
     When I open the menu
     When I click on the menu item "Apply filter"

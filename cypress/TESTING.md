@@ -35,8 +35,8 @@ To run the Cypress BDD tests with Cucumber, you need to install Cypress and the 
 
 ```bash
 npm install --save-dev cypress
-```
 
+```
 ### 2. Install the Cucumber Preprocessor and Dependencies
 
 ```bash
@@ -47,14 +47,19 @@ npm install --save-dev @badeball/cypress-cucumber-preprocessor
 ```bash
 npm install -g npx
 ```
+###  4. Install npx cypress
+```bash
+npx cypress install np
+```
 
-### 4. Open the Cypress Test Runner:
+
+### 5. Open the Cypress Test Runner:
 bash
 ```bash
 npx cypress open
 ```
 
-### 5. Run Tests in Headless Mode:
+### 6. Run Tests in Headless Mode:
 ```bash
 npx cypress run
 ```
