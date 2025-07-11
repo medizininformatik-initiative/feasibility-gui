@@ -94,13 +94,15 @@ services:
     depends_on:
       - dataportal-elastic
     image: ghcr.io/medizininformatik-initiative/dataportal-es-init:1.2
-    container_name: elastic-search-init
+    container_name: integration-test_elastic-search-init
     environment:
       ES_HOST: dataportal-elastic
       LOCAL_PATH: /tmp/mounted_onto.zip
     volumes:
-      - ./ontology/elastic.zip:/tmp/mounted_onto.zip:ro
-
+      - type: bind
+        source: "./ontology/elastic.zip"
+        target: "/tmp/mounted_onto.zip"
+        read_only: true
 
   auth-db:
     image: postgres:16-alpine
