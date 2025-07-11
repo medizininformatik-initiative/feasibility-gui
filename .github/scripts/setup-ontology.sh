@@ -2,7 +2,7 @@
 
 ONTOLOGY_GIT_TAG=${ONTOLOGY_GIT_TAG:-v3.8.1}
 
-BASE_DIR="cypress/docker/ontology"
+BASE_DIR="../../cypress/docker/ontology"
 DSE_DIR="$BASE_DIR/dse"
 MIGRATION_DIR="$BASE_DIR/migration"
 
