@@ -181,7 +181,11 @@
         "UNIT": "Einheit",
         "VALUE": "Wert"
       },
-      "REQUIRED_FILTER": "Bitte einen Filter setzen"
+      "REQUIRED_FILTER": "Bitte einen Filter setzen",
+      "SWITCH": {
+        "LABEL_AND": "UND",
+        "LABEL_OR": "ODER"
+      }
     },
     "HINT": {
       "MAXIMUM_EXCEEDED": "Wert darf höchstens {{ max }} sein",

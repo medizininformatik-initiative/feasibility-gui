@@ -181,7 +181,11 @@
     "UNIT": "Unit",
     "VALUE": "Value"
    },
-   "REQUIRED_FILTER": "Please set a filter"
+   "REQUIRED_FILTER": "Please set a filter",
+    "SWITCH": {
+      "LABEL_AND": "AND",
+      "LABEL_OR": "OR"
+    }
   },
   "HINT": {
    "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}",
