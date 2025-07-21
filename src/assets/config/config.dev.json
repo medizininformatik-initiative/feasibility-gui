@@ -7,9 +7,9 @@
   },
   "auth": {
     "baseUrl": "http://localhost:8080",
-    "realm": "feasibility",
-    "clientId": "feasibility-webapp",
-    "roles": ["FeasibilityUser"]
+    "realm": "dataportal",
+    "clientId": "dataportal-webapp",
+    "roles": ["DataportalUser"]
   },
   "dataset": "codex",
   "env": {
