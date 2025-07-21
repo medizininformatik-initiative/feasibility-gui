@@ -332,6 +332,7 @@
    "COHORT_WARNING": "Cohort selection is required",
    "COMMENT": "Comment",
    "HEADER": "Save query",
+   "LABEL": "Title",
    "SAVE": "Save",
    "TITLE": "Title"
   },
