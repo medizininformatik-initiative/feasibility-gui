@@ -181,7 +181,7 @@
     "UNIT": "Unit",
     "VALUE": "Value"
    },
-   "REQUIRED_FILTERS": "Please set a filter"
+   "REQUIRED_FILTER": "Please set a filter"
   },
   "HINT": {
    "MAXIMUM_EXCEEDED": "Value must be at most {{ max }}",
@@ -208,7 +208,8 @@
    "PATIENT_NUMBER": "Number of patients",
    "PATIENT_NUMBER_TOOLTIP": "Feasibility queries return approximate, anonymized results with deliberate deviations from exact numbers. Use these results only for initial project feasibility assessment. They are not suitable for scientific work. Publishing these numbers is generally prohibited. The actual patient count can only be determined via a formal data usage request reviewed by responsible Use & Access Committees.",
    "SAVE_DIALOG": {
-    "HEADER_DESCRIPTION": "The number of patients meeting your cohort criteria is determined across locations. This result is approximate."
+     "HEADER": "Number of patients",
+     "HEADER_DESCRIPTION": "The number of patients meeting your cohort criteria is determined across locations. This result is approximate."
    },
    "SITE": "Location",
    "TOTAL": "Total"
@@ -330,6 +331,9 @@
    "SAVE": "Save",
    "TITLE": "Title"
   },
+   "SEARCH": {
+     "MIN_LENGTH": "Required length of 3 letters"
+   },
   "TABLE": {
    "AVAILABILITY": "Availability",
    "CONTEXT": "Context",

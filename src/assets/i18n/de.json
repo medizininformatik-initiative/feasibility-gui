@@ -125,7 +125,6 @@
         "SAVE_DATAQUERY": "Datendefinition speichern",
         "SEND_QUERY": "Machbarkeitsabfrage"
       },
-      "ADD": "Hinzufügen",
       "CONSENT": {
         "CENTRAL": "Zentral",
         "DISTRIBUTED": "Verteilt",
@@ -163,6 +162,10 @@
       "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen Sie Ihre Kohortenselektion zusammen. Die Kohortenselektion kann verwendet werden, um direkt eine standortübergreifende Machbarkeitsabfrage zu stellen.",
       "HEADER_TITLE": "Ausgewählte Kriterien",
       "INCLUSION": "Einschlusskriterien",
+      "MODAL": {
+        "ADD": "Hinzufügen",
+        "REMOVE": "Entfernen"
+      },
       "NO_SELECTED_CRITERIA": "Keine Kriterien in der Auswahl",
       "QUANTITY": {
         "AND": "und",
@@ -178,7 +181,6 @@
         "UNIT": "Einheit",
         "VALUE": "Wert"
       },
-      "REMOVE": "Entfernen",
       "REQUIRED_FILTER": "Bitte einen Filter setzen"
     },
     "HINT": {
@@ -328,6 +330,9 @@
       "HEADER": "Abfrage speichern",
       "SAVE": "Speichern",
       "TITLE": "Titel"
+    },
+    "SEARCH": {
+      "MIN_LENGTH": "Bitte mindestens drei Buchstaben eingeben"
     },
     "TABLE": {
       "AVAILABILITY": "Verfügbarkeit",
