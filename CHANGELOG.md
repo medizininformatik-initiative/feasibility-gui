@@ -1,5 +1,12 @@
 # Changelog
 
+## v6.3.2 (2025-07-21)
+
+### HotFix
+* add missing lang entry
+* fix auth config
+
+
 ## v6.3.1 (2025-07-21)
 
 ### Feature
