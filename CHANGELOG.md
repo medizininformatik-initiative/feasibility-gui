@@ -1,5 +1,18 @@
 # Changelog
 
+## v6.3.1 (2025-07-21)
+
+### Feature
+* **About Page** with system version information (UI, Backend, Ontology) [#403](https://github.com/medizininformatik-initiative/feasibility-gui/issues/403)
+
+### Changed
+* Updated **language files** in `src/assets/i18n` [#393](https://github.com/medizininformatik-initiative/feasibility-gui/issues/393), [#399](https://github.com/medizininformatik-initiative/feasibility-gui/issues/399), [#400](https://github.com/medizininformatik-initiative/feasibility-gui/issues/400)
+
+### Fixed
+* Ensured **all CI tests** run successfully [#405](https://github.com/medizininformatik-initiative/feasibility-gui/issues/405)
+* Fix snackbar message when cancel downloading [#398](https://github.com/medizininformatik-initiative/feasibility-gui/issues/398)
+
+
 ## v6.3.0 (2025-07-01)
 
 ### Feature
