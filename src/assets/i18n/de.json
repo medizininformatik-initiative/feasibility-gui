@@ -60,6 +60,7 @@
       },
       "HEADER": "Ausgewählte Merkmale",
       "HEADER_DESCRIPTION": "Hier können Sie definieren, welche Merkmale von Patientinnen und Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll / Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z. B. auf bestimmte Diagnosecodes) hinzu.",
+      "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Die verfügbaren Daten sind durch Module des Kerndatensatzes (KDS) deutschlandweit standardisiert. Sie können Datenpunkte zusätzlich Filtern, wenn z.b. nur bestimmte Laborwerte von Interesse sind und Sie haben die Möglichkeit anzugeben, welche Datenpunkte zwingend erforderlich sind für Ihre Forschungsfrage.",
       "SECTION": "Ausgewählte Kriterien"
     },
     "SEARCH": {
@@ -180,6 +181,10 @@
         "OPERATOR": "Operator",
         "UNIT": "Einheit",
         "VALUE": "Wert"
+      },
+      "REFERENCE": {
+        "ADD": "Hinzufügen",
+        "SELECTION": "Ausgewählte Referenzen"
       },
       "REQUIRED_FILTER": "Bitte einen Filter setzen",
       "SWITCH": {

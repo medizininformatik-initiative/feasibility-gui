@@ -24,12 +24,12 @@
 <div class="container pr4">
   <div style="margin-top: 5px">
     <num-header-description>
-      {{ 'DATASELECTION.HEADER_INFO' | translate }}
+      {{ 'DATASELECTION.EDITOR.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
   <div *ngIf="(isDataSelectionExistent$ | async) === false" class="empty-data-selection-box">
     <num-placeholder-box>
-      {{ 'DATAQUERY.DATASELECTION.EMPTY' | translate }}
+      {{ 'DATAQUERY.DATASELECTION.EDITOR.EMPTY' | translate }}
     </num-placeholder-box>
   </div>
   <num-display-profiles [isEditable]="false"></num-display-profiles>

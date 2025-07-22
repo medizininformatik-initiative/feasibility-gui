@@ -19,10 +19,10 @@
     color="white"
     (click)="setSelectedReferenceCriteria()"
   >
-    {{ 'FEASIBILITY.EDITOR.BUTTON.ADD' | translate }}
+    {{ 'FEASIBILITY.EDITOR.REFERENCE.ADD' | translate }}
   </button>
   <div *ngIf="arrayOfSelectedReferences.length > 0" class="filter-selection">
-    <div class="filter-title">Filter selection</div>
+    <div class="filter-title">{{ 'FEASIBILITY.EDITOR.REFERENCE.SELECTION' | translate }}</div>
     <div class="selectedFilterBox">
       <div
         *ngFor="let selectedReferences of arrayOfSelectedReferences; let index = index"
