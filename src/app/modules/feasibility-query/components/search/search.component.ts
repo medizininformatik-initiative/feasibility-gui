@@ -2,7 +2,6 @@ import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { MatDrawer } from '@angular/material/sidenav';
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SearchFilterService } from 'src/app/service/Search/Filter/SearchFilter.service';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SearchService } from 'src/app/service/Search/Search.service';
@@ -26,8 +25,8 @@ import {
   ViewContainerRef,
   TemplateRef,
 } from '@angular/core';
-import { DataSelectionMainProfileInitializerService } from 'src/app/service/DataSelectionMainProfileInitializerService';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
+import { ActivatedRoute } from '@angular/router';
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -42,14 +41,15 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   searchtext = '';
   adaptedData: TableData;
   private subscription: Subscription;
-  private isInitialized = false;
   isOpen = false;
+
+  private isInitialized = false;
 
   elasticSearchEnabled = false;
 
   selectedDetails$: Observable<SearchTermDetails>;
 
-  searchFilters$: Observable<SearchFilter[]>;
+  searchFilters: SearchFilter[] = [];
 
   searchText$: Observable<string>;
 
@@ -69,8 +69,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     private searchTermDetailsService: SearchTermDetailsService,
     private searchResultProviderService: SearchResultProvider,
     private searchTermDetailsProviderService: SearchTermDetailsProviderService,
-    private dataSelectionMainProfileInitializerService: DataSelectionMainProfileInitializerService,
-    private dataSelectionProviderService: DataSelectionProviderService
+    private activatedRoute: ActivatedRoute
   ) {
     this.subscription = this.searchResultProviderService
       .getCriteriaSearchResults()
@@ -101,6 +100,8 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   ngOnInit() {
+    const t = this.activatedRoute.snapshot.data.preLoadCriteriaData;
+    console.log('Preloaded data:', t);
     this.selectedDetails$ = this.searchTermDetailsProviderService.getSearchTermDetails$();
     this.handleSelectedItemsSubscription();
     this.getElasticSearchFilter();
@@ -184,16 +185,16 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   public getElasticSearchFilter(): void {
-    this.searchFilters$ = this.filterService.fetchFilters().pipe(
-      map((searchFilters: SearchTermFilter[]) =>
-        searchFilters.map((searchFilter) => {
-          searchFilter.setSelectedValues(
-            this.searchFilterProvider.getSelectedValuesOfType(searchFilter.getName())
-          );
-          return CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter);
-        })
-      )
-    );
+    const searchFilters: Array<SearchTermFilter> =
+      this.activatedRoute.snapshot.data.preLoadCriteriaFilter;
+    if (searchFilters && searchFilters.length > 0) {
+      this.searchFilters = searchFilters.map((searchFilter: SearchTermFilter) => {
+        searchFilter.setSelectedValues(
+          this.searchFilterProvider.getSelectedValuesOfType(searchFilter.getName())
+        );
+        return CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter);
+      });
+    }
   }
 
   public setElasticSearchFilter(filter: any) {

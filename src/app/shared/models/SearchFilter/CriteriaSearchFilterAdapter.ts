@@ -6,6 +6,7 @@ import { TerminologySystemDictionary } from 'src/app/model/Utilities/Terminology
 
 export class CriteriaSearchFilterAdapter {
   public static convertToFilterValues(filter: SearchTermFilter): SearchFilter {
+    console.log('Converting SearchTermFilter to SearchFilter:', filter);
     const searchFilterValues: SearchFilterValues[] = filter
       .getValues()
       .map((filterValue: SearchTermFilterValues) =>
