@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class CriteriaSearchDataResolverService {
   constructor(private searchService: SearchService) {}
 
-  resolve(): Observable<SearchTermResultList> {
+  public resolve(): Observable<SearchTermResultList> {
     return this.searchService.searchCriteria('');
   }
 }

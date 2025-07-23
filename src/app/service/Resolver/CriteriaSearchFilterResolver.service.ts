@@ -9,7 +9,7 @@ import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilte
 export class CriteriaSearchFilterResolverService {
   constructor(private searchFilterService: SearchFilterService) {}
 
-  resolve(): Observable<Array<SearchTermFilter>> {
+  public resolve(): Observable<Array<SearchTermFilter>> {
     return this.searchFilterService.fetchFilters();
   }
 }

@@ -22,6 +22,7 @@ import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'num-search-data-selection',
@@ -55,7 +56,8 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
     private dataSelectionProviderService: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
     private selectedDataSelectionProfileService: SelectedDataSelectionProfileService,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private activeRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -66,13 +68,9 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
       this.selectedDataSelectionProfileService.getSelectedProfiles();
 
     this.handleSelectedItemsSubscription();
-    this.dataSelectionProfileTreeSubscription = this.dataSelectionProfileTreeService
-      .fetchProfileTree()
-      .subscribe((tree) => {
-        const treeNodes = tree.getTreeNode();
-        const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
-        this.trees = rootNode;
-      });
+    const tree = this.activeRoute.snapshot.data.preLoadDataSelectionData;
+    const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
+    this.trees = rootNode;
   }
 
   /**
