@@ -113,7 +113,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.handleSelectedItemsSubscription();
     this.getElasticSearchFilter();
     this.searchText$ = this.searchService.getActiveCriteriaSearchTerm();
-    this.criteriaResultProvider.clearResults();
   }
 
   ngAfterViewInit() {
