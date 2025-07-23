@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchDataSelectionComponent } from './components/search/search.component';
 import { PathSegments } from 'src/app/app-paths';
+import { DataSelectionProfileResolverService } from 'src/app/service/Resolver/DataSelectionProfileResolver.servcie';
 
 const routes: Routes = [
   {
@@ -14,6 +15,9 @@ const routes: Routes = [
   {
     path: PathSegments.search,
     component: SearchDataSelectionComponent,
+    resolve: {
+      preLoadDataSelectionData: DataSelectionProfileResolverService,
+    },
     data: { animation: 'Data_Selection_Search', title: 'TAB_TITLE.DATA_SELECTION.SEARCH' },
   },
   {
