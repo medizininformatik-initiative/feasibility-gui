@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { AbstractSearchEngine } from './Abstract/AbstractSearchEngine';
+import { SearchUrlBuilder } from './UrlBuilder/SearchUrlBuilder';
 
 @Injectable({
   providedIn: 'root',
@@ -39,8 +41,8 @@ export class SearchService {
     this.activeSearchTermSubject.next(newSearchTerm);
   }
 
-  public searchCriteria(searchText: string): Observable<SearchTermResultList> {
-    return this.criteriaSearchService.search(searchText);
+  public searchCriteria(searchText: string, page: number = 0): Observable<SearchTermResultList> {
+    return this.criteriaSearchService.search(searchText, page);
   }
 
   public searchCriteriaSets(

@@ -6,6 +6,7 @@ import { FilterProvider } from '../Filter/SearchFilterProvider.service';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
+import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder';
 
 @Injectable({
   providedIn: 'root',

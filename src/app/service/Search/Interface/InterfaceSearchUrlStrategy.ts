@@ -1,3 +1,3 @@
 export interface SearchUrlStrategy {
-  getSearchUrl()
+  getSearchUrl(page?: number, pageSize?: number): string
 }

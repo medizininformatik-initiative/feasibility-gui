@@ -18,6 +18,9 @@ export abstract class AbstractSearchResultProviderService<
    * @param result The search result to be set.
    */
   public setSearchResults(result: T): void {
+    const currentResults = this.searchResultSubject.value?.getResults() ?? [];
+    const newResult = [...currentResults, ...result.getResults()];
+    result.setResults(newResult);
     this.searchResultSubject.next(result);
   }
 

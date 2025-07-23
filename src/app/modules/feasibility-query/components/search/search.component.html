@@ -44,7 +44,15 @@
         </num-list-item-details>
       </div>
     </mat-drawer>
-    <mat-drawer-content *ngIf="listItems?.length > 0" class="content-height-100">
+    <mat-drawer-content
+      *ngIf="listItems?.length > 0"
+      class="content-height-100"
+      infiniteScroll
+      [infiniteScrollDistance]="0.5"
+      [infiniteScrollThrottle]="50"
+      [scrollWindow]="false"
+      (scrolled)="loadMoreCriteriaSearchResults()"
+    >
       <num-table
         (selectedRow)="setSelectedRowItem($event)"
         (rowClicked)="setClickedRow($event)"

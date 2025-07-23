@@ -23,14 +23,16 @@ export class CriteriaSearchUrlStrategy implements SearchUrlStrategy {
     this.terminologyFilter = terminologyFilter;
   }
 
-  public getSearchUrl(): string {
+  public getSearchUrl(page: number, pageSize: number): string {
+    console.log(page, pageSize);
     const url = new SearchUrlBuilder(TerminologyPaths.SEARCH_ENTRY_ENDPOINT)
       .withSearchTerm(this.searchText)
       .withAvailability(this.availabilityFilter)
       .withContext(this.contextFilter)
       .withKds(this.kdsFilter)
       .withTerminology(this.terminologyFilter)
-      .withPageSize()
+      .withPage(pageSize)
+      .withPageSize(page)
       .buildUrl();
     return url;
   }
