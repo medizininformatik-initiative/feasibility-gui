@@ -45,7 +45,7 @@ export class FilterChipTimeRestrictionAdapter {
     const atText = this.createDisplayDataInstance(
       `${this.formatDate(timeRestriction.getBeforeDate())}`
     );
-    const builder = new FilterChipBuilder('FEASIBILITY.STAGE.EDIT.TIMERESTRICTION.AT');
+    const builder = new FilterChipBuilder('SHARED_FILTER.TIMERESTRICTION.AT');
     builder.addData(uuidv4(), atText);
     return builder.buildFilterChip();
   }
