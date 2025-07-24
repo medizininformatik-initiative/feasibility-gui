@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { Injectable } from '@angular/core';
 import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
@@ -38,6 +38,17 @@ export class FilterProvider {
   public getSelectedValuesOfType(name: ElasticSearchFilterTypes): string[] {
     const filterMap = this.filtersSubject.value;
     return filterMap.get(name) || [];
+  }
+
+  /**
+   * Emits `true` if any filters have selected values, otherwise `false`.
+   */
+  public filtersNotSet(): Observable<boolean> {
+    return this.filtersSubject
+      .asObservable()
+      .pipe(
+        map((filterMap) => Array.from(filterMap.values()).every((values) => values.length === 0))
+      );
   }
 
   public resetSelectedValuesOfType(): void {

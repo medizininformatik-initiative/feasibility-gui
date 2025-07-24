@@ -13,7 +13,7 @@ import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTer
 import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { map, Observable, Subscription, take } from 'rxjs';
+import { map, Observable, of, Subscription, take } from 'rxjs';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -61,6 +61,8 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   searchWithFilterSubscription: Subscription;
 
   infiniteScrollEnabled = false;
+
+  resetFilterEnabled$: Observable<boolean> = of(true);
 
   page = 0;
   pageSize = 50;
@@ -113,6 +115,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.handleSelectedItemsSubscription();
     this.getElasticSearchFilter();
     this.searchText$ = this.searchService.getActiveCriteriaSearchTerm();
+    this.resetFilterEnabled$ = this.searchFilterProvider.filtersNotSet();
   }
 
   ngAfterViewInit() {
@@ -215,6 +218,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
       this.searchFilterProvider.resetSelectedValuesOfType();
       this.searchService.searchCriteria(searchText).subscribe({
         next: () => {
+          this.getElasticSearchFilter();
           this.rerender();
         },
         error: (err) => console.error('Search failed', err),

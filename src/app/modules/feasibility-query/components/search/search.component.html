@@ -28,7 +28,7 @@
         (selectedFilterChanged)="setElasticSearchFilter($event)"
       ></num-search-filter>
     </ng-template>
-    <num-button type="blue" (click)="resetFilter()">
+    <num-button [isDisabled]="resetFilterEnabled$ | async" type="blue" (click)="resetFilter()">
       {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
     </num-button>
   </div>
