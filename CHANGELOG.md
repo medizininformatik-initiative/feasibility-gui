@@ -1,5 +1,14 @@
 # Changelog
 
+## v6.3.3 (2025-07-24)
+
+### Feature
+* Preloaded criteria filter, criteria search results and data selection profiles before page load using Angular route resolver [#415](https://github.com/medizininformatik-initiative/feasibility-gui/issues/415)
+
+### Fixed
+* Added missing language entries [#412](https://github.com/medizininformatik-initiative/feasibility-gui/issues/412)
+
+
 ## v6.3.2 (2025-07-21)
 
 ### HotFix

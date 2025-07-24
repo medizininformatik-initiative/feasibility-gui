@@ -37,7 +37,7 @@
   "legal": {
     "copyrightOwner": "FDPG+ Team",
     "copyrightYear": "2025",
-    "version": "6.3.2"
+    "version": "6.3.3"
   },
   "mock": {
     "loadnsave": false,
