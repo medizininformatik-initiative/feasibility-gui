@@ -25,9 +25,12 @@
   background-color: #fff;
   width: 1000px;
   min-width: 100% !important;
-  width: 55%;
+  width: fit-content;
   min-width: 20% !important;
   position: fixed;
-  /* right: 27%; */
-  left: 19%;
+  height: 100% !important;
+}
+
+::ng-deep .cdk-overlay-container .cdk-overlay-pane .mat-mdc-select-panel {
+  max-height: max-content;
 }
