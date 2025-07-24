@@ -36,10 +36,6 @@
   padding-left: 2rem;
 }
 
-.padding-top-50 {
-  padding-top: 50px;
-}
-
 .cancel-button {
   width: auto;
   align-self: end;
@@ -120,10 +116,6 @@
   color: red;
 }
 
-::ng-deep .mat-drawer-container {
-  height: 78%;
-}
-
 .no-results-box {
   height: 50%;
   width: 100%;
@@ -135,4 +127,8 @@
   min-width: 40px;
   color: #c2c2c2;
   font-size: medium;
+}
+
+.width-1000 {
+  width: 100%;
 }
