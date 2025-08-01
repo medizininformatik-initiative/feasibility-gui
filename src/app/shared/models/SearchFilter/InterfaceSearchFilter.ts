@@ -1,5 +1,7 @@
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
+
 export interface SearchFilter {
-  filterType: string
+  filterType: ElasticSearchFilterTypes
   selectedValues: string[]
   data: SearchFilterValues[]
 }

@@ -1,3 +1,4 @@
+import { ElasticSearchFilterPaths } from 'src/app/service/Backend/Paths/ElasticSearchFilterPaths';
 import { SearchUrlStrategy } from '../../../Interface/InterfaceSearchUrlStrategy';
 import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder';
 import { TerminologyPaths } from 'src/app/service/Backend/Paths/TerminologyPaths';
@@ -11,10 +12,10 @@ export class CriteriaSearchUrlStrategy implements SearchUrlStrategy {
 
   constructor(
     searchText: string,
-    availabilityFilter: string,
-    contextFilter: string,
-    kdsFilter: string,
-    terminologyFilter: string
+    availabilityFilter: string = ElasticSearchFilterPaths.AVAILABILITY,
+    contextFilter: string = ElasticSearchFilterPaths.CONTEXTS,
+    kdsFilter: string = ElasticSearchFilterPaths.KDSMODULES,
+    terminologyFilter: string = ElasticSearchFilterPaths.TERMINOLOGIES
   ) {
     this.searchText = searchText;
     this.availabilityFilter = availabilityFilter;
@@ -24,7 +25,6 @@ export class CriteriaSearchUrlStrategy implements SearchUrlStrategy {
   }
 
   public getSearchUrl(page: number, pageSize: number): string {
-    console.log(page, pageSize);
     const url = new SearchUrlBuilder(TerminologyPaths.SEARCH_ENTRY_ENDPOINT)
       .withSearchTerm(this.searchText)
       .withAvailability(this.availabilityFilter)

@@ -2,14 +2,13 @@
   "api": {
     "baseUrl": "/api"
   },
-  "uiBackendApi": {
-    "baseUrl": "http://localhost:8090/api/v5"
-  },
   "auth": {
     "baseUrl": "http://localhost:8080",
-    "realm": "dataportal",
     "clientId": "dataportal-webapp",
-    "roles": ["DataportalUser"]
+    "realm": "dataportal",
+    "roles": [
+      "DataportalUser"
+    ]
   },
   "dataset": "codex",
   "env": {
@@ -50,10 +49,13 @@
     "lowerboundarylocationresult": 1,
     "lowerboundarypatientresult": 20,
     "pollingintervallinseconds": 10,
-    "pollingtimeinseconds": 10,
+    "pollingtimeinseconds": 60,
     "sendsqcontexttobackend": true
   },
   "proposalPortalLink": "https://antrag.dev.forschen-fuer-gesundheit.de",
   "queryVersion": "v2",
-  "stylesheet": "FDPGTheme"
+  "stylesheet": "FDPGTheme",
+  "uiBackendApi": {
+    "baseUrl": "http://localhost:8090/api/v5"
+  }
 }

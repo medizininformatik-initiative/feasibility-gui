@@ -1,14 +1,13 @@
-import { AbstractSearchEngine } from '../../Abstract/AbstractSearchEngine';
 import { CriteriaSetResultMapperStrategy } from './Mapper/CriteriaSetResultMapperStrategy';
-import { ElasticSearchFilterPaths } from 'src/app/service/Backend/Paths/ElasticSearchFilterPaths';
+import { CriteriaSetSearchUrlStrategy } from './Url/CriteriaSetSearchUrlStrategy';
+import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
 import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
+import { SearchResultSetterService } from '../../Result/SearchResultSetter.service';
 import { SearchUrlBuilder } from '../../UrlBuilder/SearchUrlBuilder';
 import { TerminologyPaths } from 'src/app/service/Backend/Paths/TerminologyPaths';
-import { Injectable } from '@angular/core';
-import { SearchResultSetterService } from '../../Result/SearchResultSetter.service';
-import { CriteriaSetSearchUrlStrategy } from './Url/CriteriaSetSearchUrlStrategy';
+import { SearchEngine } from '../../SearchEngine';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +17,7 @@ export class CriteriaSetSearchEngineService {
 
   constructor(
     private searchResultSetter: SearchResultSetterService,
-    private searchResultProcessorService: AbstractSearchEngine<
+    private searchResultProcessorService: SearchEngine<
       ReferenceCriteriaListEntry,
       ReferenceCriteriaResultList
     >

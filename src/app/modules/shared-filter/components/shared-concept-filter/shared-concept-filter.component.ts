@@ -4,7 +4,6 @@ import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilte
 import { Observable, Subscription } from 'rxjs';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 @Component({
   selector: 'num-shared-concept-filter',

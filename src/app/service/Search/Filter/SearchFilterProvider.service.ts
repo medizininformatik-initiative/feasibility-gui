@@ -7,26 +7,24 @@ import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilte
   providedIn: 'root',
 })
 export class FilterProvider {
-  private filtersSubject = new BehaviorSubject<Map<ElasticSearchFilterTypes, string[]>>(new Map());
-  private filterMap: Map<ElasticSearchFilterTypes, string[]> = new Map();
+  private searchTermFiltersSubject = new BehaviorSubject<SearchTermFilter[]>([]);
 
   /**
-   * Sets the current list of filters in the BehaviorSubject.
+   * Gets the current list of SearchTermFilter objects as an Observable.
    *
-   * @param filter The filter to set.
+   * @returns An Observable emitting the current list of SearchTermFilter objects.
    */
-  public setFilter(filter: SearchTermFilter): void {
-    this.filterMap.set(filter.getName(), filter.getSelectedValues());
-    this.filtersSubject.next(new Map(this.filterMap));
+  public getSearchTermFilters(): Observable<SearchTermFilter[]> {
+    return this.searchTermFiltersSubject.asObservable();
   }
 
   /**
-   * Gets the current list of filters as an Observable.
+   * Sets the list of SearchTermFilter objects and updates the BehaviorSubject.
    *
-   * @returns An Observable emitting the current list of filters.
+   * @param filters An array of SearchTermFilter objects to set.
    */
-  public getFilters(): Observable<Map<ElasticSearchFilterTypes, string[]>> {
-    return this.filtersSubject.asObservable();
+  public setSearchTermFilters(filters: SearchTermFilter[]): void {
+    this.searchTermFiltersSubject.next(filters);
   }
 
   /**
@@ -35,26 +33,73 @@ export class FilterProvider {
    * @param type The type of the filter to retrieve selected values for.
    * @returns An array of selected values for the specified filter type, or an empty array if the filter is not found.
    */
-  public getSelectedValuesOfType(name: ElasticSearchFilterTypes): string[] {
-    const filterMap = this.filtersSubject.value;
-    return filterMap.get(name) || [];
+  public getSelectedValuesOfType(type: ElasticSearchFilterTypes): string[] {
+    const filters = this.searchTermFiltersSubject.getValue();
+    const filter = filters.find((f) => f.getName() === type);
+    return filter ? filter.getSelectedValues() : [];
   }
 
   /**
    * Emits `true` if any filters have selected values, otherwise `false`.
    */
   public filtersNotSet(): Observable<boolean> {
-    return this.filtersSubject
+    return this.searchTermFiltersSubject
       .asObservable()
-      .pipe(
-        map((filterMap) => Array.from(filterMap.values()).every((values) => values.length === 0))
-      );
+      .pipe(map((filters) => filters.every((filter) => filter.getSelectedValues().length === 0)));
   }
 
-  public resetSelectedValuesOfType(): void {
-    this.filterMap.forEach((value, key) => {
-      this.filterMap.set(key, []);
+  /**
+   * Resets all selected values for all filters.
+   */
+  public resetSelectedValues(): void {
+    const updatedFilters = this.searchTermFiltersSubject.getValue().map((filter) => {
+      filter.setSelectedValues([]);
+      return filter;
     });
-    this.filtersSubject.next(this.filterMap);
+    this.searchTermFiltersSubject.next(updatedFilters);
+  }
+
+  /**
+   * Initializes the filter map with the given array of SearchTermFilter objects.
+   *
+   * @param filters An array of SearchTermFilter objects to initialize the map with.
+   */
+  public initializeFilterMap(filters: SearchTermFilter[]): void {
+    this.setSearchTermFilters(filters);
+  }
+
+  /**
+   * Updates an existing SearchTermFilter in the list.
+   * If the filter does not exist, it will not be added.
+   *
+   * @param updatedFilter The updated SearchTermFilter object.
+   */
+  public updateSearchTermFilter(updatedFilter: SearchTermFilter): void {
+    const filters = this.searchTermFiltersSubject.getValue();
+    const index = filters.findIndex((filter) => filter.getName() === updatedFilter.getName());
+
+    if (index !== -1) {
+      filters[index] = updatedFilter;
+      this.searchTermFiltersSubject.next([...filters]);
+    }
+  }
+
+  /**
+   * Updates the selected values of a specific filter.
+   *
+   * @param filterType The type of the filter to update.
+   * @param selectedValues The new selected values to set.
+   */
+  public updateFilterSelectedValues(
+    filterType: ElasticSearchFilterTypes,
+    selectedValues: string[]
+  ): void {
+    const filters = this.searchTermFiltersSubject.getValue();
+    const filter = filters.find((f) => f.getName() === filterType);
+
+    if (filter) {
+      filter.setSelectedValues(selectedValues);
+      this.searchTermFiltersSubject.next([...filters]);
+    }
   }
 }

@@ -10,6 +10,6 @@ export class CriteriaSearchDataResolverService {
   constructor(private searchService: SearchService) {}
 
   public resolve(): Observable<SearchTermResultList> {
-    return this.searchService.searchCriteria('');
+    return this.searchService.searchCriteria('').pipe();
   }
 }

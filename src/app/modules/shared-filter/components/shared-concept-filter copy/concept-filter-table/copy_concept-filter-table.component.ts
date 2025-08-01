@@ -7,9 +7,9 @@ import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilte
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
-import { SearchService } from 'src/app/service/Search/Search.service';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 
 @Component({
   selector: 'num-concept-filter-table-copy',
@@ -39,7 +39,7 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
   searchText$: Observable<string>;
 
   constructor(
-    private searchService: SearchService,
+    private activeSearchTermService: ActiveSearchTermService,
     private conceptElasticSearchService: SearchResultProvider,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
   ) {}
@@ -56,7 +56,7 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
         this.updateCheckboxSelection();
       });
 
-    this.searchText$ = this.searchService.getActiveSearchTerm();
+    this.searchText$ = this.activeSearchTermService.getActiveSearchTerm();
   }
 
   private updateCheckboxSelection(): void {

@@ -1,10 +1,8 @@
 <div fxFlexFill fxLayout="column" fxLayoutAlign="start" class="pr4">
-  <div style="margin-top: 5px">
-    <num-header>{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
-    <num-header-description>
-      {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
-    </num-header-description>
-  </div>
+  <num-header>{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
+  <num-header-description>
+    {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
+  </num-header-description>
   <div fxLayout="column" fxLayoutAlign="start start" class="padding-top-1">
     <div fxLayout="row" fxLayoutAlign="start start" class="width-100">
       <num-searchbar
@@ -13,10 +11,14 @@
         [searchText]="searchText$ | async"
         [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
         class="padding-right-1 width-100"
-        (searchTextChange)="startElasticSearch($event)"
+        (searchTextChange)="startElasticSearch()"
       >
       </num-searchbar>
-      <num-button type="blue" (click)="startElasticSearch(searchtext)">
+      <num-button
+        [isDisabled]="searchButtonEnabled$ | async"
+        type="blue"
+        (click)="startElasticSearch()"
+      >
         {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
       </num-button>
     </div>
@@ -24,7 +26,7 @@
       <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
       <ng-template #content>
         <num-search-filter
-          *ngFor="let searchFilter of searchFilters"
+          *ngFor="let searchFilter of searchFilters$ | async"
           [filter]="searchFilter"
           (selectedFilterChanged)="setElasticSearchFilter($event)"
         ></num-search-filter>
@@ -37,7 +39,7 @@
 
   <mat-drawer-container *ngIf="searchResultsFound">
     <mat-drawer #drawer position="end" mode="side">
-      <div fxLayout="column" *ngIf="listItems" class="padding-top-50">
+      <div fxLayout="column" *ngIf="listItems">
         <button (click)="closeSidenav()" class="cancel-button" fxLayoutAlign="center end">
           {{ 'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate }}
           <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>

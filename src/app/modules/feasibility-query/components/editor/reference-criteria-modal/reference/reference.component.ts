@@ -9,6 +9,7 @@ import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 
 interface selectedItem {
   id: string
@@ -46,6 +47,7 @@ export class ReferenceComponent implements OnInit, OnDestroy {
   searchResultsFound = false;
 
   constructor(
+    private activeSearchTermService: ActiveSearchTermService,
     private searchService: SearchService,
     private searchResultProviderService: SearchResultProvider,
     private selectedTableItemsService: SelectedTableItemsService<ReferenceCriteriaListEntry>
@@ -66,7 +68,7 @@ export class ReferenceComponent implements OnInit, OnDestroy {
           }
         }
       });
-    this.searchText$ = this.searchService.getActiveSearchTerm();
+    this.searchText$ = this.activeSearchTermService.getActiveSearchTerm();
     this.handleSelectedItemsSubscription();
   }
 

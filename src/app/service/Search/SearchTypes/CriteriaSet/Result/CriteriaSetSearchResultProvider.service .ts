@@ -9,6 +9,4 @@ import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/Elastic
 export class CriteriaSetSearchResultProviderService extends AbstractSearchResultProviderService<
   ReferenceCriteriaListEntry,
   ReferenceCriteriaResultList
-> {
-  // No additional implementation needed
-}
+> {}

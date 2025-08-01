@@ -4,7 +4,7 @@
       disableOptionCentering
       (selectionChange)="onSelectionChange()"
       panelClass="example-panel"
-      [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter?.filterType | translate"
+      [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter?.filterType | translate | uppercase"
       [(value)]="selectedValues"
       multiple
     >

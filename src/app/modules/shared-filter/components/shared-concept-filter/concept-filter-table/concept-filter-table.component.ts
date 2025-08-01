@@ -10,6 +10,7 @@ import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResult
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 
 @Component({
   selector: 'num-concept-filter-table',
@@ -36,6 +37,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   searchText$: Observable<string>;
 
   constructor(
+    private activeSearchTermService: ActiveSearchTermService,
     private searchService: SearchService,
     private conceptElasticSearchService: SearchResultProvider,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
@@ -54,7 +56,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
         this.updateCheckboxSelection();
       });
 
-    this.searchText$ = this.searchService.getActiveSearchTerm();
+    this.searchText$ = this.activeSearchTermService.getActiveSearchTerm();
   }
 
   private updateCheckboxSelection(): void {

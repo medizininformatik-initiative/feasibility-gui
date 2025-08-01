@@ -13,7 +13,7 @@ export class CriteriaSearchFilterAdapter {
       );
 
     return {
-      filterType: filter.getName().toUpperCase(),
+      filterType: filter.getName(),
       selectedValues: filter.getSelectedValues(),
       data: searchFilterValues,
     };

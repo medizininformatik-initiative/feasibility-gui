@@ -40,14 +40,9 @@ export class ListItemDetailsMenuItemsFunctionsService {
       .searchCriteriaById(id)
       .pipe(
         take(1),
-        switchMap((searchTermResultList: SearchTermResultList) => {
-          this.searchService.setActiveCriteriaSearchTerm(
+        switchMap((searchTermResultList: SearchTermResultList) => this.searchService.searchCriteria(
             searchTermResultList.getResults()[0].getDisplay().getOriginal()
-          );
-          return this.searchService.searchCriteria(
-            searchTermResultList.getResults()[0].getDisplay().getOriginal()
-          );
-        })
+          ))
       )
       .subscribe();
   }

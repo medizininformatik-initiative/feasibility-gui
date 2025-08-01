@@ -1,4 +1,4 @@
-import { AbstractSearchEngine } from '../../Abstract/AbstractSearchEngine';
+import { SearchEngine } from '../../SearchEngine';
 import { CriteriaResultMapperStrategy } from './Mapping/CriteriaResultMapperStrategy';
 import { CriteriaSearchUrlStrategy } from './Url/CriteriaSearchUrlStrategy';
 import { Injectable } from '@angular/core';
@@ -12,14 +12,9 @@ import { SearchUrlBuilder } from '../../UrlBuilder/SearchUrlBuilder';
   providedIn: 'root',
 })
 export class CriteriaSearchEngineService {
-  private maxPage = 1;
-
   constructor(
     private searchResultSetter: SearchResultSetterService,
-    private searchResultProcessorService: AbstractSearchEngine<
-      SearchTermListEntry,
-      SearchTermResultList
-    >
+    private searchResultProcessorService: SearchEngine<SearchTermListEntry, SearchTermResultList>
   ) {}
 
   public search(
@@ -27,16 +22,12 @@ export class CriteriaSearchEngineService {
     page: number
   ): Observable<SearchTermResultList> | Observable<null> {
     const resultMapper = this.getMapping();
-    const urlBuilder = this.createUrl(searchText, SearchUrlBuilder.MAX_ENTRIES_PER_PAGE, page);
+    const urlBuilder = this.createUrl(searchText, page);
 
     return this.searchResultProcessorService
       .fetchAndMapSearchResults(urlBuilder, resultMapper)
       .pipe(
         map((result) => {
-          const maxPage = this.updateMaxPage(result.totalHits);
-          if (page >= maxPage) {
-            return new SearchTermResultList(0, []);
-          }
           this.searchResultSetter.setCriteriaSearchResults(result);
           return result;
         })
@@ -48,7 +39,11 @@ export class CriteriaSearchEngineService {
    * @param searchText The text to search for.
    * @returns The constructed search URL.
    */
-  private createUrl(searchText: string, pageSize: number, page: number): string {
+  private createUrl(
+    searchText: string,
+    page: number,
+    pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
+  ): string {
     const urlStrategy = new CriteriaSearchUrlStrategy(
       searchText,
       this.searchResultProcessorService.getAvailabilityFilter(),
@@ -61,12 +56,5 @@ export class CriteriaSearchEngineService {
 
   public getMapping(): CriteriaResultMapperStrategy {
     return new CriteriaResultMapperStrategy();
-  }
-
-  private updateMaxPage(totalHits: number): number {
-    return Math.min(
-      Math.floor(totalHits / SearchUrlBuilder.MAX_ENTRIES_PER_PAGE),
-      SearchUrlBuilder.MAX_PAGES
-    );
   }
 }

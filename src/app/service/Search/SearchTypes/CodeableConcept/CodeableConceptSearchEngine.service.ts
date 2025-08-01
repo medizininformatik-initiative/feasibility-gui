@@ -1,4 +1,3 @@
-import { AbstractSearchEngine } from '../../Abstract/AbstractSearchEngine';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
 import { CodeableConceptResultMapperStrategy } from './Mapper/CodeableConceptResultMapperStrategy';
@@ -6,18 +5,25 @@ import { CodeableConceptSearchUrlStrategy } from './Url/CodeableConceptSearchUrl
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { SearchResultSetterService } from '../../Result/SearchResultSetter.service';
+import { SearchEngine } from '../../SearchEngine';
+import { AbstractSearchEngine } from '../../Abstract/AbstractSearchEngine.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CodeableConceptSearchEngineService {
+export class CodeableConceptSearchEngineService extends AbstractSearchEngine<
+  CodeableConceptResultListEntry,
+  CodeableConceptResultList
+> {
   constructor(
     private searchResultSetter: SearchResultSetterService,
-    private searchResultProcessorService: AbstractSearchEngine<
+    private searchResultProcessorService: SearchEngine<
       CodeableConceptResultListEntry,
       CodeableConceptResultList
     >
-  ) {}
+  ) {
+    super();
+  }
 
   public search(
     searchText: string,
@@ -34,11 +40,11 @@ export class CodeableConceptSearchEngineService {
     );
   }
 
-  private createUrl(searchText: string, valueSetUrls: string[]) {
+  protected createUrl(searchText: string, valueSetUrls: string[]) {
     return new CodeableConceptSearchUrlStrategy(searchText, valueSetUrls).getSearchUrl();
   }
 
-  private getMapping(): CodeableConceptResultMapperStrategy {
+  protected getMapping(): CodeableConceptResultMapperStrategy {
     return new CodeableConceptResultMapperStrategy();
   }
 }

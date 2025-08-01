@@ -1,20 +1,18 @@
 import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
 import { AbstractResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/AbstractResultList';
-import { AbstractResultMapper } from './AbstractResultMapper';
+import { AbstractResultMapper } from './Abstract/AbstractResultMapper';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
-import { FilterProvider } from '../Filter/SearchFilterProvider.service';
+import { FilterProvider } from './Filter/SearchFilterProvider.service';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
-import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder';
+import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
+import { SearchUrlBuilder } from './UrlBuilder/SearchUrlBuilder';
+import { ActiveSearchTermService } from './ActiveSearchTerm.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export abstract class AbstractSearchEngine<
-  C extends AbstractListEntry,
-  T extends AbstractResultList<C>
-> {
+export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultList<C>> {
   constructor(
     private terminologyApiService: TerminologyApiService,
     private filterProvider: FilterProvider
@@ -48,5 +46,23 @@ export abstract class AbstractSearchEngine<
       .join(',');
   }
 
-  public abstract search(): Observable<AbstractResultList<AbstractListEntry>>;
+  /**
+   * Calculates the maximum page and determines if an empty result should be returned.
+   *
+   * @param totalHits The total number of hits.
+   * @param currentPage The current page number.
+   * @param entriesPerPage The number of entries per page.
+   * @param maxPages The maximum number of pages allowed.
+   * @returns A boolean indicating if an empty result should be returned.
+   */
+  public shouldReturnEmptyResult(
+    totalHits: number,
+    currentPage: number,
+    entriesPerPage: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE,
+    maxPages: number = SearchUrlBuilder.MAX_PAGES
+  ): boolean {
+    const calculatedMaxPage = Math.floor(totalHits / entriesPerPage);
+    const maxPage = Math.max(1, Math.min(calculatedMaxPage, maxPages));
+    return currentPage >= maxPage;
+  }
 }
