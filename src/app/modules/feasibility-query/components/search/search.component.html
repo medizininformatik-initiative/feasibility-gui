@@ -11,14 +11,10 @@
         [searchText]="searchText$ | async"
         [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
         class="padding-right-1 width-100"
-        (searchTextChange)="startElasticSearch()"
+        (searchTextChange)="startSearch($event)"
       >
       </num-searchbar>
-      <num-button
-        [isDisabled]="searchButtonEnabled$ | async"
-        type="blue"
-        (click)="startElasticSearch()"
-      >
+      <num-button [isDisabled]="!searchText" type="blue" (click)="startSearch()">
         {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
       </num-button>
     </div>
