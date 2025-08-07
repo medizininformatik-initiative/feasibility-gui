@@ -1,3 +1,4 @@
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 import { debounceTime, filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
@@ -11,8 +12,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { SearchService } from 'src/app/service/Search/Search.service';
-import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 
 @Component({
   selector: 'num-searchbar',
