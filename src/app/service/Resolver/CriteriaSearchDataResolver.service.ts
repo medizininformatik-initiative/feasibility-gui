@@ -1,15 +1,15 @@
+import { CriteriaSearchService } from '../Search/SearchTypes/Criteria/CriteriaSearch.service';
 import { Injectable } from '@angular/core';
-import { SearchService } from '../Search/Search.service';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { Observable } from 'rxjs';
+import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriteriaSearchDataResolverService {
-  constructor(private searchService: SearchService) {}
+  constructor(private searchService: CriteriaSearchService) {}
 
   public resolve(): Observable<SearchTermResultList> {
-    return this.searchService.searchCriteria('').pipe();
+    return this.searchService.search('').pipe();
   }
 }
