@@ -1,8 +1,8 @@
+import { BehaviorSubject, Observable } from 'rxjs';
+
 import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
 import { AbstractResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/AbstractResultList';
-import { BehaviorSubject, filter, Observable, pairwise, map, switchMap, skip, tap } from 'rxjs';
-import { Injectable, SkipSelf } from '@angular/core';
-import { SearchStateService } from '../SearchState.service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -13,21 +13,26 @@ export abstract class AbstractSearchResultProviderService<
 > {
   private searchResultSubject = new BehaviorSubject<T>(null);
 
-  private searchTextChangeSubject = new BehaviorSubject<boolean>(false);
-
-  constructor(private searchStateService: SearchStateService) {
-    this.initializeSearchChangeSubscription();
-  }
+  constructor() {}
 
   /**
    * Sets the current search result.
    *
    * @param result The search result to be set.
    */
-  public setSearchResults(result: T): void {
+  public setSearchResults(result: T, ...params: any[]): void {
+    this.searchResultSubject.next(result);
+  }
+
+  /**
+   * Updates the current search results by appending new results.
+   *
+   * @param result The new search results to be appended.
+   */
+  public updateSearchResults(result: T): void {
     const currentResults = this.searchResultSubject.value?.getResults() ?? [];
-    const newResult = [...currentResults, ...result.getResults()];
-    result.setResults(newResult);
+    const updatedResults = [...currentResults, ...result.getResults()];
+    result.setResults(updatedResults);
     this.searchResultSubject.next(result);
   }
 
@@ -46,21 +51,95 @@ export abstract class AbstractSearchResultProviderService<
   public clearResults(): void {
     this.searchResultSubject.next(null);
   }
+}
 
-  private initializeSearchChangeSubscription(): void {
-    this.searchStateService
-      .searchChanges()
-      .pipe(
-        tap((hasChanged) => console.log('Search state changed, clearing results...', hasChanged)),
-        skip(1), // Skip the initial emission
-        filter((hasChanged) => hasChanged)
-      )
-      .subscribe(() => {
-        console.log('Search state changed, clearing results...');
-        this.clearResults();
-      });
+/**
+ * Abstract base class for search result providers that manage multiple result sets
+ * identified by keys (e.g., concept filters, value sets).
+ */
+@Injectable({
+  providedIn: 'root',
+})
+export abstract class AbstractKeyedSearchResultProviderService<
+  C extends AbstractListEntry,
+  T extends AbstractResultList<C>
+> {
+  protected searchResultSubject = new BehaviorSubject<Map<string, T | null>>(new Map());
+
+  constructor() {}
+
+  /**
+   * Sets the search result for a specific key.
+   * If the key does not exist, it creates a new entry in the map.
+   *
+   * @param key The key to identify the result set.
+   * @param result The search result to be set.
+   */
+  public setSearchResults(key: string, result: T): void {
+    const currentResults = this.searchResultSubject.value;
+    currentResults.set(key, result);
+    this.searchResultSubject.next(currentResults);
+  }
+
+  /**
+   * Updates the search results for a specific key by appending new results.
+   *
+   * @param key The key to identify the result set.
+   * @param result The new search results to be appended.
+   */
+  public updateSearchResults(key: string, result: T): void {
+    const currentResults = this.searchResultSubject.value;
+    const existingResult = currentResults.get(key);
+
+    if (existingResult) {
+      const currentEntries = existingResult.getResults() ?? [];
+      const updatedEntries = [...currentEntries, ...result.getResults()];
+      result.setResults(updatedEntries);
+    }
+
+    currentResults.set(key, result);
+    this.searchResultSubject.next(currentResults);
+  }
+
+  /**
+   * Gets the search results for a specific key as an observable.
+   *
+   * @param key The key to identify the result set.
+   * @returns An Observable of the search result for the given key.
+   */
+  public abstract getSearchResults(key: string): Observable<T | null>;
+
+  /**
+   * Clears the search result for a specific key.
+   *
+   * @param key The key to identify the result set to clear.
+   */
+  public clearResults(key: string): void {
+    const currentResults = this.searchResultSubject.value;
+
+    if (currentResults.has(key)) {
+      currentResults.set(key, null);
+      this.searchResultSubject.next(currentResults);
+    }
+  }
+
+  /**
+   * Clears all stored search results in the map.
+   */
+  public clearAllResults(): void {
+    const emptyMap = new Map<string, T | null>();
+    this.searchResultSubject.next(emptyMap);
+  }
+
+  /**
+   * Gets the entire results map as an observable.
+   * Useful for debugging or advanced use cases.
+   */
+  protected getResultsMap(): Observable<Map<string, T | null>> {
+    return this.searchResultSubject.asObservable();
   }
 }
+
 /**
  * 1. Bie init darf nicht gelöscht werden --> Skip(1)
  * 2. Wenn seite wechseln muss beides gelöscht werden filetr undtext aber skip geht nicht, zweite emission

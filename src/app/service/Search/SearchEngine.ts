@@ -45,24 +45,4 @@ export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultL
       .getSelectedValuesOfType(ElasticSearchFilterTypes.KDS_MODULE)
       .join(',');
   }
-
-  /**
-   * Calculates the maximum page and determines if an empty result should be returned.
-   *
-   * @param totalHits The total number of hits.
-   * @param currentPage The current page number.
-   * @param entriesPerPage The number of entries per page.
-   * @param maxPages The maximum number of pages allowed.
-   * @returns A boolean indicating if an empty result should be returned.
-   */
-  public shouldReturnEmptyResult(
-    totalHits: number,
-    currentPage: number,
-    entriesPerPage: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE,
-    maxPages: number = SearchUrlBuilder.MAX_PAGES
-  ): boolean {
-    const calculatedMaxPage = Math.floor(totalHits / entriesPerPage);
-    const maxPage = Math.max(1, Math.min(calculatedMaxPage, maxPages));
-    return currentPage >= maxPage;
-  }
 }
