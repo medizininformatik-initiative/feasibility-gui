@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ActiveSearchTermService {
   private activeSearchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private activeCriteriaSearchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   /**
    *
@@ -18,5 +20,13 @@ export class ActiveSearchTermService {
 
   public setActiveSearchTerm(searchText: string): void {
     this.activeSearchTermSubject.next(searchText);
+  }
+
+  public getActiveCriteriaSearchTerm(): Observable<string> {
+    return this.activeCriteriaSearchTermSubject.asObservable();
+  }
+
+  public setActiveCriteriaSearchTerm(searchText: string) {
+    this.activeCriteriaSearchTermSubject.next(searchText);
   }
 }
