@@ -1,8 +1,11 @@
+import { RouterModule, Routes } from '@angular/router';
+
+import { BasePaths } from './app-paths';
+import { CriteriaSearchDataResolverService } from './service/Resolver/CriteriaSearchDataResolver.service';
+import { CriteriaSearchFilterResolverService } from './service/Resolver/CriteriaSearchFilterResolver.service';
 import { DataProtectionComponent } from './site/data-protection/data-protection.component';
 import { NgModule } from '@angular/core';
 import { RoleGuard } from './core/auth/guards/role.guard';
-import { RouterModule, Routes } from '@angular/router';
-import { BasePaths } from './app-paths';
 
 export const routes: Routes = [
   {
@@ -42,6 +45,10 @@ export const routes: Routes = [
   },
   {
     path: BasePaths.feasibilityQuery,
+    resolve: {
+      preLoadCriteriaData: CriteriaSearchDataResolverService,
+      preLoadCriteriaFilter: CriteriaSearchFilterResolverService,
+    },
     canLoad: [RoleGuard],
     data: {
       navId: BasePaths.feasibilityQuery,
