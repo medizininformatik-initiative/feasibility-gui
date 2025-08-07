@@ -1,8 +1,8 @@
 import { AbstractResultMapper } from '../../../Abstract/AbstractResultMapper';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 export class CriteriaResultMapperStrategy extends AbstractResultMapper<
   SearchTermListEntry,
   SearchTermResultList
