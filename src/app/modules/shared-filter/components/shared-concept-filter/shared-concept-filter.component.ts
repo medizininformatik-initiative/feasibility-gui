@@ -4,6 +4,7 @@ import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilte
 import { Observable, Subscription } from 'rxjs';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 
 @Component({
   selector: 'num-shared-concept-filter',
@@ -30,16 +31,14 @@ export class SharedConceptFilterComponent implements OnInit, OnDestroy {
 
   constructor(
     private selectedConceptFilterService: SelectedConceptFilterProviderService,
-    private searchResultProvider: SearchResultProvider
+    private searchResultProvider: CodeableConceptSearchService
   ) {}
 
   ngOnInit() {
     if (this.preSelectedConcepts.length > 0) {
       this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     }
-    this.searchResults$ = this.searchResultProvider.getCodeableConceptSearchResults(
-      this.conceptFilterId
-    );
+    this.searchResults$ = this.searchResultProvider.getSearchResults(this.valueSetUrl);
     this.subscription = this.selectedConceptFilterService
       .getSelectedConcepts()
       .subscribe((selectedConcepts: Concept[]) => {

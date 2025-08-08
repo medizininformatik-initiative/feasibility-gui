@@ -10,6 +10,7 @@ import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResult
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 
 @Component({
   selector: 'num-concept-filter-table-copy',
@@ -40,13 +41,13 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
 
   constructor(
     private activeSearchTermService: ActiveSearchTermService,
-    private conceptElasticSearchService: SearchResultProvider,
+    private conceptElasticSearchService: CodeableConceptSearchService,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
   ) {}
 
   ngOnInit() {
     this.conceptElasticSearchService
-      .getCodeableConceptSearchResults(this.conceptFilterId)
+      .getSearchResults(this.valueSetUrl)
       .pipe(
         map((results) => {
           this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());

@@ -3,6 +3,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 
 @Component({
   selector: 'num-search-concept-copy',
@@ -19,7 +20,7 @@ export class CopySearchConceptComponent implements OnDestroy, OnInit {
   private searchSubscription: Subscription;
   public searchResults: CodeableConceptResultList;
 
-  constructor(private conceptFilterSearchService: SearchService) {}
+  constructor(private conceptFilterSearchService: CodeableConceptSearchService) {}
 
   ngOnInit(): void {
     this.startElasticSearch(' ');
@@ -30,11 +31,10 @@ export class CopySearchConceptComponent implements OnDestroy, OnInit {
    * @param searchtext The text to search for.
    */
   public startElasticSearch(searchtext: string): void {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-    }
+    const page = 0;
+    this.searchSubscription?.unsubscribe();
     this.searchSubscription = this.conceptFilterSearchService
-      .searchCodeableConcepts(searchtext, this.valueSetUrl, this.conceptFilterId)
+      .search(searchtext, page, this.valueSetUrl)
       .subscribe(
         (result) => {
           this.searchResults = result;

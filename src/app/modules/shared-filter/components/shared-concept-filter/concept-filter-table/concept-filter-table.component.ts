@@ -11,6 +11,7 @@ import { SearchService } from 'src/app/service/Search/Search.service';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 
 @Component({
   selector: 'num-concept-filter-table',
@@ -28,6 +29,8 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
 
   adaptedData: TableData;
 
+  searchText = '';
+
   selectedConcepts: Concept[] = [];
 
   private subscription: Subscription = new Subscription();
@@ -39,13 +42,13 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   constructor(
     private activeSearchTermService: ActiveSearchTermService,
     private searchService: SearchService,
-    private conceptElasticSearchService: SearchResultProvider,
+    private codeableConceptSearchService: CodeableConceptSearchService,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
   ) {}
 
   ngOnInit() {
-    this.conceptElasticSearchService
-      .getCodeableConceptSearchResults(this.conceptFilterId)
+    this.codeableConceptSearchService
+      .getSearchResults(this.valueSetUrl)
       .pipe(
         switchMap((results) => {
           this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
@@ -104,5 +107,10 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
 
   private clearSelectedConceptArray() {
     this.selectedConcepts = [];
+  }
+
+  public loadMoreSearchResults(): void {
+    console.log('test');
+    this.codeableConceptSearchService.loadNextPage(' ', this.valueSetUrl).subscribe();
   }
 }

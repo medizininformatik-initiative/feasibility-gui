@@ -1,10 +1,19 @@
-<num-table
-  *ngIf="adaptedData?.body.rows.length > 0"
-  class="result-list-container"
-  [tableData]="adaptedData"
-  (selectedRow)="addSelectedRow($event)"
+<div
+  style="max-height: 300px; overflow: scroll"
+  infiniteScroll
+  [infiniteScrollDistance]="0.5"
+  [infiniteScrollThrottle]="50"
+  [scrollWindow]="false"
+  (scrolled)="loadMoreSearchResults()"
 >
-</num-table>
+  <num-table
+    *ngIf="adaptedData?.body.rows.length > 0"
+    class="result-list-container"
+    [tableData]="adaptedData"
+    (selectedRow)="addSelectedRow($event)"
+  >
+  </num-table>
+</div>
 <num-placeholder-box *ngIf="adaptedData?.body.rows.length <= 0" class="no-results-text">
   {{ 'FEASIBILITY.EDITOR.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
   >"</num-placeholder-box
