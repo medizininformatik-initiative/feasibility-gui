@@ -1,12 +1,9 @@
-import { RouterModule, Routes } from '@angular/router';
-
-import { CriteriaSearchDataResolverService } from 'src/app/service/Resolver/CriteriaSearchDataResolver.service';
-import { CriteriaSearchFilterResolverService } from 'src/app/service/Resolver/CriteriaSearchFilterResolver.service';
 import { EditFeasibilityQueryComponent } from './components/editor/edit.component';
 import { FeasibilityQuerySearchComponent } from './components/search/search.component';
 import { NgModule } from '@angular/core';
 import { PathSegments } from 'src/app/app-paths';
 import { ResultComponent } from './components/result/result.component';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
