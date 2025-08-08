@@ -1,3 +1,3 @@
-export interface SearchUrlStrategy {
-  getSearchUrl(page?: number, pageSize?: number): string
+export abstract class SearchUrlStrategy {
+  abstract getSearchUrl(page: number, pageSize: number): string;
 }

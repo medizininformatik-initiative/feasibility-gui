@@ -1,17 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchEngine } from '../../../SearchEngine';
-import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder';
+import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service';
 import { CriteriaResultMapperStrategy } from '../Mapping/CriteriaResultMapperStrategy';
 import { CriteriaSearchUrlStrategy } from '../Url/CriteriaSearchUrlStrategy';
-import { AbstractSearchEngine } from '../../../Abstract/AbstractSearchEngine.service';
+import { Injectable } from '@angular/core';
+import { SearchEngine } from '../../../SearchEngine';
+import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CriteriaSearchEngineService extends AbstractSearchEngine<
+export class CriteriaSearchEngineService extends AbstractSimpleSearchEngine<
   SearchTermListEntry,
   SearchTermResultList
 > {

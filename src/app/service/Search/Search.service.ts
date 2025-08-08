@@ -26,14 +26,14 @@ export class SearchService {
     return this.criteriaSetSearchService.search(searchText, criteriaSetUrls);
   }
 
-  public searchCodeableConcepts(
-    searchText: string,
-    valueSetUrl: string[],
-    conceptFilterId: string,
-    page: number = 0
-  ): Observable<CodeableConceptResultList> {
-    return this.codeableConceptSearchService.search(searchText, page, valueSetUrl, conceptFilterId);
-  }
+  // public searchCodeableConcepts(
+  //   searchText: string,
+  //   valueSetUrl: string[],
+  //   conceptFilterId: string,
+  //   page: number = 0
+  // ): Observable<CodeableConceptResultList> {
+  //   return this.codeableConceptSearchService.search(searchText, page, valueSetUrl, conceptFilterId);
+  // }
 
   public searchCriteriaById(id: string): Observable<SearchTermResultList> {
     return this.criteriaSearchSigleEntryEngineService.search(id);

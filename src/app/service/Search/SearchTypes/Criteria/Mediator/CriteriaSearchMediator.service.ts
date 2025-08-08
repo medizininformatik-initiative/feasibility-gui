@@ -1,4 +1,4 @@
-import { AbstractSearchMediatorService } from '../../../Abstract/AbstractSearchMediator';
+import { AbstractSimpleSearchMediator } from '../../../Abstract/Mediator/AbstractSimpleSearchMediator';
 import { CriteriaSearchEngineService } from '../Engine/CriteriaSearchEngine';
 import { CriteriaSearchResultProviderService } from '../Result/CriteriaSearchResultProvider.service';
 import { Injectable } from '@angular/core';
@@ -8,7 +8,7 @@ import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchR
 @Injectable({
   providedIn: 'root',
 })
-export class CriteriaSearchMediatorService extends AbstractSearchMediatorService<
+export class CriteriaSearchMediatorService extends AbstractSimpleSearchMediator<
   SearchTermListEntry,
   SearchTermResultList
 > {

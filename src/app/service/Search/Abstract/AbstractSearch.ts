@@ -1,18 +1,15 @@
 import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
-import { AbstractResultMapper } from './AbstractResultMapper';
 import { AbstractResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/AbstractResultList';
+import { AbstractSearchResultProviderService } from './Result/AbstractSearchResultProvider.servcie';
 import { Observable } from 'rxjs';
-import { AbstractSearchResultProviderService } from './AbstractSearchResultProvider.servcie';
 
 export abstract class AbstractSearch<C extends AbstractListEntry, T extends AbstractResultList<C>> {
-  constructor(private resultProviderService: AbstractSearchResultProviderService<C, T>) {}
-  abstract search(searchTerm: string, page: number, ...params: any[]): Observable<T>;
+  constructor(protected resultProviderService: AbstractSearchResultProviderService<C, T>) {}
+  abstract search(searchTerm: string, page: number, dataSetUrls?: string[]): Observable<T>;
 
-  abstract loadNextPage(searchTerm: string): Observable<T>;
+  abstract loadNextPage(searchTerm: string, dataSetUrls: string[]): Observable<T>;
 
-  public getSearchResults(): Observable<T> {
-    return this.resultProviderService.getSearchResults();
-  }
+  public abstract getSearchResults(dataSetUrls?: string[]): Observable<T>;
 
   protected abstract setSearchTerm(searchTerm: string): void;
 }

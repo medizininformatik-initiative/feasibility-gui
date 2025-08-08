@@ -10,6 +10,9 @@ import { CriteriaSetSearchResultProviderService } from '../SearchTypes/CriteriaS
 @Injectable({
   providedIn: 'root',
 })
+/**
+ * @deprecated
+ */
 export class SearchResultProvider {
   constructor(
     private criteriaResultProvider: CriteriaSearchResultProviderService,
@@ -25,9 +28,9 @@ export class SearchResultProvider {
     return this.criteriaSetResultProvider.getSearchResults();
   }
 
-  public getCodeableConceptSearchResults(
-    valueSetUrl: string
-  ): Observable<CodeableConceptResultList | null> {
-    return this.codeableConceptResultProvider.getSearchResults(valueSetUrl);
-  }
+  // public getCodeableConceptSearchResults(
+  //   valueSetUrl: string
+  // ): Observable<CodeableConceptResultList | null> {
+  //   return this.codeableConceptResultProvider.getSearchResults(valueSetUrl);
+  // }
 }

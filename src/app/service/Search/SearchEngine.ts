@@ -1,6 +1,6 @@
 import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
 import { AbstractResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/AbstractResultList';
-import { AbstractResultMapper } from './Abstract/AbstractResultMapper';
+import { AbstractResultMapper } from './Abstract/Mapping/AbstractResultMapper';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { FilterProvider } from './Filter/SearchFilterProvider.service';
 import { Injectable } from '@angular/core';
