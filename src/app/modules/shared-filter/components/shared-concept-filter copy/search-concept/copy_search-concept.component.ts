@@ -1,7 +1,7 @@
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
+import { CodeableConceptResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CodeableConcepttResultList';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 

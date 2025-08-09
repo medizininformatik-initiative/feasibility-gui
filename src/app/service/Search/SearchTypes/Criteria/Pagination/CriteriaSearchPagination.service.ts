@@ -1,13 +1,13 @@
+import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
+import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
 import { CriteriaSearchMediatorService } from '../Mediator/CriteriaSearchMediator.service';
 import { Injectable } from '@angular/core';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { SimpleSearchPagination } from '../../../Abstract/Pagination/SimpleSearchPagination';
 
 @Injectable({ providedIn: 'root' })
 export class CriteriaSearchPaginationService extends SimpleSearchPagination<
-  SearchTermListEntry,
-  SearchTermResultList
+  CriteriaListEntry,
+  CriteriaResultList
 > {
   constructor(protected mediator: CriteriaSearchMediatorService) {
     super(mediator);

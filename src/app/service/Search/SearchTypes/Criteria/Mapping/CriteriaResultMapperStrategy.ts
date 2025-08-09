@@ -1,15 +1,15 @@
 import { AbstractResultMapper } from '../../../Abstract/Mapping/AbstractResultMapper';
+import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 export class CriteriaResultMapperStrategy extends AbstractResultMapper<
-  SearchTermListEntry,
-  SearchTermResultList
+  CriteriaListEntry,
+  CriteriaResultList
 > {
-  public mapResponseToResultList(response: any): SearchTermResultList {
-    const listItems: SearchTermListEntry[] = this.mapResponseToEntries(response.results);
-    return new SearchTermResultList(response.totalHits, listItems);
+  public mapResponseToResultList(response: any): CriteriaResultList {
+    const listItems: CriteriaListEntry[] = this.mapResponseToEntries(response.results);
+    return new CriteriaResultList(response.totalHits, listItems);
   }
 
   /**
@@ -18,10 +18,10 @@ export class CriteriaResultMapperStrategy extends AbstractResultMapper<
    * @returns
    * @todo create Instance of displayData and Translation
    */
-  public mapResponseToEntries(results: any[]): SearchTermListEntry[] {
+  public mapResponseToEntries(results: any[]): CriteriaListEntry[] {
     return results.map(
       (resultItem: any) =>
-        new SearchTermListEntry(
+        new CriteriaListEntry(
           resultItem.availability,
           resultItem.selectable,
           resultItem.terminology,

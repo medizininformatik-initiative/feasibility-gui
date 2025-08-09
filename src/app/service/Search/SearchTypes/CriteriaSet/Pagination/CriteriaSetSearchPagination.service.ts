@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { KeyedSearchPagination } from '../../../Abstract/Pagination/AbstractKeyedSearchPagination';
 import { Observable } from 'rxjs';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
 
 /**
  * Pagination service for criteria set searches with support for multiple criteria set filters.

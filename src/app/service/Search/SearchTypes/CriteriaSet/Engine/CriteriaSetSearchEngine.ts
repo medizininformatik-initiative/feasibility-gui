@@ -4,7 +4,7 @@ import { CriteriaSetSearchUrlStrategy } from '../Url/CriteriaSetSearchUrlStrateg
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
 import { SearchEngine } from '../../../SearchEngine';
 
 /**

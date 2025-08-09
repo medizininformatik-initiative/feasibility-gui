@@ -1,7 +1,7 @@
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { SearchFilter, SearchFilterValues } from './InterfaceSearchFilter';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
+import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
+import { SearchTermFilterValues } from 'src/app/model/Search/SearchFilter/SearchTermFilterValues';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 export class CriteriaSearchFilterAdapter {

@@ -1,5 +1,5 @@
 import { AbstractKeyedSearchEngineService } from '../../../Abstract/Engine/AbstractKeyedSearchEngine.service';
-import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
+import { CodeableConceptResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
 import { CodeableConceptResultMapperStrategy } from '../Mapper/CodeableConceptResultMapperStrategy';
 import { CodeableConceptSearchUrlStrategy } from '../Url/CodeableConceptSearchUrlStrategy';

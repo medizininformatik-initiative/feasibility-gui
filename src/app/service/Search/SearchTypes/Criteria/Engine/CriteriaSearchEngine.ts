@@ -1,20 +1,20 @@
 import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service';
+import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
+import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
 import { CriteriaResultMapperStrategy } from '../Mapping/CriteriaResultMapperStrategy';
 import { CriteriaSearchUrlStrategy } from '../Url/CriteriaSearchUrlStrategy';
 import { Injectable } from '@angular/core';
 import { SearchEngine } from '../../../SearchEngine';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriteriaSearchEngineService extends AbstractSimpleSearchEngine<
-  SearchTermListEntry,
-  SearchTermResultList
+  CriteriaListEntry,
+  CriteriaResultList
 > {
-  constructor(protected searchEngine: SearchEngine<SearchTermListEntry, SearchTermResultList>) {
+  constructor(protected searchEngine: SearchEngine<CriteriaListEntry, CriteriaResultList>) {
     super(searchEngine);
   }
 

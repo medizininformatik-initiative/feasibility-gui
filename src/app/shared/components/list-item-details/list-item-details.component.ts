@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
+import { SearchTermDetails } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermDetails';
+import { CriteriaListEntry } from '../../models/ListEntries/CriteriaListListEntry';
 
 @Component({
   selector: 'num-list-item-details',
@@ -23,13 +23,13 @@ export class ListItemDetailsComponent implements OnInit {
   listItemDetails$: Observable<SearchTermDetails>;
 
   @Output()
-  selectedRelative: EventEmitter<SearchTermListEntry> = new EventEmitter();
+  selectedRelative: EventEmitter<CriteriaListEntry> = new EventEmitter();
 
   constructor() {}
 
   ngOnInit() {}
 
-  public getSelectedRelative(entry: SearchTermListEntry) {
+  public getSelectedRelative(entry: CriteriaListEntry): void {
     this.selectedRelative.emit(entry);
   }
 }

@@ -1,5 +1,5 @@
 import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
-import { AbstractResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/AbstractResultList';
+import { AbstractResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/AbstractResultList';
 import { MappingStrategy } from '../../Interface/InterfaceMappingStrategy';
 import { Observable } from 'rxjs';
 import { SearchEngine } from '../../SearchEngine';

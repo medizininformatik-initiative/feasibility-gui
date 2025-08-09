@@ -6,9 +6,9 @@ import { FeasibilityQueryProviderService } from '../../../../../service/Provider
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { map, Observable, of } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
+import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
 
 @Component({
   selector: 'num-search-action-bar',
@@ -16,17 +16,17 @@ import { StageProviderService } from 'src/app/service/Provider/StageProvider.ser
   styleUrls: ['./search-action-bar.component.scss'],
 })
 export class SearchActionBarComponent implements OnInit {
-  listItemArray$: Observable<SearchTermListEntry[]> = of([]);
+  listItemArray$: Observable<CriteriaListEntry[]> = of([]);
   isFeasibilityExistent$: Observable<boolean>;
   stageArray$: Observable<Array<string>> = of([]);
 
   constructor(
-    private listItemSelectionService: SelectedTableItemsService<SearchTermListEntry>,
+    private listItemSelectionService: SelectedTableItemsService<CriteriaListEntry>,
     private criterionService: CreateCriterionService,
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
     private queryProviderService: FeasibilityQueryProviderService,
-    private listItemService: SelectedTableItemsService<SearchTermListEntry>,
+    private listItemService: SelectedTableItemsService<CriteriaListEntry>,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
     private feasibilityQueryValidation: FeasibilityQueryValidation
   ) {}

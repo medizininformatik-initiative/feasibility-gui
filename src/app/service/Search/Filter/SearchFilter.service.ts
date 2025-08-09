@@ -3,8 +3,8 @@ import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
+import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
+import { SearchTermFilterValues } from 'src/app/model/Search/SearchFilter/SearchTermFilterValues';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
 
 @Injectable({

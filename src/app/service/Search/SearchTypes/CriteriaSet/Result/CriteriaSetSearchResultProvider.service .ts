@@ -1,7 +1,7 @@
 import { AbstractKeyedSearchResultProvider } from '../../../Abstract/Result/AbstractKeyedSearchResultProvider.service';
 import { Injectable } from '@angular/core';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
 
 /**
  * Result provider service for criteria set searches with keyed result management.

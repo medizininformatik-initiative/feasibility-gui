@@ -1,19 +1,19 @@
-import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
 
 export class CriteriaResulByIdMapperStrategy
-  implements MappingStrategy<SearchTermListEntry, SearchTermResultList>
+  implements MappingStrategy<CriteriaListEntry, CriteriaResultList>
 {
-  public mapResponseToResultList(response: any): SearchTermResultList {
-    const listItems: SearchTermListEntry[] = this.mapResponseToEntries(response);
-    return new SearchTermResultList(1, listItems);
+  public mapResponseToResultList(response: any): CriteriaResultList {
+    const listItems: CriteriaListEntry[] = this.mapResponseToEntries(response);
+    return new CriteriaResultList(1, listItems);
   }
 
-  public mapResponseToEntries(results: any): SearchTermListEntry[] {
-    const entry = new SearchTermListEntry(
+  public mapResponseToEntries(results: any): CriteriaListEntry[] {
+    const entry = new CriteriaListEntry(
       results.availability,
       results.selectable,
       results.terminology,

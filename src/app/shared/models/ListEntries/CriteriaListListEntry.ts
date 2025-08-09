@@ -6,7 +6,7 @@ import { AbstractListEntry } from './AbstractListEntry';
  *
  * @see AbstractSearchResult
  */
-export class SearchTermListEntry extends AbstractListEntry {
+export class CriteriaListEntry extends AbstractListEntry {
   private selectable = true;
   private availability: number;
   private terminology: string;

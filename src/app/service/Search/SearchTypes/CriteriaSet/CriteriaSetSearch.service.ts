@@ -1,4 +1,4 @@
-import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
 import { CriteriaSetSearchMediatorService } from './Mediator/CriteriaSetSearchMediator.service';
 import { CriteriaSetSearchPaginationService } from './Pagination/CriteriaSetSearchPagination.service';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { SearchFilterService } from '../Search/Filter/SearchFilter.service';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
+import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
 import { FilterProvider } from '../Search/Filter/SearchFilterProvider.service';
 
 @Injectable({

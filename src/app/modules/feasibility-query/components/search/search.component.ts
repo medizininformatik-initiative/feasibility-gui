@@ -1,3 +1,20 @@
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
+import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
+import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
+import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
+import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
+import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
+import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
+import { map, Observable, of, Subscription } from 'rxjs';
+import { MatDrawer } from '@angular/material/sidenav';
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
+import { SearchTermDetails } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermDetails';
+import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
+import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
+import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
+import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
+import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -9,23 +26,6 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
-import { map, Observable, of, Subscription } from 'rxjs';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
-import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
-import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
-import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
-import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
-import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
-import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -36,7 +36,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   @ViewChild('drawer') sidenav: MatDrawer;
   @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;
-  listItems: Array<SearchTermListEntry> = [];
+  listItems: Array<CriteriaListEntry> = [];
   searchtext = '';
   adaptedData: TableData;
   private subscription: Subscription;
@@ -72,7 +72,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     public elementRef: ElementRef,
     private cdr: ChangeDetectorRef,
     private searchFilterProvider: FilterProvider,
-    private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>,
+    private selectedTableItemsService: SelectedTableItemsService<CriteriaListEntry>,
     private searchTermDetailsService: SearchTermDetailsService,
     private searchTermDetailsProviderService: SearchTermDetailsProviderService,
     private criteriaSearchService: CriteriaSearchService
@@ -102,7 +102,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   /** Search Result Handling */
-  private handleSearchResults(results: SearchTermListEntry[]): void {
+  private handleSearchResults(results: CriteriaListEntry[]): void {
     this.listItems = results;
     this.adaptedData = SearchTermListEntryAdapter.adapt(this.listItems);
     this.searchResultsFound = this.adaptedData.body.rows.length > 0;
@@ -126,7 +126,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   private handleSelectedItemsSubscription(): void {
     this.selectedTableItemsService
       .getSelectedTableItems()
-      .subscribe((selectedItems: SearchTermListEntry[]) => {
+      .subscribe((selectedItems: CriteriaListEntry[]) => {
         if (selectedItems.length === 0) {
           this.uncheckAllRows();
         }
@@ -152,14 +152,14 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
     const itemId = item.originalEntry.id;
     if (selectedIds.includes(itemId)) {
-      this.selectedTableItemsService.removeFromSelection(item.originalEntry as SearchTermListEntry);
+      this.selectedTableItemsService.removeFromSelection(item.originalEntry as CriteriaListEntry);
     } else {
-      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry as SearchTermListEntry);
+      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry as CriteriaListEntry);
     }
   }
 
   public setClickedRow(row: InterfaceTableDataRow) {
-    const originalEntry = row.originalEntry as SearchTermListEntry;
+    const originalEntry = row.originalEntry as CriteriaListEntry;
     this.searchTermDetailsService
       .getDetailsForListItem(originalEntry.id)
       .subscribe(() => this.openSidenav());
@@ -209,7 +209,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.searchWithFilterSubscription?.unsubscribe();
     this.searchWithFilterSubscription = this.criteriaSearchService
       .loadNextPage(this.searchText)
-      .subscribe((result: SearchTermResultList) => {
+      .subscribe((result: CriteriaResultList) => {
         this.handleSearchResults(result.getResults());
       });
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
+import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
 import { FilterProvider } from './Filter/SearchFilterProvider.service';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { CriteriaProfileData } from '../FeasibilityQuery/CriteriaProfileData';
-import { SearchTermDetails } from './ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
+import { SearchTermDetails } from './SearchResult/SearchDetails/SearchTermDetails';
 
 export class Entries {
   searchTermDetails: SearchTermDetails;

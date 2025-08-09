@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
-import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 import { CodeableConceptSearchEngineService } from './SearchTypes/CodeableConcept/Engine/CodeableConceptSearchEngine.service';
+import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
 import { CriteriaSearchMediatorService } from './SearchTypes/Criteria/Mediator/CriteriaSearchMediator.service';
 import { CriteriaSearchSigleEntryEngineService } from './SearchTypes/CriteriaById/CriteriaSearchSingleEntryEngine.service';
 import { CriteriaSetSearchService } from './SearchTypes/CriteriaSet/CriteriaSetSearch.service';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
 
 /**
  * Main search service providing unified access to all search functionality.
@@ -74,7 +73,7 @@ export class SearchService {
    * @param id - The unique identifier of the criteria to search for
    * @returns An Observable that emits the search term results for the specified criteria
    */
-  public searchCriteriaById(id: string): Observable<SearchTermResultList> {
+  public searchCriteriaById(id: string): Observable<CriteriaResultList> {
     return this.criteriaSearchSigleEntryEngineService.search(id);
   }
 }

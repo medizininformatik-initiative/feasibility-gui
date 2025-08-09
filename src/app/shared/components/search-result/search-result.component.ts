@@ -1,5 +1,4 @@
 import { MatDrawer } from '@angular/material/sidenav';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import {
   AfterViewInit,
@@ -9,6 +8,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { CriteriaListEntry } from '../../models/ListEntries/CriteriaListListEntry';
 
 @Component({
   selector: 'num-search-result',
@@ -19,19 +19,19 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer') sidenav: MatDrawer;
 
   @Input()
-  searchTermListItems: SearchTermListEntry[] = [];
+  searchTermListItems: CriteriaListEntry[] = [];
 
   @Input()
   keysToSkip: string[] = [];
 
   private isInitialized = false;
 
-  data: SearchTermListEntry;
+  data: CriteriaListEntry;
 
   isOpen = false;
 
   constructor(
-    private listItemService: SelectedTableItemsService<SearchTermListEntry>,
+    private listItemService: SelectedTableItemsService<CriteriaListEntry>,
     private cdr: ChangeDetectorRef
   ) {}
 

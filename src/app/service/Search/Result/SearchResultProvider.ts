@@ -1,9 +1,7 @@
-import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
-import { CodeableConceptSearchResultProviderService } from '../SearchTypes/CodeableConcept/Result/CodeableConceptSearchResultProvider.service';
 import { CriteriaSearchResultProviderService } from '../SearchTypes/Criteria/Result/CriteriaSearchResultProvider.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
+import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +12,7 @@ import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchR
 export class SearchResultProvider {
   constructor(private criteriaResultProvider: CriteriaSearchResultProviderService) {}
 
-  public getCriteriaSearchResults(): Observable<SearchTermResultList | null> {
+  public getCriteriaSearchResults(): Observable<CriteriaResultList | null> {
     return this.criteriaResultProvider.getSearchResults();
   }
 }

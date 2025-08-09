@@ -3,8 +3,8 @@ import { ListItemDetailService } from 'src/app/shared/service/Menu/ListItemDetai
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermRelatives } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermRelatives';
+import { SearchTermRelatives } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermRelatives';
+import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
 
 @Component({
   selector: 'num-list-item-details-sections',
@@ -18,7 +18,7 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   menuItems: MenuItemInterface[] = [];
 
   @Output()
-  selectedRelative: EventEmitter<SearchTermListEntry> = new EventEmitter();
+  selectedRelative: EventEmitter<CriteriaListEntry> = new EventEmitter();
 
   constructor(
     private menuService: ListItemDetailService,

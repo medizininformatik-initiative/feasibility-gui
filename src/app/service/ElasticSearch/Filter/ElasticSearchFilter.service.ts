@@ -2,8 +2,8 @@ import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchF
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
+import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
+import { SearchTermFilterValues } from 'src/app/model/Search/SearchFilter/SearchTermFilterValues';
 import { BackendService } from 'src/app/modules/querybuilder/service/backend.service';
 
 @Injectable({

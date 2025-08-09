@@ -1,6 +1,6 @@
 import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';

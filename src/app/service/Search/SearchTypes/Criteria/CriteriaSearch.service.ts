@@ -1,19 +1,18 @@
-import { AbstractSearch } from '../../Abstract/AbstractSearch';
 import { AbstractSimpleSearch } from '../../Abstract/AbstractSimpleSearch';
+import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
+import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
 import { CriteriaSearchPaginationService } from './Pagination/CriteriaSearchPagination.service';
 import { CriteriaSearchResultProviderService } from './Result/CriteriaSearchResultProvider.service';
 import { CriteriaSearchStateService } from '../../CriteriaSearchState.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriteriaSearchService extends AbstractSimpleSearch<
-  SearchTermListEntry,
-  SearchTermResultList
+  CriteriaListEntry,
+  CriteriaResultList
 > {
   constructor(
     private paginator: CriteriaSearchPaginationService,
@@ -23,17 +22,17 @@ export class CriteriaSearchService extends AbstractSimpleSearch<
     super(resultProvider);
   }
 
-  public search(searchTerm: string): Observable<SearchTermResultList> {
+  public search(searchTerm: string): Observable<CriteriaResultList> {
     this.setSearchTerm(searchTerm);
     return this.paginator.searchFirstPage(searchTerm);
   }
 
-  public loadNextPage(searchTerm: string): Observable<SearchTermResultList> {
+  public loadNextPage(searchTerm: string): Observable<CriteriaResultList> {
     this.setSearchTerm(searchTerm);
     return this.paginator.loadNextPage(searchTerm);
   }
 
-  public getSearchResults(): Observable<SearchTermResultList> {
+  public getSearchResults(): Observable<CriteriaResultList> {
     return this.resultProviderService.getSearchResults();
   }
 
