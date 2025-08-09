@@ -1,4 +1,4 @@
-import { InterfaceListEntry } from './InterfaceListEntry';
+import { InterfaceListEntry } from '../../../model/Interface/Search/ListEntryData';
 
 /**
  * Represents an abstract search result, extending AbstractTermHashContext.

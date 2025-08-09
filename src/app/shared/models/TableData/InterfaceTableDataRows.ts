@@ -1,4 +1,4 @@
-import { InterfaceListEntry } from 'src/app/shared/models/ListEntries/InterfaceListEntry';
+import { InterfaceListEntry } from 'src/app/model/Interface/Search/ListEntryData';
 
 export interface InterfaceTableDataRow {
   id: string
