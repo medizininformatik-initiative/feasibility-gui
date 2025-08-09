@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 /**
- * ┌─────────────────────────────────────────────────────────────────────────────┐
- * │                    LAYER 1: ABSTRACT MEDIATOR CONTRACT                      │
- * └─────────────────────────────────────────────────────────────────────────────┘
+ * @abstract
  * Pure abstract contract that defines the fundamental mediator interface.
- * This serves as the foundation for all mediator implementations.
+ *
+ * @template C - Type extending AbstractListEntry representing individual search result entries
+ * @template T - Type extending AbstractResultList representing the complete search result list
  */
 @Injectable({
   providedIn: 'root',
@@ -19,28 +19,49 @@ export abstract class AbstractSearchMediatorService<
   C extends AbstractListEntry,
   T extends AbstractResultList<C>
 > {
+  /**
+   * Creates an instance of AbstractSearchMediatorService.
+   *
+   * @param resultProvider - The result provider service for managing search results
+   * @param searchEngine - The search engine for executing search operations
+   * @protected
+   */
   constructor(
     protected resultProvider: AbstractSearchResultProviderService<C, T>,
     protected searchEngine: AbstractSearchEngine<C, T>
   ) {}
 
   /**
-   * Core search method that all mediators must implement.
-   * Coordinates between search engine and result provider.
+   * @abstract
+   * @protected
+   * Core search method that coordinates search execution and result storage.
+   * Executes a search operation and sets the results in the provider.
+   *
+   * @param searchText - The text to search for
+   * @param page - The page number for pagination (0-based)
+   * @param dataSetUrl - Array of dataset URLs to filter the search
+   * @returns An Observable that emits the search results
    */
   protected abstract searchAndSetProvider(
     searchText: string,
     page: number,
-    ...params: any[]
+    dataSetUrl: string[]
   ): Observable<T>;
 
   /**
+   * @abstract
+   * @protected
    * Core update method for pagination and result appending.
-   * Handles result updates in the provider.
+   * Executes a search operation and updates/appends results in the provider.
+   *
+   * @param searchText - The text to search for
+   * @param page - The page number for pagination (0-based)
+   * @param dataSetUrl - Array of dataset URLs to filter the search
+   * @returns An Observable that emits the updated search results
    */
   protected abstract searchAndUpdateProvider(
     searchText: string,
     page: number,
-    ...params: any[]
+    dataSetUrl: string[]
   ): Observable<T>;
 }

@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { InterfaceListEntry } from 'src/app/shared/models/ListEntries/InterfaceListEntry';
+import { InterfaceListEntry } from 'src/app/model/Interface/Search/ListEntryData';
 
 @Injectable({
   providedIn: 'root',

@@ -20,16 +20,6 @@ export class CodeableConceptSearchEngineService extends AbstractKeyedSearchEngin
     super(searchEngine);
   }
 
-  public search(
-    searchText: string,
-    page: number = 0,
-    valueSetUrl: string[]
-  ): Observable<CodeableConceptResultList> {
-    const resultMapper = this.getMapping();
-    const url = this.createUrl(searchText, page, valueSetUrl);
-    return this.searchEngine.fetchAndMapSearchResults(url, resultMapper);
-  }
-
   protected createUrl(searchText: string, page: number, valueSetUrls: string[]): string {
     return new CodeableConceptSearchUrlStrategy(searchText, valueSetUrls).getSearchUrl(page);
   }

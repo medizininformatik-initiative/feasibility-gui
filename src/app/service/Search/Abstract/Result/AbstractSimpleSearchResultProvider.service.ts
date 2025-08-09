@@ -53,16 +53,9 @@ export abstract class AbstractSimpleSearchResultProvider<
   }
 
   /**
-   * Clears the current search result.
+   * Clears all search results (same as clearResults for simple provider).
    */
   public clearResults(): void {
     this.searchResultSubject.next(null);
-  }
-
-  /**
-   * Clears all search results (same as clearResults for simple provider).
-   */
-  public clearAllResults(): void {
-    this.clearResults();
   }
 }

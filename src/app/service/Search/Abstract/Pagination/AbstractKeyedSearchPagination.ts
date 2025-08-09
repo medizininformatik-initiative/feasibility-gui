@@ -6,12 +6,11 @@ import { AbstractKeyedSearchMediator } from '../Mediator/AbstractKeyedSearchMedi
 import { Injectable } from '@angular/core';
 
 /**
- * ┌─────────────────────────────────────────────────────────────────────────────┐
- * │                    LAYER 3: KEYED PAGINATION IMPLEMENTATION                 │
- * └─────────────────────────────────────────────────────────────────────────────┘
+ * @abstract
+ * Abstract pagination implementation for keyed search operations with datasets.
  *
- * Implementation for pagination that works with keyed result sets.
- * Supports multiple concurrent paginations identified by keys (e.g., concept filter IDs).
+ * @template C - Type extending AbstractListEntry representing individual search result entries
+ * @template T - Type extending AbstractResultList representing the complete search result list
  */
 @Injectable({
   providedIn: 'root',
@@ -21,30 +20,60 @@ export abstract class KeyedSearchPagination<
   T extends AbstractResultList<C>
 > extends AbstractSearchPagination<C, T> {
   /**
-   * Map to track current pages for each key.
-   * Key is a stringified array of data set URLs.
+   * Map to track current page numbers for each dataset key.
+   * @protected
    */
   protected keyedPages: Map<string, number> = new Map();
 
   /**
-   * Map to track total results for each key.
-   * Key is a stringified array of data set URLs.
+   * Map to track total result counts for each dataset key.
+   * @protected
    */
   protected keyedTotalResults: Map<string, number> = new Map();
+
+  /**
+   * The number of results per page for pagination calculations.
+   * @protected
+   */
   protected pageSize = 20;
 
+  /**
+   * Creates an instance of KeyedSearchPagination.
+   *
+   * @param mediatorService - The keyed search mediator for coordinating search operations
+   * @protected
+   */
   constructor(protected mediatorService: AbstractKeyedSearchMediator<C, T>) {
     super(mediatorService);
   }
 
   /**
-   * Loads the next page for a specific key.
-   * The first parameter after searchTerm should be the key identifier.
-   * @param searchTerm The text to search for
-   * @param dataSetUrl Array of data set URLs to search within
-   * @returns Observable containing the search results
+   * @protected
+   * Performs the initial search for the first page of results for a specific dataset key.
+   *
+   * @param searchTerm - The search term to query for
+   * @param dataSetUrl - Array of dataset URLs that serve as the pagination key
+   * @returns An Observable that emits the first page of search results
+   * @throws Error when dataSetUrl array is empty
    */
-  public loadNextPage(searchTerm: string, dataSetUrl: string[]): Observable<T> {
+  protected searchFirstPage(searchTerm: string, dataSetUrl: string[]): Observable<T> {
+    if (dataSetUrl.length === 0) {
+      throw new Error('KeyedSearchPagination requires a key parameter');
+    }
+    this.resetPaginationForKey(dataSetUrl);
+    return this.mediatorService.searchAndSetProvider(searchTerm, 0, dataSetUrl);
+  }
+
+  /**
+   * @protected
+   * Loads the next page of results for a specific dataset key.
+   *
+   * @param searchTerm - The search term to query for
+   * @param dataSetUrl - Array of dataset URLs that serve as the pagination key
+   * @returns An Observable that emits the next page of search results
+   * @throws Error when dataSetUrl array is empty
+   */
+  protected loadNextPage(searchTerm: string, dataSetUrl: string[]): Observable<T> {
     if (dataSetUrl.length === 0) {
       throw new Error('KeyedSearchPagination requires a key parameter');
     }
@@ -55,23 +84,34 @@ export abstract class KeyedSearchPagination<
     return this.mediatorService.searchAndUpdateProvider(searchTerm, nextPage, dataSetUrl);
   }
 
+  /**
+   * @private
+   * Uses JSON serialization to create consistent keys for pagination state tracking.
+   *
+   * @param dataSetUrls - Array of dataset URLs to convert to a key
+   * @returns A unique string key representing the dataset URL array
+   */
   private generateKeyFromDataSetUrls(dataSetUrls: string[]): string {
     return JSON.stringify(dataSetUrls);
   }
 
   /**
-   * Resets pagination state for all keys.
+   * @protected
+   * Resets pagination state for all dataset keys.
    */
-  public resetPagination(): void {
+  protected resetPagination(): void {
     super.resetPagination();
     this.keyedPages.clear();
     this.keyedTotalResults.clear();
   }
 
   /**
-   * Resets pagination state for a specific key.
+   * @protected
+   * Resets pagination state for a specific dataset key.
+   *
+   * @param dataSetUrls - Array of dataset URLs to identify the key to reset
    */
-  public resetPaginationForKey(dataSetUrls: string[]): void {
+  protected resetPaginationForKey(dataSetUrls: string[]): void {
     const key = this.generateKeyFromDataSetUrls(dataSetUrls);
     this.keyedPages.set(key, 0);
     this.keyedTotalResults.delete(key);

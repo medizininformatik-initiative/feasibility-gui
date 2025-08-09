@@ -5,33 +5,59 @@ import { MappingStrategy } from '../../Interface/InterfaceMappingStrategy';
 import { Observable } from 'rxjs';
 import { SearchEngine } from '../../SearchEngine';
 
+/**
+ * @abstract
+ * Abstract search engine for keyed search operations with dataset filtering.
+ * Extends AbstractSearchEngine to provide concrete search functionality for multi-context
+ * searches that support key-based filtering and multiple dataset operations.
+ *
+ * @template C - Type extending AbstractListEntry representing individual search result entries
+ * @template T - Type extending AbstractResultList representing the complete search result list
+ */
 export abstract class AbstractKeyedSearchEngineService<
   C extends AbstractListEntry,
   T extends AbstractResultList<C>
 > extends AbstractSearchEngine<C, T> {
+  /**
+   * Creates an instance of AbstractKeyedSearchEngineService.
+   *
+   * @param searchEngine - The underlying search engine service for processing search requests
+   * @protected
+   * @readonly
+   */
   constructor(protected readonly searchEngine: SearchEngine<C, T>) {
     super(searchEngine);
   }
+
   /**
-   * Abstract method to create a search URL based on the search text and other parameters.
-   * @param searchText The text to search for.
-   * @param params Additional parameters for the search.
-   * @returns The constructed search URL.
+   * @abstract
+   * @protected
+   * Creates a search URL for keyed search operations with dataset filtering.
+   *
+   * @param searchText - The text to search for
+   * @param page - The page number for pagination (0-based)
+   * @param dataSetUrls - Array of dataset URLs to filter the search
+   * @returns The constructed search URL as a string
    */
   protected abstract createUrl(searchText: string, page: number, dataSetUrls: string[]): string;
 
   /**
-   * Abstract method to get the mapping strategy for the search results.
-   * @returns An instance of MappingStrategy that defines how to map the search results.
+   * @abstract
+   * @protected
+   * @see {MappingStrategy}
+   * Provides the mapping strategy for transforming keyed search results.
+   *
+   * @returns An instance of MappingStrategy for keyed search result mapping
    */
   protected abstract getMapping(): MappingStrategy<C, T>;
 
   /**
-   * Method to perform a search operation.
-   * @param searchTerm The search term.
-   * @param page The page number for pagination.
-   * @param dataSetUrls Additional dataSetUrls to search within.
-   * @returns An Observable that emits the search results.
+   * Performs a keyed search operation with dataset filtering and pagination support.
+   *
+   * @param searchTerm - The search term to query for
+   * @param page - The page number for pagination
+   * @param dataSetUrls - Array of dataset URLs to search within
+   * @returns An Observable that emits the search results
    */
   public search(searchTerm: string, page: number, dataSetUrls: string[]): Observable<T> {
     const mapping = this.getMapping();

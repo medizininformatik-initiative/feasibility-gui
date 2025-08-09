@@ -145,7 +145,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.searchText = searchText;
     this.searchWithFilterSubscription?.unsubscribe();
     this.searchSubscription?.unsubscribe();
-    this.criteriaSearchService.search(searchText, this.page).subscribe();
+    this.criteriaSearchService.search(searchText).subscribe();
   }
 
   public setSelectedRowItem(item: InterfaceTableDataRow) {

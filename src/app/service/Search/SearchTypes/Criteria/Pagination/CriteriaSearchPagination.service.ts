@@ -9,7 +9,7 @@ export class CriteriaSearchPaginationService extends SimpleSearchPagination<
   SearchTermListEntry,
   SearchTermResultList
 > {
-  constructor(searchService: CriteriaSearchMediatorService) {
-    super(searchService);
+  constructor(protected mediator: CriteriaSearchMediatorService) {
+    super(mediator);
   }
 }

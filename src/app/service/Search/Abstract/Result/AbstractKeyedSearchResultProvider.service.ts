@@ -25,10 +25,11 @@ export abstract class AbstractKeyedSearchResultProvider<
   /**
    * Sets the search result for a specific key.
    *
-   * @param key The key to identify the result set.
+   * @param dataSetUrls These are the keys to identify the result set.
    * @param result The search result to be set.
    */
-  public setSearchResults(key: string, result: T): void {
+  public setSearchResults(dataSetUrls: string[], result: T): void {
+    const key = this.generateKey(dataSetUrls);
     const currentResults = new Map(this.searchResultSubject.value);
     currentResults.set(key, result);
     this.searchResultSubject.next(currentResults);
@@ -37,11 +38,12 @@ export abstract class AbstractKeyedSearchResultProvider<
   /**
    * Updates the search results for a specific key by appending new results.
    *
-   * @param key The key to identify the result set.
+   * @param dataSetUrls These are the keys to identify the result set.
    * @param result The new search results to be appended.
    */
-  public updateSearchResults(key: string, result: T): void {
+  public updateSearchResults(dataSetUrls: string[], result: T): void {
     const currentResults = new Map(this.searchResultSubject.value);
+    const key = this.generateKey(dataSetUrls);
     const existingResult = currentResults.get(key);
 
     if (existingResult) {
@@ -61,7 +63,7 @@ export abstract class AbstractKeyedSearchResultProvider<
    * @returns An Observable of the search result for the given key.
    */
   public getSearchResults(dataSetUrls: string[]): Observable<T | null> {
-    const key = JSON.stringify(dataSetUrls);
+    const key = this.generateKey(dataSetUrls);
     return this.searchResultSubject
       .asObservable()
       .pipe(map((resultsMap) => resultsMap.get(key) ?? null));
@@ -70,9 +72,10 @@ export abstract class AbstractKeyedSearchResultProvider<
   /**
    * Clears the search result for a specific key.
    *
-   * @param key The key to identify the result set to clear.
+   * @param dataSetUrls The dataSetUrls to identify the result set to clear.
    */
-  public clearResults(key: string): void {
+  public clearResults(dataSetUrls: string[]): void {
+    const key = this.generateKey(dataSetUrls);
     const currentResults = new Map(this.searchResultSubject.value);
     if (currentResults.has(key)) {
       currentResults.set(key, null);
@@ -88,31 +91,11 @@ export abstract class AbstractKeyedSearchResultProvider<
   }
 
   /**
-   * Gets all keys that have been used for storing results.
-   *
-   * @returns An array of all keys in the results map.
+   * Generates a unique key for the result set based on the provided dataset URLs.
+   * @param dataSetUrls These are the keys to identify the result set.
+   * @returns
    */
-  public getAllKeys(): string[] {
-    return Array.from(this.searchResultSubject.value.keys());
-  }
-
-  /**
-   * Gets the entire results map as an observable.
-   * Useful for debugging or advanced use cases.
-   *
-   * @returns An Observable of the complete results map.
-   */
-  protected getResultsMap(): Observable<Map<string, T | null>> {
-    return this.searchResultSubject.asObservable();
-  }
-
-  /**
-   * Checks if a specific key exists in the results map.
-   *
-   * @param key The key to check for existence.
-   * @returns True if the key exists, false otherwise.
-   */
-  public hasKey(key: string): boolean {
-    return this.searchResultSubject.value.has(key);
+  private generateKey(dataSetUrls: string[]): string {
+    return JSON.stringify(dataSetUrls);
   }
 }

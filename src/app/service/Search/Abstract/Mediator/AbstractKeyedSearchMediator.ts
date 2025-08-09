@@ -3,16 +3,15 @@ import { AbstractKeyedSearchResultProvider } from '../Result/AbstractKeyedSearch
 import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
 import { AbstractResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/AbstractResultList';
 import { AbstractSearchMediatorService } from './AbstractSearchMediator';
-import { map, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { map, Observable, tap } from 'rxjs';
 
 /**
- * ┌─────────────────────────────────────────────────────────────────────────────┐
- * │                    LAYER 3: KEYED MEDIATOR IMPLEMENTATION                   │
- * └─────────────────────────────────────────────────────────────────────────────┘
+ * @abstract
+ * Abstract mediator implementation for keyed search operations with datasets.
  *
- * Implementation for mediators that work with keyed result sets.
- * Supports multiple concurrent searches identified by keys (e.g., concept filter IDs).
+ * @template C - Type extending AbstractListEntry representing individual search result entries
+ * @template T - Type extending AbstractResultList representing the complete search result list
  */
 @Injectable({
   providedIn: 'root',
@@ -21,6 +20,13 @@ export abstract class AbstractKeyedSearchMediator<
   C extends AbstractListEntry,
   T extends AbstractResultList<C>
 > extends AbstractSearchMediatorService<C, T> {
+  /**
+   * Creates an instance of AbstractKeyedSearchMediator.
+   *
+   * @param resultProvider - The keyed result provider for managing search results by dataset URLs
+   * @param searchEngine - The keyed search engine for executing dataset-filtered searches
+   * @protected
+   */
   constructor(
     protected resultProvider: AbstractKeyedSearchResultProvider<C, T>,
     protected searchEngine: AbstractKeyedSearchEngineService<C, T>
@@ -29,37 +35,36 @@ export abstract class AbstractKeyedSearchMediator<
   }
 
   /**
-   * Performs search and sets results for a specific key.
-   * The first parameter after page should be the key identifier.
-   * @param searchText The text to search for
-   * @param page The page number for pagination
-   * @param dataSetUrl Array of data set URLs to search within
-   * @returns Observable containing the search results
+   * Performs a keyed search operation and sets the results for the specified dataset URLs.
+   *
+   * @param searchText - The text to search for
+   * @param page - The page number for pagination (defaults to 0)
+   * @param dataSetUrl - Array of dataset URLs that serve as keys for result storage
+   * @returns An Observable that emits the search results
+   * @throws Error when dataSetUrl array is empty
    */
   public searchAndSetProvider(
     searchText: string,
     page: number = 0,
     dataSetUrl: string[]
   ): Observable<T> {
-    console.log('search', searchText, page, dataSetUrl);
     if (dataSetUrl.length === 0) {
       throw new Error('KeyedSearchMediatorService requires a key parameter for search operations');
     }
-    return this.searchEngine.search(searchText, page, dataSetUrl).pipe(
-      map((result) => {
-        this.resultProvider.setSearchResults(JSON.stringify(dataSetUrl), result);
-        return result;
-      })
-    );
+    return this.searchEngine
+      .search(searchText, page, dataSetUrl)
+      .pipe(tap((result) => this.resultProvider.setSearchResults(dataSetUrl, result)));
   }
 
   /**
-   * Performs search and updates results for a specific key.
-   * Used for pagination - appends results to existing data for the given key.
-   * @param searchText The text to search for
-   * @param page The page number for pagination
-   * @param dataSetUrl Array of data set URLs to search within
-   * @returns Observable containing the search results
+   * Performs a keyed search operation and updates existing results for the specified dataset URLs.
+   * Used for pagination scenarios where new results need to be appended to existing data.
+   *
+   * @param searchText - The text to search for
+   * @param page - The page number for pagination
+   * @param dataSetUrl - Array of dataset URLs that serve as keys for result updates
+   * @returns An Observable that emits the updated search results
+   * @throws Error when dataSetUrl array is empty
    */
   public searchAndUpdateProvider(
     searchText: string,
@@ -69,11 +74,8 @@ export abstract class AbstractKeyedSearchMediator<
     if (dataSetUrl.length === 0) {
       throw new Error('KeyedSearchMediatorService requires a key parameter for update operations');
     }
-    return this.searchEngine.search(searchText, page, dataSetUrl).pipe(
-      map((result) => {
-        this.resultProvider.updateSearchResults(JSON.stringify(dataSetUrl), result);
-        return result;
-      })
-    );
+    return this.searchEngine
+      .search(searchText, page, dataSetUrl)
+      .pipe(tap((result) => this.resultProvider.updateSearchResults(dataSetUrl, result)));
   }
 }

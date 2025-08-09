@@ -10,6 +10,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
+import { CriteriaSetSearchService } from 'src/app/service/Search/SearchTypes/CriteriaSet/CriteriaSetSearch.service';
 
 interface selectedItem {
   id: string
@@ -48,15 +49,14 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   constructor(
     private activeSearchTermService: ActiveSearchTermService,
-    private searchService: SearchService,
-    private searchResultProviderService: SearchResultProvider,
+    private searchService: CriteriaSetSearchService,
     private selectedTableItemsService: SelectedTableItemsService<ReferenceCriteriaListEntry>
   ) {}
 
   ngOnInit() {
     this.startElasticSearch('');
-    this.subscription = this.searchResultProviderService
-      .getCriteriaSetSearchResults()
+    this.subscription = this.searchService
+      .getSearchResults([this.referenceFilterUri])
       .subscribe((searchTermResults) => {
         if (searchTermResults) {
           this.listItems = searchTermResults.results;
@@ -106,11 +106,9 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   startElasticSearch(searchtext: string) {
     if (this.referenceFilterUri?.length > 0) {
-      this.searchService
-        .searchCriteriaSets(searchtext, this.referenceFilterUri)
-        .subscribe((test) => {
-          this.listItems = test.results;
-        });
+      this.searchService.search(searchtext, [this.referenceFilterUri]).subscribe((test) => {
+        this.listItems = test.results;
+      });
     } else {
       console.warn('No referenceCriteriaUrl was provided');
     }

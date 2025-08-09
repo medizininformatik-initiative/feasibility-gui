@@ -1,6 +1,5 @@
 import { AbstractSearch } from '../../Abstract/AbstractSearch';
 import { AbstractSimpleSearch } from '../../Abstract/AbstractSimpleSearch';
-import { CriteriaSearchMediatorService } from './Mediator/CriteriaSearchMediator.service';
 import { CriteriaSearchPaginationService } from './Pagination/CriteriaSearchPagination.service';
 import { CriteriaSearchResultProviderService } from './Result/CriteriaSearchResultProvider.service';
 import { CriteriaSearchStateService } from '../../CriteriaSearchState.service';
@@ -17,7 +16,6 @@ export class CriteriaSearchService extends AbstractSimpleSearch<
   SearchTermResultList
 > {
   constructor(
-    private mediator: CriteriaSearchMediatorService,
     private paginator: CriteriaSearchPaginationService,
     resultProvider: CriteriaSearchResultProviderService,
     private criteriaSearchStateService: CriteriaSearchStateService
@@ -25,10 +23,9 @@ export class CriteriaSearchService extends AbstractSimpleSearch<
     super(resultProvider);
   }
 
-  public search(searchTerm: string, page = 0): Observable<SearchTermResultList> {
-    this.paginator.resetPagination();
+  public search(searchTerm: string): Observable<SearchTermResultList> {
     this.setSearchTerm(searchTerm);
-    return this.mediator.searchAndSetProvider(searchTerm, page);
+    return this.paginator.searchFirstPage(searchTerm);
   }
 
   public loadNextPage(searchTerm: string): Observable<SearchTermResultList> {

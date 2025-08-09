@@ -4,44 +4,61 @@ import { AbstractSearchMediatorService } from '../Mediator/AbstractSearchMediato
 import { Observable } from 'rxjs';
 
 /**
- * ═══════════════════════════════════════════════════════════════════════════════
- *                       CLEAN 3-LAYER PAGINATION ARCHITECTURE
- * ═══════════════════════════════════════════════════════════════════════════════
+ * @abstract
+ * Serves as the foundation for all pagination implementations, managing page state
+ * and coordinating with mediator services for paginated search operations.
  *
- * Layer 1: AbstractSearchPagination - Pure contract definition
- * Layer 2: SimpleSearchPagination - Single result set pagination
- * Layer 3: KeyedSearchPagination - Multi-keyed result set pagination
- *
- * This architecture provides clean separation of concerns and supports both
- * simple pagination (single result set) and complex pagination (multiple keyed result sets).
- */
-
-/**
- * ┌─────────────────────────────────────────────────────────────────────────────┐
- * │                    LAYER 1: ABSTRACT PAGINATION CONTRACT                    │
- * └─────────────────────────────────────────────────────────────────────────────┘
- *
- * Pure abstract contract that defines the fundamental pagination interface.
- * This serves as the foundation for all pagination implementations.
+ * @template C - Type extending AbstractListEntry representing individual search result entries
+ * @template T - Type extending AbstractResultList representing the complete search result list
  */
 export abstract class AbstractSearchPagination<
   C extends AbstractListEntry,
   T extends AbstractResultList<C>
 > {
+  /**
+   * The current page number for pagination tracking.
+   * @protected
+   */
   protected currentPage = 0;
 
+  /**
+   * Creates an instance of AbstractSearchPagination.
+   *
+   * @param mediatorService - The mediator service for coordinating search operations
+   * @protected
+   */
   constructor(protected mediatorService: AbstractSearchMediatorService<C, T>) {}
 
   /**
+   * @protected
    * Resets pagination state to initial values.
+   * Sets the current page back to 0 for new search operations.
    */
-  public resetPagination(): void {
+  protected resetPagination(): void {
     this.currentPage = 0;
   }
 
   /**
-   * Core pagination method that all implementations must define.
-   * Handles loading the next page of results.
+   * @abstract
+   * @protected
+   * Core pagination method that handles loading the next page of results.
+   * Implementations must define how to retrieve subsequent pages of search results.
+   *
+   * @param searchTerm - The search term to search for
+   * @param params - Additional parameters for the search operation
+   * @returns An Observable that emits the next page of search results
    */
-  public abstract loadNextPage(searchTerm: string, ...params: any[]): Observable<T>;
+  protected abstract loadNextPage(searchTerm: string, ...params: any[]): Observable<T>;
+
+  /**
+   * @abstract
+   * @protected
+   * Searches for the first page of results and resets pagination state.
+   * Implementations must define how to initiate a new paginated search.
+   *
+   * @param searchTerm - The search term to search for
+   * @param dataSetUrls - Optional array of dataset URLs to search within
+   * @returns An Observable that emits the first page of search results
+   */
+  protected abstract searchFirstPage(searchTerm: string, dataSetUrls?: string[]): Observable<T>;
 }

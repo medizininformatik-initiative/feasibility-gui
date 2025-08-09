@@ -51,7 +51,7 @@ export class CodeableConceptSearchMediatorService extends AbstractKeyedSearchMed
    * @param page The page number for pagination
    * @returns Observable containing the search results
    */
-  public searchAndAppendCodeableConcepts(
+  public searchAndUpdateCodeableConceptResults(
     searchText: string,
     valueSetUrls: string[],
     page: number

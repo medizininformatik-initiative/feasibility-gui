@@ -5,32 +5,56 @@ import { Observable } from 'rxjs';
 import { SearchEngine } from '../../SearchEngine';
 import { AbstractSearchEngine } from './AbstractSearchEngine';
 
+/**
+ * @abstract
+ * Abstract search engine for simple search operations without dataset filtering.
+ * Extends AbstractSearchEngine to provide concrete search functionality for single-context
+ * searches that don't require key-based filtering or multiple dataset support.
+ *
+ * @template C - Type extending AbstractListEntry representing individual search result entries
+ * @template T - Type extending AbstractResultList representing the complete search result list
+ */
 export abstract class AbstractSimpleSearchEngine<
   C extends AbstractListEntry,
   T extends AbstractResultList<C>
 > extends AbstractSearchEngine<C, T> {
+  /**
+   * Creates an instance of AbstractSimpleSearchEngine.
+   *
+   * @param searchEngine - The underlying search engine service for processing search requests
+   * @protected
+   * @readonly
+   */
   constructor(protected readonly searchEngine: SearchEngine<C, T>) {
     super(searchEngine);
   }
+
   /**
-   * Abstract method to create a search URL based on the search text and other parameters.
-   * @param searchText The text to search for.
-   * @param params Additional parameters for the search.
-   * @returns The constructed search URL.
+   * @abstract
+   * @protected
+   * Creates a search URL for simple search operations.
+   *
+   * @param searchText - The text to search for
+   * @param page - The page number for pagination (0-based)
+   * @returns The constructed search URL as a string
    */
   protected abstract createUrl(searchText: string, page: number): string;
 
   /**
-   * Abstract method to get the mapping strategy for the search results.
-   * @returns An instance of MappingStrategy that defines how to map the search results.
+   * @abstract
+   * @protected
+   * Provides the mapping strategy for transforming simple search results.
+   * @see {MappingStrategy}
+   * @returns An instance of MappingStrategy for simple search result mapping
    */
   protected abstract getMapping(): MappingStrategy<C, T>;
 
   /**
-   * Method to perform a search operation.
-   * @param searchTerm The search term.
-   * @param page The page number for pagination.
-   * @returns An Observable that emits the search results.
+   * Performs a simple search operation with pagination support.
+   *
+   * @param searchTerm - The search term to query for
+   * @param page - The page number for pagination
+   * @returns An Observable that emits the search results
    */
   public search(searchTerm: string, page: number): Observable<T> {
     const mapping = this.getMapping();

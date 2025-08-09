@@ -31,10 +31,9 @@ export class SearchConceptComponent implements OnDestroy, OnInit {
    * @param searchtext The text to search for.
    */
   public startElasticSearch(searchtext: string): void {
-    const page = 0;
     this.searchSubscription?.unsubscribe();
     this.searchSubscription = this.conceptFilterSearchService
-      .search(searchtext, page, this.valueSetUrl)
+      .search(searchtext, this.valueSetUrl)
       .subscribe(
         (result) => {
           this.searchResults = result;

@@ -21,46 +21,43 @@ export class CodeableConceptSearchResultProviderService extends AbstractKeyedSea
 
   /**
    * Sets the search results for a specific concept filter.
-   *
-   * @param conceptFilterId The concept filter ID to identify the result set.
+   * @param valueSetUrls The value set URLs to identify the result set.
    * @param result The search result to be set.
    */
-  public setConceptFilterResults(conceptFilterId: string, result: CodeableConceptResultList): void {
-    this.setSearchResults(conceptFilterId, result);
+  public setConceptFilterResults(valueSetUrls: string[], result: CodeableConceptResultList): void {
+    this.setSearchResults(valueSetUrls, result);
   }
 
   /**
    * Gets the search results for a specific concept filter as an observable.
-   *
-   * @param conceptFilterId The concept filter ID to get results for.
+   * @param valueSetUrls The value set URLs to identify the result set.
    * @returns An Observable of the search results for the given concept filter.
    */
   public getConceptFilterResults(
-    conceptFilterId: string[]
+    valueSetUrls: string[]
   ): Observable<CodeableConceptResultList | null> {
-    return this.getSearchResults(conceptFilterId);
+    return this.getSearchResults(valueSetUrls);
   }
 
   /**
    * Updates the search results for a specific concept filter by appending new results.
    *
-   * @param conceptFilterId The concept filter ID to identify the result set.
+   * @param valueSetUrls The value set URLs to identify the result set.
    * @param result The new search results to be appended.
    */
   public updateConceptFilterResults(
-    conceptFilterId: string,
+    valueSetUrls: string[],
     result: CodeableConceptResultList
   ): void {
-    this.updateSearchResults(conceptFilterId, result);
+    this.updateSearchResults(valueSetUrls, result);
   }
 
   /**
    * Clears the search results for a specific concept filter.
-   *
-   * @param conceptFilterId The concept filter ID to clear results for.
+   * @param valueSetUrls The value set URLs to identify the result set.
    */
-  public clearConceptFilterResults(conceptFilterId: string): void {
-    this.clearResults(conceptFilterId);
+  public clearConceptFilterResults(valueSetUrls: string[]): void {
+    this.clearResults(valueSetUrls);
   }
 
   /**
@@ -68,24 +65,5 @@ export class CodeableConceptSearchResultProviderService extends AbstractKeyedSea
    */
   public clearAllConceptResults(): void {
     this.clearAllResults();
-  }
-
-  /**
-   * Gets all concept filter IDs that have stored results.
-   *
-   * @returns An array of all concept filter IDs.
-   */
-  public getAllConceptFilterIds(): string[] {
-    return this.getAllKeys();
-  }
-
-  /**
-   * Checks if a specific concept filter has stored results.
-   *
-   * @param conceptFilterId The concept filter ID to check.
-   * @returns True if the concept filter has stored results, false otherwise.
-   */
-  public hasConceptFilterResults(conceptFilterId: string): boolean {
-    return this.hasKey(conceptFilterId);
   }
 }

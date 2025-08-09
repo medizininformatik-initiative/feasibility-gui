@@ -1,12 +1,16 @@
+import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch';
 import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
-import { CodeableConceptSearchMediatorService } from './Mediator/CodeableConceptSearchMediator.service';
 import { CodeableConceptSearchPaginationService } from './Pagination/CodeableConceptSearchPagination.service';
 import { CodeableConceptSearchResultProviderService } from './Result/CodeableConceptSearchResultProvider.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch';
 
+/**
+ * Service for performing codeable concept searches with value set filtering.
+ * Extends AbstractKeyedSearch to provide specific functionality for searching
+ * codeable concepts within specified value sets with pagination support.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -14,30 +18,51 @@ export class CodeableConceptSearchService extends AbstractKeyedSearch<
   CodeableConceptResultListEntry,
   CodeableConceptResultList
 > {
+  /**
+   * Creates an instance of CodeableConceptSearchService.
+   *
+   * @param resultProvider - The result provider for managing codeable concept search results
+   * @param paginationService - The pagination service for handling paginated searches
+   */
   constructor(
     resultProvider: CodeableConceptSearchResultProviderService,
-    private mediator: CodeableConceptSearchMediatorService,
-    private codeableConceptPaginationService: CodeableConceptSearchPaginationService
+    private paginationService: CodeableConceptSearchPaginationService
   ) {
     super(resultProvider);
   }
 
-  public search(
-    searchText: string,
-    page: number = 0,
-    valueSetUrl: string[]
-  ): Observable<CodeableConceptResultList> {
-    this.codeableConceptPaginationService.resetPagination();
-    return this.mediator.searchAndSetProvider(searchText, page, valueSetUrl);
+  /**
+   * Performs a new codeable concept search within the specified value sets.
+   *
+   * @param searchText - The text to search for within codeable concepts
+   * @param valueSetUrls - Array of value set URLs to search within
+   * @returns An Observable that emits the first page of codeable concept search results
+   */
+  public search(searchText: string, valueSetUrls: string[]): Observable<CodeableConceptResultList> {
+    return this.paginationService.searchFirstPageOfCodeableConcept(searchText, valueSetUrls);
   }
 
+  /**
+   * Loads the next page of results for a previously executed codeable concept search.
+   *
+   * @param searchText - The original search text
+   * @param valueSetUrls - Array of value set URLs used in the original search
+   * @returns An Observable that emits the next page of codeable concept search results
+   */
   public loadNextPage(
     searchText: string,
     valueSetUrls: string[]
   ): Observable<CodeableConceptResultList> {
-    return this.codeableConceptPaginationService.loadNextPage(searchText, valueSetUrls);
+    return this.paginationService.loadNextPageOfCodeableConceptResults(searchText, valueSetUrls);
   }
 
+  /**
+   * @protected
+   * Sets the current search term for internal state management.
+   * Currently a placeholder implementation - extend as needed for specific requirements.
+   *
+   * @param searchTerm - The search term to set
+   */
   protected setSearchTerm(searchTerm: string): void {
     // Implement logic to set the search term if needed
   }

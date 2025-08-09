@@ -24,25 +24,4 @@ export class SearchResultSetterService {
   public setCriteriaSearchResults(result: SearchTermResultList): void {
     this.criteriaResultProvider.setSearchResults(result);
   }
-
-  /**
-   * Sets the criteria set search results.
-   *
-   * @param result The ReferenceCriteriaResultList to set.
-   */
-  public setCriteriaSetSearchResults(result: ReferenceCriteriaResultList): void {
-    this.criteriaSetResultProvider.setSearchResults(result);
-  }
-
-  /**
-   * Sets the codeable concept search results.
-   *
-   * @param result The CodeableConceptResultList to set.
-   */
-  public setCodeableConceptSearchResults(
-    result: CodeableConceptResultList,
-    conceptFilterId: string
-  ): void {
-    this.codeableConceptResultProvider.setSearchResults(conceptFilterId, result);
-  }
 }
