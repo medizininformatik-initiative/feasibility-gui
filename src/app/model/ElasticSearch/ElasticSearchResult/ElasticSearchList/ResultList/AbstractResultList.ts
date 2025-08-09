@@ -1,6 +1,6 @@
-import { InterfaceResultList } from './InterfaceResultList';
+import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
 
-export abstract class AbstractResultList<T> implements InterfaceResultList<T> {
+export abstract class AbstractResultList<T> implements ResultListData<T> {
   totalHits: number;
   results: Array<T>;
 
