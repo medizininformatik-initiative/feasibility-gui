@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SearchTermDetails } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermDetails';
+import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
 
 @Injectable({
   providedIn: 'root',

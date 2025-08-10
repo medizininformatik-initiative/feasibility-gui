@@ -1,6 +1,6 @@
 import { AbstractSimpleSearch } from '../../Abstract/AbstractSimpleSearch';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 import { CriteriaSearchPaginationService } from './Pagination/CriteriaSearchPagination.service';
 import { CriteriaSearchResultProviderService } from './Result/CriteriaSearchResultProvider.service';
 import { CriteriaSearchStateService } from '../../CriteriaSearchState.service';

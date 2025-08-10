@@ -1,7 +1,7 @@
 import { CriteriaSearchResultProviderService } from '../SearchTypes/Criteria/Result/CriteriaSearchResultProvider.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 
 @Injectable({
   providedIn: 'root',

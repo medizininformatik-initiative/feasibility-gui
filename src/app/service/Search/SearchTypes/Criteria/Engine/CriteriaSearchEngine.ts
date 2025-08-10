@@ -1,6 +1,6 @@
 import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 import { CriteriaResultMapperStrategy } from '../Mapping/CriteriaResultMapperStrategy';
 import { CriteriaSearchUrlStrategy } from '../Url/CriteriaSearchUrlStrategy';
 import { Injectable } from '@angular/core';

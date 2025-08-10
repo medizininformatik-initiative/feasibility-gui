@@ -1,49 +1,47 @@
 import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
-import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
+import { ReferenceCriteriaListEntryData } from 'src/app/model/Interface/Search/ReferenceCriteriaListEntryData';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriteriaResultListData } from 'src/app/model/Interface/Search/RefrenceCriteriaResultListData';
+import { TypeGuard } from 'src/app/service/TypeGuard/TypeGuard';
 
 export class CriteriaSetResultMapperStrategy
   implements MappingStrategy<ReferenceCriteriaListEntry, ReferenceCriteriaResultList>
 {
-  public mapResponseToResultList(response: any): ReferenceCriteriaResultList {
+  /**
+   * Maps the API response to a ReferenceCriteriaResultList.
+   * @param response The API response object
+   * @returns A mapped ReferenceCriteriaResultList
+   */
+  public mapResponseToResultList(
+    response: ReferenceCriteriaResultListData
+  ): ReferenceCriteriaResultList {
     const listItems: ReferenceCriteriaListEntry[] = this.mapResponseToEntries(response.results);
     return new ReferenceCriteriaResultList(response.totalHits, listItems);
   }
 
-  public mapResponseToEntries(results: any[]): ReferenceCriteriaListEntry[] {
-    return results.map(
-      (resultItem) =>
-        new ReferenceCriteriaListEntry(
-          this.instantiateDisplayData(resultItem.display),
-          this.createTerminologyCode(resultItem),
-          resultItem.id
-        )
-    );
-  }
-
-  private createTerminologyCode(resultItem: any) {
-    return new TerminologyCode(
-      resultItem.termcode,
-      resultItem.name,
-      resultItem.terminology,
-      undefined
+  /**
+   * Maps the API response entries to a list of ReferenceCriteriaListEntry.
+   * @param results The API response entries
+   * @returns A list of mapped ReferenceCriteriaListEntry
+   */
+  public mapResponseToEntries(
+    results: ReferenceCriteriaListEntryData[]
+  ): ReferenceCriteriaListEntry[] {
+    return results.map((resultItem: ReferenceCriteriaListEntryData) =>
+      this.mapReferenceCriteriaListEntry(resultItem)
     );
   }
 
   /**
-   *
-   * @param data @todo need to outsource this to a service
-   * @returns
+   * Maps a single API response entry to a ReferenceCriteriaListEntry.
+   * @param resultItem The API response entry
+   * @returns A mapped ReferenceCriteriaListEntry
    */
-  public instantiateDisplayData(data: any) {
-    return new Display(
-      data.translations?.map(
-        (translation) => new Translation(translation.language, translation.value)
-      ),
-      data.original
-    );
+  private mapReferenceCriteriaListEntry(
+    resultItem: ReferenceCriteriaListEntryData
+  ): ReferenceCriteriaListEntry {
+    TypeGuard.isReferenceCriteriaListEntryData(resultItem);
+    return ReferenceCriteriaListEntry.fromJson(resultItem);
   }
 }

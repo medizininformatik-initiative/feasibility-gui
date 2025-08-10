@@ -1,7 +1,7 @@
 import { AbstractSimpleSearchResultProvider } from '../../../Abstract/Result/AbstractSimpleSearchResultProvider.service';
 import { Injectable } from '@angular/core';
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 
 @Injectable({
   providedIn: 'root',

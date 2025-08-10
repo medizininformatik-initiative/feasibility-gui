@@ -1,5 +1,5 @@
 import { CriteriaResulByIdMapperStrategy } from './Mapping/CriteriaResulByIdMapperStrategy';
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { SearchResultSetterService } from '../../Result/SearchResultSetter.service';

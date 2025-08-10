@@ -1,55 +1,25 @@
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
+import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
 
 export class CriteriaResulByIdMapperStrategy
   implements MappingStrategy<CriteriaListEntry, CriteriaResultList>
 {
-  public mapResponseToResultList(response: any): CriteriaResultList {
-    const listItems: CriteriaListEntry[] = this.mapResponseToEntries(response);
-    return new CriteriaResultList(1, listItems);
-  }
-
-  public mapResponseToEntries(results: any): CriteriaListEntry[] {
-    const entry = new CriteriaListEntry(
-      results.availability,
-      results.selectable,
-      results.terminology,
-      results.termcode,
-      results.kdsModule,
-      this.instantiateDisplayData(results.display),
-      results.id,
-      results.context
-    );
-
-    return [entry];
-  }
-
   /**
-   *
-   * @param data @todo need to outsource this to a service
-   * @returns
+   * This is a special case where a single entry is only fetched. To collaborate with the interface MappingStrategy
+   * the response is turned into an array and then again into a CriteriaResultList.
+   * Maps a single response to a result list.
+   * @param response The response data to map.
+   * @returns The mapped result list.
    */
-  public instantiateDisplayData(data: any) {
-    return new Display(
-      data.translations?.map(
-        (translation) => new Translation(translation.language, translation.value)
-      ),
-      data.original
-    );
+  public mapResponseToResultList(response: CriteriaListEntryData): CriteriaResultList {
+    const listItems: CriteriaListEntry[] = this.mapResponseToEntries([response]);
+    const totalHits = 1;
+    return new CriteriaResultList(totalHits, listItems);
   }
 
-  public checkValuesForTypeString(value: string | string[]): string[] {
-    if (typeof value == 'string') {
-      if (value.length > 0) {
-        return [value];
-      } else {
-        return [];
-      }
-    } else {
-      return value;
-    }
+  public mapResponseToEntries(results: CriteriaListEntryData[]): CriteriaListEntry[] {
+    return results.map((entry) => CriteriaListEntry.fromJson(entry));
   }
 }

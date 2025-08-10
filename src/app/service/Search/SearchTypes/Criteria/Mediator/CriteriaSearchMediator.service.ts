@@ -1,6 +1,6 @@
 import { AbstractSimpleSearchMediator } from '../../../Abstract/Mediator/AbstractSimpleSearchMediator';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 import { CriteriaSearchEngineService } from '../Engine/CriteriaSearchEngine';
 import { CriteriaSearchResultProviderService } from '../Result/CriteriaSearchResultProvider.service';
 import { Injectable } from '@angular/core';

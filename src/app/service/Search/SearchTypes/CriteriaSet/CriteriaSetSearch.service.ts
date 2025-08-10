@@ -1,5 +1,5 @@
-import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
-import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
 import { CriteriaSetSearchMediatorService } from './Mediator/CriteriaSetSearchMediator.service';
 import { CriteriaSetSearchPaginationService } from './Pagination/CriteriaSetSearchPagination.service';
 import { CriteriaSetSearchResultProviderService } from './Result/CriteriaSetSearchResultProvider.service ';
@@ -11,9 +11,6 @@ import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch';
  * Service for performing criteria set searches with criteria set filtering.
  * Extends AbstractKeyedSearch to provide specific functionality for searching
  * reference criteria within specified criteria sets with pagination support.
- *
- * @since 1.0.0
- * @author Feasibility GUI Team
  */
 @Injectable({
   providedIn: 'root',

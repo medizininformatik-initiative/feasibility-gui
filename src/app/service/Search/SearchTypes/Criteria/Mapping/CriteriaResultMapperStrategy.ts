@@ -1,50 +1,33 @@
 import { AbstractResultMapper } from '../../../Abstract/Mapping/AbstractResultMapper';
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
+import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
+import { TypeAssertion } from 'src/app/service/TypeGuard/TypeAssersations';
 export class CriteriaResultMapperStrategy extends AbstractResultMapper<
   CriteriaListEntry,
   CriteriaResultList
 > {
+  /**
+   * Maps the API response to a CriteriaResultList.
+   * @param response The API response object.
+   * @returns A CriteriaResultList instance.
+   */
   public mapResponseToResultList(response: any): CriteriaResultList {
     const listItems: CriteriaListEntry[] = this.mapResponseToEntries(response.results);
     return new CriteriaResultList(response.totalHits, listItems);
   }
 
   /**
-   *
-   * @param results
-   * @returns
-   * @todo create Instance of displayData and Translation
+   * Maps the API response to an array of CriteriaListEntry instances.
+   * @param results The array of CriteriaListEntryData objects.
+   * @returns An array of CriteriaListEntry instances.
    */
-  public mapResponseToEntries(results: any[]): CriteriaListEntry[] {
-    return results.map(
-      (resultItem: any) =>
-        new CriteriaListEntry(
-          resultItem.availability,
-          resultItem.selectable,
-          resultItem.terminology,
-          resultItem.termcode,
-          resultItem.kdsModule,
-          this.instantiateDisplayData(resultItem.display),
-          resultItem.id,
-          resultItem.context
-        )
-    );
+  public mapResponseToEntries(results: CriteriaListEntryData[]): CriteriaListEntry[] {
+    return results.map((resultItem: CriteriaListEntryData) => this.mapCriteriaListEntry(resultItem));
   }
 
-  /**
-   *
-   * @param data @todo need to outsource this to a service
-   * @returns
-   */
-  public instantiateDisplayData(data: any) {
-    return new Display(
-      data.translations?.map(
-        (translation) => new Translation(translation.language, translation.value)
-      ),
-      data.original
-    );
+  private mapCriteriaListEntry(data: CriteriaListEntryData): CriteriaListEntry {
+    TypeAssertion.assertCriteriaListListEntryData(data);
+    return CriteriaListEntry.fromJson(data);
   }
 }

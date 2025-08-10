@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { SearchTermDetails } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermDetails';
-import { SearchTermTranslation } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermTranslation';
-import { SearchTermRelatives } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermRelatives';
+import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
+import { SearchTermTranslation } from 'src/app/model/Search/SearchDetails/SearchTermTranslation';
+import { SearchTermRelatives } from 'src/app/model/Search/SearchDetails/SearchTermRelatives';
 import { SearchTermDetailsProviderService } from './SearchTermDetailsProvider.service';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
 import { Display } from '../../../model/DataSelection/Profile/Display';

@@ -3,8 +3,8 @@ import { CriteriaSetResultMapperStrategy } from '../Mapper/CriteriaSetResultMapp
 import { CriteriaSetSearchUrlStrategy } from '../Url/CriteriaSetSearchUrlStrategy';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
 import { SearchEngine } from '../../../SearchEngine';
 
 /**
