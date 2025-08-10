@@ -1,11 +1,11 @@
-import { CriteriaListEntry } from '../../ListEntries/CriteriaListListEntry';
+import { CriteriaListEntry } from '../../../../model/Search/ListEntries/CriteriaListListEntry';
 import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
 import { TableData } from '../InterfaceTableData';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
-export class SearchTermListEntryAdapter {
+export class CriteriaListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
     headers: ['NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'],
   };
@@ -23,7 +23,7 @@ export class SearchTermListEntryAdapter {
       id: listEntry.getId(),
       data: [
         listEntry.getDisplay(),
-        SearchTermListEntryAdapter.changeAvailabilityDisplay(listEntry.getAvailability()),
+        CriteriaListEntryAdapter.changeAvailabilityDisplay(listEntry.getAvailability()),
         TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology()),
         listEntry.getTermcode(),
         listEntry.getContext(),
@@ -38,6 +38,6 @@ export class SearchTermListEntryAdapter {
 
     const body: InterfaceTableDataBody = { rows };
 
-    return { header: SearchTermListEntryAdapter.headers, body };
+    return { header: CriteriaListEntryAdapter.headers, body };
   }
 }
