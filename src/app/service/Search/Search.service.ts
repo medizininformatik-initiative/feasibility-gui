@@ -1,11 +1,11 @@
 import { CodeableConceptSearchEngineService } from './SearchTypes/CodeableConcept/Engine/CodeableConceptSearchEngine.service';
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 import { CriteriaSearchMediatorService } from './SearchTypes/Criteria/Mediator/CriteriaSearchMediator.service';
 import { CriteriaSearchSigleEntryEngineService } from './SearchTypes/CriteriaById/CriteriaSearchSingleEntryEngine.service';
 import { CriteriaSetSearchService } from './SearchTypes/CriteriaSet/CriteriaSetSearch.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ReferenceCriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
 
 /**
  * Main search service providing unified access to all search functionality.

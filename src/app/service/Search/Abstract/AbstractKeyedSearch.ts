@@ -1,6 +1,6 @@
 import { AbstractKeyedSearchResultProvider } from './Result/AbstractKeyedSearchResultProvider.service';
-import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
-import { AbstractResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/AbstractResultList';
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
+import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList';
 import { AbstractSearch } from './AbstractSearch';
 import { Observable } from 'rxjs';
 

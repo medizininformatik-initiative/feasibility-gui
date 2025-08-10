@@ -1,5 +1,5 @@
-import { AbstractListEntry } from 'src/app/shared/models/ListEntries/AbstractListEntry';
-import { AbstractResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/AbstractResultList';
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
+import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList';
 import { AbstractResultMapper } from './Abstract/Mapping/AbstractResultMapper';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { FilterProvider } from './Filter/SearchFilterProvider.service';
