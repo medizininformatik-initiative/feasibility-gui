@@ -1,5 +1,5 @@
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { AbstractListEntry } from './AbstractListEntry';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { ReferenceCriteriaListEntryData } from '../../Interface/Search/ReferenceCriteriaListEntryData';
 
 export class ReferenceCriteriaListEntry extends AbstractListEntry {
