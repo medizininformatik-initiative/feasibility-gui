@@ -29,6 +29,7 @@ export class SelectedConceptFilterProviderService {
   }
 
   public addConcept(concept: Concept): void {
+    console.log('Adding concept:', concept);
     const currentArray = this.selectedConceptsSubject.getValue();
     if (
       !currentArray.some(

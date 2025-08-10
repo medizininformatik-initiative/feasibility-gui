@@ -6,9 +6,9 @@ import { FeasibilityQueryProviderService } from '../../../../../service/Provider
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { map, Observable, of } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 
 @Component({
   selector: 'num-search-action-bar',

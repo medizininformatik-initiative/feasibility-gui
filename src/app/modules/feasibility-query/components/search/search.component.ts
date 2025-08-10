@@ -1,6 +1,6 @@
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
-import { CriteriaResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CriteriaResultList';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
@@ -8,12 +8,12 @@ import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/Interface
 import { map, Observable, of, Subscription } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
-import { SearchTermDetails } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermDetails';
+import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
 import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import {
   AfterViewInit,
@@ -79,7 +79,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   ) {
     this.subscription = this.criteriaSearchService
       .getSearchResults()
-      .subscribe((results) => this.handleSearchResults(results?.results || []));
+      .subscribe((results) => this.handleSearchResults(results?.getResults() || []));
   }
 
   ngOnInit() {
@@ -150,7 +150,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   public setSelectedRowItem(item: InterfaceTableDataRow) {
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
-    const itemId = item.originalEntry.id;
+    const itemId = item.originalEntry.getId();
     if (selectedIds.includes(itemId)) {
       this.selectedTableItemsService.removeFromSelection(item.originalEntry as CriteriaListEntry);
     } else {
@@ -161,7 +161,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   public setClickedRow(row: InterfaceTableDataRow) {
     const originalEntry = row.originalEntry as CriteriaListEntry;
     this.searchTermDetailsService
-      .getDetailsForListItem(originalEntry.id)
+      .getDetailsForListItem(originalEntry.getId())
       .subscribe(() => this.openSidenav());
   }
 

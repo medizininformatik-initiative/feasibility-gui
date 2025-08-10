@@ -1,12 +1,11 @@
 import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
-import { CodeableConceptResultList } from 'src/app/model/Search/SearchResult/SearchList/ResultList/CodeableConcepttResultList';
-import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
+import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
+import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { Observable, Subscription, switchMap } from 'rxjs';
-import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
@@ -79,6 +78,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   }
 
   public addSelectedRow(item: InterfaceTableDataRow) {
+    console.log('Adding selected row:', item);
     const entry = item.originalEntry as CodeableConceptResultListEntry;
     const concept = CloneConcept.deepCopyConcept(entry.getConcept());
 
@@ -101,6 +101,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   }
 
   public addSelectedConceptsToStage() {
+    console.log('Adding selected concepts to stage:', this.selectedConcepts);
     this.selectedConceptProviderService.addConcepts(this.selectedConcepts);
     this.clearSelectedConceptArray();
   }
