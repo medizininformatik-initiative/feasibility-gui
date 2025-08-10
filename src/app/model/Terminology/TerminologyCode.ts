@@ -1,3 +1,5 @@
+import { TerminologyCodeData } from '../Interface/TerminologyCodeData';
+
 /**
  * @todo check if uid is still needed as a class variable
  */
@@ -22,7 +24,7 @@ export class TerminologyCode {
    * @param other
    * @returns
    */
-  equals(other: TerminologyCode): boolean {
+  public equals(other: TerminologyCode): boolean {
     return this.code === other.code && this.system === other.system;
   }
 
@@ -31,7 +33,7 @@ export class TerminologyCode {
    *
    * @returns The code of the terminology code.
    */
-  getCode(): string {
+  public getCode(): string {
     return this.code;
   }
 
@@ -40,7 +42,7 @@ export class TerminologyCode {
    *
    * @param code - The new code to set.
    */
-  setCode(code: string): void {
+  public setCode(code: string): void {
     this.code = code;
   }
 
@@ -49,7 +51,7 @@ export class TerminologyCode {
    *
    * @returns The display name of the terminology code.
    */
-  getDisplay(): string {
+  public getDisplay(): string {
     return this.display;
   }
 
@@ -58,7 +60,7 @@ export class TerminologyCode {
    *
    * @param display - The new display name to set.
    */
-  setDisplay(display: string): void {
+  public setDisplay(display: string): void {
     this.display = display;
   }
 
@@ -67,7 +69,7 @@ export class TerminologyCode {
    *
    * @returns The system of the terminology code.
    */
-  getSystem(): string {
+  public getSystem(): string {
     return this.system;
   }
 
@@ -76,7 +78,7 @@ export class TerminologyCode {
    *
    * @param system - The new system to set.
    */
-  setSystem(system: string): void {
+  public setSystem(system: string): void {
     this.system = system;
   }
 
@@ -85,7 +87,7 @@ export class TerminologyCode {
    *
    * @returns The version of the terminology code.
    */
-  getVersion(): string | undefined {
+  public getVersion(): string | undefined {
     return this.version;
   }
 
@@ -94,7 +96,7 @@ export class TerminologyCode {
    *
    * @param version - The new version to set.
    */
-  setVersion(version?: string): void {
+  public setVersion(version?: string): void {
     this.version = version;
   }
 
@@ -103,7 +105,7 @@ export class TerminologyCode {
    *
    * @returns The UID of the terminology code.
    */
-  getUid(): string | undefined {
+  public getUid(): string | undefined {
     return this.uid;
   }
 
@@ -112,7 +114,17 @@ export class TerminologyCode {
    *
    * @param uid - The new UID to set.
    */
-  setUid(uid?: string): void {
+  public setUid(uid?: string): void {
     this.uid = uid;
+  }
+
+  /**
+   * Creates a TerminologyCode instance from a JSON object.
+   *
+   * @param json The JSON object to convert.
+   * @returns The created TerminologyCode instance.
+   */
+  public static fromJson(json: TerminologyCodeData): TerminologyCode {
+    return new TerminologyCode(json.code, json.display, json.system, json.version);
   }
 }

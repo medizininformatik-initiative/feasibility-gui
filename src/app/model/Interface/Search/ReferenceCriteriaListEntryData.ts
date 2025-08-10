@@ -1,8 +1,25 @@
-import { InterfaceListEntry } from 'src/app/model/Interface/Search/ListEntryData';
 import { DisplayData } from '../DisplayData';
-import { TerminologyCodeData } from '../TerminologyCodeData';
+import { ListEntryData } from './ListEntryData';
 
-export interface ReferenceCriteriaListEntryData extends InterfaceListEntry {
+/**
+ * Interface representing reference criteria entry data from backend search API responses.
+ * Extends base ListEntryData with reference-specific properties including display information,
+ * system identifiers, and terminology references. Used for mapping JSON responses to
+ * ReferenceCriteriaListEntry domain models.
+ */
+export interface ReferenceCriteriaListEntryData extends ListEntryData {
+  /**
+   * Display information including original text and translations for this reference criteria
+   */
   display: DisplayData
-  terminologyCode: TerminologyCodeData
+
+  /**
+   * System identifier indicating the source system or standard for this reference
+   */
+  system: string
+
+  /**
+   * Terminology system name or identifier associated with this reference criteria
+   */
+  terminology: string
 }
