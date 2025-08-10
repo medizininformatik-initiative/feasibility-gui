@@ -1,5 +1,4 @@
-import { AbstractTermHashContext } from '../AbstractTermHashContext';
-import { Display } from '../../../DataSelection/Profile/Display';
+import { Display } from '../../DataSelection/Profile/Display';
 
 /**
  * Represents the relatives (parents, children, related terms) and translations of a search term.

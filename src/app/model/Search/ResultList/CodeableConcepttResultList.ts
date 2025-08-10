@@ -1,4 +1,4 @@
-import { CodeableConceptResultListEntry } from '../../../../../shared/models/ListEntries/CodeableConceptResultListEntry';
+import { CodeableConceptResultListEntry } from '../ListEntries/CodeableConceptResultListEntry';
 import { AbstractResultList } from './AbstractResultList';
 
 export class CodeableConceptResultList extends AbstractResultList<CodeableConceptResultListEntry> {

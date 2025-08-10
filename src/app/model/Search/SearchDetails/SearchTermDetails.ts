@@ -1,7 +1,5 @@
-import { AbstractTermHashContext } from '../AbstractTermHashContext';
+import { Display } from '../../DataSelection/Profile/Display';
 import { SearchTermRelatives } from './SearchTermRelatives';
-import { SearchTermTranslation } from './SearchTermTranslation';
-import { Display } from '../../../DataSelection/Profile/Display';
 
 /**
  * Represents detailed information about a search term, extending the AbstractSearchResult class.
