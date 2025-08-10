@@ -40,9 +40,7 @@
           {{ selectedReferences.display | displayTranslation }}
         </div>
         <div fxFlex="50" class="display-part">
-          {{ selectedReferences.termCode.getCode() }} ({{
-            selectedReferences.termCode.getSystem()
-          }})
+          {{ selectedReferences.terminology }} ({{ selectedReferences.system }})
         </div>
         <div fxFlexAlign="end">
           <button (click)="removeSelectedReference(index)" class="delete-button">entfernen</button>

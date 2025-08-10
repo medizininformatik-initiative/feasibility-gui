@@ -1,21 +1,20 @@
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { CriteriaSetSearchService } from 'src/app/service/Search/SearchTypes/CriteriaSet/CriteriaSetSearch.service';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { ReferenceCriteriaListEntry } from 'src/app/shared/models/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter';
-import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
-import { SearchService } from 'src/app/service/Search/Search.service';
 import { Observable, Subscription } from 'rxjs';
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
+import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter';
+import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
-import { CriteriaSetSearchService } from 'src/app/service/Search/SearchTypes/CriteriaSet/CriteriaSetSearch.service';
 
 interface selectedItem {
   id: string
   display: Display
-  termCode: TerminologyCode
+  system: string
+  terminology: string
 }
 @Component({
   selector: 'num-reference',
@@ -59,7 +58,7 @@ export class ReferenceComponent implements OnInit, OnDestroy {
       .getSearchResults([this.referenceFilterUri])
       .subscribe((searchTermResults) => {
         if (searchTermResults) {
-          this.listItems = searchTermResults.results;
+          this.listItems = searchTermResults.getResults();
           this.adaptedData = ReferenceCriteriaListEntryAdapter.adapt(this.listItems);
           if (this.adaptedData.body.rows.length > 0) {
             this.searchResultsFound = true;
@@ -104,10 +103,10 @@ export class ReferenceComponent implements OnInit, OnDestroy {
     item.isCheckboxSelected = false;
   }
 
-  startElasticSearch(searchtext: string) {
+  public startElasticSearch(searchtext: string) {
     if (this.referenceFilterUri?.length > 0) {
       this.searchService.search(searchtext, [this.referenceFilterUri]).subscribe((test) => {
-        this.listItems = test.results;
+        this.listItems = test.getResults();
       });
     } else {
       console.warn('No referenceCriteriaUrl was provided');
@@ -119,11 +118,12 @@ export class ReferenceComponent implements OnInit, OnDestroy {
     this.selectedTableItemsService
       .getSelectedTableItems()
       .subscribe((items) => {
-        items.forEach((item) => {
+        items.forEach((item: ReferenceCriteriaListEntry) => {
           this.arrayOfSelectedReferences.push({
             id: item.getId(),
             display: item.getDisplay(),
-            termCode: item.getTerminologyCode(),
+            system: item.getSystem(),
+            terminology: item.getTerminology(),
           });
         });
       })
@@ -135,7 +135,7 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   public setSelectedRowItem(item: InterfaceTableDataRow) {
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
-    const itemId = item.originalEntry.id;
+    const itemId = item.originalEntry.getId();
     if (selectedIds.includes(itemId)) {
       this.selectedTableItemsService.removeFromSelection(
         item.originalEntry as ReferenceCriteriaListEntry
