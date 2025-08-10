@@ -1,8 +1,8 @@
+import { CriteriaSearchFilter } from 'src/app/model/Search/SearchFilter/CriteriaSearchFilter';
+import { FilterProvider } from '../Search/Filter/SearchFilterProvider.service';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { SearchFilterService } from '../Search/Filter/SearchFilter.service';
-import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
-import { FilterProvider } from '../Search/Filter/SearchFilterProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class CriteriaSearchFilterResolverService {
     private filterProvider: FilterProvider
   ) {}
 
-  public resolve(): Observable<Array<SearchTermFilter>> {
+  public resolve(): Observable<Array<CriteriaSearchFilter>> {
     return this.searchFilterService.fetchFilters().pipe(
       map((filters) => {
         this.filterProvider.initializeFilterMap(filters);

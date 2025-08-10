@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
+import { CriteriaSearchFilter } from 'src/app/model/Search/SearchFilter/CriteriaSearchFilter';
 import { FilterProvider } from './Filter/SearchFilterProvider.service';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { FilterProvider } from './Filter/SearchFilterProvider.service';
 })
 export class CriteriaSearchStateService {
   private searchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  private searchFilterSubject: Subject<SearchTermFilter> = new Subject<SearchTermFilter>();
+  private searchFilterSubject: Subject<CriteriaSearchFilter> = new Subject<CriteriaSearchFilter>();
   constructor(private filterProvider: FilterProvider) {}
 
   public getActiveSearchTerm(): Observable<string> {
@@ -20,11 +20,11 @@ export class CriteriaSearchStateService {
     this.searchTermSubject.next(searchTerm);
   }
 
-  public getActiveSearchFilter(): Observable<SearchTermFilter> {
+  public getActiveSearchFilter(): Observable<CriteriaSearchFilter> {
     return this.searchFilterSubject.asObservable();
   }
 
-  public setActiveSearchFilter(searchFilter: SearchTermFilter): void {
+  public setActiveSearchFilter(searchFilter: CriteriaSearchFilter): void {
     this.searchFilterSubject.next(searchFilter);
   }
 
@@ -54,13 +54,13 @@ export class CriteriaSearchStateService {
    * Emits true when the search filters change.
    */
   private filterChanges(): Observable<boolean> {
-    return this.filterProvider.getSearchTermFilters().pipe(
-      filter((filters: SearchTermFilter[]) => filters.length > 0),
+    return this.filterProvider.getCriteriaSearchFilters().pipe(
+      filter((filters: CriteriaSearchFilter[]) => filters.length > 0),
       map((filters) =>
         JSON.stringify(
           filters.map((f) => ({
-            name: f.name,
-            selected: [...f.selectedValues],
+            name: f.getName(),
+            selected: [...f.getSelectedValues()],
           }))
         )
       ),

@@ -1,4 +1,4 @@
-export class SearchTermFilterValues {
+export class CriteriaSearchFilterValue {
   private count: number;
   private label: string;
 

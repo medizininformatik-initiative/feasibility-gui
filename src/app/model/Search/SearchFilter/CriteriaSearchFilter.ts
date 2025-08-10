@@ -1,10 +1,10 @@
+import { CriteriaSearchFilterValue } from './CriteriaSearchFilterValue';
 import { ElasticSearchFilterTypes } from '../../Utilities/ElasticSearchFilterTypes';
-import { SearchTermFilterValues } from './SearchTermFilterValues';
 
-export class SearchTermFilter {
+export class CriteriaSearchFilter {
   name: ElasticSearchFilterTypes;
 
-  values: SearchTermFilterValues[] = [];
+  values: CriteriaSearchFilterValue[] = [];
   selectedValues: string[] = [];
 
   /**
@@ -13,7 +13,7 @@ export class SearchTermFilter {
    * @param name - The name of the filter.
    * @param values - An array of filter values.
    */
-  constructor(name: ElasticSearchFilterTypes, values: SearchTermFilterValues[]) {
+  constructor(name: ElasticSearchFilterTypes, values: CriteriaSearchFilterValue[]) {
     this.name = name;
     this.values = values;
   }
@@ -41,7 +41,7 @@ export class SearchTermFilter {
    *
    * @returns An array of filter values.
    */
-  public getValues(): SearchTermFilterValues[] {
+  public getValues(): CriteriaSearchFilterValue[] {
     return this.values;
   }
 
@@ -50,7 +50,7 @@ export class SearchTermFilter {
    *
    * @param values - The new filter values.
    */
-  public setValues(values: SearchTermFilterValues[]): void {
+  public setValues(values: CriteriaSearchFilterValue[]): void {
     this.values = values;
   }
 
