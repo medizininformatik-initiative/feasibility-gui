@@ -1,5 +1,5 @@
-import { CriteriaSearchFilter } from 'src/app/model/Search/SearchFilter/CriteriaSearchFilter';
-import { CriteriaSearchFilterValue } from 'src/app/model/Search/SearchFilter/CriteriaSearchFilterValue';
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
+import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { SearchFilter, SearchFilterValues } from './InterfaceSearchFilter';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';

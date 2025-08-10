@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
-import { CriteriaSearchFilter } from 'src/app/model/Search/SearchFilter/CriteriaSearchFilter';
-import { CriteriaSearchFilterValue } from 'src/app/model/Search/SearchFilter/CriteriaSearchFilterValue';
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
+import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue';
 
 @Injectable({
   providedIn: 'root',

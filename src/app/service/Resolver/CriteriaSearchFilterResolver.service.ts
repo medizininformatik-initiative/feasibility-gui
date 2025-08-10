@@ -1,4 +1,4 @@
-import { CriteriaSearchFilter } from 'src/app/model/Search/SearchFilter/CriteriaSearchFilter';
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
 import { FilterProvider } from '../Search/Filter/SearchFilterProvider.service';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
