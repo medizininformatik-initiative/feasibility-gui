@@ -3,8 +3,8 @@ import { ListItemDetailService } from 'src/app/shared/service/Menu/ListItemDetai
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SearchTermRelatives } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermRelatives';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
+import { SearchTermRelatives } from 'src/app/model/Search/SearchDetails/SearchTermRelatives';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 
 @Component({
   selector: 'num-list-item-details-sections',

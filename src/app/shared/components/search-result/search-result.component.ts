@@ -1,5 +1,5 @@
 import { MatDrawer } from '@angular/material/sidenav';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -8,7 +8,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CriteriaListEntry } from '../../models/ListEntries/CriteriaListListEntry';
+import { CriteriaListEntry } from '../../../model/Search/ListEntries/CriteriaListListEntry';
 
 @Component({
   selector: 'num-search-result',

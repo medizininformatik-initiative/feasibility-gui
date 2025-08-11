@@ -1,4 +1,4 @@
-import { FeasibilityQueryResultDetailstListEntry } from '../../ListEntries/FeasibilityQueryResultDetailstListEntry';
+import { FeasibilityQueryResultDetailstListEntry } from '../../../../model/Search/ListEntries/FeasibilityQueryResultDetailstListEntry';
 import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';

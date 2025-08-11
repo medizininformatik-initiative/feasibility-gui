@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CriteriaListEntry } from '../../../model/Search/ListEntries/CriteriaListListEntry';
 import { Observable } from 'rxjs';
-import { SearchTermDetails } from 'src/app/model/Search/SearchResult/SearchDetails/SearchTermDetails';
-import { CriteriaListEntry } from '../../models/ListEntries/CriteriaListListEntry';
+import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
 
 @Component({
   selector: 'num-list-item-details',
