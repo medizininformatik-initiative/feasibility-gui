@@ -6,10 +6,8 @@ import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { Injectable } from '@angular/core';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
-import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';

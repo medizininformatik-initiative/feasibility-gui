@@ -1,19 +1,19 @@
 import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeDefinitionsResultMapper } from './Mapper/AttributeDefinitionsResultMapper';
-import { CriteriaListEntry } from 'src/app/shared/models/ListEntries/CriteriaListListEntry';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 import { CriteriaProfile } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
-import { DisplayDataFactoryService } from '../Factory/DisplayDataFactory.service';
 import { finalize, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { SelectedTableItemsService } from '../ElasticSearch/SearchTermListItemService.service';
+import { SelectedTableItemsService } from '../SearchTermListItemService.service';
 import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +23,7 @@ export class CriteriaProfileDataService {
 
   constructor(
     private terminologyApiService: TerminologyApiService,
-    private listItemService: SelectedTableItemsService<CriteriaListEntry>,
-    private displayDataFactoryService: DisplayDataFactoryService
+    private listItemService: SelectedTableItemsService<CriteriaListEntry>
   ) {}
 
   /**
@@ -59,14 +58,14 @@ export class CriteriaProfileDataService {
   private createCriteriaProfileData(response: CriteriaProfileData): CriteriaProfile | undefined {
     try {
       if (response.uiProfile) {
-        const context = this.mapTerminologyCode(response.context);
-        const termCodes = response.termCodes.map(this.mapTerminologyCode);
+        const context = TerminologyCode.fromJson(response.context);
+        const termCodes = this.mapTerminologyCodes(response.termCodes);
         const id = response.id;
         const display = response.display;
 
         return new CriteriaProfile(
           id,
-          this.displayDataFactoryService.createDisplayData(display),
+          Display.fromJson(display),
           response.uiProfile.timeRestrictionAllowed,
           this.mapAttributeDefinitions(response.uiProfile),
           context,
@@ -93,7 +92,7 @@ export class CriteriaProfileDataService {
     return valueDefinitionsResultMapper.mapValueDefinition(uiProfile);
   }
 
-  private mapTerminologyCode(termCode: any): TerminologyCode {
-    return new TerminologyCode(termCode.code, termCode.display, termCode.system, termCode.version);
+  private mapTerminologyCodes(termCodes: TerminologyCodeData[]): TerminologyCode[] {
+    return termCodes.map((termCode) => TerminologyCode.fromJson(termCode));
   }
 }
