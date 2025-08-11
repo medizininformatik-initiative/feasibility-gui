@@ -9,16 +9,15 @@
       <div
         class="text-overflow display-name"
         (click)="getSelectedRelative(item)"
-        [matTooltip]="item.name | displayTranslation"
+        [matTooltip]="item.getDisplay() | displayTranslation"
       >
-        <!--We need to set the translate pipe here-->
-        {{ item.name | displayTranslation }}
+        {{ item.getDisplay() | displayTranslation }}
       </div>
       <num-menu
         fxFlex="10"
         (click)="$event.stopPropagation()"
         [menuItems]="menuItems"
-        [id]="item.getTermCodeHash()"
+        [id]="item.getContextualizedTermcodeHash()"
       ></num-menu>
     </div>
   </div>
