@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 import { ListItemDetailService } from 'src/app/shared/service/Menu/ListItemDetails/ListItemDetails.service';
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
-import { SearchService } from 'src/app/service/Search/Search.service';
-import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { SearchTermRelatives } from 'src/app/model/Search/SearchDetails/SearchTermRelatives';
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 
 @Component({
   selector: 'num-list-item-details-sections',
@@ -22,9 +21,7 @@ export class ListItemDetailsSectionsComponent implements OnInit {
 
   constructor(
     private menuService: ListItemDetailService,
-    private elasticSearchService: SearchService,
-    private searchService: SearchService,
-    private test: SearchTermDetailsService
+    private criteriaByIdSearchService: CriteriaByIdSearchService
   ) {}
 
   public ngOnInit() {
@@ -32,12 +29,11 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   }
 
   public getSelectedRelative(item: SearchTermRelatives) {
-    this.elasticSearchService.searchCriteriaById(item.getTermCodeHash()).subscribe((resultList) => {
-      this.selectedRelative.emit(resultList.getResults()[0]);
-    });
-
-    this.searchService.searchCriteriaById(item.getTermCodeHash()).subscribe();
-    this.test.getDetailsForListItem(item.getTermCodeHash()).subscribe();
+    this.criteriaByIdSearchService
+      .search(item.getContextualizedTermcodeHash())
+      .subscribe((resultList) => {
+        this.selectedRelative.emit(resultList.getResults()[0]);
+      });
   }
 
   private getMenuItems() {

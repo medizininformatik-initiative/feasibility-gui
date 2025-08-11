@@ -5,15 +5,15 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
 import { Injectable } from '@angular/core';
 import { map, switchMap, take } from 'rxjs';
-import { SearchService } from 'src/app/service/Search/Search.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
+import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ListItemDetailsMenuItemsFunctionsService {
   constructor(
-    private searchService: SearchService,
+    private searchService: CriteriaByIdSearchService,
     private criteriaSearchService: CriteriaSearchService,
     private criterionService: CreateCriterionService,
     private searchTermDetailsService: SearchTermDetailsService,
@@ -21,7 +21,7 @@ export class ListItemDetailsMenuItemsFunctionsService {
   ) {}
 
   public showCriteriaInResultList(id: string) {
-    this.searchService.searchCriteriaById(id).pipe(take(1)).subscribe();
+    this.searchService.search(id).pipe(take(1)).subscribe();
     this.searchTermDetailsService.getDetailsForListItem(id).pipe(take(1)).subscribe();
   }
 
@@ -39,7 +39,7 @@ export class ListItemDetailsMenuItemsFunctionsService {
 
   public searchCriteria(id: string) {
     this.searchService
-      .searchCriteriaById(id)
+      .search(id)
       .pipe(
         take(1),
         switchMap((searchTermResultList: CriteriaResultList) =>
