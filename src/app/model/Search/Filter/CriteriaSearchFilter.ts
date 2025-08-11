@@ -2,10 +2,10 @@ import { CriteriaSearchFilterValue } from './CriteriaSearchFilterValue';
 import { ElasticSearchFilterTypes } from '../../Utilities/ElasticSearchFilterTypes';
 
 export class CriteriaSearchFilter {
-  name: ElasticSearchFilterTypes;
+  private name: ElasticSearchFilterTypes;
 
-  values: CriteriaSearchFilterValue[] = [];
-  selectedValues: string[] = [];
+  private values: CriteriaSearchFilterValue[] = [];
+  private selectedValues: string[] = [];
 
   /**
    * Constructs a new SearchTermFilter.

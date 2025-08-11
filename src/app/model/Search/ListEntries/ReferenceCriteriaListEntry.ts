@@ -30,6 +30,11 @@ export class ReferenceCriteriaListEntry extends AbstractListEntry {
     return this.system;
   }
 
+  /**
+   * Creates a new instance of ReferenceCriteriaListEntry from JSON.
+   * @param json The JSON object to convert.
+   * @returns A new instance of ReferenceCriteriaListEntry.
+   */
   public static fromJson(json: ReferenceCriteriaListEntryData): ReferenceCriteriaListEntry {
     return new ReferenceCriteriaListEntry(
       Display.fromJson(json.display),

@@ -1,19 +1,16 @@
-import { ListEntryData } from '../../Interface/Search/ListEntryData';
-
-/**
- * Represents an abstract search result, extending AbstractTermHashContext.
- */
 export abstract class AbstractListEntry {
-  protected id: string;
+  protected readonly id: string;
   /**
-   * Constructs a new AbstractSearchResult instance.
-   *
    * @param id
    */
   constructor(id: string) {
     this.id = id;
   }
 
+  /**
+   * Returns the ID of the list entry.
+   * @returns The ID of the list entry.
+   */
   public getId(): string {
     return this.id;
   }

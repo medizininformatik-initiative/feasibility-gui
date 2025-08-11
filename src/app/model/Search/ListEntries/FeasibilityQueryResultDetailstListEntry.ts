@@ -1,8 +1,8 @@
 import { AbstractListEntry } from './AbstractListEntry';
 
 export class FeasibilityQueryResultDetailstListEntry extends AbstractListEntry {
-  private numberOfPatients: number;
-  private siteName: string;
+  private readonly numberOfPatients: number;
+  private readonly siteName: string;
 
   constructor(numberOfPatients: number, siteName: string) {
     super(siteName);
@@ -10,21 +10,19 @@ export class FeasibilityQueryResultDetailstListEntry extends AbstractListEntry {
     this.siteName = siteName;
   }
 
-  // Getter and Setter for numberOfPatients
-  getNumberOfPatients(): number {
+  /**
+   * Gets the number of patients.
+   * @returns The number of patients.
+   */
+  public getNumberOfPatients(): number {
     return this.numberOfPatients;
   }
 
-  setNumberOfPatients(value: number) {
-    this.numberOfPatients = value;
-  }
-
-  // Getter and Setter for siteName
-  getSiteName(): string {
+  /**
+   * Gets the site name.
+   * @returns The site name.
+   */
+  public getSiteName(): string {
     return this.siteName;
-  }
-
-  setSiteName(value: string) {
-    this.siteName = value;
   }
 }

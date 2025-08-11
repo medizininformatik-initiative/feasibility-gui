@@ -1,9 +1,9 @@
 import { AbstractListEntry } from './AbstractListEntry';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { CriteriaListEntryData } from '../../Interface/Search/CriteriaListListEntryData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 /**
- * Represents a search term list item, extending AbstractSearchResult.
+ * Represents a criteria list item, extending AbstractSearchResult.
  */
 export class CriteriaListEntry extends AbstractListEntry {
   private readonly selectable: boolean;
@@ -95,6 +95,11 @@ export class CriteriaListEntry extends AbstractListEntry {
     return this.context;
   }
 
+  /**
+   * Creates a new instance of CriteriaListEntry from JSON.
+   * @param json The JSON object to convert.
+   * @returns A new instance of CriteriaListEntry.
+   */
   public static fromJson(json: CriteriaListEntryData): CriteriaListEntry {
     return new CriteriaListEntry(
       json.availability,

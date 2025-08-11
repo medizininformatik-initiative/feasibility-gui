@@ -1,9 +1,9 @@
-import { CodeableConceptResultListEntryData } from '../../Interface/Search/CodeableConceptResultListEntryData';
 import { AbstractListEntry } from './AbstractListEntry';
+import { CodeableConceptResultListEntryData } from '../../Interface/Search/CodeableConceptResultListEntryData';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 
 export class CodeableConceptResultListEntry extends AbstractListEntry {
-  private isSelected = false;
+  private readonly isSelected: boolean;
   private concept: Concept;
 
   /**
@@ -24,13 +24,6 @@ export class CodeableConceptResultListEntry extends AbstractListEntry {
   }
 
   /**
-   * @param isSelected
-   */
-  public setIsSelected(isSelected: boolean) {
-    this.isSelected = isSelected;
-  }
-
-  /**
    * @returns
    */
   public getConcept(): Concept {
@@ -44,6 +37,11 @@ export class CodeableConceptResultListEntry extends AbstractListEntry {
     this.concept = concept;
   }
 
+  /**
+   * Creates a new instance of CodeableConceptResultListEntry from JSON.
+   * @param json The JSON object to convert.
+   * @returns A new instance of CodeableConceptResultListEntry.
+   */
   public static fromJson(json: CodeableConceptResultListEntryData): CodeableConceptResultListEntry {
     return new CodeableConceptResultListEntry(
       Concept.fromJson({
