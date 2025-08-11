@@ -29,7 +29,6 @@ export class SearchFilterComponent implements OnInit {
         this.filter.filterType.toUpperCase() as keyof typeof ElasticSearchFilterTypes
       ];
     this.filter.selectedValues = this.selectedValues;
-    console.log('Selected values:', this.filter);
     this.selectedFilterChanged.emit(this.filter);
   }
 }

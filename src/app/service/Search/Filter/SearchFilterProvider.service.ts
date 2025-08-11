@@ -95,8 +95,9 @@ export class FilterProvider {
     selectedValues: string[]
   ): void {
     const filters = this.CriteriaSearchFiltersSubject.getValue();
-    const filter = filters.find((f) => f.getName() === filterType);
-
+    const filter = filters.find(
+      (f) => f.getName() === (filterType.toLocaleLowerCase() as ElasticSearchFilterTypes)
+    );
     if (filter) {
       filter.setSelectedValues(selectedValues);
       this.CriteriaSearchFiltersSubject.next([...filters]);
