@@ -39,4 +39,8 @@ export class CriteriaSearchService extends AbstractSimpleSearch<
   protected setSearchTerm(searchTerm: string) {
     this.criteriaSearchStateService.setActiveSearchTerm(searchTerm);
   }
+
+  public getActiveSearchTerm(): Observable<string> {
+    return this.criteriaSearchStateService.getActiveSearchTerm();
+  }
 }
