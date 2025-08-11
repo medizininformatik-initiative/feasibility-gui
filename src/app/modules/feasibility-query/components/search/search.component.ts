@@ -1,6 +1,8 @@
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
+import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter';
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
@@ -11,8 +13,6 @@ import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearch
 import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SearchTermFilter } from 'src/app/model/Search/SearchFilter/SearchTermFilter';
-import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
 import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import {
@@ -104,7 +104,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   /** Search Result Handling */
   private handleSearchResults(results: CriteriaListEntry[]): void {
     this.listItems = results;
-    this.adaptedData = SearchTermListEntryAdapter.adapt(this.listItems);
+    this.adaptedData = CriteriaListEntryAdapter.adapt(this.listItems);
     this.searchResultsFound = this.adaptedData.body.rows.length > 0;
     this.selectedTableItemsService
       .getSelectedTableItems()
@@ -167,9 +167,9 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   public getElasticSearchFilter(): void {
     this.searchFilters$ = this.searchFilterProvider
-      .getSearchTermFilters()
+      .getCriteriaSearchFilters()
       .pipe(
-        map((searchFilters: SearchTermFilter[]) =>
+        map((searchFilters: CriteriaSearchFilter[]) =>
           searchFilters.map((searchFilter) =>
             CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
           )
