@@ -1,4 +1,3 @@
-import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter';
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
@@ -37,7 +36,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;
   listItems: Array<CriteriaListEntry> = [];
-  searchtext = '';
   adaptedData: TableData;
   private subscription: Subscription;
   isOpen = false;
@@ -64,11 +62,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   searchButtonEnabled$: Observable<boolean> = of(true);
 
-  page = 0;
-  pageSize = 50;
-
   constructor(
-    private activeSearchTermService: ActiveSearchTermService,
     public elementRef: ElementRef,
     private cdr: ChangeDetectorRef,
     private searchFilterProvider: FilterProvider,
@@ -84,7 +78,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   ngOnInit() {
     this.selectedDetails$ = this.searchTermDetailsProviderService.getSearchTermDetails$();
-    this.searchText$ = this.activeSearchTermService.getActiveCriteriaSearchTerm();
+    this.searchText$ = this.criteriaSearchService.getActiveSearchTerm();
     this.resetFilterEnabled$ = this.searchFilterProvider.filtersNotSet();
     this.handleSelectedItemsSubscription();
     this.getElasticSearchFilter();
@@ -170,7 +164,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
       .getCriteriaSearchFilters()
       .pipe(
         map((searchFilters: CriteriaSearchFilter[]) =>
-          searchFilters.map((searchFilter) =>
+          searchFilters.map((searchFilter: CriteriaSearchFilter) =>
             CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
           )
         )
