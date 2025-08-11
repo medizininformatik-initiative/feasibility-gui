@@ -1,4 +1,5 @@
 import { Display } from '../../DataSelection/Profile/Display';
+import { CriteriaRelationsData } from '../../Interface/CriteriaRelationsData';
 import { SearchTermRelatives } from './SearchTermRelatives';
 
 /**
@@ -8,28 +9,24 @@ import { SearchTermRelatives } from './SearchTermRelatives';
  * @see AbstractSearchResult
  */
 export class SearchTermDetails {
-  translations: Display;
-  parents: SearchTermRelatives[];
-  children: SearchTermRelatives[];
-  relatedTerms: SearchTermRelatives[];
+  private readonly display: Display;
+  private readonly parents: SearchTermRelatives[];
+  private readonly children: SearchTermRelatives[];
 
   /**
    *
    * @param children
    * @param parents
-   * @param relatedTerms
-   * @param translations
+   * @param display
    */
   constructor(
     children: Array<SearchTermRelatives>,
     parents: Array<SearchTermRelatives>,
-    relatedTerms: Array<SearchTermRelatives>,
-    translations: Display
+    display: Display
   ) {
-    this.translations = translations;
+    this.display = display;
     this.parents = parents;
     this.children = children;
-    this.relatedTerms = relatedTerms;
   }
 
   /**
@@ -37,17 +34,8 @@ export class SearchTermDetails {
    *
    * @returns An array of parent terms.
    */
-  getParents(): SearchTermRelatives[] {
+  public getParents(): SearchTermRelatives[] {
     return this.parents;
-  }
-
-  /**
-   * Sets the parent terms.
-   *
-   * @param parents - An array of new parent terms.
-   */
-  setParents(parents: SearchTermRelatives[]): void {
-    this.parents = parents;
   }
 
   /**
@@ -55,34 +43,18 @@ export class SearchTermDetails {
    *
    * @returns An array of child terms.
    */
-  getChildren(): SearchTermRelatives[] {
+  public getChildren(): SearchTermRelatives[] {
     return this.children;
   }
 
-  /**
-   * Sets the child terms.
-   *
-   * @param children - An array of new child terms.
-   */
-  setChildren(children: SearchTermRelatives[]): void {
-    this.children = children;
+  public getDisplay(): Display {
+    return this.display;
   }
 
-  /**
-   * Gets the related terms.
-   *
-   * @returns An array of related terms.
-   */
-  getRelatedTerms(): SearchTermRelatives[] {
-    return this.relatedTerms;
-  }
-
-  /**
-   * Sets the related terms.
-   *
-   * @param relatedTerms - An array of new related terms.
-   */
-  setRelatedTerms(relatedTerms: SearchTermRelatives[]): void {
-    this.relatedTerms = relatedTerms;
+  public static fromJson(json: CriteriaRelationsData): SearchTermDetails {
+    const display = Display.fromJson(json.display);
+    const parents = json.parents.map(SearchTermRelatives.fromJson);
+    const children = json.children.map(SearchTermRelatives.fromJson);
+    return new SearchTermDetails(children, parents, display);
   }
 }

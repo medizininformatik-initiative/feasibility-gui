@@ -10,6 +10,8 @@ import { ComparatorTypeData } from '../../model/Interface/ComparatorTypeData';
 import { ContextData } from '../../model/Interface/ContextData';
 import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
 import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData';
+import { CriteriaRelationsData } from 'src/app/model/Interface/CriteriaRelationsData';
+import { CriteriaRelativeData } from 'src/app/model/Interface/CriteriaRelativesData';
 import { CRTDLData } from '../../model/Interface/CRTDLData';
 import { DataExtractionData } from '../../model/Interface/DataExtractionData';
 import { DisplayData } from '../../model/Interface/DisplayData';
@@ -20,13 +22,9 @@ import { QuantityUnitData } from '../../model/Interface/Unit';
 import { QueryResultData } from '../../model/Interface/QueryResultData';
 import { QueryResultLineData } from '../../model/Interface/QueryResultLineData';
 import { ReferenceCriteriaListEntryData } from 'src/app/model/Interface/Search/ReferenceCriteriaListEntryData';
-import { Relations } from '../../model/Interface/Relations';
-import { Relatives } from '../../model/Interface/Relatives';
 import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
 import { SavedDataQueryData } from '../../model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItemData } from '../../model/Interface/SavedDataQueryListItemData';
-import { SearchResponse } from '../../model/Interface/Search/SearchResponse';
-import { SearchResultData } from 'src/app/model/Interface/Search/SearchResultData';
 import { StructuredQueryCriterionData } from '../../model/Interface/StructuredQueryCriterionData';
 import { StructuredQueryData } from '../../model/Interface/StructuredQueryData';
 import { TerminologyCodeBaseData } from '../../model/Interface/TerminologyBaseData';
@@ -181,8 +179,8 @@ export class TypeAssertion {
    * @param obj - The object to check.
    * @throws Will throw an error if the object is not of type Relations.
    */
-  public static assertRelations(obj: unknown): asserts obj is Relations {
-    if (!TypeGuard.isRelations(obj)) {
+  public static assertCriteriaRelationsData(obj: unknown): asserts obj is CriteriaRelationsData {
+    if (!TypeGuard.isCriteriaRelations(obj)) {
       throw new Error(`Invalid Relations: ${JSON.stringify(obj)}`);
     }
   }
@@ -192,8 +190,8 @@ export class TypeAssertion {
    * @param obj - The object to check.
    * @throws Will throw an error if the object is not of type Relatives.
    */
-  public static assertRelatives(obj: unknown): asserts obj is Relatives {
-    if (!TypeGuard.isRelatives(obj)) {
+  public static assertRelatives(obj: unknown): asserts obj is CriteriaRelativeData {
+    if (!TypeGuard.isCriteriaRelative(obj)) {
       throw new Error(`Invalid Relatives: ${JSON.stringify(obj)}`);
     }
   }
@@ -443,6 +441,12 @@ export class TypeAssertion {
   ): asserts obj is CriteriaListEntryData {
     if (!TypeGuard.isCriteriaListListEntryData(obj)) {
       throw new Error(`Invalid CriteriaListListEntryData: ${JSON.stringify(obj)}`);
+    }
+  }
+
+  public static assertCriteriaRelativeData(obj: unknown): asserts obj is CriteriaRelativeData {
+    if (!TypeGuard.isCriteriaRelative(obj)) {
+      throw new Error(`Invalid CriteriaRelativeData: ${JSON.stringify(obj)}`);
     }
   }
 }

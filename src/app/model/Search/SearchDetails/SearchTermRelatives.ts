@@ -1,35 +1,42 @@
 import { Display } from '../../DataSelection/Profile/Display';
+import { CriteriaRelativeData } from '../../Interface/CriteriaRelativesData';
 
 /**
  * Represents the relatives (parents, children, related terms) and translations of a search term.
  */
 export class SearchTermRelatives {
-  name: Display;
-  private readonly termCodeHash: string;
-  constructor(name: Display, termCodeHash: string) {
-    this.name = name;
-    this.termCodeHash = termCodeHash;
+  private display: Display;
+  private readonly contextualizedTermcodeHash: string;
+  constructor(display: Display, contextualizedTermcodeHash: string) {
+    this.display = display;
+    this.contextualizedTermcodeHash = contextualizedTermcodeHash;
   }
 
-  getName(): Display {
-    return this.name;
-  }
-
-  /**
-   * Sets the name of the term.
-   *
-   * @param name - The new name of the term as a string.
-   */
-  setName(name: Display): void {
-    this.name = name;
+  public getDisplay(): Display {
+    return this.display;
   }
 
   /**
-   * Gets the termCodeHash.
+   * Sets the display of the term.
    *
-   * @returns The termCodeHash as a string, or undefined if not set.
+   * @param display - The new display of the term.
    */
-  getTermCodeHash(): string | undefined {
-    return this.termCodeHash;
+  public setDisplay(display: Display): void {
+    this.display = display;
+  }
+
+  /**
+   * Gets the contextualized term code hash.
+   *
+   * @returns The contextualizedTermcodeHash as a string, or undefined if not set.
+   */
+  public getContextualizedTermcodeHash(): string | undefined {
+    return this.contextualizedTermcodeHash;
+  }
+
+  public static fromJson(json: CriteriaRelativeData): SearchTermRelatives {
+    const display = Display.fromJson(json.display);
+    const contextualizedTermcodeHash = json.contextualizedTermcodeHash;
+    return new SearchTermRelatives(display, contextualizedTermcodeHash);
   }
 }

@@ -9,7 +9,10 @@ import { CodeableConceptResultListData } from 'src/app/model/Interface/Search/Co
 import { CodeableConceptResultListEntryData } from 'src/app/model/Interface/Search/CodeableConceptResultListEntryData';
 import { ComparatorTypeData } from '../../model/Interface/ComparatorTypeData';
 import { ContextData } from '../../model/Interface/ContextData';
+import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
 import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData';
+import { CriteriaRelationsData } from 'src/app/model/Interface/CriteriaRelationsData';
+import { CriteriaRelativeData } from '../../model/Interface/CriteriaRelativesData';
 import { CRTDLData } from '../../model/Interface/CRTDLData';
 import { DataExtractionData } from '../../model/Interface/DataExtractionData';
 import { DisplayData } from '../../model/Interface/DisplayData';
@@ -21,8 +24,6 @@ import { QueryResultData } from '../../model/Interface/QueryResultData';
 import { QueryResultLineData } from '../../model/Interface/QueryResultLineData';
 import { ReferenceCriteriaListEntryData } from 'src/app/model/Interface/Search/ReferenceCriteriaListEntryData';
 import { ReferenceCriteriaResultListData } from 'src/app/model/Interface/Search/RefrenceCriteriaResultListData';
-import { Relations } from '../../model/Interface/Relations';
-import { Relatives } from '../../model/Interface/Relatives';
 import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
 import { SavedDataQueryData } from '../../model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItemData } from '../../model/Interface/SavedDataQueryListItemData';
@@ -35,7 +36,6 @@ import { TranslationData } from '../../model/Interface/TranslationData';
 import { UiProfileData } from '../../model/Interface/UiProfileData';
 import { ValueDefinitionData } from '../../model/Interface/ValueDefinition';
 import { ValueFilterData } from '../../model/Interface/ValueFilterData';
-import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
 
 /**
  * Utility class for type guards to ensure objects conform to their respective interfaces.
@@ -348,17 +348,17 @@ export class TypeGuard {
    * @param obj
    * @returns boolean
    */
-  public static isRelations(obj: unknown): obj is Relations {
-    const relations = obj as Relations;
+  public static isCriteriaRelations(obj: unknown): obj is CriteriaRelationsData {
+    const relations = obj as CriteriaRelationsData;
     return (
       TypeGuard.isObject(relations) &&
       TypeGuard.isDisplayData(relations.display) &&
       Array.isArray(relations.parents) &&
-      relations.parents.every(TypeGuard.isRelatives) &&
+      relations.parents.every(TypeGuard.isCriteriaRelative) &&
       Array.isArray(relations.children) &&
-      relations.children.every(TypeGuard.isRelatives) &&
+      relations.children.every(TypeGuard.isCriteriaRelative) &&
       Array.isArray(relations.relatedTerms) &&
-      relations.relatedTerms.every(TypeGuard.isRelatives)
+      relations.relatedTerms.every(TypeGuard.isCriteriaRelative)
     );
   }
 
@@ -367,11 +367,11 @@ export class TypeGuard {
    * @param obj
    * @returns boolean
    */
-  public static isRelatives(obj: unknown): obj is Relatives {
-    const relatives = obj as Relatives;
+  public static isCriteriaRelative(obj: unknown): obj is CriteriaRelativeData {
+    const relatives = obj as CriteriaRelativeData;
     return (
       TypeGuard.isObject(relatives) &&
-      TypeGuard.isString(relatives.name) &&
+      TypeGuard.isDisplayData(relatives.display) &&
       TypeGuard.isString(relatives.contextualizedTermcodeHash)
     );
   }
