@@ -11,3 +11,8 @@ num-table {
   overflow: auto;
   margin-bottom: 10px;
 }
+.filter-div {
+  max-height: 90%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
