@@ -4,7 +4,6 @@ import { CodeableConceptSearchMediatorService } from '../Mediator/CodeableConcep
 import { Injectable } from '@angular/core';
 import { KeyedSearchPagination } from '../../../Abstract/Pagination/AbstractKeyedSearchPagination';
 import { Observable } from 'rxjs';
-import { data } from 'cypress/types/jquery';
 
 /**
  * Pagination service for CodeableConcept searches with support for multiple concept filters.

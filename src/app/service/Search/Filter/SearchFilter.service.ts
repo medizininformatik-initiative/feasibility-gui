@@ -1,11 +1,11 @@
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
+import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
-import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
-import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue';
 
 @Injectable({
   providedIn: 'root',

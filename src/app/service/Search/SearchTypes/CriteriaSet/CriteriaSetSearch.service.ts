@@ -1,11 +1,10 @@
-import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
-import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
-import { CriteriaSetSearchMediatorService } from './Mediator/CriteriaSetSearchMediator.service';
+import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch';
 import { CriteriaSetSearchPaginationService } from './Pagination/CriteriaSetSearchPagination.service';
-import { CriteriaSetSearchResultProviderService } from './Result/CriteriaSetSearchResultProvider.service ';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch';
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
+import { CriteriaSetSearchResultProviderService } from './Result/CriteriaSetSearchResultProvider.service ';
 
 /**
  * Service for performing criteria set searches with criteria set filtering.
@@ -26,7 +25,7 @@ export class CriteriaSetSearchService extends AbstractKeyedSearch<
    * @param paginationService - The pagination service for handling paginated searches
    */
   constructor(
-    resultProvider: CriteriaSetSearchResultProviderService,
+    private resultProvider: CriteriaSetSearchResultProviderService,
     private paginationService: CriteriaSetSearchPaginationService
   ) {
     super(resultProvider);
@@ -68,6 +67,6 @@ export class CriteriaSetSearchService extends AbstractKeyedSearch<
    * @param searchTerm - The search term to set
    */
   protected setSearchTerm(searchTerm: string): void {
-    // Implement logic to set the search term if needed
+    throw new Error('Not implemented');
   }
 }

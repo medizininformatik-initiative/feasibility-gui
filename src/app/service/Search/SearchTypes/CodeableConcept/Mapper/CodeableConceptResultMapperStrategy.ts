@@ -1,5 +1,7 @@
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
+import { CodeableConceptResultListData } from 'src/app/model/Interface/Search/CodeableConceptResultList';
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
+import { CodeableConceptResultListEntryData } from 'src/app/model/Interface/Search/CodeableConceptResultListEntryData';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayData } from 'src/app/model/Interface/DisplayData';
@@ -8,8 +10,6 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
 import { TypeAssertion } from 'src/app/service/TypeGuard/TypeAssersations';
 import { v4 as uuidv4 } from 'uuid';
-import { CodeableConceptResultListData } from 'src/app/model/Interface/Search/CodeableConceptResultList';
-import { CodeableConceptResultListEntryData } from 'src/app/model/Interface/Search/CodeableConceptResultListEntryData';
 
 export class CodeableConceptResultMapperStrategy
   implements MappingStrategy<CodeableConceptResultListEntry, CodeableConceptResultList>

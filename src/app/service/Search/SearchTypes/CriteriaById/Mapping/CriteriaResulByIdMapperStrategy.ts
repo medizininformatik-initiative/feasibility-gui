@@ -1,7 +1,7 @@
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
-import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
+import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy';
 
 export class CriteriaResulByIdMapperStrategy
   implements MappingStrategy<CriteriaListEntry, CriteriaResultList>

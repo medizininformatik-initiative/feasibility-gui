@@ -1,7 +1,7 @@
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { Injectable } from '@angular/core';
-import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
 
 @Injectable({
   providedIn: 'root',
