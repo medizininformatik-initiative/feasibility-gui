@@ -10,16 +10,8 @@ export class CriteriaListEntryAdapter {
     headers: ['NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'],
   };
 
-  private static changeAvailabilityDisplay(availability: number): string {
-    if (availability === 0) {
-      return '?';
-    }
-
-    return availability.toString();
-  }
-
   public static adapt(listEntries: CriteriaListEntry[]): TableData {
-    const rows: InterfaceTableDataRow[] = listEntries.map((listEntry) => ({
+    const rows: InterfaceTableDataRow[] = listEntries.map((listEntry: CriteriaListEntry) => ({
       id: listEntry.getId(),
       data: [
         listEntry.getDisplay(),
@@ -39,5 +31,18 @@ export class CriteriaListEntryAdapter {
     const body: InterfaceTableDataBody = { rows };
 
     return { header: CriteriaListEntryAdapter.headers, body };
+  }
+
+  /**
+   * Transforms the availability value for display purposes.
+   * @param availability The availability value to transform.
+   * @returns The transformed availability value as a string.
+   */
+  private static changeAvailabilityDisplay(availability: number): string {
+    if (availability === 0) {
+      return '?';
+    }
+
+    return availability.toString();
   }
 }
