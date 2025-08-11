@@ -2,10 +2,11 @@ import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CriteriaSetSearchService } from 'src/app/service/Search/SearchTypes/CriteriaSet/CriteriaSetSearch.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { filter, Observable, Subscription, tap } from 'rxjs';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { Observable, Subscription } from 'rxjs';
 import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
 import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter';
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
 import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -36,6 +37,8 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
+  private loadNextPageSubscription: Subscription;
+
   adaptedData: TableData;
 
   isTableItemsSelected = false;
@@ -46,25 +49,30 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   searchResultsFound = false;
 
+  searchtText: string;
+
   constructor(
     private activeSearchTermService: ActiveSearchTermService,
-    private searchService: CriteriaSetSearchService,
+    private criteriaSetSearchService: CriteriaSetSearchService,
     private selectedTableItemsService: SelectedTableItemsService<ReferenceCriteriaListEntry>
   ) {}
 
   ngOnInit() {
     this.startElasticSearch('');
-    this.subscription = this.searchService
+    this.subscription = this.criteriaSetSearchService
       .getSearchResults([this.referenceFilterUri])
-      .subscribe((searchTermResults) => {
-        if (searchTermResults) {
-          this.listItems = searchTermResults.getResults();
-          this.adaptedData = ReferenceCriteriaListEntryAdapter.adapt(this.listItems);
-          if (this.adaptedData.body.rows.length > 0) {
-            this.searchResultsFound = true;
-          } else {
-            this.searchResultsFound = false;
-          }
+      .pipe(
+        filter(
+          (searchResult: ReferenceCriteriaResultList) => searchResult?.getResults()?.length > 0
+        )
+      )
+      .subscribe((searchTermResults: ReferenceCriteriaResultList) => {
+        this.listItems = searchTermResults.getResults();
+        this.adaptedData = ReferenceCriteriaListEntryAdapter.adapt(this.listItems);
+        if (this.adaptedData.body.rows.length > 0) {
+          this.searchResultsFound = true;
+        } else {
+          this.searchResultsFound = false;
         }
       });
     this.searchText$ = this.activeSearchTermService.getActiveSearchTerm();
@@ -73,6 +81,7 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+    this.loadNextPageSubscription?.unsubscribe();
   }
 
   private handleSelectedItemsSubscription(): void {
@@ -105,16 +114,16 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   public startElasticSearch(searchtext: string) {
     if (this.referenceFilterUri?.length > 0) {
-      this.searchService.search(searchtext, [this.referenceFilterUri]).subscribe((test) => {
-        this.listItems = test.getResults();
-      });
+      this.searchtText = searchtext;
+      this.subscription = this.criteriaSetSearchService
+        .search(searchtext, [this.referenceFilterUri])
+        .subscribe();
     } else {
       console.warn('No referenceCriteriaUrl was provided');
     }
   }
 
   setSelectedReferenceCriteria() {
-    const ids = this.selectedTableItemsService.getSelectedIds();
     this.selectedTableItemsService
       .getSelectedTableItems()
       .subscribe((items) => {
@@ -129,7 +138,7 @@ export class ReferenceComponent implements OnInit, OnDestroy {
       })
       .unsubscribe();
 
-    this.emitIDs();
+    this.emitIds();
     this.selectedTableItemsService.clearSelection();
   }
 
@@ -149,10 +158,17 @@ export class ReferenceComponent implements OnInit, OnDestroy {
 
   public removeSelectedReference(index: number): void {
     this.arrayOfSelectedReferences.splice(index, 1);
-    this.emitIDs();
+    this.emitIds();
   }
 
-  private emitIDs(): void {
+  private emitIds(): void {
     this.selectedReferenceIds.emit(this.arrayOfSelectedReferences.map((items) => items.id));
+  }
+
+  public loadMoreCriteriaSetResults(): void {
+    this.loadNextPageSubscription?.unsubscribe();
+    this.loadNextPageSubscription = this.criteriaSetSearchService
+      .loadNextPage(this.searchtText, [this.referenceFilterUri])
+      .subscribe();
   }
 }
