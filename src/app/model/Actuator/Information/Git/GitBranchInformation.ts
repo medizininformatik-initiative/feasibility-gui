@@ -1,4 +1,4 @@
-import { GitBranchData } from 'src/app/model/Interface/ActuatorInfoIData/GitData/GitBranchData';
+import { GitBranchData } from 'src/app/model/Interface/ActuatorInfoData/GitData/GitBranchData';
 
 export class GitBranchInformation {
   private name: string;

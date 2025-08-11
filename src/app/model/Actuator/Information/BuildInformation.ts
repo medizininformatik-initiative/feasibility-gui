@@ -1,5 +1,5 @@
 import { BuildDetails } from './Build/BuildInformation';
-import { BuildInformationData } from '../../Interface/ActuatorInfoIData/BuildInformationData';
+import { BuildInformationData } from '../../Interface/ActuatorInfoData/BuildInformationData';
 import { GitInformation } from './Git/GitInformation';
 import { TerminologyInformation } from './Terminology/TerminologyInformation';
 

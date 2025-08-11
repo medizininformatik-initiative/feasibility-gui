@@ -1,4 +1,4 @@
-import { GitInformationData } from 'src/app/model/Interface/ActuatorInfoIData/GitData/GitInformationData';
+import { GitInformationData } from 'src/app/model/Interface/ActuatorInfoData/GitData/GitInformationData';
 import { GitBranchInformation } from './GitBranchInformation';
 import { GitBuildInformation } from './GitBuildInformation';
 import { GitCommitInformation } from './GitCommitInformation';

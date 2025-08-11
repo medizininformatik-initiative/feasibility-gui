@@ -1,4 +1,4 @@
-import { TerminologyInformationData } from 'src/app/model/Interface/ActuatorInfoIData/Terminology/TerminologyInformationData';
+import { TerminologyInformationData } from 'src/app/model/Interface/ActuatorInfoData/Terminology/TerminologyInformationData';
 
 export class TerminologyInformation {
   private ontologyTag: string;
