@@ -1,16 +1,15 @@
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { Observable, Subscription, switchMap } from 'rxjs';
-import { SearchService } from 'src/app/service/Search/Search.service';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
-import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 
 @Component({
   selector: 'num-concept-filter-table',
@@ -40,7 +39,6 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
 
   constructor(
     private activeSearchTermService: ActiveSearchTermService,
-    private searchService: SearchService,
     private codeableConceptSearchService: CodeableConceptSearchService,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
   ) {}
@@ -78,7 +76,6 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   }
 
   public addSelectedRow(item: InterfaceTableDataRow) {
-    console.log('Adding selected row:', item);
     const entry = item.originalEntry as CodeableConceptResultListEntry;
     const concept = CloneConcept.deepCopyConcept(entry.getConcept());
 
@@ -101,7 +98,6 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   }
 
   public addSelectedConceptsToStage() {
-    console.log('Adding selected concepts to stage:', this.selectedConcepts);
     this.selectedConceptProviderService.addConcepts(this.selectedConcepts);
     this.clearSelectedConceptArray();
   }
@@ -111,7 +107,6 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   }
 
   public loadMoreSearchResults(): void {
-    console.log('test');
     this.codeableConceptSearchService.loadNextPage(' ', this.valueSetUrl).subscribe();
   }
 }

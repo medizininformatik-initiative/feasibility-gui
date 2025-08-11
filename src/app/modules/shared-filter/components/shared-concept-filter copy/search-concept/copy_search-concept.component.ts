@@ -1,4 +1,3 @@
-import { SearchService } from 'src/app/service/Search/Search.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
