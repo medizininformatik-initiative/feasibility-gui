@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BackendService } from '../Backend.service';
 import { ActuatorPaths } from '../Paths/ActuatorPath';
 import { Observable } from 'rxjs';
-import { BuildInformationData } from 'src/app/model/Interface/ActuatorInfoIData/BuildInformationData';
+import { BuildInformationData } from 'src/app/model/Interface/ActuatorInfoData/BuildInformationData';
 
 @Injectable({
   providedIn: 'root',
