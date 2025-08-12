@@ -3,7 +3,6 @@ import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 import { from, race, of, timer, Observable, throwError } from 'rxjs';
 import { catchError, mapTo, map } from 'rxjs/operators';
 import { IAppConfig } from 'src/app/config/app-config.model';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +61,7 @@ export class OAuthInitService {
     const CLIENT_ID = config.auth.clientId;
 
     const authConfig: AuthConfig = {
+      preserveRequestedRoute: true,
       issuer: `${BASE_URL}/realms/${REALM}`,
       clientId: CLIENT_ID,
       responseType: 'code',
