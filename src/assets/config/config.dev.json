@@ -49,7 +49,7 @@
     "lowerboundarylocationresult": 1,
     "lowerboundarypatientresult": 20,
     "pollingintervallinseconds": 10,
-    "pollingtimeinseconds": 60,
+    "pollingtimeinseconds": 10,
     "sendsqcontexttobackend": true
   },
   "proposalPortalLink": "https://antrag.dev.forschen-fuer-gesundheit.de",
