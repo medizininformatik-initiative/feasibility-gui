@@ -1,10 +1,10 @@
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
+import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermFilterValues } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilterValues';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class SearchFilterService {
    *
    * @returns An Observable emitting the current list of filters.
    */
-  public fetchFilters(): Observable<Array<SearchTermFilter>> {
+  public fetchFilters(): Observable<Array<CriteriaSearchFilter>> {
     return this.backendService
       .getSearchFilter()
       .pipe(
@@ -34,16 +34,16 @@ export class SearchFilterService {
     name: string
     type: string
     values: [{ count: number; label: string }]
-  }): SearchTermFilter {
+  }): CriteriaSearchFilter {
     const searchTermValues = this.buildSearchTermValues(filter.values);
     const filterType = this.setFilterType(filter.name);
-    return new SearchTermFilter(filterType, searchTermValues);
+    return new CriteriaSearchFilter(filterType, searchTermValues);
   }
 
   private buildSearchTermValues(
     values: [{ count: number; label: string }]
-  ): SearchTermFilterValues[] {
-    return values.map((value) => new SearchTermFilterValues(value.count, value.label));
+  ): CriteriaSearchFilterValue[] {
+    return values.map((value) => new CriteriaSearchFilterValue(value.count, value.label));
   }
 
   private setFilterType(name: string): ElasticSearchFilterTypes {

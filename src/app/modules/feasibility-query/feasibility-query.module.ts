@@ -42,6 +42,7 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { ResultActionBarComponent } from './components/result/action-bar/result-action-bar.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -97,6 +98,7 @@ export const FORMATS_GERMAN = {
     FileSaverModule,
     SharedFilterModule,
     FeasibilityQueryRoutingModule,
+    InfiniteScrollModule,
   ],
   exports: [
     EditTimeRestrictionComponent,

@@ -1,10 +1,11 @@
-import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
+import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Observable, Subscription } from 'rxjs';
 import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 
 @Component({
   selector: 'num-shared-concept-filter-copy',
@@ -31,16 +32,14 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
 
   constructor(
     private selectedConceptFilterService: SelectedConceptFilterProviderService,
-    private searchResultProvider: SearchResultProvider
+    private searchResultProvider: CodeableConceptSearchService
   ) {}
 
   ngOnInit() {
     if (this.preSelectedConcepts.length > 0) {
       this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     }
-    this.searchResults$ = this.searchResultProvider.getCodeableConceptSearchResults(
-      this.conceptFilterId
-    );
+    this.searchResults$ = this.searchResultProvider.getSearchResults(this.valueSetUrl);
   }
 
   ngOnDestroy(): void {

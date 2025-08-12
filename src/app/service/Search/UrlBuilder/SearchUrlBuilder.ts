@@ -5,6 +5,20 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
   private baseUrl: string;
   private queryParams: Map<string, string> = new Map();
 
+  /**
+   * The maximum number of pages shown each page contains {$MAX_ENTRIES_PER_PAGE}
+   */
+  public static readonly MAX_PAGES = 20;
+  /**
+   * The default number of pages shown
+   */
+  public static readonly DEFAULT_PAGES = 20;
+
+  /**
+   * The maximum number of entries per page is set to 20 to prevent performance issues with large datasets.
+   */
+  public static readonly MAX_ENTRIES_PER_PAGE = 20;
+
   constructor(path: string) {
     this.baseUrl = path;
   }
@@ -44,12 +58,23 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
     return this;
   }
 
-  public withPageSize(limit: number = 50): this {
+  public withPageSize(limit: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE): this {
+    if (limit > SearchUrlBuilder.MAX_ENTRIES_PER_PAGE) {
+      limit = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE;
+    }
     this.queryParams.set('page-size', limit.toString());
     return this;
   }
 
+  /**
+   * The page size is limited to 20 to prevent performance issues with large datasets.
+   * @param offset
+   * @returns
+   */
   public withPage(offset: number): this {
+    if (offset > SearchUrlBuilder.MAX_PAGES) {
+      offset = SearchUrlBuilder.MAX_PAGES;
+    }
     this.queryParams.set('page', offset.toString());
     return this;
   }

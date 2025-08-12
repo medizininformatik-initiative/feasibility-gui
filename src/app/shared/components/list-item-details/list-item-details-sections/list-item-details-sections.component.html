@@ -1,0 +1,24 @@
+<ng-container *ngIf="listItemDetails?.length > 0">
+  <div fxLayout="column" fxLayoutAlign="start start" class="container">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      *ngFor="let item of listItemDetails"
+      class="mat-divider entry-layout"
+    >
+      <div
+        class="text-overflow display-name"
+        (click)="getSelectedRelative(item)"
+        [matTooltip]="item.getDisplay() | displayTranslation"
+      >
+        {{ item.getDisplay() | displayTranslation }}
+      </div>
+      <num-menu
+        fxFlex="10"
+        (click)="$event.stopPropagation()"
+        [menuItems]="menuItems"
+        [id]="item.getContextualizedTermcodeHash()"
+      ></num-menu>
+    </div>
+  </div>
+</ng-container>

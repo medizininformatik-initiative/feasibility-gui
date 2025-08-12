@@ -1,4 +1,4 @@
-import { GitBuildData } from '../../../Interface/ActuatorInfoIData/GitData/GitBuildData';
+import { GitBuildData } from '../../../Interface/ActuatorInfoData/GitData/GitBuildData';
 
 export class GitBuildInformation {
   private version: string;

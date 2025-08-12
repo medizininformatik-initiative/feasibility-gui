@@ -1,4 +1,4 @@
-import { GitCommitIdData } from 'src/app/model/Interface/ActuatorInfoIData/GitData/GitCommitIdData';
+import { GitCommitIdData } from 'src/app/model/Interface/ActuatorInfoData/GitData/GitCommitIdData';
 
 export class GitCommitIdInformation {
   private full: string;

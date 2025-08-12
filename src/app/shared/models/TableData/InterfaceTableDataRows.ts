@@ -1,4 +1,4 @@
-import { InterfaceListEntry } from 'src/app/shared/models/ListEntries/InterfaceListEntry';
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
 
 export interface InterfaceTableDataRow {
   id: string
@@ -8,5 +8,5 @@ export interface InterfaceTableDataRow {
   isClickable?: boolean
   isDisabled: boolean
   checkboxColumnIndex?: number
-  originalEntry: InterfaceListEntry
+  originalEntry: AbstractListEntry
 }

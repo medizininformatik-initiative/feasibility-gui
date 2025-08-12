@@ -10,6 +10,7 @@ import { StagedConceptsComponent } from './components/shared-concept-filter/stag
 import { CopyConceptFilterTableComponent } from './components/shared-concept-filter copy/concept-filter-table/copy_concept-filter-table.component';
 import { CopySearchConceptComponent } from './components/shared-concept-filter copy/search-concept/copy_search-concept.component';
 import { CopySharedConceptFilterComponent } from './components/shared-concept-filter copy/copy_shared-concept-filter.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { CopySharedConceptFilterComponent } from './components/shared-concept-fi
     CopySearchConceptComponent,
     CopySharedConceptFilterComponent,
   ],
-  imports: [CommonModule, LayoutModule, SharedModule],
+  imports: [CommonModule, LayoutModule, SharedModule, InfiniteScrollModule],
   exports: [SharedConceptFilterComponent, EditFieldsComponent, CopySharedConceptFilterComponent],
 })
 export class SharedFilterModule {}

@@ -1,4 +1,4 @@
-import { BuildDetailsData } from 'src/app/model/Interface/ActuatorInfoIData/BuildData/BuildDetailsData';
+import { BuildDetailsData } from 'src/app/model/Interface/ActuatorInfoData/BuildData/BuildDetailsData';
 
 export class BuildDetails {
   private artifact: string;

@@ -1,5 +1,7 @@
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { ConceptData } from 'src/app/model/Interface/ConceptData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { ConceptComponent } from 'src/app/modules/feasibility-query/components/editor/criterion-modal/concept/concept.component';
 
 /**
  * @todo the id of a concept needs to be set in the future --> can be system + code or uuid maybe
@@ -29,5 +31,11 @@ export class Concept {
 
   public setTerminologyCode(terminologyCode: TerminologyCode) {
     this.terminologyCode = terminologyCode;
+  }
+
+  public static fromJson(json: ConceptData): Concept {
+    const display = Display.fromJson(json.display);
+    const terminologyCode = TerminologyCode.fromJson(json.terminologyCode);
+    return new Concept(display, terminologyCode);
   }
 }

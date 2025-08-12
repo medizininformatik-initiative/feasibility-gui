@@ -1,3 +1,4 @@
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 import { debounceTime, filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
@@ -11,7 +12,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { SearchService } from 'src/app/service/Search/Search.service';
 
 @Component({
   selector: 'num-searchbar',
@@ -21,7 +21,7 @@ import { SearchService } from 'src/app/service/Search/Search.service';
 export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
   private readonly debounceTime = 300;
   searchForm: UntypedFormGroup;
-  constructor(private searchService: SearchService) {}
+  constructor(private activeSearchTermService: ActiveSearchTermService) {}
 
   private subscriptions = new Subscription();
 
@@ -46,9 +46,9 @@ export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
         .valueChanges.pipe(debounceTime(this.debounceTime))
         .subscribe((value) => {
           this.currentText = value;
+          this.activeSearchTermService.setActiveSearchTerm(value);
           this.showWarning = value.length > 0 && value.length < this.minLength;
           if (value.length >= this.minLength || value.length === 0) {
-            this.searchService.setActiveSearchTerm(value);
             this.searchTextChange.emit(value);
           }
         })

@@ -1,10 +1,8 @@
+import { AbstractStructuredQueryFilters } from '../../StructuredQuery/Criterion/Abstract/AbstractStructuredQueryFilters';
+import { AbstractTimeRestriction } from '../../StructuredQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
 import { AnnotatedStructuredQueryIssue } from '../AnnotatedStructuredQueryIssue';
 import { StructuredQueryCriterion } from '../../StructuredQuery/Criterion/StructuredQueryCriterion';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { AttributeFilter } from '../../FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { AbstractStructuredQueryFilters } from '../../StructuredQuery/Criterion/Abstract/AbstractStructuredQueryFilters';
-import { AbstractTimeRestriction } from '../../StructuredQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
-import { ValueFilter } from '../../FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 /**
  * @todo we need default values for all class attributes

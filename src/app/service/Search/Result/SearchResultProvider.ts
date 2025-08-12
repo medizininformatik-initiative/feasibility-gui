@@ -1,33 +1,18 @@
-import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
-import { CodeableConceptSearchResultProviderService } from '../SearchTypes/CodeableConcept/Result/CodeableConceptSearchResultProvider.service';
 import { CriteriaSearchResultProviderService } from '../SearchTypes/Criteria/Result/CriteriaSearchResultProvider.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ReferenceCriteriaResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/ReferenceCriteriaResultList';
-import { SearchTermResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/SearchTermResultList';
-import { CriteriaSetSearchResultProviderService } from '../SearchTypes/CriteriaSet/Result/CriteriaSetSearchResultProvider.service ';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 
 @Injectable({
   providedIn: 'root',
 })
+/**
+ * @deprecated
+ */
 export class SearchResultProvider {
-  constructor(
-    private criteriaResultProvider: CriteriaSearchResultProviderService,
-    private criteriaSetResultProvider: CriteriaSetSearchResultProviderService,
-    private codeableConceptResultProvider: CodeableConceptSearchResultProviderService
-  ) {}
+  constructor(private criteriaResultProvider: CriteriaSearchResultProviderService) {}
 
-  public getCriteriaSearchResults(): Observable<SearchTermResultList | null> {
+  public getCriteriaSearchResults(): Observable<CriteriaResultList | null> {
     return this.criteriaResultProvider.getSearchResults();
-  }
-
-  public getCriteriaSetSearchResults(): Observable<ReferenceCriteriaResultList | null> {
-    return this.criteriaSetResultProvider.getSearchResults();
-  }
-
-  public getCodeableConceptSearchResults(
-    valueSetUrl: string
-  ): Observable<CodeableConceptResultList | null> {
-    return this.codeableConceptResultProvider.getSearchResults(valueSetUrl);
   }
 }

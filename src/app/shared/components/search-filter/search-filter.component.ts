@@ -12,7 +12,7 @@ export class SearchFilterComponent implements OnInit {
   filter: SearchFilter;
 
   @Output()
-  selectedFilterChanged = new EventEmitter<{ values: string[]; type: ElasticSearchFilterTypes }>();
+  selectedFilterChanged = new EventEmitter<SearchFilter>();
 
   selectedValues: string[];
 
@@ -23,11 +23,12 @@ export class SearchFilterComponent implements OnInit {
     this.selectedValues = this.filter.selectedValues;
   }
 
-  onSelectionChange(): void {
+  public onSelectionChange(): void {
     const filterType =
       ElasticSearchFilterTypes[
         this.filter.filterType.toUpperCase() as keyof typeof ElasticSearchFilterTypes
       ];
-    this.selectedFilterChanged.emit({ values: this.selectedValues, type: filterType });
+    this.filter.selectedValues = this.selectedValues;
+    this.selectedFilterChanged.emit(this.filter);
   }
 }
