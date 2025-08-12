@@ -11,6 +11,7 @@ export const PathSegments = {
   search: 'search',
   editor: 'editor',
   result: 'result',
+  loadQuery: 'load-query',
   cohortDefinition: 'cohort-definition',
   dataSelection: 'data-selection',
   criterion: 'criterion',
