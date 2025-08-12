@@ -46,7 +46,7 @@ export class ReadDataQueryService {
 
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
-      switchMap((data) => {
+      switchMap((data: SavedDataQueryData) => {
         try {
           TypeAssertion.assertSavedDataQueryData(data);
           return this.transformDataQuery(data);
