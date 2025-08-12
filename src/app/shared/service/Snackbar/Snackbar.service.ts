@@ -36,8 +36,17 @@ export class SnackbarService {
 
   constructor() {}
 
+  /**
+   * @todo implement timer for retry after
+   * @param errorCode
+   * @param retryAfter
+   */
   public displayErrorMessage(errorCode: string, retryAfter: number = 0) {
     const message = `${MessageType.ERROR}.${errorCode}`;
+    // if (retryAfter > 0) {
+    //   message += `${retryAfter}`;
+    //   this.setSnackbarTimeOut(retryAfter * 1000);
+    // }
     this.activateSnackbar(message, SnackbarColor.ERROR);
   }
 
@@ -54,6 +63,10 @@ export class SnackbarService {
     this.messageSubject.next(message);
     this.colorSubject.next(color);
     setTimeout(() => this.deactivateSnackbar(), 5000);
+  }
+
+  private setSnackbarTimeOut(timeout: number = 5000) {
+    setTimeout(() => this.deactivateSnackbar(), timeout);
   }
 
   public deactivateSnackbar() {

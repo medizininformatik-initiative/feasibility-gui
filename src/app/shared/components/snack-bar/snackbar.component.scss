@@ -2,8 +2,10 @@
   width: 100%;
   height: 50px;
   display: flex;
-  justify-content: center; /* Center text horizontally */
-  align-items: center; /* Center text vertically */
+  justify-content: center;
+  /* Center text horizontally */
+  align-items: center;
+  /* Center text vertically */
   padding: 0 10px;
   color: white;
 }
@@ -13,11 +15,13 @@
 }
 
 .info-snackbar {
-  background-color: var(--num-color--primary-green); /* Info color */
+  background-color: var(--num-color--primary-green);
+  /* Info color */
 }
 
 .close-icon {
-  margin-left: auto; /* Pushes the close button to the right */
+  margin-left: auto;
+  /* Pushes the close button to the right */
   color: black;
 }
 
@@ -25,4 +29,9 @@
   padding-left: 13%;
   font-size: larger;
   color: rgba(171, 42, 42, 1);
+  font-weight: 500;
+  font-style: Medium;
+  font-size: large;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
