@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   stylesheet: string;
   urlSrc: string;
   urlAlt: string;
+  proposalPortalLink: string;
 
   constructor(
     private oauthService: OAuthService,
@@ -46,5 +47,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   public getActuatorInfo() {
     this.matDialog.open(AboutModalComponent, {});
+  }
+
+  public navigateToProposalPortal() {
+    this.proposalPortalLink = this.featureService.getProposalPortalLink();
+    window.open(this.proposalPortalLink, '_blank');
   }
 }
