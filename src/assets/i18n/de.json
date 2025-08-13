@@ -5,6 +5,11 @@
     },
     "TOGGLE": {
       "LABEL": "Seitennavigation umschalten"
+    },
+    "HEADER": {
+      "PROPOSAL_PORTAL": "Antragsportal",
+      "ABOUT": "Über das Portal",
+      "LOGOUT": "Abmelden"
     }
   },
   "DATAQUERY": {
