@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { CohortDefinitionComponent } from './data-query/cohort-definition/cohort-definition.component';
 import { DataSelectionComponent } from './data-query/data-selection/data-selection.component';
+import { LoadQueryIntoEditorFromUrlService } from 'src/app/service/Resolver/LoadQueryIntoEditorFromUrl.service';
+import { NgModule } from '@angular/core';
 import { PathSegments } from 'src/app/app-paths';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -10,6 +11,14 @@ const routes: Routes = [
     redirectTo: PathSegments.cohortDefinition,
     pathMatch: 'full',
     data: { animation: 'Search', title: 'TAB_TITLE.DATA_QUERY.COHORT_DEFINITION' },
+  },
+  {
+    path: PathSegments.loadQuery,
+    resolve: {
+      preLoadedQuery: LoadQueryIntoEditorFromUrlService,
+    },
+    component: CohortDefinitionComponent,
+    data: { animation: 'Cohort' },
   },
   {
     path: PathSegments.cohortDefinition,
