@@ -1,11 +1,11 @@
+import { AboutModalComponent } from '../about-modal/about-modal.component';
 import { ActuatorInformationService } from 'src/app/service/Actuator/ActuatorInformation.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FeatureProviderService } from 'src/app/service/FeatureProvider.service';
 import { FeatureService } from '../../../service/Feature.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { MatDialog } from '@angular/material/dialog';
-import { AboutModalComponent } from '../about-modal/about-modal.component';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'num-dataportal-header',
