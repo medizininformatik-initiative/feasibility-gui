@@ -23,13 +23,21 @@
           <mat-checkbox
             *ngIf="row.hasCheckbox && row.checkboxColumnIndex === j"
             color="primary"
+            matTooltip="{{ 'SHARED_COMPONENTS.TABLE.SELECT_CHECKBOX' | translate }}"
             disableRipple="true"
             [disabled]="!row.isDisabled"
             [checked]="row.isCheckboxSelected"
             (change)="onCheckboxSelect(row)"
             (click)="$event.stopPropagation()"
           ></mat-checkbox>
+          <fa-icon
+            matTooltip="{{ 'SHARED_COMPONENTS.TABLE.ICON' | translate }}"
+            *ngIf="row.treeIcon !== '' && row.treeIconColumnIndex === j"
+            size="1x"
+            icon="{{ row.treeIcon }}"
+          ></fa-icon>
           <div
+            matTooltip="{{ cell | displayTranslation }}"
             [ngClass]="{
               'name-column': j === 0,
               'info-column': j > 0,

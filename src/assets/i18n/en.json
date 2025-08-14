@@ -352,13 +352,15 @@
     },
     "TABLE": {
       "AVAILABILITY": "Availability",
+      "SELECT_CHECKBOX": "Select Criteria",
       "CONTEXT": "Context",
       "DISPLAY": "Display",
       "NAME": "Name",
       "PATIENT_COUNT": "Number of patients",
       "SITE": "Location",
       "TERMCODE": "Term code",
-      "TERMINOLOGY_CODE": "Terminology"
+      "TERMINOLOGY_CODE": "Terminology",
+      "ICON": "Show related criteria"
     }
   },
   "SHARED_FILTER": {
