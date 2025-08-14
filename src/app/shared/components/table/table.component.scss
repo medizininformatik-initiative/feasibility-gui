@@ -30,7 +30,7 @@ table {
 }
 
 .name-column {
-  padding-left: 20px;
+  padding-left: 10px;
   font-size: medium;
 }
 
@@ -60,4 +60,8 @@ table {
 .font-size-small {
   font-size: smaller;
   color: #6a7483;
+}
+.cursor-click {
+  cursor: pointer;
+  padding-left: 10px;
 }

@@ -21,6 +21,8 @@ export class CriteriaListEntryAdapter {
         listEntry.getContext(),
       ],
       hasCheckbox: true,
+      treeIcon: 'sitemap',
+      treeIconColumnIndex: 0,
       isCheckboxSelected: false,
       isClickable: true,
       isDisabled: listEntry.getSelectable(),

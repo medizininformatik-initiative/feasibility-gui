@@ -29,6 +29,13 @@
             (change)="onCheckboxSelect(row)"
             (click)="$event.stopPropagation()"
           ></mat-checkbox>
+          <fa-icon
+            *ngIf="row.treeIcon !== '' && row.treeIconColumnIndex === j"
+            size="1x"
+            class="cursor-click"
+            icon="{{ row.treeIcon }}"
+            (click)="onRowClick(row)"
+          ></fa-icon>
           <div
             [ngClass]="{
               'name-column': j === 0,
