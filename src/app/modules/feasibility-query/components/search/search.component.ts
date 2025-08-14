@@ -44,6 +44,8 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   elasticSearchEnabled = false;
 
+  listIetmDetailsSubscription: Subscription;
+
   selectedDetails$: Observable<SearchTermDetails>;
 
   searchFilters$: Observable<SearchFilter[]> = of([]);
@@ -93,6 +95,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.subscription?.unsubscribe();
     this.searchSubscription?.unsubscribe();
     this.searchWithFilterSubscription?.unsubscribe();
+    this.listIetmDetailsSubscription?.unsubscribe();
   }
 
   /** Search Result Handling */
@@ -154,9 +157,14 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   public setClickedRow(row: InterfaceTableDataRow) {
     const originalEntry = row.originalEntry as CriteriaListEntry;
-    this.searchTermDetailsService
-      .getDetailsForListItem(originalEntry.getId())
-      .subscribe(() => this.openSidenav());
+    this.listIetmDetailsSubscription?.unsubscribe();
+    if (this.isOpen) {
+      this.closeSidenav();
+    } else {
+      this.listIetmDetailsSubscription = this.searchTermDetailsService
+        .getDetailsForListItem(originalEntry.getId())
+        .subscribe(() => this.openSidenav());
+    }
   }
 
   public getElasticSearchFilter(): void {
