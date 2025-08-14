@@ -353,13 +353,15 @@
     },
     "TABLE": {
       "AVAILABILITY": "Verfügbarkeit",
+      "SELECT_CHECKBOX": "Kriterium auswählen",
       "CONTEXT": "Kontext",
       "DISPLAY": "Anzeige",
       "NAME": "Name",
       "PATIENT_COUNT": "Anzahl der Patienten",
       "SITE": "Standort",
       "TERMCODE": "Termcode",
-      "TERMINOLOGY_CODE": "Terminologie"
+      "TERMINOLOGY_CODE": "Terminologie",
+      "ICON": "Verwandte Kriterien anzeigen"
     }
   },
   "SHARED_FILTER": {
