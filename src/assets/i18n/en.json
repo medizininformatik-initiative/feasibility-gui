@@ -32,7 +32,9 @@
         "NEW_DATASELECTION": "New feature selection",
         "UPLOAD": "Upload data definition"
       },
-      "EMPTY": "You have not defined a feature selection yet. Upload an existing feature selection or create a new one.",
+      "EDITOR": {
+        "EMPTY": "You have not defined a feature selection yet. Upload an existing feature selection or create a new one."
+      },
       "ERROR": {
         "DOWNLOAD": "No cohort defined; download not possible",
         "UPLOAD": "No valid cohort defined in the uploaded file"
