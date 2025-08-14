@@ -1,11 +1,4 @@
-import {
-  faAngleDoubleLeft,
-  faArrowRight,
-  faExclamation,
-  faExclamationTriangle,
-  faFolderOpen,
-} from '@fortawesome/free-solid-svg-icons';
-import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleRight, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +9,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { faCubes } from '@fortawesome/free-solid-svg-icons';
 import { faDna } from '@fortawesome/free-solid-svg-icons';
@@ -25,10 +19,13 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { faFile, faFileImage, faWindowMinimize } from '@fortawesome/free-solid-svg-icons';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { faFolder } from '@fortawesome/free-solid-svg-icons';
 import { faGlobeEurope } from '@fortawesome/free-solid-svg-icons';
 import { faGreaterThan } from '@fortawesome/free-solid-svg-icons';
 import { faGreaterThanEqual } from '@fortawesome/free-solid-svg-icons';
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faLessThan } from '@fortawesome/free-solid-svg-icons';
 import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
@@ -52,10 +49,13 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faUsersCog } from '@fortawesome/free-solid-svg-icons';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { faWrench } from '@fortawesome/free-solid-svg-icons';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { faInfo } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleDoubleLeft,
+  faArrowRight,
+  faExclamation,
+  faExclamationTriangle,
+  faFolderOpen,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   faClone,
   faDatabase,
@@ -133,4 +133,6 @@ export const FONT_AWESOME_ICONS = [
   faExclamationTriangle,
   faInfoCircle,
   faInfo,
+  faLink,
+  faExternalLinkAlt,
 ];

@@ -3,6 +3,7 @@
   font-size: 14px;
   margin: 0 0 1em 0;
 }
+
 .toolbar fa-icon {
   padding: 0 0 0 1em;
 }
@@ -13,9 +14,11 @@
   height: 105px;
   object-fit: cover;
 }
+
 .mat-toolbar {
   height: 105px;
 }
+
 .mat-toolbar-single-row {
   padding-left: 0px !important;
 }
@@ -42,4 +45,23 @@
 
 ::ng-deep .mdc-list-item__primary-text {
   width: 100%;
+}
+
+span.link-like {
+  padding-top: 0.3em;
+  padding-left: 1em;
+  cursor: pointer;
+  color: var(--num-color--primary);
+  font-size: medium;
+  font-weight: 500;
+  text-decoration: none;
+  /* No underline by default */
+  transition: color 0.2s ease;
+}
+
+span.link-like:hover {
+  text-decoration: underline;
+  /* Show underline on hover */
+  color: #0056b3;
+  /* Darker blue on hover */
 }

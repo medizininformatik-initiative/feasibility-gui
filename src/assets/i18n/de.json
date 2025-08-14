@@ -5,6 +5,11 @@
     },
     "TOGGLE": {
       "LABEL": "Seitennavigation umschalten"
+    },
+    "HEADER": {
+      "PROPOSAL_PORTAL": "Antragsportal",
+      "ABOUT": "Über das Portal",
+      "LOGOUT": "Abmelden"
     }
   },
   "DATAQUERY": {
@@ -27,7 +32,9 @@
         "NEW_DATASELECTION": "Neue Merkmalselektion",
         "UPLOAD": "Datendefinition hochladen"
       },
-      "EMPTY": "Sie haben noch keine Merkmalselektion definiert. Laden Sie eine existierende Merkmalselektion oder erstellen Sie eine neue Merkmalselektion.",
+      "EDITOR": {
+        "EMPTY": "Sie haben noch keine Merkmalselektion definiert. Laden Sie eine existierende Merkmalselektion oder erstellen Sie eine neue Merkmalselektion."
+      },
       "ERROR": {
         "DOWNLOAD": "Es wurde keine Kohorte definiert, Download nicht möglich.",
         "UPLOAD": "In der hochgeladenen Datei wurde keine Kohorte definiert."
