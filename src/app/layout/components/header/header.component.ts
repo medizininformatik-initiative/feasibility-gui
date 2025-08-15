@@ -6,6 +6,7 @@ import { FeatureService } from '../../../service/Feature.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { UserProfileService } from 'src/app/service/User/UserProfile.service';
 
 @Component({
   selector: 'num-dataportal-header',
@@ -23,8 +24,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private oauthService: OAuthService,
     private featureProviderService: FeatureProviderService,
     public featureService: FeatureService,
-    private actuatorInformationService: ActuatorInformationService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private userProfileService: UserProfileService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +39,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   async initProfile(): Promise<void> {
     const isLoggedIn = this.oauthService.hasValidAccessToken();
     if (isLoggedIn) {
-      this.profile = (await this.oauthService.loadUserProfile()) as IUserProfile;
+      this.profile = this.userProfileService.getCurrentProfile();
     }
   }
   public logout() {

@@ -1,23 +1,17 @@
+import { ActuatorApiService } from './service/Backend/Api/ActuatorApi.service';
 import { AppConfigService } from './config/app-config.service';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
 import { DataSelectionMainProfileInitializerService } from './service/DataSelectionMainProfileInitializerService';
 import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile';
 import { FeatureProviderService } from './service/FeatureProvider.service';
 import { FeatureService } from './service/Feature.service';
-import { HttpClient } from '@angular/common/http';
 import { IAppConfig } from './config/app-config.model';
 import { Injectable } from '@angular/core';
 import { OAuthInitService } from './core/auth/oauth-init.service';
 import { Observable, of, throwError } from 'rxjs';
 import { ProvidersInitService } from './service/Provider/ProvidersInit.service';
 import { TerminologySystemProvider } from './service/Provider/TerminologySystemProvider.service';
-import { ActuatorApiService } from './service/Backend/Api/ActuatorApi.service';
-
-interface PatientProfileInitResult {
-  config: IAppConfig
-  patientProfileResult: DataSelectionProfile
-}
-
+import { UserProfileService } from './service/User/UserProfile.service';
 @Injectable({ providedIn: 'root' })
 export class CoreInitService {
   constructor(
@@ -28,13 +22,21 @@ export class CoreInitService {
     private featureService: FeatureService,
     private featureProviderService: FeatureProviderService,
     private providersInitService: ProvidersInitService,
-    private http: HttpClient,
-    private actuatorApiService: ActuatorApiService
+    private actuatorApiService: ActuatorApiService,
+    private userProfileService: UserProfileService
   ) {}
 
+  /**
+   * @see Once the pipe has more than nine operators the return type will
+   * be Observable<unknown> therefore it needs to be casted explicitly
+   * to the return desired type
+   * Initializes core services and features.
+   * @returns An observable of the application configuration.
+   */
   public init(): Observable<IAppConfig> {
     return this.loadConfig().pipe(
       concatMap((config) => this.initOAuth(config)),
+      concatMap((config) => this.initUserProfile(config)),
       concatMap((config) => this.initFeatureService(config)),
       concatMap((config) => this.initFeatureProviderService(config)),
       concatMap((config) => this.checkBackendHealth(config)),
@@ -52,7 +54,7 @@ export class CoreInitService {
         console.error('CoreInitService failed:', err);
         return throwError(() => err);
       })
-    );
+    ) as Observable<IAppConfig>;
   }
 
   private loadConfig(): Observable<IAppConfig> {
@@ -75,6 +77,18 @@ export class CoreInitService {
         console.error('OAuth init failed:', err);
         return throwError(() => err);
       })
+    );
+  }
+
+  private initUserProfile(config: IAppConfig): Observable<IAppConfig> {
+    return this.userProfileService.initializeProfile().pipe(
+      tap((result) => console.log('UserProfile initialized:', result)),
+      concatMap((result: boolean) =>
+        result === true
+          ? of(config)
+          : throwError(() => new Error('UserProfile initialization failed'))
+      ),
+      map(() => config)
     );
   }
 

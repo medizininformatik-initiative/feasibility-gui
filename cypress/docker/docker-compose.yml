@@ -1,3 +1,5 @@
+# Wieso hoch und runterfahren des Containers wenn settings geändert werden
+# DataPortalAdmin hat keine rechte
 services:
   dataportal-backend:
     container_name: dataportal-backend
