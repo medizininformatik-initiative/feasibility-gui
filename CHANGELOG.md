@@ -1,5 +1,29 @@
 # Changelog
 
+## v6.3.4 (2025-08-18)
+
+### Feature
+* Infinite scrolling – implemented for CodeableConcept search, Criteria search, and Reference search [#217](https://github.com/medizininformatik-initiative/feasibility-gui/issues/217)
+* Support loading of query by id via url params [#416](https://github.com/medizininformatik-initiative/feasibility-gui/issues/416)
+* Add Link to Proposal Portal [#368](https://github.com/medizininformatik-initiative/feasibility-gui/issues/368)
+* Display tree icon next to each search result [#413](https://github.com/medizininformatik-initiative/feasibility-gui/issues/413)
+
+### Fixed
+* Fix selected Fields window placement [#417](https://github.com/medizininformatik-initiative/feasibility-gui/issues/417)
+
+### Changed
+* Search architecture reworked – streamlined data flow and improved clarity of the search process.
+* Search engine updates – revised engine logic and search operation flow.
+* Keyed vs. simple search distinction – introduced clear separation between searches with a dataset URL (keyed search) and simple result searches.
+* New abstraction layers – improved maintainability and separation of concerns.
+* Refactored class names – applied consistent and meaningful naming conventions.
+* Type safety improvements – added TypeGuard utilities and type assertions for safer runtime checks.
+* Schema validation – introduced interfaces to enforce the search schema structure.
+* Implemented resolver logic to load and validate query information before component initialization.
+* Updated CSS styling for the error-handling snackbar
+
+
+
 ## v6.3.3 (2025-07-24)
 
 ### Feature
