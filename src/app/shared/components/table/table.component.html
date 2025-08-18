@@ -24,6 +24,7 @@
             *ngIf="row.hasCheckbox && row.checkboxColumnIndex === j"
             color="primary"
             matTooltip="{{ 'SHARED_COMPONENTS.TABLE.SELECT_CHECKBOX' | translate }}"
+            matTooltipClass="prevent-selection"
             disableRipple="true"
             [disabled]="!row.isDisabled"
             [checked]="row.isCheckboxSelected"
@@ -32,9 +33,11 @@
           ></mat-checkbox>
           <fa-icon
             matTooltip="{{ 'SHARED_COMPONENTS.TABLE.ICON' | translate }}"
+            matTooltipClass="prevent-selection"
             *ngIf="row.treeIcon !== '' && row.treeIconColumnIndex === j"
             size="1x"
             icon="{{ row.treeIcon }}"
+            class="cursor-click"
           ></fa-icon>
           <div
             matTooltip="{{ cell | displayTranslation }}"
