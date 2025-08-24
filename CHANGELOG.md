@@ -1,5 +1,14 @@
 # Changelog
 
+## v6.3.5 (2025-08-24)
+
+### Changed
+* Changed description of Feature Selection [#438](https://github.com/medizininformatik-initiative/feasibility-gui/issues/438)
+* Refactor user profile handling across services and components [#436](https://github.com/medizininformatik-initiative/feasibility-gui/pull/436)
+* Add AuthToken and HttpError interceptors for improved HTTP request handling [#435](https://github.com/medizininformatik-initiative/feasibility-gui/pull/435)
+
+
+
 ## v6.3.4 (2025-08-18)
 
 ### Feature
