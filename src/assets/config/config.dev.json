@@ -36,7 +36,8 @@
   "legal": {
     "copyrightOwner": "FDPG+ Team",
     "copyrightYear": "2025",
-    "version": "6.3.4"
+    "version": "6.3.4",
+    "email": "info@forschen-fuer-gesundheit.de"
   },
   "mock": {
     "loadnsave": false,

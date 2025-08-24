@@ -153,4 +153,8 @@ export class FeatureService {
   public getLegalVersion(): string {
     return this.appConfig.legal.version;
   }
+
+  public getLegalEmail(): string {
+    return this.appConfig.legal.email;
+  }
 }

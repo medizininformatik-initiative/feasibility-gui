@@ -15,6 +15,7 @@ export class AboutModalComponent implements OnInit {
   legalVersion: string;
   legalCopyrightOwner: string;
   legalCopyrightYear: string;
+  legalEmail: string;
   backendBuildTime: string;
 
   constructor(
@@ -35,5 +36,6 @@ export class AboutModalComponent implements OnInit {
     this.legalVersion = this.featureService.getLegalVersion();
     this.legalCopyrightOwner = this.featureService.getLegalCopyrightOwner();
     this.legalCopyrightYear = this.featureService.getLegalCopyrightYear();
+    this.legalEmail = this.featureService.getLegalEmail();
   }
 }
