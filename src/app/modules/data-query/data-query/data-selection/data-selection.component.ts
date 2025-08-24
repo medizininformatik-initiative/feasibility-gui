@@ -11,6 +11,7 @@ import { DataSelectionProviderService } from 'src/app/modules/data-selection/ser
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { map, Observable, Subscription, take } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { FeatureService } from '../../../../service/Feature.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -31,11 +32,13 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   translatedCRTLDSubscription: Subscription;
   fileName: string;
   createDSSubscription: Subscription;
+  emailLink: string;
   constructor(
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
-    private feasibilityQueryValidation: FeasibilityQueryValidation
+    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private featureService: FeatureService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +47,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
       .pipe(map((dataSelection) => dataSelection.getProfiles().length > 0));
 
     this.isCohortExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
+    this.emailLink = this.featureService.getLegalEmail();
   }
 
   ngOnDestroy(): void {

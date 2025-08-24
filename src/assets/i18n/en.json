@@ -67,6 +67,9 @@
       },
       "HEADER": "Selected features",
       "HEADER_DESCRIPTION": "Define which patient features in the cohort are relevant to your research question here. Pay attention to data sparseness and alignment with your study protocol, ethics approval, or research proposal (if available). Change the selection by clicking the pencil icon and add filters (e.g., specific diagnosis codes) as needed.",
+      "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
+      "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
+      "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
       "SECTION": "Selected criteria"
     },
     "SEARCH": {
@@ -75,7 +78,9 @@
         "JUMP_TO_DATASELECTION": "Show selection"
       },
       "HEADER": "Feature Selection",
-      "HEADER_INFO": "For your research question, define which patient data you would like to receive. The available data is standardized across Germany using core data set (CDS) modules. You can filter data points (e.g., specific lab values) and specify which data points are essential for your research.",
+      "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
+      "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
+      "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
       "INFOTEXT": "Select criteria to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
     }
   },

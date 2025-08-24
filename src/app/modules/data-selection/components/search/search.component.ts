@@ -23,6 +23,7 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { ActivatedRoute } from '@angular/router';
+import { FeatureService } from '../../../../service/Feature.service';
 
 @Component({
   selector: 'num-search-data-selection',
@@ -48,6 +49,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   $dataSelectionProfileTreeNodeArray: Observable<DataSelectionProfileTreeNode[]>;
 
   downloadDisabled = true;
+  emailLink: string;
 
   constructor(
     public elementRef: ElementRef,
@@ -57,7 +59,8 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
     private activeDataSelectionService: ActiveDataSelectionService,
     private selectedDataSelectionProfileService: SelectedDataSelectionProfileService,
     private navigationHelperService: NavigationHelperService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private featureService: FeatureService
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +74,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
     const tree = this.activeRoute.snapshot.data.preLoadDataSelectionData;
     const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
     this.trees = rootNode;
+    this.emailLink = this.featureService.getLegalEmail();
   }
 
   /**
