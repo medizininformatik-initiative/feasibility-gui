@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
+import { SnackbarComponent } from '../../components/snack-bar/snackbar.component';
 
 export enum ErrorCodes {
   FEAS_10001 = 'FEAS-10001',
@@ -21,9 +23,7 @@ export enum SnackbarColor {
   ERROR = 'red',
   INFO = 'green',
 }
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SnackbarService {
   private visibilitySubject = new Subject<boolean>();
   public visibility$ = this.visibilitySubject.asObservable();
@@ -34,7 +34,7 @@ export class SnackbarService {
   private colorSubject = new Subject<string>();
   public color$ = this.colorSubject.asObservable();
 
-  constructor() {}
+  constructor(private snackBar: MatSnackBar) {}
 
   /**
    * @todo implement timer for retry after

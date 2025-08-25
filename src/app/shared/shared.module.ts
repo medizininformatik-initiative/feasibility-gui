@@ -7,6 +7,7 @@ import { SharedComponentsModule } from './components/shared-components.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { SnackbarService } from './service/Snackbar/Snackbar.service';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -35,6 +36,7 @@ const SHARED_DECLARATIONS = [];
   imports: [...SHARED_MODULES, CommonModule, LayoutModule, MatMomentDateModule],
   exports: [...SHARED_MODULES, ...SHARED_DECLARATIONS],
   providers: [
+    SnackbarService,
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }, // FIXED
     { provide: MAT_DATE_FORMATS, useValue: FORMATS_GERMAN }, // ADDED
   ],
