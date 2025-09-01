@@ -52,10 +52,10 @@ export class DropGroupDirective implements OnInit {
     } else {
       switch (event.container.id) {
         case 'Exclusion':
-          this.moveCriterionInExclusion(event.previousIndex, event.currentIndex);
+          this.moveCriterionInExclusion(droppedCriterion, event.previousIndex, event.currentIndex);
           break;
         case 'Inclusion':
-          this.moveCriterionInInclusion(event.previousIndex, event.currentIndex);
+          this.moveCriterionInInclusion(droppedCriterion, event.previousIndex, event.currentIndex);
           break;
         default:
           break;
@@ -70,12 +70,12 @@ export class DropGroupDirective implements OnInit {
   }
   private addToInclusion(droppedCriterion: string, currentIndex: number): void {
     this.criteria = this.feasibilityQuery.getInclusionCriteria();
-    this.criteria.splice(currentIndex, 0, [droppedCriterion]);
+    this.addCriterionToInnerArray(this.criteria, droppedCriterion, currentIndex);
     this.queryProviderService.setInclusionCriteria(this.criteria);
   }
   private addToExclusion(droppedCriterion: string, currentIndex: number): void {
     this.criteria = this.feasibilityQuery.getExclusionCriteria();
-    this.criteria.splice(currentIndex, 0, [droppedCriterion]);
+    this.addCriterionToInnerArray(this.criteria, droppedCriterion, currentIndex);
     this.queryProviderService.setExclusionCriteria(this.criteria);
   }
 
@@ -104,14 +104,55 @@ export class DropGroupDirective implements OnInit {
     inexclusion = inexclusion.filter((item) => item.length > 0);
     return inexclusion;
   }
-  private moveCriterionInInclusion(previousIndex: number, currentIndex: number): void {
+  private moveCriterionInInclusion(
+    criterionID: string,
+    previousIndex: number,
+    currentIndex: number
+  ): void {
     this.criteria = this.feasibilityQuery.getInclusionCriteria();
-    moveItemInArray(this.criteria, previousIndex, currentIndex);
+    this.criteria = this.deleteCriterion(this.criteria, criterionID);
+    this.addCriterionToInnerArray(this.criteria, criterionID, currentIndex);
     this.queryProviderService.setInclusionCriteria(this.criteria);
   }
-  private moveCriterionInExclusion(previousIndex: number, currentIndex: number): void {
+  private moveCriterionInExclusion(
+    criterionID: string,
+    previousIndex: number,
+    currentIndex: number
+  ): void {
     this.criteria = this.feasibilityQuery.getExclusionCriteria();
-    moveItemInArray(this.criteria, previousIndex, currentIndex);
+    this.criteria = this.deleteCriterion(this.criteria, criterionID);
+    this.addCriterionToInnerArray(this.criteria, criterionID, currentIndex);
     this.queryProviderService.setExclusionCriteria(this.criteria);
+  }
+
+  private addCriterionToInnerArray(
+    criteria: string[][],
+    criterionID: string,
+    currentIndex: number
+  ): void {
+    const position = this.getPosition(criteria, currentIndex);
+    if (currentIndex >= criteria.length) {
+      this.criteria.push([criterionID]);
+    } else {
+      if (criteria[position[0]]?.length > 1) {
+        this.criteria[0].splice(position[1], 0, criterionID);
+      } else {
+        this.criteria.splice(position[0], 0, [criterionID]);
+      }
+    }
+  }
+
+  private getPosition(criteria: string[][], currentIndex: number): [number, number] {
+    let position: [number, number] = [0, 0];
+    let count = 0;
+    criteria.forEach((outer, outerIndex) => {
+      outer.forEach((inner, innerIndex) => {
+        if (count === currentIndex) {
+          position = [outerIndex, innerIndex];
+        }
+        count++;
+      });
+    });
+    return position;
   }
 }
