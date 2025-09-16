@@ -18,7 +18,7 @@ export class AttributeDefinitions extends AbstractAttributeDefinition {
     min?: number,
     precision: number = 1,
     referenceCriteriaSet?: string,
-    referencedValueSet?: string
+    referencedValueSet?: string[]
   ) {
     super(display, type, optional, allowedUnits, max, min, precision, referencedValueSet);
     this.attributeCode = attributeCode;

@@ -118,8 +118,8 @@ export class AttributeFiltersBuilder {
     return new QuantityNotSet(allowedUnits, selectedUnit, precision);
   }
 
-  buildConceptFilter(id: string, allowedConceptUri: string, selectedConcepts?: Concept[]) {
-    return new ConceptFilter(id, [allowedConceptUri], selectedConcepts);
+  buildConceptFilter(id: string, allowedConceptUri: string[], selectedConcepts?: Concept[]) {
+    return new ConceptFilter(id, allowedConceptUri, selectedConcepts);
   }
 
   /**

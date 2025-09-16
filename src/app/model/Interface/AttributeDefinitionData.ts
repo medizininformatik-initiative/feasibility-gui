@@ -12,7 +12,7 @@ export interface AttributeDefinitionData {
   optional: boolean
   precision: number
   referencedCriteriaSet?: string
-  referencedValueSet?: string
+  referencedValueSet?: string[]
   selectableConcepts: string[]
   type: FilterTypes
 }
