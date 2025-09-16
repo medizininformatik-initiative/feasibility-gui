@@ -1,11 +1,10 @@
+import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Observable, Subscription } from 'rxjs';
-import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
-import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
-import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 
 @Component({
   selector: 'num-shared-concept-filter-copy',
@@ -40,6 +39,24 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
       this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     }
     this.searchResults$ = this.searchResultProvider.getSearchResults(this.valueSetUrl);
+
+    // Subscribe to service changes to keep component in sync
+    this.subscription = this.selectedConceptFilterService
+      .getSelectedConcepts()
+      .subscribe((concepts) => {
+        if (
+          concepts.length !== this.preSelectedConcepts.length ||
+          !concepts.every(
+            (concept, index) =>
+              this.preSelectedConcepts[index]?.getTerminologyCode().getCode() ===
+              concept.getTerminologyCode().getCode()
+          )
+        ) {
+          this.preSelectedConcepts.length = 0;
+          this.preSelectedConcepts.push(...concepts);
+          this.updateAndEmitConceptFilter(this.preSelectedConcepts);
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -59,17 +76,20 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
       )
     ) {
       currentArray.push(concept);
+      this.selectedConceptFilterService.addConcept(concept);
       this.updateAndEmitConceptFilter(currentArray);
     } else {
-      const newConcepts = this.removeConcept(concept);
-      this.updateAndEmitConceptFilter(newConcepts);
+      this.removeConcept(concept);
     }
   }
 
-  public removeConcept(concept: Concept): Concept[] {
-    const currentArray = this.preSelectedConcepts;
-    return currentArray.filter(
+  public removeConcept(concept: Concept): void {
+    const filteredArray = this.preSelectedConcepts.filter(
       (tc) => tc.getTerminologyCode().getCode() !== concept.getTerminologyCode().getCode()
     );
+    this.preSelectedConcepts.length = 0;
+    this.preSelectedConcepts.push(...filteredArray);
+    this.selectedConceptFilterService.removeConcept(concept);
+    this.updateAndEmitConceptFilter(this.preSelectedConcepts);
   }
 }
