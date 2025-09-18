@@ -4,6 +4,7 @@ import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
+import { CloneDisplayData } from 'src/app/model/Utilities/DisplayData/CloneDisplayData';
 
 @Injectable({
   providedIn: 'root',
@@ -62,15 +63,7 @@ export class SelectedProfileFieldsService {
   }
 
   private instantiateDisplayData(displayData: Display): Display {
-    return new Display(
-      displayData
-        .getTranslations()
-        .map(
-          (translation) =>
-            new Translation(translation.getLanguage(), translation.getValue(), undefined)
-        ),
-      displayData.getOriginal()
-    );
+    return CloneDisplayData.deepCopyDisplayData(displayData);
   }
 
   public getDeepCopyBasicFields(): Observable<BasicField[]> {
@@ -117,13 +110,13 @@ export class SelectedProfileFieldsService {
     this.updateDeepCopyField(field);
   }
 
-  private updateDeepCopyField(field: BasicField, isSelected = true): void {
+  public updateDeepCopyField(field: BasicField, isSelected = true): void {
     const deepCopy = this.deepCopyOfBasicFields.getValue();
     const updatedDeepCopy = this.updateNodeInDeepCopy(deepCopy, field, isSelected);
     this.deepCopyOfBasicFields.next(updatedDeepCopy);
   }
 
-  private updateNodeInDeepCopy(
+  public updateNodeInDeepCopy(
     fields: BasicField[],
     updatedField: BasicField,
     isSelected: boolean

@@ -1,11 +1,11 @@
 import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter';
 import { map, Subscription, take } from 'rxjs';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedFieldCloner';
 import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/SelectedProfileFields.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'num-edit-fields',
@@ -45,7 +45,7 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
       .getDeepCopyBasicFields()
       .pipe(
         take(1),
-        map((profileFields) => {
+        map((profileFields: BasicField[]) => {
           this.setSelectedChildrenFields();
           this.tree = FieldsTreeAdapter.fromTree(profileFields);
         })
@@ -70,8 +70,10 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
     const node: BasicField = element.originalEntry as BasicField;
     const index = this.getIndexInSelectedFields(node.getElementId());
     if (index !== -1) {
+      node.setIsSelected(false);
       this.spliceAndEmit(index);
     } else {
+      node.setIsSelected(true);
       this.addNodeToSelectedFields(node);
     }
     this.traversAndUpddateTree();
@@ -92,6 +94,12 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
     const index = this.getIndexInSelectedFields(node.getElementId());
     if (index !== -1) {
       this.spliceAndEmit(index);
+      this.fieldTree = this.selectedDataSelectionProfileFieldsService.updateNodeInDeepCopy(
+        this.fieldTree,
+        node.getSelectedField(),
+        false
+      );
+      this.tree = FieldsTreeAdapter.fromTree(this.fieldTree);
     }
   }
 
@@ -112,9 +120,6 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
       this.selectedBasicFields
     );
     this.updatedSelectedBasicFields.emit(clonedSelectedFields);
-    // Only update the selection status, don't trigger tree rebuilding
     this.traversAndUpddateTree();
-    // Remove this line that causes the circular trigger:
-    // this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.fieldTree);
   }
 }
