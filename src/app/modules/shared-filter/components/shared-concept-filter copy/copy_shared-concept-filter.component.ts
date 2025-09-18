@@ -62,6 +62,7 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
       this.updateAndEmitConceptFilter(currentArray);
     } else {
       const newConcepts = this.removeConcept(concept);
+      this.preSelectedConcepts = newConcepts;
       this.updateAndEmitConceptFilter(newConcepts);
     }
   }
