@@ -1,10 +1,8 @@
 import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
+import { BasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/BasicFieldCloner';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { CloneDisplayData } from 'src/app/model/Utilities/DisplayData/CloneDisplayData';
 
 @Injectable({
   providedIn: 'root',
@@ -43,27 +41,7 @@ export class SelectedProfileFieldsService {
   }
 
   private deepCopyBasicFields(fields: BasicField[]): BasicField[] {
-    return fields.map((field) => this.mapNode(field));
-  }
-
-  private mapNode(basicField: BasicField): BasicField {
-    const children = basicField.getChildren()
-      ? this.deepCopyBasicFields(basicField.getChildren())
-      : [];
-    return new BasicField(
-      basicField.getElementId(),
-      this.instantiateDisplayData(basicField.getDisplay()),
-      this.instantiateDisplayData(basicField.getDescription()),
-      children,
-      basicField.getRecommended(),
-      basicField.getIsSelected(),
-      basicField.getIsRequired(),
-      basicField.getType()
-    );
-  }
-
-  private instantiateDisplayData(displayData: Display): Display {
-    return CloneDisplayData.deepCopyDisplayData(displayData);
+    return fields.map((field) => BasicFieldCloner.deepCopyBasicField(field));
   }
 
   public getDeepCopyBasicFields(): Observable<BasicField[]> {
@@ -77,7 +55,6 @@ export class SelectedProfileFieldsService {
   public setSelectedFields(fields: SelectedBasicField[]): void {
     this.selectedFields.next(fields);
     this.fieldIds.clear();
-    //this.setSelectedChildrenFields(fields);
   }
 
   private setSelectedChildrenFields(fields: BasicField[]): void {
