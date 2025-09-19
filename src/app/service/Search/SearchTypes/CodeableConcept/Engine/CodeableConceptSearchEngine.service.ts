@@ -4,7 +4,6 @@ import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries
 import { CodeableConceptResultMapperStrategy } from '../Mapper/CodeableConceptResultMapperStrategy';
 import { CodeableConceptSearchUrlStrategy } from '../Url/CodeableConceptSearchUrlStrategy';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { SearchEngine } from '../../../SearchEngine';
 
 @Injectable({

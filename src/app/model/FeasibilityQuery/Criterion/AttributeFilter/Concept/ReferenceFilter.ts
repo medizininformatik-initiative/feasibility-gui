@@ -1,15 +1,14 @@
 import { AbstractConceptFilter } from './AbstractConceptFilter';
+import { Concept } from './Concept';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { ReferenceCriterion } from '../../ReferenceCriterion';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { Concept } from './Concept';
 
 /**
  * Class representing a ReferenceFilter.
  */
 export class ReferenceFilter extends AbstractConceptFilter {
+  private allowedReferenceUri: string[];
   private selectedReferences: ReferenceCriterion[] = [];
-  private allowedReferenceUri: string;
   private type: FilterTypes = FilterTypes.REFERENCE;
 
   /**
@@ -21,7 +20,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    */
   constructor(
     id: string,
-    allowedReferenceUri: string,
+    allowedReferenceUri: string[],
     selectedReferences: ReferenceCriterion[] = [],
     selectedConcepts: Concept[]
   ) {
@@ -35,7 +34,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @returns An array of selected reference criteria.
    */
-  getSelectedReferences(): ReferenceCriterion[] {
+  public getSelectedReferences(): ReferenceCriterion[] {
     return this.selectedReferences;
   }
 
@@ -44,7 +43,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @param selectedReferences - An array of selected reference criteria.
    */
-  setSelectedReferences(selectedReferences: ReferenceCriterion[]): void {
+  public setSelectedReferences(selectedReferences: ReferenceCriterion[]): void {
     this.selectedReferences = selectedReferences;
   }
 
@@ -53,7 +52,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @returns The allowed reference URI.
    */
-  getAllowedReferenceUri(): string {
+  public getAllowedReferenceUri(): string[] {
     return this.allowedReferenceUri;
   }
 
@@ -62,7 +61,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @param allowedReferenceUri - The allowed reference URI to set.
    */
-  setAllowedReferenceUri(allowedReferenceUri: string): void {
+  public setAllowedReferenceUri(allowedReferenceUri: string[]): void {
     this.allowedReferenceUri = allowedReferenceUri;
   }
 
@@ -71,7 +70,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @returns The filter type.
    */
-  getType(): FilterTypes {
+  public getType(): FilterTypes {
     return this.type;
   }
 
@@ -80,7 +79,7 @@ export class ReferenceFilter extends AbstractConceptFilter {
    *
    * @param type - The new filter type.
    */
-  setType(type: FilterTypes): void {
+  public setType(type: FilterTypes): void {
     this.type = type;
   }
 
@@ -92,16 +91,16 @@ export class ReferenceFilter extends AbstractConceptFilter {
    * @param selectedConcepts - The selected concepts.
    * @returns The created ReferenceFilter instance.
    */
-  static create(
+  public static create(
     id: string,
-    allowedReferenceUri: string,
+    allowedReferenceUri: string[],
     selectedReference: ReferenceCriterion[] = [],
     selectedConcepts: Concept[]
   ): ReferenceFilter {
     return new ReferenceFilter(id, allowedReferenceUri, selectedReference, selectedConcepts);
   }
 
-  isSelectedReferenceSet(): boolean {
+  public isSelectedReferenceSet(): boolean {
     return (
       this.selectedReferences !== undefined &&
       this.selectedReferences !== null &&

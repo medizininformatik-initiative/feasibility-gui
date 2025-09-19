@@ -9,7 +9,7 @@ export abstract class AbstractAttributeDefinition {
   protected optional = false;
   protected precision = 1;
   protected type: FilterTypes;
-  protected referencedValueSet?: string;
+  protected referencedValueSet?: string[];
   protected display: Display;
 
   constructor(
@@ -20,7 +20,7 @@ export abstract class AbstractAttributeDefinition {
     max?: number,
     min?: number,
     precision: number = 1,
-    referencedValueSet?: string
+    referencedValueSet?: string[]
   ) {
     this.display = display;
     this.type = type;
@@ -88,11 +88,11 @@ export abstract class AbstractAttributeDefinition {
     this.precision = precision;
   }
 
-  getReferencedValueSet(): string {
+  getReferencedValueSet(): string[] {
     return this.referencedValueSet;
   }
 
-  setReferencedValueSet(referencedValueSet: string): void {
+  setReferencedValueSet(referencedValueSet: string[]): void {
     this.referencedValueSet = referencedValueSet;
   }
 }

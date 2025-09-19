@@ -16,7 +16,7 @@ Feature: Cohort Search
 
     Examples: Search Criteria
       | criterium                       | button1                          | button2                    |
-      | Aktuelles chronologisches Alter | Zur Kohortenselektion hinzufügen | Kohortenselektion anzeigen |
+      | Alter | Zur Kohortenselektion hinzufügen | Kohortenselektion anzeigen |
       | Diabetes                        | Zur Kohortenselektion hinzufügen | Kohortenselektion anzeigen |
 
   Scenario Outline: Select Cohort elements
@@ -30,4 +30,4 @@ Feature: Cohort Search
 
     Examples: Selection Criteria
       | criterium                       | button1                          | button2                    |
-      | Aktuelles chronologisches Alter | Zur Kohortenselektion hinzufügen | Kohortenselektion anzeigen |
+      | Alter | Zur Kohortenselektion hinzufügen | Kohortenselektion anzeigen |

@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
-ONTOLOGY_GIT_TAG=${ONTOLOGY_GIT_TAG:-v3.8.1}
+ONTOLOGY_GIT_TAG=${ONTOLOGY_GIT_TAG:-v3.9.0-experimental.0}
 
-BASE_DIR="cypress/docker/ontology"
+BASE_DIR="../../cypress/docker/ontology"
 DSE_DIR="$BASE_DIR/dse"
 MIGRATION_DIR="$BASE_DIR/migration"
 
@@ -13,7 +13,7 @@ curl -fsSL -o "$BASE_DIR/backend.zip" \
   "https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download/${ONTOLOGY_GIT_TAG}/backend.zip"
 
 echo "Unzipping all files to ontology folder..."
-unzip -oj "$BASE_DIR/backend.zip" -d "$BASE_DIR"
+unzip -oj -o "$BASE_DIR/backend.zip" -d "$BASE_DIR"
 
 echo "Moving profile_tree.json to ontology/dse/ folder..."
 mv "$BASE_DIR/profile_tree.json" "$DSE_DIR/" 2>/dev/null || true
@@ -26,7 +26,11 @@ curl -fsSL -o "$BASE_DIR/elastic.zip" \
   "https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download/${ONTOLOGY_GIT_TAG}/elastic.zip"
 
 echo "Cleaning up zip..."
-rm "$BASE_DIR/backend.zip"
+#rm "$BASE_DIR/backend.zip"
+
+chmod 644 "$BASE_DIR"/*.zip
+chmod 644 "$DSE_DIR"/* || true
+chmod 644 "$MIGRATION_DIR"/* || true
 
 echo "Final files:"
 ls -l "$BASE_DIR"

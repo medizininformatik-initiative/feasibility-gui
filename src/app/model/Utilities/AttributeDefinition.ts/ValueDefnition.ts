@@ -12,7 +12,7 @@ export class ValueDefinition extends AbstractAttributeDefinition {
     max?: number,
     min?: number,
     precision: number = 1,
-    referencedValueSet?: string
+    referencedValueSet?: string[]
   ) {
     super(display, type, optional, allowedUnits, max, min, precision, referencedValueSet);
   }

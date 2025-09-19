@@ -56,7 +56,7 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
     builder: AttributeFiltersBuilder
   ): void {
     builder.withConcept(
-      new ConceptFilter(uuidv4(), [abstractAttributeDefinition.getReferencedValueSet()], [])
+      new ConceptFilter(uuidv4(), abstractAttributeDefinition.getReferencedValueSet(), [])
     );
   }
 

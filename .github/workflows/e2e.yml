@@ -11,7 +11,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     env:
-      ONTOLOGY_GIT_TAG: v3.8.1 # Or dynamically set it
+      ONTOLOGY_GIT_TAG: v3.9.0-experimental.0 # Or dynamically set it
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -64,9 +64,6 @@ jobs:
       - name: Create Test User in Keycloak
         run: .github/scripts/create-keycloak-user.sh
       
-
-      - name: Checkout
-        uses: actions/checkout@v4
 
       - name: Cypress install
         uses: cypress-io/github-action@v6

@@ -3,7 +3,7 @@
 services:
   dataportal-backend:
     container_name: dataportal-backend
-    image:  ghcr.io/medizininformatik-initiative/feasibility-backend:latest
+    image:  ghcr.io/medizininformatik-initiative/feasibility-backend:pr-600
     ports:
       - "8090:8090"
     depends_on:
@@ -27,6 +27,9 @@ services:
       DATABASE_USER: "dataportaluser"
       DATABASE_PASSWORD: "dataportalpw"
       DATABASE_DBNAME: "dataportal"
+      ONTOLOGY_DB_MIGRATION_FOLDER: "/opt/dataportal-backend/ontology/migration"
+      DSE_PROFILE_TREE_FILE: "/opt/dataportal-backend/ontology/dse/profile_tree.json"
+      TERMINOLOGY_SYSTEMS_FILE: "/opt/dataportal-backend/ontology/terminology_systems.json"
       # ---- auth
       KEYCLOAK_ENABLED: "true"
       KEYCLOAK_ALLOWED_ROLE: "DataportalUser"
@@ -63,6 +66,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./secrets:/opt/dataportal-security
+      - ./ontology:/opt/ontology:ro
 
   dataportal-postgres:
     image: 'postgres:16-alpine'
@@ -75,7 +79,7 @@ services:
       POSTGRES_DB: "dataportal"
 
   dataportal-elastic:
-    image: docker.elastic.co/elasticsearch/elasticsearch:9.0.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.1.3
     container_name: dataportal-elastic
     ports:
       - '9200:9200'
@@ -95,11 +99,14 @@ services:
   elastic-search-init:
     depends_on:
       - dataportal-elastic
-    image: ghcr.io/medizininformatik-initiative/dataportal-es-init:1.2
-    container_name: integration-test_elastic-search-init
+    image: ghcr.io/medizininformatik-initiative/dataportal-es-init:latest
+    container_name: elastic-search-init
     environment:
       ES_HOST: dataportal-elastic
-      LOCAL_PATH: /tmp/mounted_onto.zip
+      ONTO_GIT_TAG: v3.9.0-experimental.0
+      ONTO_REPO: https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download
+      DOWNLOAD_FILENAME: elastic.zip
+      EXIT_ON_EXISTING_INDICES: false
     volumes:
       - type: bind
         source: "./ontology/elastic.zip"
