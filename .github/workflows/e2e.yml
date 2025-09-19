@@ -11,7 +11,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     env:
-      ONTOLOGY_GIT_TAG: v3.8.1 # Or dynamically set it
+      ONTOLOGY_GIT_TAG: v3.9.0-experimental.0 # Or dynamically set it
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,6 +23,9 @@ jobs:
 
       - name: Start Docker Compose
         run: docker compose -f cypress/docker/docker-compose.yml up -d
+
+      - name: Check container status
+        run: docker ps -a
 
       - name: Check backend health with curl (wait until ready)
         run: |

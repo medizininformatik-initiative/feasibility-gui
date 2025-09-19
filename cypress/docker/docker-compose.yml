@@ -103,7 +103,6 @@ services:
     container_name: elastic-search-init
     environment:
       ES_HOST: dataportal-elastic
-      LOCAL_PATH: cypress/docker/ontology/elastic.zip
       ONTO_GIT_TAG: v3.9.0-experimental.0
       ONTO_REPO: https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download
       DOWNLOAD_FILENAME: elastic.zip
