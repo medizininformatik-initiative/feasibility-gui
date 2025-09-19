@@ -27,9 +27,9 @@ services:
       DATABASE_USER: "dataportaluser"
       DATABASE_PASSWORD: "dataportalpw"
       DATABASE_DBNAME: "dataportal"
-      ONTOLOGY_DB_MIGRATION_FOLDER: "/opt/ontology/migration"
-      DSE_PROFILE_TREE_FILE: "/opt/ontology/dse/profile_tree.json"
-      TERMINOLOGY_SYSTEMS_FILE: "/opt/ontology/terminology_systems.json"
+      ONTOLOGY_DB_MIGRATION_FOLDER: "/opt/dataportal-backend/ontology/migration"
+      DSE_PROFILE_TREE_FILE: "/opt/dataportal-backend/ontology/dse/profile_tree.json"
+      TERMINOLOGY_SYSTEMS_FILE: "/opt/dataportal-backend/ontology/terminology_systems.json"
       # ---- auth
       KEYCLOAK_ENABLED: "true"
       KEYCLOAK_ALLOWED_ROLE: "DataportalUser"
