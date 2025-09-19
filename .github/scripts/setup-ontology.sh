@@ -28,6 +28,10 @@ curl -fsSL -o "$BASE_DIR/elastic.zip" \
 echo "Cleaning up zip..."
 #rm "$BASE_DIR/backend.zip"
 
+chmod 644 "$BASE_DIR"/*.zip
+chmod 644 "$DSE_DIR"/* || true
+chmod 644 "$MIGRATION_DIR"/* || true
+
 echo "Final files:"
 ls -l "$BASE_DIR"
 ls -l "$DSE_DIR"
