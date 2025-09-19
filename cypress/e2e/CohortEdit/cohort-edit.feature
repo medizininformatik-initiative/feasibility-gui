@@ -38,7 +38,7 @@ Feature: Cohort editing
     And I should see "<criterium>" in the cohort criteria list with "<panel_name>" and "<chip_value>" selected
     Examples:
       | criterium                 | default_filter | new_filter | panel_name    | value | unit | chip_value |
-      | Age | No filter      | greater    | Age | 5     | a    | 5          |
+      | Current chronological age | No filter      | greater    | Current chronological age | 5     | a    | 5          |
 
 
   Scenario Outline: I add criterium to inlcusion list
