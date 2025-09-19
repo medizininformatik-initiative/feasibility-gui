@@ -9,7 +9,7 @@ export interface ValueDefinitionData {
   optional: boolean
   allowedUnits: QuantityUnitData[]
   precision: number
-  referencedCriteriaSet?: string
+  referencedCriteriaSet?: string[]
   referencedValueSet?: string[]
   max: number
   min: number

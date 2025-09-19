@@ -129,7 +129,7 @@ export class AttributeFiltersBuilder {
    */
   buildReferenceFilter(
     id: string,
-    allowedReferenceUri: string,
+    allowedReferenceUri: string[],
     selectedReference?: ReferenceCriterion[],
     selectedConcepts?: Concept[]
   ): ReferenceFilter {

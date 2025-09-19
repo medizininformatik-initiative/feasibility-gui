@@ -6,7 +6,7 @@ import { TerminologyCode } from '../../Terminology/TerminologyCode';
 
 export class AttributeDefinitions extends AbstractAttributeDefinition {
   private attributeCode?: TerminologyCode;
-  private referencedCriteriaSet?: string;
+  private referencedCriteriaSet?: string[];
 
   constructor(
     display: Display,
@@ -17,7 +17,7 @@ export class AttributeDefinitions extends AbstractAttributeDefinition {
     max?: number,
     min?: number,
     precision: number = 1,
-    referenceCriteriaSet?: string,
+    referenceCriteriaSet?: string[],
     referencedValueSet?: string[]
   ) {
     super(display, type, optional, allowedUnits, max, min, precision, referencedValueSet);
@@ -33,11 +33,11 @@ export class AttributeDefinitions extends AbstractAttributeDefinition {
     this.attributeCode = attributeCode;
   }
 
-  public getReferenceCriteriaSet(): string {
+  public getReferenceCriteriaSet(): string[] {
     return this.referencedCriteriaSet;
   }
 
-  public setReferenceCriteriaSet(referenceCriteriaSet: string | undefined): void {
+  public setReferenceCriteriaSet(referenceCriteriaSet: string[]): void {
     this.referencedCriteriaSet = referenceCriteriaSet;
   }
 }

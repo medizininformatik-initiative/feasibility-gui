@@ -11,7 +11,7 @@ export interface AttributeDefinitionData {
   display: DisplayData
   optional: boolean
   precision: number
-  referencedCriteriaSet?: string
+  referencedCriteriaSet?: string[]
   referencedValueSet?: string[]
   selectableConcepts: string[]
   type: FilterTypes
