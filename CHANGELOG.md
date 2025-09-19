@@ -1,5 +1,21 @@
 # Changelog
 
+## v6.3.6 (2025-09-19)
+
+### Feature
+* Updated UI profile to support multiple value sets and criteria sets for feasibility [#425](https://github.com/medizininformatik-initiative/feasibility-gui/issues/425)
+
+### Changed
+* Redesigned snackbar [#447](https://github.com/medizininformatik-initiative/feasibility-gui/issues/447)
+* Added feedback through the snackbar on profile edit [#448](https://github.com/medizininformatik-initiative/feasibility-gui/issues/448)
+
+### Fixed
+* Prevent field tree from collapsing on every selection [#445](https://github.com/medizininformatik-initiative/feasibility-gui/issues/445)
+* Ensure patient profile always remains part of the data extraction [#449](https://github.com/medizininformatik-initiative/feasibility-gui/issues/449)
+* Allow unsetting/deleting of filters [#442](https://github.com/medizininformatik-initiative/feasibility-gui/issues/442)
+
+
+
 ## v6.3.5 (2025-08-24)
 
 ### Changed
