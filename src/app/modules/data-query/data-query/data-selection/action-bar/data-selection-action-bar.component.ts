@@ -1,5 +1,6 @@
 import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { DataSelectionFactoryService } from 'src/app/service/DataSelection/DataSelection.factory.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
 import { DownloadDataSelectionComponent } from '../download-data-selection/download-data-selection.component';
@@ -9,8 +10,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable, Subscription } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { DataSelectionFactoryService } from 'src/app/service/DataSelection/DataSelection.factory.service';
-import { is } from 'cypress/types/bluebird';
 
 @Component({
   selector: 'num-data-selection-action-bar',
@@ -24,6 +23,8 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
   private subscription: Subscription;
 
   downloadSubscription: Subscription;
+
+  mainProfileSubscription: Subscription;
 
   constructor(
     public elementRef: ElementRef,
@@ -45,9 +46,8 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription?.unsubscribe();
-    }
+    this.mainProfileSubscription?.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   public editDataSelection() {
@@ -55,7 +55,8 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
   }
 
   public createNewDataSelection() {
-    this.dataSelectionFactoryService.instantiate();
+    this.mainProfileSubscription?.unsubscribe();
+    this.dataSelectionFactoryService.instantiate().subscribe();
     this.navigationHelperService.navigateToDataSelectionSearch();
   }
 

@@ -1,5 +1,6 @@
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionMainProfileInitializerService } from '../DataSelectionMainProfileInitializerService';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
 import { map, Observable, take } from 'rxjs';
@@ -19,16 +20,13 @@ export class DataSelectionFactoryService {
   ) {}
 
   public instantiate(): Observable<DataSelection> {
-    const dataSelection = this.createEmptyDataSelection();
-    this.setDataSelectionProvider(dataSelection);
-
     return this.loadMainProfile().pipe(
-      map((mainProfile) => this.setProfileInDataSelection(dataSelection, mainProfile))
+      map((mainProfile: DataSelectionProfile) => {
+        const dataSelection = this.setProfileInDataSelection(mainProfile);
+        this.setDataSelectionProvider(dataSelection);
+        return dataSelection;
+      })
     );
-  }
-
-  private createEmptyDataSelection(): DataSelection {
-    return new DataSelection([], uuidv4());
   }
 
   private setDataSelectionProvider(dataSelection: DataSelection): void {
@@ -40,10 +38,11 @@ export class DataSelectionFactoryService {
   }
 
   private loadMainProfile() {
-    return this.dataSelectionMainProfileInitializerService.initializePatientProfile().pipe(take(1));
+    return this.dataSelectionMainProfileInitializerService.initializePatientProfile();
   }
 
-  private setProfileInDataSelection(dataSelection: DataSelection, mainProfile: any): DataSelection {
+  private setProfileInDataSelection(mainProfile: DataSelectionProfile): DataSelection {
+    const dataSelection = new DataSelection([], uuidv4());
     dataSelection.setProfiles([mainProfile]);
     return dataSelection;
   }
