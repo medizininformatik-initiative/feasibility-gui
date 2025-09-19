@@ -24,8 +24,6 @@ jobs:
       - name: Start Docker Compose
         run: docker compose -f cypress/docker/docker-compose.yml up -d
 
-      - name: Check Docker Backend logs
-        run: docker logs -f dataportal-backend
       - name: Check backend health with curl (wait until ready)
         run: |
           max_attempts=20
