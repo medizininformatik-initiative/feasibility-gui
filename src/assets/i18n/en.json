@@ -106,6 +106,10 @@
           "ADD": "Add new reference",
           "INFO": "Click on 'Add new reference' to create a new reference"
         },
+        "SNACKBAR": {
+          "SAVED": "Profile saved successfully",
+          "SAVING_ERROR": "Error saving profile"
+        },
         "TAB_LABEL": {
           "FIELD": "Fields",
           "FILTER": "Filter",

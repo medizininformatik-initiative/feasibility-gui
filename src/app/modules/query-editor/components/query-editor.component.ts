@@ -8,6 +8,7 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { PathSegments } from 'src/app/app-paths';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -31,7 +32,8 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
     private stagedProfileService: StagedProfileService,
-    private possibleReferencesService: PossibleReferencesService
+    private possibleReferencesService: PossibleReferencesService,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +57,6 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('destroy');
     this.routeSubscription?.unsubscribe();
     this.buildProfileSubscription?.unsubscribe();
   }
@@ -80,7 +81,9 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
       this.buildProfileSubscription = this.stagedProfileService
         .buildProfile()
         .pipe(take(1))
-        .subscribe();
+        .subscribe(() => {
+          this.snackbarService.displayInfoMessage('EDITOR.CONTENT.PROFILE.SNACKBAR.SAVED');
+        });
     }
   }
 

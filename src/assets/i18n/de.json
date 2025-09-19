@@ -106,6 +106,10 @@
           "ADD": "Neues Merkmal hinzufügen",
           "INFO": "Klicken Sie auf neues Merkmal hinzufügen, um ein neues Merkmal zu erstellen"
         },
+        "SNACKBAR": {
+          "SAVED": "Profil erfolgreich gespeichert",
+          "SAVING_ERROR": "Fehler beim Speichern des Profils"
+        },
         "TAB_LABEL": {
           "FIELD": "Felder",
           "FILTER": "Filter",
