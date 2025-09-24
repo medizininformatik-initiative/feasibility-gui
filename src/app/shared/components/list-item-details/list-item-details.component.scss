@@ -1,32 +1,29 @@
-.children-container {
-  display: flex;
-  align-items: flex-start;
+.row-block {
+  width: 100%;
+  min-height: 16%;
 }
 
-.children-header {
-  flex: 0 0 auto;
-  margin-right: 20px;
+.row-header {
+  font-weight: 500;
+  justify-content: flex-start;
+  min-width: 24%;
+  height: 100%;
 }
 
-.children-list {
-  flex: 1;
-}
-
-.padding-20 {
-  padding: 10px 0px 10px 20px;
-}
-
-.padding-top-5 {
-  padding-top: 5px;
+.row-content {
+  width: 76%;
+  height: 100%;
 }
 
 .border-top {
-  border-top: 1px solid rgba(0, 0, 0, 0.1215686275);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .divider {
-  border: 0;
-  border-bottom: 1px solid #0000001f;
-  width: 100%;
-  align-content: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.orginal-item {
+  font-weight: 500;
+  font-size: 16px;
 }

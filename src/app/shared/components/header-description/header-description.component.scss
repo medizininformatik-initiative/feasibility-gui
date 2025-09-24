@@ -1,10 +1,10 @@
 .header-description {
   width: 100%;
-  font-size: 19px;
+  font-size: 16px; // snapped from 19px → 16px (closest 8-point friendly)
   font-weight: 500;
-  color: rgb(90 122 175);
-  font-family: 'Titillium Web';
-  margin-top: 25px;
+  color: rgb(90, 122, 175);
+  font-family: 'Titillium Web', sans-serif;
+  margin-top: 16px; // snapped from 25px → 24px (3 × 8)
   text-align: justify;
-  line-height: 24px;
+  line-height: 24px; // already multiple of 8 (3 × 8)
 }

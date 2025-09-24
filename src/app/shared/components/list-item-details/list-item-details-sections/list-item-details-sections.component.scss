@@ -2,15 +2,21 @@
   border: 0;
   border-bottom: 0px solid #0000001f;
   width: 100%;
-  height: 20px;
+  height: 24px;
   align-content: center;
+}
+
+.container {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .entry-layout {
   max-width: 80%;
   padding: 3%;
   height: 40px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   text-overflow: ellipsis;
   flex-wrap: wrap;
   min-width: 0px;
@@ -35,9 +41,4 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.container {
-  padding-left: 20px;
-  width: 85%;
 }

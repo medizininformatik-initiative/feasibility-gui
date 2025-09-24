@@ -1,35 +1,61 @@
+/* Text field wrapper */
 ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field {
   width: 100%;
-  padding: 0px;
-  background-color: white;
+  padding: 0;
+  background-color: #fff;
 }
 
+/* Utility spacing */
 .padding-top-20 {
-  padding: 10px;
+  padding-top: 16px; // snapped to 8-point (from 10px)
 }
 
-::ng-deep.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
+/* Form field flex */
+::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
   border: 1px solid var(--num-color--primary-300);
-  padding: 0px 6px;
-  border-radius: 5px;
-  height: 42px;
+  padding: 0 16px; // horizontal padding snapped to 16
+  border-radius: 4px; // snapped from 5px
+  height: 40px; // snapped from 42px
   align-items: center;
+  display: flex;
 }
 
+/* Remove default line ripple */
 ::ng-deep .mat-mdc-text-field-wrapper .mdc-line-ripple {
   display: none;
-  border: 0px;
+  border: 0;
 }
 
+/* Overlay panel adjustments */
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .example-panel {
   background-color: #fff;
-  width: 1000px;
-  min-width: 100% !important;
   width: fit-content;
-  min-width: 20% !important;
+  min-width: 20%; // keep relative sizing
+  max-width: 1000px; // optional max width
   position: fixed;
+  padding: 16px; // optional padding inside panel
+  box-sizing: border-box;
 }
 
+/* Select panel adjustments */
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .mat-mdc-select-panel {
   max-height: max-content;
+  padding: 8px 0; // add small 8px spacing
+}
+
+::ng-deep .mat-pseudo-checkbox-full {
+  background: white !important; // example override
+  border: 2px solid black !important; // force border
+
+  &::after {
+    color: rgba(90, 121, 175, 1) !important;
+  }
+}
+
+::ng-deep .mat-mdc-option.mat-mdc-option-active {
+  background-color: #ffffff !important;
+}
+
+::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after {
+  color: rgba(90, 121, 175, 1) !important; // this controls the check mark
 }

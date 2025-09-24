@@ -20,6 +20,7 @@ export class SearchFilterComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    console.log(this.filter);
     this.selectedValues = this.filter.selectedValues;
   }
 

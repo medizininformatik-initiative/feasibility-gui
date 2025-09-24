@@ -1,31 +1,40 @@
 <ng-container *ngIf="listItemDetails$ | async as listItemDetails">
-  <mat-list class="border-top">
+  <div class="height-100 width-100" fxLayout="column" fxLayoutAlign="start start">
+    <div class="padding-bottom-4 width-100 orginal-item">
+      <span>
+        {{ listItemDetails.display | displayTranslation }}
+      </span>
+    </div>
     <!-- Parents -->
-    <ng-container>
-      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 divider">
-        <div fxLayout="row" fxLayoutAlign="start center" class="section-layout">
-          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
-        </div>
-        <div style="width: 100%">
-          <num-list-item-details-sections [listItemDetails]="listItemDetails.parents">
-          </num-list-item-details-sections>
-        </div>
+    <div fxLayout="row" fxLayoutAlign="start center" class="row-block divider width-100">
+      <div class="row-header margin-right-2">
+        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
       </div>
-    </ng-container>
+      <div class="row-content padding-right-3 margin-bottom-3">
+        <num-list-item-details-sections
+          [listItemDetails]="listItemDetails.parents"
+          (selectedRelative)="getSelectedRelative($event)"
+        >
+        </num-list-item-details-sections>
+      </div>
+    </div>
+
     <!-- Children -->
-    <ng-container>
-      <div fxLayout="row" fxLayoutAlign="start start" class="padding-20 padding-top-5 divider">
-        <div class="section-layout">
-          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
-        </div>
-        <div style="width: 100%">
-          <num-list-item-details-sections
-            [listItemDetails]="listItemDetails.children"
-            (selectedRelative)="getSelectedRelative($event)"
-          >
-          </num-list-item-details-sections>
-        </div>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="row-block width-100 divider padding-top-3"
+    >
+      <div class="row-header margin-right-2">
+        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
       </div>
-    </ng-container>
-  </mat-list>
+      <div class="row-content padding-right-3 margin-bottom-3">
+        <num-list-item-details-sections
+          [listItemDetails]="listItemDetails.children"
+          (selectedRelative)="getSelectedRelative($event)"
+        >
+        </num-list-item-details-sections>
+      </div>
+    </div>
+  </div>
 </ng-container>

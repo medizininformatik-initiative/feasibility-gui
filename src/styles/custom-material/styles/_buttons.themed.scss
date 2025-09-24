@@ -1,49 +1,35 @@
 @use 'node_modules/@angular/material' as mat;
 
 @mixin buttons($theme) {
-  $raised-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-  $accent: map-get($theme, accent);
+  $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   $primary: map-get($theme, primary);
-  $additional: map-get($theme, additional);
-  $name: map-get($theme, name);
 
   .mat-mdc-button-base {
     text-transform: none !important;
   }
 
   .mat-mdc-icon-button {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
+    width: 40px; // 5 * 8
+    height: 40px; // 5 * 8
+    font-size: 16px; // 2 * 8
     font-weight: 400;
     padding: 0;
   }
 
   .num-button {
-    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-    &.mat-mdc-button .mat-button-wrapper > *,
-    &.mat-mdc-outlined-button .mat-button-wrapper > *,
-    &.mat-mdc-raised-button .mat-button-wrapper > *,
-    &.mat-mdc-unelevated-button .mat-button-wrapper > * {
-      vertical-align: baseline !important;
-    }
-    font-size: medium;
+    font-size: 16px;
     box-shadow: $raised-shadow;
-    height: 42px;
-    white-space: nowrap;
-    padding: 0px 15px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 4px;
     letter-spacing: inherit;
     cursor: pointer;
-    &.green {
-      background-color: mat.get-color-from-palette($primary, 'green');
-    }
+    white-space: nowrap;
 
     fa-icon {
-      margin: 0 4px 0 0;
+      margin: 0 8px 0 0;
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
     &.cdk-keyboard-focused .mat-button-focus-overlay {
       display: none;
     }
@@ -52,17 +38,13 @@
     * Blue Button
     */
     &.blue {
-      min-width: 7em !important;
-      line-height: 34px;
-      border-width: 1px;
-      border-style: solid;
-      border-radius: 5px;
+      min-width: 112px !important; // 14 * 8
+      line-height: 32px; // 4 * 8
+      border: 1px solid mat.get-color-from-palette($primary, 500);
 
       color: mat.get-contrast-color-from-palette($primary, 900);
       background-color: mat.get-color-from-palette($primary, 'blue');
-      border-color: mat.get-color-from-palette($primary, 500);
 
-      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.disabled) {
         color: white !important;
         background: mat.get-color-from-palette($primary, 'blue-hover') !important;
@@ -85,17 +67,13 @@
     * Green Button
     */
     &.green {
-      min-width: 8em !important;
-      line-height: 34px;
-      border-width: 1px;
-      border-style: solid;
-      border-radius: 5px;
+      min-width: 128px !important; // 16 * 8
+      line-height: 32px; // 4 * 8
+      border: 1px solid mat.get-color-from-palette($primary, 500);
 
       color: mat.get-contrast-color-from-palette($primary, 900);
       background-color: mat.get-color-from-palette($primary, 'green');
-      border-color: mat.get-color-from-palette($primary, 500);
 
-      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.disabled) {
         color: white !important;
         background: mat.get-color-from-palette($primary, 'green-hover') !important;
@@ -114,18 +92,17 @@
       }
     }
 
+    /**
+    * Red Button
+    */
     &.red {
-      min-width: 8em !important;
-      line-height: 34px;
-      border-width: 1px;
-      border-style: solid;
-      border-radius: 5px;
+      min-width: 128px !important; // 16 * 8
+      line-height: 32px; // 4 * 8
+      border: 1px solid mat.get-color-from-palette($primary, 500);
 
       color: mat.get-contrast-color-from-palette($primary, 900);
       background-color: mat.get-color-from-palette($primary, 'red');
-      border-color: mat.get-color-from-palette($primary, 500);
 
-      /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &:hover:not(.disabled) {
         color: white !important;
         background: mat.get-color-from-palette($primary, 'red-hover') !important;
@@ -133,13 +110,13 @@
       }
 
       &.cdk-keyboard-focused {
-        background: mat.get-color-from-palette($primary, 'green-hover');
+        background: mat.get-color-from-palette($primary, 'red-hover');
       }
 
       &.disabled {
         background-color: mat.get-color-from-palette($primary, 50);
-        color: mat.get-color-from-palette($primary, 'green');
-        box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'green');
+        color: mat.get-color-from-palette($primary, 'red');
+        box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'red');
         cursor: unset;
       }
     }

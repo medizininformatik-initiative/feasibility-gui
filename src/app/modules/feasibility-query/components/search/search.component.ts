@@ -98,6 +98,16 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.listIetmDetailsSubscription?.unsubscribe();
   }
 
+  public getSelectedRelative(criteriaListEntry: CriteriaListEntry) {
+    this.listIetmDetailsSubscription?.unsubscribe();
+    this.listIetmDetailsSubscription = this.searchTermDetailsService
+      .getDetailsForListItem(criteriaListEntry.getId())
+      .subscribe((test) => {
+        this.searchTermDetailsProviderService.setSearchTermDetails(test);
+        this.openSidenav();
+      });
+  }
+
   /** Search Result Handling */
   private handleSearchResults(results: CriteriaListEntry[]): void {
     this.listItems = results;
@@ -158,13 +168,12 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   public setClickedRow(row: InterfaceTableDataRow) {
     const originalEntry = row.originalEntry as CriteriaListEntry;
     this.listIetmDetailsSubscription?.unsubscribe();
-    if (this.isOpen) {
-      this.closeSidenav();
-    } else {
-      this.listIetmDetailsSubscription = this.searchTermDetailsService
-        .getDetailsForListItem(originalEntry.getId())
-        .subscribe(() => this.openSidenav());
-    }
+    this.listIetmDetailsSubscription = this.searchTermDetailsService
+      .getDetailsForListItem(originalEntry.getId())
+      .subscribe((test) => {
+        this.searchTermDetailsProviderService.setSearchTermDetails(test);
+        this.openSidenav();
+      });
   }
 
   public getElasticSearchFilter(): void {

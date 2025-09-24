@@ -2,20 +2,6 @@
   padding-right: 1rem;
 }
 
-.width-100 {
-  width: 100%;
-}
-.pr4 {
-  padding-right: 4rem;
-}
-.height-59 {
-  height: 42px;
-  border-radius: 5px;
-  background: var(--mid-grey, #c5cacf);
-  font-size: medium;
-  color: white;
-}
-
 .mat-mdc-icon-button {
   height: 44px;
   width: 44px;
@@ -67,14 +53,6 @@
   padding-left: 10px;
 }
 
-.mat-drawer-content {
-  overflow-y: scroll;
-  min-height: 400px;
-}
-
-.searchbar-div {
-  margin-bottom: 2em;
-}
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   -webkit-border-radius: 10px;
@@ -82,9 +60,8 @@
 }
 
 .content-height-100 {
-  height: 80%;
+  height: 100%;
   overflow: scroll;
-  /*min-height: 500px;*/
   overflow-x: hidden;
 }
 
@@ -131,4 +108,9 @@
 
 .width-1000 {
   width: 100%;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  overflow: hidden;
+  height: 100%;
 }

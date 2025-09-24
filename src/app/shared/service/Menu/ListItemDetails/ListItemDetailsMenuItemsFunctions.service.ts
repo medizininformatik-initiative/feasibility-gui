@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { map, switchMap, take } from 'rxjs';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service';
+import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +18,19 @@ export class ListItemDetailsMenuItemsFunctionsService {
     private criteriaSearchService: CriteriaSearchService,
     private criterionService: CreateCriterionService,
     private searchTermDetailsService: SearchTermDetailsService,
-    private feasibilityQueryProviderHub: FeasibilityQueryProviderHub
+    private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
+    private searchTermDetailsProviderService: SearchTermDetailsProviderService
   ) {}
 
   public showCriteriaInResultList(id: string) {
     this.searchService.search(id).pipe(take(1)).subscribe();
-    this.searchTermDetailsService.getDetailsForListItem(id).pipe(take(1)).subscribe();
+    this.searchTermDetailsService
+      .getDetailsForListItem(id)
+      .pipe(take(1))
+      .subscribe((test) => {
+        console.log(test);
+        this.searchTermDetailsProviderService.setSearchTermDetails(test);
+      });
   }
 
   public addToStage(id: string) {
@@ -46,8 +54,19 @@ export class ListItemDetailsMenuItemsFunctionsService {
           this.criteriaSearchService.search(
             searchTermResultList.getResults()[0].getDisplay().getOriginal()
           )
-        )
+        ),
+        switchMap((resultList: CriteriaResultList) => {
+          if (resultList.getResults().length > 0) {
+            return this.searchTermDetailsService.getDetailsForListItem(
+              resultList.getResults()[0].getId()
+            );
+          }
+          return [];
+        })
       )
-      .subscribe();
+      .subscribe((test) => {
+        console.log(test);
+        this.searchTermDetailsProviderService.setSearchTermDetails(test);
+      });
   }
 }

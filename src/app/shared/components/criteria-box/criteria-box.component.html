@@ -3,7 +3,7 @@
   [cdkDragData]="criterion.getId()"
   fxLayout="row"
   fxLayoutAlign="start start"
-  class="container"
+  class="container margin-bottom-2 margin-right-2"
 >
   <div class="content" cdkDragHandle>
     <div
@@ -42,7 +42,7 @@
     </div>
   </div>
 </div>
-<div style="padding-left: 50px" *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+<div *ngFor="let attributeFilter of criterion.getAttributeFilters()" class="padding-left-7">
   <div *ngIf="attributeFilter?.isReferenceSet()">
     <div *ngFor="let reference of attributeFilter.getReference().getSelectedReferences()">
       <num-reference-criteria-box

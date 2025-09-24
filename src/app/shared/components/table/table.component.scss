@@ -1,17 +1,21 @@
+/* Table base */
 table {
   width: 100%;
-  font-family: 'Titillium Web';
+  font-family: 'Titillium Web', sans-serif;
   color: #6a7484;
   background-color: #fff;
+  border-radius: 4px; /* as requested */
+  border-collapse: collapse;
 }
 
+/* Table header */
 .table-header {
   text-align: left;
-  padding: 8px;
+  padding: 8px; /* multiple of 8 */
   border-bottom: 1px solid #ddd;
   color: rgba(197, 202, 207, 1);
-  font-size: medium;
-  font-family: 'Titillium Web';
+  font-size: 16px; /* medium mapped to 16px */
+  font-family: 'Titillium Web', sans-serif;
 }
 
 .sticky-header {
@@ -21,47 +25,50 @@ table {
   z-index: 2;
 }
 
-.table-collapse {
-  border-collapse: collapse;
-}
-
+/* Table row and border */
 .table-border {
-  border-bottom: 1pt solid #c5cacf;
-}
-
-.name-column {
-  padding-left: 10px;
-  font-size: medium;
-}
-
-.info-column {
-  font-size: small;
-}
-.highlight:hover {
-  text-decoration: underline;
-  cursor: pointer;
-  color: black;
-}
-.header-column {
-  padding-bottom: 20px;
-  font-size: medium;
-  color: rgba(197, 202, 207, 1);
-  font-weight: 500;
-}
-
-.height-3-rem {
-  height: 3rem;
+  border-bottom: 1px solid #c5cacf;
 }
 
 .table-row-hover:hover {
   background-color: #f5f5f5;
 }
 
-.font-size-small {
-  font-size: smaller;
-  color: #6a7483;
+/* Table columns */
+.name-column {
+  padding-left: 8px; /* snapped from 10px → 8px */
+  font-size: 16px;
 }
+
+.info-column {
+  font-size: 14px; /* small mapped to 14px */
+}
+
+.header-column {
+  padding-bottom: 16px; /* snapped from 20px → 16px */
+  font-size: 16px;
+  color: rgba(197, 202, 207, 1);
+  font-weight: 500;
+}
+
+/* Highlight and clickable styles */
+.highlight:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: black;
+}
+
 .cursor-click {
   cursor: pointer;
-  padding-left: 5px;
+  padding-left: 8px; /* snapped from 5px → 8px */
+}
+
+/* Height utilities */
+.height-3-rem {
+  height: 3rem; /* ~48px, keeps spacing consistent with 8-point system */
+}
+
+.font-size-small {
+  font-size: 14px; /* consistent with info-column */
+  color: #6a7483;
 }
