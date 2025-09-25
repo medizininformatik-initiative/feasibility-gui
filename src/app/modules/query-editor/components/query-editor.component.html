@@ -1,6 +1,6 @@
 <div class="container" fxLayout="column">
   <num-editor-header [id]="id" [type]="type"></num-editor-header>
-  <div class="background">
+  <div class="background margin-bottom-3">
     <num-editor-content
       [criterion]="criterion$ | async"
       (criterionChanged)="updateCriterion($event)"

@@ -4,18 +4,10 @@
   display: block;
 }
 .container {
-  height: 80%;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-.pr4 {
-  padding-right: 4rem;
-}
-
-.searchbar-container {
-  width: 70%;
-  padding-bottom: 20px;
 }
 
 .background-color-button {
@@ -24,22 +16,10 @@
   margin-right: 10px;
 }
 
-.action-bar-layout {
-  width: 100%;
-}
-
-.bottom {
-  position: fixed;
-  bottom: 20px;
-  width: 81%;
-  z-index: 100;
-}
-
 .tree-container {
   width: 100%;
   overflow: auto;
   height: 100%;
-  margin-left: 2em;
 }
 
 .box-container {

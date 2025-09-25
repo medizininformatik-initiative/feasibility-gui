@@ -4,7 +4,7 @@
       <ng-container *ngIf="displayBlockTriangle">
         <div
           data-cy="{{ filterChip.type | displayTranslation }}"
-          class="block margin-left-1"
+          class="block"
           (click)="toggleTypeExpanded(filterChip)"
           [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
         >

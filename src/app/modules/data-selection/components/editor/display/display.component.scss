@@ -5,7 +5,7 @@
 }
 .container {
   width: 100%;
-  height: 85%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -15,18 +15,9 @@
   display: flex;
   flex-direction: column;
 }
-.pr4 {
-  padding-right: 4rem;
-}
 
 .box-container {
   margin-bottom: 10px;
-}
-.bottom {
-  position: fixed;
-  bottom: 20px;
-  width: 81%;
-  z-index: 100;
 }
 .margin-right-10 {
   margin-right: 10px;

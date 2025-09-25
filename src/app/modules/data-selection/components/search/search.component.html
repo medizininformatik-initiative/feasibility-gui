@@ -1,5 +1,5 @@
-<div class="container pr4">
-  <div style="margin-top: 5px">
+<div class="container">
+  <div>
     <num-header>{{ 'DATASELECTION.SEARCH.HEADER' | translate }}</num-header>
     <num-header-description>
       {{ 'DATASELECTION.EDITOR.HEADER_INFO1' | translate }}
@@ -13,13 +13,13 @@
       {{ 'DATASELECTION.EDITOR.HEADER_INFO3' | translate }}
     </num-header-description>
   </div>
-  <div class="tree-container">
+  <div class="tree-container margin-bottom-3">
     <div *ngFor="let tree of trees">
       <num-tree (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
     </div>
   </div>
 
-  <num-action-bar class="bottom">
+  <num-action-bar>
     <num-button
       [isDisabled]="($dataSelectionProfileTreeNodeArray | async)?.length === 0"
       class="margin-right-20"
