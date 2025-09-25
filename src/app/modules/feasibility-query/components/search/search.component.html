@@ -5,82 +5,78 @@
       {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
-  <div fxLayout="column" fxLayoutAlign="start start" style="height: 76%">
-    <div fxLayout="row" fxLayoutAlign="start start" class="width-100">
-      <num-searchbar
-        fxFlex="50"
-        icon="search"
-        [searchText]="searchText$ | async"
-        [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
-        class="width-100"
-        (searchTextChange)="startSearch($event)"
-      >
-      </num-searchbar>
-      <num-button [isDisabled]="!searchText" type="blue" (click)="startSearch()">
-        {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
-      </num-button>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start start">
-      <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
-      <ng-template #content>
-        <num-search-filter
-          *ngFor="let searchFilter of searchFilters$ | async"
-          [filter]="searchFilter"
-          (selectedFilterChanged)="setElasticSearchFilter($event)"
-        ></num-search-filter>
-      </ng-template>
-      <num-button [isDisabled]="resetFilterEnabled$ | async" type="blue" (click)="resetFilter()">
-        {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
-      </num-button>
-    </div>
-
-    <mat-drawer-container *ngIf="searchResultsFound" class="height-100 margin-bottom-3 width-100">
-      <mat-drawer #drawer position="end" mode="side" class="height-100 padding-left-3">
-        <div fxLayout="column" *ngIf="listItems" class="height-100">
+  <div fxLayout="row" fxLayoutAlign="start start" class="width-100">
+    <num-searchbar
+      fxFlex="50"
+      icon="search"
+      [searchText]="searchText$ | async"
+      [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
+      class="width-100"
+      (searchTextChange)="startSearch($event)"
+    >
+    </num-searchbar>
+    <num-button [isDisabled]="!searchText" type="blue" (click)="startSearch()">
+      {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
+    </num-button>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start">
+    <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
+    <ng-template #content>
+      <num-search-filter
+        *ngFor="let searchFilter of searchFilters$ | async"
+        [filter]="searchFilter"
+        (selectedFilterChanged)="setElasticSearchFilter($event)"
+      ></num-search-filter>
+    </ng-template>
+    <num-button [isDisabled]="resetFilterEnabled$ | async" type="blue" (click)="resetFilter()">
+      {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
+    </num-button>
+  </div>
+  <mat-drawer-container *ngIf="searchResultsFound" class="height-100 margin-bottom-3 width-100">
+    <mat-drawer #drawer position="end" mode="side" class="height-100 padding-left-3">
+      <ng-container *ngIf="listItems">
+        <div fxLayout="column" class="width-100 height-100">
           <!-- Top row -->
-          <div fxLayoutAlign="end center" class="width-100" style="height: 8%">
-            <button (click)="closeSidenav()" class="cancel-button">
-              {{ 'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate }}
-              <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
-            </button>
-          </div>
+          <button (click)="closeSidenav()" class="cancel-button" style="height: 4%">
+            {{ 'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate }}
+            <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
+          </button>
 
           <!-- Fill the rest -->
-          <div class="width-100" style="height: 92%">
-            <num-list-item-details
-              [listItemDetails$]="selectedDetails$"
-              (selectedRelative)="getSelectedRelative($event)"
-              class="padding-left-2"
-            >
-            </num-list-item-details>
-          </div>
+          <num-list-item-details
+            style="height: 96%"
+            [listItemDetails$]="selectedDetails$"
+            (selectedRelative)="getSelectedRelative($event)"
+            class="padding-left-2"
+          >
+          </num-list-item-details>
         </div>
-      </mat-drawer>
+      </ng-container>
+    </mat-drawer>
 
-      <mat-drawer-content
-        *ngIf="listItems?.length > 0"
-        infiniteScroll
-        [infiniteScrollDistance]="0.5"
-        [infiniteScrollThrottle]="50"
-        [scrollWindow]="false"
-        (scrolled)="loadMoreCriteriaSearchResults()"
-      >
-        <num-table
-          (selectedRow)="setSelectedRowItem($event)"
-          (rowClicked)="setClickedRow($event)"
-          [tableData]="adaptedData"
-          fxFlexFill
-        ></num-table>
-      </mat-drawer-content>
-    </mat-drawer-container>
-    <div *ngIf="!searchResultsFound" class="no-results-box">
-      <num-placeholder-box class="no-results-text"
-        >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
-        >"</num-placeholder-box
-      >
-    </div>
+    <mat-drawer-content
+      *ngIf="listItems?.length > 0"
+      infiniteScroll
+      [infiniteScrollDistance]="0.5"
+      [infiniteScrollThrottle]="50"
+      [scrollWindow]="false"
+      (scrolled)="loadMoreCriteriaSearchResults()"
+    >
+      <num-table
+        (selectedRow)="setSelectedRowItem($event)"
+        (rowClicked)="setClickedRow($event)"
+        [tableData]="adaptedData"
+        fxFlexFill
+      ></num-table>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  <div *ngIf="!searchResultsFound" class="no-results-box">
+    <num-placeholder-box class="no-results-text"
+      >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+      >"</num-placeholder-box
+    >
   </div>
-  <div style="height: 8%">
+  <div>
     <num-search-action-bar></num-search-action-bar>
   </div>
 </div>

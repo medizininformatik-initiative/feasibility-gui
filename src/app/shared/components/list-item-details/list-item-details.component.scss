@@ -1,6 +1,6 @@
 .row-block {
   width: 100%;
-  min-height: 16%;
+  min-height: 8%;
 }
 
 .row-header {
@@ -11,8 +11,7 @@
 }
 
 .row-content {
-  width: 76%;
-  height: 100%;
+  overflow-y: auto;
 }
 
 .border-top {

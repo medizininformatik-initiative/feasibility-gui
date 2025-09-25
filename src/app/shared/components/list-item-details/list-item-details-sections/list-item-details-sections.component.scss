@@ -13,13 +13,11 @@
 }
 
 .entry-layout {
-  max-width: 80%;
+  border-radius: 4px;
   padding: 3%;
-  height: 40px;
+  height: 48px;
   margin-bottom: 8px;
   text-overflow: ellipsis;
-  flex-wrap: wrap;
-  min-width: 0px;
   white-space: nowrap;
   background-color: rgba(90, 121, 175, 0.1);
   color: black;
