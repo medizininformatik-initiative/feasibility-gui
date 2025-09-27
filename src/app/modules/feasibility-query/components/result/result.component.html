@@ -1,5 +1,5 @@
-<div class="height-90 pr4">
-  <div class="result-header-line">
+<div class="container">
+  <div>
     <num-header *ngIf="!resultLoaded">{{
       'FEASIBILITY.RESULT.HEADER.RESULT_NOT_LOADED' | translate
     }}</num-header>
@@ -10,13 +10,11 @@
       {{ 'FEASIBILITY.RESULT.HEADER_DESCRIPTION' | translate }}
     </num-header-description>
   </div>
-  <div class="simple-result">
-    <num-simple-result
-      (resultLoaded)="setResultLoaded($event)"
-      class="result-simple-box"
-    ></num-simple-result>
+  <div>
+    <num-simple-result (resultLoaded)="setResultLoaded($event)"></num-simple-result>
   </div>
-  <num-display-feasibility-query [isEditable]="false" style="height: 400px">
-  </num-display-feasibility-query>
+  <div class="feasibility-container">
+    <num-display-feasibility-query [isEditable]="false"> </num-display-feasibility-query>
+  </div>
   <num-result-action-bar [hasQueryResult]="!resultLoaded" class="bottom"> </num-result-action-bar>
 </div>

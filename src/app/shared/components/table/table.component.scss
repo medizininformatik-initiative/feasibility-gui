@@ -44,13 +44,6 @@ table {
   font-size: 14px; /* small mapped to 14px */
 }
 
-.header-column {
-  padding-bottom: 16px; /* snapped from 20px → 16px */
-  font-size: 16px;
-  color: rgba(197, 202, 207, 1);
-  font-weight: 500;
-}
-
 /* Highlight and clickable styles */
 .highlight:hover {
   text-decoration: underline;
@@ -63,12 +56,18 @@ table {
   padding-left: 8px; /* snapped from 5px → 8px */
 }
 
-/* Height utilities */
-.height-3-rem {
-  height: 3rem; /* ~48px, keeps spacing consistent with 8-point system */
-}
-
 .font-size-small {
   font-size: 14px; /* consistent with info-column */
   color: #6a7483;
+}
+
+td {
+  padding: 0.25rem 0.5rem; /* snapped from 4px → 8px */
+}
+
+th {
+  padding: 1rem 0.5rem; /* snapped from 8px → 8px */
+  font-size: 16px;
+  color: rgba(197, 202, 207, 1);
+  font-weight: 500;
 }

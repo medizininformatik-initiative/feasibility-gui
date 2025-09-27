@@ -1,17 +1,19 @@
-.criteria-container {
+.container {
   width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.flex-grow {
+  flex: 0 0 auto; /* don’t grow, don’t shrink, size to content */
 }
 
-.example-boundary {
-  width: 400px;
-  height: 400px;
-  max-width: 100%;
-  border: dotted #ccc 2px;
-}
-
-#Stage {
-  padding-bottom: 16px;
+/* When the form is 400px or less */
+@media (max-width: 50%) {
+  .criteria-container {
+    flex-wrap: nowrap; /* disable wrapping */
+    overflow-x: auto; /* allow horizontal scroll if needed */
+  }
 }
 
 .no-selected-criteria {
@@ -22,13 +24,6 @@
   font-weight: 400;
   font-size: large;
   color: rgba(90, 121, 175, 1);
-}
-.overflow-hidden {
-  overflow: hidden;
-}
-.overflow-auto {
-  overflow: auto;
-}
-.pr4 {
-  padding-right: 4rem;
+  align-content: center;
+  text-align: center;
 }

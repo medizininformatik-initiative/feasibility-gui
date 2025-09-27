@@ -22,7 +22,6 @@
   <num-action-bar>
     <num-button
       [isDisabled]="($dataSelectionProfileTreeNodeArray | async)?.length === 0"
-      class="margin-right-20"
       type="green"
       (click)="getDataSelectionProfileData()"
       [matBadge]="($dataSelectionProfileTreeNodeArray | async)?.length"
@@ -33,7 +32,6 @@
     <num-button
       [isDisabled]="($dataSelectionProfileArray | async)?.length === 0"
       [icon]="'arrow-down'"
-      class="margin-right-10"
       (click)="navigateToDataSelectionEditor()"
       type="green"
       [matBadge]="($dataSelectionProfileArray | async)?.length"

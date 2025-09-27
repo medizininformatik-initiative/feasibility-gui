@@ -1,4 +1,4 @@
-<div class="container" fxLayout="column">
+<div class="container">
   <num-editor-header [id]="id" [type]="type"></num-editor-header>
   <div class="background margin-bottom-3">
     <num-editor-content
@@ -6,6 +6,5 @@
       (criterionChanged)="updateCriterion($event)"
     ></num-editor-content>
   </div>
-  <num-edit-action-bar (save)="saveElement()" (cancel)="onCancel()" class="action-bar">
-  </num-edit-action-bar>
+  <num-edit-action-bar (save)="saveElement()" (cancel)="onCancel()"> </num-edit-action-bar>
 </div>

@@ -1,23 +1,18 @@
-<div class="container pr4">
-  <num-header style="margin-top: 5px">{{ 'DATASELECTION.EDITOR.HEADER' | translate }}</num-header>
+<div class="container">
+  <num-header>{{ 'DATASELECTION.EDITOR.HEADER' | translate }}</num-header>
   <num-header-description>{{
     'DATASELECTION.EDITOR.HEADER_DESCRIPTION' | translate
   }}</num-header-description>
   <num-section-name>{{ 'DATASELECTION.EDITOR.SECTION' | translate }}</num-section-name>
   <num-display-profiles class="overflow margin-bottom-3" [isEditable]="true"></num-display-profiles>
   <num-action-bar>
-    <num-button class="margin-right-10" (click)="navigateToDataRequestDataSelection()" type="green">
+    <num-button (click)="navigateToDataRequestDataSelection()" type="green">
       {{ 'DATASELECTION.EDITOR.ACTION_BAR.DATA_REQUEST' | translate }}
     </num-button>
-    <num-button class="margin-right-10" (click)="saveDataQuery()" type="green">
+    <num-button (click)="saveDataQuery()" type="green">
       {{ 'DATASELECTION.EDITOR.ACTION_BAR.SAVE_DATAQUERY' | translate }}
     </num-button>
-    <num-button
-      [icon]="'arrow-up'"
-      class="margin-right-10"
-      (click)="navigateToDataSelectionSearch()"
-      type="green"
-    >
+    <num-button [icon]="'arrow-up'" (click)="navigateToDataSelectionSearch()" type="green">
       {{ 'DATASELECTION.EDITOR.ACTION_BAR.JUMP_TO_DATASELECTION_TREE' | translate }}
     </num-button>
   </num-action-bar>

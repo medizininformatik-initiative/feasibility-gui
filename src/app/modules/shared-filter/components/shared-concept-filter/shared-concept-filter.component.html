@@ -1,11 +1,16 @@
-<div fxLayout="column" class="container">
-  <div class="attribute-code-display"></div>
-  <num-search-concept [valueSetUrl]="valueSetUrl" [conceptFilterId]="conceptFilterId">
-  </num-search-concept>
-  <num-concept-filter-table
-    *ngIf="searchResults$ | async as searchResults"
-    [valueSetUrl]="valueSetUrl"
-    [conceptFilterId]="conceptFilterId"
-  ></num-concept-filter-table>
-  <num-staged-concepts></num-staged-concepts>
+<div class="container">
+  <div>
+    <num-search-concept [valueSetUrl]="valueSetUrl" [conceptFilterId]="conceptFilterId">
+    </num-search-concept>
+  </div>
+  <div style="overflow: auto; min-height: 50%">
+    <num-concept-filter-table
+      *ngIf="searchResults$ | async as searchResults"
+      [valueSetUrl]="valueSetUrl"
+      [conceptFilterId]="conceptFilterId"
+    ></num-concept-filter-table>
+  </div>
+  <div>
+    <num-staged-concepts></num-staged-concepts>
+  </div>
 </div>

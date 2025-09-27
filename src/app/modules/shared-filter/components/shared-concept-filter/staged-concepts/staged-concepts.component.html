@@ -1,5 +1,8 @@
-<div *ngIf="(arrayOfSelectedConcepts$ | async).length > 0" class="height-100">
-  <div class="filter-title">{{ 'FEASIBILITY.EDITOR.FILTER_SELECTION' | translate }}</div>
+<div *ngIf="(arrayOfSelectedConcepts$ | async).length > 0" class="container">
+  <div class="filter-title">
+    {{ 'FEASIBILITY.EDITOR.FILTER_SELECTION' | translate }}
+    {{ (arrayOfSelectedConcepts$ | async).length }}
+  </div>
   <div class="selected-filter-box">
     <div
       *ngFor="let selectedConceptFilter of arrayOfSelectedConcepts$ | async"

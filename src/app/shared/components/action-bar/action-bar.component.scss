@@ -1,6 +1,5 @@
 /* Base layout styles */
-.layout {
-  width: 100%;
+.container {
   margin-bottom: 24px;
   height: 80px;
   border-radius: 4px;
@@ -8,20 +7,19 @@
   background-color: #f9fcf1;
   box-sizing: border-box;
   display: flex;
+  gap: 8px;
   align-items: center;
   padding: 0 16px;
+  overflow-x: auto;
+  flex-direction: row-reverse;
+  overflow-y: hidden;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
-/* Utility padding */
 .padding-left-right-5px {
   padding-left: 16px;
   padding-right: 16px;
 }
-
-/* Content container */
-.content-container {
-  overflow: hidden;
-  max-width: 100%;
-  box-sizing: border-box;
+.container > * {
+  flex: 0 0 auto; /* <-- prevents shrinking, allows overflow */
 }

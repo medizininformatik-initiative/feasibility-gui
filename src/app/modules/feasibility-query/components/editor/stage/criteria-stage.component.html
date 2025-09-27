@@ -1,20 +1,12 @@
-<div
-  id="Stage"
-  cdkDropList
-  numAppDropGroup
-  fxLayout="row wrap"
-  fxLayoutAlign="start"
-  class="criteria-container"
->
-  <div *ngFor="let criterion of $criteriaArray | async" class="criteria-box">
-    <num-criteria-box [criterion]="criterion" [isEditable]="isEditable"></num-criteria-box>
-  </div>
-  <div
-    fxLayout="row"
-    fxLayoutAlign="center center"
-    *ngIf="($criteriaArray | async).length === 0"
-    class="no-selected-criteria"
-  >
+<div id="Stage" cdkDropList numAppDropGroup class="container">
+  <ng-container *ngFor="let criterion of $criteriaArray | async">
+    <num-criteria-box
+      class="flex-grow"
+      [criterion]="criterion"
+      [isEditable]="isEditable"
+    ></num-criteria-box>
+  </ng-container>
+  <div *ngIf="($criteriaArray | async).length === 0" class="no-selected-criteria">
     {{ 'FEASIBILITY.EDITOR.NO_SELECTED_CRITERIA' | translate }}
   </div>
 </div>

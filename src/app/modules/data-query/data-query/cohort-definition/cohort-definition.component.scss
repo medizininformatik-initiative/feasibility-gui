@@ -4,14 +4,11 @@
   display: block;
 }
 .container {
-  height: 80%;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: auto;
-}
-.pr4 {
-  padding-right: 4rem;
 }
 
 .file-input {
@@ -51,14 +48,7 @@
 
 .empty-cohort-box {
   width: 100%;
-  height: 50%;
-}
-
-.bottom {
-  position: fixed;
-  width: 81%;
-  z-index: 100;
-  bottom: 20px;
+  flex: 1;
 }
 
 num-button {
@@ -71,14 +61,6 @@ num-button {
 
 .height-400 {
   height: 400px;
-}
-
-.stepper-container {
-  display: flex; /* Enable flexbox layout */
-  justify-content: start; /* Center horizontally */
-  align-items: center; /* Center vertically (optional) */
-  height: 10%;
-  margin-top: 3%;
 }
 
 ::ng-deep.mat-step-icon {

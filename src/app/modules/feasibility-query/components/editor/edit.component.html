@@ -1,4 +1,4 @@
-<div cdkDropListGroup fxLayout="column" fxLayoutAlign="start" class="height-100">
+<div cdkDropListGroup class="container">
   <div>
     <num-header>
       {{ 'FEASIBILITY.EDITOR.HEADER' | translate }}
@@ -6,29 +6,20 @@
     <num-header-description>
       {{ 'FEASIBILITY.EDITOR.HEADER_INFO' | translate }}
     </num-header-description>
+  </div>
+  <div>
     <num-consent-switches></num-consent-switches>
   </div>
-  <div class="margin-bottom-6 padding-bottom-6 height-40" fxLayout="column">
-    <div>
-      <num-section-name>
-        {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }}
-      </num-section-name>
-    </div>
-    <div class="overflow-auto height-100">
-      <num-criteria-stage
-        class="height-100"
-        [isEditable]="true"
-        fxLayout="row wrap"
-        fxLayoutAlign="start start"
-        #stage
-      >
-      </num-criteria-stage>
-    </div>
+  <num-section-name>
+    {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }}
+  </num-section-name>
+  <div class="margin-bottom-4 stage-container">
+    <num-criteria-stage [isEditable]="true" #stage> </num-criteria-stage>
   </div>
-  <div class="overflow-auto height-40">
+  <div class="overflow-auto">
     <num-display-feasibility-query [isEditable]="true"></num-display-feasibility-query>
   </div>
-  <div fxFlex="0 0 10%">
+  <div>
     <num-editor-action-bar></num-editor-action-bar>
   </div>
 </div>
