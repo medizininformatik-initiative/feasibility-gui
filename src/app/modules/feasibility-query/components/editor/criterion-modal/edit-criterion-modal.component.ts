@@ -10,6 +10,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 
 export class EnterCriterionListComponentData {
   criterion: AbstractCriterion;
@@ -23,6 +24,7 @@ export class EnterCriterionListComponentData {
 export class EditCriterionModalComponent implements OnInit {
   criterion: AbstractCriterion;
   criterionBuilder: CriterionBuilder;
+  attributeFilters: AttributeFilter[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EnterCriterionListComponentData,
@@ -37,7 +39,14 @@ export class EditCriterionModalComponent implements OnInit {
 
   ngOnInit() {
     this.criterion = this.data.criterion;
+    this.attributeFilters = this.filterAttributeFiltersByTypeConcept();
     this.instantiateCriterion();
+  }
+
+  private filterAttributeFiltersByTypeConcept(): AttributeFilter[] {
+    return this.criterion
+      .getAttributeFilters()
+      .filter((filter) => filter.getFilterType() === FilterTypes.CONCEPT);
   }
 
   /**

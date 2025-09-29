@@ -5,13 +5,12 @@
       {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start start" class="width-100">
+  <div class="search-container width-100">
     <num-searchbar
-      fxFlex="50"
+      style="flex: 0 1 50%"
       icon="search"
       [searchText]="searchText$ | async"
       [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
-      class="width-100"
       (searchTextChange)="startSearch($event)"
     >
     </num-searchbar>
@@ -19,7 +18,7 @@
       {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
     </num-button>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start start">
+  <div class="filter-container">
     <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
     <ng-template #content>
       <num-search-filter
@@ -42,7 +41,6 @@
             <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
           </button>
 
-          <!-- Fill the rest -->
           <num-list-item-details
             style="height: 96%"
             [listItemDetails$]="selectedDetails$"

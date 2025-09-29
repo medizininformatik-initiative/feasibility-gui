@@ -1,10 +1,6 @@
 <div class="container">
   <div>
-    <mat-stepper
-      (selectionChange)="navigatToDataQueryDataSelection()"
-      labelPosition="bottom"
-      style="width: 90%"
-    >
+    <mat-stepper (selectionChange)="navigatToDataQueryDataSelection()" labelPosition="bottom">
       <mat-step completed>
         <ng-template matStepLabel>
           <num-header>
