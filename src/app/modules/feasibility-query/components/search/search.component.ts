@@ -25,6 +25,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -71,7 +72,8 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     private selectedTableItemsService: SelectedTableItemsService<CriteriaListEntry>,
     private searchTermDetailsService: SearchTermDetailsService,
     private searchTermDetailsProviderService: SearchTermDetailsProviderService,
-    private criteriaSearchService: CriteriaSearchService
+    private criteriaSearchService: CriteriaSearchService,
+    private snackbarService: SnackbarService
   ) {
     this.subscription = this.criteriaSearchService
       .getSearchResults()
@@ -156,11 +158,16 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   public setSelectedRowItem(item: InterfaceTableDataRow) {
+    console.log(item);
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
     const itemId = item.originalEntry.getId();
     if (selectedIds.includes(itemId)) {
       this.selectedTableItemsService.removeFromSelection(item.originalEntry as CriteriaListEntry);
+      this.snackbarService.displayErrorMessageWithNoCode(
+        'FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE'
+      );
     } else {
+      this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE');
       this.selectedTableItemsService.setSelectedTableItem(item.originalEntry as CriteriaListEntry);
     }
   }
