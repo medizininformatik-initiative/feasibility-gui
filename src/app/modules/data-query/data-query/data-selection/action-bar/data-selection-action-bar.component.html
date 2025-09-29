@@ -1,15 +1,16 @@
-<num-action-bar>
-  <num-button (click)="createNewDataSelection()" type="green">
+<num-action-bar class="bottom">
+  <num-button (click)="createNewDataSelection()" type="green" style="order: 5">
     {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.NEW_DATASELECTION' | translate }}
   </num-button>
   <num-button
     type="green"
     (click)="editDataSelection()"
     [isDisabled]="(isDataSelectionExistent$ | async) === false"
+    style="order: 4"
   >
     {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.EDIT' | translate }}
   </num-button>
-  <div>
+  <div style="order: 3">
     <input
       type="file"
       class="file-input"
@@ -28,10 +29,16 @@
       (isDataSelectionExistent$ | async) === false || (isCohortExistent$ | async) === false
     "
     type="green"
+    style="order: 2"
   >
     {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.DOWNLOAD' | translate }}
   </num-button>
-  <num-button [icon]="'arrow-up'" (click)="navigateToDataQueryCohortDefinition()" type="green">
+  <num-button
+    [icon]="'arrow-up'"
+    (click)="navigateToDataQueryCohortDefinition()"
+    type="green"
+    style="order: 1"
+  >
     {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.JUMP_TO_COHORT_SELECTION' | translate }}
   </num-button>
 </num-action-bar>

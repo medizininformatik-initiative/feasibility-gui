@@ -26,6 +26,7 @@
       (click)="getDataSelectionProfileData()"
       [matBadge]="($dataSelectionProfileTreeNodeArray | async)?.length"
       matBadgePosition="above after"
+      style="order: 2"
     >
       {{ 'DATASELECTION.SEARCH.ACTION_BAR.ADD' | translate }}
     </num-button>
@@ -36,6 +37,7 @@
       type="green"
       [matBadge]="($dataSelectionProfileArray | async)?.length"
       matBadgePosition="above after"
+      style="order: 1"
     >
       {{ 'DATASELECTION.SEARCH.ACTION_BAR.JUMP_TO_DATASELECTION' | translate }}
     </num-button>
