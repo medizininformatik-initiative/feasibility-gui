@@ -11,7 +11,7 @@
     </div>
     <div style="display: flex; flex: 1; min-height: 0" class="background">
       <mat-tab-group>
-        <div *ngFor="let attributeFilter of attributeFilters">
+        <div *ngFor="let attributeFilter of criterion.getAttributeFilters()">
           <mat-tab
             class="attribute-filter-container"
             label="{{ attributeFilter.getDisplay() | displayTranslation }}"
