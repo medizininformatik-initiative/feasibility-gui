@@ -95,11 +95,13 @@ export class DropGroupDirective implements OnInit {
   }
 
   private deleteCriterion(inexclusion: string[][], criterionID: string): string[][] {
-    inexclusion.forEach((idArray) => {
+    inexclusion.every((idArray) => {
       const index = idArray.indexOf(criterionID);
       if (index > -1) {
         idArray.splice(index, 1);
+        return false;
       }
+      return true;
     });
     inexclusion = inexclusion.filter((item) => item.length > 0);
     return inexclusion;
@@ -110,8 +112,7 @@ export class DropGroupDirective implements OnInit {
     currentIndex: number
   ): void {
     this.criteria = this.feasibilityQuery.getInclusionCriteria();
-    this.criteria = this.deleteCriterion(this.criteria, criterionID);
-    this.addCriterionToInnerArray(this.criteria, criterionID, currentIndex);
+    this.moveCriterion(criterionID, previousIndex, currentIndex);
     this.queryProviderService.setInclusionCriteria(this.criteria);
   }
   private moveCriterionInExclusion(
@@ -120,9 +121,43 @@ export class DropGroupDirective implements OnInit {
     currentIndex: number
   ): void {
     this.criteria = this.feasibilityQuery.getExclusionCriteria();
-    this.criteria = this.deleteCriterion(this.criteria, criterionID);
-    this.addCriterionToInnerArray(this.criteria, criterionID, currentIndex);
+    this.moveCriterion(criterionID, previousIndex, currentIndex);
     this.queryProviderService.setExclusionCriteria(this.criteria);
+  }
+
+  private moveCriterion(criterionID: string, previousIndex: number, currentIndex: number): void {
+    const positionPrev = this.getPosition(this.criteria, previousIndex);
+    const positionCurr = this.getPosition(this.criteria, currentIndex);
+    let position = positionCurr;
+    if (previousIndex < currentIndex) {
+      if (positionPrev[0] < positionCurr[0]) {
+        position = [positionCurr[0] + 1, positionCurr[1]];
+      } else {
+        position = [positionCurr[0], positionCurr[1] + 1];
+      }
+      this.addCriterionToPosition(this.criteria, criterionID, position);
+      this.criteria = this.deleteCriterion(this.criteria, criterionID);
+    } else {
+      const addToInnerArray = positionPrev[1] > 0 || positionCurr[1] > 0;
+      this.criteria = this.deleteCriterion(this.criteria, criterionID);
+      this.addCriterionToPosition(this.criteria, criterionID, positionCurr, addToInnerArray);
+    }
+  }
+  private addCriterionToPosition(
+    criteria: string[][],
+    criterionID: string,
+    position: [number, number],
+    addToInnerArray?: boolean
+  ): void {
+    if (position[0] >= criteria.length) {
+      this.criteria.push([criterionID]);
+    } else {
+      if (criteria[position[0]]?.length > 1 || addToInnerArray) {
+        this.criteria[position[0]].splice(position[1], 0, criterionID);
+      } else {
+        this.criteria.splice(position[0], 0, [criterionID]);
+      }
+    }
   }
 
   private addCriterionToInnerArray(
