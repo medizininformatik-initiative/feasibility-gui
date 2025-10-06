@@ -3,11 +3,12 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
+  overflow: auto;
 }
 
 .background {
   background-color: rgba(90, 121, 175, 0.1);
-  border-radius: 4px;
   padding: 1%;
+  overflow: auto;
   flex: 1;
 }
