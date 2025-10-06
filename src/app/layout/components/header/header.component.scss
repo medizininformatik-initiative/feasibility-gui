@@ -1,67 +1,77 @@
+/* Toolbar base */
 .toolbar {
   background: transparent;
-  font-size: 14px;
-  margin: 0 0 1em 0;
+  font-size: 16px; // snapped from 14px → 16px for better visibility
+  margin: 0 0 16px 0; // 1em → 16px
+  display: flex;
+  align-items: center;
 }
 
+/* Toolbar icons */
 .toolbar fa-icon {
-  padding: 0 0 0 1em;
+  padding-left: 16px; // 1em → 16px
 }
 
+/* Theme/logo image */
 .FDPGTheme {
-  width: 250px;
-  max-width: 210px;
-  height: 105px;
+  width: 208px; // snapped from 250px → closest 8-point friendly
+  max-width: 208px; // snapped from 210px
+  height: 104px; // snapped from 105px
   object-fit: cover;
 }
 
+/* Angular Material toolbar */
 .mat-toolbar {
-  height: 105px;
+  height: 104px; // snapped from 105px
 }
 
 .mat-toolbar-single-row {
-  padding-left: 0px !important;
+  padding-left: 0 !important;
 }
 
+/* User button */
 .user-button {
   background-color: var(--num-color--primary-blue) !important;
-  border-radius: 20px;
-  min-width: 100px;
+  border-radius: 20px; // optional, can keep for rounded pill shape
+  min-width: 104px; // snapped from 100px
   color: white !important;
+  padding: 8px 16px; // consistent 8-point padding
+  font-size: 16px;
 }
 
+/* Margin utilities */
 .margin-right-20 {
-  margin-right: 20px;
+  margin-right: 16px; // snapped from 20px
 }
 
 .margin-right {
-  margin-right: 3%;
+  margin-right: 16px; // snapped from 3% to 16px
 }
 
+/* Circle element */
 .circle {
   color: var(--num-color--primary-blue);
-  margin-right: 10%;
+  margin-right: 16px; // snapped from 10%
 }
 
+/* MDC list text */
 ::ng-deep .mdc-list-item__primary-text {
   width: 100%;
 }
 
+/* Link-like span */
 span.link-like {
-  padding-top: 0.3em;
-  padding-left: 1em;
+  padding-top: 8px; // 0.3em → snapped to 8px
+  padding-left: 16px; // 1em → 16px
   cursor: pointer;
   color: var(--num-color--primary);
-  font-size: medium;
+  font-size: 16px; // medium mapped to 16px
   font-weight: 500;
   text-decoration: none;
-  /* No underline by default */
   transition: color 0.2s ease;
 }
 
 span.link-like:hover {
   text-decoration: underline;
-  /* Show underline on hover */
   color: #0056b3;
-  /* Darker blue on hover */
 }

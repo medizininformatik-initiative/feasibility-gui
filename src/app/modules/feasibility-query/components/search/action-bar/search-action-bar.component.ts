@@ -9,6 +9,7 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Component({
   selector: 'num-search-action-bar',
@@ -25,10 +26,10 @@ export class SearchActionBarComponent implements OnInit {
     private criterionService: CreateCriterionService,
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
-    private queryProviderService: FeasibilityQueryProviderService,
     private listItemService: SelectedTableItemsService<CriteriaListEntry>,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
-    private feasibilityQueryValidation: FeasibilityQueryValidation
+    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -45,9 +46,13 @@ export class SearchActionBarComponent implements OnInit {
         map((criteria: Criterion[]) => {
           this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria);
           this.feasibilityQueryProviderHub.addCriteriaToStage(criteria);
+          return criteria;
         })
       )
-      .subscribe(() => this.listItemService.clearSelection());
+      .subscribe((criteria: Criterion[]) => {
+        this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_COHORT');
+        this.listItemService.clearSelection();
+      });
   }
 
   public navigateToEditor() {

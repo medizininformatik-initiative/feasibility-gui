@@ -1,18 +1,7 @@
-:host {
-  height: 60%;
-}
-.add-button {
-  margin-top: 10px;
-}
-
-num-table {
-  display: block;
-  height: 87%;
-  overflow: auto;
-  margin-bottom: 10px;
-}
-.filter-div {
-  max-height: 90%;
-  overflow: scroll;
-  overflow-x: hidden;
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  gap: 24px;
 }

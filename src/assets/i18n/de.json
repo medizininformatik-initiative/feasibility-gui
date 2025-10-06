@@ -252,7 +252,12 @@
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen.",
       "LABEL": "Code oder Suchbegriff eingeben",
       "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
-      "SEARCH_BUTTON": "Suchen"
+      "SEARCH_BUTTON": "Suchen",
+      "SNACKBAR": {
+        "ADDED_TO_COHORT": "Kriterien wurden zur Kohortenselektion hinzugefügt",
+        "ADDED_TO_STAGE": "Kriterium wurde ausgewählt",
+        "REMOVED_FROM_STAGE": "Kriterium wurde entfernt"
+      }
     }
   },
   "LANGUAGE": {

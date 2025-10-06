@@ -1,42 +1,30 @@
-.criteria-box {
-  padding: 2px;
-}
-
-.criteria-container {
+.container {
   width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.flex-grow {
+  flex: 0 0 auto; /* don’t grow, don’t shrink, size to content */
 }
 
-.example-boundary {
-  width: 400px;
-  height: 400px;
-  max-width: 100%;
-  border: dotted #ccc 2px;
-}
-
-.header-title {
-  width: 30%;
-  font-size: large;
-  color: rgba(95, 98, 102, 1);
-}
-#Stage {
-  padding-bottom: 50px;
+/* When the form is 400px or less */
+@media (max-width: 50%) {
+  .criteria-container {
+    flex-wrap: nowrap; /* disable wrapping */
+    overflow-x: auto; /* allow horizontal scroll if needed */
+  }
 }
 
 .no-selected-criteria {
-  width: 50%;
-  height: 100px;
+  width: 100%;
+  height: 96px;
   border: 2px dotted rgba(90, 121, 175, 1);
-  border-radius: 5px;
+  border-radius: 4px;
   font-weight: 400;
   font-size: large;
   color: rgba(90, 121, 175, 1);
-}
-.overflow-hidden {
-  overflow: hidden;
-}
-.overflow-auto {
-  overflow: auto;
-}
-.pr4 {
-  padding-right: 4rem;
+  align-content: center;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }

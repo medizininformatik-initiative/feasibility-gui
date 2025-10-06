@@ -1,36 +1,32 @@
-<num-action-bar class="bottom">
+<num-action-bar>
   <num-button
     type="green"
     (click)="doSendRequest()"
     [isDisabled]="(isFeasibilityQueryValid$ | async) === false"
-    class="margin-right-10"
+    style="order: 4"
   >
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY' | translate }}
   </num-button>
-  <num-button
-    type="green"
-    (click)="navigateToDataRequestCohortDefinition()"
-    class="margin-right-10"
-  >
+  <num-button type="green" (click)="navigateToDataRequestCohortDefinition()" style="order: 3">
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.DATA_REQUEST' | translate }}
   </num-button>
   <num-button
     type="green"
-    class="margin-right-10"
     (click)="saveDataQuery()"
     [isDisabled]="
       !((validDataQuery$ | async).feasibilityQuery || (validDataQuery$ | async).dataSelection)
     "
+    style="order: 2"
   >
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SAVE_DATAQUERY' | translate }}
   </num-button>
   <num-button
     icon="arrow-up"
     type="green"
-    class="margin-right-10"
     (click)="navigateToSearch()"
     [matBadge]="(stageArray$ | async)?.length"
     matBadgePosition="above after"
+    style="order: 1"
   >
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.BACK_TO_SEARCH' | translate }}
   </num-button>

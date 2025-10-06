@@ -1,59 +1,63 @@
+/* Overlay layer */
 .show-above-overlay {
   z-index: 2000;
 }
 
-.width-100 {
-  width: 100%;
-}
+/* Form container */
 .form-design {
   border: 1px solid #c3c7ce;
-  border-radius: 4px;
-  background-color: white;
+  border-radius: 4px; // 8-point system
+  background-color: #fff;
+
+  &:focus-within {
+    outline: none !important;
+    font-weight: 600;
+    border-width: 2px;
+    border-color: #5a79ae;
+    background-color: #eff2f7;
+    box-shadow: 0 0 8px -4px #5a79ae;
+    transition: background-color 0.5s;
+  }
 }
-.form-design:focus-within {
-  outline: none !important;
-  font-weight: 600;
-  border-width: 2px;
-  border-color: #5a79ae;
-  background-color: #eff2f7;
-  box-shadow: 0 0 10px -5px #5a79ae;
-  transition: 0.5s;
-  transition-property: background-color;
-}
+
+/* Input field */
 .input-design {
-  height: 42px;
+  flex: 1; // take remaining space
+  height: 40px; // snapped to 8-point
+  padding: 0 16px; // horizontal padding
+  font-size: 16px;
   color: #333;
-  padding: 0 20px;
-  font-size: 18px;
+  font-family: 'Titillium Web', serif;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-family: Titillium Web, serif;
   border: none;
-  margin-right: 20px;
+
+  &:focus {
+    outline: none !important;
+    font-weight: 600;
+    background-color: #eff2f7;
+    transition: background-color 0.5s;
+  }
+
+  &:focus + fa-icon {
+    color: #828282;
+  }
 }
 
-.input-design:focus {
-  outline: none !important;
-  padding: 0 20px;
-  font-weight: 600;
-  background-color: #eff2f7;
-  transition: 0.5s;
-  transition-property: background-color;
-}
-
+/* Icon inside input */
 .icon-design {
-  padding-top: 12px;
-  padding-left: 10px;
-  min-width: 40px;
+  display: flex; // make it a flex container
+  align-items: center; // vertical center
+  justify-content: center; // horizontal center inside its box
+  width: 40px; // fixed width (multiple of 8)
+  height: 40px; // match input height
   color: #c2c2c2;
-  font-size: medium;
+  font-size: 16px;
+  padding: 0; // remove extra padding
 }
 
-.input-design:focus + fa-icon {
-  color: #828282;
-}
-
+/* Warning message */
 .search-warning {
   color: red;
 }

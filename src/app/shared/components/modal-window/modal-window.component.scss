@@ -1,18 +1,22 @@
 .container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
   width: 60em;
-  height: 85vh;
-  background-color: rgb(90, 121, 175, 0.1);
+  height: 100vh;
+  background-color: white;
+  overflow: auto;
 }
 
 .content-container {
-  overflow: auto;
-  min-height: 90%;
-  max-height: 90%;
-  height: 90%;
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
 }
 
 .select-button {
+  padding-bottom: 16px;
   margin-left: 2%;
   margin-top: 2%;
 }

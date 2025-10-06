@@ -252,7 +252,12 @@
       "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide.",
       "LABEL": "Enter code or search term",
       "SEARCHBAR": "Search for term or terminology code",
-      "SEARCH_BUTTON": "Search"
+      "SEARCH_BUTTON": "Search",
+      "SNACKBAR": {
+        "ADDED_TO_COHORT": "Criteria added to cohort selection",
+        "ADDED_TO_STAGE": "Criterion {{criterium}} was selected ",
+        "REMOVED_FROM_STAGE": "Criterion {{criterium}} was removed"
+      }
     }
   },
   "LANGUAGE": {

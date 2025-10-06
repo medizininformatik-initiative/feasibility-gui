@@ -1,12 +1,33 @@
-num-attribute-filter {
+.container {
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  display: block;
+  width: 100%;
   overflow: auto;
 }
-.full-height {
-  max-height: 91%;
-  margin-bottom: 1em;
+
+.attribute-filter-container {
+  overflow: auto;
+  height: 100%;
 }
-::ng-deep .mdc-dialog__surface {
-  overflow: unset;
+
+::ng-deep .mat-mdc-tab-body-content {
+  overflow: hidden !important;
+}
+
+.background {
+  padding: 16px;
+  background-color: rgb(90, 121, 175, 0.1);
+  border: 1px solid rgb(90, 121, 175, 0.1);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+/* active tab */
+::ng-deep .mat-mdc-tab-labels {
+  background-color: white;
+}
+mat-tab-group {
+  width: 100%;
 }

@@ -1,20 +1,19 @@
-<div fxLayout="column" class="full">
+<div class="container">
   <num-profile-header
     *ngIf="profile"
-    class="profile-header"
+    class="header-container"
     [profile]="profile"
     (updatedLabel)="updateLabel($event)"
   >
   </num-profile-header>
   <num-filter-tabs
-    class="width-100 height"
+    class="filter-tabs-container"
     *ngIf="templates.length > 0"
     [content]="templates"
   ></num-filter-tabs>
 
   <ng-template #fields>
     <num-edit-fields
-      class="full"
       [fieldTree]="profile.getProfileFields().getFieldTree()"
       [selectedBasicFields]="profile.getProfileFields().getSelectedBasicFields()"
       (updatedSelectedBasicFields)="updateSelectedFields($event)"
@@ -31,7 +30,7 @@
 
   <ng-template #reference>
     <num-profile-reference
-      class="width-100 height"
+      class="width-100"
       [referenceFields]="profile.getProfileFields().getReferenceFields()"
       [selectedReferenceFields]="profile.getProfileFields().getSelectedReferenceFields()"
       [profileId]="profile.getId()"

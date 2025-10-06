@@ -1,23 +1,25 @@
-<div
-  class="filter-div"
-  infiniteScroll
-  [infiniteScrollDistance]="0.5"
-  [infiniteScrollThrottle]="50"
-  [scrollWindow]="false"
-  (scrolled)="loadMoreSearchResults()"
->
-  <num-table
-    *ngIf="adaptedData?.body.rows.length > 0"
-    class="result-list-container"
-    [tableData]="adaptedData"
-    (selectedRow)="addSelectedRow($event)"
+<div class="container">
+  <div
+    infiniteScroll
+    [infiniteScrollDistance]="0.5"
+    [infiniteScrollThrottle]="50"
+    [scrollWindow]="false"
+    (scrolled)="loadMoreSearchResults()"
+    style="overflow: auto; height: 100%"
   >
-  </num-table>
+    <num-table
+      style="overflow: auto"
+      *ngIf="adaptedData?.body.rows.length > 0"
+      [tableData]="adaptedData"
+      (selectedRow)="addSelectedRow($event)"
+    >
+    </num-table>
+    <num-placeholder-box *ngIf="adaptedData?.body.rows.length <= 0" class="no-results-text">
+      {{ 'FEASIBILITY.EDITOR.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+      >"</num-placeholder-box
+    >
+  </div>
+  <num-button (click)="addSelectedConceptsToStage()" type="blue" class="add-button">
+    {{ 'FEASIBILITY.EDITOR.MODAL.ADD' | translate }}
+  </num-button>
 </div>
-<num-placeholder-box *ngIf="adaptedData?.body.rows.length <= 0" class="no-results-text">
-  {{ 'FEASIBILITY.EDITOR.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
-  >"</num-placeholder-box
->
-<num-button (click)="addSelectedConceptsToStage()" type="blue" class="add-button">
-  {{ 'FEASIBILITY.EDITOR.MODAL.ADD' | translate }}
-</num-button>
