@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { FilterTypes } from '../../../../../model/Utilities/FilterTypes';
 @Component({
   selector: 'num-edit-reference-criteria',
   templateUrl: './edit-reference-criteria-modal.component.html',
@@ -20,6 +21,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
   ids: string[] = [];
 
   parentAttributeFilter: AttributeFilter;
+  referenceFilter: AttributeFilter[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EditReferenceCriteriaModalComponent,
@@ -35,6 +37,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
 
   ngOnInit() {
     this.criterion = this.data.criterion;
+    this.referenceFilter = this.filterAttributeFiltersByTypeReference();
   }
 
   public setSelectedReferenceIds(ids: string[], attributeFilter: AttributeFilter) {
@@ -96,6 +99,11 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
     };
   }
 
+  private filterAttributeFiltersByTypeReference(): AttributeFilter[] {
+    return this.criterion
+      .getAttributeFilters()
+      .filter((filter) => filter.getFilterType() === FilterTypes.REFERENCE);
+  }
   closeDialog() {
     this.dialogRef.close();
   }

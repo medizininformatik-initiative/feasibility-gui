@@ -22,7 +22,7 @@
       {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
-  <div style="flex: 1" class="margin-bottom-3">
+  <div class="feasibility-container margin-bottom-3">
     <ng-container *ngIf="isFeasibilityExistent$ | async">
       <num-display-feasibility-query [isEditable]="false"></num-display-feasibility-query>
     </ng-container>

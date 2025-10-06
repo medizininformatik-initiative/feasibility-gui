@@ -8,13 +8,13 @@
   border: 1px solid rgb(90, 121, 175, 0.1);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
-
+/*
 .container:hover {
   transform: translateY(-4px);
   box-shadow: rgba(0, 0, 0, 0.25) 0px 8px 16px -2px;
   cursor: grab;
 }
-
+*/
 .title-section {
   font-size: 16px; /* scalable typography */
   width: 100%;
@@ -43,7 +43,7 @@
 }
 
 .menu-icon:hover {
-  cursor: pointer;
+  cursor: grab;
   opacity: 0.8; /* small visual feedback */
 }
 
@@ -68,6 +68,7 @@
 
 .content {
   width: 100%;
+  cursor: grab;
 }
 
 .img-layout {

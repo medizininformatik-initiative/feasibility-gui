@@ -58,7 +58,10 @@ num-button {
 .margin-top-5 {
   margin-top: 5px;
 }
-
+.feasibility-container {
+  overflow-y: auto;
+  flex: 1;
+}
 .height-400 {
   height: 400px;
 }
