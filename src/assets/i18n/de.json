@@ -131,7 +131,8 @@
     "FEAS-10004": "Die Ergebnismenge ist zu klein → Ergebnis wird nicht angezeigt.",
     "FEAS-10005": "Die Anzahl der Standorte, die geantwortet haben, ist zu klein → Detailergebnis wird nicht angezeigt.",
     "FEAS-10006": "Sie haben zu viele Kohorten gespeichert, bitte löschen Sie Kohortenselektionen, bevor Sie weitere speichern.",
-    "VAL-20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden."
+    "VAL-20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden.",
+    "DSE-10001": "Ein ausgewähltes Feld konnte nicht geladen werden"
   },
   "FEASIBILITY": {
     "EDITOR": {

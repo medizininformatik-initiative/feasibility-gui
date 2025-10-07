@@ -17,6 +17,7 @@ import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service';
+import { SnackbarService } from '../../../shared/service/Snackbar/Snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,7 @@ export class DataExtraction2UiDataSelectionService {
   constructor(
     private createDataSelection: CreateDataSelectionProfileService,
     private profileFilterTranslatorService: ProfileFilterTranslatorService,
-    private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService
+    private snackbar: SnackbarService
   ) {}
 
   /**
@@ -108,6 +109,7 @@ export class DataExtraction2UiDataSelectionService {
     return ProfileFieldsCloner.deepCopyProfileFields(profileFields);
   }
 
+  /*TODO: Snackbar message is just a temporary solution. Will be obsolete with Backend validation*/
   private buildSelectedReferenceFields(
     attributes: AttributesData[],
     profileFields: ProfileFields
@@ -119,10 +121,16 @@ export class DataExtraction2UiDataSelectionService {
           profileFields.getReferenceFields(),
           attribute.attributeRef
         );
-        return this.createSelectedReferenceField(attribute, matchingField);
-      });
+        if (matchingField) {
+          return this.createSelectedReferenceField(attribute, matchingField);
+        } else {
+          this.snackbar.displayErrorMessage('DSE-10001');
+        }
+      })
+      .filter((element) => element !== undefined);
   }
 
+  /*TODO: Snackbar message is just a temporary solution. Will be obsolete with Backend validation*/
   private buildSelectedBasicFields(
     attributes: AttributesData[],
     profileFields: ProfileFields
@@ -134,8 +142,13 @@ export class DataExtraction2UiDataSelectionService {
           profileFields.getFieldTree(),
           attribute.attributeRef
         );
-        return this.createSelecteBasicFields(matchingField, attribute);
-      });
+        if (matchingField) {
+          return this.createSelecteBasicFields(matchingField, attribute);
+        } else {
+          this.snackbar.displayErrorMessage('DSE-10001');
+        }
+      })
+      .filter((element) => element !== undefined);
   }
 
   private findBasicField(basicFields: BasicField[], attributeRef: string): BasicField | undefined {
