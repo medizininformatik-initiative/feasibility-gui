@@ -2,7 +2,7 @@ import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
 
 export class FilterChips {
   private getCriteriaBoxByLabel(criterium: string) {
-    return cy.contains('num-criteria-stage .criteria-box *', criterium).closest('.criteria-box')
+    return cy.contains('num-criteria-stage .container *', criterium).closest('.container')
   }
 
   // 🔹 Assert the block name text

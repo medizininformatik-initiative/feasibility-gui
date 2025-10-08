@@ -3,6 +3,7 @@
   [cdkDragData]="criterion.getId()"
   fxLayout="row"
   fxLayoutAlign="start start"
+  [attr.data-cy]="criterion.getDisplay() | displayTranslation"
   class="container margin-bottom-2 margin-right-2"
 >
   <div class="content" cdkDragHandle>

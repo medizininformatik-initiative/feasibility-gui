@@ -21,12 +21,14 @@ export class CohortEdit {
     cy.get('mat-dialog-container').should('be.visible')
   }
 
-  public openPanelByName(panelName: string) {
-    cy.contains('mat-expansion-panel-header', panelName).click()
+  public shouldSeePanelWithName(panelName: string) {
+    cy.get(`[data-cy="${panelName}"]`).should('be.visible')
   }
-  public shouldSeeSelectedInPanel(selected: string) {
+  public shouldSeeSelectedInPanel(selected: string, panelName: string) {
     cy.get('num-edit-criterion-modal').within(() => {
-      cy.get('num-quantity-comparision-select').contains(selected).should('be.visible')
+          cy.get(`[data-cy="${panelName}"]`).within(() => {
+            cy.get('num-quantity-comparision-select').contains(selected).should('be.visible')
+          })
     })
   }
   public selectFromPanelByName(option: string, panelName: string) {
@@ -50,7 +52,7 @@ export class CohortEdit {
   ) {
     const filterChip = new FilterChips()
     filterChip.getFilterChipBlock(criterium, panelName)
-    cy.get('.criteria-box').within(() => {
+     cy.get(`[data-cy="${criterium}"]`).within(() => {
       cy.get('.content').should('contain', criterium).should('contain', chipValue)
     })
     filterChip.getFilterChipByName(criterium, chipValue, panelName)
@@ -107,11 +109,11 @@ const cohortEdit = new CohortEdit()
 defineStep('I should see {string} modal opening', (modalTitle: string) =>
   cohortEdit.shouldSeeModalOpening(modalTitle)
 )
-defineStep('I open the panel with the name {string}', (panelName: string) =>
-  cohortEdit.openPanelByName(panelName)
+defineStep('I see the panel with the name {string}', (panelName: string) =>
+  cohortEdit.shouldSeePanelWithName(panelName)
 )
-defineStep('I should see {string} selected in the panel', (selected: string) =>
-  cohortEdit.shouldSeeSelectedInPanel(selected)
+defineStep('I should see {string} selected in the panel {string}', (selected: string, panelName: string) =>
+  cohortEdit.shouldSeeSelectedInPanel(selected, panelName)
 )
 defineStep(
   'I select {string} from the panel with the name {string}',

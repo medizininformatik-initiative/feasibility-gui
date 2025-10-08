@@ -27,10 +27,10 @@ Feature: Cohort editing
     Given I add the criterium "<criterium>" to the editor
     When I open the menu
     When I click on the menu item "Apply filter"
-    When I open the panel with the name "<panel_name>"
-    Then I should see "<default_filter>" selected in the panel
+    When I see the panel with the name "<panel_name>"
+    Then I should see "<default_filter>" selected in the panel "<panel_name>"
     When I select "<new_filter>" from the panel with the name "<panel_name>"
-    Then I should see "<new_filter>" selected in the panel
+    Then I should see "<new_filter>" selected in the panel "<panel_name>"
     Then I select a value of <value>
     And  I select the unit "<unit>"
     When I click on Auswählen button

@@ -8,10 +8,11 @@ export class CriterionToEditor {
     criterionSearchInstance.selectCriterion(criterium)
     criterionSearchInstance.selectActioBarButton('Add')
     criterionSearchInstance.selectActioBarButton('Show')
+    cy.wait(1000) // wait for the editor to load
   }
 
   public shouldSeeCriteriumInEditor(criterium: string) {
-    cy.get('.criteria-box').within(() => {
+    cy.get(`[data-cy="${criterium}"]`).within(() => {
       cy.get('.content').should('contain', criterium).should('contain', criterium)
     })
   }
@@ -29,7 +30,7 @@ export class CriterionToEditor {
         waitForAnimations: true,
       })
       .click()
-      cy.wait(1000) // wait for the drag to complete
+      cy.wait(1000)
   }
 }
 
