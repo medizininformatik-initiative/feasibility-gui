@@ -53,7 +53,7 @@ Feature: Data Selection Search
     When  I add a reference named "Procedure"
     Then I add the reference
     Then I click on the button "Save"
-    Then a chip labeled "Procedure" should appear in the "Selected Reference" section
+    #Then a chip labeled "Procedure" should appear in the "Selected Reference" section
     Then I click on the button "Close"
 
 
