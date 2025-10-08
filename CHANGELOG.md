@@ -1,5 +1,19 @@
 # Changelog
 
+## v6.3.7 (2025-10-08)
+
+### Features
+* Major overhaul of CSS and component layouts for improved consistency and responsiveness. [#452](https://github.com/medizininformatik-initiative/feasibility-gui/issues/452), [#440](https://github.com/medizininformatik-initiative/feasibility-gui/issues/440)
+
+### Changed
+* Updated the behavior of criteria relations for better logical handling. [#452](https://github.com/medizininformatik-initiative/feasibility-gui/issues/452)
+
+### Fixed
+* Fixed missing token and date filters when loading a CRTDL. [#453](https://github.com/medizininformatik-initiative/feasibility-gui/issues/453)
+* Fixed an issue where unmatched fields in a loaded CRTDL were not properly removed [#454](https://github.com/medizininformatik-initiative/feasibility-gui/issues/454)
+* Corrected sorting behavior of criteria. [#419](https://github.com/medizininformatik-initiative/feasibility-gui/issues/419)
+
+
 ## v6.3.6 (2025-09-19)
 
 ### Feature
