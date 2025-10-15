@@ -1,58 +1,20 @@
 {
-  "env": {
-    "name": "#{env_name}"
-  },
-  "api": {
-    "baseUrl": "#{api_baseUrl}"
-  },
-  "uiBackendApi": {
-    "baseUrl": "#{uiBackendApi_baseUrl}"
-  },
-  "auth": {
-    "baseUrl": "#{auth_baseUrl}",
-    "realm": "#{auth_realm}",
-    "clientId": "#{auth_clientId}",
-    "roles": "#{auth_roles}"
-  },
+  "authBaseUrl": "#{auth_baseUrl}",
+  "authClientId": "#{auth_clientId}",
+  "authRealm": "#{auth_realm}",
+  "authRoles": [
+    "#{auth_roles}"
+  ],
+  "backendBaseUrl": "#{uiBackendApi_baseUrl}",
   "legal": {
-    "version": "#{legal_version}",
     "copyrightOwner": "#{legal_copyrightOwner}",
-    "email": "#{legal_email}"
+    "copyrightYear": "2025",
+    "email": "#{legal_email}",
+    "version": "#{legal_version}"
   },
-  "features": {
-    "v2": {
-      "multiplevaluedefinitions": "#{features_v2_multiplevaluedefinitions}",
-      "multiplegroups": "#{features_v2_multiplegroups}",
-      "dependentgroups": "#{features_v2_dependentgroups}",
-      "timerestriction": "#{features_v2_timerestriction}"
-    },
-    "extra": {
-      "displayvaluefiltericon": false,
-      "showoptionspage": false,
-      "showdataselectionpage": false,
-      "optionpageroles": "#{auth_roles}",
-      "displayInfoMessage": true,
-      "displayUpdateInfo": true
-    }
-  },
-  "options": {
-    "sendsqcontexttobackend": true,
-    "pollingtimeinseconds": 10,
-    "pollingintervallinseconds": 1,
-    "lowerboundarypatientresult": 10,
-    "lowerboundarylocationresult": 3,
-    "dsePatientProfileUrl": "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"
-
-  },
-  "mock": {
-    "terminology": false,
-    "query": false,
-    "result": false,
-    "loadnsave": false
-  },
-  "stylesheet": "FDPGTheme",
-  "fhirport": "8082",
-  "dataset": "codex",
-  "queryVersion": "v2",
-  "proposalPortalLink": "https://antrag.dev.forschen-fuer-gesundheit.de"
+  "optionpageroles": [
+    "#{auth_roles}"
+  ],
+  "showoptionspage": false,
+  "stylesheet": "FDPGTheme"
 }
