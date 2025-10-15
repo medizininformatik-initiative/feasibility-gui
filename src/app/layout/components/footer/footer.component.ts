@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { IAppConfig } from 'src/app/config/app-config.model';
-import { AppConfigService } from 'src/app/config/app-config.service';
-import { FeatureService } from '../../../service/Feature.service';
 import { FeatureProviderService } from 'src/app/service/FeatureProvider.service';
+import { AppConfigData } from 'src/app/config/model/AppConfig/AppConfigData';
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 
 @Component({
   selector: 'num-footer',
@@ -10,21 +9,18 @@ import { FeatureProviderService } from 'src/app/service/FeatureProvider.service'
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit, AfterViewInit {
-  config: IAppConfig;
+  config: AppConfigData;
   stylesheet: string;
   urlSrc: string;
   urlAlt: string;
 
   constructor(
-    private appConfig: AppConfigService,
-    private featureProviderService: FeatureProviderService,
-    public featureService: FeatureService
-  ) {
-    this.config = appConfig.config;
-  }
+    private appSettingsProviderService: AppSettingsProviderService,
+    private featureProviderService: FeatureProviderService
+  ) {}
 
   ngOnInit(): void {
-    this.stylesheet = this.featureService.getStylesheet();
+    this.stylesheet = this.appSettingsProviderService.getStylesheet();
   }
 
   ngAfterViewInit(): void {

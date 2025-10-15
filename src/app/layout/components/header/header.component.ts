@@ -1,8 +1,7 @@
 import { AboutModalComponent } from '../about-modal/about-modal.component';
-import { ActuatorInformationService } from 'src/app/service/Actuator/ActuatorInformation.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 import { FeatureProviderService } from 'src/app/service/FeatureProvider.service';
-import { FeatureService } from '../../../service/Feature.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -23,14 +22,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(
     private oauthService: OAuthService,
     private featureProviderService: FeatureProviderService,
-    public featureService: FeatureService,
+    public appSettingsProviderService: AppSettingsProviderService,
     private matDialog: MatDialog,
     private userProfileService: UserProfileService
   ) {}
 
   ngOnInit(): void {
     this.initProfile();
-    this.stylesheet = this.featureService.getStylesheet();
   }
   ngAfterViewInit(): void {
     this.featureProviderService.setTheme(this.stylesheet, this.stylesheet);
@@ -51,7 +49,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   public navigateToProposalPortal() {
-    this.proposalPortalLink = this.featureService.getProposalPortalLink();
+    this.proposalPortalLink = this.appSettingsProviderService.getProposalPortalLink();
     window.open(this.proposalPortalLink, '_blank');
   }
 }

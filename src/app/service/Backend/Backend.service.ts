@@ -1,13 +1,19 @@
-import { AppConfigService } from 'src/app/config/app-config.service';
+import { AppConfigProviderService } from 'src/app/core/settings/AppConfigProvider.service';
+import { AppConfigService } from 'src/app/config/AppConfig.service';
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
+import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BackendService {
-  constructor(private config: AppConfigService, private authStorage: OAuthStorage) {}
+  constructor(
+    private config: AppConfigService,
+    private authStorage: OAuthStorage,
+    private appSettingsProvider: AppSettingsProviderService
+  ) {}
 
   private getAccessToken() {
     return this.authStorage.getItem('access_token');
@@ -20,7 +26,13 @@ export class BackendService {
   }
 
   public createUrl(pathToResource: string, paramString?: string): string {
-    return this.buildUrl(this.config.getConfig().uiBackendApi.baseUrl, pathToResource, paramString);
+    const apiUrl =
+      this.appSettingsProvider.getBackenBaseUrl() + this.appSettingsProvider.getUiBackendApiUrl();
+    return this.buildUrl(apiUrl, pathToResource, paramString);
+  }
+
+  public getBaseUrl(): string {
+    return this.appSettingsProvider.getBaseUrl();
   }
 
   private buildUrl(base: string, path: string, paramString?: string): string {

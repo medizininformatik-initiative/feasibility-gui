@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { IAppConfig } from 'src/app/config/app-config.model';
+import { IAppConfig } from 'src/app/config/model/AppConfig/AppConfigData';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { MaterialModule } from '../../material/material.module';
 

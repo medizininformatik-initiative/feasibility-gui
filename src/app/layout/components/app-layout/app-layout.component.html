@@ -9,12 +9,7 @@
     [mode]="isHandset ? 'over' : 'side'"
     [opened]="isHandset === false"
   >
-    <num-side-menu
-      class="side-menu"
-      (toggleSideMenu)="toggleMenu($event)"
-      [isSideMenuExpanded]="isSideMenuExpanded || isHandset"
-      fxFlex="100"
-    ></num-side-menu>
+    <num-side-menu class="side-menu" fxFlex="100"></num-side-menu>
   </mat-sidenav>
 
   <mat-sidenav-content fxLayout="column" class="fix-overlay padding-left-4">

@@ -1,3 +1,7 @@
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
+import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { map, Observable, Subscription } from 'rxjs';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import {
   Component,
   ElementRef,
@@ -7,11 +11,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
-import { map, Observable, Subscription, take } from 'rxjs';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { FeatureService } from '../../../../service/Feature.service';
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 
 @Component({
   selector: 'num-data-selection',
@@ -38,7 +38,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
     private feasibilityQueryValidation: FeasibilityQueryValidation,
-    private featureService: FeatureService
+    private appSettingsProviderService: AppSettingsProviderService
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +47,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
       .pipe(map((dataSelection) => dataSelection.getProfiles().length > 0));
 
     this.isCohortExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
-    this.emailLink = this.featureService.getLegalEmail();
+    this.emailLink = this.appSettingsProviderService.getLegalEmail();
   }
 
   ngOnDestroy(): void {

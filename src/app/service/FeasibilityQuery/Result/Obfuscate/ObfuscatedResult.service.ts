@@ -1,10 +1,10 @@
 import { FeasibilityQueryResultApiService } from '../../../Backend/Api/FeasibilityQueryResultApi.service';
-import { FeatureService } from '../../../Feature.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service';
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service';
 export class ObfuscatedResultService {
   constructor(
     private feasibilityQueryResultApiService: FeasibilityQueryResultApiService,
-    private feature: FeatureService,
+    private appSettingsProviderService: AppSettingsProviderService,
     private queryResultMapperService: QueryResultMapperService
   ) {}
 
@@ -68,6 +68,6 @@ export class ObfuscatedResultService {
   }
 
   private getLowerBoundaryPatient(): number {
-    return this.feature.getPatientResultLowerBoundary();
+    return this.appSettingsProviderService.getLowerBoundaryPatientResult();
   }
 }

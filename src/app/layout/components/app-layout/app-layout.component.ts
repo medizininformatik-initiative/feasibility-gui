@@ -55,13 +55,6 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  toggleMenu($event): void {
-    // On Desktop version do not minimize side menu when choosing item
-    if (this.isHandset || !$event?.item) {
-      this.isSideMenuExpanded = !this.isSideMenuExpanded;
-    }
-  }
-
   handleRouterEvent(routerEvent: ActivationEnd): void {
     this.currentTabNavSelected = routerEvent.snapshot.firstChild?.data?.tabNavId;
 
