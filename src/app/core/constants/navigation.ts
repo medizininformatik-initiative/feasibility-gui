@@ -26,12 +26,6 @@ export const mainNavItems: INavItem[] = [
     icon: 'folder',
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
-  {
-    routeTo: BasePaths.options,
-    roles: ['option'],
-    icon: 'wrench',
-    translationKey: 'NAVIGATION.OPTIONS',
-  },
 ];
 
 export const secondaryNavItems: INavItem[] = [

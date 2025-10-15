@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FeatureService } from '../../../../service/Feature.service';
-import { IAppConfig } from '../../../../config/app-config.model';
+import { IAppConfig } from '../../../../config/model/AppConfig/AppConfigData';
 import { FeatureProviderService } from '../../../querybuilder/service/feature-provider.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 

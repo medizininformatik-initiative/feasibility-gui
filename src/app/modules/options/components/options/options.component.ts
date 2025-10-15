@@ -3,11 +3,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeatureProviderService } from 'src/app/service/FeatureProvider.service';
-import { FeatureService } from '../../../../service/Feature.service';
 import { HttpClient } from '@angular/common/http';
-import { IAppConfig } from '../../../../config/app-config.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
+import { AppConfigData } from 'src/app/config/model/AppConfig/AppConfigData';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -24,7 +23,7 @@ export class SafePipe implements PipeTransform {
   styleUrls: ['./options.component.scss'],
 })
 export class OptionsComponent implements OnInit {
-  public features: IAppConfig;
+  public features: AppConfigData;
   includeContext: boolean;
   query: FeasibilityQuery;
   stylesheet: string;
@@ -38,70 +37,21 @@ export class OptionsComponent implements OnInit {
   queryVersion: string;
 
   constructor(
-    public featureService: FeatureService,
     public featureProviderService: FeatureProviderService,
-    private queryService: FeasibilityQueryProviderService,
-    private http: HttpClient
+    private queryService: FeasibilityQueryProviderService
   ) {}
 
   ngOnInit(): void {
-    this.features = this.featureProviderService.getFeatures();
     this.stylesheet = this.features.stylesheet;
     this.queryService.getActiveFeasibilityQuery().subscribe((query) => {
       this.query = query;
     });
-    this.pollingTime = this.features.options.pollingtimeinseconds;
-    this.pollingIntervall = this.features.options.pollingintervallinseconds;
-    this.fhirport = this.features.fhirport;
-    this.queryVersion = this.features.queryVersion;
-    this.includeContext = this.features.options.sendsqcontexttobackend;
   }
 
   setFeature(checked: MatCheckboxChange): void {
     switch (checked.source.id) {
-      case 'multiplevaluedefinitions': {
-        this.features.features.v2.multiplevaluedefinitions = checked.checked;
-        break;
-      }
-      case 'multiplegroups': {
-        this.features.features.v2.multiplegroups = checked.checked;
-        break;
-      }
-      case 'dependentgroups': {
-        this.features.features.v2.dependentgroups = checked.checked;
-        break;
-      }
-      case 'timerestriction': {
-        this.features.features.v2.timerestriction = checked.checked;
-        break;
-      }
-      case 'displayvaluefiltericon': {
-        this.features.features.extra.displayvaluefiltericon = checked.checked;
-        break;
-      }
       default:
         return null;
     }
-    this.featureProviderService.storeFeatures(this.features);
-  }
-
-  setPollingTimes(): void {
-    this.features.options.pollingtimeinseconds = this.pollingTime;
-    this.features.options.pollingintervallinseconds = this.pollingIntervall;
-    this.featureProviderService.storeFeatures(this.features);
-  }
-
-  setFhirPort(): void {
-    this.features.fhirport = this.fhirport;
-    this.featureProviderService.storeFeatures(this.features);
-  }
-
-  setSqContextBackend() {
-    this.features.options.sendsqcontexttobackend = this.includeContext;
-    this.featureProviderService.storeFeatures(this.features);
-  }
-
-  updateContextInSQ() {
-    this.setSqContextBackend();
   }
 }

@@ -63,21 +63,6 @@ export const routes: Routes = [
       ).then((m) => m.FeasibilityQueryModule),
   },
   {
-    path: BasePaths.options,
-    canLoad: [RoleGuard],
-    data: {
-      navId: BasePaths.options,
-      roles: ['option'],
-      breadcrumb: 'Options',
-      animation: 'OptionsPage',
-      title: 'Options',
-    },
-    loadChildren: () =>
-      import(/* webpackChunkName: "Options.Module" */ './modules/options/options.module').then(
-        (m) => m.OptionsModule
-      ),
-  },
-  {
     path: BasePaths.dataSelection,
     canLoad: [RoleGuard],
     data: {
