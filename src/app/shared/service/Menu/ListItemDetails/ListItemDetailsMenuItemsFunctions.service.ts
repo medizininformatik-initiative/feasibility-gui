@@ -28,7 +28,6 @@ export class ListItemDetailsMenuItemsFunctionsService {
       .getDetailsForListItem(id)
       .pipe(take(1))
       .subscribe((test) => {
-        console.log(test);
         this.searchTermDetailsProviderService.setSearchTermDetails(test);
       });
   }
@@ -64,9 +63,8 @@ export class ListItemDetailsMenuItemsFunctionsService {
           return [];
         })
       )
-      .subscribe((test) => {
-        console.log(test);
-        this.searchTermDetailsProviderService.setSearchTermDetails(test);
+      .subscribe((details) => {
+        this.searchTermDetailsProviderService.setSearchTermDetails(details);
       });
   }
 }
