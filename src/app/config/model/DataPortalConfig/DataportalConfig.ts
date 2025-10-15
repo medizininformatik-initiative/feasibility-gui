@@ -2,7 +2,7 @@
  * Data portal specific settings interface that defines configuration values
  * for portal functionality, API endpoints, polling behavior, and result boundaries.
  */
-export interface DataportalConfig {
+export interface DataportalConfigData {
   /**
    * Version string of the CCDL (Common Clinical Data Language) specification.
    * Indicates which version of the data standard is being used.

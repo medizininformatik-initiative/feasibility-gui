@@ -1,7 +1,7 @@
-import { DataportalConfig } from './DataportalConfig';
+import { DataportalConfigData } from './DataportalConfig';
 
 /**
  * Union type representing all possible setting keys from both DataportalSettings and AppConfigData.
  * Used for type-safe access to configuration values across the application.
  */
-export type DataportalConfigKey = keyof DataportalConfig;
+export type DataportalConfigKey = keyof DataportalConfigData;

@@ -1,4 +1,4 @@
-import { DataportalConfig } from './DataportalConfig';
+import { DataportalConfigData } from './DataportalConfig';
 import { DataportalConfigKey } from './DataportalConfigKey';
 
 /**
@@ -7,6 +7,5 @@ import { DataportalConfigKey } from './DataportalConfigKey';
  *
  * @template K - The setting key type, must extend DataportalConfigKey
  */
-export type DataportalConfigValue<K extends DataportalConfigKey> = K extends keyof DataportalConfig
-  ? DataportalConfig[K]
-  : never;
+export type DataportalConfigValue<K extends DataportalConfigKey> =
+  K extends keyof DataportalConfigData ? DataportalConfigData[K] : never;
