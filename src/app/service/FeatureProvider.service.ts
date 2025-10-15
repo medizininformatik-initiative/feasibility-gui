@@ -1,7 +1,4 @@
-import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
-import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { Observable, of } from 'rxjs';
-import { IAppConfig } from '../config/app-config.model';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -10,38 +7,7 @@ export class FeatureProviderService {
   private readonly STORAGE_FEATURE_KEY = 'FEATURES';
   private renderer: Renderer2;
 
-  constructor(
-    @Inject(LOCAL_STORAGE) private storage: StorageService,
-    rendererFactory: RendererFactory2
-  ) {
-    this.renderer = rendererFactory.createRenderer(null, null);
-  }
-
-  public initFeatures(features: IAppConfig): Observable<boolean> {
-    if (features.features?.extra?.showoptionspage) {
-      if (!this.storage.get(this.STORAGE_FEATURE_KEY)) {
-        this.storeFeatures(features);
-      } else {
-        features = this.getFeatures() ?? features;
-        return of(true);
-      }
-    } else {
-      this.deleteFeaturesFromLocalStorage();
-    }
-    this.applyTheme(features.stylesheet);
-  }
-
-  public storeFeatures(features: IAppConfig): void {
-    this.storage.set(this.STORAGE_FEATURE_KEY, features);
-  }
-
-  public deleteFeaturesFromLocalStorage(): void {
-    this.storage.remove(this.STORAGE_FEATURE_KEY);
-  }
-
-  public getFeatures(): IAppConfig | null {
-    return this.storage.get(this.STORAGE_FEATURE_KEY);
-  }
+  constructor(rendererFactory: RendererFactory2) {}
 
   public setTheme(oldTheme: string, newTheme: string): void {
     this.applyTheme(newTheme, oldTheme);
