@@ -13,14 +13,11 @@ import { ErrorCodes, SnackbarService } from 'src/app/shared/service/Snackbar/Sna
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private oauthService: OAuthService, private snackbar: SnackbarService) {}
+  constructor(private snackbar: SnackbarService) {}
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.oauthService.logOut();
-        }
         if (error.status === 404) {
           this.handleErrorCodes(error.status);
         }
