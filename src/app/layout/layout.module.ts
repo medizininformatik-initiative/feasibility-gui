@@ -1,3 +1,4 @@
+import { AboutModalComponent } from './components/about-modal/about-modal.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { CommonModule } from '@angular/common';
 import { DirectivesModule } from '../shared/directives/directives.module';
@@ -13,7 +14,6 @@ import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '../shared/components/shared-components.module';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { AboutModalComponent } from './components/about-modal/about-modal.component';
 
 const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
 
