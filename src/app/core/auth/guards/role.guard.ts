@@ -1,4 +1,4 @@
-import { FeatureService } from '../../../service/Feature.service';
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 import { Injectable } from '@angular/core';
 import { UserProfileService } from 'src/app/service/User/UserProfile.service';
 import {
@@ -14,7 +14,7 @@ import {
 })
 export class RoleGuard implements CanActivate, CanLoad {
   constructor(
-    public featureService: FeatureService,
+    public appSettingsProviderService: AppSettingsProviderService,
     private userProfileService: UserProfileService
   ) {}
 
@@ -37,10 +37,8 @@ export class RoleGuard implements CanActivate, CanLoad {
 
     allowedRoles.forEach((role) => {
       if (role === 'main') {
-        expandedAllowedRoles = expandedAllowedRoles.concat(this.featureService.getRoles('main'));
-      } else if (role === 'option') {
         expandedAllowedRoles = expandedAllowedRoles.concat(
-          this.featureService.getRoles('optionpage')
+          this.appSettingsProviderService.getAuthRoles()
         );
       } else {
         expandedAllowedRoles.push(role);
