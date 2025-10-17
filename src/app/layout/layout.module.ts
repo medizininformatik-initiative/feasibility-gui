@@ -5,7 +5,6 @@ import { DirectivesModule } from '../shared/directives/directives.module';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FONT_AWESOME_ICONS } from './font-awesome-icons';
-import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LanguageComponent } from './components/language/language.component';
 import { MaterialModule } from './material/material.module';
@@ -23,7 +22,6 @@ const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
     HeaderComponent,
     SideMenuComponent,
     LanguageComponent,
-    FooterComponent,
     AboutModalComponent,
   ],
   imports: [
