@@ -5,7 +5,7 @@ import { catchError, concatMap, map, take, tap, timeout } from 'rxjs/operators';
 import { DataportalConfigService } from './config/DataportalConfig.service';
 import { DataSelectionMainProfileInitializerService } from './service/DataSelectionMainProfileInitializerService';
 import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { OAuthInitService } from './core/auth/OAuthInit.service';
 import { Observable, of, throwError } from 'rxjs';
 import { ProvidersInitService } from './service/Provider/ProvidersInit.service';

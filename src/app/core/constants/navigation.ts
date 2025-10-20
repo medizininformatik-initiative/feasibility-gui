@@ -27,11 +27,3 @@ export const mainNavItems: INavItem[] = [
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
 ];
-
-export const secondaryNavItems: INavItem[] = [
-  {
-    routeTo: '#logout',
-    icon: 'sign-out-alt',
-    translationKey: 'NAVIGATION.SIGNOUT',
-  },
-];
