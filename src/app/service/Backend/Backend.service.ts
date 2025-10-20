@@ -27,7 +27,7 @@ export class BackendService {
 
   public createUrl(pathToResource: string, paramString?: string): string {
     const apiUrl =
-      this.appSettingsProvider.getBackenBaseUrl() + this.appSettingsProvider.getUiBackendApiUrl();
+      this.appSettingsProvider.getBackendBaseUrl() + this.appSettingsProvider.getUiBackendApiUrl();
     return this.buildUrl(apiUrl, pathToResource, paramString);
   }
 
