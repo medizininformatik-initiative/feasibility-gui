@@ -1,7 +1,6 @@
 import { AboutModalComponent } from '../about-modal/about-modal.component';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
-import { FeatureProviderService } from 'src/app/service/FeatureProvider.service';
+import { Component, OnInit } from '@angular/core';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -12,7 +11,7 @@ import { UserProfileService } from 'src/app/service/User/UserProfile.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit {
   profile: IUserProfile;
   stylesheet: string;
   urlSrc: string;
@@ -21,7 +20,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   constructor(
     private oauthService: OAuthService,
-    private featureProviderService: FeatureProviderService,
     public appSettingsProviderService: AppSettingsProviderService,
     private matDialog: MatDialog,
     private userProfileService: UserProfileService
@@ -29,9 +27,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.initProfile();
-  }
-  ngAfterViewInit(): void {
-    this.featureProviderService.setTheme(this.stylesheet, this.stylesheet);
   }
 
   async initProfile(): Promise<void> {
