@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { ConsentService } from '../../Consent/Consent.service';
 import { CreateCriterionService } from '../../Criterion/Builder/Create/CreateCriterionService';
-import { CriterionHashService } from '../../Criterion/CriterionHash.service';
+import { HashService } from '../../Hash.service';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { ReferenceCriterion } from '../../../model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -19,11 +19,17 @@ import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilte
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
+import { ConceptData } from 'src/app/model/Interface/ConceptData';
+import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service';
+import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
+import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2UIQueryTranslatorService {
+  private subscription: Subscription;
   private hashMap: Array<{
     hash: string
     abstractCriterion: AbstractCriterion
@@ -45,7 +51,9 @@ export class StructuredQuery2UIQueryTranslatorService {
 
   constructor(
     private createCriterionService: CreateCriterionService,
-    private criterionHashService: CriterionHashService,
+    private terminologyApiService: TerminologyApiService,
+    private conceptTranslationCache: ConceptTranslationCacheService,
+    private hashService: HashService,
     private consentService: ConsentService,
     private criterionProvider: CriterionProviderService,
     private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService,
@@ -101,7 +109,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     );
   }
 
-  public innerCriterion(structuredQueryCriterionInnerArray: any[]) {
+  public innerCriterion(structuredQueryCriterionInnerArray: any[]): string[] {
     return structuredQueryCriterionInnerArray.map((structuredQueryCriterion) => {
       const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
       if (!this.isConsent(termCode)) {
@@ -149,7 +157,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     return criterion
       .getAttributeFilters()
       .find(
-        (attributeFilter) =>
+        (attributeFilter: AttributeFilter) =>
           attributeFilter.getAttributeCode().getCode() ===
             structuredQueryAttributeFilter.attributeCode.code &&
           attributeFilter.getAttributeCode().getSystem() ===
@@ -165,7 +173,11 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
   }
 
-  private handleFilterByType(foundAttributeFilter, structuredQueryAttributeFilter, criterion) {
+  private handleFilterByType(
+    foundAttributeFilter: AttributeFilter,
+    structuredQueryAttributeFilter,
+    criterion
+  ) {
     const type = foundAttributeFilter?.getFilterType();
 
     switch (type) {
@@ -181,14 +193,45 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
   }
 
-  private handleConceptFilter(foundAttributeFilter, structuredQueryAttributeFilter) {
-    const selectedConcepts: Concept[] = structuredQueryAttributeFilter.selectedConcepts.map(
-      (concept) => {
-        const terminologyCode = new TerminologyCode(concept.code, concept.display, concept.system);
-        return new Concept(this.instantiateDisplayData(concept.display), terminologyCode);
-      }
-    );
-    foundAttributeFilter.getConcept().setSelectedConcepts(selectedConcepts);
+  private handleConceptFilter(
+    foundAttributeFilter: AttributeFilter,
+    structuredQueryAttributeFilter
+  ) {
+    this.subscription?.unsubscribe();
+    const notFoundConcept: string[] = [];
+    const notTranslatedHashes = structuredQueryAttributeFilter.selectedConcepts
+      .filter(
+        (concept) =>
+          this.conceptTranslationCache.getConceptDisplayById(
+            this.hashService.createConceptHash(concept)
+          ) === undefined
+      )
+      .map((concept) => this.hashService.createConceptHash(concept));
+    if (notTranslatedHashes.length > 0) {
+      this.subscription = this.terminologyApiService
+        .getCodeableConceptsByIds(notTranslatedHashes)
+        .subscribe((conceptsData) => {
+          conceptsData.forEach((conceptData: ConceptData) => {
+            const display = Display.fromJson(conceptData.display);
+            this.conceptTranslationCache.setConceptDisplayById(conceptData.id, display);
+          });
+          const conceptFilter = this.setConcepts(structuredQueryAttributeFilter.selectedConcepts);
+          foundAttributeFilter.getConcept().setSelectedConcepts(conceptFilter);
+        });
+    } else {
+      const conceptFilter = this.setConcepts(structuredQueryAttributeFilter.selectedConcepts);
+      foundAttributeFilter.getConcept().setSelectedConcepts(conceptFilter);
+    }
+  }
+
+  private setConcepts(selectedConceptsData: TerminologyCodeData[]): Concept[] {
+    const selectedConcepts: Concept[] = selectedConceptsData.map((concept: TerminologyCodeData) => {
+      const terminologyCode = TerminologyCode.fromJson(concept);
+      const hash = this.hashService.createConceptHash(concept);
+      const display = this.conceptTranslationCache.getConceptDisplayById(hash);
+      return new Concept(display, terminologyCode);
+    });
+    return selectedConcepts;
   }
 
   private handleQuantityFilter(foundAttributeFilter, structuredQueryAttributeFilter) {
@@ -297,7 +340,7 @@ export class StructuredQuery2UIQueryTranslatorService {
   private createSQHash(structuredQueryCriterion) {
     const context = this.createTermCode(structuredQueryCriterion.context);
     const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
-    return this.criterionHashService.createHash(context, termCode);
+    return this.hashService.createCriterionHash(context, termCode);
   }
 
   private isConsent(termCode: TerminologyCode): boolean {
