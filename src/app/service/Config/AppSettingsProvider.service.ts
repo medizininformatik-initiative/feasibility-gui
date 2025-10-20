@@ -2,6 +2,7 @@ import * as iso8601 from 'iso8601-duration';
 import { AppConfigKey } from 'src/app/config/model/AppConfig/AppConfigKey';
 import { AppConfigProviderService } from 'src/app/core/settings/AppConfigProvider.service';
 import { AppConfigValue } from 'src/app/config/model/AppConfig/AppConfigValue';
+import { AppSettingGetter } from './AppSettingGetterType';
 import { DataportalConfigKey } from 'src/app/config/model/DataPortalConfig/DataportalConfigKey';
 import { DataportalConfigProviderService } from '../../core/settings/DataportalConfigProvider.service';
 import { DataportalConfigValue } from 'src/app/config/model/DataPortalConfig/DataportalConfigValue';
@@ -10,11 +11,15 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class AppSettingsProviderService {
+export class AppSettingsProviderService implements AppSettingGetter {
   constructor(
     private readonly settingsProvider: DataportalConfigProviderService,
     private readonly appConfigProvider: AppConfigProviderService
   ) {}
+  getVersion: () => string | number;
+  getEmail: () => string | number;
+  getLowerboundarylocationresult: () => string;
+  getLowerboundarypatientresult: () => string;
 
   /**
    * Gets a specific setting by key using the settings provider
@@ -65,20 +70,6 @@ export class AppSettingsProviderService {
   }
 
   /**
-   * Gets the authentication roles
-   */
-  public getAuthRoles(): string[] {
-    return this.getAppConfigSettingByKey('authRoles') ?? [];
-  }
-
-  /**
-   * Checks if a specific role is configured
-   */
-  public hasAuthRole(role: string): boolean {
-    return this.getAuthRoles().includes(role);
-  }
-
-  /**
    * Gets the legal version
    */
   public getLegalVersion(): string {
@@ -104,52 +95,6 @@ export class AppSettingsProviderService {
    */
   public getLegalEmail(): string {
     return this.getAppConfigSettingByKey('email') ?? '';
-  }
-
-  /**
-   * Gets the complete copyright notice
-   */
-  public getCopyrightNotice(): string {
-    const year = this.getCopyrightYear();
-    const owner = this.getCopyrightOwner();
-    return year && owner ? `© ${year} ${owner}` : '';
-  }
-
-  /**
-   * Gets whether the options page should be shown
-   */
-  public getShowOptionsPage(): boolean {
-    return this.getAppConfigSettingByKey('featuresShowOptionsPage') ?? false;
-  }
-
-  /**
-   * Gets the roles allowed to access the options page
-   */
-  public getOptionsPageRoles(): string[] {
-    return this.getAppConfigSettingByKey('featuresOptionPageRoles') ?? [];
-  }
-
-  /**
-   * Checks if a user with given roles can access the options page
-   */
-  public canAccessOptionsPage(userRoles: string[]): boolean {
-    if (!this.getShowOptionsPage()) {
-      return false;
-    }
-
-    const requiredRoles = this.getOptionsPageRoles();
-    if (requiredRoles.length === 0) {
-      return true;
-    }
-
-    return requiredRoles.some((role) => userRoles.includes(role));
-  }
-
-  /**
-   * Checks if a specific role can access the options page
-   */
-  public hasOptionsPageRole(role: string): boolean {
-    return this.getOptionsPageRoles().includes(role);
   }
 
   /**
@@ -190,7 +135,7 @@ export class AppSettingsProviderService {
   /**
    * Gets the polling interval configuration
    */
-  public getPollingInterval(): number {
+  public getPollingintervall(): number {
     const duration = iso8601.parse(this.getDataPortalByKey('pollingintervall'));
     return iso8601.toSeconds(duration);
   }
@@ -198,7 +143,7 @@ export class AppSettingsProviderService {
   /**
    * Gets the polling time configuration in milliseconds and parsed according to iso8601
    */
-  public getPollingTime(): number {
+  public getPollingtime(): number {
     const duration = iso8601.parse(this.getDataPortalByKey('pollingtime'));
     return iso8601.toSeconds(duration);
   }
@@ -212,7 +157,7 @@ export class AppSettingsProviderService {
 
   /** Gets the backend base URL
    */
-  public getBackenBaseUrl(): string {
+  public getBackendBaseUrl(): string {
     return this.getAppConfigSettingByKey('backendBaseUrl') ?? '';
   }
 
