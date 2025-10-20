@@ -44,7 +44,7 @@ export class TerminologyApiService {
     return this.http.get<{ totalHits: number; results: any[] }>(parsedUrl);
   }
 
-  public getCodeableConceptsById(commaSeparatedIds: string[]): Observable<Array<any>> {
+  public getCodeableConceptsByIds(commaSeparatedIds: string[]): Observable<Array<any>> {
     return this.chunkedRequestService.getChunkedRequest(
       commaSeparatedIds,
       CodeableConceptPaths.ENTRY_CONCEPT_ENDPOINT
