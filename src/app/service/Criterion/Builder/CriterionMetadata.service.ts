@@ -1,5 +1,5 @@
 import { CriteriaProfile } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
-import { CriterionHashService } from '../CriterionHash.service';
+import { HashService } from '../../Hash.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root',
 })
 export class CriterionMetadataService {
-  constructor(private criterionHashService: CriterionHashService) {}
+  constructor(private hashService: HashService) {}
 
   /**
    * Creates the mandatory fields (metadata) for a criterion.
@@ -30,7 +30,7 @@ export class CriterionMetadataService {
     const context = criteriaProfileData.getContext();
     const termCodes = criteriaProfileData.getTermCodes();
     const display = criteriaProfileData.getDisplay();
-    const criterionHash = this.criterionHashService.createHash(context, termCodes[0]);
+    const criterionHash = this.hashService.createCriterionHash(context, termCodes[0]);
     const isFilterRequired = !this.setIsRequiredFilterSet(criteriaProfileData);
 
     return {
