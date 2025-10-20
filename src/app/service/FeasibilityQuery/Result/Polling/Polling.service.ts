@@ -10,18 +10,16 @@ import { UIQuery2StructuredQueryService } from '../../../Translator/StructureQue
   providedIn: 'root',
 })
 export class PollingService {
-  readonly POLLING_INTERVALL_MILLISECONDS = this.appSettingsProviderService.getPollingInterval();
-  readonly POLLING_MAXL_MILLISECONDS = this.appSettingsProviderService.getPollingTime();
+  private readonly POLLING_INTERVALL_MILLISECONDS =
+    this.appSettingsProviderService.getPollingintervall();
+  private readonly POLLING_MAXL_MILLISECONDS = this.appSettingsProviderService.getPollingtime();
 
   constructor(
     private feasibilityQueryResultApiService: FeasibilityQueryResultApiService,
     private appSettingsProviderService: AppSettingsProviderService,
     private feasibilityQueryApiService: FeasibilityQueryApiService,
     private translator: UIQuery2StructuredQueryService
-  ) {
-    console.log(`[PollingService] Polling interval: ${this.POLLING_INTERVALL_MILLISECONDS} ms`);
-    console.log(`[PollingService] Polling max time: ${this.POLLING_MAXL_MILLISECONDS} ms`);
-  }
+  ) {}
 
   /**
    * Retrieves a summary of the query result.
@@ -41,5 +39,25 @@ export class PollingService {
           return pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1);
         })
       );
+  }
+
+  /**
+   * If the polling intervall exceeds the max polling time, it returns the max polling time.
+   * @returns The polling interval in milliseconds
+   */
+  public getPollingInterval(): number {
+    const pollingIntervall =
+      this.POLLING_INTERVALL_MILLISECONDS > this.POLLING_MAXL_MILLISECONDS
+        ? this.POLLING_MAXL_MILLISECONDS
+        : this.POLLING_INTERVALL_MILLISECONDS;
+    return pollingIntervall * 1000;
+  }
+
+  /**
+   *
+   * @returns The polling time
+   */
+  public getPollingTime(): number {
+    return this.POLLING_MAXL_MILLISECONDS * 1000;
   }
 }

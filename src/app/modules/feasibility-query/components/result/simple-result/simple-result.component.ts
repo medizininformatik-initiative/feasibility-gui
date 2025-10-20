@@ -48,7 +48,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService
   ) {
     this.queryResultRateLimit$ = this.feasibilityQueryResultService.getDetailedResultRateLimit();
-    this.pollingTime = this.appSettingsProviderService.getPollingTime();
+    this.pollingTime = this.appSettingsProviderService.getPollingtime();
   }
 
   private destroy$ = new Subject<void>();

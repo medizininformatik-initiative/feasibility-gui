@@ -32,7 +32,6 @@ export class AppConfigProviderService {
       Object.entries(appConfig) as [AppConfigKey, AppConfigValue<AppConfigKey>][]
     );
     this.appConfigMap = appConfigMap;
-    console.log('[AppConfigProviderService] AppConfig settings initialized:', appConfigMap);
     this.appConfigMapSubject.next(appConfigMap);
   }
 
