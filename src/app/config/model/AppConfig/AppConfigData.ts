@@ -34,14 +34,6 @@ export interface AppConfigData {
   readonly authClientId: string
 
   /**
-   * Array of roles that users can have in the application.
-   * Used for role-based access control and feature gating.
-   */
-  readonly authRoles: string[]
-
-  // Legal Information
-
-  /**
    * The version string of the application for legal and compliance purposes.
    * Displayed in legal notices and about dialogs.
    */
@@ -64,21 +56,6 @@ export interface AppConfigData {
    * Used for legal compliance and user support contact information.
    */
   readonly email: string
-
-  // Feature Flags
-
-  /**
-   * Whether to show the options and settings page in the application.
-   * Controls the visibility of configuration and preference screens.
-   */
-  readonly featuresShowOptionsPage: boolean
-
-  /**
-   * Array of roles that are allowed to access the options page.
-   * Only users with these roles can view and modify application settings.
-   * Empty array means all authenticated users can access if featuresShowOptionsPage is true.
-   */
-  readonly featuresOptionPageRoles: string[]
 
   /**
    * The name of the default stylesheet to apply on application startup.

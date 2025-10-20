@@ -1,8 +1,7 @@
 import { AppConfigData } from './model/AppConfig/AppConfigData';
 import { AppConfigProviderService } from '../core/settings/AppConfigProvider.service';
 import { AssetsPath } from '../core/assets/AssetsPath';
-import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
-import { FeatureProviderService } from '../service/FeatureProvider.service';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
