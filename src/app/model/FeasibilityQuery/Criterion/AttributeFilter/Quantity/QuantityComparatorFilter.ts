@@ -38,7 +38,7 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
    *
    * @returns The comparator type.
    */
-  getComparator(): QuantityComparisonOption {
+  public getComparator(): QuantityComparisonOption {
     return this.comparator;
   }
 
@@ -47,7 +47,7 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
    *
    * @param comparator - The comparator type to set.
    */
-  setComparator(comparator: QuantityComparisonOption): void {
+  public setComparator(comparator: QuantityComparisonOption): void {
     this.comparator = comparator;
   }
 
@@ -56,7 +56,7 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
    *
    * @returns The comparison value.
    */
-  getValue(): number | null {
+  public getValue(): number | null {
     return this.value;
   }
 
@@ -65,7 +65,7 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
    *
    * @param value - The comparison value to set.
    */
-  setValue(value: number | null): void {
+  public setValue(value: number | null): void {
     this.value = value;
   }
 
@@ -74,7 +74,7 @@ export class QuantityComparatorFilter extends AbstractQuantityFilter {
    *
    * @returns The filter type.
    */
-  getType(): FilterTypes {
+  public getType(): FilterTypes {
     return this.type;
   }
 
