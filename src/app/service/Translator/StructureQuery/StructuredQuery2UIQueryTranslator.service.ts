@@ -1,29 +1,32 @@
 import { AbstractCriterion } from '../../../model/FeasibilityQuery/Criterion/AbstractCriterion';
-import { Injectable } from '@angular/core';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { ConsentService } from '../../Consent/Consent.service';
-import { CreateCriterionService } from '../../Criterion/Builder/Create/CreateCriterionService';
-import { HashService } from '../../Hash.service';
-import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { map, Observable, Subscription } from 'rxjs';
-import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
-import { ReferenceCriterion } from '../../../model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
-import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { CriterionValidationService } from '../../Criterion/CriterionValidation.deprecated.service';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { ConceptData } from 'src/app/model/Interface/ConceptData';
 import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service';
+import { ConsentService } from '../../Consent/Consent.service';
+import { CreateCriterionService } from '../../Criterion/Builder/Create/CreateCriterionService';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
+import { CriterionValidationService } from '../../Criterion/CriterionValidation.deprecated.service';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
+import { HashService } from '../../Hash.service';
+import { Injectable } from '@angular/core';
+import { map, Observable, Subscription } from 'rxjs';
+import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
+import { ReferenceCriterion } from '../../../model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData';
+import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
+import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { ValueFilterData } from 'src/app/model/Interface/ValueFilterData';
 
 @Injectable({
   providedIn: 'root',
@@ -34,20 +37,6 @@ export class StructuredQuery2UIQueryTranslatorService {
     hash: string
     abstractCriterion: AbstractCriterion
   }> = [];
-
-  private emptyDisplayData = {
-    original: 'test',
-    translations: [
-      {
-        language: 'de-DE',
-        value: undefined,
-      },
-      {
-        language: 'en-US',
-        value: undefined,
-      },
-    ],
-  };
 
   constructor(
     private createCriterionService: CreateCriterionService,
@@ -60,11 +49,13 @@ export class StructuredQuery2UIQueryTranslatorService {
     private criterionValidationService: CriterionValidationService
   ) {}
 
-  public translateInExclusion(inexclusion: any[]): Observable<string[][]> {
+  public translateInExclusion(
+    inexclusion: StructuredQueryCriterionData[][]
+  ): Observable<string[][]> {
     const hashes = [];
     this.hashMap = [];
 
-    inexclusion.forEach((criterionArray) => {
+    inexclusion.forEach((criterionArray: StructuredQueryCriterionData[]) => {
       hashes.push(...this.innerCriterion(criterionArray));
     });
 
@@ -76,7 +67,7 @@ export class StructuredQuery2UIQueryTranslatorService {
             idArray[index] = [];
           }
           criterionArray?.forEach((structuredQueryCriterion, innerIndex) => {
-            const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
+            const termCode = TerminologyCode.fromJson(structuredQueryCriterion.termCodes[0]);
 
             if (!this.isConsent(termCode)) {
               this.setStructuredQueryCriterionFilter(structuredQueryCriterion);
@@ -84,14 +75,7 @@ export class StructuredQuery2UIQueryTranslatorService {
               const criterion = this.findCriterionInMapByHash(hash);
               idArray[index][innerIndex] = criterion.getId();
             } else {
-              const flags = this.consentService.getBooleanFlags(termCode.getCode());
-              this.consentService.setProvisionCode(
-                flags.distributedAnalysis,
-                flags.euGdpr,
-                flags.insuranceData,
-                flags.contact
-              );
-              this.consentService.setConsent(true);
+              this.setConsent(termCode);
             }
           });
         });
@@ -109,16 +93,31 @@ export class StructuredQuery2UIQueryTranslatorService {
     );
   }
 
-  public innerCriterion(structuredQueryCriterionInnerArray: any[]): string[] {
-    return structuredQueryCriterionInnerArray.map((structuredQueryCriterion) => {
-      const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
-      if (!this.isConsent(termCode)) {
-        return this.createSQHash(structuredQueryCriterion);
-      }
-    });
+  public setConsent(terminologyCode: TerminologyCode): void {
+    const flags = this.consentService.getBooleanFlags(terminologyCode.getCode());
+    this.consentService.setProvisionCode(
+      flags.distributedAnalysis,
+      flags.euGdpr,
+      flags.insuranceData,
+      flags.contact
+    );
+    this.consentService.setConsent(true);
   }
 
-  public setStructuredQueryCriterionFilter(structuredQueryCriterion) {
+  public innerCriterion(
+    structuredQueryCriterionInnerArray: StructuredQueryCriterionData[]
+  ): string[] {
+    return structuredQueryCriterionInnerArray.map(
+      (structuredQueryCriterion: StructuredQueryCriterionData) => {
+        const termCode = TerminologyCode.fromJson(structuredQueryCriterion.termCodes[0]);
+        if (!this.isConsent(termCode)) {
+          return this.createSQHash(structuredQueryCriterion);
+        }
+      }
+    );
+  }
+
+  public setStructuredQueryCriterionFilter(structuredQueryCriterion: StructuredQueryCriterionData) {
     const structuredQueryCriterionHash = this.createSQHash(structuredQueryCriterion);
     const criterion = this.findCriterionInMapByHash(structuredQueryCriterionHash);
     this.applyTimeRestrictionIfPresent(structuredQueryCriterion, criterion);
@@ -126,7 +125,10 @@ export class StructuredQuery2UIQueryTranslatorService {
     this.processValueFilter(structuredQueryCriterion.valueFilter, criterion);
   }
 
-  private applyTimeRestrictionIfPresent(structuredQueryCriterion, criterion) {
+  private applyTimeRestrictionIfPresent(
+    structuredQueryCriterion: StructuredQueryCriterionData,
+    criterion: Criterion
+  ) {
     if (structuredQueryCriterion.timeRestriction) {
       criterion.setTimeRestriction(
         this.uITimeRestrictionFactoryService.createTimeRestrictionForFeasibilityQuery(
@@ -136,9 +138,9 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
   }
 
-  private processAttributeFilters(attributeFilters, criterion: Criterion) {
+  private processAttributeFilters(attributeFilters: AttributeFilterData[], criterion: Criterion) {
     if (TypeGuard.isArray(attributeFilters)) {
-      attributeFilters?.forEach((structuredQueryAttributeFilter) => {
+      attributeFilters?.forEach((structuredQueryAttributeFilter: AttributeFilterData) => {
         const foundAttributeFilter = this.findMatchingAttributeFilter(
           criterion,
           structuredQueryAttributeFilter
@@ -153,7 +155,10 @@ export class StructuredQuery2UIQueryTranslatorService {
     }
   }
 
-  private findMatchingAttributeFilter(criterion: Criterion, structuredQueryAttributeFilter) {
+  private findMatchingAttributeFilter(
+    criterion: Criterion,
+    structuredQueryAttributeFilter: AttributeFilterData
+  ): AttributeFilter {
     return criterion
       .getAttributeFilters()
       .find(
@@ -165,7 +170,7 @@ export class StructuredQuery2UIQueryTranslatorService {
       );
   }
 
-  private processValueFilter(structuredQueryValueFilter, criterion) {
+  private processValueFilter(structuredQueryValueFilter: ValueFilterData, criterion: Criterion) {
     if (TypeGuard.isValueFilterData(structuredQueryValueFilter)) {
       this.handleFilterByType(criterion.getValueFilters()[0], structuredQueryValueFilter, criterion);
     } else {
@@ -174,11 +179,11 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private handleFilterByType(
-    foundAttributeFilter: AttributeFilter,
-    structuredQueryAttributeFilter,
-    criterion
+    foundAttributeFilter: AttributeFilter | ValueFilter,
+    structuredQueryAttributeFilter: AttributeFilterData | ValueFilterData,
+    criterion: Criterion
   ) {
-    const type = foundAttributeFilter?.getFilterType();
+    const type: FilterTypes = foundAttributeFilter?.getFilterType();
 
     switch (type) {
       case FilterTypes.CONCEPT:
@@ -194,11 +199,10 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private handleConceptFilter(
-    foundAttributeFilter: AttributeFilter,
-    structuredQueryAttributeFilter
+    foundAttributeFilter: AttributeFilter | ValueFilter,
+    structuredQueryAttributeFilter: AttributeFilterData | ValueFilterData
   ) {
     this.subscription?.unsubscribe();
-    const notFoundConcept: string[] = [];
     const notTranslatedHashes = structuredQueryAttributeFilter.selectedConcepts
       .filter(
         (concept) =>
@@ -234,7 +238,10 @@ export class StructuredQuery2UIQueryTranslatorService {
     return selectedConcepts;
   }
 
-  private handleQuantityFilter(foundAttributeFilter, structuredQueryAttributeFilter) {
+  private handleQuantityFilter(
+    foundAttributeFilter: AttributeFilter | ValueFilter,
+    structuredQueryAttributeFilter
+  ) {
     if (structuredQueryAttributeFilter.type === FilterTypes.QUANTITY_RANGE) {
       this.buildQuantityRangeInstance(structuredQueryAttributeFilter, foundAttributeFilter);
     }
@@ -290,14 +297,11 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private buildQuantityRangeInstance(
-    structuredQueryAttributeFilter,
-    feasibilityQueryQuantityRange: AttributeFilter
+    structuredQueryAttributeFilter: AttributeFilterData,
+    feasibilityQueryQuantityRange: AttributeFilter | ValueFilter
   ) {
     const quantityRange = new QuantityRangeFilter(
-      new QuantityUnit(
-        structuredQueryAttributeFilter.unit.code,
-        structuredQueryAttributeFilter.unit.display
-      ),
+      QuantityUnit.fromJson(structuredQueryAttributeFilter.unit),
       feasibilityQueryQuantityRange.getQuantity().getAllowedUnits(),
       structuredQueryAttributeFilter.precision,
       structuredQueryAttributeFilter.minValue,
@@ -309,14 +313,11 @@ export class StructuredQuery2UIQueryTranslatorService {
   }
 
   private buildQuantityComparatorInstance(
-    structuredQueryAttributeFilter,
-    feasibilityQueryAttributeFilter: AttributeFilter
+    structuredQueryAttributeFilter: AttributeFilterData | ValueFilterData,
+    feasibilityQueryAttributeFilter: AttributeFilter | ValueFilter
   ) {
     const quantityComparatorFilter = new QuantityComparatorFilter(
-      new QuantityUnit(
-        structuredQueryAttributeFilter.unit.code,
-        structuredQueryAttributeFilter.unit.display
-      ),
+      QuantityUnit.fromJson(structuredQueryAttributeFilter.unit),
       feasibilityQueryAttributeFilter.getQuantity().getAllowedUnits(),
       structuredQueryAttributeFilter.precision,
       feasibilityQueryAttributeFilter
@@ -337,9 +338,9 @@ export class StructuredQuery2UIQueryTranslatorService {
     this.hashMap.push({ hash: criterion.getCriterionHash(), abstractCriterion: criterion });
   }
 
-  private createSQHash(structuredQueryCriterion) {
-    const context = this.createTermCode(structuredQueryCriterion.context);
-    const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
+  private createSQHash(structuredQueryCriterion: StructuredQueryCriterionData): string {
+    const context = TerminologyCode.fromJson(structuredQueryCriterion.context);
+    const termCode = TerminologyCode.fromJson(structuredQueryCriterion.termCodes[0]);
     return this.hashService.createCriterionHash(context, termCode);
   }
 
@@ -347,15 +348,11 @@ export class StructuredQuery2UIQueryTranslatorService {
     return this.consentService.getBooleanFlags(termCode.getCode()) !== null;
   }
 
-  public createTermCode(termCode: any) {
-    return new TerminologyCode(termCode.code, termCode.display, termCode.system, termCode.version);
-  }
-
-  public getConsent(structuredQuery: any): any {
+  public getConsent(structuredQuery: StructuredQueryData): any {
     let result = {};
-    structuredQuery.inclusionCriteria.forEach((criterionArray) => {
-      criterionArray.forEach((structuredQueryCriterion) => {
-        const termCode = this.createTermCode(structuredQueryCriterion.termCodes[0]);
+    structuredQuery.inclusionCriteria.forEach((criterionArray: StructuredQueryCriterionData[]) => {
+      criterionArray.forEach((structuredQueryCriterion: StructuredQueryCriterionData) => {
+        const termCode = TerminologyCode.fromJson(structuredQueryCriterion.termCodes[0]);
         if (this.isConsent(termCode)) {
           result = structuredQueryCriterion;
         } else {
@@ -364,32 +361,6 @@ export class StructuredQuery2UIQueryTranslatorService {
       });
     });
     return result;
-  }
-
-  /**
-   *
-   * @param data @todo need to outsource this to a service
-   * @returns
-   */
-  public instantiateDisplayData(display: string) {
-    return new Display(
-      this.emptyDisplayData.translations?.map(
-        (translation) => new Translation(translation.language, translation.value)
-      ),
-      display ?? 'test'
-    );
-  }
-
-  public checkValuesForTypeString(value: string | string[]): string[] {
-    if (typeof value == 'string') {
-      if (value.length > 0) {
-        return [value];
-      } else {
-        return [];
-      }
-    } else {
-      return value;
-    }
   }
 
   private findCriterionInMapByHash(hash: string): AbstractCriterion {
