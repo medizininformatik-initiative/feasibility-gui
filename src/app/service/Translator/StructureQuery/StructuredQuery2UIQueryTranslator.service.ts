@@ -27,6 +27,7 @@ import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { ValueFilterData } from 'src/app/model/Interface/ValueFilterData';
+import { FilterValidationService } from '../../Criterion/FilterValidation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +47,7 @@ export class StructuredQuery2UIQueryTranslatorService {
     private consentService: ConsentService,
     private criterionProvider: CriterionProviderService,
     private uITimeRestrictionFactoryService: UITimeRestrictionFactoryService,
-    private criterionValidationService: CriterionValidationService
+    private filterValidationService: FilterValidationService
   ) {}
 
   public translateInExclusion(
@@ -82,9 +83,6 @@ export class StructuredQuery2UIQueryTranslatorService {
 
         this.hashMap.forEach((element) => {
           const criterion: Criterion = element.abstractCriterion;
-          criterion.setIsRequiredFilterSet(
-            this.criterionValidationService.setIsFilterRequired(criterion)
-          );
           this.criterionProvider.setCriterionByUID(criterion, criterion.getId());
         });
         idArray = idArray.filter((id) => id.length > 0);
@@ -187,7 +185,7 @@ export class StructuredQuery2UIQueryTranslatorService {
 
     switch (type) {
       case FilterTypes.CONCEPT:
-        this.handleConceptFilter(foundAttributeFilter, structuredQueryAttributeFilter);
+        this.handleConceptFilter(foundAttributeFilter, structuredQueryAttributeFilter, criterion);
         break;
       case FilterTypes.QUANTITY:
         this.handleQuantityFilter(foundAttributeFilter, structuredQueryAttributeFilter);
@@ -200,7 +198,8 @@ export class StructuredQuery2UIQueryTranslatorService {
 
   private handleConceptFilter(
     foundAttributeFilter: AttributeFilter | ValueFilter,
-    structuredQueryAttributeFilter: AttributeFilterData | ValueFilterData
+    structuredQueryAttributeFilter: AttributeFilterData | ValueFilterData,
+    criterion: Criterion
   ) {
     this.subscription?.unsubscribe();
     const notTranslatedHashes = structuredQueryAttributeFilter.selectedConcepts
@@ -221,10 +220,22 @@ export class StructuredQuery2UIQueryTranslatorService {
           });
           const conceptFilter = this.setConcepts(structuredQueryAttributeFilter.selectedConcepts);
           foundAttributeFilter.getConcept().setSelectedConcepts(conceptFilter);
+          criterion.setIsRequiredFilterSet(
+            this.filterValidationService.isConceptFilterSet(
+              foundAttributeFilter.getConcept(),
+              foundAttributeFilter.getOptional()
+            )
+          );
         });
     } else {
       const conceptFilter = this.setConcepts(structuredQueryAttributeFilter.selectedConcepts);
       foundAttributeFilter.getConcept().setSelectedConcepts(conceptFilter);
+      criterion.setIsRequiredFilterSet(
+        this.filterValidationService.isConceptFilterSet(
+          foundAttributeFilter.getConcept(),
+          foundAttributeFilter.getOptional()
+        )
+      );
     }
   }
 
