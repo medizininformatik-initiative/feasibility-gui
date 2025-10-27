@@ -50,7 +50,6 @@ export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
 
   doSave(): void {
     if (!this.isFeasibilityChecked && !this.isDataSelectionChecked) {
-      console.warn('Save aborted: At least one option must be selected.');
       return;
     }
 

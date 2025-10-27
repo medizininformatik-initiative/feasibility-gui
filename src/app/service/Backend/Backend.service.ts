@@ -8,7 +8,6 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 })
 export class BackendService {
   constructor(private config: AppConfigService, private authStorage: OAuthStorage) {}
-  public static MOCK_RESULT_URL = 'http://localhost:9999/result-of-query/12345';
 
   private getAccessToken() {
     return this.authStorage.getItem('access_token');
@@ -21,18 +20,15 @@ export class BackendService {
   }
 
   public createUrl(pathToResource: string, paramString?: string): string {
-    let url = this.config.getConfig().uiBackendApi.baseUrl;
+    return this.buildUrl(this.config.getConfig().uiBackendApi.baseUrl, pathToResource, paramString);
+  }
 
-    if (!url.endsWith('/')) {
-      url += '/';
-    }
-
-    url += pathToResource;
-
+  private buildUrl(base: string, path: string, paramString?: string): string {
+    let url = base.endsWith('/') ? base : base + '/';
+    url += path;
     if (paramString) {
       url += '?' + paramString;
     }
-
     return url;
   }
 
@@ -43,6 +39,7 @@ export class BackendService {
     }
     return chunks;
   }
+
   public chunkArrayForStrings(array: string[], maxUrlLength: number = 1900): string[][] {
     const chunks = [[]];
     let i = 0;

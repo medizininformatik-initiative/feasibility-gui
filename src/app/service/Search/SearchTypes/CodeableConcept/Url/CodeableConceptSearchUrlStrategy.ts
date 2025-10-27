@@ -12,14 +12,17 @@ export class CodeableConceptSearchUrlStrategy implements SearchUrlStrategy {
     this.valueSetUrls = valueSetUrls;
   }
 
-  public getSearchUrl(): string {
+  public getSearchUrl(
+    page: number,
+    pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
+  ): string {
     const valueSetUrl =
       this.valueSetUrls.length > 0 ? this.valueSetUrls.join(',') : this.valueSetUrls[0];
-    const url = new SearchUrlBuilder(this.path)
+    return new SearchUrlBuilder(this.path)
       .withFiltertUrl(ElasticSearchFilterPaths.VALUESETS, valueSetUrl)
-      .withPageSize()
+      .withPage(page)
+      .withPageSize(pageSize)
       .withSearchTerm(this.searchText)
       .buildUrl();
-    return url;
   }
 }

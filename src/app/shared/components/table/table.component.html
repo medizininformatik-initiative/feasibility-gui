@@ -1,9 +1,9 @@
-<table *ngIf="tableData" class="table-collapse">
+<table *ngIf="tableData">
   <thead class="table-header sticky-header">
     <tr>
       <th *ngFor="let headerItem of tableData.header.headers">
-        <div fxLayout="row" fxLayoutAlign="start center" class="header-column">
-          {{ 'SHAREDCOMPONENTS.' + headerItem | translate }}
+        <div fxLayout="row" fxLayoutAlign="start center">
+          {{ 'SHARED_COMPONENTS.TABLE.' + headerItem | translate }}
         </div>
       </th>
     </tr>
@@ -23,18 +23,29 @@
           <mat-checkbox
             *ngIf="row.hasCheckbox && row.checkboxColumnIndex === j"
             color="primary"
+            matTooltip="{{ 'SHARED_COMPONENTS.TABLE.SELECT_CHECKBOX' | translate }}"
             disableRipple="true"
             [disabled]="!row.isDisabled"
             [checked]="row.isCheckboxSelected"
             (change)="onCheckboxSelect(row)"
             (click)="$event.stopPropagation()"
           ></mat-checkbox>
+          <fa-icon
+            matTooltip="{{ 'SHARED_COMPONENTS.TABLE.ICON' | translate }}"
+            matTooltipClass="prevent-selection"
+            *ngIf="row.treeIcon !== '' && row.treeIconColumnIndex === j"
+            size="1x"
+            icon="{{ row.treeIcon }}"
+            class="cursor-click"
+          ></fa-icon>
           <div
+            matTooltip="{{ cell | displayTranslation }}"
             [ngClass]="{
               'name-column': j === 0,
               'info-column': j > 0,
               highlight: row.isClickable && j === 0
             }"
+            data-cy="{{ cell | displayTranslation }}"
           >
             {{ cell | displayTranslation }}
           </div>

@@ -13,7 +13,9 @@ export class FilterChipDataSelectionAdapter {
     const filterChips: InterfaceFilterChip[] = [];
 
     fields.forEach((field: SelectedBasicField) => {
-      const type = field.getMustHave() ? 'DATASELECTION.REQUIRED' : 'DATASELECTION.OPTIONAL';
+      const type = field.getMustHave()
+        ? 'DATASELECTION.EDITOR.DISPLAY.REQUIRED'
+        : 'DATASELECTION.EDITOR.DISPLAY.OPTIONAL';
       const builder = new FilterChipBuilder(type);
       builder.addData(
         field.getElementId(),

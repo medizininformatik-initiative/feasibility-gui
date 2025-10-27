@@ -1,26 +1,22 @@
-<div fxLayout="row" fxLayoutAlign="start" class="container">
-  <div fxLayout="column" style="width: 100%">
-    <num-section-name>
-      {{ 'DATASELECTION.FIELD_SELECTION.HEADER' | translate }}
+<div class="container">
+  <div class="header-container">
+    <num-section-name style="flex: 0 0 70%">
+      {{ 'EDITOR.CONTENT.PROFILE.FIELDS.HEADER' | translate }}
     </num-section-name>
-    <div class="main-content">
-      <div class="width-70">
-        <div *ngFor="let singleTree of tree">
-          <num-tree
-            [treeData]="singleTree"
-            (selectedCheckbox)="setSelectedFieldElement($event)"
-          ></num-tree>
-        </div>
+    <num-section-name>
+      {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED' | translate }}
+    </num-section-name>
+  </div>
+  <div class="main-content">
+    <div class="field-box">
+      <div *ngFor="let singleTree of tree">
+        <num-tree
+          [treeData]="singleTree"
+          (selectedCheckbox)="setSelectedFieldElement($event)"
+        ></num-tree>
       </div>
     </div>
-  </div>
-  <div class="sidebar" *ngIf="selectedBasicFields">
-    <div fxLayout="column" class="height-100">
-      <div fxLayout="row">
-        <num-section-name>
-          {{ 'DATASELECTION.FIELD_SELECTION.REQUIRED' | translate }}
-        </num-section-name>
-      </div>
+    <div class="sidebar" *ngIf="selectedBasicFields">
       <div class="selected-fields-box">
         <div
           *ngFor="let selectedField of selectedBasicFields; let index = index"
@@ -49,7 +45,6 @@
             fxLayout="row"
             fxFlex="10"
             fxLayoutAlign="end center"
-            class="padding-right-10"
           >
             <fa-icon
               [icon]="'times'"

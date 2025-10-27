@@ -1,5 +1,112 @@
 # Changelog
 
+## v6.3.7 (2025-10-08)
+
+### Features
+* Major overhaul of CSS and component layouts for improved consistency and responsiveness. [#452](https://github.com/medizininformatik-initiative/feasibility-gui/issues/452), [#440](https://github.com/medizininformatik-initiative/feasibility-gui/issues/440)
+
+### Changed
+* Updated the behavior of criteria relations for better logical handling. [#452](https://github.com/medizininformatik-initiative/feasibility-gui/issues/452)
+
+### Fixed
+* Fixed missing token and date filters when loading a CRTDL. [#453](https://github.com/medizininformatik-initiative/feasibility-gui/issues/453)
+* Fixed an issue where unmatched fields in a loaded CRTDL were not properly removed [#454](https://github.com/medizininformatik-initiative/feasibility-gui/issues/454)
+* Corrected sorting behavior of criteria. [#419](https://github.com/medizininformatik-initiative/feasibility-gui/issues/419)
+
+
+## v6.3.6 (2025-09-19)
+
+### Feature
+* Updated UI profile to support multiple value sets and criteria sets for feasibility [#425](https://github.com/medizininformatik-initiative/feasibility-gui/issues/425)
+
+### Changed
+* Redesigned snackbar [#447](https://github.com/medizininformatik-initiative/feasibility-gui/issues/447)
+* Added feedback through the snackbar on profile edit [#448](https://github.com/medizininformatik-initiative/feasibility-gui/issues/448)
+
+### Fixed
+* Prevent field tree from collapsing on every selection [#445](https://github.com/medizininformatik-initiative/feasibility-gui/issues/445)
+* Ensure patient profile always remains part of the data extraction [#449](https://github.com/medizininformatik-initiative/feasibility-gui/issues/449)
+* Allow unsetting/deleting of filters [#442](https://github.com/medizininformatik-initiative/feasibility-gui/issues/442)
+
+
+
+## v6.3.5 (2025-08-24)
+
+### Changed
+* Changed description of Feature Selection [#438](https://github.com/medizininformatik-initiative/feasibility-gui/issues/438)
+* Refactor user profile handling across services and components [#436](https://github.com/medizininformatik-initiative/feasibility-gui/pull/436)
+* Add AuthToken and HttpError interceptors for improved HTTP request handling [#435](https://github.com/medizininformatik-initiative/feasibility-gui/pull/435)
+
+
+
+## v6.3.4 (2025-08-18)
+
+### Feature
+* Infinite scrolling – implemented for CodeableConcept search, Criteria search, and Reference search [#217](https://github.com/medizininformatik-initiative/feasibility-gui/issues/217)
+* Support loading of query by id via url params [#416](https://github.com/medizininformatik-initiative/feasibility-gui/issues/416)
+* Add Link to Proposal Portal [#368](https://github.com/medizininformatik-initiative/feasibility-gui/issues/368)
+* Display tree icon next to each search result [#413](https://github.com/medizininformatik-initiative/feasibility-gui/issues/413)
+
+### Fixed
+* Fix selected Fields window placement [#417](https://github.com/medizininformatik-initiative/feasibility-gui/issues/417)
+
+### Changed
+* Search architecture reworked – streamlined data flow and improved clarity of the search process.
+* Search engine updates – revised engine logic and search operation flow.
+* Keyed vs. simple search distinction – introduced clear separation between searches with a dataset URL (keyed search) and simple result searches.
+* New abstraction layers – improved maintainability and separation of concerns.
+* Refactored class names – applied consistent and meaningful naming conventions.
+* Type safety improvements – added TypeGuard utilities and type assertions for safer runtime checks.
+* Schema validation – introduced interfaces to enforce the search schema structure.
+* Implemented resolver logic to load and validate query information before component initialization.
+* Updated CSS styling for the error-handling snackbar
+
+
+
+## v6.3.3 (2025-07-24)
+
+### Feature
+* Preloaded criteria filter, criteria search results and data selection profiles before page load using Angular route resolver [#415](https://github.com/medizininformatik-initiative/feasibility-gui/issues/415)
+
+### Fixed
+* Added missing language entries [#412](https://github.com/medizininformatik-initiative/feasibility-gui/issues/412)
+
+
+## v6.3.2 (2025-07-21)
+
+### HotFix
+* add missing lang entry
+* fix auth config
+
+
+## v6.3.1 (2025-07-21)
+
+### Feature
+* **About Page** with system version information (UI, Backend, Ontology) [#403](https://github.com/medizininformatik-initiative/feasibility-gui/issues/403)
+
+### Changed
+* Updated **language files** in `src/assets/i18n` [#393](https://github.com/medizininformatik-initiative/feasibility-gui/issues/393), [#399](https://github.com/medizininformatik-initiative/feasibility-gui/issues/399), [#400](https://github.com/medizininformatik-initiative/feasibility-gui/issues/400)
+
+### Fixed
+* Ensured **all CI tests** run successfully [#405](https://github.com/medizininformatik-initiative/feasibility-gui/issues/405)
+* Fix snackbar message when cancel downloading [#398](https://github.com/medizininformatik-initiative/feasibility-gui/issues/398)
+
+
+## v6.3.0 (2025-07-01)
+
+### Feature
+* new e2e testing with Cypress Gherkin 
+
+### Changes
+* Refactor Action-Bar Logic into Separate Components ([#335](https://github.com/medizininformatik-initiative/feasibility-gui/issues/335))
+* Change download behaviour of Cohort selection ([#395](https://github.com/medizininformatik-initiative/feasibility-gui/issues/395))
+* Query without data selection is not saveable anymore ([#396](https://github.com/medizininformatik-initiative/feasibility-gui/issues/396))
+
+### Bug Fixes
+* Fix for mandatory patient feature is added to DSE on query load ([#394](https://github.com/medizininformatik-initiative/feasibility-gui/issues/394))
+* Checkbox for "Only if referenced" is only be visible if feature is referenced ([#397](https://github.com/medizininformatik-initiative/feasibility-gui/issues/397))
+
+
 ## v6.2.0 (2025-05-27)
 
 ### Feature

@@ -1,13 +1,13 @@
 import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
-import { ReferenceCriteriaListEntry } from '../../ListEntries/ReferenceCriteriaListEntry';
+import { ReferenceCriteriaListEntry } from '../../../../model/Search/ListEntries/ReferenceCriteriaListEntry';
 import { TableData } from '../InterfaceTableData';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 export class ReferenceCriteriaListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['Name', 'Terminology'],
+    headers: ['NAME', 'TERMINOLOGY_CODE'],
   };
 
   public static adapt(listEntries: ReferenceCriteriaListEntry[]): TableData {
@@ -15,8 +15,8 @@ export class ReferenceCriteriaListEntryAdapter {
       id: listEntry.getId(),
       data: [
         listEntry.getDisplay(),
-        listEntry.getTerminologyCode().getDisplay(),
-        TerminologySystemDictionary.getNameByUrl(listEntry.getTerminologyCode().getSystem()),
+        listEntry.getTerminology(),
+        TerminologySystemDictionary.getNameByUrl(listEntry.getSystem()),
       ],
       hasCheckbox: true,
       isCheckboxSelected: false,

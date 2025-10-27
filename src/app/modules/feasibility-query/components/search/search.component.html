@@ -1,25 +1,24 @@
-<div fxFlexFill fxLayout="column" fxLayoutAlign="start" class="pr4">
-  <div style="margin-top: 5px">
-    <num-header>{{ 'QUERYBUILDER.SEARCH.HEADER' | translate }}</num-header>
+<div fxFlexFill fxLayout="column" fxLayoutAlign="start">
+  <div>
+    <num-header>{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
     <num-header-description>
-      {{ 'QUERYBUILDER.SEARCH.HEADER_INFO' | translate }}
+      {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start start" class="searchbar-div">
+  <div class="search-container width-100">
     <num-searchbar
-      fxFlex="50"
+      style="flex: 0 1 50%"
       icon="search"
       [searchText]="searchText$ | async"
-      [label]="'QUERYBUILDER.SEARCH.SEARCHBAR'"
-      class="padding-right-1 width-100"
-      (searchTextChange)="startElasticSearch($event)"
+      [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
+      (searchTextChange)="startSearch($event)"
     >
     </num-searchbar>
-    <num-button type="blue" (click)="startElasticSearch(searchtext)">
-      {{ 'QUERYBUILDER.SEARCH.SEARCH_BUTTON' | translate }}
+    <num-button [isDisabled]="!searchText" type="blue" (click)="startSearch()">
+      {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
     </num-button>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start start">
+  <div class="filter-container">
     <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
     <ng-template #content>
       <num-search-filter
@@ -28,23 +27,39 @@
         (selectedFilterChanged)="setElasticSearchFilter($event)"
       ></num-search-filter>
     </ng-template>
-    <num-button type="blue" (click)="resetFilter()">
-      {{ 'QUERYBUILDER.SEARCH.BUTTON.RESET' | translate }}
+    <num-button [isDisabled]="resetFilterEnabled$ | async" type="blue" (click)="resetFilter()">
+      {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
     </num-button>
   </div>
+  <mat-drawer-container *ngIf="searchResultsFound" class="height-100 margin-bottom-3 width-100">
+    <mat-drawer #drawer position="end" mode="side" class="height-100 padding-left-3">
+      <ng-container *ngIf="listItems">
+        <div fxLayout="column" class="width-100 height-100">
+          <!-- Top row -->
+          <button (click)="closeSidenav()" class="cancel-button" style="height: 4%">
+            {{ 'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate }}
+            <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
+          </button>
 
-  <mat-drawer-container *ngIf="searchResultsFound">
-    <mat-drawer #drawer position="end" mode="side">
-      <div fxLayout="column" *ngIf="listItems" class="padding-top-50">
-        <button (click)="closeSidenav()" class="cancel-button" fxLayoutAlign="center end">
-          {{ 'QUERYBUILDER.SEARCH.CLOSE_DETAILS' | translate }}
-          <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
-        </button>
-        <num-list-item-details [listItemDetails$]="selectedDetails$" class="padding-left-2">
-        </num-list-item-details>
-      </div>
+          <num-list-item-details
+            style="height: 96%"
+            [listItemDetails$]="selectedDetails$"
+            (selectedRelative)="getSelectedRelative($event)"
+            class="padding-left-2"
+          >
+          </num-list-item-details>
+        </div>
+      </ng-container>
     </mat-drawer>
-    <mat-drawer-content *ngIf="listItems?.length > 0" class="content-height-100">
+
+    <mat-drawer-content
+      *ngIf="listItems?.length > 0"
+      infiniteScroll
+      [infiniteScrollDistance]="0.5"
+      [infiniteScrollThrottle]="50"
+      [scrollWindow]="false"
+      (scrolled)="loadMoreCriteriaSearchResults()"
+    >
       <num-table
         (selectedRow)="setSelectedRowItem($event)"
         (rowClicked)="setClickedRow($event)"
@@ -55,9 +70,11 @@
   </mat-drawer-container>
   <div *ngIf="!searchResultsFound" class="no-results-box">
     <num-placeholder-box class="no-results-text"
-      >{{ 'QUERYBUILDER.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+      >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
       >"</num-placeholder-box
     >
   </div>
-  <num-search-action-bar></num-search-action-bar>
+  <div>
+    <num-search-action-bar></num-search-action-bar>
+  </div>
 </div>

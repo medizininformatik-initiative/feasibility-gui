@@ -5,24 +5,28 @@ import { AttributeFilterBaseData } from '../../model/Interface/AttributeFilterBa
 import { AttributeFilterData } from '../../model/Interface/AttributeFilterData';
 import { AttributeGroupsData } from '../../model/Interface/AttributeGroupsData';
 import { AttributesData } from '../../model/Interface/AttributesData';
-import { CodeableConceptResult } from '../../model/Interface/CodeableConceptResult';
+import { CodeableConceptResultListData } from 'src/app/model/Interface/Search/CodeableConceptResultList';
+import { CodeableConceptResultListEntryData } from 'src/app/model/Interface/Search/CodeableConceptResultListEntryData';
 import { ComparatorTypeData } from '../../model/Interface/ComparatorTypeData';
 import { ContextData } from '../../model/Interface/ContextData';
+import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
 import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData';
+import { CriteriaRelationsData } from 'src/app/model/Interface/CriteriaRelationsData';
+import { CriteriaRelativeData } from '../../model/Interface/CriteriaRelativesData';
 import { CRTDLData } from '../../model/Interface/CRTDLData';
 import { DataExtractionData } from '../../model/Interface/DataExtractionData';
 import { DisplayData } from '../../model/Interface/DisplayData';
 import { FilterData } from '../../model/Interface/FilterData';
 import { IssueData } from '../../model/Interface/IssueData';
+import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
 import { QuantityUnitData } from '../../model/Interface/Unit';
 import { QueryResultData } from '../../model/Interface/QueryResultData';
 import { QueryResultLineData } from '../../model/Interface/QueryResultLineData';
-import { Relations } from '../../model/Interface/Relations';
-import { Relatives } from '../../model/Interface/Relatives';
+import { ReferenceCriteriaListEntryData } from 'src/app/model/Interface/Search/ReferenceCriteriaListEntryData';
+import { ReferenceCriteriaResultListData } from 'src/app/model/Interface/Search/RefrenceCriteriaResultListData';
+import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
 import { SavedDataQueryData } from '../../model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItemData } from '../../model/Interface/SavedDataQueryListItemData';
-import { SearchResponse } from '../../model/Interface/SearchResponse';
-import { SearchResult } from '../../model/Interface/SearchResult';
 import { StructuredQueryCriterionData } from '../../model/Interface/StructuredQueryCriterionData';
 import { StructuredQueryData } from '../../model/Interface/StructuredQueryData';
 import { TerminologyCodeBaseData } from '../../model/Interface/TerminologyBaseData';
@@ -344,17 +348,17 @@ export class TypeGuard {
    * @param obj
    * @returns boolean
    */
-  public static isRelations(obj: unknown): obj is Relations {
-    const relations = obj as Relations;
+  public static isCriteriaRelations(obj: unknown): obj is CriteriaRelationsData {
+    const relations = obj as CriteriaRelationsData;
     return (
       TypeGuard.isObject(relations) &&
       TypeGuard.isDisplayData(relations.display) &&
       Array.isArray(relations.parents) &&
-      relations.parents.every(TypeGuard.isRelatives) &&
+      relations.parents.every(TypeGuard.isCriteriaRelative) &&
       Array.isArray(relations.children) &&
-      relations.children.every(TypeGuard.isRelatives) &&
+      relations.children.every(TypeGuard.isCriteriaRelative) &&
       Array.isArray(relations.relatedTerms) &&
-      relations.relatedTerms.every(TypeGuard.isRelatives)
+      relations.relatedTerms.every(TypeGuard.isCriteriaRelative)
     );
   }
 
@@ -363,11 +367,11 @@ export class TypeGuard {
    * @param obj
    * @returns boolean
    */
-  public static isRelatives(obj: unknown): obj is Relatives {
-    const relatives = obj as Relatives;
+  public static isCriteriaRelative(obj: unknown): obj is CriteriaRelativeData {
+    const relatives = obj as CriteriaRelativeData;
     return (
       TypeGuard.isObject(relatives) &&
-      TypeGuard.isString(relatives.name) &&
+      TypeGuard.isDisplayData(relatives.display) &&
       TypeGuard.isString(relatives.contextualizedTermcodeHash)
     );
   }
@@ -421,32 +425,23 @@ export class TypeGuard {
   }
 
   /**
-   * Checks if the object is an instance of SearchResponse.
+   * Checks if the object is an instance of ResultList.
    * @param obj
    * @returns boolean
    */
-  public static isSearchResponse(obj: unknown): obj is SearchResponse {
-    const searchResponse = obj as SearchResponse;
-    return (
-      TypeGuard.isObject(searchResponse) &&
-      TypeGuard.isNumber(searchResponse.totalHits) &&
-      Array.isArray(searchResponse.results) &&
-      searchResponse.results.every(TypeGuard.isSearchResult)
-    );
+  public static isListEntryData<C extends ListEntryData>(obj: unknown): obj is ResultListData<C> {
+    const searchResult = obj as ResultListData<C>;
+    return TypeGuard.isObject(searchResult) && Array.isArray(searchResult.results);
   }
 
   /**
-   * Checks if the object is an instance of SearchResult.
+   * Checks if the object is an instance of ResultList.
    * @param obj
    * @returns boolean
    */
-  public static isSearchResult(obj: unknown): obj is SearchResult {
-    const searchResult = obj as SearchResult;
-    return (
-      TypeGuard.isObject(searchResult) &&
-      TypeGuard.isString(searchResult.id) &&
-      TypeGuard.isDisplayData(searchResult.display)
-    );
+  public static isResultListEntryData(obj: unknown): obj is ListEntryData {
+    const searchResult = obj as ListEntryData;
+    return TypeGuard.isObject(searchResult) && TypeGuard.isString(searchResult.id);
   }
 
   public static isOptionalStructuredQueryCriterionData(
@@ -746,12 +741,72 @@ export class TypeGuard {
    * @param obj
    * @returns boolean
    */
-  public static isCodeableConceptResult(obj: unknown): obj is CodeableConceptResult {
-    const codeableConceptResult = obj as CodeableConceptResult;
+  public static isCodeableConceptResult(obj: unknown): obj is CodeableConceptResultListData {
+    const codeableConceptResult = obj as CodeableConceptResultListData;
     return (
       TypeGuard.isObject(codeableConceptResult) &&
-      TypeGuard.isSearchResult(codeableConceptResult) &&
-      TypeGuard.isTerminologyCodeData(codeableConceptResult.termCode)
+      TypeGuard.isListEntryData<CodeableConceptResultListEntryData>(codeableConceptResult)
+    );
+  }
+
+  /**
+   * Checks if the object is an instance of CodeableConceptResultListEntry.
+   * @param obj
+   * @returns boolean
+   */
+  public static isCodeableConceptResultListEntry(
+    obj: unknown
+  ): obj is CodeableConceptResultListEntryData {
+    const codeableConceptResultListEntry = obj as CodeableConceptResultListEntryData;
+    return (
+      TypeGuard.isObject(codeableConceptResultListEntry) &&
+      TypeGuard.isResultListEntryData(codeableConceptResultListEntry) &&
+      TypeGuard.isDisplayData(codeableConceptResultListEntry.display) &&
+      TypeGuard.isTerminologyCodeData(codeableConceptResultListEntry.termCode)
+    );
+  }
+
+  /**
+   * Checks if the object is an instance of ReferenceCriteriaResultList.
+   * @param obj
+   * @returns boolean
+   */
+  public static isReferenceCriteriaResultList(
+    obj: unknown
+  ): obj is ReferenceCriteriaResultListData {
+    const referenceCriteriaResult = obj as ReferenceCriteriaResultListData;
+    return (
+      TypeGuard.isObject(referenceCriteriaResult) &&
+      TypeGuard.isArray(referenceCriteriaResult.results, TypeGuard.isReferenceCriteriaListEntryData)
+    );
+  }
+
+  public static isReferenceCriteriaListEntryData(
+    obj: unknown
+  ): obj is ReferenceCriteriaListEntryData {
+    const referenceCriteriaListEntry = obj as ReferenceCriteriaListEntryData;
+    return (
+      TypeGuard.isObject(referenceCriteriaListEntry) &&
+      TypeGuard.isResultListEntryData(referenceCriteriaListEntry) &&
+      TypeGuard.isString(referenceCriteriaListEntry.id) &&
+      TypeGuard.isDisplayData(referenceCriteriaListEntry.display) &&
+      TypeGuard.isString(referenceCriteriaListEntry.terminology) &&
+      TypeGuard.isString(referenceCriteriaListEntry.system)
+    );
+  }
+
+  public static isCriteriaListListEntryData(obj: unknown): obj is CriteriaListEntryData {
+    const criteriaListEntry = obj as CriteriaListEntryData;
+    return (
+      TypeGuard.isObject(criteriaListEntry) &&
+      TypeGuard.isResultListEntryData(criteriaListEntry) &&
+      TypeGuard.isString(criteriaListEntry.id) &&
+      TypeGuard.isDisplayData(criteriaListEntry.display) &&
+      TypeGuard.isBoolean(criteriaListEntry.selectable) &&
+      TypeGuard.isString(criteriaListEntry.terminology) &&
+      TypeGuard.isString(criteriaListEntry.termcode) &&
+      TypeGuard.isString(criteriaListEntry.kdsModule) &&
+      TypeGuard.isString(criteriaListEntry.context)
     );
   }
 }

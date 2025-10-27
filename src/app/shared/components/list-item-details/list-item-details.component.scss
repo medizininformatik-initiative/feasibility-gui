@@ -1,0 +1,28 @@
+.row-block {
+  width: 100%;
+  min-height: 16%;
+}
+
+.row-header {
+  font-weight: 500;
+  justify-content: flex-start;
+  min-width: 24%;
+  height: 100%;
+}
+
+.row-content {
+  overflow-y: auto;
+}
+
+.border-top {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.orginal-item {
+  font-weight: 500;
+  font-size: 16px;
+}

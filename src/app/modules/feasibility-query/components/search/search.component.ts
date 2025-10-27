@@ -1,20 +1,19 @@
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
+import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter';
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
+import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
+import { map, Observable, of, Subscription } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
-import { SearchFilterService } from 'src/app/service/Search/Filter/SearchFilter.service';
-import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
-import { SearchService } from 'src/app/service/Search/Search.service';
-import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
+import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SearchTermFilter } from 'src/app/model/ElasticSearch/ElasticSearchFilter/SearchTermFilter';
-import { SearchTermListEntry } from 'src/app/shared/models/ListEntries/SearchTermListEntry';
-import { SearchTermListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/SearchTermListEntryAdapter';
-import { SelectedTableItemsService } from 'src/app/service/ElasticSearch/SearchTermListItemService.service';
+import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { map, Observable, Subscription, switchMap, take, tap } from 'rxjs';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -22,12 +21,11 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
+  TemplateRef,
   ViewChild,
   ViewContainerRef,
-  TemplateRef,
 } from '@angular/core';
-import { DataSelectionMainProfileInitializerService } from 'src/app/service/DataSelectionMainProfileInitializerService';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -38,20 +36,24 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   @ViewChild('drawer') sidenav: MatDrawer;
   @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;
-  listItems: Array<SearchTermListEntry> = [];
-  searchtext = '';
+  listItems: Array<CriteriaListEntry> = [];
   adaptedData: TableData;
   private subscription: Subscription;
-  private isInitialized = false;
   isOpen = false;
+
+  private isInitialized = false;
 
   elasticSearchEnabled = false;
 
+  listIetmDetailsSubscription: Subscription;
+
   selectedDetails$: Observable<SearchTermDetails>;
 
-  searchFilters$: Observable<SearchFilter[]>;
+  searchFilters$: Observable<SearchFilter[]> = of([]);
 
   searchText$: Observable<string>;
+
+  searchText = '';
 
   searchResultsFound = false;
 
@@ -59,61 +61,31 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   searchWithFilterSubscription: Subscription;
 
+  resetFilterEnabled$: Observable<boolean> = of(true);
+
+  searchButtonEnabled$: Observable<boolean> = of(true);
+
   constructor(
     public elementRef: ElementRef,
-    private filterService: SearchFilterService,
-    private searchService: SearchService,
     private cdr: ChangeDetectorRef,
     private searchFilterProvider: FilterProvider,
-    private selectedTableItemsService: SelectedTableItemsService<SearchTermListEntry>,
+    private selectedTableItemsService: SelectedTableItemsService<CriteriaListEntry>,
     private searchTermDetailsService: SearchTermDetailsService,
-    private searchResultProviderService: SearchResultProvider,
     private searchTermDetailsProviderService: SearchTermDetailsProviderService,
-    private dataSelectionMainProfileInitializerService: DataSelectionMainProfileInitializerService,
-    private dataSelectionProviderService: DataSelectionProviderService
+    private criteriaSearchService: CriteriaSearchService,
+    private snackbarService: SnackbarService
   ) {
-    this.subscription = this.searchResultProviderService
-      .getCriteriaSearchResults()
-      .subscribe((searchTermResults) => {
-        if (searchTermResults) {
-          this.listItems = searchTermResults.results;
-          this.adaptedData = SearchTermListEntryAdapter.adapt(searchTermResults.results);
-          if (this.adaptedData.body.rows.length > 0) {
-            this.searchResultsFound = true;
-          } else {
-            this.searchResultsFound = false;
-          }
-          this.selectedTableItemsService
-            .getSelectedTableItems()
-            .pipe(
-              map((tableItems) => {
-                this.adaptedData.body.rows.forEach((row) => {
-                  const found = tableItems.find((item) => item.getId() === row.id);
-                  if (found) {
-                    row.isCheckboxSelected = true;
-                  }
-                });
-              })
-            )
-            .subscribe();
-        }
-      });
+    this.subscription = this.criteriaSearchService
+      .getSearchResults()
+      .subscribe((results) => this.handleSearchResults(results?.getResults() || []));
   }
 
   ngOnInit() {
     this.selectedDetails$ = this.searchTermDetailsProviderService.getSearchTermDetails$();
+    this.searchText$ = this.criteriaSearchService.getActiveSearchTerm();
+    this.resetFilterEnabled$ = this.searchFilterProvider.filtersNotSet();
     this.handleSelectedItemsSubscription();
     this.getElasticSearchFilter();
-    this.searchText$ = this.searchService.getActiveCriteriaSearchTerm();
-    this.searchSubscription = this.searchService
-      .getActiveCriteriaSearchTerm()
-      .pipe(
-        switchMap((searchText) => {
-          this.searchtext = searchText;
-          return this.searchService.searchCriteria(searchText || '');
-        })
-      )
-      .subscribe();
   }
 
   ngAfterViewInit() {
@@ -125,12 +97,36 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.subscription?.unsubscribe();
     this.searchSubscription?.unsubscribe();
     this.searchWithFilterSubscription?.unsubscribe();
+    this.listIetmDetailsSubscription?.unsubscribe();
   }
 
-  public rerender() {
-    this.outletRef.clear();
-    this.outletRef.createEmbeddedView(this.contentRef);
+  public getSelectedRelative(criteriaListEntry: CriteriaListEntry) {
+    this.listIetmDetailsSubscription?.unsubscribe();
+    this.listIetmDetailsSubscription = this.searchTermDetailsService
+      .getDetailsForListItem(criteriaListEntry.getId())
+      .subscribe((test) => {
+        this.searchTermDetailsProviderService.setSearchTermDetails(test);
+        this.openSidenav();
+      });
   }
+
+  /** Search Result Handling */
+  private handleSearchResults(results: CriteriaListEntry[]): void {
+    this.listItems = results;
+    this.adaptedData = CriteriaListEntryAdapter.adapt(this.listItems);
+    this.searchResultsFound = this.adaptedData.body.rows.length > 0;
+    this.selectedTableItemsService
+      .getSelectedTableItems()
+      .pipe(
+        map((selected) => {
+          this.adaptedData.body.rows.forEach((row) => {
+            row.isCheckboxSelected = selected.some((item) => item.getId() === row.id);
+          });
+        })
+      )
+      .subscribe();
+  }
+
   /**
    * If the checked table items get added to stage they will be removed from the SelectedTableItemsService
    * Behaviour Subject Array and therefore an empty Array will be returned. Therefore all checkboxes can be
@@ -139,81 +135,78 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   private handleSelectedItemsSubscription(): void {
     this.selectedTableItemsService
       .getSelectedTableItems()
-      .subscribe((selectedItems: SearchTermListEntry[]) => {
-        if (this.shouldUncheckAll(selectedItems)) {
+      .subscribe((selectedItems: CriteriaListEntry[]) => {
+        if (selectedItems.length === 0) {
           this.uncheckAllRows();
         }
       });
   }
 
-  private shouldUncheckAll(selectedItems: SearchTermListEntry[]): boolean {
-    return selectedItems.length === 0;
-  }
-
   private uncheckAllRows(): void {
     this.adaptedData?.body.rows.forEach((item) => {
       if (item.isCheckboxSelected) {
-        this.uncheckRow(item);
+        item.isCheckboxSelected = false;
       }
     });
   }
 
-  private uncheckRow(item: InterfaceTableDataRow): void {
-    item.isCheckboxSelected = false;
-  }
-
-  public startElasticSearch(searchtext: string) {
-    this.searchService.setActiveCriteriaSearchTerm(searchtext);
+  public startSearch(searchText: string = this.searchText): void {
+    this.searchText = searchText;
+    this.searchWithFilterSubscription?.unsubscribe();
+    this.searchSubscription?.unsubscribe();
+    this.criteriaSearchService.search(searchText).subscribe();
   }
 
   public setSelectedRowItem(item: InterfaceTableDataRow) {
+    console.log(item);
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
-    const itemId = item.originalEntry.id;
+    const itemId = item.originalEntry.getId();
     if (selectedIds.includes(itemId)) {
-      this.selectedTableItemsService.removeFromSelection(item.originalEntry as SearchTermListEntry);
+      this.selectedTableItemsService.removeFromSelection(item.originalEntry as CriteriaListEntry);
+      this.snackbarService.displayErrorMessageWithNoCode(
+        'FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE'
+      );
     } else {
-      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry as SearchTermListEntry);
+      this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE');
+      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry as CriteriaListEntry);
     }
   }
 
   public setClickedRow(row: InterfaceTableDataRow) {
-    const originalEntry = row.originalEntry as SearchTermListEntry;
-    this.searchTermDetailsService
-      .getDetailsForListItem(originalEntry.id)
-      .subscribe(() => this.openSidenav());
+    const originalEntry = row.originalEntry as CriteriaListEntry;
+    this.listIetmDetailsSubscription?.unsubscribe();
+    this.listIetmDetailsSubscription = this.searchTermDetailsService
+      .getDetailsForListItem(originalEntry.getId())
+      .subscribe((test) => {
+        this.searchTermDetailsProviderService.setSearchTermDetails(test);
+        this.openSidenav();
+      });
   }
 
   public getElasticSearchFilter(): void {
-    this.searchFilters$ = this.filterService.fetchFilters().pipe(
-      map((searchFilters: SearchTermFilter[]) =>
-        searchFilters.map((searchFilter) => {
-          searchFilter.setSelectedValues(
-            this.searchFilterProvider.getSelectedValuesOfType(searchFilter.getName())
-          );
-          return CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter);
-        })
-      )
-    );
+    this.searchFilters$ = this.searchFilterProvider
+      .getCriteriaSearchFilters()
+      .pipe(
+        map((searchFilters: CriteriaSearchFilter[]) =>
+          searchFilters.map((searchFilter: CriteriaSearchFilter) =>
+            CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
+          )
+        )
+      );
   }
 
-  public setElasticSearchFilter(filter: any) {
+  public setElasticSearchFilter(newFilter: SearchFilter) {
     this.searchWithFilterSubscription?.unsubscribe();
-    const newFilter = new SearchTermFilter(filter.type, []);
-    newFilter.setSelectedValues(filter.values);
-    this.searchFilterProvider.setFilter(newFilter);
-    this.searchService.searchCriteria(this.searchtext).subscribe();
+    this.searchFilterProvider.updateFilterSelectedValues(
+      newFilter.filterType,
+      newFilter.selectedValues
+    );
+    this.startSearch(this.searchText);
   }
 
   public resetFilter(): void {
-    this.searchText$.pipe(take(1)).subscribe((searchText: string) => {
-      this.searchFilterProvider.resetSelectedValuesOfType();
-      this.searchService.searchCriteria(searchText).subscribe({
-        next: () => {
-          this.rerender();
-        },
-        error: (err) => console.error('Search failed', err),
-      });
-    });
+    this.searchFilterProvider.resetSelectedValues();
+    this.startSearch(this.searchText);
   }
 
   openSidenav() {
@@ -228,5 +221,14 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
       this.isOpen = false;
       this.sidenav.close();
     }
+  }
+
+  public loadMoreCriteriaSearchResults() {
+    this.searchWithFilterSubscription?.unsubscribe();
+    this.searchWithFilterSubscription = this.criteriaSearchService
+      .loadNextPage(this.searchText)
+      .subscribe((result: CriteriaResultList) => {
+        this.handleSearchResults(result.getResults());
+      });
   }
 }

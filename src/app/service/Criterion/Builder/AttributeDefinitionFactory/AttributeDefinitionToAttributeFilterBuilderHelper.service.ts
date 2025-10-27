@@ -1,7 +1,7 @@
 import { AbstractAttributeDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/AbstractAttributeDefinition';
 import { AttributeFiltersBuilder } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFiltersBuilder';
+import { CloneDisplayData } from 'src/app/model/Utilities/DisplayData/CloneDisplayData';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { DisplayDataFactoryService } from 'src/app/service/Factory/DisplayDataFactory.service';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
 import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root',
 })
 export class AttributeDefinitionToAttributeFilterBuilderHelperService {
-  constructor(private displayDataFactoryService: DisplayDataFactoryService) {}
+  constructor() {}
   /**
    * Initializes the AttributeFiltersBuilder with common properties from the value definition.
    *
@@ -22,7 +22,7 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
     abstractAttributeDefinition: AbstractAttributeDefinition
   ): AttributeFiltersBuilder {
     const builder = new AttributeFiltersBuilder(
-      this.displayDataFactoryService.createDisplayData(abstractAttributeDefinition.getDisplay()),
+      CloneDisplayData.deepCopyDisplayData(abstractAttributeDefinition.getDisplay()),
       abstractAttributeDefinition.getOptional(),
       abstractAttributeDefinition.getType()
     );
@@ -56,7 +56,7 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
     builder: AttributeFiltersBuilder
   ): void {
     builder.withConcept(
-      new ConceptFilter(uuidv4(), [abstractAttributeDefinition.getReferencedValueSet()], [])
+      new ConceptFilter(uuidv4(), abstractAttributeDefinition.getReferencedValueSet(), [])
     );
   }
 

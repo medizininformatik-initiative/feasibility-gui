@@ -1,4 +1,4 @@
-import { FeasibilityQueryResultDetailstListEntry } from '../../ListEntries/FeasibilityQueryResultDetailstListEntry';
+import { FeasibilityQueryResultDetailstListEntry } from '../../../../model/Search/ListEntries/FeasibilityQueryResultDetailstListEntry';
 import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class FeasibilityQueryResultDetailsListAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['site', 'patient_number'],
+    headers: ['SITE', 'PATIENT_COUNT'],
   };
 
   public static adapt(listEntries: FeasibilityQueryResultDetailstListEntry[]): TableData {

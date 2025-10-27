@@ -7,6 +7,10 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorCodes, SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
+/**
+ * @todo Needs to be refactored
+ * User directive possibly not needed
+ */
 @Component({
   selector: 'num-dashboard',
   templateUrl: './dashboard.component.html',
@@ -33,7 +37,7 @@ export class DashboardComponent implements OnInit {
     this.roles = this.featureService.getRoles('main');
     this.init();
     this.displayInfoMessage = this.featureService.showInfoPage();
-    this.proposalPortalLink = this.featureService.getproposalPortalLink();
+    this.proposalPortalLink = this.featureService.getProposalPortalLink();
 
     if (this.featureService.showUpdateInfo()) {
       this.snackbar.displayInfoMessage('UPDATE_NOTE');

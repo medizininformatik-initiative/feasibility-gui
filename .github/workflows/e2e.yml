@@ -1,0 +1,97 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+
+  cypress-run:
+    runs-on: ubuntu-24.04
+    env:
+      ONTOLOGY_GIT_TAG: v3.9.0-experimental.0 # Or dynamically set it
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare ontology files
+        run: |
+          chmod +x .github/scripts/setup-ontology.sh
+          .github/scripts/setup-ontology.sh
+
+      - name: Start Docker Compose
+        run: docker compose -f cypress/docker/docker-compose.yml up -d
+
+      - name: Check backend health with curl (wait until ready)
+        run: |
+          max_attempts=20
+          attempt=0
+          until curl --fail http://localhost:8090/api/v5/actuator/health; do
+            attempt=$((attempt+1))
+            if [ $attempt -ge $max_attempts ]; then
+              echo "Backend did not become healthy after $max_attempts attempts"
+              exit 1
+            fi
+            echo "Waiting for backend to be healthy... attempt $attempt"
+            sleep 5
+          done
+          echo "Backend is healthy!"
+
+      - name: Make script executable
+        run: chmod +x .github/scripts/check-if-running-as-user-10001.sh
+
+      - name: Make script executable
+        run: chmod +x .github/scripts/create-keycloak-user.sh
+
+      - name: Check if Dataportal Backend is correctly running with the user with id 10001
+        run: .github/scripts/check-if-running-as-user-10001.sh
+
+      - name: Make script executable
+        run: chmod +x .github/scripts/wait-for-url.sh
+
+      - name: Check docker containers
+        run: docker ps -a
+        
+      - name: Wait for Keycloak
+        run: .github/scripts/wait-for-url.sh  http://localhost:9003/health
+
+
+      - name: Wait for localhost:8080
+        run: .github/scripts/wait-for-url.sh  http://localhost:8080/realms/master/.well-known/openid-configuration
+
+      - name: Create Test User in Keycloak
+        run: .github/scripts/create-keycloak-user.sh
+      
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: npm run build
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          if-no-files-found: error
+          path: dist/num-portal-webapp
+
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        env:
+          DEBUG: '@cypress/github-action'
+        with:
+          start: npm start
+          wait-on: 'http://127.0.0.1:8080, http://localhost:4200'
+          browser: chrome
+
+      - name: Upload Cypress screenshots
+        if: failure() # only upload on test failure (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SearchTermDetails } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchDetails/SearchTermDetails';
+import { Injectable } from '@angular/core';
+import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
 
 @Injectable({
   providedIn: 'root',

@@ -1,14 +1,21 @@
+/* Navigation list */
 mat-nav-list {
-  margin: 0 1em 0 0;
-  padding: 1em 0 0 0;
+  margin: 0 16px 0 0; // snapped 1em → 16px
+  padding: 16px 0 0 0; // snapped 1em → 16px
 }
 
+/* Buttons inside nav list */
 mat-nav-list button {
-  padding: 0 0 0 16px;
+  padding-left: 16px; // consistent 8-point padding
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  background: transparent !important; // optional for style consistency
 }
 
+/* Icons */
 fa-icon {
-  margin-right: 1.3em;
+  margin-right: 16px; // snapped 1.3em → 16px (closest multiple of 8)
   color: rgba(106, 116, 131, 1);
 }
 
@@ -16,11 +23,13 @@ fa-icon svg {
   vertical-align: middle;
 }
 
+/* Logo row */
 .num-logo-row {
-  height: 3em;
+  height: 48px; // 3em → 48px (6 × 8)
 }
 
 .num-logo-row button {
   width: auto;
   background: transparent !important;
+  padding: 0; // remove default padding for clean alignment
 }

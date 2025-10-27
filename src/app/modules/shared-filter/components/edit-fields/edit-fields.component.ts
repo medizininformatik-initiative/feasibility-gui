@@ -1,20 +1,11 @@
 import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter';
-import { map, Subscription } from 'rxjs';
+import { map, Subscription, take } from 'rxjs';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
+import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedFieldCloner';
 import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/SelectedProfileFields.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
-import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedFieldCloner';
 
 @Component({
   selector: 'num-edit-fields',
@@ -22,7 +13,7 @@ import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCl
   styleUrls: ['./edit-fields.component.scss'],
   providers: [SelectedProfileFieldsService],
 })
-export class EditFieldsComponent implements OnInit, OnChanges, OnDestroy {
+export class EditFieldsComponent implements OnInit, OnDestroy {
   @Input()
   fieldTree: BasicField[];
 
@@ -38,9 +29,7 @@ export class EditFieldsComponent implements OnInit, OnChanges, OnDestroy {
   deepCopyFieldsSubscription: Subscription;
   constructor(private selectedDataSelectionProfileFieldsService: SelectedProfileFieldsService) {}
 
-  ngOnInit() {}
-
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnInit() {
     this.traversAndUpddateTree();
     this.buildTreeFromProfileFields();
   }
@@ -55,7 +44,8 @@ export class EditFieldsComponent implements OnInit, OnChanges, OnDestroy {
     this.deepCopyFieldsSubscription = this.selectedDataSelectionProfileFieldsService
       .getDeepCopyBasicFields()
       .pipe(
-        map((profileFields) => {
+        take(1),
+        map((profileFields: BasicField[]) => {
           this.setSelectedChildrenFields();
           this.tree = FieldsTreeAdapter.fromTree(profileFields);
         })
@@ -80,8 +70,10 @@ export class EditFieldsComponent implements OnInit, OnChanges, OnDestroy {
     const node: BasicField = element.originalEntry as BasicField;
     const index = this.getIndexInSelectedFields(node.getElementId());
     if (index !== -1) {
+      node.setIsSelected(false);
       this.spliceAndEmit(index);
     } else {
+      node.setIsSelected(true);
       this.addNodeToSelectedFields(node);
     }
     this.traversAndUpddateTree();
@@ -102,6 +94,12 @@ export class EditFieldsComponent implements OnInit, OnChanges, OnDestroy {
     const index = this.getIndexInSelectedFields(node.getElementId());
     if (index !== -1) {
       this.spliceAndEmit(index);
+      this.fieldTree = this.selectedDataSelectionProfileFieldsService.updateNodeInDeepCopy(
+        this.fieldTree,
+        node.getSelectedField(),
+        false
+      );
+      this.tree = FieldsTreeAdapter.fromTree(this.fieldTree);
     }
   }
 
@@ -123,6 +121,5 @@ export class EditFieldsComponent implements OnInit, OnChanges, OnDestroy {
     );
     this.updatedSelectedBasicFields.emit(clonedSelectedFields);
     this.traversAndUpddateTree();
-    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.fieldTree);
   }
 }

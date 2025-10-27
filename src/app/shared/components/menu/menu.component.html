@@ -1,9 +1,10 @@
-<num-button type="blue" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
-  {{ 'SHAREDCOMPONENTS.MENU.EDIT' | translate }}
+<num-button data-cy="openMenu" type="blue" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+  {{ 'SHARED_COMPONENTS.MENU.EDIT' | translate }}
 </num-button>
+
 <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
-  <div class="divider options">{{ 'SHAREDCOMPONENTS.MENU.OPTIONS' | translate }}</div>
-  <div *ngFor="let item of menuItems; let isLast = last">
+  <div class="divider options">{{ 'SHARED_COMPONENTS.MENU.OPTIONS' | translate }}</div>
+  <div *ngFor="let item of menuItems; let isLast = last" data-cy="{{ item.label | translate }}">
     <button
       [ngClass]="{ divider: !isLast, 'last-item': isLast }"
       mat-menu-item
@@ -11,7 +12,7 @@
       (click)="item.action(id)"
     >
       <fa-icon [icon]="item.icon" size="sm" class="icon-color"></fa-icon>
-      {{ 'SHAREDCOMPONENTS.MENU.' + item.label | translate }}
+      {{ 'SHARED_COMPONENTS.MENU.' + item.label | translate }}
     </button>
   </div>
 </mat-menu>

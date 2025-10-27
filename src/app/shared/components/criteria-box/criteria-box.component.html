@@ -3,9 +3,10 @@
   [cdkDragData]="criterion.getId()"
   fxLayout="row"
   fxLayoutAlign="start start"
-  class="container"
+  [attr.data-cy]="criterion.getDisplay() | displayTranslation"
+  class="container margin-bottom-2 margin-right-2"
 >
-  <div class="content">
+  <div class="content" cdkDragHandle>
     <div
       matTooltipPosition="below"
       [matTooltip]="criterion.getDisplay() | displayTranslation"
@@ -28,7 +29,7 @@
       >
         <img src="assets/img/alert-blue-white.png" class="img-layout" />
         <span class="warning-message">
-          {{ 'SHAREDCOMPONENTS.CRITERIA_BOX.REQUIRED_FILTER' | translate }}
+          {{ 'FEASIBILITY.EDITOR.REQUIRED_FILTER' | translate }}
         </span>
       </div>
 
@@ -42,7 +43,7 @@
     </div>
   </div>
 </div>
-<div style="padding-left: 50px" *ngFor="let attributeFilter of criterion.getAttributeFilters()">
+<div *ngFor="let attributeFilter of criterion.getAttributeFilters()" class="padding-left-7">
   <div *ngIf="attributeFilter?.isReferenceSet()">
     <div *ngFor="let reference of attributeFilter.getReference().getSelectedReferences()">
       <num-reference-criteria-box

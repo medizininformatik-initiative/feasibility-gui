@@ -1,14 +1,17 @@
 <num-action-bar class="bottom">
   <ng-container *ngIf="listItemArray$ | async as listItemArray">
-    <div *ngIf="listItemArray.length > 0" class="display-selected">
-      {{
-        listItemArray.length === 1
-          ? ('SHAREDCOMPONENTS.ACTIONBAR.SELECTED_CRITERIA.SINGULAR'
-            | translate : { amount: listItemArray.length })
-          : ('SHAREDCOMPONENTS.ACTIONBAR.SELECTED_CRITERIA.PLURAL'
-            | translate : { amount: listItemArray.length })
-      }}
-    </div>
+    <num-button
+      icon="arrow-down"
+      type="green"
+      [isDisabled]="
+        (stageArray$ | async)?.length === 0 && (isFeasibilityExistent$ | async) === false
+      "
+      (click)="navigateToEditor()"
+      [matBadge]="(stageArray$ | async)?.length"
+      matBadgePosition="above after"
+    >
+      {{ 'FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE' | translate }}
+    </num-button>
     <num-button
       type="green"
       (click)="addItemsToStage()"
@@ -17,18 +20,16 @@
       matBadgePosition="above after"
       class="margin-right-20"
     >
-      {{ 'QUERYBUILDER.STAGE.BUTTON.ADD_TO_STAGE' | translate }}
+      {{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
     </num-button>
+    <div *ngIf="listItemArray.length > 0" class="display-selected">
+      {{
+        listItemArray.length === 1
+          ? ('SHARED_COMPONENTS.ACTIONBAR.SELECTED_CRITERIA.SINGULAR'
+            | translate : { amount: listItemArray.length })
+          : ('SHARED_COMPONENTS.ACTIONBAR.SELECTED_CRITERIA.PLURAL'
+            | translate : { amount: listItemArray.length })
+      }}
+    </div>
   </ng-container>
-  <num-button
-    icon="arrow-down"
-    type="green"
-    [isDisabled]="(stageArray$ | async)?.length === 0 && (isFeasibilityExistent$ | async) === false"
-    class="margin-right-10"
-    (click)="navigateToEditor()"
-    [matBadge]="(stageArray$ | async)?.length"
-    matBadgePosition="above after"
-  >
-    {{ 'QUERYBUILDER.STAGE.BUTTON.VIEW_STAGE' | translate }}
-  </num-button>
 </num-action-bar>

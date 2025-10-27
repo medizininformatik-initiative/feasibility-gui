@@ -1,19 +1,19 @@
-import { APP_INITIALIZER } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { AppComponent } from './app.component';
-import { AppConfigService } from './config/app-config.service';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthTokenInterceptor } from './core/interceptors/AuthToken.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { CoreInitService } from './CoreInit.service';
 import { CoreModule } from './core/core.module';
 import { DataProtectionComponent } from './site/data-protection/data-protection.component';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpErrorInterceptor } from './core/interceptors/HttpError.interceptor';
 import { LayoutModule } from './layout/layout.module';
 import { NgModule } from '@angular/core';
-import { OAuthInitService } from './core/auth/oauth-init.service';
-import { OAuthInterceptor } from './core/interceptors/oauth.interceptor';
+import { SharedModule } from './shared/shared.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CoreInitService } from './CoreInit.service';
 
 export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   new TranslateHttpLoader(http);
@@ -27,6 +27,7 @@ export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     LayoutModule,
     AppRoutingModule,
     HttpClientModule,
+    SharedModule,
     TranslateModule.forRoot({
       defaultLanguage: 'de',
       loader: {
@@ -45,7 +46,12 @@ export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: OAuthInterceptor,
+      useClass: AuthTokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
       multi: true,
     },
   ],

@@ -1,5 +1,8 @@
-<div *ngIf="(arrayOfSelectedConcepts$ | async).length > 0" class="height-100">
-  <div class="filter-title">{{ 'SHAREDFILTER.FILTER_SELECTION' | translate }}</div>
+<div *ngIf="(arrayOfSelectedConcepts$ | async).length > 0" class="container">
+  <div class="filter-title">
+    {{ 'FEASIBILITY.EDITOR.FILTER_SELECTION' | translate }}
+    {{ (arrayOfSelectedConcepts$ | async).length }}
+  </div>
   <div class="selected-filter-box">
     <div
       *ngFor="let selectedConceptFilter of arrayOfSelectedConcepts$ | async"
@@ -20,7 +23,7 @@
       </div>
       <div fxFlexAlign="end">
         <button (click)="removeSelectedConcept(selectedConceptFilter)" class="delete-button">
-          {{ 'SHAREDFILTER.BUTTON.REMOVE' | translate }}
+          {{ 'FEASIBILITY.EDITOR.MODAL.REMOVE' | translate }}
         </button>
       </div>
     </div>

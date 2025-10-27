@@ -1,82 +1,47 @@
-<div class="stepper-container">
-  <mat-stepper
-    (selectionChange)="navigateToDataQueryCohortDefinition()"
-    labelPosition="bottom"
-    style="width: 90%"
-    [selectedIndex]="1"
-  >
-    <mat-step role="tab">
-      <ng-template matStepLabel>
-        <num-header>
-          {{ 'DATAQUERY.COHORT.HEADER' | translate }}
-        </num-header>
-      </ng-template>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>
-        <num-header>
-          {{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}
-        </num-header>
-      </ng-template>
-    </mat-step>
-  </mat-stepper>
-</div>
-<div class="container pr4">
-  <div style="margin-top: 5px">
+<div class="container">
+  <div class="stepper-container">
+    <mat-stepper
+      class="width-100"
+      (selectionChange)="navigateToDataQueryCohortDefinition()"
+      labelPosition="bottom"
+      [selectedIndex]="1"
+    >
+      <mat-step role="tab">
+        <ng-template matStepLabel>
+          <num-header>
+            {{ 'DATAQUERY.COHORT.HEADER' | translate }}
+          </num-header>
+        </ng-template>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>
+          <num-header>
+            {{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}
+          </num-header>
+        </ng-template>
+      </mat-step>
+    </mat-stepper>
+  </div>
+  <div>
     <num-header-description>
-      {{ 'DATASELECTION.HEADER_INFO' | translate }}
+      {{ 'DATASELECTION.EDITOR.HEADER_INFO1' | translate }}
+      <a href="{{ 'mailto: ' + emailLink }}" target="_blank">{{ emailLink }}</a>
+      {{ 'DATASELECTION.EDITOR.HEADER_INFO2' | translate }}
+      <a
+        href="https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/"
+        target="_blank"
+        >https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/</a
+      >
+      {{ 'DATASELECTION.EDITOR.HEADER_INFO3' | translate }}
     </num-header-description>
   </div>
   <div *ngIf="(isDataSelectionExistent$ | async) === false" class="empty-data-selection-box">
     <num-placeholder-box>
-      {{ 'DATAQUERY.DATASELECTION.EMPTY' | translate }}
+      {{ 'DATAQUERY.DATASELECTION.EDITOR.EMPTY' | translate }}
     </num-placeholder-box>
   </div>
-  <num-display-profiles [isEditable]="false"></num-display-profiles>
-  <num-action-bar class="bottom">
-    <num-button class="margin-right-10" (click)="createNewDataSelection()" type="green">
-      {{ 'DATAQUERY.DATASELECTION.BUTTON.NEW_DATASELECTION' | translate }}
-    </num-button>
-    <num-button
-      type="green"
-      (click)="editDataSelection()"
-      class="margin-right-10"
-      [isDisabled]="(isDataSelectionExistent$ | async) === false"
-    >
-      {{ 'DATAQUERY.DATASELECTION.BUTTON.EDIT' | translate }}
-    </num-button>
-    <num-button class="margin-right-10" (click)="saveDataQuery()" type="green">
-      {{ 'DATASELECTION.BUTTON.SAVE_DATAQUERY' | translate }}
-    </num-button>
-    <div>
-      <input
-        type="file"
-        class="file-input"
-        (change)="onFileSelected($event)"
-        #fileUpload
-        style="display: none"
-      />
-      <num-button type="green" class="margin-right-10" (click)="fileUpload.click()">
-        {{ 'DATAQUERY.DATASELECTION.BUTTON.UPLOAD' | translate }}
-      </num-button>
-    </div>
-    <num-button
-      class="margin-right-10"
-      [isDisabled]="
-        (isDataSelectionExistent$ | async) === false || (isCohortExistent$ | async) === false
-      "
-      type="green"
-      (click)="downloadCRDTL()"
-    >
-      {{ 'DATAQUERY.DATASELECTION.BUTTON.DOWNLOAD' | translate }}
-    </num-button>
-    <num-button
-      [icon]="'arrow-up'"
-      class="margin-right-10"
-      (click)="navigateToDataQueryCohortDefinition()"
-      type="green"
-    >
-      {{ 'DATAQUERY.DATASELECTION.BUTTON.JUMP_TO_COHORT_SELECTION' | translate }}
-    </num-button>
-  </num-action-bar>
+  <div style="flex: 1">
+    <num-display-profiles [isEditable]="false"></num-display-profiles>
+  </div>
+  <num-data-selection-action-bar></num-data-selection-action-bar>
 </div>

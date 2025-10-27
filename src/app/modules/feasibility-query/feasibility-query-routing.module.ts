@@ -10,6 +10,7 @@ const routes: Routes = [
     path: '',
     redirectTo: PathSegments.search,
     pathMatch: 'full',
+
     data: {
       animation: 'Feasibility_Search',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',

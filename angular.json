@@ -68,13 +68,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+               "maximumWarning": "10mb",
+                "maximumError": "15mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumError": "20kb"
                 }
               ]
             },
@@ -88,13 +88,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "6mb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "16mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumError": "20kb"
                 }
               ]
             }
@@ -114,6 +114,9 @@
             },
             "development": {
               "browserTarget": "studio:build:development"
+            },
+            "mock": {
+              "browserTarget": "num-portal-webapp:build:mock"
             }
           }
         },

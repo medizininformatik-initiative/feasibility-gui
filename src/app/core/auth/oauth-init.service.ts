@@ -61,6 +61,7 @@ export class OAuthInitService {
     const CLIENT_ID = config.auth.clientId;
 
     const authConfig: AuthConfig = {
+      preserveRequestedRoute: true,
       issuer: `${BASE_URL}/realms/${REALM}`,
       clientId: CLIENT_ID,
       responseType: 'code',

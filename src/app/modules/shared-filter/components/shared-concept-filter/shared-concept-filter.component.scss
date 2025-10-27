@@ -1,14 +1,17 @@
-:host {
-  display: block;
-  height: 100%;
-}
 .container {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
-num-concept-filter-table {
-  /*height: 100%;*/
+
+.table-item {
+  flex: 2 0 60%;
 }
-num-staged-concepts {
-  margin-top: 12px;
-  height: 40%;
+
+.staged-concepts-item {
+  flex: 1 1 40%;
+}
+
+.overflow {
+  overflow: auto;
 }

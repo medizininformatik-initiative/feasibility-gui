@@ -1,7 +1,7 @@
 <mat-form-field appearance="outline" class="operator-part">
   <mat-select [(ngModel)]="type" (selectionChange)="onTimeRestrictionOptionChange($event.value)">
     <mat-option *ngFor="let option of timeRestrictionOptions" [value]="option">
-      {{ 'QUERYBUILDER.EDIT.TIMERESTRICTION.' + option | translate }}
+      {{ 'SHARED_FILTER.TIMERESTRICTION.' + option | translate }}
     </mat-option>
   </mat-select>
 </mat-form-field>

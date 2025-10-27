@@ -58,17 +58,6 @@ export class ConceptFilter extends AbstractConceptFilter {
   }
 
   /**
-   * Static method to create a ConceptFilter.
-   *
-   * @param allowedConceptUri - The allowed concept URI.
-   * @param selectedConcepts - The selected concepts.
-   * @returns The created ConceptFilter instance.
-   */
-  static create(id: string, allowedConceptUri: string, selectedConcepts: Concept[]): ConceptFilter {
-    return new ConceptFilter(id, [allowedConceptUri], selectedConcepts);
-  }
-
-  /**
    * Checks whether the selected concepts set exists.
    *
    * @returns True if the selected concepts set exists, otherwise false.

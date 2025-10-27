@@ -1,7 +1,8 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConsentService } from '../../../../service/Consent/Consent.service';
 import { DataQueryStorageService } from 'src/app/service/DataQuery/DataQueryStorage.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
+import { map, tap } from 'rxjs/operators';
 import { first, Observable, Subscription } from 'rxjs';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
@@ -9,8 +10,6 @@ import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { v4 as uuidv4 } from 'uuid';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'num-feasibility',
@@ -22,7 +21,6 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   loadSubscription: Subscription;
   constructor(
     private dataQueryStorageService: DataQueryStorageService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
     private navigationHelperService: NavigationHelperService,
     private resultProviderService: ResultProviderService,
     private consentService: ConsentService

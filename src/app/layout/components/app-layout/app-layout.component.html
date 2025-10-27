@@ -64,14 +64,7 @@
       role="presentation"
       fxFlexFill
     >
-      <main
-        fxFlexFill
-        fxLayout="column"
-        fxLayoutAlign="start start"
-        fxFlex="95%"
-        fxFlex.gt-md="90%"
-        fxFlex.gt-lg="100%"
-      >
+      <main fxFlexFill fxLayout="column" fxLayoutAlign="start start" fxFlex="90%">
         <div [@routeAnimations]="prepareRoute(outlet)" class="fullscreen">
           <router-outlet #outlet="outlet"></router-outlet>
         </div>

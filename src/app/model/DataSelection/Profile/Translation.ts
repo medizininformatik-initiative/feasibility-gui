@@ -34,4 +34,8 @@ export class Translation {
   public setValues(values: string[]): void {
     this.values = values;
   }
+
+  public static fromJson(json: TranslationData): Translation {
+    return new Translation(json.language, json.value, []);
+  }
 }

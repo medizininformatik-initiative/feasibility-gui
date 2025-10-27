@@ -1,0 +1,40 @@
+<ng-container *ngIf="listItemDetails$ | async as listItemDetails">
+  <div class="height-100 width-100" fxLayout="column" fxLayoutAlign="start start">
+    <div class="padding-bottom-4 width-100 orginal-item">
+      <span>
+        {{ listItemDetails.display | displayTranslation }}
+      </span>
+    </div>
+    <!-- Parents -->
+    <div fxLayout="row" fxLayoutAlign="start center" class="row-block divider width-100">
+      <div class="row-header margin-right-2">
+        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
+      </div>
+      <div class="row-content margin-bottom-3 height-100 width-100">
+        <num-list-item-details-sections
+          [listItemDetails]="listItemDetails.parents"
+          (selectedRelative)="getSelectedRelative($event)"
+        >
+        </num-list-item-details-sections>
+      </div>
+    </div>
+
+    <!-- Children -->
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="row-block width-100 divider padding-top-3"
+    >
+      <div class="row-header margin-right-2">
+        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
+      </div>
+      <div class="row-content margin-bottom-3 height-100 width-100">
+        <num-list-item-details-sections
+          [listItemDetails]="listItemDetails.children"
+          (selectedRelative)="getSelectedRelative($event)"
+        >
+        </num-list-item-details-sections>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,14 +1,22 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad, Route, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 import { FeatureService } from '../../../service/Feature.service';
+import { Injectable } from '@angular/core';
+import { UserProfileService } from 'src/app/service/User/UserProfile.service';
+import {
+  CanActivate,
+  CanLoad,
+  Route,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleGuard implements CanActivate, CanLoad {
-  constructor(private oauthService: OAuthService, public featureService: FeatureService) {}
+  constructor(
+    public featureService: FeatureService,
+    private userProfileService: UserProfileService
+  ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const redirectUri = window.location.origin + state.url;
@@ -19,10 +27,8 @@ export class RoleGuard implements CanActivate, CanLoad {
     const redirectUri = window.location.origin + '/' + route.path;
     return this.isAllowed(route, redirectUri);
   }
-
   async isAllowed(route: ActivatedRouteSnapshot | Route, redirectUri: string): Promise<boolean> {
     const allowedRoles = route.data?.roles;
-
     if (!(allowedRoles instanceof Array) || allowedRoles.length === 0) {
       return Promise.resolve(true);
     }
@@ -33,23 +39,15 @@ export class RoleGuard implements CanActivate, CanLoad {
       if (role === 'main') {
         expandedAllowedRoles = expandedAllowedRoles.concat(this.featureService.getRoles('main'));
       } else if (role === 'option') {
-        expandedAllowedRoles = expandedAllowedRoles.concat(this.featureService.getRoles('optionpage'));
+        expandedAllowedRoles = expandedAllowedRoles.concat(
+          this.featureService.getRoles('optionpage')
+        );
       } else {
         expandedAllowedRoles.push(role);
       }
     });
 
-    const isLoggedIn = this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
-
-    if (!isLoggedIn) {
-      await this.oauthService.loadDiscoveryDocumentAndLogin({ customRedirectUri: redirectUri });
-    }
-
-    let userRoles: string[];
-    await this.oauthService.loadUserProfile().then((userinfo: IUserProfile) => {
-      userRoles = userinfo.info.realm_access.roles;
-    });
-
+    const userRoles: string[] = this.userProfileService.getCurrentProfile().info.realm_access.roles;
     if (userRoles) {
       return Promise.resolve(expandedAllowedRoles.some((role) => userRoles.indexOf(role) >= 0));
     }

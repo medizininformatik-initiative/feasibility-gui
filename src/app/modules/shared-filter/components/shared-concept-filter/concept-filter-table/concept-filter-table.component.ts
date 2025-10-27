@@ -1,13 +1,13 @@
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
-import { CodeableConceptResultList } from 'src/app/model/ElasticSearch/ElasticSearchResult/ElasticSearchList/ResultList/CodeableConcepttResultList';
-import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
+import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
+import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { Observable, Subscription, switchMap } from 'rxjs';
-import { SearchResultProvider } from 'src/app/service/Search/Result/SearchResultProvider';
-import { SearchService } from 'src/app/service/Search/Search.service';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 
@@ -27,6 +27,8 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
 
   adaptedData: TableData;
 
+  searchText = '';
+
   selectedConcepts: Concept[] = [];
 
   private subscription: Subscription = new Subscription();
@@ -36,14 +38,14 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   searchText$: Observable<string>;
 
   constructor(
-    private searchService: SearchService,
-    private conceptElasticSearchService: SearchResultProvider,
+    private activeSearchTermService: ActiveSearchTermService,
+    private codeableConceptSearchService: CodeableConceptSearchService,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
   ) {}
 
   ngOnInit() {
-    this.conceptElasticSearchService
-      .getCodeableConceptSearchResults(this.conceptFilterId)
+    this.codeableConceptSearchService
+      .getSearchResults(this.valueSetUrl)
       .pipe(
         switchMap((results) => {
           this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
@@ -54,7 +56,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
         this.updateCheckboxSelection();
       });
 
-    this.searchText$ = this.searchService.getActiveSearchTerm();
+    this.searchText$ = this.activeSearchTermService.getActiveSearchTerm();
   }
 
   private updateCheckboxSelection(): void {
@@ -102,5 +104,9 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
 
   private clearSelectedConceptArray() {
     this.selectedConcepts = [];
+  }
+
+  public loadMoreSearchResults(): void {
+    this.codeableConceptSearchService.loadNextPage(' ', this.valueSetUrl).subscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { CodeableConceptResultListEntry } from 'src/app/shared/models/ListEntries/CodeableConceptResultListEntry';
+import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
 import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
 import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
 import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
@@ -8,7 +8,7 @@ import { TerminologySystemDictionary } from 'src/app/model/Utilities/Terminology
 
 export class CodeableConceptListEntryAdapter {
   private static headers: InterfaceTableDataHeader = {
-    headers: ['Display', 'Terminology', 'Terminology Code'],
+    headers: ['DISPLAY', 'TERMCODE', 'TERMINOLOGY_CODE'],
   };
 
   public static adapt(listEntries: CodeableConceptResultListEntry[]): TableData {

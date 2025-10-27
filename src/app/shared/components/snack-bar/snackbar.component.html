@@ -1,12 +1,16 @@
 <div
   *ngIf="isVisible"
-  fxLayout="row"
-  fxLayoutAlign="start center"
-  [ngClass]="{ 'error-snackbar': color === 'red', 'info-snackbar': color === 'green' }"
   class="snackbar"
+  [ngClass]="{
+    'error-snackbar': color === 'red',
+    'info-snackbar': color === 'green',
+    'snackbar-enter': isVisible
+  }"
+  role="alert"
+  [attr.aria-live]="color === 'red' ? 'assertive' : 'polite'"
+  aria-atomic="true"
 >
-  <div fxFlex="95" class="message-display">{{ message | translate }}</div>
-  <div fxFlex="5">
-    <fa-icon (click)="closeSnackbar()" class="close-icon" size="lg" icon="times"> </fa-icon>
+  <div class="message-display">
+    <span>{{ message | displayTranslation }}</span>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<mat-form-field class="language-select">
+<mat-form-field class="language-select" [attr.data-cy]="'language-select'">
   <span *ngIf="translate.currentLang === 'de'" class="fi fi-de" matPrefix></span>
   <span *ngIf="translate.currentLang === 'en'" class="fi fi-gb" matPrefix></span>
 
@@ -11,11 +11,11 @@
     "
     (selectionChange)="changeLanguage($event.value)"
   >
-    <mat-option value="de">
+    <mat-option value="de" [attr.data-cy]="'language-option-de'">
       <span style="margin-right: 10px" class="fi fi-de option-layout"></span>
       {{ 'LANGUAGE.GERMAN' | translate }}
     </mat-option>
-    <mat-option value="en">
+    <mat-option value="en" [attr.data-cy]="'language-option-en'">
       <span style="margin-right: 10px" class="fi fi-gb option-layout"></span>
       {{ 'LANGUAGE.ENGLISH' | translate }}
     </mat-option>

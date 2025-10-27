@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { IAppConfig } from 'src/app/config/app-config.model';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { FeatureService } from '../../../service/Feature.service';
-import { FeatureProviderService } from 'src/app/modules/feasibility-query/service/feature-provider.service';
+import { FeatureProviderService } from 'src/app/service/FeatureProvider.service';
 
 @Component({
   selector: 'num-footer',

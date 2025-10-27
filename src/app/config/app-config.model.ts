@@ -18,6 +18,7 @@ export interface IAppConfig {
     version: string
     copyrightYear: string
     copyrightOwner: string
+    email: string
   }
   features: {
     v2: {

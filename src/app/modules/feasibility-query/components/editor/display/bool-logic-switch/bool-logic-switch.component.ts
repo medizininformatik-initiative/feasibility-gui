@@ -20,7 +20,7 @@ export class BoolLogicSwitchComponent implements OnInit {
   ngOnInit(): void {}
 
   getLabelKey(): string {
-    return 'QUERYBUILDER.SWITCH.LABEL_' + this.label;
+    return 'FEASIBILITY.EDITOR.SWITCH.LABEL_' + this.label;
   }
 
   switch(): void {

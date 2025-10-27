@@ -11,34 +11,32 @@ import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 })
 export class AttributeFilterComponent implements OnInit {
   @Input() attributeFilter: AttributeFilter;
-
   @Output() attributeFilterChange = new EventEmitter<AttributeFilter>();
 
   ngOnInit(): void {}
 
-  public updateConceptFilter(conceptFilter: ConceptFilter) {
-    const newAttributeFilter = new AttributeFilter(
-      this.attributeFilter.getDisplay(),
-      FilterTypes.CONCEPT,
-      this.attributeFilter.getAttributeCode(),
-      conceptFilter,
-      undefined,
-      undefined,
-      this.attributeFilter.getOptional()
-    );
-    this.attributeFilterChange.emit(newAttributeFilter);
+  public updateConceptFilter(conceptFilter: ConceptFilter): void {
+    this.emitUpdatedFilter(FilterTypes.CONCEPT, conceptFilter, undefined);
   }
 
-  public updateQuantityFilter(quantityFilter: AbstractQuantityFilter) {
-    const newAttributeFilter = new AttributeFilter(
+  public updateQuantityFilter(quantityFilter: AbstractQuantityFilter): void {
+    this.emitUpdatedFilter(FilterTypes.QUANTITY, undefined, quantityFilter);
+  }
+
+  private emitUpdatedFilter(
+    type: FilterTypes,
+    conceptFilter?: ConceptFilter,
+    quantityFilter?: AbstractQuantityFilter
+  ): void {
+    const updated = new AttributeFilter(
       this.attributeFilter.getDisplay(),
-      FilterTypes.QUANTITY,
+      type,
       this.attributeFilter.getAttributeCode(),
-      undefined,
+      conceptFilter,
       quantityFilter,
       undefined,
       this.attributeFilter.getOptional()
     );
-    this.attributeFilterChange.emit(newAttributeFilter);
+    this.attributeFilterChange.emit(updated);
   }
 }

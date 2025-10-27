@@ -3,7 +3,8 @@
     <ng-container class="filter-wrapper">
       <ng-container *ngIf="displayBlockTriangle">
         <div
-          class="block margin-left-1"
+          data-cy="{{ filterChip.type | displayTranslation }}"
+          class="block"
           (click)="toggleTypeExpanded(filterChip)"
           [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
         >
@@ -14,6 +15,7 @@
 
       <ng-container *ngFor="let chip of filterChip.data">
         <div
+          [attr.data-cy]="chip.text | displayTranslation"
           class="chip-container margin-left-1"
           [ngClass]="{ expanded: chip.expanded }"
           (click)="toggleExpanded(chip)"

@@ -15,8 +15,10 @@
     "roles": ["FEASIBILITY_USER"]
   },
   "legal": {
-    "version": "6.2.0",
-    "copyrightOwner": "FDPG+ Team"
+    "version": "6.3.7",
+    "copyrightYear": "2025",
+    "copyrightOwner": "FDPG+ Team",
+    "email": "info@forschen-fuer-gesundheit.de"
   },
   "features": {
     "v2": {

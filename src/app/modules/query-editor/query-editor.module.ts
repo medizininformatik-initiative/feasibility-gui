@@ -24,6 +24,22 @@ import { ProfileReferenceComponent } from './components/editor-content/profile/r
 import { ReferenceFieldTabComponent } from './components/editor-content/profile/reference/reference-field-tab/reference-field-tab.component';
 import { PossibleReferencesComponent } from './components/editor-content/profile/reference/possible-references/possible-references.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+export const FORMATS_GERMAN = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD.MM.YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 @NgModule({
   imports: [
@@ -56,5 +72,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PossibleReferencesComponent,
   ],
   exports: [],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: FORMATS_GERMAN },
+  ],
 })
 export class QueryEditorModule {}

@@ -9,7 +9,7 @@ export const routeAnimations = trigger('routeAnimations', [
         [
           style({
             position: 'absolute',
-            width: '100%',
+            width: '90%',
             height: '100%',
           }),
         ],
@@ -34,14 +34,14 @@ export const routeAnimations = trigger('routeAnimations', [
   ),
 
   transition(
-    'Feasibility_Editor => Feasibility_Search, Data_Selection_Editor => Data_Selection__Search, DataSelection => Cohort',
+    'Feasibility_Editor => Feasibility_Search, Data_Selection_Editor => Data_Selection_Search, DataSelection => Cohort',
     [
       query(
         ':enter, :leave',
         [
           style({
             position: 'absolute',
-            width: '100%',
+            width: '90%',
             height: '100%',
           }),
         ],

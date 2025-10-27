@@ -1,4 +1,5 @@
 import { DisplayData } from '../../Interface/DisplayData';
+import { TranslationData } from '../../Interface/TranslationData';
 import { Translation } from './Translation';
 
 export class Display {
@@ -28,6 +29,11 @@ export class Display {
     return this.translations;
   }
 
+  /**
+   * Translates the original text to the specified language.
+   * @param language The target language for translation.
+   * @returns The translated text or the original text if no translation is found.
+   */
   public translate(language: string): string {
     const translation = this.translations.find((t) => t.getLanguage().split('-')[0] === language);
 
@@ -55,5 +61,12 @@ export class Display {
     }
 
     return '';
+  }
+
+  public static fromJson(json: DisplayData): Display {
+    const translations = (json.translations || []).map((translation: TranslationData) =>
+      Translation.fromJson(translation)
+    );
+    return new Display(translations, json.original, []);
   }
 }

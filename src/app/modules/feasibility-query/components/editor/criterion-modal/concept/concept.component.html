@@ -1,17 +1,10 @@
 <div *ngIf="conceptFilter" class="container" [@.disabled]="disableAnimation">
-  <mat-expansion-panel togglePosition="before" [expanded]="expanded">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ display | displayTranslation }}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <num-shared-concept-filter
-      *ngIf="conceptFilter"
-      [conceptFilterId]="conceptFilter.getId()"
-      [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
-      [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
-      (changedSelectedConcepts)="emitConceptFilter($event)"
-    >
-    </num-shared-concept-filter>
-  </mat-expansion-panel>
+  <num-shared-concept-filter
+    *ngIf="conceptFilter"
+    [conceptFilterId]="conceptFilter.getId()"
+    [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
+    [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
+    (changedSelectedConcepts)="emitConceptFilter($event)"
+  >
+  </num-shared-concept-filter>
 </div>
