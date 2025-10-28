@@ -1,16 +1,13 @@
-import { AppConfigProviderService } from 'src/app/core/settings/AppConfigProvider.service';
-import { AppConfigService } from 'src/app/config/AppConfig.service';
+import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service';
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
-import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BackendService {
   constructor(
-    private config: AppConfigService,
     private authStorage: OAuthStorage,
     private appSettingsProvider: AppSettingsProviderService
   ) {}
@@ -26,13 +23,12 @@ export class BackendService {
   }
 
   public createUrl(pathToResource: string, paramString?: string): string {
-    const apiUrl =
-      this.appSettingsProvider.getBackendBaseUrl() + this.appSettingsProvider.getUiBackendApiUrl();
+    const apiUrl = this.getBaseUrl() + this.appSettingsProvider.getUiBackendApiPath();
     return this.buildUrl(apiUrl, pathToResource, paramString);
   }
 
   public getBaseUrl(): string {
-    return this.appSettingsProvider.getBaseUrl();
+    return this.appSettingsProvider.getBackendBaseUrl();
   }
 
   private buildUrl(base: string, path: string, paramString?: string): string {
