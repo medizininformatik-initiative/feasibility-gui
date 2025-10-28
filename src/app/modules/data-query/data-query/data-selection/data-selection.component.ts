@@ -47,7 +47,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
       .pipe(map((dataSelection) => dataSelection.getProfiles().length > 0));
 
     this.isCohortExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid();
-    this.emailLink = this.appSettingsProviderService.getLegalEmail();
+    this.emailLink = this.appSettingsProviderService.getEmail();
   }
 
   ngOnDestroy(): void {

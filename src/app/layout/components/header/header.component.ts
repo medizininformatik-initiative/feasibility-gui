@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public navigateToProposalPortal() {
-    this.proposalPortalLink = this.appSettingsProviderService.getProposalPortalLink();
+    this.proposalPortalLink = this.appSettingsProviderService.getPortalLink();
     window.open(this.proposalPortalLink, '_blank');
   }
 }

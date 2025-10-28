@@ -72,7 +72,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
     const tree = this.activeRoute.snapshot.data.preLoadDataSelectionData;
     const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
     this.trees = rootNode;
-    this.emailLink = this.appSettingsProviderService.getLegalEmail();
+    this.emailLink = this.appSettingsProviderService.getEmail();
   }
 
   /**
