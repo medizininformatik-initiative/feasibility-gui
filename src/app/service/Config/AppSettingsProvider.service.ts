@@ -16,17 +16,13 @@ export class AppSettingsProviderService implements AppSettingGetter {
     private readonly settingsProvider: DataportalConfigProviderService,
     private readonly appConfigProvider: AppConfigProviderService
   ) {}
-  getVersion: () => string | number;
-  getEmail: () => string | number;
-  getLowerboundarylocationresult: () => string;
-  getLowerboundarypatientresult: () => string;
 
   /**
    * Gets a specific setting by key using the settings provider
    * @param key The setting key to retrieve
    * @returns The setting value or undefined if not found
    */
-  private getDataPortalByKey<K extends DataportalConfigKey>(
+  private getDataPortalConfigByKey<K extends DataportalConfigKey>(
     key: K
   ): DataportalConfigValue<K> | undefined {
     return this.settingsProvider.getSettingByKey(key);
@@ -72,7 +68,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
   /**
    * Gets the legal version
    */
-  public getLegalVersion(): string {
+  public getVersion(): string {
     return this.getAppConfigSettingByKey('version') ?? '';
   }
 
@@ -93,58 +89,46 @@ export class AppSettingsProviderService implements AppSettingGetter {
   /**
    * Gets the legal contact email
    */
-  public getLegalEmail(): string {
+  public getEmail(): string {
     return this.getAppConfigSettingByKey('email') ?? '';
   }
 
   /**
    * Gets the proposal portal link URL
    */
-  public getProposalPortalLink(): string {
-    return this.getDataPortalByKey('proposalPortalLink') ?? '';
+  public getPortalLink(): string {
+    return this.getDataPortalConfigByKey('passthroughPortalLink') ?? '';
   }
 
   /**
    * Gets the UI backend API URL
    */
-  public getUiBackendApiUrl(): string {
-    return this.getDataPortalByKey('uiBackendApiUrl') ?? '';
+  public getUiBackendApiPath(): string {
+    return this.getDataPortalConfigByKey('uiBackendApiPath') ?? '';
   }
 
   /**
    * Gets the DSE patient profile URL
    */
   public getDsePatientProfileUrl(): string {
-    return this.getDataPortalByKey('dsePatientProfileUrl') ?? '';
-  }
-
-  /**
-   * Gets the lower boundary for patient results
-   */
-  public getLowerBoundaryPatientResult(): number {
-    return this.getDataPortalByKey('lowerboundarypatientresult') ?? 0;
-  }
-
-  /**
-   * Gets the lower boundary for location results
-   */
-  public getLowerBoundaryLocationResult(): number {
-    return this.getDataPortalByKey('lowerboundarylocationresult') ?? 0;
+    return this.getDataPortalConfigByKey('passthroughDsePatientProfileUrl') ?? '';
   }
 
   /**
    * Gets the polling interval configuration
    */
-  public getPollingintervall(): number {
-    const duration = iso8601.parse(this.getDataPortalByKey('pollingintervall'));
+  public getSummaryPollingInterval(): number {
+    const duration = iso8601.parse(
+      this.getDataPortalConfigByKey('readResultSummaryPollingInterval')
+    );
     return iso8601.toSeconds(duration);
   }
 
   /**
    * Gets the polling time configuration in milliseconds and parsed according to iso8601
    */
-  public getPollingtime(): number {
-    const duration = iso8601.parse(this.getDataPortalByKey('pollingtime'));
+  public getPollingTimeUi(): number {
+    const duration = iso8601.parse(this.getDataPortalConfigByKey('passthroughPollingTimeUi'));
     return iso8601.toSeconds(duration);
   }
 
@@ -152,7 +136,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
    * Gets the CCDL version
    */
   public getCcdlVersion(): string {
-    return this.getDataPortalByKey('ccdlVersion') ?? '';
+    return this.getDataPortalConfigByKey('passthroughCcdlVersion');
   }
 
   /** Gets the backend base URL
@@ -162,17 +146,41 @@ export class AppSettingsProviderService implements AppSettingGetter {
   }
 
   /**
-   * Checks if the configuration is loaded and valid
-   */
-  public isConfigurationValid(): boolean {
-    return this.getBaseUrl() !== '' && this.getAuthBaseUrl() !== '';
-  }
-
-  /**
    * Gets the configured stylesheet or an empty string if not set
    * @returns The configured stylesheet or an empty string if not set
    */
   public getStylesheet(): string | undefined {
     return this.getAppConfigSettingByKey('stylesheet');
+  }
+
+  /**
+   *
+   * @returns number
+   */
+  public getResultDetailedObfuscatedInterval(): number {
+    const duration = iso8601.parse(
+      this.getDataPortalConfigByKey('readResultDetailedObfuscatedInterval')
+    );
+    return iso8601.toSeconds(duration);
+  }
+
+  /**
+   *
+   * @returns
+   */
+  public getResultDetailedObfuscatedAmount(): number {
+    return Number(this.getDataPortalConfigByKey('readResultDetailedObfuscatedAmount'));
+  }
+
+  /**
+   *
+   * @returns
+   */
+  public getResultDetailedObfuscatedPollingInterval(): number {
+    return Number(this.getDataPortalConfigByKey('readResultDetailedObfuscatedPollingInterval'));
+  }
+
+  public getResultSummaryPollingInterval(): number {
+    return Number(this.getDataPortalConfigByKey('readResultSummaryPollingInterval'));
   }
 }

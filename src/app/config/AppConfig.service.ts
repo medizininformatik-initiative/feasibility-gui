@@ -18,7 +18,6 @@ export class AppConfigService {
   public loadAppConfig(): Observable<AppConfigData> {
     return this.http.get<AppConfigData>(AssetsPath.CONFIG_URL).pipe(
       map((config: AppConfigData) => {
-        console.log('AppConfig loaded:', config);
         this.appConfigService.setAppConfigMap(config);
         return config;
       }),
