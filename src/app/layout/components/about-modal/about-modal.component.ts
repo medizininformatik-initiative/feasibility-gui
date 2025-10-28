@@ -32,9 +32,9 @@ export class AboutModalComponent implements OnInit {
       this.text = info;
       this.backendBuildTime = new Date(info.git?.build?.time).toLocaleString();
     });
-    this.legalVersion = this.appSettingsProviderService.getLegalVersion();
+    this.legalVersion = this.appSettingsProviderService.getVersion();
     this.legalCopyrightOwner = this.appSettingsProviderService.getCopyrightOwner();
     this.legalCopyrightYear = this.appSettingsProviderService.getCopyrightYear();
-    this.legalEmail = this.appSettingsProviderService.getLegalEmail();
+    this.legalEmail = this.appSettingsProviderService.getEmail();
   }
 }
