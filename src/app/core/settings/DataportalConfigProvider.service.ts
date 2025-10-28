@@ -1,10 +1,9 @@
 import { AppConfigData } from 'src/app/config/model/AppConfig/AppConfigData';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DataportalConfigData } from 'src/app/config/model/DataPortalConfig/DataportalConfig';
+import { DataportalConfigData } from 'src/app/config/model/DataPortalConfig/DataportalConfigData';
 import { DataportalConfigKey } from 'src/app/config/model/DataPortalConfig/DataportalConfigKey';
 import { DataportalConfigValue } from 'src/app/config/model/DataPortalConfig/DataportalConfigValue';
 import { Injectable } from '@angular/core';
-import { DataPortalGetter } from 'src/app/config/model/DataPortalConfig/DataportalConfigGetter';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +48,7 @@ export class DataportalConfigProviderService {
       ][]
     );
     this.settingsMap = appConfigMap;
+    console.log('[DataportalConfigProviderService] Settings have been set:', this.settingsMap);
     this.settingsMapSubject.next(appConfigMap);
     this.locked = true;
   }

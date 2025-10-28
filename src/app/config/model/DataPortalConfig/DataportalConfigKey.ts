@@ -1,4 +1,4 @@
-import { DataportalConfigData } from './DataportalConfig';
+import { DataportalConfigData } from './DataportalConfigData';
 
 /**
  * Union type representing all possible setting keys from both DataportalSettings and AppConfigData.

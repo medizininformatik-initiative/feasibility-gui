@@ -1,4 +1,4 @@
-import { DataportalConfigData } from './DataportalConfig';
+import { DataportalConfigData } from './DataportalConfigData';
 import { DataportalConfigKey } from './DataportalConfigKey';
 
 /**
