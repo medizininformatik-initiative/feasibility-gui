@@ -32,7 +32,7 @@ export class FeasibilityQueryResultService {
   }
 
   public doSendQueryRequest(): Observable<QueryResult> {
-    this.appSettingsProviderService.getPollingtime();
+    this.appSettingsProviderService.getPollingTimeUi();
     this.obfuscatedResultRateLimitService.refreshRateLimit();
 
     return this.activeFeasibilityQuery().pipe(

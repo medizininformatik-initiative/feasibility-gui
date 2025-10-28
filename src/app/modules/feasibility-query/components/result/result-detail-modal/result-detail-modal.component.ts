@@ -9,7 +9,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 import { TableData } from '../../../../../shared/models/TableData/InterfaceTableData';
-import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 
 export class ResultDetailsModalComponentData {}
 @Component({
@@ -28,11 +27,9 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsModalComponentData,
     public dialogRef: MatDialogRef<ResultDetailModalComponent>,
     public backend: BackendService,
-    private appSettingsProviderService: AppSettingsProviderService,
     private feasibilityQueryResultService: FeasibilityQueryResultService,
     private resultProviderService: ResultProviderService
   ) {}
-  lowerBoundaryLocation: number = this.appSettingsProviderService.getLowerBoundaryLocationResult();
 
   /**
    * We read the last elment of the feasibilityQuery resultIds Array as this one contains the latest Result from the backend

@@ -169,7 +169,10 @@ export class AppSettingsProviderService implements AppSettingGetter {
    * @returns
    */
   public getResultDetailedObfuscatedAmount(): number {
-    return Number(this.getDataPortalConfigByKey('readResultDetailedObfuscatedAmount'));
+    const duration = iso8601.parse(
+      this.getDataPortalConfigByKey('readResultDetailedObfuscatedAmount')
+    );
+    return iso8601.toSeconds(duration);
   }
 
   /**
@@ -177,10 +180,20 @@ export class AppSettingsProviderService implements AppSettingGetter {
    * @returns
    */
   public getResultDetailedObfuscatedPollingInterval(): number {
-    return Number(this.getDataPortalConfigByKey('readResultDetailedObfuscatedPollingInterval'));
+    const duration = iso8601.parse(
+      this.getDataPortalConfigByKey('readResultDetailedObfuscatedPollingInterval')
+    );
+    return iso8601.toSeconds(duration);
   }
 
+  /**
+   *
+   * @returns
+   */
   public getResultSummaryPollingInterval(): number {
-    return Number(this.getDataPortalConfigByKey('readResultSummaryPollingInterval'));
+    const duration = iso8601.parse(
+      this.getDataPortalConfigByKey('readResultSummaryPollingInterval')
+    );
+    return iso8601.toSeconds(duration);
   }
 }

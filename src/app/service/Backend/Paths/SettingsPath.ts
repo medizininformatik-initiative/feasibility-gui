@@ -1,3 +1,3 @@
 export class SettingsPath {
-  public static readonly SETTINGS_ENDPOINT = '/.settings';
+  public static readonly SETTINGS_ENDPOINT = '.settings';
 }

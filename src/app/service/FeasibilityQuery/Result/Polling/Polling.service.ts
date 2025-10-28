@@ -11,8 +11,8 @@ import { UIQuery2StructuredQueryService } from '../../../Translator/StructureQue
 })
 export class PollingService {
   private readonly POLLING_INTERVALL_MILLISECONDS =
-    this.appSettingsProviderService.getPollingintervall();
-  private readonly POLLING_MAXL_MILLISECONDS = this.appSettingsProviderService.getPollingtime();
+    this.appSettingsProviderService.getResultSummaryPollingInterval();
+  private readonly POLLING_MAXL_MILLISECONDS = this.appSettingsProviderService.getPollingTimeUi();
 
   constructor(
     private feasibilityQueryResultApiService: FeasibilityQueryResultApiService,
