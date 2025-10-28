@@ -1,4 +1,3 @@
-import { AppConfigData } from 'src/app/config/model/AppConfig/AppConfigData';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DataportalConfigData } from 'src/app/config/model/DataPortalConfig/DataportalConfigData';
 import { DataportalConfigKey } from 'src/app/config/model/DataPortalConfig/DataportalConfigKey';
@@ -48,7 +47,6 @@ export class DataportalConfigProviderService {
       ][]
     );
     this.settingsMap = appConfigMap;
-    console.log('[DataportalConfigProviderService] Settings have been set:', this.settingsMap);
     this.settingsMapSubject.next(appConfigMap);
     this.locked = true;
   }
