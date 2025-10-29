@@ -196,4 +196,8 @@ export class AppSettingsProviderService implements AppSettingGetter {
     );
     return iso8601.toSeconds(duration);
   }
+
+  public getMaxSavedQueriesPerUser(): number {
+    return this.getDataPortalConfigByKey('maxSavedQueriesPerUser');
+  }
 }

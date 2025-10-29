@@ -52,4 +52,9 @@ export interface DataportalConfigData {
    * Polling interval for detailed obfuscated results.
    */
   readonly readResultDetailedObfuscatedPollingInterval: string
+
+  /**
+   * max allowed saved queries per user
+   */
+  readonly maxSavedQueriesPerUser: number
 }
