@@ -1,9 +1,7 @@
 import { AbstractAttributeDefinitionsResultMapper } from './AbstractAttributeDefinitionsResultMapper';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
 import { ValueDefinition } from 'src/app/model/Utilities/AttributeDefinition.ts/ValueDefnition';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { DisplayData } from 'src/app/model/Interface/DisplayData';
 import { ValueDefinitionData } from '../../../model/Interface/ValueDefinition';
 
 export class ValueDefinitionsResultMapper extends AbstractAttributeDefinitionsResultMapper {
@@ -22,7 +20,7 @@ export class ValueDefinitionsResultMapper extends AbstractAttributeDefinitionsRe
 
   public mapValueDefinitionInstance(valueDefinitionData: ValueDefinitionData): ValueDefinition {
     return new ValueDefinition(
-      this.createDisplayData(valueDefinitionData.display),
+      Display.fromJson(valueDefinitionData.display),
       valueDefinitionData.type,
       valueDefinitionData.optional,
       this.mapAllowedUnits(valueDefinitionData.allowedUnits),
@@ -31,16 +29,5 @@ export class ValueDefinitionsResultMapper extends AbstractAttributeDefinitionsRe
       valueDefinitionData.precision,
       valueDefinitionData.referencedValueSet
     );
-  }
-
-  public createDisplayData(displayData: DisplayData): Display {
-    const translations = displayData.translations?.map((translation) =>
-      this.createTranslation(translation)
-    );
-    return new Display(translations, displayData.original);
-  }
-
-  private createTranslation(translation: any): Translation {
-    return new Translation(translation.language, translation.value);
   }
 }
