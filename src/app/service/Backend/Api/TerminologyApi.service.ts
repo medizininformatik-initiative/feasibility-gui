@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TerminologyPaths } from '../Paths/TerminologyPaths';
+import { UiProfileResponseData } from '../../../model/Interface/UiProfileResponseData';
 
 @Injectable({
   providedIn: 'root',
@@ -59,5 +60,11 @@ export class TerminologyApiService {
 
   public getTerminologySystems() {
     return this.http.get<any>(this.backendService.createUrl(TerminologyPaths.SYSTEMS_ENDPOINT));
+  }
+
+  public getUiProfileData(): Observable<UiProfileResponseData> {
+    return this.http.get<UiProfileResponseData>(
+      this.backendService.createUrl(TerminologyPaths.UIPROFILE_ENDPOINT)
+    );
   }
 }
