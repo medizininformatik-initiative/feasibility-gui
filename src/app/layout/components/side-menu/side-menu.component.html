@@ -1,19 +1,16 @@
 <mat-nav-list fxLayout="column" fxFill>
-  <ng-template ngFor let-item [ngForOf]="mainNavItems">
-    <ng-template [ngIf]="showPage(item.routeTo)">
-      <a
-        *numUserHasRole="item.roles"
-        class="num-mat-list-item"
-        [routerLinkActive]="'num-mat-list-item--active'"
-        mat-list-item
-        [routerLink]="item.routeTo"
-        (click)="menuItemClicked($event, item)"
-      >
-        <fa-icon size="lg" [fixedWidth]="true" [icon]="item.icon"></fa-icon>
-        <div *ngIf="isSideMenuExpanded">{{ item.translationKey | translate }}</div>
-      </a>
-    </ng-template>
-  </ng-template>
+  <ng-container *ngFor="let navItem of mainNavItems">
+    <a
+      class="num-mat-list-item"
+      [routerLinkActive]="'num-mat-list-item--active'"
+      mat-list-item
+      [routerLink]="navItem.routeTo"
+      (click)="menuItemClicked($event, navItem)"
+    >
+      <fa-icon size="lg" [fixedWidth]="true" [icon]="navItem.icon"></fa-icon>
+      <div *ngIf="isSideMenuExpanded">{{ navItem.translationKey | translate }}</div>
+    </a>
+  </ng-container>
 
   <span fxFlex></span>
   <div fxLayout="row" fxLayoutAlign="end center" class="num-logo-row">
@@ -21,7 +18,7 @@
       type="button"
       [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate"
       mat-icon-button
-      (click)="menuItemClicked($event)"
+      (click)="toggleMenu()"
     >
       <fa-icon *ngIf="isSideMenuExpanded" size="1x" icon="angle-double-left"></fa-icon>
       <fa-icon *ngIf="!isSideMenuExpanded" size="1x" icon="angle-double-right"></fa-icon>

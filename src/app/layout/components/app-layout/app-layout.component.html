@@ -1,62 +1,17 @@
 <num-dataportal-header role="banner"></num-dataportal-header>
 <mat-sidenav-container autosize fullscreen class="sidenav-container fix-overlay">
   <mat-sidenav
-    #drawer
     *ngIf="showSideNav"
     fixedInViewport
     [attr.role]="isHandset ? 'dialog' : 'navigation'"
     [attr.aria-label]="'APPLAYOUT.SIDENAV.LABEL' | translate"
     [mode]="isHandset ? 'over' : 'side'"
-    [opened]="isHandset === false"
+    [opened]="true"
   >
-    <num-side-menu
-      class="side-menu"
-      (toggleSideMenu)="toggleMenu($event)"
-      [isSideMenuExpanded]="isSideMenuExpanded || isHandset"
-      fxFlex="100"
-    ></num-side-menu>
+    <num-side-menu class="side-menu" fxFlex="100"></num-side-menu>
   </mat-sidenav>
 
   <mat-sidenav-content fxLayout="column" class="fix-overlay padding-left-4">
-    <!-- Page Content -->
-
-    <section role="heading" fxLayout="row" fxLayoutAlign="center start" *ngIf="currentMainNavItem">
-      <div
-        class="titlebar num-margin-b-60"
-        role="presentation"
-        fxLayout="column"
-        fxLayoutAlign="center start"
-        fxFlex="95%"
-        fxFlex.gt-md="90%"
-        fxFlex.gt-lg="1200px"
-      >
-        <h1>
-          <fa-icon
-            class="num-fc--a"
-            [icon]="currentMainNavItem.icon"
-            size="sm"
-            [fixedWidth]="true"
-          ></fa-icon>
-          {{ currentMainNavItem.translationKey | translate }}
-        </h1>
-
-        <nav mat-tab-nav-bar [backgroundColor]="'#fff'" color="accent" *ngIf="currentTabNav">
-          <a
-            class="no-focus"
-            mat-tab-link
-            *ngFor="let tab of currentTabNav"
-            [routerLink]="tab.routeTo"
-            routerLinkActive
-            #rla="routerLinkActive"
-            [routerLinkActiveOptions]="{ exact: true }"
-            [active]="tab.id === currentTabNavSelected"
-          >
-            {{ tab.translationKey | translate }}
-          </a>
-        </nav>
-      </div>
-    </section>
-
     <div
       class="safari-fix"
       fxLayout="row"
@@ -70,7 +25,5 @@
         </div>
       </main>
     </div>
-
-    <num-footer style="display: none" fxFlexOffset="auto"></num-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

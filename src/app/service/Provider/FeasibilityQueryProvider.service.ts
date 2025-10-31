@@ -1,11 +1,9 @@
-import { BehaviorSubject, map, Observable, switchMap, combineLatest, of } from 'rxjs';
+import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service';
+import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs';
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
 import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service';
 import { v4 as uuidv4 } from 'uuid';
-import { CriterionProviderService } from './CriterionProvider.service';
-import { ResultProviderService } from './ResultProvider.service';
 
 @Injectable({
   providedIn: 'root',

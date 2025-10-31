@@ -27,8 +27,8 @@ export class ListItemDetailsMenuItemsFunctionsService {
     this.searchTermDetailsService
       .getDetailsForListItem(id)
       .pipe(take(1))
-      .subscribe((searchTermDetails) => {
-        this.searchTermDetailsProviderService.setSearchTermDetails(searchTermDetails);
+      .subscribe((test) => {
+        this.searchTermDetailsProviderService.setSearchTermDetails(test);
       });
   }
 
