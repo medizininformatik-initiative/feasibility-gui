@@ -158,7 +158,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   public setSelectedRowItem(item: InterfaceTableDataRow) {
-    console.log(item);
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
     const itemId = item.originalEntry.getId();
     if (selectedIds.includes(itemId)) {

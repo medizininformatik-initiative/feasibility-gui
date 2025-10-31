@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
 import { QuantityNotSet } from '../../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
+import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service';
 
 @Component({
   selector: 'num-quantity-range',
