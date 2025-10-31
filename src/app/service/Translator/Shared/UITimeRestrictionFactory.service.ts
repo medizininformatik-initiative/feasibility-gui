@@ -4,6 +4,7 @@ import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestr
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { Injectable } from '@angular/core';
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { TimeRestrictionData } from 'src/app/model/Interface/TimeRestrictionData';
 
 @Injectable({
   providedIn: 'root',
@@ -27,19 +28,27 @@ export class UITimeRestrictionFactoryService {
     }
   }
 
-  public createTimeRestrictionForFeasibilityQuery(timeRestriction: any): AbstractTimeRestriction {
-    if (timeRestriction.beforeDate && timeRestriction.afterDate) {
-      if (timeRestriction.beforeDate === timeRestriction.afterDate) {
-        return new AtFilter(timeRestriction.afterDate, timeRestriction.beforeDate);
+  /**
+   * @param timeRestriction
+   * @returns
+   */
+  public createTimeRestrictionForFeasibilityQuery(
+    timeRestriction: TimeRestrictionData
+  ): AbstractTimeRestriction {
+    const beforeDate: string = timeRestriction.beforeDate;
+    const afterDate: string = timeRestriction.afterDate;
+    if (beforeDate && afterDate) {
+      if (beforeDate === afterDate) {
+        return new AtFilter(afterDate, beforeDate);
       } else {
-        return new BetweenFilter(timeRestriction.afterDate, timeRestriction.beforeDate);
+        return new BetweenFilter(afterDate, beforeDate);
       }
     }
-    if (timeRestriction.beforeDate && !timeRestriction.afterDate) {
-      return new BeforeFilter(timeRestriction.beforeDate);
+    if (beforeDate && !afterDate) {
+      return new BeforeFilter(beforeDate);
     }
-    if (!timeRestriction.beforeDate && timeRestriction.afterDate) {
-      return new AfterFilter(timeRestriction.afterDate);
+    if (!beforeDate && afterDate) {
+      return new AfterFilter(afterDate);
     }
   }
 }
