@@ -30,7 +30,6 @@ export class AboutModalComponent implements OnInit {
   public getActuatorInfo() {
     this.actuatorInformationService.getActuatorInformation().subscribe((info) => {
       this.text = info;
-      console.log(this.text);
       this.backendBuildTime = new Date(info.git?.build?.time).toLocaleString();
     });
     this.legalVersion = this.featureService.getLegalVersion();
