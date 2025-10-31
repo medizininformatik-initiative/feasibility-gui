@@ -14,7 +14,8 @@ import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
-
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { v4 as uuidv4 } from 'uuid';
 @Injectable({
   providedIn: 'root',
 })

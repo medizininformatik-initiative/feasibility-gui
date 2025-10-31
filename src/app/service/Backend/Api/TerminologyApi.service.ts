@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TerminologyPaths } from '../Paths/TerminologyPaths';
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
+import { ConceptData } from 'src/app/model/Interface/ConceptData';
 
 @Injectable({
   providedIn: 'root',
@@ -24,9 +26,9 @@ export class TerminologyApiService {
     );
   }
 
-  public getCriteriaProfileData(commaSeparatedIds: string[]): Observable<Array<any>> {
+  public getCriteriaProfileData(ids: string[]): Observable<Array<CriteriaProfileData>> {
     return this.chunkedRequestService.getChunkedRequest(
-      commaSeparatedIds,
+      ids,
       TerminologyPaths.CRITERIA_PROFILE_ENDPOINT
     );
   }
@@ -44,9 +46,9 @@ export class TerminologyApiService {
     return this.http.get<{ totalHits: number; results: any[] }>(parsedUrl);
   }
 
-  public getCodeableConceptsByIds(commaSeparatedIds: string[]): Observable<Array<any>> {
+  public getCodeableConceptsByIds(ids: string[]): Observable<Array<ConceptData>> {
     return this.chunkedRequestService.getChunkedRequest(
-      commaSeparatedIds,
+      ids,
       CodeableConceptPaths.ENTRY_CONCEPT_ENDPOINT
     );
   }
