@@ -1,3 +1,4 @@
+import { ConceptData } from 'src/app/model/Interface/ConceptData';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
 
@@ -9,11 +10,27 @@ export class ConceptTranslationCacheService {
 
   constructor() {}
 
-  public getConceptDisplayById(id: string): Display | undefined {
+  public getConceptDisplayByHash(id: string): Display | undefined {
     return this.conceptTranslationCache.get(id);
   }
 
-  public setConceptDisplayById(id: string, translation: Display): void {
-    this.conceptTranslationCache.set(id, translation);
+  /**
+   * @param id
+   * @param display
+   */
+  public setConceptDisplayByHash(id: string, display: Display): void {
+    this.conceptTranslationCache.set(id, display);
+  }
+
+  /**
+   *
+   * @param conceptsData
+   * @returns
+   */
+  public setConceptsByHash(conceptsData: ConceptData[]): void {
+    conceptsData.map((conceptData: ConceptData) => {
+      const display = Display.fromJson(conceptData.display);
+      this.setConceptDisplayByHash(conceptData.id, display);
+    });
   }
 }
