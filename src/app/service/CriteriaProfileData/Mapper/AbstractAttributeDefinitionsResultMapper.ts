@@ -9,6 +9,6 @@ export abstract class AbstractAttributeDefinitionsResultMapper {
    * @returns An array of QuantityUnit instances.
    */
   protected mapAllowedUnits(allowedUnits: QuantityUnitData[]): QuantityUnit[] {
-    return allowedUnits?.map((unit) => new QuantityUnit(unit.code, unit.display, unit.system)) || [];
+    return allowedUnits?.map((unit) => QuantityUnit.fromJson(unit)) || [];
   }
 }
