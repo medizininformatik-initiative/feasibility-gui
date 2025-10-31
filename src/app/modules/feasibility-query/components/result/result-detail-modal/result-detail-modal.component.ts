@@ -4,12 +4,11 @@ import { FeasibilityQueryProviderService } from 'src/app/service/Provider/Feasib
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter';
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../model/Search/ListEntries/FeasibilityQueryResultDetailstListEntry';
 import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service';
-import { FeatureService } from '../../../../../service/Feature.service';
 import { map, Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { QueryResult } from '../../../../../model/Result/QueryResult';
-import { TableData } from '../../../../../shared/models/TableData/InterfaceTableData';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
+import { TableData } from '../../../../../shared/models/TableData/InterfaceTableData';
 
 export class ResultDetailsModalComponentData {}
 @Component({
@@ -28,11 +27,9 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: ResultDetailsModalComponentData,
     public dialogRef: MatDialogRef<ResultDetailModalComponent>,
     public backend: BackendService,
-    private featureService: FeatureService,
     private feasibilityQueryResultService: FeasibilityQueryResultService,
     private resultProviderService: ResultProviderService
   ) {}
-  lowerBoundaryLocation: number = this.featureService.getLocationResultLowerBoundary();
 
   /**
    * We read the last elment of the feasibilityQuery resultIds Array as this one contains the latest Result from the backend

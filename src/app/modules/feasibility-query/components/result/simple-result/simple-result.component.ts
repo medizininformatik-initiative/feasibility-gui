@@ -2,17 +2,7 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service';
-import { FeatureService } from 'src/app/service/Feature.service';
-import {
-  filter,
-  map,
-  Observable,
-  pairwise,
-  shareReplay,
-  Subject,
-  Subscription,
-  takeLast,
-} from 'rxjs';
+import { filter, Observable, pairwise, Subject, Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
@@ -22,6 +12,7 @@ import {
 } from '../result-detail-modal/result-detail-modal.component';
 import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 
 type QueryResponseType = QueryResult | ErrorQueryResult | null;
 
@@ -53,11 +44,11 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private feasibilityQueryResultService: FeasibilityQueryResultService,
     private queryProviderService: FeasibilityQueryProviderService,
-    private featureService: FeatureService,
+    private appSettingsProviderService: AppSettingsProviderService,
     private snackbarService: SnackbarService
   ) {
     this.queryResultRateLimit$ = this.feasibilityQueryResultService.getDetailedResultRateLimit();
-    this.pollingTime = this.featureService.getPollingTime();
+    this.pollingTime = this.appSettingsProviderService.getPollingTimeUi();
   }
 
   private destroy$ = new Subject<void>();

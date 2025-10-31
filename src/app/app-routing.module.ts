@@ -1,11 +1,9 @@
-import { RouterModule, Routes } from '@angular/router';
-
 import { BasePaths } from './app-paths';
 import { CriteriaSearchDataResolverService } from './service/Resolver/CriteriaSearchDataResolver.service';
 import { CriteriaSearchFilterResolverService } from './service/Resolver/CriteriaSearchFilterResolver.service';
 import { DataProtectionComponent } from './site/data-protection/data-protection.component';
 import { NgModule } from '@angular/core';
-import { RoleGuard } from './core/auth/guards/role.guard';
+import { RouterModule, Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
@@ -14,7 +12,6 @@ export const routes: Routes = [
   },
   {
     path: BasePaths.queryEditor,
-    canLoad: [RoleGuard],
     data: {
       hideSideNav: false,
       navId: BasePaths.queryEditor,
@@ -30,7 +27,6 @@ export const routes: Routes = [
   },
   {
     path: BasePaths.dataQuery,
-    canLoad: [RoleGuard],
     data: {
       navId: BasePaths.dataQuery,
       roles: ['main'],
@@ -49,7 +45,6 @@ export const routes: Routes = [
       preLoadCriteriaData: CriteriaSearchDataResolverService,
       preLoadCriteriaFilter: CriteriaSearchFilterResolverService,
     },
-    canLoad: [RoleGuard],
     data: {
       navId: BasePaths.feasibilityQuery,
       roles: ['main'],
@@ -63,23 +58,7 @@ export const routes: Routes = [
       ).then((m) => m.FeasibilityQueryModule),
   },
   {
-    path: BasePaths.options,
-    canLoad: [RoleGuard],
-    data: {
-      navId: BasePaths.options,
-      roles: ['option'],
-      breadcrumb: 'Options',
-      animation: 'OptionsPage',
-      title: 'Options',
-    },
-    loadChildren: () =>
-      import(/* webpackChunkName: "Options.Module" */ './modules/options/options.module').then(
-        (m) => m.OptionsModule
-      ),
-  },
-  {
     path: BasePaths.dataSelection,
-    canLoad: [RoleGuard],
     data: {
       navId: BasePaths.dataSelection,
       roles: ['main'],
@@ -94,7 +73,6 @@ export const routes: Routes = [
   },
   {
     path: 'saved-queries',
-    canLoad: [RoleGuard],
     data: {
       navId: 'saved-queries',
       roles: ['main'],

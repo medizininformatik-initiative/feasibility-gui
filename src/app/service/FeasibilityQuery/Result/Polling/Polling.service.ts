@@ -1,21 +1,22 @@
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryApiService } from '../../../Backend/Api/FeasibilityQueryApi.service';
 import { FeasibilityQueryResultApiService } from '../../../Backend/Api/FeasibilityQueryResultApi.service';
-import { FeatureService } from '../../../Feature.service';
 import { Injectable } from '@angular/core';
-import { map, Observable, Subject } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { UIQuery2StructuredQueryService } from '../../../Translator/StructureQuery/UIQuery2StructuredQuery.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PollingService {
-  readonly POLLING_INTERVALL_MILLISECONDS = this.featureService.getPollingIntervall() * 1000;
-  readonly POLLING_MAXL_MILLISECONDS = this.featureService.getPollingTime() * 1000;
+  private readonly POLLING_INTERVALL_MILLISECONDS =
+    this.appSettingsProviderService.getResultSummaryPollingInterval();
+  private readonly POLLING_MAXL_MILLISECONDS = this.appSettingsProviderService.getPollingTimeUi();
 
   constructor(
     private feasibilityQueryResultApiService: FeasibilityQueryResultApiService,
-    private featureService: FeatureService,
+    private appSettingsProviderService: AppSettingsProviderService,
     private feasibilityQueryApiService: FeasibilityQueryApiService,
     private translator: UIQuery2StructuredQueryService
   ) {}
@@ -38,5 +39,25 @@ export class PollingService {
           return pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1);
         })
       );
+  }
+
+  /**
+   * If the polling intervall exceeds the max polling time, it returns the max polling time.
+   * @returns The polling interval in milliseconds
+   */
+  public getPollingInterval(): number {
+    const pollingIntervall =
+      this.POLLING_INTERVALL_MILLISECONDS > this.POLLING_MAXL_MILLISECONDS
+        ? this.POLLING_MAXL_MILLISECONDS
+        : this.POLLING_INTERVALL_MILLISECONDS;
+    return pollingIntervall * 1000;
+  }
+
+  /**
+   *
+   * @returns The polling time
+   */
+  public getPollingTime(): number {
+    return this.POLLING_MAXL_MILLISECONDS * 1000;
   }
 }

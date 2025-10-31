@@ -1,6 +1,6 @@
+import { AppSettingsProviderService } from '../../Config/AppSettingsProvider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
-import { FeatureService } from '../../Feature.service';
 import { Injectable } from '@angular/core';
 import { map, Observable, switchMap } from 'rxjs';
 import { ObfuscatedResultRateLimitService } from './Obfuscate/ObfuscatedResultRateLimit.service';
@@ -15,7 +15,7 @@ import { ResultProviderService } from '../../Provider/ResultProvider.service';
 })
 export class FeasibilityQueryResultService {
   constructor(
-    private featureService: FeatureService,
+    private appSettingsProviderService: AppSettingsProviderService,
     private queryProviderService: FeasibilityQueryProviderService,
     private pollingManagerService: PollingManagerService,
     private resultProvider: ResultProviderService,
@@ -32,7 +32,7 @@ export class FeasibilityQueryResultService {
   }
 
   public doSendQueryRequest(): Observable<QueryResult> {
-    this.featureService.sendClickEvent(this.featureService.getPollingTime());
+    this.appSettingsProviderService.getPollingTimeUi();
     this.obfuscatedResultRateLimitService.refreshRateLimit();
 
     return this.activeFeasibilityQuery().pipe(

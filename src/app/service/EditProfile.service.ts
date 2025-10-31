@@ -1,11 +1,11 @@
+import { AbstractProfileFilter } from '../model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { AbstractTimeRestriction } from '../model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { CloneTimeRestriction } from '../model/Utilities/CriterionCloner/TimeRestriction/CloneTimeRestriction';
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 import { Injectable } from '@angular/core';
 import { ProfileTimeRestrictionFilter } from '../model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter';
-import { CloneTimeRestriction } from '../model/Utilities/CriterionCloner/TimeRestriction/CloneTimeRestriction';
-import { AbstractProfileFilter } from '../model/DataSelection/Profile/Filter/AbstractProfileFilter';
-import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +46,7 @@ export class EditProfileService {
   public getTimeRestrictionFilter(profile: DataSelectionProfile): AbstractProfileFilter[] {
     return profile.getFilters().filter((filter) => filter.getType() === 'date');
   }
+
   /**
    * Creates a new ProfileTimeRestrictionFilter with the given time restriction.
    * @param filter The existing filter to update.

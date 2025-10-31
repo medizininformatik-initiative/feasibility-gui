@@ -1,11 +1,10 @@
+import { BackendService } from '../Backend.service';
 import { FeasibilityQueryPaths } from '../Paths/FeasibilityQueryPaths';
 import { FeasibilityQueryResultPaths } from '../Paths/FeasibilityQueryResultsPaths';
-import { FeatureService } from '../../Feature.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
-import { BackendService } from '../Backend.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +12,7 @@ import { BackendService } from '../Backend.service';
 export class FeasibilityQueryResultApiService {
   private resultObservable = null;
 
-  constructor(
-    private backendService: BackendService,
-    private http: HttpClient,
-    private feature: FeatureService
-  ) {}
+  constructor(private backendService: BackendService, private http: HttpClient) {}
 
   public getSummaryResult(feasibilityQueryResultId: string): Observable<any> {
     const url =
