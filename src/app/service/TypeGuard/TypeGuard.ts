@@ -575,7 +575,7 @@ export class TypeGuard {
     const uiProfileData = obj as UiProfileData;
     return (
       TypeGuard.isObject(uiProfileData) &&
-      TypeGuard.isDisplayData(uiProfileData.display) &&
+      TypeGuard.isString(uiProfileData.name) &&
       TypeGuard.isBoolean(uiProfileData.timeRestrictionAllowed) &&
       TypeGuard.isOptionalArray(
         uiProfileData.attributeDefinitions,
