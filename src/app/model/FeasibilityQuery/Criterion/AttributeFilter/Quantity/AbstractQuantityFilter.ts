@@ -15,8 +15,8 @@ export abstract class AbstractQuantityFilter {
   /**
    * Creates an instance of AbstractQuantityFilter.
    *
-   * @param selectedUnit - The selected quantity unit.
    * @param allowedUnits - The allowed quantity units.
+   * @param selectedUnit - The selected quantity unit.
    * @param precision - The precision of the quantity filter.
    */
   constructor(allowedUnits: QuantityUnit[], selectedUnit?: QuantityUnit, precision: number = 0) {
@@ -86,7 +86,8 @@ export abstract class AbstractQuantityFilter {
   setComparator(comparator: QuantityComparisonOption): void {
     this.comparator = comparator;
   }
-  public mapQuantityComparisonToComparator(option: QuantityComparisonOption): Comparator {
+
+  public static mapQuantityComparisonToComparator(option: QuantityComparisonOption): Comparator {
     switch (option) {
       case QuantityComparisonOption.NONE:
         return Comparator.NONE;
@@ -103,7 +104,9 @@ export abstract class AbstractQuantityFilter {
     }
   }
 
-  public mapComparatorToQuantityComparison(comparator: Comparator): QuantityComparisonOption {
+  public static mapComparatorToQuantityComparison(
+    comparator: Comparator
+  ): QuantityComparisonOption {
     switch (comparator) {
       case Comparator.NONE:
         return QuantityComparisonOption.NONE;

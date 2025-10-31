@@ -63,8 +63,8 @@ export class ListItemDetailsMenuItemsFunctionsService {
           return [];
         })
       )
-      .subscribe((details) => {
-        this.searchTermDetailsProviderService.setSearchTermDetails(details);
+      .subscribe((test) => {
+        this.searchTermDetailsProviderService.setSearchTermDetails(test);
       });
   }
 }

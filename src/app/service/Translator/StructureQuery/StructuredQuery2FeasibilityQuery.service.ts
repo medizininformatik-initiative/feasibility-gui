@@ -1,18 +1,18 @@
+import { ConsentService } from '../../Consent/Consent.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { StructuredQuery2UIQueryTranslatorService } from './StructuredQuery2UIQueryTranslator.service';
-import { v4 as uuidv4 } from 'uuid';
 import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
-import { ConsentService } from '../../Consent/Consent.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2FeasibilityQueryService {
   constructor(
-    private translator: StructuredQuery2UIQueryTranslatorService,
+    private structuredQuery2UIQueryTranslatorService: StructuredQuery2UIQueryTranslatorService,
     private consentService: ConsentService
   ) {}
 
@@ -27,19 +27,23 @@ export class StructuredQuery2FeasibilityQueryService {
     return this.combineCriteria(inclusion$, exclusion$, feasibilityQuery);
   }
 
-  private getInclusionObservable(structuredQuery: StructuredQueryData): Observable<any> {
-    return this.translator.translateInExclusion(structuredQuery.inclusionCriteria);
+  private getInclusionObservable(structuredQuery: StructuredQueryData): Observable<string[][]> {
+    return this.structuredQuery2UIQueryTranslatorService.translate(
+      structuredQuery.inclusionCriteria
+    );
   }
 
-  private getExclusionObservable(structuredQuery: StructuredQueryData): Observable<any> {
+  private getExclusionObservable(
+    structuredQuery: StructuredQueryData
+  ): Observable<string[][] | null> {
     return this.hasValidExclusionCriteria(structuredQuery)
-      ? this.translator.translateInExclusion(structuredQuery.exclusionCriteria)
+      ? this.structuredQuery2UIQueryTranslatorService.translate(structuredQuery.exclusionCriteria)
       : of(null);
   }
 
   private combineCriteria(
-    inclusion$: Observable<any>,
-    exclusion$: Observable<any>,
+    inclusion$: Observable<string[][]>,
+    exclusion$: Observable<string[][] | null>,
     feasibilityQuery: FeasibilityQuery
   ): Observable<FeasibilityQuery> {
     return forkJoin([inclusion$, exclusion$]).pipe(

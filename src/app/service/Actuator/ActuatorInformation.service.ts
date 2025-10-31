@@ -12,7 +12,9 @@ export class ActuatorInformationService {
 
   public getActuatorInformation() {
     return this.actuator.getActuatorInfo().pipe(
-      map((data) => data)
+      map((data) =>
+         data // BuildInformation.fromJson(data);
+      )
     );
   }
 }

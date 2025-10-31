@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
-import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { CriterionModalService } from 'src/app/service/Criterion/CriterionModal.service';
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { Injectable } from '@angular/core';
 import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service';
 
 @Injectable({
@@ -12,17 +10,10 @@ export class RefrenceCriterionMenuFunctionsService {
   constructor(
     private criterionProviderService: CriterionProviderService,
     private editCriterionService: CriterionModalService,
-    private referenceCriterionProvider: ReferenceCriterionProviderService,
-    private stageService: StageProviderService,
-    private queryProviderService: FeasibilityQueryProviderService
+    private referenceCriterionProvider: ReferenceCriterionProviderService
   ) {}
 
   deleteCriterion(uid: string) {
-    /*this.stageService.deleteCriterionByUID(uid);
-    this.queryProviderService.deleteFromInclusion(uid);
-    this.queryProviderService.deleteFromExclusion(uid);
-    this.criterionService.deleteCriterionFromMapByUID(uid);*/
-
     const parentID = this.referenceCriterionProvider.getReferenceCriterionByUID(uid).getParentId();
     this.criterionProviderService
       .getCriterionByUID(parentID)

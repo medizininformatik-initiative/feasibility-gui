@@ -19,15 +19,10 @@ export class CloneReferenceFilter {
       referenceFilter.getSelectedReferences()
     ) as ReferenceCriterion[];
 
-    const copiedSelectedConcepts = CloneConcept.deepCopyConcepts(
-      referenceFilter.getSelectedConcepts()
-    );
-
     return new ReferenceFilter(
       uuidv4(),
       referenceFilter.getAllowedReferenceUri(),
-      copiedSelectedReferences,
-      copiedSelectedConcepts
+      copiedSelectedReferences
     );
   }
 }

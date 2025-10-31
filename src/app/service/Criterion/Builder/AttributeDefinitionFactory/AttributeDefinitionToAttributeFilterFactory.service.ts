@@ -25,13 +25,13 @@ export class AttributeDefinitionToAttributeFilterFactoryService {
     this.factoryHelperService.addFiltersToBuilder(attributeDefinition, builder);
 
     if (attributeDefinition.getType() === FilterTypes.REFERENCE) {
-      builder.withReference(this.referenceFilterInstance(attributeDefinition));
+      builder.withReferenceFilter(this.referenceFilterInstance(attributeDefinition));
     }
     builder.withAttributeCode(attributeDefinition.getAttributeCode());
     return builder.buildAttributeFilter();
   }
 
   private referenceFilterInstance(attributeDefinition): ReferenceFilter {
-    return new ReferenceFilter(uuidv4(), attributeDefinition.getReferenceCriteriaSet(), [], []);
+    return new ReferenceFilter(uuidv4(), attributeDefinition.getReferenceCriteriaSet(), []);
   }
 }

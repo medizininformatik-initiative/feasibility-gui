@@ -55,7 +55,7 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
     abstractAttributeDefinition: AbstractAttributeDefinition,
     builder: AttributeFiltersBuilder
   ): void {
-    builder.withConcept(
+    builder.withConceptFilter(
       new ConceptFilter(uuidv4(), abstractAttributeDefinition.getReferencedValueSet(), [])
     );
   }
@@ -64,7 +64,7 @@ export class AttributeDefinitionToAttributeFilterBuilderHelperService {
     abstractAttributeDefinition: AbstractAttributeDefinition,
     builder: AttributeFiltersBuilder
   ): void {
-    builder.withQuantity(
+    builder.withQuantityFilter(
       new QuantityNotSet(
         abstractAttributeDefinition.getAllowedUnits(),
         undefined,
