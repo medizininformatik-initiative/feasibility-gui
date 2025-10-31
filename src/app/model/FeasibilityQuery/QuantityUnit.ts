@@ -75,9 +75,10 @@ export class QuantityUnit {
   }
 
   /**
-   *
+   * Creates a QuantityUnit instance from a JSON object.
    * @param json
-   * @returns QuantityUnit
+   * @returns
+   * @see {@link QuantityUnitData}
    */
   public static fromJson(json: QuantityUnitData): QuantityUnit {
     return new QuantityUnit(json.code, json.display, json?.system);

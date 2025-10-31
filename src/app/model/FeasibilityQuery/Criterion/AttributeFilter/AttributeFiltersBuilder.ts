@@ -1,6 +1,8 @@
 import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
 import { AttributeFilter } from './AttributeFilter';
+import { Concept } from './Concept/Concept';
 import { ConceptFilter } from './Concept/ConceptFilter';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityNotSet } from './Quantity/QuantityNotSet';
 import { QuantityUnit } from '../../../FeasibilityQuery/QuantityUnit';
@@ -8,11 +10,9 @@ import { ReferenceCriterion } from '../ReferenceCriterion';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
 import { TerminologyCode } from '../../../Terminology/TerminologyCode';
 import { ValueFilter } from './ValueFilter';
-import { Concept } from './Concept/Concept';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 /**
- * Builder class for constructing instances of AbstractAttributeFilters and its subclasses.
+ * Builder class for constructing instances of Valuefilter and AttributeFilter and its subclasses.
  */
 export class AttributeFiltersBuilder {
   private display: Display;
@@ -35,7 +35,7 @@ export class AttributeFiltersBuilder {
    * @param concept - Concept filter to set.
    * @returns The builder instance.
    */
-  withConcept(concept: ConceptFilter): AttributeFiltersBuilder {
+  public withConceptFilter(concept: ConceptFilter): AttributeFiltersBuilder {
     this.concept = concept;
     return this;
   }
@@ -43,10 +43,10 @@ export class AttributeFiltersBuilder {
   /**
    * Sets the reference filter.
    *
-   * @param reference - Reference filter to set.
+   * @param - Reference filter to set.
    * @returns The builder instance.
    */
-  withReference(reference: ReferenceFilter): AttributeFiltersBuilder {
+  public withReferenceFilter(reference: ReferenceFilter): AttributeFiltersBuilder {
     this.reference = reference;
     return this;
   }
@@ -57,7 +57,7 @@ export class AttributeFiltersBuilder {
    * @param quantity - Quantity filter to set.
    * @returns The builder instance.
    */
-  withQuantity(quantity: AbstractQuantityFilter): AttributeFiltersBuilder {
+  public withQuantityFilter(quantity: AbstractQuantityFilter): AttributeFiltersBuilder {
     this.quantity = quantity;
     return this;
   }
@@ -68,7 +68,7 @@ export class AttributeFiltersBuilder {
    * @param attributeCode - Attribute code to set.
    * @returns The builder instance.
    */
-  withAttributeCode(attributeCode: TerminologyCode): AttributeFiltersBuilder {
+  public withAttributeCode(attributeCode: TerminologyCode): AttributeFiltersBuilder {
     this.attributeCode = attributeCode;
     return this;
   }
@@ -78,7 +78,7 @@ export class AttributeFiltersBuilder {
    *
    * @returns An instance of AttributeFilter.
    */
-  buildAttributeFilter(): AttributeFilter {
+  public buildAttributeFilter(): AttributeFilter {
     return new AttributeFilter(
       this.display,
       this.filterType,
@@ -95,7 +95,7 @@ export class AttributeFiltersBuilder {
    *
    * @returns An instance of ValueFilter.
    */
-  buildValueFilter(): ValueFilter {
+  public buildValueFilter(): ValueFilter {
     return new ValueFilter(
       this.display,
       this.filterType,
@@ -110,7 +110,7 @@ export class AttributeFiltersBuilder {
    *
    * @returns An instance of QuantityFilter.
    */
-  buildQuantityFilter(
+  public buildQuantityFilter(
     allowedUnits?: QuantityUnit[],
     precision?: number,
     selectedUnit?: QuantityUnit
@@ -118,7 +118,7 @@ export class AttributeFiltersBuilder {
     return new QuantityNotSet(allowedUnits, selectedUnit, precision);
   }
 
-  buildConceptFilter(id: string, allowedConceptUri: string[], selectedConcepts?: Concept[]) {
+  public buildConceptFilter(id: string, allowedConceptUri: string[], selectedConcepts?: Concept[]) {
     return new ConceptFilter(id, allowedConceptUri, selectedConcepts);
   }
 
@@ -127,12 +127,11 @@ export class AttributeFiltersBuilder {
    *
    * @returns An instance of ReferenceFilter.
    */
-  buildReferenceFilter(
+  public buildReferenceFilter(
     id: string,
     allowedReferenceUri: string[],
-    selectedReference?: ReferenceCriterion[],
-    selectedConcepts?: Concept[]
+    selectedReference?: ReferenceCriterion[]
   ): ReferenceFilter {
-    return new ReferenceFilter(id, allowedReferenceUri, selectedReference, selectedConcepts);
+    return new ReferenceFilter(id, allowedReferenceUri, selectedReference);
   }
 }
