@@ -3,6 +3,7 @@ import { AttributeDefinitionsResultMapper } from './Mapper/AttributeDefinitionsR
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 import { CriteriaProfile } from 'src/app/model/FeasibilityQuery/CriteriaProfileData';
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { finalize, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -11,11 +12,9 @@ import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
+import { UiProfileProviderService } from '../Provider/UiProfileProvider.service';
 import { ValueDefinition } from '../../model/Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueDefinitionsResultMapper } from './Mapper/ValueDefinitionsResultMapper';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { v4 as uuidv4 } from 'uuid';
 @Injectable({
   providedIn: 'root',
 })
@@ -24,7 +23,8 @@ export class CriteriaProfileDataService {
 
   constructor(
     private terminologyApiService: TerminologyApiService,
-    private listItemService: SelectedTableItemsService<CriteriaListEntry>
+    private listItemService: SelectedTableItemsService<CriteriaListEntry>,
+    private uiProfileProviderService: UiProfileProviderService
   ) {}
 
   /**
@@ -58,7 +58,8 @@ export class CriteriaProfileDataService {
 
   private createCriteriaProfileData(response: CriteriaProfileData): CriteriaProfile | undefined {
     try {
-      if (response.uiProfile) {
+      if (response.uiProfileId) {
+        const uiProfile = this.uiProfileProviderService.getUiProfileById(response.uiProfileId);
         const context = TerminologyCode.fromJson(response.context);
         const termCodes = this.mapTerminologyCodes(response.termCodes);
         const id = response.id;
@@ -67,11 +68,11 @@ export class CriteriaProfileDataService {
         return new CriteriaProfile(
           id,
           Display.fromJson(display),
-          response.uiProfile.timeRestrictionAllowed,
-          this.mapAttributeDefinitions(response.uiProfile),
+          uiProfile.timeRestrictionAllowed,
+          this.mapAttributeDefinitions(uiProfile),
           context,
           termCodes,
-          this.mapValueDefinition(response.uiProfile)
+          this.mapValueDefinition(uiProfile)
         );
       } else {
         const id = response.id ? response.id : 'Unknown ID';
