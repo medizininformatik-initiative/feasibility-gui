@@ -34,12 +34,12 @@ export class CriterionTranslatorService {
     this.applyValueFilters(
       criterionBuilder,
       structuredQueryCriterion,
-      criteriaProfileData.uiProfile.name
+      criteriaProfileData.uiProfileId
     );
     this.applyAttributeFilters(
       criterionBuilder,
       structuredQueryCriterion,
-      criteriaProfileData.uiProfile.name,
+      criteriaProfileData.uiProfileId,
       criterionId
     );
     this.applyTimeRestriction(criterionBuilder, structuredQueryCriterion);
@@ -69,12 +69,12 @@ export class CriterionTranslatorService {
   private applyValueFilters(
     criterionBuilder: CriterionBuilder,
     structuredQueryCriterion: StructuredQueryCriterionData,
-    uiProfileName: string
+    uiProfileId: string
   ): void {
     if (!structuredQueryCriterion.valueFilter) {
       return;
     }
-    const uiProfile = this.uiProfileProviderService.getUiProfileById(uiProfileName);
+    const uiProfile = this.uiProfileProviderService.getUiProfileById(uiProfileId);
     const valueFilter: ValueFilter = this.attributeFilterTranslatorService.translateValueFilters(
       uiProfile.valueDefinition,
       structuredQueryCriterion.valueFilter
@@ -85,15 +85,15 @@ export class CriterionTranslatorService {
   private applyAttributeFilters(
     criterionBuilder: CriterionBuilder,
     structuredQueryCriterion: StructuredQueryCriterionData,
-    uiProfileName: string,
+    uiProfileId: string,
     criterionId: string
   ): void {
     if (!structuredQueryCriterion.attributeFilters) {
       return;
     }
-
+    console.log(uiProfileId);
     const attributeDefinitions =
-      this.uiProfileProviderService.getUiProfileById(uiProfileName).attributeDefinitions;
+      this.uiProfileProviderService.getUiProfileById(uiProfileId).attributeDefinitions;
     const attributeFilters: AttributeFilter[] =
       this.attributeFilterTranslatorService.translateAttributeFilters(
         attributeDefinitions,

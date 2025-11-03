@@ -4,15 +4,13 @@ import { ConceptTranslationCacheService } from '../ConceptTranslationCache.servi
 import { ConsentService } from '../../Consent/Consent.service';
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
 import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { CriterionTranslatorService } from './CriterionTranslator.service';
 import { Injectable } from '@angular/core';
-import { map, Observable, Subscription, switchMap, tap } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData';
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { UiProfileProviderService } from '../../Provider/UiProfileProvider.service';
-import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +20,6 @@ export class StructuredQuery2UIQueryTranslatorService {
     private conceptTranslationCache: ConceptTranslationCacheService,
     private consentService: ConsentService,
     private collectCRTDLHashesService: CollectCRTDLHashesService,
-    private uiProfileProviderService: UiProfileProviderService,
     private criteriaProfileProviderService: CriteriaProfileProviderService,
     private criterionTranslatorService: CriterionTranslatorService,
     private criterionProviderService: CriterionProviderService
@@ -35,11 +32,6 @@ export class StructuredQuery2UIQueryTranslatorService {
     return this.terminologyApiService.getCriteriaProfileData(criteriaHahes).pipe(
       tap((criteriaProfileData: CriteriaProfileData[]) =>
         this.criteriaProfileProviderService.setCachedCriteriaProfiles(criteriaProfileData)
-      ),
-      map((criteriaProfileData: CriteriaProfileData[]) =>
-        this.uiProfileProviderService.cacheUiProfiles(
-          criteriaProfileData.map((data) => data.uiProfile)
-        )
       ),
       switchMap(() => this.terminologyApiService.getCodeableConceptsByIds(conceptHahes)),
       tap((conceptsData: ConceptData[]) =>
