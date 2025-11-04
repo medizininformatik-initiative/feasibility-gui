@@ -209,7 +209,7 @@ export class TypeGuard {
       TypeGuard.isObject(criteriaProfileData) &&
       TypeGuard.isString(criteriaProfileData.id) &&
       TypeGuard.isDisplayData(criteriaProfileData.display) &&
-      TypeGuard.isUiProfileData(criteriaProfileData.uiProfile) &&
+      TypeGuard.isString(criteriaProfileData.uiProfileId) &&
       TypeGuard.isTerminologyCodeData(criteriaProfileData.context) &&
       Array.isArray(criteriaProfileData.termCodes) &&
       criteriaProfileData.termCodes.every(TypeGuard.isTerminologyCodeData)

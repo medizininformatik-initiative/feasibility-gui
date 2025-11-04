@@ -6,6 +6,7 @@ import { FilterProvider } from './Filter/SearchFilterProvider.service';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
+import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
 
 /**
  * Core search engine service for executing search operations and managing filters.
@@ -37,9 +38,12 @@ export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultL
    * @param mapper - The result mapper for transforming API response to typed objects
    * @returns An Observable that emits the mapped search results
    */
-  public fetchAndMapSearchResults(url: string, mapper: AbstractResultMapper<C, T>): Observable<T> {
+  public fetchAndMapSearchResults<L extends ListEntryData>(
+    url: string,
+    mapper: AbstractResultMapper<C, T>
+  ): Observable<T> {
     return this.terminologyApiService
-      .getElasticSearchResults(url)
+      .getSearchResults<L>(url)
       .pipe(map((response) => mapper.mapResponseToResultList(response)));
   }
 

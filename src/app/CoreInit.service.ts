@@ -9,7 +9,10 @@ import { Injectable } from '@angular/core';
 import { OAuthInitService } from './core/auth/OAuthInit.service';
 import { Observable, of, throwError } from 'rxjs';
 import { ProvidersInitService } from './service/Provider/ProvidersInit.service';
+import { TerminologyApiService } from './service/Backend/Api/TerminologyApi.service';
 import { TerminologySystemProvider } from './service/Provider/TerminologySystemProvider.service';
+import { UiProfileProviderService } from './service/Provider/UiProfileProvider.service';
+import { UiProfileResponseData } from './model/Interface/UiProfileResponseData';
 import { UserProfileService } from './service/User/UserProfile.service';
 @Injectable({ providedIn: 'root' })
 export class CoreInitService {
@@ -21,7 +24,9 @@ export class CoreInitService {
     private terminologySystemProvider: TerminologySystemProvider,
     private providersInitService: ProvidersInitService,
     private actuatorApiService: ActuatorApiService,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private terminologyApiService: TerminologyApiService,
+    private uiProfileProviderService: UiProfileProviderService
   ) {}
 
   /**
@@ -37,6 +42,7 @@ export class CoreInitService {
       concatMap(() => this.loadDataportalSettings()),
       concatMap(() => this.initUserProfile()),
       concatMap(() => this.checkBackendHealth()),
+      concatMap(() => this.getUiProfilesData()),
       concatMap(() => this.initTerminologySystems()),
       concatMap(() =>
         this.initPatientProfile().pipe(map((patientProfileResult) => ({ patientProfileResult })))
@@ -50,6 +56,10 @@ export class CoreInitService {
     ) as Observable<AppConfigData>;
   }
 
+  /**
+   * Loads the application configuration.
+   * @returns An observable of the application configuration.
+   */
   private loadAppConfig(): Observable<AppConfigData> {
     return this.appConfigService.loadAppConfig().pipe(
       tap((config) => console.log('AppConfig loaded:', !!config)),
@@ -60,12 +70,13 @@ export class CoreInitService {
     );
   }
 
+  /**
+   * Loads the dataportal settings from the backend.
+   * @returns
+   */
   private loadDataportalSettings(): Observable<void> {
     return this.dataportalConfigService.loadDataportalConfig().pipe(
-      tap((config) => {
-        //const config = this.appConfigService.loadAppConfig()
-        console.log('Dataportal settings loaded:', true);
-      }),
+      tap((config) => console.log('Dataportal settings loaded:', !!config)),
       map(() => undefined),
       catchError((err) => {
         console.error('Dataportal settings load failed:', err);
@@ -74,6 +85,10 @@ export class CoreInitService {
     );
   }
 
+  /**
+   * Initializes OAuth.
+   * @returns
+   */
   private initOAuth(): Observable<boolean> {
     return this.oauthInitService.initOAuth().pipe(
       tap((result) => console.log('OAuth initialized:', result)),
@@ -84,12 +99,20 @@ export class CoreInitService {
     );
   }
 
+  /**
+   * Initializes the user profile.
+   * @returns
+   */
   private initUserProfile(): Observable<boolean> {
     return this.userProfileService
       .initializeProfile()
       .pipe(tap((result) => console.log('UserProfile initialized:', result)));
   }
 
+  /**
+   * Checks the health of the backend.
+   * @returns
+   */
   private checkBackendHealth(): Observable<boolean> {
     return this.actuatorApiService.getActuatorHealth().pipe(
       map((result) => (typeof result === 'boolean' ? result : true)),
@@ -101,6 +124,29 @@ export class CoreInitService {
     );
   }
 
+  /**
+   * Returns the UI Profiles data from the backend and caches them.
+   * @returns
+   */
+  private getUiProfilesData(): Observable<UiProfileResponseData[]> {
+    return this.terminologyApiService.getUiProfileData().pipe(
+      tap((uiProfileResponseData: UiProfileResponseData[]) =>
+        this.uiProfileProviderService.cacheUiProfiles(uiProfileResponseData)
+      ),
+      tap((data: UiProfileResponseData[]) =>
+        console.log('UiProfiles data retrieved:', data.length)
+      ),
+      catchError((err) => {
+        console.error('Failed to retrieve UiProfiles data:', err);
+        return throwError(() => err);
+      })
+    );
+  }
+
+  /**
+   * Initializes the terminology systems.
+   * @returns
+   */
   private initTerminologySystems(): Observable<boolean> {
     return this.terminologySystemProvider.initializeTerminologySystems().pipe(
       tap((result) => console.log('TerminologySystems initialized:', result === true)),
@@ -116,6 +162,11 @@ export class CoreInitService {
     );
   }
 
+  /**
+   * Initializes the providers.
+   * @param patientProfileResult
+   * @returns
+   */
   private initializeProviders(patientProfileResult: DataSelectionProfile): Observable<boolean> {
     return this.providersInitService.initializeProviders(patientProfileResult).pipe(
       tap((result) => console.log('Providers initialized:', result === true)),
@@ -131,6 +182,10 @@ export class CoreInitService {
     );
   }
 
+  /**
+   * Initializes the patient profile for the feature selection.
+   * @returns
+   */
   private initPatientProfile(): Observable<DataSelectionProfile> {
     return this.dataSelectionMainProfileInitializerService.initializePatientProfile().pipe(
       tap((result) => console.log('PatientProfile initialized:', !!result)),

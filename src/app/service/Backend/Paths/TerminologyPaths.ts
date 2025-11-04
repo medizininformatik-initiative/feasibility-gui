@@ -7,7 +7,7 @@ export class TerminologyPaths {
   public static readonly SEARCH_FILTER_ENDPOINT = `${TerminologyPaths.BASE_URL}/search/filter`;
   public static readonly SYSTEMS_ENDPOINT = `${TerminologyPaths.BASE_URL}/systems`;
   public static readonly RELATIONS_ENDPOINT = '/relations';
-  public static readonly UIPROFILE_ENDPOINT = '/ui-profile';
+  public static readonly UIPROFILE_ENDPOINT = `${TerminologyPaths.BASE_URL}/ui-profile`;
 
   public static getBaseUrl() {
     return this.BASE_URL;
