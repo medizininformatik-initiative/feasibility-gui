@@ -97,7 +97,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   private isProfile(): boolean {
-    return this.type === PathSegments.profile;
+    return this.type === PathSegments.feature;
   }
 
   private isCriterion(): boolean {

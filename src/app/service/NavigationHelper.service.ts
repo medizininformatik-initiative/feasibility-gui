@@ -16,7 +16,7 @@ export class NavigationHelperService {
   }
 
   navigateToEditProfile(id: string): void {
-    this.router.navigate([`${UrlPaths.queryEditor.profile}`, id]);
+    this.router.navigate([`${UrlPaths.queryEditor.feature}`, id]);
   }
 
   public navigateToFeasibilityQueryEditor(): void {

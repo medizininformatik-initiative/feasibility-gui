@@ -15,7 +15,7 @@ export const PathSegments = {
   cohortDefinition: 'cohort-definition',
   dataSelection: 'data-selection',
   criterion: 'criterion',
-  profile: 'profile',
+  feature: 'feature',
 };
 
 export const UrlPaths = {
@@ -34,6 +34,6 @@ export const UrlPaths = {
   },
   queryEditor: {
     criteria: `${BasePaths.queryEditor}/${PathSegments.criterion}`,
-    profile: `${BasePaths.queryEditor}/${PathSegments.profile}`,
+    feature: `${BasePaths.queryEditor}/${PathSegments.feature}`,
   },
 };
