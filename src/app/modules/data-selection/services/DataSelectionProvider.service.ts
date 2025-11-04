@@ -1,5 +1,5 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
-import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
@@ -62,9 +62,10 @@ export class DataSelectionProviderService {
   }
 
   public setProfileInActiveDataSelection(profile: DataSelectionProfile): Observable<void> {
-    return this.activeDataSelection
-      .getActiveDataSelectionIdObservable()
-      .pipe(map((id) => this.setProfileInDataSelection(id, profile)));
+    return this.activeDataSelection.getActiveDataSelectionIdObservable().pipe(
+      distinctUntilChanged(),
+      map((id) => this.setProfileInDataSelection(id, profile))
+    );
   }
 
   public setDataSelectionByUID(
@@ -100,7 +101,7 @@ export class DataSelectionProviderService {
   public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
     if (dataSelection) {
-      const profiles = DataSelectionProfileCloner.deepCopyProfiles(dataSelection.getProfiles());
+      const profiles = dataSelection.getProfiles();
       const index = profiles.findIndex(
         (existingProfile) => existingProfile.getId() === profile.getId()
       );
