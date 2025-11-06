@@ -1,3 +1,5 @@
+import { AttributesData } from 'src/app/model/Interface/AttributesData';
+
 export class Attributes {
   attributeRef: string;
   mustHave: boolean;
@@ -33,7 +35,7 @@ export class Attributes {
     this.mustHave = value;
   }
 
-  public static fromJson(json: any): Attributes {
+  public static fromJson(json: AttributesData): Attributes {
     return new Attributes(json.attributeRef, json.mustHave, json.linkedGroups);
   }
 }
