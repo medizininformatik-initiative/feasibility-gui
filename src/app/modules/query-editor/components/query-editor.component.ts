@@ -1,14 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, of, Subscription, switchMap, take, tap } from 'rxjs';
+import { combineLatest, Observable, of, Subscription, switchMap } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { PathSegments } from 'src/app/app-paths';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
-import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -31,9 +28,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     private criterionProviderService: CriterionProviderService,
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
-    private stagedProfileService: StagedProfileService,
-    private possibleReferencesService: PossibleReferencesService,
-    private snackbarService: SnackbarService
+    private possibleReferencesService: PossibleReferencesService
   ) {}
 
   ngOnInit(): void {
@@ -75,21 +70,8 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     this.deepCopyCriterion = criterion;
   }
 
-  public saveElement(): void {
-    if (this.isProfile()) {
-      this.buildProfileSubscription?.unsubscribe();
-      this.buildProfileSubscription = this.stagedProfileService
-        .buildProfile()
-        .pipe(take(1))
-        .subscribe(() => {
-          this.snackbarService.displayInfoMessage('EDITOR.CONTENT.PROFILE.SNACKBAR.SAVED');
-        });
-    }
-  }
-
   public onCancel(): void {
     if (this.isProfile()) {
-      this.possibleReferencesService.clearPossibleReferencesMap();
       this.navigationHelperService.navigateToDataSelectionEditor();
     } else if (this.isCriterion()) {
       this.navigationHelperService.navigateToFeasibilityQueryEditor();
