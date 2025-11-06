@@ -6,7 +6,6 @@ import { ElementIdMapService } from './ElementIdMap.service';
 import { Injectable } from '@angular/core';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
-import { StagedProfileService } from './StagedDataSelectionProfile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -66,7 +65,7 @@ export class PossibleReferencesService {
               fieldDef
                 ?.getReferencedProfiles()
                 .map((referencedProfile) => referencedProfile.getUrl()) ?? [];
-            const linkedIds = this.getLinkedProfilesIdsFromSelectedRefrenceFields(
+            const linkedIds = this.getLinkedProfilesIdsFromSelectedReferenceFields(
               parentProfile,
               elementId
             );
@@ -92,7 +91,7 @@ export class PossibleReferencesService {
     return this.possibleReferencesMapSubject.asObservable();
   }
 
-  public getLinkedProfilesIdsFromSelectedRefrenceFields(
+  public getLinkedProfilesIdsFromSelectedReferenceFields(
     parentProfile: DataSelectionProfile,
     elementId: string
   ): string[] {
@@ -175,8 +174,8 @@ export class PossibleReferencesService {
     parentProfileId: string
   ): Observable<PossibleProfileReferenceData[]> {
     return this.createDataSelectionProfileService.fetchDataSelectionProfileData(urls, true).pipe(
-      take(1),
       map((profiles: DataSelectionProfile[]) => {
+        this.dataSelectionProviderService.setProfilesInActiveDataSelection(profiles);
         const possibleReferences = this.mapProfilesToReferences(profiles);
         const currentMap = this.possibleReferencesMapSubject.getValue();
         const outerMap =

@@ -19,18 +19,18 @@ export class SelectedBasicField extends AbstractSelectedField {
   }
 
   public getDisplay() {
-    return this.selectedField.field.getDisplay();
+    return this.selectedField.getField().getDisplay();
   }
 
   public getDescription() {
-    return this.selectedField.field.getDescription();
+    return this.selectedField.getField().getDescription();
   }
 
   public getElementId() {
-    return this.selectedField.field.getElementId();
+    return this.selectedField.getField().getElementId();
   }
 
   public getIsRequired(): boolean {
-    return this.selectedField.field.getIsRequired();
+    return this.selectedField.getField().getIsRequired();
   }
 }

@@ -1,19 +1,15 @@
-import { Injectable } from '@angular/core';
+import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { debounceTime, map, take } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { NavigationHelperService } from './NavigationHelper.service';
 import { Observable } from 'rxjs';
-import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
-import { ProviderNavigationService } from './ProviderNavigation.service';
 import { StagedProfileService } from './StagedDataSelectionProfile.service';
-import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileProviderIteratorService {
   constructor(
-    private profileProviderService: ProfileProviderService,
-    private providerNavigationService: ProviderNavigationService,
     private navigationHelperService: NavigationHelperService,
     private stagedProfileService: StagedProfileService,
     private dataSelectionProvider: DataSelectionProviderService

@@ -1,7 +1,7 @@
 import { AbstractField } from './AbstractField';
 
 export class SelectedField<T extends AbstractField> {
-  field: T;
+  private field: T;
 
   constructor(field: T, mustHave: boolean) {
     this.field = field;

@@ -74,6 +74,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
       .openProfileReferenceModal(this.referencedProfileUrls, this.profileId)
       .pipe(
         take(1),
+        filter((urls) => urls.length > 0),
         switchMap((urls: string[]) =>
           this.possibleReferencesService.fetchProfilesAndMapToPossibleReferences(
             urls,
@@ -87,8 +88,8 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
       );
   }
 
-  private onReferencesConfirmed(selected: PossibleProfileReferenceData[]) {
-    const selectedFields =
+  private onReferencesConfirmed(selected: PossibleProfileReferenceData[]): void {
+    const selectedFields: SelectedReferenceField =
       this.createSelectedReferenceService.mapPossibleReferencesToSelectedReferences(
         selected,
         this.referenceField
