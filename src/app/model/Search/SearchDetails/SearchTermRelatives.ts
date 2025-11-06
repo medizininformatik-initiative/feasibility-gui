@@ -6,19 +6,28 @@ import { CriteriaRelativeData } from '../../Interface/CriteriaRelativesData';
  */
 export class SearchTermRelatives {
   private display: Display;
+  private readonly selectable: boolean = true;
   private readonly contextualizedTermcodeHash: string;
-  constructor(display: Display, contextualizedTermcodeHash: string) {
+  constructor(display: Display, contextualizedTermcodeHash: string, selectable: boolean = true) {
     this.display = display;
     this.contextualizedTermcodeHash = contextualizedTermcodeHash;
+    this.selectable = selectable;
   }
 
+  public getSelectable(): boolean {
+    return this.selectable;
+  }
+
+  /**
+   * Gets the display of the term.
+   * @returns The display of the term.
+   */
   public getDisplay(): Display {
     return this.display;
   }
 
   /**
    * Sets the display of the term.
-   *
    * @param display - The new display of the term.
    */
   public setDisplay(display: Display): void {
@@ -27,16 +36,21 @@ export class SearchTermRelatives {
 
   /**
    * Gets the contextualized term code hash.
-   *
    * @returns The contextualizedTermcodeHash as a string, or undefined if not set.
    */
   public getContextualizedTermcodeHash(): string | undefined {
     return this.contextualizedTermcodeHash;
   }
 
+  /**
+   *
+   * @param json
+   * @returns
+   */
   public static fromJson(json: CriteriaRelativeData): SearchTermRelatives {
     const display = Display.fromJson(json.display);
     const contextualizedTermcodeHash = json.contextualizedTermcodeHash;
-    return new SearchTermRelatives(display, contextualizedTermcodeHash);
+    const selectable = json.selectable;
+    return new SearchTermRelatives(display, contextualizedTermcodeHash, selectable);
   }
 }

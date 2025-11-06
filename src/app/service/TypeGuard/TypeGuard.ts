@@ -371,6 +371,7 @@ export class TypeGuard {
     const relatives = obj as CriteriaRelativeData;
     return (
       TypeGuard.isObject(relatives) &&
+      TypeGuard.isBoolean(relatives.selectable) &&
       TypeGuard.isDisplayData(relatives.display) &&
       TypeGuard.isString(relatives.contextualizedTermcodeHash)
     );
