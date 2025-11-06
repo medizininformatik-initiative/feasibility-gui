@@ -1,5 +1,4 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
-import { ActiveDataSelectionService } from './Provider/ActiveDataSelection.service';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
@@ -29,7 +28,6 @@ export class StagedProfileService {
   public readonly profile$ = this.stagedProfileSubject.asObservable();
 
   constructor(
-    private activeDataSelectionService: ActiveDataSelectionService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private profileProviderService: ProfileProviderService,
     private snackbarService: SnackbarService
@@ -70,7 +68,6 @@ export class StagedProfileService {
     const profile = this.stagedProfileSubject.value;
     if (profile) {
       profile.getProfileFields().setSelectedBasicFields(selectedBasicFields);
-      this.triggerUpdate(profile);
       this.buildProfile();
     }
   }
@@ -84,7 +81,6 @@ export class StagedProfileService {
     const profile = this.stagedProfileSubject.value;
     if (profile) {
       profile.setFilters(filters);
-      this.triggerUpdate(profile);
       this.buildProfile();
     }
   }
@@ -101,7 +97,6 @@ export class StagedProfileService {
     if (profile) {
       profile.getProfileFields().setSelectedReferenceFields(selectedReferenceFields);
       this.setLinkedProfillesInDataSelectionProvdier();
-      this.triggerUpdate(profile);
       this.buildProfile();
     }
   }
@@ -115,7 +110,6 @@ export class StagedProfileService {
     const profile = this.stagedProfileSubject.value;
     if (profile) {
       profile.setLabel(label);
-      this.triggerUpdate(profile);
       this.buildProfile();
     }
   }
@@ -149,7 +143,7 @@ export class StagedProfileService {
         linkedProfileIds.map((id) => {
           const profile = profileMap.get(id);
           if (profile) {
-            return this.setProfileInDataSelection(profile);
+            return this.setProfileInDataSelectionProvider(profile);
           }
         })
       )
@@ -177,7 +171,7 @@ export class StagedProfileService {
     const profile = this.stagedProfileSubject.value;
     this.triggerUpdate(profile);
     this.profileProviderService.setProfileById(profile.getId(), profile);
-    this.setProfileInDataSelection(profile);
+    this.setProfileInDataSelectionProvider(profile);
     this.snackbarService.displayInfoMessage('EDITOR.CONTENT.PROFILE.SNACKBAR.SAVED');
     return this.setLinkedProfillesInDataSelectionProvdier();
   }
@@ -198,8 +192,7 @@ export class StagedProfileService {
    * @returns
    * @private
    */
-  private setProfileInDataSelection(profile: DataSelectionProfile): void {
-    const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-    this.dataSelectionProviderService.setProfileInDataSelection(dataSelectionId, profile);
+  private setProfileInDataSelectionProvider(profile: DataSelectionProfile): void {
+    this.dataSelectionProviderService.setProfileInActiveDataSelection(profile);
   }
 }
