@@ -1,5 +1,5 @@
-import { DisplayData } from 'src/app/model/Interface/DisplayData';
 import { Display } from '../../Display';
+import { ReferencedProfileData } from 'src/app/model/Interface/ReferencedProfileData';
 
 export class ReferencedProfile {
   private readonly url: string;
@@ -21,5 +21,13 @@ export class ReferencedProfile {
 
   public getFields(): Display {
     return this.fields;
+  }
+
+  public static fromJson(data: ReferencedProfileData): ReferencedProfile {
+    return new ReferencedProfile(
+      data.url,
+      Display.fromJson(data.display),
+      Display.fromJson(data.fields)
+    );
   }
 }
