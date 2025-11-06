@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-ONTOLOGY_GIT_TAG=${ONTOLOGY_GIT_TAG:-v3.9.0}
+ONTOLOGY_GIT_TAG=${ONTOLOGY_GIT_TAG:-v3.9.1}
 
 BASE_DIR="../../cypress/docker/ontology"
 DSE_DIR="$BASE_DIR/dse"
