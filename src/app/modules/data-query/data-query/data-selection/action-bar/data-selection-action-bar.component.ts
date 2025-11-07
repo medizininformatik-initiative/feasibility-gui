@@ -66,7 +66,11 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
     this.downloadSubscription = this.dialog
       .open(DownloadDataSelectionComponent, dialogConfig)
       .afterClosed()
-      .subscribe(() => {});
+      .subscribe((isCancelled: boolean) => {
+        if (!isCancelled) {
+          this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
+        }
+      });
   }
 
   public uploadCCDL(event: Event): void {
