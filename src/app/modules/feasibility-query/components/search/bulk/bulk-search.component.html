@@ -1,0 +1,49 @@
+<div fxFlexFill fxLayout="column" fxLayoutAlign="start">
+  <div>
+    <num-header>{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
+    <num-header-description>
+      {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
+    </num-header-description>
+  </div>
+  <div class="search-container width-100">
+    <form
+      #searchForm="ngForm"
+      class="example-form"
+      fxLayout="column"
+      fxLayoutAlign="start stretch"
+      style="height: 100px; width: 300px; resize: none"
+    >
+      <mat-form-field class="example-full-width" style="height: 100px; width: 300px; resize: none">
+        <textarea
+          style="height: 100px; width: 300px; resize: none"
+          name="searchText"
+          matInput
+          rows="4"
+          cols="50"
+          ngModel
+        ></textarea>
+      </mat-form-field>
+    </form>
+    <num-button (click)="submitComment(searchForm)"></num-button>
+  </div>
+  <div class="filter-container">
+    <num-search-filter
+      *ngFor="let searchFilter of searchFilters$ | async"
+      [filter]="searchFilter"
+      (selectedFilterChanged)="setElasticSearchFilter($event)"
+    ></num-search-filter>
+    <num-button [isDisabled]="resetFilterEnabled$ | async" type="blue" (click)="resetFilter()">
+      {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
+    </num-button>
+  </div>
+  <num-table (selectedRow)="setSelectedRowItem($event)" [tableData]="adaptedData"></num-table>
+  <div *ngIf="!searchResultsFound" class="no-results-box">
+    <num-placeholder-box class="no-results-text"
+      >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+      >"</num-placeholder-box
+    >
+  </div>
+  <div>
+    <num-search-action-bar></num-search-action-bar>
+  </div>
+</div>
