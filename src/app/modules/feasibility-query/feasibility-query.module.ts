@@ -43,6 +43,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { ResultActionBarComponent } from './components/result/action-bar/result-action-bar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FeasibilityQueryBulkSearchComponent } from './components/search/bulk/bulk-search.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -87,6 +88,7 @@ export const FORMATS_GERMAN = {
     SearchActionBarComponent,
     DisplayCriteriaComponent,
     ResultActionBarComponent,
+    FeasibilityQueryBulkSearchComponent,
   ],
   imports: [
     CommonModule,
