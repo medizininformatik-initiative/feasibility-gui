@@ -17,6 +17,9 @@
     <num-button [isDisabled]="!searchText" type="blue" (click)="startSearch()">
       {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
     </num-button>
+    <div class="margin-left-auto">
+      <num-toggle-search></num-toggle-search>
+    </div>
   </div>
   <div class="filter-container">
     <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
@@ -64,7 +67,6 @@
         (selectedRow)="setSelectedRowItem($event)"
         (rowClicked)="setClickedRow($event)"
         [tableData]="adaptedData"
-        fxFlexFill
       ></num-table>
     </mat-drawer-content>
   </mat-drawer-container>
