@@ -27,6 +27,10 @@ export class NavigationHelperService {
     this.router.navigate([UrlPaths.feasibilityQuery.search]);
   }
 
+  public navigateToBulkSearch(): void {
+    this.router.navigate([UrlPaths.feasibilityQuery.bulkSearch]);
+  }
+
   /** Data Selection Navigation */
   public navigateToDataSelectionEditor(): void {
     this.router.navigate([UrlPaths.dataSelection.editor]);
