@@ -6,7 +6,7 @@ import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { filter, map, Observable, of, Subscription } from 'rxjs';
+import { filter, map, Observable, of, Subscription, tap } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
@@ -29,6 +29,8 @@ import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.servic
 import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria.service';
+import { CriteriaBulkListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkListEntryAdapter';
+import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList';
 
 @Component({
   selector: 'num-feasibility-query-bulk-search',
@@ -76,7 +78,6 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy, A
     private searchTermDetailsProviderService: SearchTermDetailsProviderService,
     private criteriaSearchService: CriteriaSearchService,
     private snackbarService: SnackbarService,
-    private terminologyApiService: TerminologyApiService,
     private bulkCriteriaService: BulkCriteriaService
   ) {}
 
@@ -103,18 +104,22 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy, A
   public submitComment(form: any) {
     const comment = form.value.searchText;
 
-    const input = '28608-8 22608-4 6827-0       71667, 07908;;;;711157///531592///922192-9';
-
-    const result = input.match(/\d+-\d+/g)?.join('\n');
+    const input = '424144002,263495000 ';
 
     this.bulkCriteriaService
-      .search(result, 'http://snomed.info/sct', 'Patient')
-      .subscribe((response) => console.log(response));
-    const body = {
-      terminology: 'http://snomed.info/sct',
-      context: 'Patient',
-      searchterms: [comment],
-    };
+      .search(input)
+      .pipe(
+        tap((response: CriteriaBulkResultList) =>
+          response.getFound().length > 0
+            ? (this.searchResultsFound = true)
+            : (this.searchResultsFound = false)
+        )
+      )
+      .subscribe((response) => {
+        const test = CriteriaBulkListEntryAdapter.adapt(response.getFound());
+        this.adaptedData = test;
+        console.log(test);
+      });
   }
 
   /** Search Result Handling */
@@ -201,20 +206,10 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy, A
       newFilter.filterType,
       newFilter.selectedValues
     );
-    this.startSearch(this.searchText);
   }
 
   public resetFilter(): void {
     this.searchFilterProvider.resetSelectedValues();
     this.startSearch(this.searchText);
-  }
-
-  public loadMoreCriteriaSearchResults() {
-    this.searchWithFilterSubscription?.unsubscribe();
-    this.searchWithFilterSubscription = this.criteriaSearchService
-      .loadNextPage(this.searchText)
-      .subscribe((result: CriteriaResultList) => {
-        this.handleSearchResults(result.getResults());
-      });
   }
 }
