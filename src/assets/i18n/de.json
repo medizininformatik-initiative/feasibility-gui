@@ -135,6 +135,12 @@
     "VAL-20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden."
   },
   "FEASIBILITY": {
+    "BULK_SEARCH": {
+      "ACTION_BAR": {
+        "ADD_TO_STAGE": "Gruppenkriterium hinzufügen",
+        "VIEW_STAGE": "Kohortenselektion anzeigen"
+      }
+    },
     "EDITOR": {
       "ACTION_BAR": {
         "BACK_TO_SEARCH": "Kriterien hinzufügen",
