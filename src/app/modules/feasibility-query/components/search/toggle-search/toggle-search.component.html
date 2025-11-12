@@ -1,0 +1,12 @@
+<div class="container">
+  <num-button type="blue" [isDisabled]="selectedMode === 'search'" (click)="setMode('search')">
+    Suche
+  </num-button>
+  <num-button
+    type="blue"
+    [isDisabled]="selectedMode === 'bulk-search'"
+    (click)="setMode('bulk-search')"
+  >
+    Bulk-Suche
+  </num-button>
+</div>
