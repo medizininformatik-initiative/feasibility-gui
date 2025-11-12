@@ -135,6 +135,12 @@
     "VAL-20001": "The combination of context and term code(s) was not found."
   },
   "FEASIBILITY": {
+    "BULK_SEARCH": {
+      "ACTION_BAR": {
+        "ADD_TO_STAGE": "Add group criteria",
+        "VIEW_STAGE": "View cohort selection"
+      }
+    },
     "EDITOR": {
       "ACTION_BAR": {
         "BACK_TO_SEARCH": "Add criteria",
