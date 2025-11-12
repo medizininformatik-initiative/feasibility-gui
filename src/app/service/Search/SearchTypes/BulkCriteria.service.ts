@@ -9,11 +9,7 @@ import { Observable } from 'rxjs';
 export class BulkCriteriaService {
   constructor(private bulkCriteriaSearchEngineService: BulkCriteriaSearchEngineService) {}
 
-  public search(
-    searchterms: string,
-    terminology: string,
-    context: string
-  ): Observable<CriteriaBulkResultList> {
-    return this.bulkCriteriaSearchEngineService.search(searchterms, terminology, context);
+  public search(searchterms: string): Observable<CriteriaBulkResultList> {
+    return this.bulkCriteriaSearchEngineService.search(searchterms);
   }
 }
