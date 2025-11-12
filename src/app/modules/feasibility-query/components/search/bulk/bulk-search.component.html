@@ -25,6 +25,9 @@
       </mat-form-field>
     </form>
     <num-button (click)="submitComment(searchForm)"></num-button>
+    <div class="margin-left-auto">
+      <num-toggle-search></num-toggle-search>
+    </div>
   </div>
   <div class="filter-container">
     <num-search-filter
@@ -36,7 +39,12 @@
       {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
     </num-button>
   </div>
-  <num-table (selectedRow)="setSelectedRowItem($event)" [tableData]="adaptedData"></num-table>
+  <num-table
+    *ngIf="searchResultsFound"
+    style="flex: 1"
+    (selectedRow)="setSelectedRowItem($event)"
+    [tableData]="adaptedData"
+  ></num-table>
   <div *ngIf="!searchResultsFound" class="no-results-box">
     <num-placeholder-box class="no-results-text"
       >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
@@ -44,6 +52,6 @@
     >
   </div>
   <div>
-    <num-search-action-bar></num-search-action-bar>
+    <num-bulk-search-action-bar></num-bulk-search-action-bar>
   </div>
 </div>
