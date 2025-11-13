@@ -4,9 +4,9 @@ import { CriteriaBulkEntry } from '../ListEntries/CriteriaBulkEntry';
 import { AbstractResultList } from './AbstractResultList';
 
 export class CriteriaBulkResultList {
-  found: CriteriaBulkEntry[];
-  notFound: string[];
-  uiProfileId: string;
+  private found: CriteriaBulkEntry[];
+  private notFound: string[];
+  private uiProfileId: string;
   constructor(found: CriteriaBulkEntry[], notFound: string[], uiProfileId: string) {
     this.found = found;
     this.notFound = notFound;

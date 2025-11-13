@@ -4,7 +4,7 @@ import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData
 import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { CriterionMetadataService } from '../../Criterion/Builder/CriterionMetadata.service';
+import { CriterionMetadataService } from '../../Criterion/CriterionMetadata.service';
 import { HashService } from '../../Hash.service';
 import { Injectable } from '@angular/core';
 import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData';
@@ -91,7 +91,6 @@ export class CriterionTranslatorService {
     if (!structuredQueryCriterion.attributeFilters) {
       return;
     }
-    console.log(uiProfileId);
     const attributeDefinitions =
       this.uiProfileProviderService.getUiProfileById(uiProfileId).attributeDefinitions;
     const attributeFilters: AttributeFilter[] =
