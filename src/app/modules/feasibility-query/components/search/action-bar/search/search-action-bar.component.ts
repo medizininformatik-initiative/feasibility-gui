@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
+import { CreateCriterionService } from 'src/app/service/Criterion/CreateCriterionService';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
 import { FeasibilityQueryProviderService } from '../../../../../../service/Provider/FeasibilityQueryProvider.service';
