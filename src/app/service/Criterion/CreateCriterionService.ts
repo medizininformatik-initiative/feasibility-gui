@@ -1,5 +1,6 @@
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
-import { CriteriaProfileDataService } from '../../../CriteriaProfileData/CriteriaProfileData.service';
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
+import { CriteriaProfileDataService } from '../CriteriaProfileData/CriteriaProfileData.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionBuilderHelperService } from './CriterionBuilderHelper.service';
@@ -33,21 +34,38 @@ export class CreateCriterionService {
     hashes: string[],
     parentId?: string
   ): Observable<AbstractCriterion[]> {
+    const validHashes = this.filterValidHashes(hashes);
     return this.criteriaProfileDataService
-      .getCriteriaProfileData(hashes.filter((hash) => hash !== undefined))
+      .getCriteriaProfileData(validHashes)
       .pipe(
-        map((criteriaProfileDatas) =>
-          criteriaProfileDatas.map((criteriaProfileData) => {
-            const builder =
-              this.criterionBuilderHelperService.setBuilderWithCriteriaProfileData(
-                criteriaProfileData
-              );
-            return parentId
-              ? this.createReferenceCriterion(builder, parentId)
-              : this.createCriterion(builder);
-          })
+        map((criteriaProfileDatas: CriteriaProfileData[]) =>
+          this.buildCriteriaFromProfileData(criteriaProfileDatas, parentId)
         )
       );
+  }
+
+  private filterValidHashes(hashes: string[]): string[] {
+    return hashes.filter((hash): hash is string => !!hash);
+  }
+
+  private buildCriteriaFromProfileData(
+    criteriaProfileDatas: CriteriaProfileData[],
+    parentId?: string
+  ): AbstractCriterion[] {
+    return criteriaProfileDatas.map((criteriaProfileData: CriteriaProfileData) =>
+      this.buildSingleCriterion(criteriaProfileData, parentId)
+    );
+  }
+
+  private buildSingleCriterion(
+    criteriaProfileData: CriteriaProfileData,
+    parentId?: string
+  ): AbstractCriterion {
+    const builder =
+      this.criterionBuilderHelperService.setBuilderWithCriteriaProfileData(criteriaProfileData);
+    return parentId
+      ? this.createReferenceCriterion(builder, parentId)
+      : this.createCriterion(builder);
   }
 
   private createCriterion(builder: CriterionBuilder): Criterion {
