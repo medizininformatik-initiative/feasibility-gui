@@ -379,6 +379,9 @@
     }
   },
   "SHARED_FILTER": {
+    "CONCEPT_FILTER": {
+      "SEARCH_PLACEHOLDER": "Begriff oder Termcode eingeben"
+    },
     "TIMERESTRICTION": {
       "AFTER": "nach",
       "AT": "am",
