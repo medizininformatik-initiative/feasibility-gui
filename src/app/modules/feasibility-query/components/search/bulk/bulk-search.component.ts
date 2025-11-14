@@ -31,6 +31,16 @@ import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchF
 import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria.service';
 import { CriteriaBulkListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkListEntryAdapter';
 import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList';
+import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
+import { CriterionMetadataService } from 'src/app/service/Criterion/CriterionMetadata.service';
+import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry';
+import { UiProfileProviderService } from 'src/app/service/Provider/UiProfileProvider.service';
+import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
+import { HashService } from 'src/app/service/Hash.service';
+import { v4 as uuidv4 } from 'uuid';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service';
 
 @Component({
   selector: 'num-feasibility-query-bulk-search',
@@ -69,6 +79,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy, A
 
   searchButtonEnabled$: Observable<boolean> = of(true);
 
+  bulkSearchTermInput: string;
   constructor(
     public elementRef: ElementRef,
     private cdr: ChangeDetectorRef,
@@ -78,7 +89,11 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy, A
     private searchTermDetailsProviderService: SearchTermDetailsProviderService,
     private criteriaSearchService: CriteriaSearchService,
     private snackbarService: SnackbarService,
-    private bulkCriteriaService: BulkCriteriaService
+    private bulkCriteriaService: BulkCriteriaService,
+    private metadata: CriterionMetadataService,
+    private uiProfileProviderService: UiProfileProviderService,
+    private criterionHashService: HashService,
+    private createBulkCriterionService: CreateBulkCriterionService
   ) {}
 
   ngOnInit() {
@@ -102,9 +117,8 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy, A
   }
 
   public submitComment(form: any) {
-    const comment = form.value.searchText;
-
-    const input = '424144002,263495000 ';
+    console.log(this.bulkSearchTermInput);
+    const input = '263495000, 424144002 ';
 
     this.bulkCriteriaService
       .search(input)
@@ -116,8 +130,11 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy, A
         )
       )
       .subscribe((response) => {
+        const criterion = this.createBulkCriterionService.createBulkCriterion(response);
+        console.log(criterion);
         const test = CriteriaBulkListEntryAdapter.adapt(response.getFound());
         this.adaptedData = test;
+
         console.log(test);
       });
   }
