@@ -5,30 +5,28 @@
       {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
-  <div class="search-container width-100">
-    <form
-      #searchForm="ngForm"
-      class="example-form"
-      fxLayout="column"
-      fxLayoutAlign="start stretch"
-      style="height: 100px; width: 300px; resize: none"
-    >
-      <mat-form-field class="example-full-width" style="height: 100px; width: 300px; resize: none">
-        <textarea
-          style="height: 100px; width: 300px; resize: none"
-          name="searchText"
-          matInput
-          rows="4"
-          cols="50"
-          ngModel
-        ></textarea>
-      </mat-form-field>
-    </form>
-    <num-button (click)="submitComment(searchForm)"></num-button>
+  <div
+    class="search-container width-100"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="8px"
+  >
+    <mat-form-field style="height: 200px; width: 100%">
+      <textarea
+        matInput
+        class="input-field"
+        name="searchText"
+        [(ngModel)]="bulkSearchTermInput"
+      ></textarea>
+    </mat-form-field>
+
+    <num-button (click)="submitComment(bulkSearchTermInput)"></num-button>
+
     <div class="margin-left-auto">
       <num-toggle-search></num-toggle-search>
     </div>
   </div>
+
   <div class="filter-container">
     <num-search-filter
       *ngFor="let searchFilter of searchFilters$ | async"
