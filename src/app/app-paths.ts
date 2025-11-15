@@ -5,6 +5,7 @@ export const BasePaths = {
   savedQueries: 'saved-queries',
   options: 'options',
   queryEditor: 'query-editor',
+  home: 'dashboard',
 };
 
 export const PathSegments = {
