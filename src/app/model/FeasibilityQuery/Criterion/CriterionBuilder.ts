@@ -239,7 +239,7 @@ export class CriterionBuilder {
       default:
         throw new Error(`Unsupported filter type: ${filterType}`);
     }
-    this.buildTimeRestriction();
+    this.buildEmptyTimeRestriction();
     return attributeFilterBuilder.withAttributeCode(attributeCode).buildAttributeFilter();
   }
 
@@ -275,7 +275,7 @@ export class CriterionBuilder {
     return valueFilterBuilder.buildValueFilter();
   }
 
-  buildTimeRestriction() {
+  buildEmptyTimeRestriction() {
     return new TimeRestrictionNotSet();
   }
 }

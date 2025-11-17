@@ -13,6 +13,9 @@ import { UiProfileProviderService } from '../../Provider/UiProfileProvider.servi
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { v4 as uuidv4 } from 'uuid';
+import { AttributeDefinitionData } from '../../../model/Interface/AttributeDefinitionData';
+import { ValueDefinitionData } from '../../../model/Interface/ValueDefinition';
+import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,25 +27,30 @@ export class CriterionTranslatorService {
     private criterionMetadataService: CriterionMetadataService,
     private hashService: HashService,
     private uiProfileProviderService: UiProfileProviderService,
-    private uiTimeRestrictionFactoryService: UITimeRestrictionFactoryService
+    private uiTimeRestrictionFactoryService: UITimeRestrictionFactoryService,
+    private attributeFilterFactoryService: AttributeFilterFactoryService
   ) {}
 
   public translate(structuredQueryCriterion: StructuredQueryCriterionData): Criterion {
     const criteriaProfileData = this.getCriteriaProfileData(structuredQueryCriterion);
     const criterionId = uuidv4();
     const criterionBuilder = this.createCriterionBuilder(criteriaProfileData, criterionId);
-    this.applyValueFilters(
-      criterionBuilder,
-      structuredQueryCriterion,
+    const uiProfile = this.uiProfileProviderService.getUiProfileById(
       criteriaProfileData.uiProfileId
     );
+
+    this.applyValueFilters(criterionBuilder, structuredQueryCriterion, uiProfile.valueDefinition);
     this.applyAttributeFilters(
       criterionBuilder,
       structuredQueryCriterion,
-      criteriaProfileData.uiProfileId,
+      uiProfile.attributeDefinitions,
       criterionId
     );
-    this.applyTimeRestriction(criterionBuilder, structuredQueryCriterion);
+    this.applyTimeRestriction(
+      criterionBuilder,
+      structuredQueryCriterion,
+      uiProfile.timeRestrictionAllowed
+    );
     return criterionBuilder.buildCriterion();
   }
 
@@ -69,31 +77,35 @@ export class CriterionTranslatorService {
   private applyValueFilters(
     criterionBuilder: CriterionBuilder,
     structuredQueryCriterion: StructuredQueryCriterionData,
-    uiProfileId: string
+    valueDefinition: ValueDefinitionData
   ): void {
-    if (!structuredQueryCriterion.valueFilter) {
-      return;
+    if (!valueDefinition) {
+      criterionBuilder.withValueFilters([]);
+    } else {
+      if (!structuredQueryCriterion.valueFilter) {
+        criterionBuilder.withValueFilters([
+          this.attributeFilterFactoryService.createValueFilter(valueDefinition),
+        ]);
+        if (!valueDefinition.optional) {
+          criterionBuilder.withRequiredFilter(false);
+        }
+      } else {
+        const valueFilter: ValueFilter =
+          this.attributeFilterTranslatorService.translateValueFilters(
+            valueDefinition,
+            structuredQueryCriterion.valueFilter
+          );
+        criterionBuilder.withValueFilters([valueFilter]);
+      }
     }
-    const uiProfile = this.uiProfileProviderService.getUiProfileById(uiProfileId);
-    const valueFilter: ValueFilter = this.attributeFilterTranslatorService.translateValueFilters(
-      uiProfile.valueDefinition,
-      structuredQueryCriterion.valueFilter
-    );
-    criterionBuilder.withValueFilters([valueFilter]);
   }
 
   private applyAttributeFilters(
     criterionBuilder: CriterionBuilder,
     structuredQueryCriterion: StructuredQueryCriterionData,
-    uiProfileId: string,
+    attributeDefinitions: AttributeDefinitionData[],
     criterionId: string
   ): void {
-    if (!structuredQueryCriterion.attributeFilters) {
-      return;
-    }
-    console.log(uiProfileId);
-    const attributeDefinitions =
-      this.uiProfileProviderService.getUiProfileById(uiProfileId).attributeDefinitions;
     const attributeFilters: AttributeFilter[] =
       this.attributeFilterTranslatorService.translateAttributeFilters(
         attributeDefinitions,
@@ -102,20 +114,22 @@ export class CriterionTranslatorService {
       );
     criterionBuilder.withAttributeFilters(attributeFilters);
   }
-
   private applyTimeRestriction(
     criterionBuilder: CriterionBuilder,
-    structuredQueryCriterion: StructuredQueryCriterionData
+    structuredQueryCriterion: StructuredQueryCriterionData,
+    timeRestrictionAllowed: boolean
   ): void {
     if (!structuredQueryCriterion.timeRestriction) {
-      return;
+      if (timeRestrictionAllowed) {
+        criterionBuilder.withTimeRestriction(criterionBuilder.buildEmptyTimeRestriction());
+      }
+    } else {
+      const timeRestriction =
+        this.uiTimeRestrictionFactoryService.createTimeRestrictionForFeasibilityQuery(
+          structuredQueryCriterion.timeRestriction
+        );
+
+      criterionBuilder.withTimeRestriction(timeRestriction);
     }
-
-    const timeRestriction =
-      this.uiTimeRestrictionFactoryService.createTimeRestrictionForFeasibilityQuery(
-        structuredQueryCriterion.timeRestriction
-      );
-
-    criterionBuilder.withTimeRestriction(timeRestriction);
   }
 }
