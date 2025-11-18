@@ -1,232 +1,177 @@
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
-import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter';
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
-import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
-import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
-import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
-import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
-import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { filter, map, Observable, of, Subscription, tap } from 'rxjs';
-import { MatDrawer } from '@angular/material/sidenav';
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
-import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
-import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
-import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
-import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core';
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
-import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria.service';
+import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteria.service';
+import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry';
 import { CriteriaBulkListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkListEntryAdapter';
 import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList';
-import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { CriterionMetadataService } from 'src/app/service/Criterion/CriterionMetadata.service';
-import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry';
-import { UiProfileProviderService } from 'src/app/service/Provider/UiProfileProvider.service';
-import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
-import { HashService } from 'src/app/service/Hash.service';
-import { v4 as uuidv4 } from 'uuid';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service';
+import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
+import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
+import { map, Observable, of, Subscription, tap } from 'rxjs';
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
+import { SelectedBulkCriteriaService } from 'src/app/service/SelectedBulkCriteria.service';
+import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service';
+import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service';
 
+/**
+ * Component for bulk criteria search functionality.
+ * Allows users to search for multiple criteria at once and manage selected entries.
+ */
 @Component({
   selector: 'num-feasibility-query-bulk-search',
   templateUrl: './bulk-search.component.html',
   styleUrls: ['./bulk-search.component.scss'],
 })
-export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('drawer') sidenav: MatDrawer;
-  @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
-  @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;
-  listItems: Array<CriteriaListEntry> = [];
+export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
   adaptedData: TableData;
-  private subscription: Subscription;
+  searchFilters$: Observable<SearchFilter[]> = of([]);
+  searchResultsFound = false;
+  bulkSearchTermInput: string;
+  filterMap: Map<string, string[]> = new Map<string, string[]>();
+  filterAreSet = false;
 
+  private subscriptions = new Subscription();
   private isInitialized = false;
 
-  elasticSearchEnabled = false;
-
-  listIetmDetailsSubscription: Subscription;
-
-  selectedDetails$: Observable<SearchTermDetails>;
-
-  searchFilters$: Observable<SearchFilter[]> = of([]);
-
-  searchText$: Observable<string>;
-
-  searchText = '';
-
-  searchResultsFound = false;
-
-  searchSubscription: Subscription;
-
-  searchWithFilterSubscription: Subscription;
-
-  resetFilterEnabled$: Observable<boolean> = of(true);
-
-  searchButtonEnabled$: Observable<boolean> = of(true);
-
-  bulkSearchTermInput: string;
   constructor(
-    public elementRef: ElementRef,
-    private cdr: ChangeDetectorRef,
+    private bulkCriteriaSearchProvider: BulkCriteriaSearchProvider,
+    private bulkCriteriaSearchFilterService: BulkCriteriaSearchFilterService,
     private searchFilterProvider: FilterProvider,
-    private selectedTableItemsService: SelectedTableItemsService<CriteriaListEntry>,
-    private searchTermDetailsService: SearchTermDetailsService,
-    private searchTermDetailsProviderService: SearchTermDetailsProviderService,
-    private criteriaSearchService: CriteriaSearchService,
-    private snackbarService: SnackbarService,
     private bulkCriteriaService: BulkCriteriaService,
-    private metadata: CriterionMetadataService,
-    private uiProfileProviderService: UiProfileProviderService,
-    private criterionHashService: HashService,
-    private createBulkCriterionService: CreateBulkCriterionService
-  ) {}
-
-  ngOnInit() {
-    this.selectedDetails$ = this.searchTermDetailsProviderService.getSearchTermDetails$();
-    this.searchText$ = this.criteriaSearchService.getActiveSearchTerm();
-    this.resetFilterEnabled$ = this.searchFilterProvider.filtersNotSet();
-    this.handleSelectedItemsSubscription();
-    this.getElasticSearchFilter();
+    private selectedBulkCriteriaService: SelectedBulkCriteriaService
+  ) {
+    this.getBulkCriteriaSearchFilter();
   }
 
-  ngAfterViewInit() {
-    this.isInitialized = true;
-    this.cdr.detectChanges();
-  }
-
-  ngOnDestroy() {
-    this.subscription?.unsubscribe();
-    this.searchSubscription?.unsubscribe();
-    this.searchWithFilterSubscription?.unsubscribe();
-    this.listIetmDetailsSubscription?.unsubscribe();
-  }
-
-  public submitComment(form: any) {
-    console.log(this.bulkSearchTermInput);
-    const input = '263495000, 424144002 ';
-
-    this.bulkCriteriaService
-      .search(input)
-      .pipe(
-        tap((response: CriteriaBulkResultList) =>
-          response.getFound().length > 0
-            ? (this.searchResultsFound = true)
-            : (this.searchResultsFound = false)
-        )
-      )
-      .subscribe((response) => {
-        const criterion = this.createBulkCriterionService.createBulkCriterion(response);
-        console.log(criterion);
-        const test = CriteriaBulkListEntryAdapter.adapt(response.getFound());
-        this.adaptedData = test;
-
-        console.log(test);
-      });
-  }
-
-  /** Search Result Handling */
-  private handleSearchResults(results: CriteriaListEntry[]): void {
-    this.listItems = results;
-    this.adaptedData = CriteriaListEntryAdapter.adapt(this.listItems);
-    this.searchResultsFound = this.adaptedData.body.rows.length > 0;
-    this.selectedTableItemsService
-      .getSelectedTableItems()
-      .pipe(
-        map((selected) => {
-          this.adaptedData.body.rows.forEach((row) => {
-            row.isCheckboxSelected = selected.some((item) => item.getId() === row.id);
-          });
-        })
-      )
-      .subscribe();
-  }
-
-  /**
-   * If the checked table items get added to stage they will be removed from the SelectedTableItemsService
-   * Behaviour Subject Array and therefore an empty Array will be returned. Therefore all checkboxes can be
-   * unchecked in the table
-   */
-  private handleSelectedItemsSubscription(): void {
-    this.selectedTableItemsService
-      .getSelectedTableItems()
-      .subscribe((selectedItems: CriteriaListEntry[]) => {
-        if (selectedItems.length === 0) {
-          this.uncheckAllRows();
-        }
-      });
-  }
-
-  private uncheckAllRows(): void {
-    this.adaptedData?.body.rows.forEach((item) => {
-      if (item.isCheckboxSelected) {
-        item.isCheckboxSelected = false;
-      }
-    });
-  }
-
-  public startSearch(searchText: string = this.searchText): void {
-    this.searchText = searchText;
-    this.searchWithFilterSubscription?.unsubscribe();
-    this.searchSubscription?.unsubscribe();
-    this.criteriaSearchService.search(searchText).subscribe();
-  }
-
-  public setSelectedRowItem(item: InterfaceTableDataRow) {
-    const selectedIds = this.selectedTableItemsService.getSelectedIds();
-    const itemId = item.originalEntry.getId();
-    if (selectedIds.includes(itemId)) {
-      this.selectedTableItemsService.removeFromSelection(item.originalEntry as CriteriaListEntry);
-      this.snackbarService.displayErrorMessageWithNoCode(
-        'FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE'
-      );
-    } else {
-      this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE');
-      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry as CriteriaListEntry);
+  ngOnInit(): void {
+    this.getBulkCriteriaSearchFilter();
+    this.bulkSearchTermInput = this.bulkCriteriaSearchProvider.getSearchText();
+    if (this.shouldAutoSubmitSearch()) {
+      this.submitSearch();
     }
   }
 
-  public getElasticSearchFilter(): void {
-    this.searchFilters$ = this.searchFilterProvider.getCriteriaSearchFilters().pipe(
-      map((filters: CriteriaSearchFilter[]) =>
-        filters.filter(
-          (searchFilter) =>
-            searchFilter.getName() === ElasticSearchFilterTypes.CONTEXT ||
-            searchFilter.getName() === ElasticSearchFilterTypes.TERMINOLOGY
-        )
-      ),
-      map((searchFilters: CriteriaSearchFilter[]) =>
-        searchFilters.map((searchFilter: CriteriaSearchFilter) =>
-          CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
-        )
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  /**
+   * Submits the bulk search with the current search term input.
+   */
+  public submitSearch(): void {
+    this.bulkCriteriaSearchProvider.setSearchText(this.bulkSearchTermInput);
+    const searchSub = this.bulkCriteriaService
+      .search(this.bulkSearchTermInput)
+      .pipe(
+        tap((response: CriteriaBulkResultList) => {
+          this.searchResultsFound = response.getFound().length > 0;
+        })
       )
+      .subscribe((response: CriteriaBulkResultList) => {
+        this.handleSearchResults(response);
+      });
+
+    this.subscriptions.add(searchSub);
+  }
+
+  /**
+   * Sets the selected row item in the bulk criteria selection.
+   * @param item - The table data row that was selected
+   */
+  public setSelectedRowItem(item: InterfaceTableDataRow): void {
+    const criteriaBulkEntry = item.originalEntry as CriteriaBulkEntry;
+    this.selectedBulkCriteriaService.addSelectedBulkCriterion(criteriaBulkEntry);
+  }
+
+  /**
+   * Retrieves and sets up the bulk criteria search filters.
+   */
+  public getBulkCriteriaSearchFilter(): void {
+    this.searchFilters$ = this.bulkCriteriaSearchFilterService.getFilter().pipe(
+      tap((searchFilters: SearchFilter[]) => this.populateFilterMap(searchFilters)),
+      tap(() => this.updateFilterStatus())
     );
   }
 
-  public setElasticSearchFilter(newFilter: SearchFilter) {
-    this.searchWithFilterSubscription?.unsubscribe();
-    this.searchFilterProvider.updateFilterSelectedValues(
-      newFilter.filterType,
-      newFilter.selectedValues
+  /**
+   * Updates the elastic search filter with new values.
+   * @param newFilter - The new search filter to apply
+   */
+  public setElasticSearchFilter(newFilter: SearchFilter): void {
+    this.filterMap.set(newFilter.filterType, newFilter.selectedValues as string[]);
+    this.updateFilterStatus();
+    const selectedValues = Array.isArray(newFilter.selectedValues)
+      ? newFilter.selectedValues
+      : [newFilter.selectedValues];
+
+    this.searchFilterProvider.updateFilterSelectedValues(newFilter.filterType, selectedValues);
+  }
+
+  /**
+   * Initializes the subscription for selected entries updates.
+   */
+  private initializeSelectedEntriesSubscription(): void {
+    const selectedSub = this.selectedBulkCriteriaService
+      .getFoundEntries()
+      .pipe(
+        map((entries: CriteriaBulkEntry[]) => {
+          this.updateRowSelectionStatus(entries);
+        })
+      )
+      .subscribe();
+
+    this.subscriptions.add(selectedSub);
+  }
+
+  /**
+   * Determines if the search should be auto-submitted on initialization.
+   * @returns True if search should be submitted automatically
+   */
+  private shouldAutoSubmitSearch(): boolean {
+    return !!(
+      this.bulkSearchTermInput &&
+      this.bulkSearchTermInput.length > 0 &&
+      this.filterMap.size > 1
     );
   }
 
-  public resetFilter(): void {
-    this.searchFilterProvider.resetSelectedValues();
-    this.startSearch(this.searchText);
+  /**
+   * Handles the search results by updating selected criteria and adapted data.
+   * @param response - The bulk criteria result list from the search
+   */
+  private handleSearchResults(response: CriteriaBulkResultList): void {
+    this.selectedBulkCriteriaService.addSelectedBulkCriteriaIds(response.getFound());
+    this.selectedBulkCriteriaService.setUiProfileId(response.getUiProfileId());
+    this.adaptedData = CriteriaBulkListEntryAdapter.adapt(response.getFound());
+  }
+
+  /**
+   * Updates the checkbox selection status for table rows based on selected entries.
+   * @param entries - Array of selected criteria bulk entries
+   */
+  private updateRowSelectionStatus(entries: CriteriaBulkEntry[]): void {
+    if (!this.adaptedData?.body?.rows) {
+      return;
+    }
+    this.adaptedData.body.rows.forEach((row) => {
+      row.isCheckboxSelected = entries.some((item) => item.getId() === row.id);
+    });
+  }
+
+  /**
+   * Populates the filter map from search filters.
+   * @param searchFilters - Array of search filters
+   */
+  private populateFilterMap(searchFilters: SearchFilter[]): void {
+    searchFilters.forEach((filter) => {
+      this.filterMap.set(filter.filterType, filter.selectedValues as string[]);
+    });
+  }
+
+  /**
+   * Updates the filter status based on whether all filters have selected values.
+   */
+  private updateFilterStatus(): void {
+    const filterArray = Array.from(this.filterMap);
+    this.filterAreSet = filterArray.every(([key, values]) => values.length > 0);
   }
 }
