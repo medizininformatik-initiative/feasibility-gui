@@ -11,8 +11,8 @@ import { StructuredQueryCriterionData } from 'src/app/model/Interface/Structured
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { UiProfileProviderService } from '../../Provider/UiProfileProvider.service';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { v4 as uuidv4 } from 'uuid';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,14 @@ export class CriterionTranslatorService {
   public translate(structuredQueryCriterion: StructuredQueryCriterionData): Criterion {
     const criteriaProfileData = this.getCriteriaProfileData(structuredQueryCriterion);
     const criterionId = uuidv4();
-    const criterionBuilder = this.createCriterionBuilder(criteriaProfileData, criterionId);
+    const termCodes = structuredQueryCriterion.termCodes.map((termCode) =>
+      TerminologyCode.fromJson(termCode)
+    );
+    const criterionBuilder = this.createCriterionBuilder(
+      criteriaProfileData,
+      criterionId,
+      termCodes
+    );
     this.applyValueFilters(
       criterionBuilder,
       structuredQueryCriterion,
@@ -49,19 +56,23 @@ export class CriterionTranslatorService {
   private getCriteriaProfileData(
     structuredQueryCriterion: StructuredQueryCriterionData
   ): CriteriaProfileData {
-    const termCode = TerminologyCode.fromJson(structuredQueryCriterion.termCodes[0]);
+    const termCodes = structuredQueryCriterion.termCodes.map((termCodeData) =>
+      TerminologyCode.fromJson(termCodeData)
+    );
     const context = TerminologyCode.fromJson(structuredQueryCriterion.context);
-    const hash = this.hashService.createCriterionHash(context, termCode);
+    const hash = this.hashService.createCriterionHash(context, termCodes[0]);
     return this.criteriaProfileProviderService.getCriteriaProfileByHash(hash);
   }
 
   private createCriterionBuilder(
     criteriaProfileData: CriteriaProfileData,
-    criterionId: string
+    criterionId: string,
+    termCodes: TerminologyCode[]
   ): CriterionBuilder {
     const criterionMetadata = this.criterionMetadataService.createMandatoryFieldsFromData(
       criteriaProfileData,
-      criterionId
+      criterionId,
+      termCodes
     );
     return new CriterionBuilder(criterionMetadata);
   }
