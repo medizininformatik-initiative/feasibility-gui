@@ -27,13 +27,6 @@ export class ToggleSearchComponent implements OnInit {
     });
   }
 
-  public onNumButtonClick(): void {
-    this.selectedMode = 'num-button';
-    console.log('Num button clicked');
-    // Add your navigation or action here
-    // this.navigationHelperService.navigateToSomewhere();
-  }
-
   public toggleSearchMode(event: MatButtonToggleChange): void {
     console.log(event.value);
     if (event.value === 'bulk-search') {
