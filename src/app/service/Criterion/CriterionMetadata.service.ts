@@ -53,7 +53,8 @@ export class CriterionMetadataService {
    */
   public createMandatoryFieldsFromData(
     criteriaProfileData: CriteriaProfileData,
-    criterionId: string
+    criterionId: string,
+    termCodes: TerminologyCode[]
   ): {
     isReference: false
     context: TerminologyCode
@@ -65,7 +66,6 @@ export class CriterionMetadataService {
     termCodes: Array<TerminologyCode>
   } {
     const context = TerminologyCode.fromJson(criteriaProfileData.context);
-    const termCodes = criteriaProfileData.termCodes.map(TerminologyCode.fromJson);
     const display = Display.fromJson(criteriaProfileData.display);
     const criterionHash = this.hashService.createCriterionHash(context, termCodes[0]);
     const isFilterRequired = true;
