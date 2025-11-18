@@ -27,7 +27,7 @@ export class NavigationHelperService {
     this.router.navigate([UrlPaths.feasibilityQuery.search]);
   }
 
-  public navigateToBulkSearch(): void {
+  public navigateToFeasibilityQueryBulkSearch(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.bulkSearch]);
   }
 
