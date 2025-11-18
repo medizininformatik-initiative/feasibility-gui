@@ -11,21 +11,24 @@ export class CriteriaBulkListEntryAdapter {
     headers: ['DISPLAY', 'TERMINOLOGY_CODE', 'TERMCODE'],
   };
 
-  public static adapt(listEntries: CriteriaBulkEntry[]): TableData {
+  public static adapt(
+    listEntries: CriteriaBulkEntry[],
+    isCheckboxSelected: boolean = true
+  ): TableData {
     const rows: InterfaceTableDataRow[] = listEntries.map((entry: CriteriaBulkEntry) => ({
-        id: uuidv4(),
-        data: [
-          entry.getDisplay(),
-          TerminologySystemDictionary.getNameByUrl(entry.getTerminology()),
-          entry.getTermcodes()[0].getCode(),
-        ],
-        hasCheckbox: true,
-        isCheckboxSelected: true,
-        isClickable: false,
-        isDisabled: true,
-        checkboxColumnIndex: 0,
-        originalEntry: entry,
-      }));
+      id: uuidv4(),
+      data: [
+        entry.getDisplay(),
+        TerminologySystemDictionary.getNameByUrl(entry.getTerminology()),
+        entry.getTermcodes()[0].getCode(),
+      ],
+      hasCheckbox: true,
+      isCheckboxSelected,
+      isClickable: false,
+      isDisabled: true,
+      checkboxColumnIndex: 0,
+      originalEntry: entry,
+    }));
 
     const body: InterfaceTableDataBody = { rows };
 
