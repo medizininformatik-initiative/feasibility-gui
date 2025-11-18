@@ -139,11 +139,15 @@
       "ACTION_BAR": {
         "ADD_TO_STAGE": "Add group criteria",
         "VIEW_STAGE": "View cohort selection"
-      }
+      },
+      "HEADER": "Bulk Search",
+      "HEADER_INFO": "Define your cohort using the bulk search mode by setting two required filters: Context and Terminology. Then provide a list of comma-separated terminology codes (e.g., ICD-10, LOINC, OPS) to narrow down the search.The bulk cohort search allows you to process large sets of codes at once",
+      "PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them."
     },
     "EDITOR": {
       "ACTION_BAR": {
-        "BACK_TO_SEARCH": "Add criteria",
+        "BACK_TO_SEARCH": "To single search",
+        "BULK_SEARCH": "To bulk search",
         "DATA_REQUEST": "Data definition",
         "SAVE_DATAQUERY": "Save data definition",
         "SEND_QUERY": "Feasibility query"
