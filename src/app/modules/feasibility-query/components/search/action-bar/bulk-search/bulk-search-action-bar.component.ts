@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { CreateCriterionService } from 'src/app/service/Criterion/CreateCriterionService';
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service';
+import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry';
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
-import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of, Subscription, take } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { SelectedBulkCriteriaService } from 'src/app/service/SelectedBulkCriteria.service';
 import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
 
 @Component({
@@ -16,43 +13,54 @@ import { StageProviderService } from 'src/app/service/Provider/StageProvider.ser
   templateUrl: './bulk-search-action-bar.component.html',
   styleUrls: ['./bulk-search-action-bar.component.scss'],
 })
-export class BulkSearchActionBarComponent implements OnInit {
-  listItemArray$: Observable<CriteriaListEntry[]>;
+export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
+  listItemArray$: Observable<CriteriaBulkEntry[]>;
   stageArray$: Observable<string[]>;
   isFeasibilityExistent$: Observable<boolean>;
-
+  disabledAddToStageButton: Observable<boolean> = of(true);
+  addToStageSubscription: Subscription;
   constructor(
-    private listItemSelectionService: SelectedTableItemsService<CriteriaListEntry>,
-    private criterionService: CreateCriterionService,
+    private selectedBulkCriteriaService: SelectedBulkCriteriaService,
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
-    private listItemService: SelectedTableItemsService<CriteriaListEntry>,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
     private feasibilityQueryValidation: FeasibilityQueryValidation,
-    private snackbarService: SnackbarService
+    private createBulkCriterionService: CreateBulkCriterionService
   ) {}
 
   ngOnInit() {
-    this.listItemArray$ = this.listItemSelectionService.getSelectedTableItems();
+    this.disabledAddToStageButton = this.selectedBulkCriteriaService
+      .getSelectedBulkCriteria()
+      .pipe(map((entries) => entries.length === 0));
+    this.listItemArray$ = this.selectedBulkCriteriaService.getSelectedBulkCriteria();
     this.stageArray$ = this.stageProviderService.getStageUIDArray();
     this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
   }
 
+  ngOnDestroy() {
+    this.addToStageSubscription?.unsubscribe();
+  }
+
   public addItemsToStage() {
-    const ids = this.listItemService.getSelectedIds();
-    this.criterionService
-      .createCriteriaFromHashes(ids)
+    this.addToStageSubscription?.unsubscribe();
+    this.addToStageSubscription = this.selectedBulkCriteriaService
+      .getSelectedBulkCriteria()
       .pipe(
-        map((criteria: Criterion[]) => {
-          this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria);
-          this.feasibilityQueryProviderHub.addCriteriaToStage(criteria);
-          return criteria;
+        take(1),
+        map((entries) => {
+          this.selectedBulkCriteriaService.setFoundEntries(entries);
+          this.selectedBulkCriteriaService.removeSelectedBulkCriterion(entries);
+          const uiProfileId = this.selectedBulkCriteriaService.getUiProfileId();
+          const criterion = this.createBulkCriterionService.createBulkCriterion(
+            entries,
+            uiProfileId
+          );
+          this.feasibilityQueryProviderHub.addCriteriaToStage([criterion]);
+          this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider([criterion]);
+          return entries;
         })
       )
-      .subscribe((criteria: Criterion[]) => {
-        this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_COHORT');
-        this.listItemService.clearSelection();
-      });
+      .subscribe();
   }
 
   public navigateToEditor(): void {
