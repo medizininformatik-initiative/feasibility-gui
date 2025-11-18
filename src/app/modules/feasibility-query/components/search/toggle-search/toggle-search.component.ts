@@ -37,7 +37,7 @@ export class ToggleSearchComponent implements OnInit {
   public toggleSearchMode(event: MatButtonToggleChange): void {
     console.log(event.value);
     if (event.value === 'bulk-search') {
-      this.navigationHelperService.navigateToBulkSearch();
+      this.navigationHelperService.navigateToFeasibilityQueryBulkSearch();
     } else if (event.value === 'search') {
       this.navigationHelperService.navigateToFeasibilityQuerySearch();
     }
@@ -46,7 +46,7 @@ export class ToggleSearchComponent implements OnInit {
   public setMode(mode: 'search' | 'bulk-search'): void {
     this.selectedMode = mode;
     if (mode === 'bulk-search') {
-      this.navigationHelperService.navigateToBulkSearch();
+      this.navigationHelperService.navigateToFeasibilityQueryBulkSearch();
     } else if (mode === 'search') {
       this.navigationHelperService.navigateToFeasibilityQuerySearch();
     }
