@@ -141,3 +141,9 @@
   width: 90%;
   margin: 0.5em 0;
 }
+
+.table-container {
+  display: flex;
+  height: 400px;
+  overflow: auto;
+}

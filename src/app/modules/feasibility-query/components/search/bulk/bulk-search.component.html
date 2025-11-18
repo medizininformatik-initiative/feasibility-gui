@@ -1,16 +1,11 @@
 <div fxFlexFill fxLayout="column" fxLayoutAlign="start">
   <div>
-    <num-header>{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
+    <num-header>{{ 'FEASIBILITY.BULK_SEARCH.HEADER' | translate }}</num-header>
     <num-header-description>
-      {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
+      {{ 'FEASIBILITY.BULK_SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
-  <div
-    class="search-container width-100"
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    fxLayoutGap="8px"
-  >
+  <div class="search-container width-100" fxLayout="row" fxLayoutAlign="start center">
     <mat-form-field style="height: 200px; width: 100%">
       <textarea
         matInput
@@ -20,7 +15,12 @@
       ></textarea>
     </mat-form-field>
 
-    <num-button (click)="submitComment(bulkSearchTermInput)"></num-button>
+    <num-button
+      (click)="submitSearch()"
+      [isDisabled]="!(filterAreSet && bulkSearchTermInput?.length > 0)"
+    >
+      {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
+    </num-button>
 
     <div class="margin-left-auto">
       <num-toggle-search></num-toggle-search>
@@ -32,22 +32,21 @@
       *ngFor="let searchFilter of searchFilters$ | async"
       [filter]="searchFilter"
       (selectedFilterChanged)="setElasticSearchFilter($event)"
+      [multiSelect]="false"
     ></num-search-filter>
-    <num-button [isDisabled]="resetFilterEnabled$ | async" type="blue" (click)="resetFilter()">
-      {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
-    </num-button>
   </div>
+
   <num-table
-    *ngIf="searchResultsFound"
     style="flex: 1"
+    *ngIf="searchResultsFound"
     (selectedRow)="setSelectedRowItem($event)"
     [tableData]="adaptedData"
   ></num-table>
+
   <div *ngIf="!searchResultsFound" class="no-results-box">
-    <num-placeholder-box class="no-results-text"
-      >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
-      >"</num-placeholder-box
-    >
+    <num-placeholder-box class="no-results-text">{{
+      'FEASIBILITY.BULK_SEARCH.PLACEHOLDER' | translate
+    }}</num-placeholder-box>
   </div>
   <div>
     <num-bulk-search-action-bar></num-bulk-search-action-bar>
