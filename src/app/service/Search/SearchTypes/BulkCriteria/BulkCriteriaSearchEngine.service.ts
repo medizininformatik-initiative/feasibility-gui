@@ -2,10 +2,10 @@ import { BulkSearchPostData } from 'src/app/model/Interface/BulkSearchPostData';
 import { BulkSearchResponseData } from 'src/app/model/Interface/BulkSearchResponseData';
 import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
-import { FilterProvider } from '../Filter/SearchFilterProvider.service';
+import { FilterProvider } from '../../Filter/SearchFilterProvider.service';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service';
+import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service';
 
 @Injectable({
   providedIn: 'root',
