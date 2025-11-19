@@ -1,32 +1,27 @@
 <div fxFlexFill fxLayout="column" fxLayoutAlign="start">
   <div>
-    <num-header>{{ 'FEASIBILITY.BULK_SEARCH.HEADER' | translate }}</num-header>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <num-header>{{ 'FEASIBILITY.BULK_SEARCH.HEADER' | translate }}</num-header>
+      <div class="margin-left-auto">
+        <num-toggle-search></num-toggle-search>
+      </div>
+    </div>
     <num-header-description>
       {{ 'FEASIBILITY.BULK_SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
   <div class="search-container width-100" fxLayout="row" fxLayoutAlign="start center">
-    <mat-form-field style="height: 200px; width: 100%">
-      <textarea
-        matInput
-        class="input-field"
-        name="searchText"
-        [(ngModel)]="bulkSearchTermInput"
-      ></textarea>
-    </mat-form-field>
-
-    <num-button
-      (click)="submitSearch()"
-      [isDisabled]="!(filterAreSet && bulkSearchTermInput?.length > 0)"
-    >
-      {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
-    </num-button>
-
-    <div class="margin-left-auto">
-      <num-toggle-search></num-toggle-search>
-    </div>
+    <textarea
+      class="input-field-area"
+      matNativeControl
+      type="text"
+      name="searchText"
+      rows="10"
+      cols="100"
+      placeholder="{{ 'FEASIBILITY.BULK_SEARCH.INPUT_PLACEHOLDER' | translate }}"
+      [(ngModel)]="bulkSearchTermInput"
+    ></textarea>
   </div>
-
   <div class="filter-container">
     <num-search-filter
       *ngFor="let searchFilter of searchFilters$ | async"
@@ -34,14 +29,30 @@
       (selectedFilterChanged)="setElasticSearchFilter($event)"
       [multiSelect]="false"
     ></num-search-filter>
+    <num-button
+      (click)="submitSearch()"
+      [isDisabled]="!(filterAreSet && bulkSearchTermInput?.length > 0)"
+    >
+      {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
+    </num-button>
   </div>
 
-  <num-table
-    style="flex: 1"
-    *ngIf="searchResultsFound"
-    (selectedRow)="setSelectedRowItem($event)"
-    [tableData]="adaptedData"
-  ></num-table>
+  <mat-tab-group *ngIf="searchResultsFound" style="width: 100%; flex: 1">
+    <mat-tab label="Gefunden{{ foundCount > 0 ? ' (' + foundCount + ')' : '' }}">
+      <num-table
+        *ngIf="searchResultsFound"
+        (selectedRow)="setSelectedRowItem($event)"
+        [tableData]="foundCriteriaTableData"
+      ></num-table>
+    </mat-tab>
+    <mat-tab label="Nicht Gefunden{{ notFoundCount > 0 ? ' (' + notFoundCount + ')' : '' }}">
+      <num-table
+        *ngIf="searchResultsFound"
+        (selectedRow)="setSelectedRowItem($event)"
+        [tableData]="notFoundCriteriaTableData"
+      ></num-table>
+    </mat-tab>
+  </mat-tab-group>
 
   <div *ngIf="!searchResultsFound" class="no-results-box">
     <num-placeholder-box class="no-results-text">{{

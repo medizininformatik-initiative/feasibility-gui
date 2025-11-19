@@ -1,4 +1,7 @@
+import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service';
+import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service';
 import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteria.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry';
 import { CriteriaBulkListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkListEntryAdapter';
 import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList';
@@ -8,9 +11,6 @@ import { map, Observable, of, Subscription, tap } from 'rxjs';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SelectedBulkCriteriaService } from 'src/app/service/SelectedBulkCriteria.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service';
-import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service';
 
 /**
  * Component for bulk criteria search functionality.
@@ -22,12 +22,15 @@ import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/B
   styleUrls: ['./bulk-search.component.scss'],
 })
 export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
-  adaptedData: TableData;
+  foundCriteriaTableData: TableData;
+  notFoundCriteriaTableData: TableData;
   searchFilters$: Observable<SearchFilter[]> = of([]);
   searchResultsFound = false;
   bulkSearchTermInput: string;
   filterMap: Map<string, string[]> = new Map<string, string[]>();
   filterAreSet = false;
+  foundCount: number;
+  notFoundCount: number;
 
   private subscriptions = new Subscription();
   private isInitialized = false;
@@ -43,6 +46,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.initializeSelectedEntriesSubscription();
     this.getBulkCriteriaSearchFilter();
     this.bulkSearchTermInput = this.bulkCriteriaSearchProvider.getSearchText();
     if (this.shouldAutoSubmitSearch()) {
@@ -64,6 +68,8 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
       .pipe(
         tap((response: CriteriaBulkResultList) => {
           this.searchResultsFound = response.getFound().length > 0;
+          this.foundCount = response.getFound().length;
+          this.notFoundCount = response.getNotFound().length;
         })
       )
       .subscribe((response: CriteriaBulkResultList) => {
@@ -141,7 +147,10 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
   private handleSearchResults(response: CriteriaBulkResultList): void {
     this.selectedBulkCriteriaService.addSelectedBulkCriteriaIds(response.getFound());
     this.selectedBulkCriteriaService.setUiProfileId(response.getUiProfileId());
-    this.adaptedData = CriteriaBulkListEntryAdapter.adapt(response.getFound());
+    this.foundCriteriaTableData = CriteriaBulkListEntryAdapter.adaptFound(response.getFound());
+    this.notFoundCriteriaTableData = CriteriaBulkListEntryAdapter.adaptNotFound(
+      response.getNotFound()
+    );
   }
 
   /**
@@ -149,10 +158,10 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    * @param entries - Array of selected criteria bulk entries
    */
   private updateRowSelectionStatus(entries: CriteriaBulkEntry[]): void {
-    if (!this.adaptedData?.body?.rows) {
+    if (!this.foundCriteriaTableData?.body?.rows) {
       return;
     }
-    this.adaptedData.body.rows.forEach((row) => {
+    this.foundCriteriaTableData.body.rows.forEach((row) => {
       row.isCheckboxSelected = entries.some((item) => item.getId() === row.id);
     });
   }
