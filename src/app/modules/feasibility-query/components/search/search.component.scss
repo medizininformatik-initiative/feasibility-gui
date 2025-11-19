@@ -4,8 +4,7 @@
 
 .search-container {
   display: flex;
-  gap: 1.5rem;
-  justify-content: center;
+  justify-content: start;
 }
 
 .filter-container {
@@ -13,6 +12,7 @@
   align-content: space-around;
   justify-content: flex-start;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .mat-mdc-icon-button {
   height: 44px;
