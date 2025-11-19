@@ -1,6 +1,7 @@
 import { BulkSearchResponseData } from '../../Interface/BulkSearchResponseData';
 import { BulkSearchResponseFoundData } from '../../Interface/BulkSearchResponseFoundData';
 import { CriteriaBulkEntry } from '../ListEntries/CriteriaBulkEntry';
+import { CriteriaBulkEntryNotFound } from '../ListEntries/CriteriaBulkEntryNotFound';
 
 /**
  * Represents a result list for bulk criteria search operations.
@@ -8,7 +9,7 @@ import { CriteriaBulkEntry } from '../ListEntries/CriteriaBulkEntry';
  */
 export class CriteriaBulkResultList {
   private found: CriteriaBulkEntry[];
-  private notFound: string[];
+  private notFound: CriteriaBulkEntryNotFound[];
   private uiProfileId: string;
 
   /**
@@ -17,7 +18,11 @@ export class CriteriaBulkResultList {
    * @param notFound - Array of identifiers that were not found
    * @param uiProfileId - The UI profile identifier
    */
-  constructor(found: CriteriaBulkEntry[], notFound: string[], uiProfileId: string) {
+  constructor(
+    found: CriteriaBulkEntry[],
+    notFound: CriteriaBulkEntryNotFound[],
+    uiProfileId: string
+  ) {
     this.found = found;
     this.notFound = notFound;
     this.uiProfileId = uiProfileId;
@@ -43,7 +48,7 @@ export class CriteriaBulkResultList {
    * Gets the array of identifiers that were not found.
    * @returns Array of not found identifiers
    */
-  public getNotFound(): string[] {
+  public getNotFound(): CriteriaBulkEntryNotFound[] {
     return this.notFound;
   }
 
@@ -51,7 +56,7 @@ export class CriteriaBulkResultList {
    * Sets the array of identifiers that were not found.
    * @param notFound - Array of not found identifiers to set
    */
-  public setNotFound(notFound: string[]): void {
+  public setNotFound(notFound: CriteriaBulkEntryNotFound[]): void {
     this.notFound = notFound;
   }
 
@@ -80,6 +85,9 @@ export class CriteriaBulkResultList {
     const foundEntries: CriteriaBulkEntry[] = json.found.map((entry: BulkSearchResponseFoundData) =>
       CriteriaBulkEntry.fromJson(entry)
     );
-    return new CriteriaBulkResultList(foundEntries, json.notFound, json.uiProfileId);
+    const notFoundEntries: CriteriaBulkEntryNotFound[] = json.notFound.map(
+      (entry: string) => new CriteriaBulkEntryNotFound(entry, entry)
+    );
+    return new CriteriaBulkResultList(foundEntries, notFoundEntries, json.uiProfileId);
   }
 }
