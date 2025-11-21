@@ -1,9 +1,9 @@
 <div fxFlexFill fxLayout="column" fxLayoutAlign="start">
   <div>
-    <div fxLayout="row" fxLayoutAlign="start center">
+    <div class="header-container">
       <num-header>{{ 'FEASIBILITY.BULK_SEARCH.HEADER' | translate }}</num-header>
       <div class="margin-left-auto">
-        <num-toggle-search></num-toggle-search>
+        <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
       </div>
     </div>
     <num-header-description>
@@ -37,15 +37,19 @@
     </num-button>
   </div>
 
-  <mat-tab-group *ngIf="searchResultsFound" style="width: 100%; flex: 1">
-    <mat-tab label="Gefunden{{ foundCount > 0 ? ' (' + foundCount + ')' : '' }}">
+  <mat-tab-group
+    (selectedTabChange)="tabChange($event)"
+    *ngIf="searchResultsFound"
+    style="width: 100%; flex: 1; overflow: auto"
+  >
+    <mat-tab position="2" label="Gefunden{{ foundCount >= 0 ? ' (' + foundCount + ')' : '' }}">
       <num-table
         *ngIf="searchResultsFound"
         (selectedRow)="setSelectedRowItem($event)"
         [tableData]="foundCriteriaTableData"
       ></num-table>
     </mat-tab>
-    <mat-tab label="Nicht Gefunden{{ notFoundCount > 0 ? ' (' + notFoundCount + ')' : '' }}">
+    <mat-tab label="Nicht Gefunden{{ notFoundCount >= 0 ? ' (' + notFoundCount + ')' : '' }}">
       <num-table
         *ngIf="searchResultsFound"
         (selectedRow)="setSelectedRowItem($event)"
@@ -60,6 +64,6 @@
     }}</num-placeholder-box>
   </div>
   <div>
-    <num-bulk-search-action-bar></num-bulk-search-action-bar>
+    <num-bulk-search-action-bar [resultType]="searchtype"></num-bulk-search-action-bar>
   </div>
 </div>

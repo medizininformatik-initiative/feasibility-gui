@@ -11,7 +11,11 @@ import { map, Observable, of, Subscription, tap } from 'rxjs';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SelectedBulkCriteriaService } from 'src/app/service/SelectedBulkCriteria.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component';
 
+export type SelectedTab = 'FOUND' | 'NOTFOUND';
 /**
  * Component for bulk criteria search functionality.
  * Allows users to search for multiple criteria at once and manage selected entries.
@@ -31,7 +35,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
   filterAreSet = false;
   foundCount: number;
   notFoundCount: number;
-
+  searchtype: SelectedTab = 'FOUND';
   private subscriptions = new Subscription();
   private isInitialized = false;
 
@@ -40,7 +44,8 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
     private bulkCriteriaSearchFilterService: BulkCriteriaSearchFilterService,
     private searchFilterProvider: FilterProvider,
     private bulkCriteriaService: BulkCriteriaService,
-    private selectedBulkCriteriaService: SelectedBulkCriteriaService
+    private selectedBulkCriteriaService: SelectedBulkCriteriaService,
+    private navigationHelperService: NavigationHelperService
   ) {
     this.getBulkCriteriaSearchFilter();
   }
@@ -62,14 +67,15 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    * Submits the bulk search with the current search term input.
    */
   public submitSearch(): void {
+    this.selectedBulkCriteriaService.clearSelectedBulkCriteriaIds();
     this.bulkCriteriaSearchProvider.setSearchText(this.bulkSearchTermInput);
     const searchSub = this.bulkCriteriaService
       .search(this.bulkSearchTermInput)
       .pipe(
         tap((response: CriteriaBulkResultList) => {
-          this.searchResultsFound = response.getFound().length > 0;
           this.foundCount = response.getFound().length;
           this.notFoundCount = response.getNotFound().length;
+          this.searchResultsFound = this.foundCount > 0 || this.notFoundCount > 0;
         })
       )
       .subscribe((response: CriteriaBulkResultList) => {
@@ -79,6 +85,18 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
     this.subscriptions.add(searchSub);
   }
 
+  /**
+   * Found tab equal index 0
+   * NotFound tab equal index 1
+   * @param tabEvent
+   */
+  public tabChange(tabEvent: MatTabChangeEvent): void {
+    if (tabEvent.index === 0) {
+      this.searchtype = 'FOUND';
+    } else if (tabEvent.index === 1) {
+      this.searchtype = 'NOTFOUND';
+    }
+  }
   /**
    * Sets the selected row item in the bulk criteria selection.
    * @param item - The table data row that was selected
@@ -182,5 +200,13 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
   private updateFilterStatus(): void {
     const filterArray = Array.from(this.filterMap);
     this.filterAreSet = filterArray.every(([key, values]) => values.length > 0);
+  }
+
+  public searchModeChange(mode: SearchMode): void {
+    if (mode === 'bulk-search') {
+      this.navigationHelperService.navigateToFeasibilityQueryBulkSearch();
+    } else if (mode === 'search') {
+      this.navigationHelperService.navigateToFeasibilityQuerySearch();
+    }
   }
 }
