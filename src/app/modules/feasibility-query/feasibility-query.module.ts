@@ -3,6 +3,7 @@ import { AttributeFilterComponent } from './components/editor/criterion-modal/at
 import { BeforeFilterComponent } from './components/editor/criterion-modal/time-restriction/before-filter/before-filter.component';
 import { BetweenFilterComponent } from './components/editor/criterion-modal/time-restriction/between-filter/between-filter.component';
 import { BoolLogicSwitchComponent } from './components/editor/display/bool-logic-switch/bool-logic-switch.component';
+import { BulkSearchActionBarComponent } from './components/search/action-bar/bulk-search/bulk-search-action-bar.component';
 import { CommonModule } from '@angular/common';
 import { ConceptComponent } from './components/editor/criterion-modal/concept/concept.component';
 import { ConsentSwitchesComponent } from './components/editor/stage/consent-switches/consent-switches.component';
@@ -39,13 +40,11 @@ import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SimpleResultComponent } from './components/result/simple-result/simple-result.component';
 import { TimerestrictionTypeSelectorComponent } from './components/editor/criterion-modal/time-restriction/timerestriction-type-selector/timerestriction-type-selector.component';
-import { ToggleSearchComponent } from './components/search/toggle-search/toggle-search.component';
 import { ValueFilterComponent } from './components/editor/criterion-modal/value-filter/value-filter.component';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
-import { BulkSearchActionBarComponent } from './components/search/action-bar/bulk-search/bulk-search-action-bar.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -91,7 +90,6 @@ export const FORMATS_GERMAN = {
     DisplayCriteriaComponent,
     ResultActionBarComponent,
     FeasibilityQueryBulkSearchComponent,
-    ToggleSearchComponent,
     BulkSearchActionBarComponent,
   ],
   imports: [

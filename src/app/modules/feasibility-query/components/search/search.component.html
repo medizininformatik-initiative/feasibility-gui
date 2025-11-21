@@ -1,9 +1,9 @@
 <div fxFlexFill fxLayout="column" fxLayoutAlign="start">
   <div>
-    <div fxLayout="row" fxLayoutAlign="start center">
+    <div class="header-container">
       <num-header>{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
       <div class="margin-left-auto">
-        <num-toggle-search></num-toggle-search>
+        <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
       </div>
     </div>
     <num-header-description>
