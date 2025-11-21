@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service';
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry';
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
@@ -19,6 +19,9 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
   isFeasibilityExistent$: Observable<boolean>;
   disabledAddToStageButton: Observable<boolean> = of(true);
   addToStageSubscription: Subscription;
+
+  @Input()
+  resultType: 'FOUND' | 'NOTFOUND';
   constructor(
     private selectedBulkCriteriaService: SelectedBulkCriteriaService,
     private stageProviderService: StageProviderService,
@@ -29,6 +32,7 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log('Result Type in Action Bar:', this.resultType);
     this.disabledAddToStageButton = this.selectedBulkCriteriaService
       .getSelectedBulkCriteria()
       .pipe(map((entries) => entries.length === 0));
