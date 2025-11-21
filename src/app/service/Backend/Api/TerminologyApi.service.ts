@@ -72,18 +72,6 @@ export class TerminologyApiService {
   }
 
   /**
-   * Retrieves codeable concepts by their IDs.
-   * @param ids - The IDs of the codeable concepts.
-   * @returns - An observable containing the codeable concepts.
-   */
-  public getCodeableConceptsByIds(ids: string[]): Observable<Array<ConceptData>> {
-    return this.chunkedRequestService.getChunkedRequest(
-      ids,
-      CodeableConceptPaths.ENTRY_CONCEPT_ENDPOINT
-    );
-  }
-
-  /**
    * Retrieves a specific entry by its ID.
    * @param id - The ID of the entry to retrieve.
    * @returns - An observable containing the entry data.
