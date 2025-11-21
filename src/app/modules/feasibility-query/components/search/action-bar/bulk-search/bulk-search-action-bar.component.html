@@ -12,7 +12,7 @@
     (click)="addItemsToStage()"
     matBadgePosition="above after"
     class="margin-right-20"
-    [isDisabled]="disabledAddToStageButton | async"
+    [isDisabled]="(disabledAddToStageButton | async) || resultType === 'NOTFOUND'"
   >
     {{ 'FEASIBILITY.BULK_SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
   </num-button>
