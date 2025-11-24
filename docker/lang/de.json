@@ -1,15 +1,15 @@
 {
   "APPLAYOUT": {
+    "HEADER": {
+      "ABOUT": "Über das Portal",
+      "LOGOUT": "Abmelden",
+      "PROPOSAL_PORTAL": "Antragsportal"
+    },
     "SIDENAV": {
       "LABEL": "Seitennavigation"
     },
     "TOGGLE": {
       "LABEL": "Seitennavigation umschalten"
-    },
-    "HEADER": {
-      "PROPOSAL_PORTAL": "Antragsportal",
-      "ABOUT": "Über das Portal",
-      "LOGOUT": "Abmelden"
     }
   },
   "DATAQUERY": {
@@ -106,6 +106,10 @@
           "ADD": "Neues Merkmal hinzufügen",
           "INFO": "Klicken Sie auf neues Merkmal hinzufügen, um ein neues Merkmal zu erstellen"
         },
+        "SNACKBAR": {
+          "SAVED": "Profil erfolgreich gespeichert",
+          "SAVING_ERROR": "Fehler beim Speichern des Profils"
+        },
         "TAB_LABEL": {
           "FIELD": "Felder",
           "FILTER": "Filter",
@@ -121,14 +125,14 @@
   },
   "ERROR": {
     "404": "Standort wurde nicht gefunden",
+    "DSE-10001": "Ein ausgewähltes Feld konnte nicht geladen werden",
     "FEAS-10001": "Ihr Account wurde wegen zu vieler Abfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
     "FEAS-10002": "Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut.",
     "FEAS-10003": "Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut.",
     "FEAS-10004": "Die Ergebnismenge ist zu klein → Ergebnis wird nicht angezeigt.",
     "FEAS-10005": "Die Anzahl der Standorte, die geantwortet haben, ist zu klein → Detailergebnis wird nicht angezeigt.",
     "FEAS-10006": "Sie haben zu viele Kohorten gespeichert, bitte löschen Sie Kohortenselektionen, bevor Sie weitere speichern.",
-    "VAL-20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden.",
-    "DSE-10001": "Ein ausgewähltes Feld konnte nicht geladen werden"
+    "VAL-20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden."
   },
   "FEASIBILITY": {
     "EDITOR": {
@@ -249,7 +253,12 @@
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen.",
       "LABEL": "Code oder Suchbegriff eingeben",
       "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
-      "SEARCH_BUTTON": "Suchen"
+      "SEARCH_BUTTON": "Suchen",
+      "SNACKBAR": {
+        "ADDED_TO_COHORT": "Kriterien wurden zur Kohortenselektion hinzugefügt",
+        "ADDED_TO_STAGE": "Kriterium wurde ausgewählt",
+        "REMOVED_FROM_STAGE": "Kriterium wurde entfernt"
+      }
     }
   },
   "LANGUAGE": {
@@ -358,18 +367,21 @@
     },
     "TABLE": {
       "AVAILABILITY": "Verfügbarkeit",
-      "SELECT_CHECKBOX": "Kriterium auswählen",
       "CONTEXT": "Kontext",
       "DISPLAY": "Anzeige",
+      "ICON": "Verwandte Kriterien anzeigen",
       "NAME": "Name",
       "PATIENT_COUNT": "Anzahl der Patienten",
+      "SELECT_CHECKBOX": "Kriterium auswählen",
       "SITE": "Standort",
       "TERMCODE": "Termcode",
-      "TERMINOLOGY_CODE": "Terminologie",
-      "ICON": "Verwandte Kriterien anzeigen"
+      "TERMINOLOGY_CODE": "Terminologie"
     }
   },
   "SHARED_FILTER": {
+    "CONCEPT_FILTER": {
+      "SEARCH_PLACEHOLDER": "Begriff oder Termcode eingeben"
+    },
     "TIMERESTRICTION": {
       "AFTER": "nach",
       "AT": "am",
