@@ -1,8 +1,8 @@
+import { AppSettingsProviderService } from './Config/AppSettingsProvider.service';
 import { CreateDataSelectionProfileService } from './DataSelection/CreateDataSelectionProfile.service';
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile';
-import { FeatureService } from './Feature.service';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,25 +11,21 @@ import { Observable } from 'rxjs';
 export class DataSelectionMainProfileInitializerService {
   constructor(
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
-    private featureProvider: FeatureService
+    private appSettingsProviderService: AppSettingsProviderService
   ) {}
 
   /**
    * @todo set Profile in DataSelectionProviderService
    * @param patientProfileUrl
-   * @returns
+   * @returns Observable<DataSelectionProfile>
    */
   public initializePatientProfile(): Observable<DataSelectionProfile> {
-    const mainProfileUrl = this.featureProvider.getPatientProfileUrl();
+    const mainProfileUrl = this.appSettingsProviderService.getDsePatientProfileUrl();
     return this.createDataSelectionProfileService
       .fetchDataSelectionProfileData([mainProfileUrl])
       .pipe(
-        map((profiles) => {
-          if (profiles && profiles.length > 0) {
-            const profile = profiles[0];
-            return profile;
-          }
-        })
+        filter((profiles) => !!profiles && profiles.length > 0),
+        map((profiles) => profiles[0])
       );
   }
 }

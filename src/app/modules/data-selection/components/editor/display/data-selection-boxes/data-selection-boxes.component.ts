@@ -2,19 +2,19 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { FeatureService } from '../../../../../../service/Feature.service';
 import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
+import { map, Observable, of, Subscription, take } from 'rxjs';
 import { MenuItemInterface } from '../../../../../../shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from '../../../../../../shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
-import { map, Observable, of, Subscription, take } from 'rxjs';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { RemoveReferenceService } from 'src/app/service/RemoveReference.service';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -51,7 +51,7 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
     private filtersFilterChipsService: DataSelectionFiltersFilterChips,
     private removeReferenceService: RemoveReferenceService,
     private menuService: MenuServiceDataSelection,
-    private featureService: FeatureService,
+    private appSettingsProvider: AppSettingsProviderService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private profileProviderService: ProfileProviderService
   ) {}
@@ -99,10 +99,16 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
       .getActiveDataSelection()
       .pipe(
         map((dataSelection) => {
-          this.isReferenced = dataSelection.getProfiles().some((profile) => profile
+          this.isReferenced = dataSelection.getProfiles().some((profile) =>
+            profile
               .getProfileFields()
               .getSelectedReferenceFields()
-              .some((referenceField) => referenceField.getLinkedProfileIds().some((linkedProfileId) => this.profile.getId() === linkedProfileId)));
+              .some((referenceField) =>
+                referenceField
+                  .getLinkedProfileIds()
+                  .some((linkedProfileId) => this.profile.getId() === linkedProfileId)
+              )
+          );
           return this.isReferenced;
         })
       )
@@ -133,7 +139,8 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
     this.getRequiredOrRecommendedReferences();
   }
   private getMenuItems() {
-    const isMainProfile = this.featureService.getPatientProfileUrl() === this.profile.getUrl();
+    const isMainProfile =
+      this.appSettingsProvider.getDsePatientProfileUrl() === this.profile.getUrl();
     this.menuItems = this.menuService.getMenuItemsForDataSelection(isMainProfile);
   }
 }

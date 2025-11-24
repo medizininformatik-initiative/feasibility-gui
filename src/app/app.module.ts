@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ErrorHandler } from '@angular/core';
+import { APP_INITIALIZER } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthTokenInterceptor } from './core/interceptors/AuthToken.interceptor';

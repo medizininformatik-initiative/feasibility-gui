@@ -15,8 +15,7 @@ export class CriterionProviderService {
 
   /**
    * Retrieves the observable of the criterion UID map.
-   *
-   * @returns Observable<Map<string, Criterion>>
+   * @returns
    */
   public getCriterionUIDMap(): Observable<Map<string, Criterion>> {
     return this.criterionUIDMapSubject.asObservable();

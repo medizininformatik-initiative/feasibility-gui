@@ -1,29 +1,32 @@
 import { ActuatorApiService } from './service/Backend/Api/ActuatorApi.service';
-import { AppConfigService } from './config/app-config.service';
-import { catchError, concatMap, map, tap } from 'rxjs/operators';
+import { AppConfigData } from './config/model/AppConfig/AppConfigData';
+import { AppConfigService } from './config/AppConfig.service';
+import { catchError, concatMap, map, take, tap, timeout } from 'rxjs/operators';
+import { DataportalConfigService } from './config/DataportalConfig.service';
 import { DataSelectionMainProfileInitializerService } from './service/DataSelectionMainProfileInitializerService';
 import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile';
-import { FeatureProviderService } from './service/FeatureProvider.service';
-import { FeatureService } from './service/Feature.service';
-import { IAppConfig } from './config/app-config.model';
 import { Injectable } from '@angular/core';
-import { OAuthInitService } from './core/auth/oauth-init.service';
+import { OAuthInitService } from './core/auth/OAuthInit.service';
 import { Observable, of, throwError } from 'rxjs';
 import { ProvidersInitService } from './service/Provider/ProvidersInit.service';
+import { TerminologyApiService } from './service/Backend/Api/TerminologyApi.service';
 import { TerminologySystemProvider } from './service/Provider/TerminologySystemProvider.service';
+import { UiProfileProviderService } from './service/Provider/UiProfileProvider.service';
+import { UiProfileResponseData } from './model/Interface/UiProfileResponseData';
 import { UserProfileService } from './service/User/UserProfile.service';
 @Injectable({ providedIn: 'root' })
 export class CoreInitService {
   constructor(
     private appConfigService: AppConfigService,
+    private dataportalConfigService: DataportalConfigService,
     private oauthInitService: OAuthInitService,
     private dataSelectionMainProfileInitializerService: DataSelectionMainProfileInitializerService,
     private terminologySystemProvider: TerminologySystemProvider,
-    private featureService: FeatureService,
-    private featureProviderService: FeatureProviderService,
     private providersInitService: ProvidersInitService,
     private actuatorApiService: ActuatorApiService,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private terminologyApiService: TerminologyApiService,
+    private uiProfileProviderService: UiProfileProviderService
   ) {}
 
   /**
@@ -33,33 +36,33 @@ export class CoreInitService {
    * Initializes core services and features.
    * @returns An observable of the application configuration.
    */
-  public init(): Observable<IAppConfig> {
-    return this.loadConfig().pipe(
-      concatMap((config) => this.initOAuth(config)),
-      concatMap((config) => this.initUserProfile(config)),
-      concatMap((config) => this.initFeatureService(config)),
-      concatMap((config) => this.initFeatureProviderService(config)),
-      concatMap((config) => this.checkBackendHealth(config)),
-      concatMap((config) => this.initTerminologySystems(config)),
-      concatMap((config) =>
-        this.initPatientProfile(config).pipe(
-          map((patientProfileResult) => ({ config, patientProfileResult }))
-        )
+  public init(): Observable<AppConfigData> {
+    return this.loadAppConfig().pipe(
+      concatMap(() => this.initOAuth()),
+      concatMap(() => this.loadDataportalSettings()),
+      concatMap(() => this.initUserProfile()),
+      concatMap(() => this.checkBackendHealth()),
+      concatMap(() => this.getUiProfilesData()),
+      concatMap(() => this.initTerminologySystems()),
+      concatMap(() =>
+        this.initPatientProfile().pipe(map((patientProfileResult) => ({ patientProfileResult })))
       ),
-      concatMap(({ config, patientProfileResult }) =>
-        this.initializeProviders(config, patientProfileResult)
-      ),
+      concatMap(({ patientProfileResult }) => this.initializeProviders(patientProfileResult)),
       tap(() => console.log('CoreInitService complete')),
       catchError((err) => {
         console.error('CoreInitService failed:', err);
         return throwError(() => err);
       })
-    ) as Observable<IAppConfig>;
+    ) as Observable<AppConfigData>;
   }
 
-  private loadConfig(): Observable<IAppConfig> {
-    return this.appConfigService.loadConfig().pipe(
-      tap((config) => console.log('Config loaded:', !!config)),
+  /**
+   * Loads the application configuration.
+   * @returns An observable of the application configuration.
+   */
+  private loadAppConfig(): Observable<AppConfigData> {
+    return this.appConfigService.loadAppConfig().pipe(
+      tap((config) => console.log('AppConfig loaded:', !!config)),
       catchError((err) => {
         console.error('Config load failed:', err);
         return throwError(() => err);
@@ -67,12 +70,28 @@ export class CoreInitService {
     );
   }
 
-  private initOAuth(config: IAppConfig): Observable<IAppConfig> {
-    return this.oauthInitService.initOAuth(config).pipe(
+  /**
+   * Loads the dataportal settings from the backend.
+   * @returns
+   */
+  private loadDataportalSettings(): Observable<void> {
+    return this.dataportalConfigService.loadDataportalConfig().pipe(
+      tap((config) => console.log('Dataportal settings loaded:', !!config)),
+      map(() => undefined),
+      catchError((err) => {
+        console.error('Dataportal settings load failed:', err);
+        return throwError(() => err);
+      })
+    );
+  }
+
+  /**
+   * Initializes OAuth.
+   * @returns
+   */
+  private initOAuth(): Observable<boolean> {
+    return this.oauthInitService.initOAuth().pipe(
       tap((result) => console.log('OAuth initialized:', result)),
-      concatMap((result) =>
-        result === true ? of(config) : throwError(() => new Error('OAuth initialization failed'))
-      ),
       catchError((err) => {
         console.error('OAuth init failed:', err);
         return throwError(() => err);
@@ -80,51 +99,24 @@ export class CoreInitService {
     );
   }
 
-  private initUserProfile(config: IAppConfig): Observable<IAppConfig> {
-    return this.userProfileService.initializeProfile().pipe(
-      tap((result) => console.log('UserProfile initialized:', result)),
-      concatMap((result: boolean) =>
-        result === true
-          ? of(config)
-          : throwError(() => new Error('UserProfile initialization failed'))
-      ),
-      map(() => config)
-    );
+  /**
+   * Initializes the user profile.
+   * @returns
+   */
+  private initUserProfile(): Observable<boolean> {
+    return this.userProfileService
+      .initializeProfile()
+      .pipe(tap((result) => console.log('UserProfile initialized:', result)));
   }
 
-  private initFeatureService(config: IAppConfig): Observable<IAppConfig> {
-    return this.featureService.initFeatureService(config).pipe(
-      tap((result) => console.log('FeatureService initialized:', result === true)),
-      concatMap((result) =>
-        result === true
-          ? of(config)
-          : throwError(() => new Error('FeatureService initialization failed'))
-      ),
-      catchError((err) => {
-        console.error('FeatureService init failed:', err);
-        return throwError(() => err);
-      })
-    );
-  }
-
-  private initFeatureProviderService(config: IAppConfig): Observable<IAppConfig> {
-    return this.featureProviderService.initFeatures(config).pipe(
-      concatMap((result) =>
-        result === true
-          ? of(config)
-          : throwError(() => new Error('FeatureProviderService initialization failed'))
-      ),
-      catchError((err) => {
-        console.error('FeatureProviderService init failed:', err);
-        return throwError(() => err);
-      })
-    );
-  }
-
-  private checkBackendHealth(config: IAppConfig): Observable<IAppConfig> {
+  /**
+   * Checks the health of the backend.
+   * @returns
+   */
+  private checkBackendHealth(): Observable<boolean> {
     return this.actuatorApiService.getActuatorHealth().pipe(
+      map((result) => (typeof result === 'boolean' ? result : true)),
       tap(() => console.log('Backend is up')),
-      map(() => config),
       catchError((err) => {
         console.error('Backend health check failed:', err);
         return throwError(() => new Error('Backend is not reachable'));
@@ -132,12 +124,35 @@ export class CoreInitService {
     );
   }
 
-  private initTerminologySystems(config: IAppConfig): Observable<IAppConfig> {
+  /**
+   * Returns the UI Profiles data from the backend and caches them.
+   * @returns
+   */
+  private getUiProfilesData(): Observable<UiProfileResponseData[]> {
+    return this.terminologyApiService.getUiProfileData().pipe(
+      tap((uiProfileResponseData: UiProfileResponseData[]) =>
+        this.uiProfileProviderService.cacheUiProfiles(uiProfileResponseData)
+      ),
+      tap((data: UiProfileResponseData[]) =>
+        console.log('UiProfiles data retrieved:', data.length)
+      ),
+      catchError((err) => {
+        console.error('Failed to retrieve UiProfiles data:', err);
+        return throwError(() => err);
+      })
+    );
+  }
+
+  /**
+   * Initializes the terminology systems.
+   * @returns
+   */
+  private initTerminologySystems(): Observable<boolean> {
     return this.terminologySystemProvider.initializeTerminologySystems().pipe(
       tap((result) => console.log('TerminologySystems initialized:', result === true)),
       concatMap((result) =>
         result === true
-          ? of(config)
+          ? of(result)
           : throwError(() => new Error('TerminologySystems initialization failed'))
       ),
       catchError((err) => {
@@ -147,15 +162,17 @@ export class CoreInitService {
     );
   }
 
-  private initializeProviders(
-    config: IAppConfig,
-    patientProfileResult: DataSelectionProfile
-  ): Observable<IAppConfig> {
+  /**
+   * Initializes the providers.
+   * @param patientProfileResult
+   * @returns
+   */
+  private initializeProviders(patientProfileResult: DataSelectionProfile): Observable<boolean> {
     return this.providersInitService.initializeProviders(patientProfileResult).pipe(
       tap((result) => console.log('Providers initialized:', result === true)),
       concatMap((result) =>
         result === true
-          ? of(config)
+          ? of(result)
           : throwError(() => new Error('Providers initialization failed'))
       ),
       catchError((err) => {
@@ -165,7 +182,11 @@ export class CoreInitService {
     );
   }
 
-  private initPatientProfile(config: IAppConfig): Observable<DataSelectionProfile> {
+  /**
+   * Initializes the patient profile for the feature selection.
+   * @returns
+   */
+  private initPatientProfile(): Observable<DataSelectionProfile> {
     return this.dataSelectionMainProfileInitializerService.initializePatientProfile().pipe(
       tap((result) => console.log('PatientProfile initialized:', !!result)),
       concatMap((result) =>

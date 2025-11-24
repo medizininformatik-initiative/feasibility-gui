@@ -2,6 +2,7 @@ import { AbstractQuantityFilter } from './AbstractQuantityFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityUnit } from '../../../QuantityUnit';
+import { QuantityRangeFilterData } from 'src/app/model/Interface/Quantity/QuantityRangeFilterData';
 
 /**
  * Class representing a QuantityRangeFilter.
@@ -38,7 +39,7 @@ export class QuantityRangeFilter extends AbstractQuantityFilter {
    *
    * @returns The minimum value.
    */
-  getMinValue(): number | null {
+  public getMinValue(): number | null {
     return this.minValue;
   }
 
@@ -47,7 +48,7 @@ export class QuantityRangeFilter extends AbstractQuantityFilter {
    *
    * @param minValue - The minimum value to set.
    */
-  setMinValue(minValue: number | null): void {
+  public setMinValue(minValue: number | null): void {
     this.minValue = minValue;
   }
 
@@ -56,7 +57,7 @@ export class QuantityRangeFilter extends AbstractQuantityFilter {
    *
    * @returns The maximum value.
    */
-  getMaxValue(): number | null {
+  public getMaxValue(): number | null {
     return this.maxValue;
   }
 
@@ -65,7 +66,7 @@ export class QuantityRangeFilter extends AbstractQuantityFilter {
    *
    * @param maxValue - The maximum value to set.
    */
-  setMaxValue(maxValue: number | null): void {
+  public setMaxValue(maxValue: number | null): void {
     this.maxValue = maxValue;
   }
 
@@ -74,7 +75,7 @@ export class QuantityRangeFilter extends AbstractQuantityFilter {
    *
    * @returns The filter type.
    */
-  getType(): FilterTypes {
+  public getType(): FilterTypes {
     return this.type;
   }
 }

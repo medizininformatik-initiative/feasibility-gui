@@ -1,5 +1,7 @@
+import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData';
 import { AbstractAttributeGroupFilter } from './AttributeGroup/AbstractAttributeGroupFilter';
 import { Attributes } from './AttributeGroup/Attributes/Attribute';
+import { AttributesData } from 'src/app/model/Interface/AttributesData';
 
 export class AttributeGroup {
   id: string;
@@ -58,13 +60,13 @@ export class AttributeGroup {
   }
 
   public static fromJson(
-    json: any,
+    json: AttributeGroupsData,
     abstractAttributeGroupFilter: AbstractAttributeGroupFilter[]
   ): AttributeGroup {
     return new AttributeGroup(
       json.id,
       json.groupReference,
-      json.attributes.map((attribute: any) => Attributes.fromJson(attribute)),
+      json.attributes.map((attribute: AttributesData) => Attributes.fromJson(attribute)),
       abstractAttributeGroupFilter,
       json.name,
       json.includeReferenceOnly

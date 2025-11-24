@@ -1,10 +1,10 @@
 import { AttributeFilterBaseData } from './AttributeFilterBaseData';
 import { AttributeFilterTypeData } from './AttributeFilterTypeData';
-import { StructuredQueryCriterionData } from './StructuredQueryCriterionData';
+import { ReferenceCriteriaData } from './ReferenceCriteriaData';
 import { TerminologyCodeBaseData } from './TerminologyBaseData';
 
 export interface AttributeFilterData extends AttributeFilterBaseData {
-  type: AttributeFilterTypeData
-  criteria: StructuredQueryCriterionData[]
-  attributeCode: TerminologyCodeBaseData
+  readonly type: AttributeFilterTypeData
+  readonly criteria: ReferenceCriteriaData[]
+  readonly attributeCode: TerminologyCodeBaseData
 }

@@ -60,8 +60,8 @@ export class PollingManagerService {
     let lastValidResult: QueryResult | null = null;
     let lastError: ErrorQueryResult | null = null;
 
-    return interval(this.pollingService.POLLING_INTERVALL_MILLISECONDS).pipe(
-      takeUntil(timer(this.pollingService.POLLING_MAXL_MILLISECONDS + 200)),
+    return interval(this.pollingService.getPollingInterval()).pipe(
+      takeUntil(timer(this.pollingService.getPollingTime() + 200)),
       mergeMap(() =>
         this.requestPollingResult(resultId).pipe(
           map((result) => {

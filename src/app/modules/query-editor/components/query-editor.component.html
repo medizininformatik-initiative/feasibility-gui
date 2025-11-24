@@ -1,14 +1,10 @@
 <div class="container">
-  <div>
-    <num-editor-header [id]="id" [type]="type"></num-editor-header>
-  </div>
+  <num-editor-header [id]="id" [type]="type"></num-editor-header>
   <div class="background margin-bottom-3">
     <num-editor-content
       [criterion]="criterion$ | async"
       (criterionChanged)="updateCriterion($event)"
     ></num-editor-content>
   </div>
-  <div>
-    <num-edit-action-bar (save)="saveElement()" (cancel)="onCancel()"> </num-edit-action-bar>
-  </div>
+  <num-edit-action-bar (cancel)="onCancel()"> </num-edit-action-bar>
 </div>

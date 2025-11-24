@@ -1,22 +1,24 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
+import { BasicFieldData } from 'src/app/model/Interface/BasicFieldData';
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
 import { concatMap, map, Observable } from 'rxjs';
 import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionProfileData } from 'src/app/model/Interface/DataSelectionProfileData';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
+import { ProfileFilterData } from 'src/app/model/Interface/ProfileFilterData';
 import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
-import { ReferencedProfile } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferencedProfile';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
+import { ReferenceFieldData } from 'src/app/model/Interface/ReferenceFieldData';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
@@ -30,16 +32,23 @@ export class CreateDataSelectionProfileService {
     private profileProvider: ProfileProviderService
   ) {}
 
+  /**
+   * Fetches data selection profile data from the API.
+   * Sets profiles in the profile provider.
+   * @param urls The URLs of the data selection profiles to fetch.
+   * @param markAsReference Whether to mark the profiles as references.
+   * @return An observable of the fetched data selection profiles.
+   */
   public fetchDataSelectionProfileData(
     urls: string[],
     markAsReference: boolean = false
   ): Observable<DataSelectionProfile[]> {
     return this.dataSelectionApiService.getDataSelectionProfileData(urls).pipe(
-      map((data: any[]) =>
-        data.map((item: any) => {
+      map((data: DataSelectionProfileData[]) =>
+        data.map((item: DataSelectionProfileData) => {
           const filters = this.createFilters(item.filters);
           const referenceFields = item.references;
-          const test = this.mapAndConstructProfileRefrenceFields(referenceFields);
+          const test = this.mapAndConstructProfileReferenceFields(referenceFields);
           const profileFields = this.mapAndConstructProfileFields(item.fields, test);
           const profile = this.instanceOfDataSelectionProfile(
             item,
@@ -59,8 +68,13 @@ export class CreateDataSelectionProfileService {
     );
   }
 
-  private createFilters(filters: any): AbstractProfileFilter[] {
-    const profileFilters = filters?.map((filter: any) => {
+  /**
+   * Creates profile filters from the provided filter data.
+   * @param filters
+   * @returns
+   */
+  private createFilters(filters: ProfileFilterData[]): AbstractProfileFilter[] {
+    const profileFilters = filters?.map((filter: ProfileFilterData) => {
       switch (filter.ui_type) {
         case DataSelectionUIType.TIMERESTRICTION:
           return this.createProfileTimeRestrictionFilter(filter);
@@ -71,7 +85,14 @@ export class CreateDataSelectionProfileService {
     return profileFilters;
   }
 
-  private createProfileTimeRestrictionFilter(filter: any): ProfileTimeRestrictionFilter {
+  /**
+   * Creates a time restriction filter from the provided filter data.
+   * @param filter
+   * @returns
+   */
+  private createProfileTimeRestrictionFilter(
+    filter: ProfileFilterData
+  ): ProfileTimeRestrictionFilter {
     return new ProfileTimeRestrictionFilter(filter.name, filter.type, new BetweenFilter(null, null));
   }
 
@@ -84,12 +105,12 @@ export class CreateDataSelectionProfileService {
    * @returns
    */
   private instanceOfDataSelectionProfile(
-    item: any,
+    item: DataSelectionProfileData,
     fields: ProfileFields,
     filters: AbstractProfileFilter[],
     markAsReference: boolean
   ): DataSelectionProfile {
-    const displayInstance = this.instantiateDisplayData(item.display);
+    const displayInstance = Display.fromJson(item.display);
     const dataSelectionProfileProfile: DataSelectionProfile = new DataSelectionProfile(
       uuidv4(),
       item.url,
@@ -102,22 +123,30 @@ export class CreateDataSelectionProfileService {
     return dataSelectionProfileProfile;
   }
 
-  private mapAndConstructProfileFields(node: any, referenceField: ReferenceField[]): ProfileFields {
+  private mapAndConstructProfileFields(
+    node: BasicFieldData[],
+    referenceField: ReferenceField[]
+  ): ProfileFields {
     const fields: BasicField[] = [];
     this.traverseAndMapFields(node, fields);
     return this.constructProfileFields(fields, referenceField);
   }
 
-  private traverseAndMapFields(node: any, fields: BasicField[]): void {
+  private traverseAndMapFields(node: BasicFieldData[], fields: BasicField[]): void {
     node.map((nodeEntry) => {
       fields.push(this.mapField(nodeEntry));
     });
   }
 
-  private mapField(node: any): BasicField {
+  /**
+   * Maps a BasicFieldData node to a BasicField instance.
+   * @param node
+   * @returns
+   */
+  private mapField(node: BasicFieldData): BasicField {
     const children = node.children ? node.children.map((child) => this.mapField(child)) : [];
-    const display = this.instantiateDisplayData(node?.display);
-    const description = this.instantiateDisplayData(node?.description);
+    const display = Display.fromJson(node?.display);
+    const description = Display.fromJson(node?.description);
     const isRequiredOrRecommended: boolean = node.required || node.recommended;
     const basicField = new BasicField(
       node.id,
@@ -127,7 +156,7 @@ export class CreateDataSelectionProfileService {
       node.recommended,
       isRequiredOrRecommended,
       node.required,
-      node.type
+      null
     );
     if (isRequiredOrRecommended) {
       this.selectedBasicFields.push(new SelectedBasicField(basicField, false));
@@ -149,16 +178,6 @@ export class CreateDataSelectionProfileService {
     return profileFields;
   }
 
-  public instantiateDisplayData(displayData: any): Display {
-    return new Display(
-      displayData.translations.map(
-        (translation) =>
-          new Translation(translation.language, translation.value ? translation.value : undefined)
-      ),
-      displayData.original
-    );
-  }
-
   public checkValuesForTypeString(value: string | string[]): string[] {
     if (typeof value == 'string') {
       if (value.length > 0) {
@@ -171,29 +190,14 @@ export class CreateDataSelectionProfileService {
     }
   }
 
-  private mapAndConstructProfileRefrenceFields(referenceFields: any[]): ReferenceField[] {
-    const insatnces = referenceFields.map(
-      (field) =>
-        new ReferenceField(
-          field.id,
-          this.instantiateDisplayData(field.display),
-          this.instantiateDisplayData(field.description),
-          field.required,
-          field.recommended,
-          this.mapAndConstructRefrencedProfiles(field.referencedProfiles) || []
-        )
-    );
-    return insatnces;
-  }
-
-  private mapAndConstructRefrencedProfiles(refrencedProfiles: any[]): ReferencedProfile[] {
-    return refrencedProfiles.map(
-      (referencedProfile) =>
-        new ReferencedProfile(
-          referencedProfile.url,
-          this.instantiateDisplayData(referencedProfile.display),
-          this.instantiateDisplayData(referencedProfile.fields)
-        )
-    );
+  /**
+   * Maps and constructs ReferenceField instances from ReferenceFieldData array.
+   * @param referenceFields
+   * @returns
+   */
+  private mapAndConstructProfileReferenceFields(
+    referenceFields: ReferenceFieldData[]
+  ): ReferenceField[] {
+    return referenceFields.map((field) => ReferenceField.fromJson(field));
   }
 }

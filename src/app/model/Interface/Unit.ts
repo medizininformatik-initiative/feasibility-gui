@@ -1,21 +1,27 @@
 /**
- * Interface representing quantity unit data from backend API responses.
- * Defines measurement units with coding information for quantities and values.
- * Used for mapping JSON responses containing unit definitions to domain models.
+ * Represents a quantity unit as returned by the backend API.
+ *
+ * This interface defines the coding information for measurement units (e.g., kilograms, centimeters, mmHg).
+ * It is primarily used to map JSON responses containing unit definitions into domain models.
+ *
+ * @interface QuantityUnitData
  */
 export interface QuantityUnitData {
   /**
-   * The unit code value (e.g., "kg", "cm", "mmHg")
+   * The coded unit value.
+   * @type {string}
    */
-  code: string
+  readonly code: string
 
   /**
-   * Human-readable display text for the unit
+   * The human-readable display name for the unit.
+   * @type {string}
    */
-  display: string
+  readonly display: string
 
   /**
-   * Optional URI or identifier of the unit coding system (e.g., UCUM)
+   * The optional URI or identifier for the unit’s coding system.
+   * @type {string | undefined}
    */
-  system?: string
+  readonly system?: string
 }

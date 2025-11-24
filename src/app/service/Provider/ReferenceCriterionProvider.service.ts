@@ -34,7 +34,7 @@ export class ReferenceCriterionProviderService {
   /**
    * Sets a reference criterion array by its unique ID and updates the map.
    *
-   * @param uid The unique ID of the reference criterion
+   * @param id The id of the reference criterion
    * @param referenceCriterion The array of reference criteria to set
    */
   public setReferenceCriterionByUID(id: string, referenceCriterion: ReferenceCriterion): void {

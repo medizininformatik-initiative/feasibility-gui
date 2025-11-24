@@ -34,14 +34,14 @@ export class SelectedReferenceField extends AbstractSelectedField {
   }
 
   public getElementId(): string {
-    return this.selectedField.field.getElementId();
+    return this.selectedField.getField().getElementId();
   }
 
   public getDisplay(): Display {
-    return this.selectedField.field.getDisplay();
+    return this.selectedField.getField().getDisplay();
   }
 
   public getType(): string {
-    return this.selectedField.field.getType();
+    return this.selectedField.getField().getType();
   }
 }

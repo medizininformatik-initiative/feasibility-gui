@@ -20,14 +20,14 @@ export class ProfileProviderService {
     return this.profileIdMap.get(id);
   }
 
-  public setProfileById(url: string, profile: DataSelectionProfile): void {
-    this.profileIdMap.set(url, profile);
+  public setProfileById(id: string, profile: DataSelectionProfile): void {
+    this.profileIdMap.set(id, profile);
     this.profileUrlMapSubject.next(new Map(this.profileIdMap));
   }
 
-  public removeProfileById(url: string): void {
-    if (this.profileIdMap.has(url)) {
-      this.profileIdMap.delete(url);
+  public removeProfileById(id: string): void {
+    if (this.profileIdMap.has(id)) {
+      this.profileIdMap.delete(id);
       this.profileUrlMapSubject.next(new Map(this.profileIdMap));
     }
   }

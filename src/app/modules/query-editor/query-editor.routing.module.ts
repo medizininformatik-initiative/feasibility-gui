@@ -15,7 +15,7 @@ const routes: Routes = [
     component: QueryEditorComponent,
   },
   {
-    path: `${PathSegments.profile}/:id`,
+    path: `${PathSegments.feature}/:id`,
     component: QueryEditorComponent,
     data: { hideSideNav: false },
     canActivate: [RouteGuard],

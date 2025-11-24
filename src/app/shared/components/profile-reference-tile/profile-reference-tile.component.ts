@@ -120,9 +120,7 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
     this.dataSelectionProviderSubscription?.unsubscribe();
     const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
     this.profileProviderService.setProfileById(this.parentId, updatedProfile);
-    this.dataSelectionProviderSubscription = this.dataSelectionProviderService
-      .setProfileInActiveDataSelection(updatedProfile)
-      .subscribe();
+    this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile);
   }
 
   private getIndexOfSelectedReferenceField(selectedReferences: SelectedReferenceField[]): number {

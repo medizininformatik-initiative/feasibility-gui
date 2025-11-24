@@ -1,3 +1,5 @@
+import { QuantityUnitData } from '../Interface/Unit';
+
 /**
  * Represents a quantity unit with a code and display name.
  */
@@ -23,7 +25,7 @@ export class QuantityUnit {
    *
    * @returns The code of the quantity unit.
    */
-  getCode(): string {
+  public getCode(): string {
     return this.code;
   }
 
@@ -32,7 +34,7 @@ export class QuantityUnit {
    *
    * @param code - The new code of the quantity unit.
    */
-  setCode(code: string): void {
+  public setCode(code: string): void {
     this.code = code;
   }
 
@@ -41,7 +43,7 @@ export class QuantityUnit {
    *
    * @returns The display name of the quantity unit.
    */
-  getDisplay(): string {
+  public getDisplay(): string {
     return this.display;
   }
 
@@ -50,7 +52,7 @@ export class QuantityUnit {
    *
    * @param display - The new display name of the quantity unit.
    */
-  setDisplay(display: string): void {
+  public setDisplay(display: string): void {
     this.display = display;
   }
 
@@ -59,7 +61,7 @@ export class QuantityUnit {
    *
    * @returns The system name of the quantity unit.
    */
-  getSystem(): string {
+  public getSystem(): string {
     return this.system;
   }
 
@@ -68,7 +70,17 @@ export class QuantityUnit {
    *
    * @param system - The new system name of the quantity unit.
    */
-  setSystem(system: string): void {
+  public setSystem(system: string): void {
     this.system = system;
+  }
+
+  /**
+   * Creates a QuantityUnit instance from a JSON object.
+   * @param json
+   * @returns
+   * @see {@link QuantityUnitData}
+   */
+  public static fromJson(json: QuantityUnitData): QuantityUnit {
+    return new QuantityUnit(json.code, json.display, json?.system);
   }
 }

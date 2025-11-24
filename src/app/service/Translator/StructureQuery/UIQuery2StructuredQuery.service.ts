@@ -7,7 +7,6 @@ import { ConsentService } from '../../Consent/Consent.service';
 import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery';
-import { FeatureService } from '../../Feature.service';
 import { Injectable } from '@angular/core';
 import { ObjectHelper } from 'src/app/service/ObjectHelper';
 import { ReferenceFilter as ReferenceFilterSQ } from '../../../model/StructuredQuery/Criterion/AttributeFilters/ReferenceFilter/ReferenceFilter';
@@ -24,7 +23,6 @@ import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTran
 })
 export class UIQuery2StructuredQueryService {
   constructor(
-    private featureService: FeatureService,
     private criterionProvider: CriterionProviderService,
     private timeRestrictionTranslation: TimeRestrictionTranslationService,
     private quantityFilterTranslator: StructuredQueryQuantityFilterTranslatorService,
@@ -96,21 +94,13 @@ export class UIQuery2StructuredQueryService {
     const structuredQueryCriterion = new StructuredQueryCriterion(
       this.terminologyTranslator.translateTermCodes(criterion.getTermCodes()),
       this.translateAttributeFilters(criterion),
-      this.addContextToStructuredQuery(criterion),
+      criterion.getContext(),
       this.timeRestrictionTranslation.translateTimeRestrictionToStructuredQuery(
         criterion.getTimeRestriction()
       ),
       this.translateValueFilter(criterion)
     );
     return structuredQueryCriterion;
-  }
-
-  private addContextToStructuredQuery(criterion: Criterion): TerminologyCode | undefined {
-    if (this.featureService.getSendSQContextToBackend()) {
-      return criterion.getContext();
-    } else {
-      return undefined;
-    }
   }
 
   private translateAttributeFilters(

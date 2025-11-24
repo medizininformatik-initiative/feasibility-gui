@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
-import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service';
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
+import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service';
 
 @Component({
   selector: 'num-quantity-comparator',

@@ -1,10 +1,8 @@
 import { AbstractAttributeDefinitionsResultMapper } from './AbstractAttributeDefinitionsResultMapper';
-import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData';
+import { AttributeDefinitions } from 'src/app/model/Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { DisplayData } from 'src/app/model/Interface/DisplayData';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 
 export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitionsResultMapper {
   /**
@@ -37,42 +35,16 @@ export class AttributeDefinitionsResultMapper extends AbstractAttributeDefinitio
     attributeDefinition: AttributeDefinitionData
   ): AttributeDefinitions {
     return new AttributeDefinitions(
-      this.createDisplayData(attributeDefinition.display),
+      Display.fromJson(attributeDefinition.display),
       attributeDefinition.type,
       attributeDefinition.optional,
       this.mapAllowedUnits(attributeDefinition.allowedUnits),
-      this.createTerminologyCode(attributeDefinition.attributeCode),
+      TerminologyCode.fromJson(attributeDefinition.attributeCode),
       attributeDefinition.max,
       attributeDefinition.min,
       attributeDefinition.precision,
       attributeDefinition.referencedCriteriaSet,
       attributeDefinition.referencedValueSet
     );
-  }
-
-  /**
-   * Creates a TerminologyCode instance from the given terminology code data.
-   *
-   * @param terminologyCodeData The terminology code data.
-   * @returns A TerminologyCode instance.
-   */
-  private createTerminologyCode(terminologyCodeData: any): TerminologyCode {
-    return new TerminologyCode(
-      terminologyCodeData.code,
-      terminologyCodeData.display,
-      terminologyCodeData.system,
-      terminologyCodeData.version
-    );
-  }
-
-  public createDisplayData(displayData: DisplayData): Display {
-    const translations = displayData.translations?.map((translation) =>
-      this.createTranslation(translation)
-    );
-    return new Display(translations, displayData.original);
-  }
-
-  private createTranslation(translation: any): Translation {
-    return new Translation(translation.language, translation.value);
   }
 }

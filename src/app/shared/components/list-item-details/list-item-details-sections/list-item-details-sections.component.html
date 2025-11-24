@@ -14,7 +14,7 @@
     </div>
     <num-menu
       (click)="$event.stopPropagation()"
-      [menuItems]="menuItems"
+      [menuItems]="item.getSelectable() ? menuItemsTrue : menuItemsFalse"
       [id]="item.getContextualizedTermcodeHash()"
     ></num-menu>
   </div>

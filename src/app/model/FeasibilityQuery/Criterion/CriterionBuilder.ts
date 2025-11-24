@@ -167,8 +167,8 @@ export class CriterionBuilder {
 
   /**
    * Builds a ReferenceCriterion instance using the current builder configuration.
-   *
-   * @returns ReferenceCriterion instance.
+   * @instance
+   * @returns
    */
   buildReferenceCriterion(): ReferenceCriterion {
     return new ReferenceCriterion(
@@ -211,7 +211,7 @@ export class CriterionBuilder {
 
     switch (filterType) {
       case FilterTypes.CONCEPT:
-        attributeFilterBuilder.withConcept(
+        attributeFilterBuilder.withConceptFilter(
           attributeFilterBuilder.buildConceptFilter(
             uuidv4(),
             attributeDefinition.getReferencedValueSet()
@@ -221,7 +221,7 @@ export class CriterionBuilder {
       case FilterTypes.QUANTITY:
       case FilterTypes.QUANTITY_COMPARATOR:
       case FilterTypes.QUANTITY_RANGE:
-        attributeFilterBuilder.withQuantity(
+        attributeFilterBuilder.withQuantityFilter(
           attributeFilterBuilder.buildQuantityFilter(
             attributeDefinition.getAllowedUnits(),
             attributeDefinition.getPrecision()
@@ -229,7 +229,7 @@ export class CriterionBuilder {
         );
         break;
       case FilterTypes.REFERENCE:
-        attributeFilterBuilder.withReference(
+        attributeFilterBuilder.withReferenceFilter(
           attributeFilterBuilder.buildReferenceFilter(
             uuidv4(),
             attributeDefinition.getReferenceCriteriaSet()
@@ -239,7 +239,7 @@ export class CriterionBuilder {
       default:
         throw new Error(`Unsupported filter type: ${filterType}`);
     }
-    this.buildTimeRestriction();
+    this.buildEmptyTimeRestriction();
     return attributeFilterBuilder.withAttributeCode(attributeCode).buildAttributeFilter();
   }
 
@@ -255,14 +255,14 @@ export class CriterionBuilder {
     );
     switch (filterType) {
       case FilterTypes.CONCEPT:
-        valueFilterBuilder.withConcept(
+        valueFilterBuilder.withConceptFilter(
           valueFilterBuilder.buildConceptFilter(uuidv4(), valueDefinition.getReferencedValueSet())
         );
         break;
       case FilterTypes.QUANTITY:
       case FilterTypes.QUANTITY_COMPARATOR:
       case FilterTypes.QUANTITY_RANGE:
-        valueFilterBuilder.withQuantity(
+        valueFilterBuilder.withQuantityFilter(
           valueFilterBuilder.buildQuantityFilter(
             valueDefinition.getAllowedUnits(),
             valueDefinition.getPrecision()
@@ -275,7 +275,7 @@ export class CriterionBuilder {
     return valueFilterBuilder.buildValueFilter();
   }
 
-  buildTimeRestriction() {
+  buildEmptyTimeRestriction() {
     return new TimeRestrictionNotSet();
   }
 }

@@ -6,7 +6,7 @@ import { ReferenceCriterion } from '../../ReferenceCriterion';
 /**
  * Class representing a ReferenceFilter.
  */
-export class ReferenceFilter extends AbstractConceptFilter {
+export class ReferenceFilter {
   private allowedReferenceUri: string[];
   private selectedReferences: ReferenceCriterion[] = [];
   private type: FilterTypes = FilterTypes.REFERENCE;
@@ -21,10 +21,8 @@ export class ReferenceFilter extends AbstractConceptFilter {
   constructor(
     id: string,
     allowedReferenceUri: string[],
-    selectedReferences: ReferenceCriterion[] = [],
-    selectedConcepts: Concept[]
+    selectedReferences: ReferenceCriterion[] = []
   ) {
-    super(id, selectedConcepts);
     this.selectedReferences = selectedReferences;
     this.allowedReferenceUri = allowedReferenceUri;
   }
@@ -94,10 +92,9 @@ export class ReferenceFilter extends AbstractConceptFilter {
   public static create(
     id: string,
     allowedReferenceUri: string[],
-    selectedReference: ReferenceCriterion[] = [],
-    selectedConcepts: Concept[]
+    selectedReference: ReferenceCriterion[] = []
   ): ReferenceFilter {
-    return new ReferenceFilter(id, allowedReferenceUri, selectedReference, selectedConcepts);
+    return new ReferenceFilter(id, allowedReferenceUri, selectedReference);
   }
 
   public isSelectedReferenceSet(): boolean {

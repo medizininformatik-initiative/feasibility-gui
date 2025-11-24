@@ -1,11 +1,41 @@
 import { DisplayData } from './DisplayData';
 import { TerminologyCodeData } from './TerminologyCodeData';
-import { UiProfileData } from './UiProfileData';
-
+/**
+ * @interface CriteriaProfileData
+ */
 export interface CriteriaProfileData {
-  id: string
-  display: DisplayData
-  uiProfile: UiProfileData
-  context: TerminologyCodeData
-  termCodes: TerminologyCodeData[]
+  /**
+   * The unique identifier of the criteria profile.
+   * @type {string}
+   * @readonly
+   */
+  readonly id: string
+
+  /**
+   * The display data for the criteria profile.
+   * @type {DisplayData}
+   * @readonly
+   */
+  readonly display: DisplayData
+
+  /**
+   * The unique identifier of the UI profile.
+   * @type {string}
+   * @readonly
+   */
+  readonly uiProfileId: string
+
+  /**
+   * The context for the criteria profile.
+   * @type {TerminologyCodeData}
+   * @readonly
+   */
+  readonly context: TerminologyCodeData
+
+  /**
+   * The term codes associated with the criteria profile.
+   * @type {TerminologyCodeData[]}
+   * @readonly
+   */
+  readonly termCodes: TerminologyCodeData[]
 }

@@ -209,7 +209,7 @@ export class TypeGuard {
       TypeGuard.isObject(criteriaProfileData) &&
       TypeGuard.isString(criteriaProfileData.id) &&
       TypeGuard.isDisplayData(criteriaProfileData.display) &&
-      TypeGuard.isUiProfileData(criteriaProfileData.uiProfile) &&
+      TypeGuard.isString(criteriaProfileData.uiProfileId) &&
       TypeGuard.isTerminologyCodeData(criteriaProfileData.context) &&
       Array.isArray(criteriaProfileData.termCodes) &&
       criteriaProfileData.termCodes.every(TypeGuard.isTerminologyCodeData)
@@ -371,6 +371,7 @@ export class TypeGuard {
     const relatives = obj as CriteriaRelativeData;
     return (
       TypeGuard.isObject(relatives) &&
+      TypeGuard.isBoolean(relatives.selectable) &&
       TypeGuard.isDisplayData(relatives.display) &&
       TypeGuard.isString(relatives.contextualizedTermcodeHash)
     );
@@ -575,7 +576,7 @@ export class TypeGuard {
     const uiProfileData = obj as UiProfileData;
     return (
       TypeGuard.isObject(uiProfileData) &&
-      TypeGuard.isDisplayData(uiProfileData.display) &&
+      TypeGuard.isString(uiProfileData.name) &&
       TypeGuard.isBoolean(uiProfileData.timeRestrictionAllowed) &&
       TypeGuard.isOptionalArray(
         uiProfileData.attributeDefinitions,

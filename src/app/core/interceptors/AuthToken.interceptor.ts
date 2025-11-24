@@ -13,7 +13,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   /**
    * List of URL patterns that should be excluded from token injection.
    */
-  private readonly excludedUrls = ['assets', '/assets'];
+  private readonly excludedUrls = ['assets', '/assets', 'http://localhost:8080/'];
 
   /**
    * Pre-compiled regular expressions for URL matching.

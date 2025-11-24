@@ -3,7 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { OAuthModule, OAuthService } from 'angular-oauth2-oidc';
 import { DashboardComponent } from './dashboard.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { IAppConfig } from 'src/app/config/app-config.model';
+import { IAppConfig } from 'src/app/config/model/AppConfig/AppConfigData';
 import { DirectivesModule } from 'src/app/shared/directives/directives.module';
 import { FeatureService } from '../../../../service/Feature.service';
 

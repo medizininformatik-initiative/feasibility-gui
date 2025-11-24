@@ -14,7 +14,8 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   @Input()
   listItemDetails: SearchTermRelatives[];
 
-  menuItems: MenuItemInterface[] = [];
+  menuItemsTrue: MenuItemInterface[] = [];
+  menuItemsFalse: MenuItemInterface[] = [];
 
   @Output()
   selectedRelative: EventEmitter<CriteriaListEntry> = new EventEmitter();
@@ -37,6 +38,7 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   }
 
   private getMenuItems() {
-    this.menuItems = this.menuService.getMenuItemsListItemDetails();
+    this.menuItemsTrue = this.menuService.getMenuItemsListItemDetails(true);
+    this.menuItemsFalse = this.menuService.getMenuItemsListItemDetails(false);
   }
 }

@@ -1,10 +1,9 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
-import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, Observable, of, switchMap, tap } from 'rxjs';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
-import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 @Injectable({
   providedIn: 'root',
 })
@@ -53,18 +52,21 @@ export class DataSelectionProviderService {
       );
   }
 
-  public setProfilesInActiveDataSelection(profiles: DataSelectionProfile[]): Observable<void> {
-    return this.activeDataSelection
-      .getActiveDataSelectionIdObservable()
-      .pipe(
-        switchMap((id) => profiles.map((profile) => this.setProfileInDataSelection(id, profile)))
-      );
+  /**
+   * Convenence method to set multiple profiles in the active data selection.
+   * @param profiles
+   */
+  public setProfilesInActiveDataSelection(profiles: DataSelectionProfile[]): void {
+    profiles.map((profile: DataSelectionProfile) => this.setProfileInActiveDataSelection(profile));
   }
 
-  public setProfileInActiveDataSelection(profile: DataSelectionProfile): Observable<void> {
-    return this.activeDataSelection
-      .getActiveDataSelectionIdObservable()
-      .pipe(map((id) => this.setProfileInDataSelection(id, profile)));
+  /**
+   * Method to set multiple profiles in the active data selection.
+   * @param profiles
+   */
+  public setProfileInActiveDataSelection(profile: DataSelectionProfile): void {
+    const id: string = this.activeDataSelection.getActiveDataSelectionId();
+    this.setProfileInDataSelection(id, profile);
   }
 
   public setDataSelectionByUID(
@@ -100,7 +102,7 @@ export class DataSelectionProviderService {
   public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId);
     if (dataSelection) {
-      const profiles = DataSelectionProfileCloner.deepCopyProfiles(dataSelection.getProfiles());
+      const profiles = dataSelection.getProfiles();
       const index = profiles.findIndex(
         (existingProfile) => existingProfile.getId() === profile.getId()
       );

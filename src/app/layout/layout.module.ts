@@ -1,10 +1,10 @@
+import { AboutModalComponent } from './components/about-modal/about-modal.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { CommonModule } from '@angular/common';
 import { DirectivesModule } from '../shared/directives/directives.module';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FONT_AWESOME_ICONS } from './font-awesome-icons';
-import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LanguageComponent } from './components/language/language.component';
 import { MaterialModule } from './material/material.module';
@@ -13,7 +13,6 @@ import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '../shared/components/shared-components.module';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { AboutModalComponent } from './components/about-modal/about-modal.component';
 
 const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
 
@@ -23,7 +22,6 @@ const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
     HeaderComponent,
     SideMenuComponent,
     LanguageComponent,
-    FooterComponent,
     AboutModalComponent,
   ],
   imports: [

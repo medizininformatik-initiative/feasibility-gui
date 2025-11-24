@@ -5,7 +5,6 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
  * Abstract class representing a concept filter.
  */
 export abstract class AbstractConceptFilter {
-  // Needs to be tested if set works for handling unique elements??
   protected selectedConcepts: Array<Concept> = [];
 
   protected readonly id: string;

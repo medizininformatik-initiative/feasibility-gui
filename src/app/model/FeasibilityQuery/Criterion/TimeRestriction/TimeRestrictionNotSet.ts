@@ -9,10 +9,9 @@ export class TimeRestrictionNotSet extends AbstractTimeRestriction {
   }
 
   /**
-   *
-   * @returns TimeRestrictionType
+   * @returns The type of time restriction
    */
-  getType() {
+  public getType(): TimeRestrictionType {
     return this.type;
   }
 }

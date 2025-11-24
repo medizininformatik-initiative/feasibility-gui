@@ -1,36 +1,55 @@
 import { BackendService } from '../Backend.service';
 import { ChunkedRequestService } from './ChunkedRequest.service';
 import { CodeableConceptPaths } from '../Paths/CodeableConceptPaths';
-import { Observable } from 'rxjs';
+import { ConceptData } from 'src/app/model/Interface/ConceptData';
+import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
+import { Observable } from 'rxjs';
+import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
 import { TerminologyPaths } from '../Paths/TerminologyPaths';
+import { UiProfileResponseData } from '../../../model/Interface/UiProfileResponseData';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TerminologyApiService {
-  private readonly chunkSize = 50;
-
   constructor(
     private backendService: BackendService,
     private http: HttpClient,
     private chunkedRequestService: ChunkedRequestService
   ) {}
 
+  /**
+   * @todo: Define proper return type
+   * Retrieves the search filter options.
+   * @returns - An observable containing the search filter options.
+   */
   public getSearchFilter(): Observable<Array<any>> {
     return this.http.get<any>(
       this.backendService.createUrl(TerminologyPaths.SEARCH_FILTER_ENDPOINT)
     );
   }
 
-  public getCriteriaProfileData(commaSeparatedIds: string[]): Observable<Array<any>> {
+  /**
+   * Retrieves criteria profile data by their IDs.
+   * @param ids - The IDs of the criteria profiles.
+   * @returns - An observable containing the criteria profile data.
+   */
+  public getCriteriaProfileData(ids: string[]): Observable<Array<CriteriaProfileData>> {
     return this.chunkedRequestService.getChunkedRequest(
-      commaSeparatedIds,
+      ids,
       TerminologyPaths.CRITERIA_PROFILE_ENDPOINT
     );
   }
 
+  /**
+   * @todo: Define proper return type
+   * @param id
+   * @returns
+   */
   public getSearchTermEntryRelations(id: string): Observable<any> {
     return this.http.get<any>(
       this.backendService.createUrl(
@@ -39,25 +58,54 @@ export class TerminologyApiService {
     );
   }
 
-  public getElasticSearchResults(url: string): Observable<{ totalHits: number; results: any[] }> {
+  /**
+   * Retrieves the elastic search results.
+   * @param url - The URL for the elastic search request.
+   * @returns - An observable containing the search results.
+   */
+  public getSearchResults<T extends ListEntryData>(url: string): Observable<ResultListData<T>> {
     const parsedUrl = this.backendService.createUrl(url);
-    return this.http.get<{ totalHits: number; results: any[] }>(parsedUrl);
+    return this.http.get<ResultListData<T>>(parsedUrl);
   }
 
-  public getCodeableConceptsById(commaSeparatedIds: string[]): Observable<Array<any>> {
+  /**
+   * Retrieves codeable concepts by their IDs.
+   * @param ids - The IDs of the codeable concepts.
+   * @returns - An observable containing the codeable concepts.
+   */
+  public getCodeableConceptsByIds(ids: string[]): Observable<Array<ConceptData>> {
     return this.chunkedRequestService.getChunkedRequest(
-      commaSeparatedIds,
+      ids,
       CodeableConceptPaths.ENTRY_CONCEPT_ENDPOINT
     );
   }
 
-  public getEntryById(id: string): Observable<any> {
-    return this.http.get<any>(
+  /**
+   * Retrieves a specific entry by its ID.
+   * @param id - The ID of the entry to retrieve.
+   * @returns - An observable containing the entry data.
+   */
+  public getEntryById(id: string): Observable<CriteriaListEntryData> {
+    return this.http.get<CriteriaListEntryData>(
       this.backendService.createUrl(TerminologyPaths.ENTRY_ENDPOINT + '/' + id)
     );
   }
 
+  /**
+   *
+   * @returns
+   */
   public getTerminologySystems() {
     return this.http.get<any>(this.backendService.createUrl(TerminologyPaths.SYSTEMS_ENDPOINT));
+  }
+
+  /**
+   * Retrieves UI Profile data from the backend.
+   * @returns
+   */
+  public getUiProfileData(): Observable<UiProfileResponseData[]> {
+    return this.http.get<UiProfileResponseData[]>(
+      this.backendService.createUrl(TerminologyPaths.UIPROFILE_ENDPOINT)
+    );
   }
 }

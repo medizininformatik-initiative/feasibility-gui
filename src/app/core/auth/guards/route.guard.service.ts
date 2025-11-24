@@ -18,7 +18,7 @@ export class RouteGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     const id = route.paramMap.get('id');
     const url = route.url[0]?.path;
-    if (url === PathSegments.profile) {
+    if (url === PathSegments.feature) {
       return this.handleProfile(id);
     } else if (url === PathSegments.criterion) {
       return this.handleCriterion(id);

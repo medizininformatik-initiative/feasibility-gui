@@ -1,4 +1,16 @@
+import { ActivatedRoute } from '@angular/router';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
+import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
+import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
+import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
+import { map, Observable, Subscription } from 'rxjs';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelection/SelectedDataSelectionProfile.service';
+import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import {
   AfterViewInit,
   Component,
@@ -11,19 +23,6 @@ import {
   ElementRef,
   EventEmitter,
 } from '@angular/core';
-import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
-import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
-import { DataSelectionProfileTreeService } from 'src/app/service/DataSelection/CreateDataselectionProfileTree';
-import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
-import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelection/SelectedDataSelectionProfile.service';
-import { map, Observable, Subscription, take } from 'rxjs';
-import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
-import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { ActivatedRoute } from '@angular/router';
-import { FeatureService } from '../../../../service/Feature.service';
 
 @Component({
   selector: 'num-search-data-selection',
@@ -54,13 +53,12 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   constructor(
     public elementRef: ElementRef,
     private createDataSelectionProfileService: CreateDataSelectionProfileService,
-    private dataSelectionProfileTreeService: DataSelectionProfileTreeService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
     private selectedDataSelectionProfileService: SelectedDataSelectionProfileService,
     private navigationHelperService: NavigationHelperService,
     private activeRoute: ActivatedRoute,
-    private featureService: FeatureService
+    private appSettingsProviderService: AppSettingsProviderService
   ) {}
 
   ngOnInit(): void {
@@ -74,7 +72,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
     const tree = this.activeRoute.snapshot.data.preLoadDataSelectionData;
     const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode());
     this.trees = rootNode;
-    this.emailLink = this.featureService.getLegalEmail();
+    this.emailLink = this.appSettingsProviderService.getEmail();
   }
 
   /**

@@ -20,7 +20,7 @@ import INavItem from '../../models/nav-item.interface';
 import { ActivatedRouteSnapshot, ActivationEnd, ActivationStart, Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service';
-import { IAppConfig } from '../../../config/app-config.model';
+import { IAppConfig } from '../../../config/model/AppConfig/AppConfigData';
 
 describe('AppLayoutComponent', () => {
   let component: AppLayoutComponent;

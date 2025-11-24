@@ -12,7 +12,7 @@ export class ListItemDetailService {
    * @todo Labels need to be redefined for translation jsons
    * @returns Array of Menu functions for a criterion box
    */
-  public getMenuItemsListItemDetails(): MenuItemInterface[] {
+  public getMenuItemsListItemDetails(selectable: boolean): MenuItemInterface[] {
     return [
       {
         disabled: false,
@@ -27,7 +27,7 @@ export class ListItemDetailService {
         action: (id: string) => this.listItemDetailsFunctionService.showCriteriaInResultList(id),
       },
       {
-        disabled: false,
+        disabled: !selectable,
         icon: 'plus',
         label: 'ADD',
         action: (id: string) => this.listItemDetailsFunctionService.addToStage(id),
