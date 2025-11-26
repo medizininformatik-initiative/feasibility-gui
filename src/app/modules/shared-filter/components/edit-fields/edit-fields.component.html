@@ -1,12 +1,4 @@
 <div class="container">
-  <div class="header-container">
-    <num-section-name style="flex: 0 0 70%">
-      {{ 'EDITOR.CONTENT.PROFILE.FIELDS.HEADER' | translate }}
-    </num-section-name>
-    <num-section-name>
-      {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED' | translate }}
-    </num-section-name>
-  </div>
   <div class="main-content">
     <div class="field-box">
       <div *ngFor="let singleTree of tree">
@@ -17,6 +9,9 @@
       </div>
     </div>
     <div class="sidebar" *ngIf="selectedBasicFields">
+      <num-section-name>
+        {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED' | translate }}
+      </num-section-name>
       <div class="selected-fields-box">
         <div
           *ngFor="let selectedField of selectedBasicFields; let index = index"
