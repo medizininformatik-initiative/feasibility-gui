@@ -1,8 +1,7 @@
-<div class="profile-tab-group-container full">
-  <mat-tab-group class="full" animationDuration="0ms">
+<div class="full">
+  <mat-tab-group animationDuration="0ms">
     <mat-tab
       *ngFor="let reference of referenceFields"
-      class="inner-tab-group"
       label="{{ reference.getDisplay() | displayTranslation }}"
     >
       <num-reference-field-tab
