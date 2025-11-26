@@ -3,8 +3,8 @@ import { CodeableConceptBulkEntryAdapter } from 'src/app/shared/models/TableData
 import { CodeableConceptBulkResultList } from 'src/app/model/Search/ResultList/CodeableConceptBulkResultList';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { ConceptSelectionService } from '../../service/ConceptSelection/concept-selection.service';
-import { map, Observable, of, Subscription, tap } from 'rxjs';
+import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service';
+import { Observable, of, Subscription, tap } from 'rxjs';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
@@ -13,7 +13,7 @@ import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
   selector: 'num-concept-bulk-search',
   templateUrl: './concept-bulk-search.component.html',
   styleUrls: ['./concept-bulk-search.component.scss'],
-  providers: [ConceptSelectionService],
+  providers: [ConceptSelectionHelperService],
 })
 export class ConceptBulkSearchComponent implements OnInit, OnDestroy {
   @Input() valueSetUrl: string[];
@@ -35,7 +35,7 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy {
   constructor(
     private selectedConceptFilterService: SelectedConceptFilterProviderService,
     private bulkSearchService: BulkCodeableConceptSearchEngineService,
-    private conceptSelectionService: ConceptSelectionService
+    private conceptSelectionService: ConceptSelectionHelperService
   ) {}
 
   ngOnInit(): void {
@@ -89,7 +89,9 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy {
         tap((resultList) => this.adaptData(resultList))
       )
       .subscribe((resultList) => {
-        const concepts = resultList.getFound().map((entry) => new Concept(entry.getDisplay(), entry.getTermCode()));
+        const concepts = resultList
+          .getFound()
+          .map((entry) => new Concept(entry.getDisplay(), entry.getTermCode()));
         this.toggleConceptSelection(concepts);
       });
   }
