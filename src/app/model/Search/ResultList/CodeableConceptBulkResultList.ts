@@ -1,11 +1,12 @@
 import { CodeableConceptBulkEntry } from '../ListEntries/CodeableConceptBulkEntry';
 import { CodeableConceptBulkSearchResponse } from '../../Interface/CodeableConceptBulkSearchResponse';
+import { CriteriaBulkEntryNotFound } from '../ListEntries/CriteriaBulkEntryNotFound';
 
 export class CodeableConceptBulkResultList {
   private found: CodeableConceptBulkEntry[];
-  private notFound: string[];
+  private notFound: CriteriaBulkEntryNotFound[];
 
-  constructor(found: CodeableConceptBulkEntry[], notFound: string[]) {
+  constructor(found: CodeableConceptBulkEntry[], notFound: CriteriaBulkEntryNotFound[]) {
     this.found = found;
     this.notFound = notFound;
   }
@@ -22,12 +23,15 @@ export class CodeableConceptBulkResultList {
    * Returns the list of search terms that were not found.
    * @returns
    */
-  public getNotFound(): string[] {
+  public getNotFound(): CriteriaBulkEntryNotFound[] {
     return this.notFound;
   }
 
   public static fromJson(json: CodeableConceptBulkSearchResponse): CodeableConceptBulkResultList {
     const foundEntries = json.found.map((entryJson) => CodeableConceptBulkEntry.fromJson(entryJson));
-    return new CodeableConceptBulkResultList(foundEntries, json.notFound);
+    const notFoundEntries = json.notFound.map(
+      (termCode) => new CriteriaBulkEntryNotFound(termCode, termCode)
+    );
+    return new CodeableConceptBulkResultList(foundEntries, notFoundEntries);
   }
 }

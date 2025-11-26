@@ -1,23 +1,15 @@
 import { ConceptData } from '../../Interface/ConceptData';
 import { Display } from '../../DataSelection/Profile/Display';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
+import { AbstractListEntry } from './AbstractListEntry';
 
-export class CodeableConceptBulkEntry {
-  private readonly id: string;
+export class CodeableConceptBulkEntry extends AbstractListEntry {
   private readonly display: Display;
   private readonly termCode: TerminologyCode;
   constructor(id: string, display: Display, termCode: TerminologyCode) {
-    this.id = id;
+    super(id);
     this.display = display;
     this.termCode = termCode;
-  }
-
-  /**
-   * Returns the unique identifier of this codeable concept.
-   * @returns
-   */
-  public getId(): string {
-    return this.id;
   }
 
   /**
