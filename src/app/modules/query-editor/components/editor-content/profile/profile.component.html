@@ -20,12 +20,20 @@
     ></num-edit-fields>
   </ng-template>
 
-  <ng-template #filter>
-    <num-profile-filter
-      [profile]="profile"
-      [profileFilter]="profile.getFilters()"
-      (profileFiltersChanged)="updateProfileFilter($event)"
-    ></num-profile-filter>
+  <ng-template #timeRestriction>
+    <div *ngFor="let profileTimeFilter of timeRestrictionFilters">
+      <num-profile-time-filter
+        [profileTimeRestrictionFilter]="profileTimeFilter"
+        (changedProfileTimeRestrictionFilter)="updateProfileFilter($event)"
+      ></num-profile-time-filter>
+    </div>
+  </ng-template>
+
+  <ng-template #token>
+    <num-token-filter
+      [tokenFilter]="tokenFilter"
+      (tokenFilterChanged)="updateProfileFilter($event)"
+    ></num-token-filter>
   </ng-template>
 
   <ng-template #reference>
