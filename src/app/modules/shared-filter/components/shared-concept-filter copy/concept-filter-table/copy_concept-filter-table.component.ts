@@ -40,12 +40,12 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
 
   constructor(
     private activeSearchTermService: ActiveSearchTermService,
-    private conceptElasticSearchService: CodeableConceptSearchService,
+    private conceptSearchService: CodeableConceptSearchService,
     private selectedConceptProviderService: SelectedConceptFilterProviderService
   ) {}
 
   ngOnInit() {
-    this.conceptElasticSearchService
+    this.conceptSearchService
       .getSearchResults(this.valueSetUrl)
       .pipe(
         map((results) => {
@@ -100,5 +100,9 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
 
   private clearSelectedConceptArray() {
     this.selectedConcepts = [];
+  }
+
+  public loadMoreSearchResults(): void {
+    this.conceptSearchService.loadNextPage(' ', this.valueSetUrl).subscribe();
   }
 }
