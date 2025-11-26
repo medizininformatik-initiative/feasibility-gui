@@ -155,15 +155,15 @@
   font-family: 'Titillium Web', sans-serif;
 
   width: 100%;
+  height: 100%;
   padding: 0.65rem 0.9rem;
 
   border: 1px solid #9ca1a8;
   border-radius: 8px;
-
+  resize: none;
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  margin-bottom: 16px;
 }
 
 .input-field-area::placeholder {
@@ -185,4 +185,15 @@
   margin-bottom: 16px;
   display: flex;
   align-items: start;
+}
+
+.bulk-search-container {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+}
+
+.inner-tab-group {
+  height: 100%;
+  overflow: auto;
 }
