@@ -9,7 +9,7 @@ import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
   providedIn: 'root',
 })
 export class CriteriaProfileDataService {
-  ids: Set<string> = new Set<string>();
+  private ids: Set<string> = new Set<string>();
 
   constructor(
     private terminologyApiService: TerminologyApiService,
@@ -21,7 +21,8 @@ export class CriteriaProfileDataService {
    * @returns The observable of criteria profile data array.
    */
   public translateListItemsToCriterions(): Observable<CriteriaProfileData[]> {
-    return this.getCriteriaProfileData(this.listItemService.getSelectedIds());
+    const ids = this.listItemService.getSelectedIds();
+    return this.getCriteriaProfileData(ids);
   }
 
   /**
@@ -31,11 +32,6 @@ export class CriteriaProfileDataService {
    * @returns The observable of criteria profile data array.
    */
   public getCriteriaProfileData(ids: Array<string>): Observable<CriteriaProfileData[]> {
-    return this.terminologyApiService.getCriteriaProfileData(ids).pipe(
-      finalize(() => {
-        this.ids.clear();
-        this.listItemService.clearSelection();
-      })
-    );
+    return this.terminologyApiService.getCriteriaProfileData(ids);
   }
 }
