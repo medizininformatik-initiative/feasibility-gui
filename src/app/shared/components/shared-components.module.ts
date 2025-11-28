@@ -40,6 +40,7 @@ import { TableComponent } from './table/table.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
+import { InformationSectionComponent } from './information-section/information-section.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -74,6 +75,7 @@ const SHARED_DECLARATIONS = [
   LinkedBadgeComponent,
   SelectableReferenceTileComponent,
   SearchModeToggleComponent,
+  InformationSectionComponent,
 ];
 
 @NgModule({
@@ -106,6 +108,7 @@ const SHARED_DECLARATIONS = [
     SelectableReferenceTileComponent,
     ListItemDetailsComponent,
     SearchModeToggleComponent,
+    InformationSectionComponent,
   ],
   imports: [
     CommonModule,
