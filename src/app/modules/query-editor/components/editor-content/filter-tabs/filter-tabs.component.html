@@ -1,5 +1,4 @@
 <div class="container" *ngIf="content && content.length > 0">
-  <!-- CUSTOM TAB HEADER (no Angular Material) -->
   <div class="tabs-container">
     <div
       class="tab"
@@ -11,7 +10,6 @@
     </div>
   </div>
 
-  <!-- CUSTOM TAB CONTENT (same logic as before) -->
   <div class="tab-content">
     <ng-container *ngFor="let item of content; let i = index">
       <ng-container *ngIf="selectedIndex === i">
