@@ -22,14 +22,5 @@
     >
       {{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
     </num-button>
-    <div *ngIf="listItemArray.length > 0" class="display-selected">
-      {{
-        listItemArray.length === 1
-          ? ('SHARED_COMPONENTS.ACTIONBAR.SELECTED_CRITERIA.SINGULAR'
-            | translate : { amount: listItemArray.length })
-          : ('SHARED_COMPONENTS.ACTIONBAR.SELECTED_CRITERIA.PLURAL'
-            | translate : { amount: listItemArray.length })
-      }}
-    </div>
   </ng-container>
 </num-action-bar>
