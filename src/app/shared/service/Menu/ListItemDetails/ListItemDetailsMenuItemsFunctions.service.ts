@@ -34,7 +34,7 @@ export class ListItemDetailsMenuItemsFunctionsService {
 
   public addToStage(id: string) {
     this.criterionService
-      .createCriteriaFromHashes([id])
+      .createCriteriaFromHashes([id], false)
       .pipe(
         map((criteria: Criterion[]) => {
           this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria);
