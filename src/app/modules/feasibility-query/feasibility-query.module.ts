@@ -39,6 +39,7 @@ import { SearchActionBarComponent } from './components/search/action-bar/search/
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SimpleResultComponent } from './components/result/simple-result/simple-result.component';
+import { TermcodeComponent } from './components/editor/criterion-modal/termCode/termcode.component';
 import { TimerestrictionTypeSelectorComponent } from './components/editor/criterion-modal/time-restriction/timerestriction-type-selector/timerestriction-type-selector.component';
 import { ValueFilterComponent } from './components/editor/criterion-modal/value-filter/value-filter.component';
 import {
@@ -91,6 +92,7 @@ export const FORMATS_GERMAN = {
     ResultActionBarComponent,
     FeasibilityQueryBulkSearchComponent,
     BulkSearchActionBarComponent,
+    TermcodeComponent,
   ],
   imports: [
     CommonModule,
