@@ -16,7 +16,8 @@
 }
 
 .background {
-  padding: 16px;
+  padding: 8px 16px;
+  max-height: 50%;
   background-color: rgb(90, 121, 175, 0.1);
   border: 1px solid rgb(90, 121, 175, 0.1);
   border-radius: 4px;
@@ -30,4 +31,9 @@
 }
 mat-tab-group {
   width: 100%;
+}
+
+.termcode-container {
+  height: 30%;
+  overflow: auto;
 }
