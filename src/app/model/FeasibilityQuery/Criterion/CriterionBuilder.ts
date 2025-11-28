@@ -180,7 +180,7 @@ export class CriterionBuilder {
     );
   }
 
-  buildTimeRestriction() {
+  buildEmptyTimeRestriction() {
     return new TimeRestrictionNotSet();
   }
 }

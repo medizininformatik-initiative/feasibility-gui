@@ -8,6 +8,8 @@ import { Observable, of, Subscription, tap } from 'rxjs';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { InterfaceTableDataRow } from '../../../../shared/models/TableData/InterfaceTableDataRows';
+import { CodeableConceptBulkEntry } from '../../../../model/Search/ListEntries/CodeableConceptBulkEntry';
 
 @Component({
   selector: 'num-concept-bulk-search',
@@ -139,7 +141,14 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
     this.selectedConceptFilterService.clearSelectedConceptFilter();
   }
 
-  onTabChange(): void {
-    this.tabChanged = true;
+  public addSelectedRow(item: InterfaceTableDataRow) {
+    const entry = item.originalEntry as CodeableConceptBulkEntry;
+    const concept = new Concept(entry.getDisplay(), entry.getTermCode());
+    const updatedSelectedConcepts = this.conceptSelectionService.toggleConceptSelection(
+      concept,
+      this.preSelectedConcepts
+    );
+
+    this.changedSelectedConcepts.emit(updatedSelectedConcepts);
   }
 }

@@ -96,12 +96,6 @@
           "HEADER": "Select features for ",
           "REQUIRED": "Mark as required"
         },
-        "FILTER": {
-          "TAB_LABEL": {
-            "TIMERESTRICTION": "Time restriction",
-            "TOKEN": "Token filter"
-          }
-        },
         "REFERENCE": {
           "ADD": "Add new reference",
           "INFO": "Click on 'Add new reference' to create a new reference"
@@ -111,9 +105,13 @@
           "SAVING_ERROR": "Error saving profile"
         },
         "TAB_LABEL": {
+          "BULK": "Bulk search",
           "FIELD": "Fields",
           "FILTER": "Filter",
+          "INFORMATION": "Information",
           "REFERENCE": "References",
+          "SELECTED_CONCEPTS": "Selected concepts ({{count}})",
+          "SINGLE_SEARCH": "Single search",
           "TIMERESTRICTION": "Time restriction",
           "TOKEN": "Concepts"
         }
@@ -423,6 +421,10 @@
   },
   "SHARED_FILTER": {
     "CONCEPT_FILTER": {
+      "BULK": {
+        "FOUND": "Found ({{count}})",
+        "NOTFOUND": "Not found ({{count}})"
+      },
       "SEARCH_PLACEHOLDER": "Enter concept or term code"
     },
     "TIMERESTRICTION": {

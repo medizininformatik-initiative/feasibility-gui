@@ -34,11 +34,13 @@
       disableRipple="true"
       mat-stretch-tabs="true"
     >
-      <mat-tab label="Gefunden{{ foundCount >= 0 ? ' (' + foundCount + ')' : '' }}">
+      <mat-tab
+        [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.FOUND' | translate : { count: foundCount }"
+      >
         <div
           *ngIf="foundTableData?.body.rows.length > 0"
           fxLayout="column"
-          class="height-100 width-100"
+          class="height-100 width-100 table-container"
         >
           <num-table
             *ngIf="foundTableData?.body.rows.length > 0"
@@ -49,7 +51,11 @@
           </num-table>
         </div>
       </mat-tab>
-      <mat-tab label="Nicht Gefunden{{ notFoundCount >= 0 ? ' (' + notFoundCount + ')' : '' }}">
+      <mat-tab
+        [label]="
+          'SHARED_FILTER.CONCEPT_FILTER.BULK.NOTFOUND' | translate : { count: notFoundCount }
+        "
+      >
         <div
           *ngIf="notFoundTableData?.body.rows.length > 0"
           fxLayout="column"

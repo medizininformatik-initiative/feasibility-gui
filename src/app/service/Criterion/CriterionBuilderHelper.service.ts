@@ -27,7 +27,7 @@ export class CriterionBuilderHelperService {
     const attributeFilter = this.addAttributeFilters(uiProfile.attributeDefinitions);
 
     if (uiProfile.timeRestrictionAllowed) {
-      builder.withTimeRestriction(builder.buildTimeRestriction());
+      builder.withTimeRestriction(builder.buildEmptyTimeRestriction());
     }
     builder.withValueFilters(valueFilter);
     builder.withAttributeFilters(attributeFilter);

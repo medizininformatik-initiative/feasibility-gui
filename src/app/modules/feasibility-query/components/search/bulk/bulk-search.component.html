@@ -16,7 +16,7 @@
       matNativeControl
       type="text"
       name="searchText"
-      rows="10"
+      rows="8"
       cols="100"
       placeholder="{{ 'FEASIBILITY.BULK_SEARCH.INPUT_PLACEHOLDER' | translate }}"
       [(ngModel)]="bulkSearchTermInput"
@@ -42,14 +42,19 @@
     *ngIf="searchResultsFound"
     style="width: 100%; flex: 1; overflow: auto"
   >
-    <mat-tab position="2" label="Gefunden{{ foundCount >= 0 ? ' (' + foundCount + ')' : '' }}">
+    <mat-tab
+      position="2"
+      [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.FOUND' | translate : { count: foundCount }"
+    >
       <num-table
         *ngIf="searchResultsFound"
         (selectedRow)="setSelectedRowItem($event)"
         [tableData]="foundCriteriaTableData"
       ></num-table>
     </mat-tab>
-    <mat-tab label="Nicht Gefunden{{ notFoundCount >= 0 ? ' (' + notFoundCount + ')' : '' }}">
+    <mat-tab
+      [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.NOTFOUND' | translate : { count: notFoundCount }"
+    >
       <num-table
         *ngIf="searchResultsFound"
         (selectedRow)="setSelectedRowItem($event)"

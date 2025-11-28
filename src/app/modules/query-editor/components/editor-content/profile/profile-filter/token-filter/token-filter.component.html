@@ -33,7 +33,10 @@
     ></num-concept-bulk-search>
   </mat-tab>
   <mat-tab
-    [label]="'Selektierte Konzepte ' + ' (' + selectedConcepts.length + ')'"
+    [label]="
+      'EDITOR.CONTENT.PROFILE.TAB_LABEL.SELECTED_CONCEPTS'
+        | translate : { count: selectedConcepts.length }
+    "
     [disabled]="selectedConcepts.length === 0"
   >
     <num-selected-concept-list

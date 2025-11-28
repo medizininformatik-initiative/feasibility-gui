@@ -97,12 +97,6 @@
           "REQUIRED": "Als erforderlich setzen",
           "TITLE": "Felder"
         },
-        "FILTER": {
-          "TAB_LABEL": {
-            "BULK": "Bulksuche",
-            "SINGLE_SEARCH": "Einzelsuche"
-          }
-        },
         "REFERENCE": {
           "ADD": "Neues Merkmal hinzufügen",
           "INFO": "Klicken Sie auf neues Merkmal hinzufügen, um ein neues Merkmal zu erstellen"
@@ -117,6 +111,7 @@
           "FILTER": "Filter",
           "INFORMATION": "Informationen",
           "REFERENCE": "Referenzen",
+          "SELECTED_CONCEPTS": "Selektierte Konzepte ({{count}})",
           "SINGLE_SEARCH": "Einzelsuche",
           "TIMERESTRICTION": "Zeiteinschränkung",
           "TOKEN": "Konzepte"
@@ -430,6 +425,10 @@
   },
   "SHARED_FILTER": {
     "CONCEPT_FILTER": {
+      "BULK": {
+        "FOUND": "Gefunden ({{count}})",
+        "NOTFOUND": "Nicht gefunden ({{count}})"
+      },
       "SEARCH_PLACEHOLDER": "Begriff oder Termcode eingeben"
     },
     "TIMERESTRICTION": {
