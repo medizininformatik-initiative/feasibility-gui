@@ -6,6 +6,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { NgModule } from '@angular/core';
 import { SearchConceptComponent } from './components/shared-concept-filter/search-concept/search-concept.component';
+import { SelectedConceptListComponent } from './components/shared-concept-filter/selected-concept-list/selected-concept-list.component';
 import { SharedConceptFilterComponent } from './components/shared-concept-filter/shared-concept-filter.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StagedConceptsComponent } from './components/shared-concept-filter/staged-concepts/staged-concepts.component';
@@ -24,6 +25,7 @@ import { CopySharedConceptFilterComponent } from './components/shared-concept-fi
     CopySearchConceptComponent,
     CopySharedConceptFilterComponent,
     ConceptBulkSearchComponent,
+    SelectedConceptListComponent,
   ],
   imports: [CommonModule, LayoutModule, SharedModule, InfiniteScrollModule],
   exports: [
@@ -31,6 +33,7 @@ import { CopySharedConceptFilterComponent } from './components/shared-concept-fi
     EditFieldsComponent,
     CopySharedConceptFilterComponent,
     ConceptBulkSearchComponent,
+    SelectedConceptListComponent,
   ],
 })
 export class SharedFilterModule {}
