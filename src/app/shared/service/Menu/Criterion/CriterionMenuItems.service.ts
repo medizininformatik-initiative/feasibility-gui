@@ -15,8 +15,8 @@ export class CriterionMenuItems {
     return [
       {
         disabled: false,
-        icon: 'filter',
-        label: 'APPLY_FILTERS',
+        icon: 'pencil-alt',
+        label: 'EDIT',
         action: (id: string) => this.menuServiceCriterionFunctions.editCriterionFilter(id),
       },
       {
