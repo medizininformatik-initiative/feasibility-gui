@@ -45,4 +45,28 @@
       (updatedSelectedReferenceFields)="updateSelectedReferenceFields($event)"
     ></num-profile-reference>
   </ng-template>
+
+  <ng-template #information>
+    <div class="information-templates">
+      <num-information-section>
+        <span slot="title">{{ 'INFORMATION.TIME_RESTRICTION.TITLE' | translate }}</span>
+        {{ 'INFORMATION.TIME_RESTRICTION.DESCRIPTION' | translate }}
+      </num-information-section>
+
+      <num-information-section>
+        <span slot="title">{{ 'INFORMATION.TOKEN_FILTER.TITLE' | translate }}</span>
+        {{ 'INFORMATION.TOKEN_FILTER.DESCRIPTION' | translate }}
+      </num-information-section>
+
+      <num-information-section>
+        <span slot="title">{{ 'INFORMATION.FIELD.TITLE' | translate }}</span>
+        {{ 'INFORMATION.FIELD.DESCRIPTION' | translate }}
+      </num-information-section>
+
+      <num-information-section>
+        <span slot="title">{{ 'INFORMATION.REFERENCES.TITLE' | translate }}</span>
+        {{ 'INFORMATION.REFERENCES.DESCRIPTION' | translate }}
+      </num-information-section>
+    </div>
+  </ng-template>
 </div>
