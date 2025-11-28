@@ -14,6 +14,7 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   OnDestroy,
+  SimpleChanges,
 } from '@angular/core';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
@@ -51,6 +52,8 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   readonly referenceTemplate: TemplateRef<any>;
   @ViewChild('token', { static: false, read: TemplateRef })
   readonly tokenFilterTemplate: TemplateRef<any>;
+  @ViewChild('information', { static: false, read: TemplateRef })
+  readonly informationTemplate: TemplateRef<any>;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -77,14 +80,12 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
       .getProfileObservable()
       .pipe(
         tap((profile) => (this.profile = profile)),
-        tap(
-          () =>
-            (this.tokenFilter = this.profile
-              .getFilters()
-              .find(
-                (filter) => filter.getUiType() === DataSelectionUIType.CODE
-              ) as ProfileTokenFilter)
-        )
+        tap(() => {
+          this.tokenFilter = this.profile
+            .getFilters()
+            .find((filter) => filter.getUiType() === DataSelectionUIType.CODE) as ProfileTokenFilter;
+          this.cdr.detectChanges();
+        })
       )
       .subscribe(() => {
         if (this.templates.length === 0) {
@@ -98,7 +99,12 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     this.setReferencesTemplate();
     this.setTimeRestrictionTemplate();
     this.setTokenFilterTemplate();
+    this.setInformationTemplate();
     this.cdr.detectChanges();
+  }
+
+  private setInformationTemplate(): void {
+    this.templates.push({ template: this.informationTemplate, name: 'INFORMATION' });
   }
 
   private setTimeRestrictionTemplate(): void {
@@ -114,7 +120,6 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     this.profile.getFilters().forEach((filter: AbstractProfileFilter) => {
       if (filter.getUiType() === DataSelectionUIType.CODE) {
         this.tokenFilter = filter as ProfileTokenFilter;
-        console.log('Adding token filter template for filter:', this.tokenFilter);
         this.templates.push({ template: this.tokenFilterTemplate, name: 'TOKEN' });
       }
     });
