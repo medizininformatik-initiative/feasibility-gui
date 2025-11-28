@@ -1,7 +1,7 @@
 import { BulkCodeableConceptSearchEngineService } from 'src/app/service/Search/SearchTypes/BulkCodeableConcept/BulkCodeableConceptSearchEngine';
 import { CodeableConceptBulkEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkEntryAdapter';
 import { CodeableConceptBulkResultList } from 'src/app/model/Search/ResultList/CodeableConceptBulkResultList';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service';
 import { Observable, of, Subscription, tap } from 'rxjs';
@@ -15,10 +15,11 @@ import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
   styleUrls: ['./concept-bulk-search.component.scss'],
   providers: [ConceptSelectionHelperService],
 })
-export class ConceptBulkSearchComponent implements OnInit, OnDestroy {
+export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges {
   @Input() valueSetUrl: string[];
   @Input() conceptFilterId: string;
   @Input() preSelectedConcepts: Concept[] = [];
+  @Input() tabChanged = false;
   @Output() changedSelectedConcepts = new EventEmitter<Concept[]>();
 
   searchResults$: Observable<CodeableConceptBulkResultList> = of(undefined);
@@ -38,8 +39,19 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy {
     private conceptSelectionService: ConceptSelectionHelperService
   ) {}
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.initializeComponent();
+    if (this.tabChanged) {
+      this.foundTableData = null;
+      this.notFoundTableData = null;
+      this.foundCount = 0;
+      this.notFoundCount = 0;
+      this.tabChanged = false;
+    }
+  }
+
+  ngOnInit(): void {
+    this.initializePreSelectedConcepts();
   }
 
   ngOnDestroy(): void {
@@ -48,9 +60,6 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy {
 
   public setValueSet(searchFilter: SearchFilter): void {
     this.selectedValueSet = searchFilter.selectedValues[0];
-    if (this.bulkSearchTermInput) {
-      this.performBulkSearch();
-    }
   }
 
   public bulkSearch(): void {
@@ -128,5 +137,9 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy {
   private cleanup(): void {
     this.subscription.unsubscribe();
     this.selectedConceptFilterService.clearSelectedConceptFilter();
+  }
+
+  onTabChange(): void {
+    this.tabChanged = true;
   }
 }

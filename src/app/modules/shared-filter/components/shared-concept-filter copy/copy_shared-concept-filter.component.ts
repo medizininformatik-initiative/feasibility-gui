@@ -1,9 +1,9 @@
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service';
-import { Observable, Subscription } from 'rxjs';
+import { filter, map, Observable, Subscription } from 'rxjs';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 
@@ -11,9 +11,9 @@ import { SelectedConceptFilterProviderService } from '../../service/ConceptFilte
   selector: 'num-shared-concept-filter-copy',
   templateUrl: './copy_shared-concept-filter.component.html',
   styleUrls: ['./copy_shared-concept-filter.component.scss'],
-  providers: [SelectedConceptFilterProviderService, ConceptSelectionHelperService],
+  providers: [ConceptSelectionHelperService],
 })
-export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
+export class CopySharedConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
   @Input() valueSetUrl: string[];
   @Input() conceptFilterId: string;
   @Input() preSelectedConcepts: Concept[] = [];
@@ -32,11 +32,13 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log(
-      'Initializing CopySharedConceptFilterComponent with preSelectedConcepts:',
-      this.preSelectedConcepts
-    );
+    console.log('Initializing CopySharedConceptFilterComponent');
     this.initializeComponent();
+  }
+
+  ngOnChanges(): void {
+    this.initializePreSelectedConcepts();
+    this.setupSearchResults();
   }
 
   ngOnDestroy(): void {
@@ -72,7 +74,19 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy {
   }
 
   private setupSearchResults(): void {
-    this.searchResults$ = this.conceptSearchService.getSearchResults(this.valueSetUrl);
+    this.searchResults$ = this.conceptSearchService.getSearchResults(this.valueSetUrl).pipe(
+      filter((results) => results != null),
+      map((results) => {
+        results.getResults().find((entry) => {
+          entry.setIsSelected(
+            this.selectedConceptFilterService.isConceptSelected(
+              entry.getConcept().getTerminologyCode()
+            )
+          );
+        });
+        return results;
+      })
+    );
   }
 
   private performSearch(searchTerm: string): void {
