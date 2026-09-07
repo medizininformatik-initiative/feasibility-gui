@@ -12,7 +12,6 @@ import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider
 })
 export class LoadDataSelectionProfilesService {
   private dataSelectionApiService = inject(DataSelectionApiService)
-  private profileProvider = inject(ProfileProviderService)
   private profileInstanceBuilder = inject(ProfileInstanceBuilderService)
   private dataSelectionProvider = inject(DataSelectionProviderService)
 
@@ -58,7 +57,7 @@ export class LoadDataSelectionProfilesService {
    */
   private setProfilesInProvider(profiles: DataSelectionProfile[]): void {
     profiles.forEach((profile) => {
-      this.dataSelectionProvider.setProfileInActiveDataSelection(profile, 'SET')
+      this.dataSelectionProvider.setActiveProfile(profile, 'SET')
     })
   }
 }

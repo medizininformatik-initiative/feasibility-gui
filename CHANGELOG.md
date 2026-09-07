@@ -1,6 +1,16 @@
 # Changelog
 
-## v7.1.0 (2026-08-21)
+## v7.3.0 (2026-09-07)
+* Added CSV download as ZIP to the download modal [#598](https://github.com/medizininformatik-initiative/dataportal-ui/issues/598)
+* Added option to apply the same date filter to all criteria and features in the editor [#370](https://github.com/medizininformatik-initiative/dataportal-ui/issues/370)
+* Show code in value set selection for reference criteria [#612](https://github.com/medizininformatik-initiative/dataportal-ui/issues/612)
+* Added support for reordering features in feature selection [#614](https://github.com/medizininformatik-initiative/dataportal-ui/issues/614)
+* Added search and match highlighting to Data Selection Profiles [#620](https://github.com/medizininformatik-initiative/dataportal-ui/issues/620)
+* Added missing field description text to profile entry details [#618](https://github.com/medizininformatik-initiative/dataportal-ui/issues/618)
+
+
+
+## v7.2.0 (2026-08-21)
 ### Features
 * Introduced Elasticsearch-based search and filtering as a replacement for tree-based feature selection, matching the cohort selection workflow. [#596](https://github.com/medizininformatik-initiative/feasibility-gui/issues/596), [#603](https://github.com/medizininformatik-initiative/feasibility-gui/issues/603)
 * Added consecutive numbers to feature names if names are identical [#606](https://github.com/medizininformatik-initiative/feasibility-gui/issues/606)
