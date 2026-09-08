@@ -3,7 +3,7 @@ import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRTDL.service'
 import { DataQueryApiService } from '../Backend/Api/DataQueryApi.service'
 import { FileSaverService } from 'ngx-filesaver'
 import { Injectable, inject } from '@angular/core'
-import { switchMap } from 'rxjs'
+import { switchMap, take } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,10 @@ export class DownloadCRTDLZipService extends AbstractDownloadService {
   public download(filename?: string): void {
     this.createCRTDLService
       .createCRTDL()
-      .pipe(switchMap((crtdl) => this.dataQueryApiService.postConvertCrtdltToCsv(crtdl)))
+      .pipe(
+        switchMap((crtdl) => this.dataQueryApiService.postConvertCrtdltToCsv(crtdl)),
+        take(1)
+      )
       .subscribe((blob) => {
         const finalFilename = super.createFilename(filename, 'CRTDL')
         this.fileSaverService.save(blob, `${finalFilename}.zip`)
