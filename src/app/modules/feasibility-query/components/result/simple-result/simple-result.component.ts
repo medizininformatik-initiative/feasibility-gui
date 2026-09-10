@@ -193,7 +193,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
    * If the result array has fewer than 10 digits, pad it with leading '0' digits until its length is 10
    */
   private setPatientCount(totalNumberOfPatients: number): void {
-    const patientCountArray = totalNumberOfPatients.toString().split('')
+    const patientCountArray = totalNumberOfPatients?.toString()?.split('')
     const lengthOfDigitFields = 8
     while (patientCountArray.length < lengthOfDigitFields) {
       patientCountArray.unshift('0')

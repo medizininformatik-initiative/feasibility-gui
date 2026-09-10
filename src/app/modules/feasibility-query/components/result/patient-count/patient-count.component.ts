@@ -28,7 +28,9 @@ export class PatientCountComponent implements OnInit, OnChanges {
    * If the result array has fewer than 10 digits, pad it with leading '0' digits until its length is 10
    */
   private setPatientCountArray(): void {
-    const patientCountArray = this.totalNumberOfPatients().toString().split('')
+    const patientCountArray = this.totalNumberOfPatients()
+      ? this.totalNumberOfPatients()?.toString()?.split('')
+      : ['0']
     while (patientCountArray.length < this.LENGTH_OF_DIGIT_FIELDS) {
       patientCountArray.unshift('0')
     }

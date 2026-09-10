@@ -46,7 +46,7 @@ export class FeasibilityQueryResultDetailsListAdapter extends AbstractTableAdapt
   }
 
   private patientCountCell(count: number): TextCellData {
-    const text = count.toString()
+    const text = count?.toString()
     return TableCellBuilder.withText(text)
   }
 }
